@@ -1,0 +1,40 @@
+#pragma once
+#include "..\bullet.h"
+
+class CHomingBullet : public IBullet
+{
+public:
+	CHomingBullet();
+	~CHomingBullet() = default;
+	/*!
+	 *  @brief      初期化
+	 *
+	 *  @param[in]  category        ユニット識別子
+	 *  @param[in]  position        位置
+	 *  @param[in]  direction       向き
+	 *  @param[in]  launcherID      発射ID
+	 *  @param[in]  colliderID      判定ID
+	 */
+	 void    Initialize(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter, const CVector3& position, const CVector3& direction);
+
+	/*!
+	 *  @brief      更新
+	 */
+	void    Update();
+
+private:
+
+	static const std::string    m_file_name;        //!< 読み込むファイル名
+	static const float	        m_max_speed;        //!< 最高速度
+
+	static const int	m_max_homing_time;          //!< ホーミングする最大時間
+	static const float	m_curvature_radius;			//!< 曲率半径
+	static const float	m_damping;					//!< 空気抵抗
+
+	float				m_MaxCentripetalAccel;		//!< 最大加速度
+	int					m_HomingTime;               //!< ホーミングする時間
+	float				m_Propulsion;				//!< 推進力
+	float				m_Damping;					//!< 減衰力
+	int					m_StartHomingTime;			//!< ホーミングまでの時間
+	int					m_DelayTimer;				//!< 遅延タイマー
+};

@@ -1,0 +1,12 @@
+#pragma once
+
+/*!
+ *  @brief      ’eID
+ */
+enum class BULLET_ID
+{   
+    NORMAL,         //!< ’Êí’e
+    HOMING,         //!< ƒz[ƒ~ƒ“ƒO’e
+    SHOCK_WAVE,     //!< ÕŒ‚”g
+    BOSS,           //!< ƒ{ƒX’e
+};
