@@ -11,6 +11,8 @@
 
 #include "scene_manager.h"
 #include "scene\title\title.h"
+#include "scene\select_mode\select_mode.h"
+#include "scene\select_player\select_player.h"
 #include "scene\game_main\game_main.h"
 
 const int               CSceneManager::m_fade_speed = 5;
@@ -161,8 +163,10 @@ CSceneManager::CreateScene(SCENE_ID id)
     //IDÇäÓèÄÇ…ÉVÅ[ÉìëΩï™äÚ
     switch (id)
     {
-    case SCENE_ID::TITLE:        m_Scene = new CTitle();       break;
-    case SCENE_ID::GAMEMAIN:     m_Scene = new CGameMain();    break;
+    case SCENE_ID::TITLE:        m_Scene = new CTitle();        break;
+    case SCENE_ID::SELECTMODE:   m_Scene = new CSelect_Mode();  break;
+    case SCENE_ID::SELECTPLAYER:  m_Scene = new CSelect_Player();  break;
+    case SCENE_ID::GAMEMAIN:     m_Scene = new CGameMain();     break;
     }
 }
 
