@@ -1,19 +1,19 @@
-#include "title.h"
+#include "select_player.h"
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 
-CTitle::CTitle(void)
+CSelect_Player::CSelect_Player(void)
 {
 
 }
 
-CTitle::~CTitle(void)
+CSelect_Player::~CSelect_Player(void)
 {
 }
 
-void CTitle::Initialize(void)
+void CSelect_Player::Initialize(void)
 {
-	m_State = STATE::WAIT;
+    m_State = STATE::WAIT;
 
     CCamera::GetInstance().Initialize();
 
@@ -22,7 +22,7 @@ void CTitle::Initialize(void)
 
 }
 
-void CTitle::Update(void)
+void CSelect_Player::Update(void)
 {
     switch (m_State)
     {
@@ -30,7 +30,7 @@ void CTitle::Update(void)
     {
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
         {
-            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTMODE);
+            CSceneManager::GetInstance().ChangeScene(SCENE_ID::GAMEMAIN);
         }
     }
     break;
@@ -40,7 +40,7 @@ void CTitle::Update(void)
 
 }
 
-void CTitle::Draw(void)
+void CSelect_Player::Draw(void)
 {
     CStage::GetInstance().Draw();
     switch (m_State)
@@ -49,14 +49,14 @@ void CTitle::Draw(void)
     {
         vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 
-        vivid::DrawText(20, "Zで開始,左クリックで射撃または決定,ADキーで移動,スペースキーでジャンプ,Tabキーで一時停止", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
+        vivid::DrawText(20, "プレイヤーセレクト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
     }
     break;
     }
 
 }
 
-void CTitle::Finalize(void)
+void CSelect_Player::Finalize(void)
 {
     CStage::GetInstance().Finalize();
     CStage::GetInstance().Finalize();
