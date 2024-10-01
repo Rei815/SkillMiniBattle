@@ -20,7 +20,7 @@ const int               CPlayer::m_dust_cloud_interval = 10;
 const float             CPlayer::m_dust_cloud_scale_adjust = 15.0f;
 
 CPlayer::CPlayer()
-    : IUnit(m_max_life, UNIT_CATEGORY::PLAYER, UNIT_ID::PLAYER)
+    : IUnit(m_max_life, UNIT_CATEGORY::PLAYER, UNIT_ID::PLAYER1)
     , m_Accelerator(CVector3())
     , m_InvincibleTime(0)
     , m_Offset(CVector3())
@@ -45,6 +45,7 @@ void CPlayer::Initialize(const CVector3& position, MOVE_ID moveID, bool aimFlag)
 
     m_Radius = m_radius;
     m_Model.Initialize("data\\Models\\Player.mv1", position);
+    MV1SetMaterialDifColor(m_Model.GetModelHandle(), 0, m_Color);
     m_Accelerator = CVector3(0,0,0);
     m_Life = m_MaxLife = m_max_life;
     m_InvincibleTime = m_max_invincible_time;
@@ -60,7 +61,6 @@ void CPlayer::Initialize(const CVector3& position, MOVE_ID moveID, bool aimFlag)
 
 void CPlayer::Update(void)
 {
-
     IUnit::Update();
     m_Model.Update(m_Transform);
     CCamera::GetInstance().Follow(m_Transform.position,m_Offset);
@@ -134,7 +134,7 @@ Attack(void)
 void CPlayer::Control(void)
 {
     //ç∂à⁄ìÆ
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+    if (GetJoypadInputState(DX_INPUT_PAD1) && PAD_INPUT_LEFT)
         m_Accelerator.x += -m_move_speed;
 
     //âEà⁄ìÆ

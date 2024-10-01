@@ -175,6 +175,7 @@
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\camera\camera.cpp" />
     <ClCompile Include="src\game_manager\game_manager.cpp" />
+    <ClCompile Include="src\game_manager\game_object\controller_manager\controller_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\destroy_effect\destroy_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\dust_cloud_effect\dust_cloud_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\effect.cpp" />
@@ -223,6 +224,8 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\wave_counter\wave_counter.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\wave_start\wave_start.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\five_way_enemy\five_way_enemy.cpp" />
+    <ClCompile Include="src\game_manager\game_object\unit_manager\unit\player\player_1\player_1.cpp" />
+    <ClCompile Include="src\game_manager\game_object\unit_manager\unit\player\player_2\player_2.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\three_way_enemy\three_way_enemy.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\boss_enemy\boss_enemy.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\burst_enemy\burst_enemy.cpp" />
@@ -261,6 +264,7 @@
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet_manager.h" />
     <ClInclude Include="src\game_manager\game_object\camera\camera.h" />
     <ClInclude Include="src\game_manager\game_manager.h" />
+    <ClInclude Include="src\game_manager\game_object\controller_manager\controller_manager.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\destroy_effect\destroy_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\dust_cloud_effect\dust_cloud_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\effect.h" />
@@ -317,6 +321,8 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\wave_counter\wave_counter.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\wave_start\wave_start.h" />
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\five_way_enemy\five_way_enemy.h" />
+    <ClInclude Include="src\game_manager\game_object\unit_manager\unit\player\player_1\player_1.h" />
+    <ClInclude Include="src\game_manager\game_object\unit_manager\unit\player\player_2\player_2.h" />
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\three_way_enemy\three_way_enemy.h" />
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\boss_enemy\boss_enemy.h" />
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\burst_enemy\burst_enemy.h" />

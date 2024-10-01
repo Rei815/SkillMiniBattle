@@ -18,22 +18,22 @@ public:
      *
      *  @param[in]  position    初期位置
      */
-    void        Initialize(const CVector3& position, MOVE_ID moveId, bool aimFlag);
+    virtual void        Initialize(const CVector3& position, MOVE_ID moveId, bool aimFlag);
 
     /*!
      *  @brief      更新
      */
-    void        Update(void);
+    virtual void        Update(void);
 
     /*!
      *  @brief      描画
      */
-    void        Draw(void);
+    virtual void        Draw(void);
 
     /*!
      *  @brief      解放
      */
-    void        Finalize(void);
+    virtual void        Finalize(void);
 
     /*!
      *  @brief      ライフ取得
@@ -57,7 +57,7 @@ public:
  */
     void        SetFireFlag(bool flag);
 
-private:
+protected:
     /*!
      *  @brief      攻撃
      */
@@ -89,10 +89,6 @@ private:
      */
     void        Damage(void);
 
-
-
-
-
     static const float              m_radius;                       //!< 半径
     static const float              m_move_speed;                   //!< 移動速度
     static const float              m_jump_power;                   //!< ジャンプ力
@@ -103,7 +99,7 @@ private:
     static const float              m_fall_accelerator;             //!< 落下加速度
     static const int                m_dust_cloud_interval;          //!< 土煙の生成間隔
     static const CVector3           m_dust_cloud_position;          //!< 土煙の生成位置
-    static const float              m_dust_cloud_scale_adjust;          //!< エフェクト(土煙)の大きさ調整値
+    static const float              m_dust_cloud_scale_adjust;      //!< エフェクト(土煙)の大きさ調整値
 
     CVector3                        m_Offset;                       //!< カメラとの距離
     float                           m_FallSpeed;                    //!< 落下速度
@@ -114,4 +110,6 @@ private:
     int                             m_DustCloudTime;                //!< 土煙時間
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     bool                            m_FireFlag;                     //!< 発射処理有効フラグ
+    DxLib::COLOR_F                  m_Color;
+
 };

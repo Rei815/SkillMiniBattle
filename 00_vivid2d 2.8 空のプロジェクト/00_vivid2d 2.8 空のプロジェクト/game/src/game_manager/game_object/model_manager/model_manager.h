@@ -82,7 +82,7 @@ private:
 
     static const char*      m_model_file_names[(int)MODEL_ID::MAX];     //!< モデルのファイル名
 
-    int      m_model_handles[(int)MODEL_ID::MAX];     //!< モデルのファイル名
+    int                     m_model_handles[(int)MODEL_ID::MAX];        //!< モデルのファイル名
 
     int                     m_Handle;                                   //!< ハンドル
 };

@@ -4,7 +4,8 @@
 #include "..\effect_manager\effect_manager.h"
 #include "..\sound_manager\sound_manager.h"
 #include "..\..\..\utility\utility.h"
-#include "unit\player\player.h"
+#include "unit\player\player_1\player_1.h"
+#include "unit\player\player_2\player_2.h"
 #include "unit\three_way_enemy\three_way_enemy.h"
 #include "unit\five_way_enemy\five_way_enemy.h"
 #include "unit\normal_enemy\normal_enemy.h"
@@ -123,14 +124,17 @@ Create(UNIT_ID id, const CVector3& pos, MOVE_ID moveId, bool aimFlag)
 
     switch (id)
     {
-    case UNIT_ID::PLAYER:           unit = new CPlayer();      break;
-    case UNIT_ID::NORMAL_ENEMY:     unit = new CNormalEnemy();      break;
-    case UNIT_ID::THREE_WAY_ENEMY:           unit = new CThreeWayEnemy();      break;
-    case UNIT_ID::FIVE_WAY_ENEMY:           unit = new CFiveWayEnemy();      break;
-    case UNIT_ID::BURST_ENEMY:      unit = new CBurstEnemy();      break;
-    case UNIT_ID::SHOTGUN_ENEMY:      unit = new CShotGunEnemy();      break;
-    case UNIT_ID::HOMING_ENEMY:      unit = new CHomingEnemy();      break;
-    case UNIT_ID::BOSS_ENEMY:      unit = new CBossEnemy();      break;
+    case UNIT_ID::PLAYER1:              unit = new CPlayer1();      break;
+    case UNIT_ID::PLAYER2:              unit = new CPlayer2();      break;
+    case UNIT_ID::PLAYER3:              unit = new CPlayer1();      break;
+    case UNIT_ID::PLAYER4:              unit = new CPlayer1();      break;
+    case UNIT_ID::NORMAL_ENEMY:         unit = new CNormalEnemy();      break;
+    case UNIT_ID::THREE_WAY_ENEMY:      unit = new CThreeWayEnemy();      break;
+    case UNIT_ID::FIVE_WAY_ENEMY:       unit = new CFiveWayEnemy();      break;
+    case UNIT_ID::BURST_ENEMY:          unit = new CBurstEnemy();      break;
+    case UNIT_ID::SHOTGUN_ENEMY:        unit = new CShotGunEnemy();      break;
+    case UNIT_ID::HOMING_ENEMY:         unit = new CHomingEnemy();      break;
+    case UNIT_ID::BOSS_ENEMY:           unit = new CBossEnemy();      break;
     }
 
     if (!unit) return;
@@ -244,7 +248,7 @@ CPlayer* CUnitManager::GetPlayer(void)
 
     while (it != m_UnitList.end())
     {
-        if ((*it)->GetUnitID() == UNIT_ID::PLAYER)
+        if ((*it)->GetUnitID() == UNIT_ID::PLAYER1)
             return (CPlayer*)(*it);
 
         ++it;

@@ -15,6 +15,7 @@
 #include "../../../bullet_manager/bullet_manager.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
+#include "../../../controller_manager/controller_manager.h"
 #include "../../../unit_manager/unit/player/player.h"
 
 const int               CGameMain::m_fight_width = 205;
@@ -54,9 +55,10 @@ CGameMain::Initialize(void)
     CUIManager::GetInstance().Initialize();
     CEffectManager::GetInstance().Initialize();
     CLauncher::GetInstance().Initialize();
+    CControllerManager::GetInstance().Initialize();
     CStage::GetInstance().Initialize();
 
-    CUnitManager::GetInstance().Create(UNIT_ID::PLAYER, CVector3(0, 0, -1000));
+    CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 0, -1000));
     CUIManager::GetInstance().Create(UI_ID::PLAYER_LIFE);
     CUIManager::GetInstance().Create(UI_ID::RETICLE);
 
@@ -116,6 +118,7 @@ CGameMain::Update(void)
 
         CUIManager::GetInstance().Update();
     }
+    CControllerManager::GetInstance().Update();
 
 }
 
@@ -176,6 +179,7 @@ CGameMain::Finalize(void)
     CUnitManager::GetInstance().Finalize();
     CUIManager::GetInstance().Finalize();
     CEffectManager::GetInstance().Finalize();
+    CControllerManager::GetInstance().Finalize();
 
     CStage::GetInstance().Finalize();
 }
