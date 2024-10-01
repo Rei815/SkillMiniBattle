@@ -166,7 +166,7 @@ CSceneManager::CreateScene(SCENE_ID id)
     case SCENE_ID::TITLE:        m_Scene = new CTitle();        break;
     case SCENE_ID::SELECTMODE:   m_Scene = new CSelect_Mode();  break;
     case SCENE_ID::SELECTPLAYER:  m_Scene = new CSelect_Player();  break;
-    case SCENE_ID::GAMEMAIN:     m_Scene = new CGameMain();     break;
+    case SCENE_ID::GAMEMAIN:     m_Scene = new CMiniGame();     break;
     }
 }
 

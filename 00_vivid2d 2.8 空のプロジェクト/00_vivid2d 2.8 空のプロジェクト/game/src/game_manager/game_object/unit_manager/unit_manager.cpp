@@ -39,8 +39,8 @@ Initialize(void)
     m_MoveIdList["Right"] = MOVE_ID::RIGHT;
     m_MoveIdList["Wait"] = MOVE_ID::WAIT;
 
-    m_WaveStateList["Wave"] = CGameMain::WAVE_STATE::WAVE;
-    m_WaveStateList["WaveFinish"] = CGameMain::WAVE_STATE::WAVE_FINISH;
+    m_WaveStateList["Wave"] = CMiniGame::WAVE_STATE::WAVE;
+    m_WaveStateList["WaveFinish"] = CMiniGame::WAVE_STATE::WAVE_FINISH;
 
     m_EnemyTable.clear();
     m_UnitList.clear();
@@ -351,7 +351,7 @@ DeployEnemy(void)
         t.create_frame = csv_loader.GetInteger(i, ENEMY_TABLE_DATA_PARAM_CREATE_TIME);
         t.move_id = m_MoveIdList[csv_loader.GetString(i, ENEMY_TABLE_DATA_PARAM_MOVE_ID)];
         t.wave_state = m_WaveStateList[csv_loader.GetString(i, ENEMY_TABLE_DATA_PARAM_WAVE_STATE)];
-        if (t.wave_state == CGameMain::WAVE_STATE::WAVE_FINISH)
+        if (t.wave_state == CMiniGame::WAVE_STATE::WAVE_FINISH)
             m_WaveCount++;
 
         m_EnemyTable.push_back(t);
@@ -394,7 +394,7 @@ UpdateEnemyTable(void)
             m_AppearBossFlag = true;
         }
 
-        if (t.wave_state == CGameMain::WAVE_STATE::WAVE_FINISH)
+        if (t.wave_state == CMiniGame::WAVE_STATE::WAVE_FINISH)
         {
             m_AppearFinalEnemyFlag = true;
 

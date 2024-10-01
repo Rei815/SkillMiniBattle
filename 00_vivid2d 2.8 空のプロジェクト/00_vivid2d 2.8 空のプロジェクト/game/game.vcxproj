@@ -200,9 +200,10 @@
     <ClCompile Include="src\game_manager\game_object\launcher\shot\shot.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\shotgun\shotgun.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\three_way\three_way.cpp" />
-    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game_main\game_main.cpp" />
+    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\result\result.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\scene.cpp" />
+    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_game\select_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_mode\select_mode.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_player\select_player.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\title\title.cpp" />
@@ -228,6 +229,7 @@
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\five_way_enemy\five_way_enemy.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\player\player_1\player_1.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\player\player_2\player_2.cpp" />
+    <ClCompile Include="src\game_manager\game_object\unit_manager\unit\player_manager\player_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\three_way_enemy\three_way_enemy.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\boss_enemy\boss_enemy.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\burst_enemy\burst_enemy.cpp" />
@@ -297,10 +299,11 @@
     <ClInclude Include="src\game_manager\game_object\model_manager\model\model.h" />
     <ClInclude Include="src\game_manager\game_object\model_manager\model\model_id.h" />
     <ClInclude Include="src\game_manager\game_object\model_manager\model_manager.h" />
-    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game_main\game_main.h" />
+    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\result\result.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\scene.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\scene_id.h" />
+    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_game\select_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_mode\select_mode.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_player\select_player.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\title\title.h" />
@@ -327,6 +330,7 @@
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\five_way_enemy\five_way_enemy.h" />
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\player\player_1\player_1.h" />
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\player\player_2\player_2.h" />
+    <ClInclude Include="src\game_manager\game_object\unit_manager\unit\player_manager\player_manager.h" />
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\three_way_enemy\three_way_enemy.h" />
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\boss_enemy\boss_enemy.h" />
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit\burst_enemy\burst_enemy.h" />

@@ -2,16 +2,16 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 
-CSelect_Player::CSelect_Player(void)
+CSelectPlayer::CSelectPlayer(void)
 {
 
 }
 
-CSelect_Player::~CSelect_Player(void)
+CSelectPlayer::~CSelectPlayer(void)
 {
 }
 
-void CSelect_Player::Initialize(void)
+void CSelectPlayer::Initialize(void)
 {
     m_State = STATE::WAIT;
 
@@ -22,43 +22,26 @@ void CSelect_Player::Initialize(void)
 
 }
 
-void CSelect_Player::Update(void)
+void CSelectPlayer::Update(void)
 {
-    switch (m_State)
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
     {
-    case STATE::WAIT:
-    {
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
-        {
-            CSceneManager::GetInstance().ChangeScene(SCENE_ID::GAMEMAIN);
-        }
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTMODE);
     }
-    break;
-    }
-    CStage::GetInstance().Update();
     CStage::GetInstance().Update();
 
 }
 
-void CSelect_Player::Draw(void)
+void CSelectPlayer::Draw(void)
 {
-    CStage::GetInstance().Draw();
-    switch (m_State)
-    {
-    case STATE::WAIT:
-    {
-        vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
+    vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 
-        vivid::DrawText(20, "プレイヤーセレクト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
-    }
-    break;
-    }
+    vivid::DrawText(20, "プレイヤーセレクト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
 
 }
 
-void CSelect_Player::Finalize(void)
+void CSelectPlayer::Finalize(void)
 {
-    CStage::GetInstance().Finalize();
     CStage::GetInstance().Finalize();
 
 }

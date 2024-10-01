@@ -102,7 +102,6 @@ private:
 	static const int	m_shake_interval;	//!< 揺れの間隔
 	static const float	m_shake_value;		//!< 揺れの大きさ
 	CVector3			m_PreviousPosition;	//!< 揺れ前の位置
-
 	static const float	m_lerp_speed;		//!< カメラの動きの速さ
 	static const float	m_near;				//!< Nearクリップ
 	static const float	m_far;				//!< Farクリップ

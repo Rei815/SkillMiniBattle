@@ -1,17 +1,17 @@
-#include "select_mode.h"
+#include "select_game.h"
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 
-CSelectMode::CSelectMode(void)
+CSelectGame::CSelectGame(void)
 {
 
 }
 
-CSelectMode::~CSelectMode(void)
+CSelectGame::~CSelectGame(void)
 {
 }
 
-void CSelectMode::Initialize(void)
+void CSelectGame::Initialize(void)
 {
 
     CCamera::GetInstance().Initialize();
@@ -21,7 +21,7 @@ void CSelectMode::Initialize(void)
 
 }
 
-void CSelectMode::Update(void)
+void CSelectGame::Update(void)
 {
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
     {
@@ -31,18 +31,15 @@ void CSelectMode::Update(void)
 
 }
 
-void CSelectMode::Draw(void)
+void CSelectGame::Draw(void)
 {
-    CStage::GetInstance().Draw();
     vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 
-    vivid::DrawText(50, "カジュアル", vivid::Vector2(vivid::WINDOW_WIDTH / 2, vivid::WINDOW_HEIGHT / 2));
-
-    vivid::DrawText(20, "ゲームモードセレクト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
+    vivid::DrawText(20, "プレイヤーセレクト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
 
 }
 
-void CSelectMode::Finalize(void)
+void CSelectGame::Finalize(void)
 {
     CStage::GetInstance().Finalize();
 

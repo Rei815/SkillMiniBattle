@@ -219,7 +219,7 @@ private:
         int             create_frame;
         bool            aim_flag;
         MOVE_ID         move_id;
-        CGameMain::WAVE_STATE         wave_state;
+        CGame::WAVE_STATE         wave_state;
     };
 
     /*!
@@ -243,6 +243,6 @@ private:
     int                 m_WaveCurrentCount;     //!< 現在のWave用カウンター
 
     std::map<std::string, MOVE_ID> m_MoveIdList;
-    std::map<std::string, CGameMain::WAVE_STATE> m_WaveStateList;
+    std::map<std::string, CGame::WAVE_STATE> m_WaveStateList;
 };
     

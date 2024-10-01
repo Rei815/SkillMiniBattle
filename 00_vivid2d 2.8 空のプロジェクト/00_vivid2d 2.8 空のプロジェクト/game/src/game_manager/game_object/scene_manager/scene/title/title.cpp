@@ -30,7 +30,7 @@ void CTitle::Update(void)
     {
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
         {
-            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTMODE);
+            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTPLAYER);
         }
     }
     break;

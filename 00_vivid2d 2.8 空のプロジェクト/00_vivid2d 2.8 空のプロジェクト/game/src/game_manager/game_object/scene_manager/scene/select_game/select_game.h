@@ -3,21 +3,20 @@
 #include "vivid.h"
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
-#include "../../../stage/stage.h"
 
-class CSelectMode
+class CSelectGame
     : public IScene
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CSelectMode(void);
+    CSelectGame(void);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CSelectMode(void);
+    ~CSelectGame(void);
 
     /*!
      *  @brief      初期化
@@ -40,4 +39,5 @@ public:
     void Finalize(void);
 
 private:
+
 };

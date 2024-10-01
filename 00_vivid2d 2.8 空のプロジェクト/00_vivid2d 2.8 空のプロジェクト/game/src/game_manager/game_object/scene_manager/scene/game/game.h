@@ -16,53 +16,30 @@
 #include "../../../model_manager/model/model.h"
 #include "../../../stage/stage.h"
  
- /*!
-  *  @brief  ゲームの状態
-  */
+/*!
+*  @brief  ゲームの状態
+*/
 enum class GAME_STATE
 {
     START,
-    WAVE_START,
-    WAVE,
-    WAVE_CLEAR,
-    GAMEOVER,
-    GAMECLEAR,
+    PLAY,
+    FINISH,
 };
 
-class CModel;
-/*!
- *  @class      CGameMain
- *
- *  @brief      ゲームメインシーン
- *
- *  @author     Kazuya Maruyama
- *
- *  @date       2020/11/13
- *
- *  @since      1.0
- */
-class CGameMain
+class CGame
     : public IScene
 {
 public:
 
-    enum class WAVE_STATE
-    {
-        WAVE,
-        WAVE_FINISH,
-        WAVE_CLEAR,
-        WAVE_REWARD,
-    };
-
     /*!
      *  @brief      コンストラクタ
      */
-    CGameMain(void);
+    CGame(void);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CGameMain(void);
+    ~CGame(void);
 
     /*!
      *  @brief      初期化
@@ -99,25 +76,6 @@ public:
     void        SetGameState(GAME_STATE state);
 
 
-    /*!
-     *  @brief      Waveのアクティブ設定
-     *
-     */
-    void SetActiveWave(bool active);
-
-    /*!
-     *  @brief      Waveのクリア設定
-     *
-     */
-    void SetWaveState(WAVE_STATE state);
-
-    /*!
-     *  @brief      報酬フラグ取得
-     *
-     *  @return     報酬フラグ
-     */
-    bool GetReceiveReward(void);
-
 private:
 
 
@@ -129,35 +87,12 @@ private:
     /*!
      *  @brief      プレイ
      */
-    void    Wave(void);
+    void    Play(void);
 
     /*!
-     *  @brief      ゲームオーバー
+     *  @brief      終了
      */
-    void    GameOver(void);
-
-    /*!
-     *  @brief      ゲームクリア
-     */
-    void    GameClear(void);
-
-    /*!
-     *  @brief      Wave更新
-     */
-    void        UpdateWave(void);
-    /*!
-     *  @brief      WaveFinish更新
-     */
-    void        UpdateWaveFinish(void);
-    /*!
-     *  @brief      WaveClear更新
-     */
-    void        UpdateWaveClear(void);
-    /*!
-     *  @brief      WaveReward更新
-     */
-    void        UpdateWaveReward(void);
-
+    void    Finish(void);
 
     GAME_STATE          m_GameState;            //!< ゲームの状態
 
@@ -188,7 +123,5 @@ private:
     int                             m_WaveTimer;            //!< Wave間のタイマー
     int                             m_StartWaveTimer;       //!< Wave開始からののタイマー
     bool                            m_ReceiveReward;        //!< 報酬を受け取れるかどうか
-
-    WAVE_STATE          m_WaveState;
 
 };
