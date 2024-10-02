@@ -6,13 +6,6 @@
 #include "..\..\..\utility\utility.h"
 #include "unit\player\player_1\player_1.h"
 #include "unit\player\player_2\player_2.h"
-#include "unit\three_way_enemy\three_way_enemy.h"
-#include "unit\five_way_enemy\five_way_enemy.h"
-#include "unit\normal_enemy\normal_enemy.h"
-#include "unit\burst_enemy\burst_enemy.h"
-#include "unit\shotgun_enemy\shotgun_enemy.h"
-#include "unit\homing_enemy\homing_enemy.h"
-#include "unit\boss_enemy\boss_enemy.h"
 #include "../ui_manager/ui_manager.h"
 
 
@@ -35,24 +28,8 @@ void
 CUnitManager::
 Initialize(void)
 {
-    m_MoveIdList["Left"] = MOVE_ID::LEFT;
-    m_MoveIdList["Right"] = MOVE_ID::RIGHT;
-    m_MoveIdList["Wait"] = MOVE_ID::WAIT;
-
-    m_WaveStateList["Wave"] = CMiniGame::WAVE_STATE::WAVE;
-    m_WaveStateList["WaveFinish"] = CMiniGame::WAVE_STATE::WAVE_FINISH;
-
-    m_EnemyTable.clear();
     m_UnitList.clear();
-    m_CreateTimer = 0;
-
-    m_AppearBossFlag = false;
-
-    m_AppearFinalEnemyFlag = false;
-    m_GenerateFlag = false;
-    m_WaveCount = 0;
-    m_WaveCurrentCount = 1;
-    DeployEnemy();
+    m_RankingList.clear();
 }
 
 /*
@@ -68,7 +45,6 @@ Update(void)
 
     CheckHitStage();
 
-    UpdateEnemyTable();
 }
 
 /*
@@ -128,18 +104,11 @@ Create(UNIT_ID id, const CVector3& pos, MOVE_ID moveId, bool aimFlag)
     case UNIT_ID::PLAYER2:              unit = new CPlayer2();      break;
     case UNIT_ID::PLAYER3:              unit = new CPlayer1();      break;
     case UNIT_ID::PLAYER4:              unit = new CPlayer1();      break;
-    case UNIT_ID::NORMAL_ENEMY:         unit = new CNormalEnemy();      break;
-    case UNIT_ID::THREE_WAY_ENEMY:      unit = new CThreeWayEnemy();      break;
-    case UNIT_ID::FIVE_WAY_ENEMY:       unit = new CFiveWayEnemy();      break;
-    case UNIT_ID::BURST_ENEMY:          unit = new CBurstEnemy();      break;
-    case UNIT_ID::SHOTGUN_ENEMY:        unit = new CShotGunEnemy();      break;
-    case UNIT_ID::HOMING_ENEMY:         unit = new CHomingEnemy();      break;
-    case UNIT_ID::BOSS_ENEMY:           unit = new CBossEnemy();      break;
     }
 
     if (!unit) return;
 
-    unit->Initialize(pos, moveId, aimFlag);
+    unit->Initialize(pos, moveId);
     m_UnitList.push_back(unit);
 }
 
@@ -162,37 +131,6 @@ CheckHitBullet(IBullet* bullet)
 
         ++it;
     }
-}
-
-/*
- *  ボスが撃破されたか？
- */
-bool
-CUnitManager::
-CheckDestoryBoss(void)
-{
-    if (!m_UnitList.empty())
-    {
-        UNIT_LIST::iterator it = m_UnitList.begin();
-
-        if (m_UnitList.size() <= 1 && (*it)->GetUnitCategory() == UNIT_CATEGORY::PLAYER && m_AppearBossFlag)
-            return true;
-    }
-
-    return false;
-}
-
-bool CUnitManager::CheckDestoryFinalEnemy(void)
-{
-    if (!m_UnitList.empty())
-    {
-        UNIT_LIST::iterator it = m_UnitList.begin();
-
-        if (m_UnitList.size() <= 1 && (*it)->GetUnitCategory() == UNIT_CATEGORY::PLAYER && m_AppearFinalEnemyFlag)
-            return true;
-    }
-
-    return false;
 }
 
 void CUnitManager::CheckHitStage()
@@ -257,32 +195,25 @@ CPlayer* CUnitManager::GetPlayer(void)
     return nullptr;
 }
 
-IUnit* CUnitManager::GetBoss(void)
+void CUnitManager::SetAllPlayerAction(bool flag)
 {
-    if (m_UnitList.empty()) return nullptr;
+    if (m_UnitList.empty()) return;
 
     UNIT_LIST::iterator it = m_UnitList.begin();
 
     while (it != m_UnitList.end())
     {
-        if ((*it)->GetUnitID() == UNIT_ID::BOSS_ENEMY)
-            return (*it);
+        if ((*it)->GetUnitCategory() == UNIT_CATEGORY::PLAYER)
+        {
+            CPlayer* player = (CPlayer*)(*it);
+            player->SetActionFlag(flag);
+        }
 
         ++it;
     }
 
-    return nullptr;
-}
+    return;
 
-int CUnitManager::GetMaxWave(void)
-{
-    return m_WaveCount;
-}
-
-
-int CUnitManager::GetCurrentWave(void)
-{
-    return m_WaveCurrentCount;
 }
 
 CVector3 CUnitManager::CheckHitLine(const CVector3& startPos, const CVector3& endPos)
@@ -315,113 +246,6 @@ bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& e
     }
 
     return false;
-}
-
-bool CUnitManager::CheckFinishWave(void)
-{
-    if (CheckDestoryFinalEnemy())
-        return true;
-    else
-        false;
-}
-
-/*
- *  ENEMYの配置
- */
-void
-CUnitManager::
-DeployEnemy(void)
-{
-    // CSVローダーの宣言
-    CCSVLoader csv_loader;
-
-    // CSVファイルロード
-    csv_loader.Load("data\\enemy_table.csv");
-
-    for (int i = 0; i < csv_loader.GetRows(); ++i)
-    {
-        ENEMY_TABLE_DATA t;
-
-        string unit_id = csv_loader.GetString(i, ENEMY_TABLE_DATA_PARAM_ID);
-        t.aim_flag = unit_id[0] == 'T';
-        t.id = (UNIT_ID)stoi(&unit_id[1]);
-        t.x = csv_loader.GetInteger(i, ENEMY_TABLE_DATA_PARAM_X);
-        t.y = csv_loader.GetInteger(i, ENEMY_TABLE_DATA_PARAM_Y);
-        t.z = csv_loader.GetInteger(i, ENEMY_TABLE_DATA_PARAM_Z);
-        t.create_frame = csv_loader.GetInteger(i, ENEMY_TABLE_DATA_PARAM_CREATE_TIME);
-        t.move_id = m_MoveIdList[csv_loader.GetString(i, ENEMY_TABLE_DATA_PARAM_MOVE_ID)];
-        t.wave_state = m_WaveStateList[csv_loader.GetString(i, ENEMY_TABLE_DATA_PARAM_WAVE_STATE)];
-        if (t.wave_state == CMiniGame::WAVE_STATE::WAVE_FINISH)
-            m_WaveCount++;
-
-        m_EnemyTable.push_back(t);
-    }
-
-    // 解放
-    csv_loader.Unload();
-}
-
-
-/*
- *  Enemyテーブル更新
- */
-void
-CUnitManager::
-UpdateEnemyTable(void)
-{
-    if (m_EnemyTable.empty() || !m_GenerateFlag || m_AppearFinalEnemyFlag) return;
-
-    ENEMY_TABLE::iterator it = m_EnemyTable.begin();
-
-    ENEMY_TABLE_DATA t = *it;
-
-
-    if (++m_CreateTimer > t.create_frame)
-    {
-        CVector3 pos((float)(t.x), (float)(t.y), (float)(t.z));
-
-        Create(t.id, pos, t.move_id, t.aim_flag);
-
-        // ボスが生成された時には警告エフェクトを出す
-        if (t.id == UNIT_ID::BOSS_ENEMY)
-        {
-            CEffectManager::GetInstance().Create(EFFECT_ID::EMERGENCY, vivid::Vector2(0.0f, 0.0f), 0xffffffff, 0.0f);
-            CUIManager::GetInstance().Create(UI_ID::BOSS_LIFE);
-
-            CSoundManager::GetInstance().Play(SOUND_ID::WARNING);
-            CSoundManager::GetInstance().Play(SOUND_ID::WARNING_SHORT);
-
-            m_AppearBossFlag = true;
-        }
-
-        if (t.wave_state == CMiniGame::WAVE_STATE::WAVE_FINISH)
-        {
-            m_AppearFinalEnemyFlag = true;
-
-        }
-
-        m_EnemyTable.erase(it);
-    }
-}
-
-void CUnitManager::SetGenerateFlag(bool flag)
-{
-    m_GenerateFlag = flag;
-}
-
-void CUnitManager::SetAppearFinalEnemyFlag(bool flag)
-{
-    m_AppearFinalEnemyFlag = flag;
-}
-
-bool CUnitManager::GetAppearBossFlag()
-{
-    return m_AppearBossFlag;
-}
-
-void CUnitManager::AddWaveCurrentCount()
-{
-    m_WaveCurrentCount++;
 }
 
 /*
@@ -463,8 +287,6 @@ UpdateUnit(void)
  */
 CUnitManager::
 CUnitManager(void)
-    : m_CreateTimer(0)
-    , m_WaveCount(0)
 {
 }
 

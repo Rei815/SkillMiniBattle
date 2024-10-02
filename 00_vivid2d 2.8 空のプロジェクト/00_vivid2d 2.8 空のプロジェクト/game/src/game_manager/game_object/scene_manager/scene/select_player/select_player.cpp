@@ -13,7 +13,6 @@ CSelectPlayer::~CSelectPlayer(void)
 
 void CSelectPlayer::Initialize(void)
 {
-    m_State = STATE::WAIT;
 
     CCamera::GetInstance().Initialize();
 

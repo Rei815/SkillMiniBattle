@@ -1,21 +1,9 @@
-
-/*!
- *  @file       game_main.h
- *  @brief      ゲームメインシーン
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #pragma once
 
-#include "vivid.h"
 #include"..\scene.h"
 #include "../../../model_manager/model/model.h"
 #include "../../../stage/stage.h"
- 
+#include "game_id.h"
 /*!
 *  @brief  ゲームの状態
 */
@@ -39,27 +27,27 @@ public:
     /*!
      *  @brief      デストラクタ
      */
-    ~CGame(void);
+    virtual ~CGame(void);
 
     /*!
      *  @brief      初期化
      */
-    void        Initialize(void);
+    virtual void        Initialize(void);
 
     /*!
      *  @brief      更新
      */
-    void        Update(void);
+    virtual void        Update(void);
 
     /*!
      *  @brief      描画
      */
-    void        Draw(void);
+    virtual void        Draw(void);
 
     /*!
      *  @brief      解放
      */
-    void        Finalize(void);
+    virtual void        Finalize(void);
 
     /*!
      *  @brief      ゲームの状態取得
@@ -76,7 +64,7 @@ public:
     void        SetGameState(GAME_STATE state);
 
 
-private:
+protected:
 
 
     /*!
@@ -94,34 +82,11 @@ private:
      */
     void    Finish(void);
 
-    GAME_STATE          m_GameState;            //!< ゲームの状態
-
-    static const int                m_fight_width;          //!< FIGHTの幅
-    static const int                m_fight_height;         //!< FIGHTの高さ
-    static const int                m_gameclear_width;      //!< ゲームクリアの幅
-    static const int                m_gameclear_height;     //!< ゲームクリアの高さ
-    static const int                m_gameover_width;       //!< ゲームオーバーの幅
-    static const int                m_gameover_height;      //!< ゲームオーバーの高さ
-    static const vivid::Vector2     m_fight_position;       //!< ゲーム開始位置
-    static const vivid::Vector2     m_gameclear_position;   //!< ゲームクリア開始位置
-    static const vivid::Vector2     m_gameover_position;    //!< ゲームオーバー開始位置
-    static const int                m_wave_interval;        //!< Wave間の待機時間
-    static const int                m_start_wave_interval;  //!< Wave開始からの待機時間
+    GAME_STATE      m_GameState;    //!< ゲームの状態
 
 
-    int                             m_WaitTime;             //!< 待機時間
-    int                             m_FightAlpha;           //!< FIGHTアルファ値
-    int                             m_GameOverAlpha;        //!< ゲームオーバーアルファ値
-    int                             m_GameClearAlpha;       //!< ゲームクリアアルファ値
-    vivid::Vector2                  m_FightScale;           //!< FIGHT拡大率
-    vivid::Vector2                  m_GameClearScale;       //!< ゲームクリア拡大率
-    float                           m_GameClearRotation;    //!< ゲームクリア回転値
-    bool                            m_PauseFlag;            //!< ポーズフラグ
-    bool                            m_ActiveWave;           //!< Wave中かどうか
-    bool                            m_StartWave;            //!< Wave開始したかどうか
-    bool                            m_WaveClear;            //!< Waveクリアしたかどうか
-    int                             m_WaveTimer;            //!< Wave間のタイマー
-    int                             m_StartWaveTimer;       //!< Wave開始からののタイマー
-    bool                            m_ReceiveReward;        //!< 報酬を受け取れるかどうか
-
+    int             m_WaitTime;     //!< 待機時間
+    bool            m_PauseFlag;    //!< ポーズフラグ
+    std::string     m_DebugText;    //!< デバッグ用
+    bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用
 };

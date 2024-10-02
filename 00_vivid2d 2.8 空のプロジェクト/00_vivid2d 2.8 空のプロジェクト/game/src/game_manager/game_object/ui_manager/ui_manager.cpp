@@ -1,10 +1,6 @@
 #include "ui_manager.h"
 #include "ui/player_life/player_life.h"
 #include "ui/boss_life/boss_life.h"
-#include "ui/wave_counter/wave_counter.h"
-#include "ui/wave_start/wave_start.h"
-#include "ui/wave_clear/wave_clear.h"
-#include "ui/wave_rewards/wave_rewards.h"
 #include "ui/reticle/reticle.h"
 #include "ui/pause/pause.h"
  /*
@@ -105,12 +101,8 @@ void CUIManager::Create(UI_ID id)
 
     switch (id)
     {
-    case UI_ID::WAVE_COUNTER:   ui = new CPlayerLife();     break;
-    case UI_ID::WAVE_START:     ui = new CWaveStart();      break;
-    case UI_ID::WAVE_CLEAR:     ui = new CWaveClear();      break;
     case UI_ID::PLAYER_LIFE:    ui = new CPlayerLife();     break;
     case UI_ID::BOSS_LIFE:      ui = new CBossLife();     break;
-    case UI_ID::WAVE_REWARD:    ui = new CWaveRewards();    break;
     case UI_ID::RETICLE:        ui = new CReticle();        break;
     case UI_ID::PAUSE:          ui = new CPause();          break;
         break;

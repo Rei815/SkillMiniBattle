@@ -9,8 +9,10 @@ CPlayer2::~CPlayer2()
 {
 }
 
-void CPlayer2::Initialize(const CVector3& position, MOVE_ID moveId, bool aimFlag)
+void CPlayer2::Initialize(const CVector3& position, MOVE_ID moveId)
 {
 	m_Color = m_color;
-	CPlayer::Initialize(position, moveId, aimFlag);
+	m_Controller = PAD_INPUT_2;
+
+	CPlayer::Initialize(position, moveId);
 }

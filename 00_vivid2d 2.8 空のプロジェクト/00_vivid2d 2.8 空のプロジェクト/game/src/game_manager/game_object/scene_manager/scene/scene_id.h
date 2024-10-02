@@ -8,6 +8,8 @@ enum class SCENE_ID
 	SELECTPLAYER,	//!< プレイヤーセレクトシーン
 	SELECTGAME,		//!< ゲームとスキルを決めるシーン
 	GAMEMAIN,		//!< ゲームメインシーン
+	FALLGAME,		//!< フォールゲームシーン
+	DEBUGGAME,		//!< デバッグゲームシーン
 	RESULT,			//!< リザルトシーン
 
 

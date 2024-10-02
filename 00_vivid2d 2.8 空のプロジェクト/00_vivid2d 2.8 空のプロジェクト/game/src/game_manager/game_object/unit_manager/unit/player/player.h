@@ -18,7 +18,7 @@ public:
      *
      *  @param[in]  position    初期位置
      */
-    virtual void        Initialize(const CVector3& position, MOVE_ID moveId, bool aimFlag);
+    virtual void        Initialize(const CVector3& position, MOVE_ID moveId);
 
     /*!
      *  @brief      更新
@@ -50,13 +50,6 @@ public:
  */
     void        SetActionFlag(bool flag);
 
-/*!
-     *  @brief     発射可能かどうかを設定
-     *
-     *  @param[in]  flag    発射可能かどうか
- */
-    void        SetFireFlag(bool flag);
-
 protected:
     /*!
      *  @brief      攻撃
@@ -73,11 +66,6 @@ protected:
      *  @brief      操作
      */
     void        Control(void);
-
-    /*!
-     *  @brief      射撃
-     */
-    void        Fire(void);
 
     /*!
      *  @brief      移動処理
@@ -97,9 +85,6 @@ protected:
     static const int                m_max_invincible_time;          //!< 無敵時間
     static const int                m_invincible_visible_interval;  //!< 無敵時間中の点滅間隔
     static const float              m_fall_accelerator;             //!< 落下加速度
-    static const int                m_dust_cloud_interval;          //!< 土煙の生成間隔
-    static const CVector3           m_dust_cloud_position;          //!< 土煙の生成位置
-    static const float              m_dust_cloud_scale_adjust;      //!< エフェクト(土煙)の大きさ調整値
 
     CVector3                        m_Offset;                       //!< カメラとの距離
     float                           m_FallSpeed;                    //!< 落下速度
@@ -107,9 +92,8 @@ protected:
     bool                            m_IsGround;                     //!< 地上にいるか
     bool                            m_StopFlag;                     //!< 停止フラグ
     int                             m_InvincibleTime;               //!< 無敵時間
-    int                             m_DustCloudTime;                //!< 土煙時間
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
-    bool                            m_FireFlag;                     //!< 発射処理有効フラグ
     DxLib::COLOR_F                  m_Color;
-
+    int                             m_Controller;                   //!< コントローラー識別
+    bool                            m_DefeatFlag                    //!< 敗北フラグ
 };

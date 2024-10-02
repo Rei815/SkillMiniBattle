@@ -2,28 +2,17 @@
 #include "game.h"
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
-#include "../../../bullet_manager/bullet_manager.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
 #include "../../../controller_manager/controller_manager.h"
 #include "../../../unit_manager/unit/player/player.h"
 
-const int               CGame::m_fight_width = 205;
-const int               CGame::m_fight_height = 53;
-const int               CGame::m_gameclear_width = 368;
-const int               CGame::m_gameclear_height = 54;
-const int               CGame::m_gameover_width = 361;
-const int               CGame::m_gameover_height = 54;
-const vivid::Vector2    CGame::m_fight_position = vivid::Vector2((float)vivid::WINDOW_WIDTH / 2.0f - (float)m_fight_width / 2.0f, (float)vivid::WINDOW_HEIGHT / 2.0f - (float)m_fight_height / 2.0f);
-const vivid::Vector2    CGame::m_gameclear_position = vivid::Vector2((float)vivid::WINDOW_WIDTH / 2.0f - (float)m_gameclear_width / 2.0f, (float)vivid::WINDOW_HEIGHT / 2.0f - (float)m_gameclear_height / 2.0f);
-const vivid::Vector2    CGame::m_gameover_position = vivid::Vector2((float)vivid::WINDOW_WIDTH / 2.0f - (float)m_gameover_width / 2.0f, (float)vivid::WINDOW_HEIGHT / 2.0f - (float)m_gameover_height / 2.0f);
-const int               CGame::m_wave_interval = 120;
-const int               CGame::m_start_wave_interval = 120;
-
 /*
  *  コンストラクタ
  */
 CGame::CGame(void)
+    : m_DebugText()
+    , m_SetActionflag(false)
 {
 }
 
@@ -40,35 +29,21 @@ CGame::~CGame(void)
 void
 CGame::Initialize(void)
 {
-    CBulletManager::GetInstance().Initialize();
     CUnitManager::GetInstance().Initialize();
     CUIManager::GetInstance().Initialize();
     CEffectManager::GetInstance().Initialize();
-    CLauncher::GetInstance().Initialize();
     CControllerManager::GetInstance().Initialize();
     CStage::GetInstance().Initialize();
 
     CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 0, -1000));
-    CUIManager::GetInstance().Create(UI_ID::PLAYER_LIFE);
-    CUIManager::GetInstance().Create(UI_ID::RETICLE);
 
     m_WaitTime = 0;
 
-    m_FightAlpha = 255;
-    m_GameOverAlpha = 0;
-    m_GameClearAlpha = 0;
-    m_FightScale = vivid::Vector2(1.0f, 1.0f);
-    m_GameClearScale = vivid::Vector2(10.0f, 10.0f);
-
-    m_GameClearRotation = 0.0f;
-    m_StartWaveTimer = 0;
 
     m_GameState = GAME_STATE::START;
 
     m_PauseFlag = false;
-    m_WaveClear = false;
-    m_StartWave = true;
-    m_ReceiveReward = false;
+    m_DebugText = "親ゲームシーン";
 }
 
 /*
@@ -94,13 +69,8 @@ CGame::Update(void)
     }
     if(!m_PauseFlag)
     {
-        CLauncher::GetInstance().Update();
         CStage::GetInstance().Update();
         CUnitManager::GetInstance().Update();
-
-        CBulletManager& bm = CBulletManager::GetInstance();
-        bm.Update();
-        bm.CheckHitModel(CStage::GetInstance().GetModel());
 
         CEffectManager::GetInstance().Update();
 
@@ -119,18 +89,25 @@ CGame::Draw(void)
     CStage::GetInstance().Draw();
 
     CEffectManager::GetInstance().Draw();
-    CBulletManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
     CUIManager::GetInstance().Draw();
     switch (m_GameState)
     {
     case GAME_STATE::START:
+        vivid::DrawText(20, "スタート", vivid::Vector2(0, 0));
+
         break;
     case GAME_STATE::PLAY:
+        vivid::DrawText(20, "プレイ", vivid::Vector2(0, 0));
+
         break;
     case GAME_STATE::FINISH:
+        vivid::DrawText(20, "フィニッシュ", vivid::Vector2(0, 0));
+
         break;
     }
+    vivid::DrawText(20, m_DebugText, vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
+
 }
 
 /*
@@ -139,7 +116,6 @@ CGame::Draw(void)
 void
 CGame::Finalize(void)
 {
-    CBulletManager::GetInstance().Finalize();
     CUnitManager::GetInstance().Finalize();
     CUIManager::GetInstance().Finalize();
     CEffectManager::GetInstance().Finalize();
@@ -174,6 +150,11 @@ SetGameState(GAME_STATE state)
 void
 CGame::Start(void)
 {
+    if (!m_SetActionflag)
+    {
+        m_SetActionflag = true;
+        CUnitManager::GetInstance().SetAllPlayerAction(false);
+    }
     if (m_WaitTime > 120)
     {
         m_WaitTime = 0;
@@ -190,51 +171,26 @@ CGame::Start(void)
  */
 void CGame::Play(void)
 {
+    if (m_SetActionflag)
+    {
+        m_SetActionflag = false;
+        CUnitManager::GetInstance().SetAllPlayerAction(true);
+    }
+
+    if(vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
+        m_GameState = GAME_STATE::FINISH;
 
 }
 
-//void
-//CGameMain::
-//Wave(void)
-//{
-//    switch (m_WaveState)
-//    {
-//    case WAVE_STATE::WAVE:              UpdateWave();       break;
-//    case WAVE_STATE::WAVE_FINISH:       UpdateWaveFinish(); break;
-//    case WAVE_STATE::WAVE_CLEAR:        UpdateWaveClear();  break;
-//    case WAVE_STATE::WAVE_REWARD:       UpdateWaveReward(); break;
-//    }
-//
-//    CUnitManager& um = CUnitManager::GetInstance();
-//
-//    if (!um.GetPlayer())        m_GameState = GAME_STATE::GAMEOVER;
-//
-//    if (um.CheckDestoryBoss())  m_GameState = GAME_STATE::GAMECLEAR;
-//}
 
 /*
- *  ゲームオーバー
+ *  フィニッシュ
  */
 void
 CGame::
 Finish(void)
 {
-    if (m_WaitTime > 240)
-    {
-        CSoundManager::GetInstance().Play(SOUND_ID::GAMEOVER);
-
-        m_WaitTime = 0;
-
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::RESULT);
-    }
-    else if (m_WaitTime > 30)
-    {
-        m_GameOverAlpha += 2;
-
-        if (m_GameOverAlpha > 255)
-            m_GameOverAlpha = 255;
-    }
-
-    ++m_WaitTime;
 }
 

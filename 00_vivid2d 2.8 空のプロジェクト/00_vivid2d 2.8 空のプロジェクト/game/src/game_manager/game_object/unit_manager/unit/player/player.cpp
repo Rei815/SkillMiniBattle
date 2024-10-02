@@ -1,6 +1,4 @@
 #include "player.h"
-#include "../../../bullet_manager/bullet_manager.h"
-#include "../../../launcher/launcher.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../camera/camera.h"
 #include "../../unit_manager.h"
@@ -16,8 +14,6 @@ const float             CPlayer::m_max_life = 3.0f;
 const int               CPlayer::m_max_invincible_time = 60;
 const int               CPlayer::m_invincible_visible_interval = 4;
 const float             CPlayer::m_fall_accelerator = 0.05f;
-const int               CPlayer::m_dust_cloud_interval = 10;
-const float             CPlayer::m_dust_cloud_scale_adjust = 15.0f;
 
 CPlayer::CPlayer()
     : IUnit(m_max_life, UNIT_CATEGORY::PLAYER, UNIT_ID::PLAYER1)
@@ -26,10 +22,10 @@ CPlayer::CPlayer()
     , m_Offset(CVector3())
     , m_IsGround(true)
     , m_FallSpeed(0)
-    , m_DustCloudTime(0)
     , m_StopFlag(false)
     , m_ActionFlag(true)
-    , m_FireFlag(true)
+    , m_Controller()
+    , m_DefeatFlag(false)
 {
 }
 
@@ -37,26 +33,29 @@ CPlayer::~CPlayer()
 {
 }
 
-void CPlayer::Initialize(const CVector3& position, MOVE_ID moveID, bool aimFlag)
+void CPlayer::Initialize(const CVector3& position, MOVE_ID moveID)
 {
     (void)position;
 
-    IUnit::Initialize(position, moveID, aimFlag);
+    IUnit::Initialize(position, moveID);
 
     m_Radius = m_radius;
+
     m_Model.Initialize("data\\Models\\Player.mv1", position);
+
     MV1SetMaterialDifColor(m_Model.GetModelHandle(), 0, m_Color);
+
     m_Accelerator = CVector3(0,0,0);
+
     m_Life = m_MaxLife = m_max_life;
+
     m_InvincibleTime = m_max_invincible_time;
+
     CCamera::GetInstance().Initialize();
 
     m_Offset = CCamera::GetInstance().GetPosition() - m_Transform.position;
-    m_DustCloudTime = 0;
+
     m_StopFlag = false;
-    CLauncher& lan = CLauncher::GetInstance();
-    m_Shot = lan.Create(SHOT_ID::BASIC);
-    
 }
 
 void CPlayer::Update(void)
@@ -74,23 +73,6 @@ void CPlayer::Draw(void)
         IUnit::Draw();
         m_Model.Draw();
     }
-
-    std::string max_life = "ç≈ëÂëÃóÕ :" + std::to_string((int)m_MaxLife);
-    vivid::Vector2 life_position = vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(20, max_life) - 2.0f, 0);
-    vivid::DrawText(20, max_life, life_position);
-
-    std::string damage_rate = "çUåÇó¶ :" + std::to_string(m_DamageRate);
-    vivid::Vector2 damage_rate_position = vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(20, damage_rate) - 2.0f, 20);
-    vivid::DrawText(20, damage_rate, damage_rate_position);
-
-    std::string bullets_num = "î≠éÀêî :" + std::to_string(m_Shot->GetBullets());
-    vivid::Vector2 bullets_position = vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(20, bullets_num) - 2.0f, 40);
-    vivid::DrawText(20, bullets_num, bullets_position);
-
-    std::string capacity = "ëïìUêî :" + std::to_string(m_Shot->GetCapacity());
-    vivid::Vector2 capacity_position = vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(20, capacity) - 2.0f, 60);
-    vivid::DrawText(20, capacity, capacity_position);
-
 }
 
 void CPlayer::Finalize(void)
@@ -105,11 +87,6 @@ void CPlayer::SetActionFlag(bool flag)
     m_ActionFlag = flag;
 }
 
-void CPlayer::SetFireFlag(bool flag)
-{
-    m_FireFlag = flag;
-}
-
 /*
  *  çUåÇ
  */
@@ -119,26 +96,21 @@ Attack(void)
 {
     if (m_ActionFlag)
     {
-        Fire();
-
         Control();
-
     }
         Move();
 
         Damage();
-
-
 }
 
 void CPlayer::Control(void)
 {
     //ç∂à⁄ìÆ
-    if (GetJoypadInputState(DX_INPUT_PAD1) && PAD_INPUT_LEFT)
+    if ((GetJoypadInputState(m_Controller) && PAD_INPUT_LEFT) || (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A)))
         m_Accelerator.x += -m_move_speed;
 
     //âEà⁄ìÆ
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+    if ((GetJoypadInputState(m_Controller) && PAD_INPUT_RIGHT) || (vivid::keyboard::Button(vivid::keyboard::KEY_ID::D)))
         m_Accelerator.x += m_move_speed;
 
 
@@ -159,20 +131,6 @@ void CPlayer::Control(void)
          m_StopFlag = true;
     else m_StopFlag = false;
 
-    //ìyâåÉGÉtÉFÉNÉgÇÃê∂ê¨
-    if (--m_DustCloudTime <= 0 && m_Accelerator.x != 0 && m_IsGround)
-    {
-        m_DustCloudTime = m_dust_cloud_interval;
-
-        //ë´å≥Ç©ÇÁèoÇ∑
-        CVector3 pos = m_Transform.position;
-        pos.y -= m_radius;
-
-        //ìyâåëÂÇ´Ç≥í≤êÆ
-        float scale = abs(m_Velocity.x) / m_dust_cloud_scale_adjust * 25.0f;
-
-        CEffectManager::GetInstance().Create(EFFECT_ID::DUST_CLOUD, pos, scale);
-    }
 }
 
 /*
@@ -183,23 +141,6 @@ CPlayer::
 Dead(void)
 {
     m_ActiveFlag = false;
-}
-
-void CPlayer::Fire(void)
-{
-    if (vivid::mouse::Button(vivid::mouse::BUTTON_ID::LEFT) && m_FireFlag)
-    {
-        vivid::Point mousePoint = vivid::mouse::GetCursorPos();
-        CVector3 mousePos;
-        mousePos.x = mousePoint.x;
-        mousePos.y = mousePoint.y;
-        mousePos.z = 1.0f;
-        CVector3 endPos = ConvScreenPosToWorldPos(mousePos);
-        CVector3 startPos = CCamera::GetInstance().GetPosition();
-        CVector3 dir = CUnitManager::GetInstance().CheckHitLine(startPos, endPos) - m_Transform.position;
-        m_Shot->Shot(m_Category, m_Transform.position, dir.Normalize());
-
-    }
 }
 
 void CPlayer::Move(void)

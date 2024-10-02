@@ -64,7 +64,7 @@ public:
      *  @param[in]  moveID      ìÆÇ´ÇÃID
      *  @param[in]  aimFlag     ë_Ç§Ç©Ç«Ç§Ç©
      */
-    virtual void    Initialize(const CVector3& position, MOVE_ID moveID, bool aimFlag);
+    virtual void    Initialize(const CVector3& position, MOVE_ID moveID);
 
     /*!
      *  @brief      çXêV

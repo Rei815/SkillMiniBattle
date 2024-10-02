@@ -13,7 +13,11 @@
 #include "scene\title\title.h"
 #include "scene\select_mode\select_mode.h"
 #include "scene\select_player\select_player.h"
-#include "scene\game_main\game_main.h"
+#include "scene\select_game\select_game.h"
+#include "scene\game\game.h"
+#include "scene\game\fall_game\fall_game.h"
+#include "scene\game\debug_game\debug_game.h"
+#include "scene\result\result.h"
 
 const int               CSceneManager::m_fade_speed = 5;
 const vivid::Vector2    CSceneManager::m_fade_position = { 0.0f, 0.0f };
@@ -164,9 +168,12 @@ CSceneManager::CreateScene(SCENE_ID id)
     switch (id)
     {
     case SCENE_ID::TITLE:        m_Scene = new CTitle();        break;
-    case SCENE_ID::SELECTMODE:   m_Scene = new CSelect_Mode();  break;
-    case SCENE_ID::SELECTPLAYER:  m_Scene = new CSelect_Player();  break;
-    case SCENE_ID::GAMEMAIN:     m_Scene = new CMiniGame();     break;
+    case SCENE_ID::SELECTMODE:   m_Scene = new CSelectMode();  break;
+    case SCENE_ID::SELECTPLAYER:  m_Scene = new CSelectPlayer();  break;
+    case SCENE_ID::SELECTGAME:  m_Scene = new CSelectGame();  break;
+    case SCENE_ID::FALLGAME:     m_Scene = new CFallGame();     break;
+    case SCENE_ID::DEBUGGAME:     m_Scene = new CDebugGame();     break;
+    case SCENE_ID::RESULT:     m_Scene = new CResult();     break;
     }
 }
 

@@ -60,7 +60,7 @@ IUnit::
  */
 void
 IUnit::
-Initialize(const CVector3& position, MOVE_ID moveID, bool aimFlag)
+Initialize(const CVector3& position, MOVE_ID moveID)
 {
     m_Transform.position = position;
     m_Velocity = CVector3();
@@ -68,7 +68,6 @@ Initialize(const CVector3& position, MOVE_ID moveID, bool aimFlag)
     m_InvincibleFlag = false;
     m_UnitState = UNIT_STATE::APPEAR;
     m_MoveId = moveID;
-    m_AimFlag = aimFlag;
     m_Alpha = 0.0f;
     m_RevertAlpha = false;
     m_DecAlpha = false;

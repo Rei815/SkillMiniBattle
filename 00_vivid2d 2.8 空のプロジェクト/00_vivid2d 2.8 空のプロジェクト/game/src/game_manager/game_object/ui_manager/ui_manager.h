@@ -14,8 +14,6 @@
 #include "vivid.h"
 #include "ui/ui.h"
 #include <list>
-#include "ui\ui_id.h"
-#include "ui/wave_rewards/wave_rewards.h"
  /*!
   *  @class      CUIManager
   *

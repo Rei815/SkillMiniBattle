@@ -44,10 +44,7 @@ void
 CBossLife::
 Update(void)
 {
-    IUnit* Boss = CUnitManager::GetInstance().GetBoss();
 
-    if(Boss)
-    m_Rect.right = Boss->GetLifeRate() * m_width;
 
 }
 

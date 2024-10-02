@@ -1,14 +1,3 @@
-
-/*!
- *  @file       title.h
- *  @brief      タイトルシーン
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #pragma once
 
 #include "vivid.h"
@@ -16,17 +5,6 @@
 #include "..\..\..\camera\camera.h"
 #include "../../../stage/stage.h"
 
- /*!
-  *  @class      CTitle
-  *
-  *  @brief      タイトルシーンクラス
-  *
-  *  @author     Kazuya Maruyama
-  *
-  *  @date       2020/11/13
-  *
-  *  @since      1.0
-  */
 class CTitle
     : public IScene
 {

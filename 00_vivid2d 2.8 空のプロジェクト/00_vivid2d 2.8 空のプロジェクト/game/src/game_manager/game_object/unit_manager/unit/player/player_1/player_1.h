@@ -15,7 +15,7 @@ public:
      *
      *  @param[in]  position    èâä˙à íu
      */
-    virtual void        Initialize(const CVector3& position, MOVE_ID moveId, bool aimFlag);
+    virtual void        Initialize(const CVector3& position, MOVE_ID moveId);
 
 private:
     static const DxLib::COLOR_F        m_color;
