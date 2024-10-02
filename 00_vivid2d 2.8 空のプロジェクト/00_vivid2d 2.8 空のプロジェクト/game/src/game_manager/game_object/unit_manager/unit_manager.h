@@ -135,4 +135,3 @@ private:
     RANKING_LIST           m_RankingList;             //!< ランキングリスト
 
 };
-    

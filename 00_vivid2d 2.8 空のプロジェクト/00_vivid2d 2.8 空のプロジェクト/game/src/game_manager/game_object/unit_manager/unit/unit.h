@@ -25,7 +25,7 @@ enum class UNIT_STATE
 {
     APPEAR,
     ATTACK,
-    DEAD,
+    DEFEAT,
 };
 
 
@@ -50,7 +50,7 @@ public:
      *  @param[in]  category  ユニット識別子
      *  @param[in]  unit_id     ユニットID
      */
-    IUnit(int life, UNIT_CATEGORY category, UNIT_ID unit_id);
+    IUnit(int life, UNIT_CATEGORY category, UNIT_ID unit_id = UNIT_ID::NONE);
 
     /*!
      *  @brief      デストラクタ
@@ -271,9 +271,13 @@ protected:
     void        Fire(CShot* shot, bool aim, CVector3& position, const CVector3& direction);
 
     /*!
-     *  @brief      死亡
+     *  @brief      敗北
      */
-    virtual void    Dead(void);
+    virtual void    Defeat(void);
+    /*!
+     *  @brief      削除
+     */
+    virtual void    Delete(void);
 
     static const float      m_destroy_scale_adjust;     //!< エフェクト(destroy)の大きさ調整値
     static const float      m_alpha_speed;              //!< アルファ値の速度
@@ -297,6 +301,7 @@ protected:
     bool                    m_RevertAlpha;              //!< アルファ値を戻す
     bool                    m_DecAlpha;                 //!< アルファ値を減らす
     float                   m_Alpha;                    //!< アルファ値
+    bool                    m_DefeatFlag;               //!< 敗北フラグ
 
 
 };

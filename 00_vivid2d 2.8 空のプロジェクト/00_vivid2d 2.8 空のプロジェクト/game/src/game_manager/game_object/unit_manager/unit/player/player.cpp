@@ -15,8 +15,8 @@ const int               CPlayer::m_max_invincible_time = 60;
 const int               CPlayer::m_invincible_visible_interval = 4;
 const float             CPlayer::m_fall_accelerator = 0.05f;
 
-CPlayer::CPlayer()
-    : IUnit(m_max_life, UNIT_CATEGORY::PLAYER, UNIT_ID::PLAYER1)
+CPlayer::CPlayer(UNIT_ID unit_id)
+    : IUnit(m_max_life, UNIT_CATEGORY::PLAYER, unit_id)
     , m_Accelerator(CVector3())
     , m_InvincibleTime(0)
     , m_Offset(CVector3())
@@ -25,7 +25,7 @@ CPlayer::CPlayer()
     , m_StopFlag(false)
     , m_ActionFlag(true)
     , m_Controller()
-    , m_DefeatFlag(false)
+    , m_WinsNum()
 {
 }
 
@@ -106,16 +106,16 @@ Attack(void)
 void CPlayer::Control(void)
 {
     //ç∂à⁄ìÆ
-    if ((GetJoypadInputState(m_Controller) && PAD_INPUT_LEFT) || (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A)))
+    if (GetJoypadInputState(m_Controller) & PAD_INPUT_LEFT)
         m_Accelerator.x += -m_move_speed;
 
     //âEà⁄ìÆ
-    if ((GetJoypadInputState(m_Controller) && PAD_INPUT_RIGHT) || (vivid::keyboard::Button(vivid::keyboard::KEY_ID::D)))
+    if (GetJoypadInputState(m_Controller) & PAD_INPUT_RIGHT)
         m_Accelerator.x += m_move_speed;
 
 
     //ÉWÉÉÉìÉv
-    if (m_IsGround && vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE) && !m_StopFlag)
+    if (m_IsGround && GetJoypadInputState(m_Controller) & PAD_INPUT_1 && !m_StopFlag)
         if (m_IsGround == true)
         {
             m_IsGround = false;
@@ -138,9 +138,10 @@ void CPlayer::Control(void)
  */
 void
 CPlayer::
-Dead(void)
+Defeat(void)
 {
-    m_ActiveFlag = false;
+    IUnit::Defeat();
+
 }
 
 void CPlayer::Move(void)

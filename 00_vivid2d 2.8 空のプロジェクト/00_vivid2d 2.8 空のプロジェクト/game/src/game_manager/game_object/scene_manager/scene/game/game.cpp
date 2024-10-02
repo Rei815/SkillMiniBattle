@@ -35,8 +35,6 @@ CGame::Initialize(void)
     CControllerManager::GetInstance().Initialize();
     CStage::GetInstance().Initialize();
 
-    CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 0, -1000));
-
     m_WaitTime = 0;
 
 
@@ -182,7 +180,6 @@ void CGame::Play(void)
 
 }
 
-
 /*
  *  フィニッシュ
  */
@@ -193,4 +190,3 @@ Finish(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::RESULT);
 }
-

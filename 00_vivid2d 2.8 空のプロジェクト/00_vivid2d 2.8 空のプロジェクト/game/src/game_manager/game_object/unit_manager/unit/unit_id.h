@@ -15,6 +15,7 @@ enum class UNIT_CATEGORY
  */
 enum class UNIT_ID
 {
+    NONE,
     PLAYER1,            //!< ƒvƒŒƒCƒ„[1
     NORMAL_ENEMY,       //!< ’Êí’e‚Ì“G
     THREE_WAY_ENEMY,    //!< 3WAY’e‚Ì“G

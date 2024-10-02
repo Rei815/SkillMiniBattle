@@ -210,6 +210,7 @@
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_player\select_player.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\title\title.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene_manager.cpp" />
+    <ClCompile Include="src\game_manager\game_object\skill_manager\skill_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\sound_manager\sound_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\stage\stage.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\boss_life\boss_life.cpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_player\select_player.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\title\title.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene_manager.h" />
+    <ClInclude Include="src\game_manager\game_object\skill_manager\skill_manager.h" />
     <ClInclude Include="src\game_manager\game_object\sound_manager\sound_manager.h" />
     <ClInclude Include="src\game_manager\game_object\stage\stage.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\boss_life\boss_life.h" />

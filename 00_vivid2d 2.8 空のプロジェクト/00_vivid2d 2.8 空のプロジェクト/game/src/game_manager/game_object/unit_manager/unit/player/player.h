@@ -9,7 +9,7 @@ class CPlayer: public IUnit
 {
 public:
 
-	CPlayer();
+	CPlayer(UNIT_ID unit_id);
 
 	~CPlayer();
 
@@ -59,7 +59,7 @@ protected:
     /*!
      *  @brief      死亡
      */
-    void        Dead(void);
+    void        Defeat(void);
 
 
     /*!
@@ -95,5 +95,5 @@ protected:
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     DxLib::COLOR_F                  m_Color;
     int                             m_Controller;                   //!< コントローラー識別
-    bool                            m_DefeatFlag                    //!< 敗北フラグ
+    int                             m_WinsNum;                      //!< 勝った回数
 };

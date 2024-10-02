@@ -44,6 +44,7 @@ IUnit(int life, UNIT_CATEGORY category, UNIT_ID unit_id)
     , m_DamageRate(1.0f)
     , m_Shot()
     , m_Alpha()
+    , m_DefeatFlag(false)
 {
 }
 
@@ -84,7 +85,7 @@ Update(void)
     {
     case UNIT_STATE::APPEAR:     Appear();      break;
     case UNIT_STATE::ATTACK:     Attack();      break;
-    case UNIT_STATE::DEAD:       Dead();        break;
+    case UNIT_STATE::DEFEAT:       Defeat();        break;
     }
 
 }
@@ -115,7 +116,7 @@ IUnit::
 CheckHitBullet(IBullet* bullet)
 {
 
-    if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEAD)
+    if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
         return false;
 
     DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim{};
@@ -171,7 +172,7 @@ CheckHitBullet(IBullet* bullet)
         {
             float scale = m_Radius / m_destroy_scale_adjust * 24.0f;
             CEffectManager::GetInstance().Create(EFFECT_ID::DESTROY, m_Transform.position, scale);
-            m_UnitState = UNIT_STATE::DEAD;
+            m_UnitState = UNIT_STATE::DEFEAT;
 
         }
 
@@ -444,7 +445,13 @@ void IUnit::Fire(CShot* shot, bool aim, CVector3& position, const CVector3& dire
  */
 void
 IUnit::
-Dead(void)
+Defeat(void)
+{
+    m_DefeatFlag = true;
+}
+
+void IUnit::Delete(void)
 {
     m_ActiveFlag = false;
+
 }
