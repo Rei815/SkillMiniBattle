@@ -4,27 +4,24 @@
 #include "../../../../mathematics/mathematics.h"
 #include "../../model_manager/model/model.h"
 
-class IGimmick
+class CGimmick
 {
 public:
-    IGimmick();
     /*!
      *  @brief      コンストラクタ
-     *
-     *  @param[in]  gimmick_id     ギミックID
      */
-    IGimmick(GIMMICK_ID gimmick_id);
+    CGimmick();
 
     /*!
      *  @brief      デストラクタ
      */
-    virtual ~IGimmick(void);
+    virtual ~CGimmick(void);
 
     /*!
      *  @brief      初期化
      *
      */
-    virtual void    Initialize(const CVector3& position);
+    virtual void    Initialize();
 
     /*!
      *  @brief      更新
@@ -46,7 +43,7 @@ public:
      *
      *  @return     ギミックID
      */
-    GIMMICK_ID         GetGimmickID(void);
+    GIMMICK_ID      GetGimmickID(void);
 
     /*!
      *  @brief      アクティブフラグ取得
@@ -63,8 +60,6 @@ public:
     void            SetActive(bool active);
 
 protected:
-
-    CModel                  m_Model;
-    CTransform	            m_Transform;		    //!< トランスフォーム
-
+    CTransform	            m_Transform;    //!< トランスフォーム
+    bool                    m_ActiveFlag;       //!< アクティブフラグ
 };

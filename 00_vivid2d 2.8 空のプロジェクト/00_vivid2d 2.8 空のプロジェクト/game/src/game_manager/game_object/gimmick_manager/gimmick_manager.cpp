@@ -34,15 +34,15 @@ CGimmickManager::Update(void)
 
     while (it != m_GimmickList.end())
     {
-        CG* ui = (CUI*)(*it);
+        CGimmick* gimmick = (CGimmick*)(*it);
 
-        ui->Update();
+        gimmick->Update();
 
-        if (!ui->GetActive())
+        if (!gimmick->GetActive())
         {
-            ui->Finalize();
+            gimmick->Finalize();
 
-            delete ui;
+            delete gimmick;
 
             it = m_GimmickList.erase(it);
 
@@ -92,107 +92,20 @@ void CGimmickManager::Finalize(void)
     m_GimmickList.clear();
 }
 
-void CGimmickManager::Create(UI_ID id)
+void CGimmickManager::Create(GIMMICK_ID id)
 {
-    CUI* ui = nullptr;
+    CGimmick* gimmick = nullptr;
 
     switch (id)
     {
-    case UI_ID::PLAYER_LIFE:    ui = new CPlayerLife();     break;
-    case UI_ID::BOSS_LIFE:      ui = new CBossLife();     break;
-    case UI_ID::RETICLE:        ui = new CReticle();        break;
-    case UI_ID::PAUSE:          ui = new CPause();          break;
+    case GIMMICK_ID::FALL_GIMMICK:    gimmick = new CFallGimmick();     break;
         break;
     }
-    if (!ui) return;
+    if (!gimmick) return;
 
-    ui->Initialize();
-    m_GimmickList.push_back(ui);
+    gimmick->Initialize();
+    m_GimmickList.push_back(gimmick);
 
-}
-
-void CGimmickManager::Delete(UI_ID id)
-{
-    if (m_GimmickList.empty()) return;
-
-    GIMMICK_LIST::iterator it = m_GimmickList.begin();
-
-    while (it != m_GimmickList.end())
-    {
-        CUI* ui = (CUI*)(*it);
-
-
-        if (ui->GetUI_ID() == id)
-        {
-            (*it)->SetActive(false);
-        }
-
-        ++it;
-    }
-}
-
-bool CGimmickManager::CheckUIAttribute(CUI::UI_ATTRIBUTE ui_attribute)
-{
-    if (m_GimmickList.empty()) return false;
-
-    GIMMICK_LIST::iterator it = m_GimmickList.begin();
-
-    while (it != m_GimmickList.end())
-    {
-        CUI* ui = (CUI*)(*it);
-
-
-        if (ui->CheckAttribute(ui_attribute) == true)
-            return true;
-
-        ++it;
-    }
-    return false;
-}
-
-bool CGimmickManager::GetReceivedReward(void)
-{
-    return m_ReceivedReward;
-}
-
-void CGimmickManager::SetReceivedReward(bool active)
-{
-    m_ReceivedReward = active;
-}
-
-bool CGimmickManager::GetWaveClearUIActive(void)
-{
-    return m_WaveClearUIActiveFlag;
-}
-
-void CGimmickManager::SetWaveClearUIActive(bool active)
-{
-    m_WaveClearUIActiveFlag = active;
-}
-
-int CGimmickManager::GetUIActive(UI_ID ui_id)
-{
-    if (m_GimmickList.empty()) return -1;
-
-    GIMMICK_LIST::iterator it = m_GimmickList.begin();
-
-    while (it != m_GimmickList.end())
-    {
-        CUI* ui = (CUI*)(*it);
-
-
-        if (ui->GetUI_ID() == ui_id && ui->GetActive() != false)
-            return 1;
-
-        if (ui->GetUI_ID() == ui_id && ui->GetActive() != true)
-            return 0;
-        ++it;
-    }
-    return -1;
-}
-
-void CGimmickManager::Create(GIMMICK_ID id)
-{
 }
 
 /*

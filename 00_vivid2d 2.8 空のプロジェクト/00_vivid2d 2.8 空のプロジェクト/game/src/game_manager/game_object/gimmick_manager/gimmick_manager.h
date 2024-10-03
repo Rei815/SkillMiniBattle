@@ -70,7 +70,7 @@ private:
     /*!
      *  @brief      ギミックリスト型
      */
-    using GIMMICK_LIST = std::list<IGimmick*>;
+    using GIMMICK_LIST = std::list<CGimmick*>;
 
     GIMMICK_LIST             m_GimmickList;             //!< UIリスト
 };

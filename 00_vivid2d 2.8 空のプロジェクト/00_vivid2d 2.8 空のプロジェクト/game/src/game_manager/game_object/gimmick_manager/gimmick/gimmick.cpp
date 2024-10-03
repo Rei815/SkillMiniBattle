@@ -1,43 +1,40 @@
 #include "gimmick.h"
 
-IGimmick::IGimmick()
+CGimmick::CGimmick()
 {
 }
 
-IGimmick::IGimmick(GIMMICK_ID gimmick_id)
+CGimmick::~CGimmick(void)
 {
 }
 
-IGimmick::~IGimmick(void)
+void CGimmick::Initialize()
 {
 }
 
-void IGimmick::Initialize(const CVector3& position)
+void CGimmick::Update(void)
 {
 }
 
-void IGimmick::Update(void)
+void CGimmick::Draw(void)
 {
 }
 
-void IGimmick::Draw(void)
+void CGimmick::Finalize(void)
 {
 }
 
-void IGimmick::Finalize(void)
-{
-}
-
-GIMMICK_ID IGimmick::GetGimmickID(void)
+GIMMICK_ID CGimmick::GetGimmickID(void)
 {
 	return GIMMICK_ID();
 }
 
-bool IGimmick::GetActive(void)
+bool CGimmick::GetActive(void)
 {
-	return false;
+	return m_ActiveFlag;
 }
 
-void IGimmick::SetActive(bool active)
+void CGimmick::SetActive(bool active)
 {
+	m_ActiveFlag = active;
 }
