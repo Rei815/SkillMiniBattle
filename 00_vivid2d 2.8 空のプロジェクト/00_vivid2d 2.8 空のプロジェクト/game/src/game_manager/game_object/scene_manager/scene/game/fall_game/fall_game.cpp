@@ -15,5 +15,5 @@ void CFallGame::Initialize(void)
 
 	m_DebugText = "フォールゲーム";
 	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 0, -1000));
-	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(0, 0, -500));
+	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, -1000));
 }

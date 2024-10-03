@@ -106,12 +106,19 @@ Attack(void)
 void CPlayer::Control(void)
 {
     //ç∂à⁄ìÆ
-    if (GetJoypadInputState(m_Controller) & PAD_INPUT_LEFT)
+    if (GetJoypadInputState(m_Controller) & PAD_INPUT_LEFT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         m_Accelerator.x += -m_move_speed;
 
     //âEà⁄ìÆ
-    if (GetJoypadInputState(m_Controller) & PAD_INPUT_RIGHT)
+    if (GetJoypadInputState(m_Controller) & PAD_INPUT_RIGHT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
         m_Accelerator.x += m_move_speed;
+    //è„à⁄ìÆ
+    if (GetJoypadInputState(m_Controller) & PAD_INPUT_UP || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+        m_Accelerator.z += m_move_speed;
+
+    //â∫à⁄ìÆ
+    if (GetJoypadInputState(m_Controller) & PAD_INPUT_DOWN || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
+        m_Accelerator.z += -m_move_speed;
 
 
     //ÉWÉÉÉìÉv
