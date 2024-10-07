@@ -12,12 +12,6 @@ class CUnitManager
 {
 public:
 
-    enum class AIM_ID
-    {
-        TARGET,
-        NON_TARGET,
-    };
-
     /*!
      *  @brief      インスタンスの取得
      *

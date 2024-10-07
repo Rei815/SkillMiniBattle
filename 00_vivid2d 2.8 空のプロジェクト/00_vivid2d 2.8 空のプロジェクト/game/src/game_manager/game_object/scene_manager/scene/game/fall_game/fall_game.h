@@ -19,6 +19,21 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
-    void Initialize(void);
+    void        Initialize(void);
+
+    /*!
+     *  @brief      XV
+     */
+    void        Update(void);
+
+    /*!
+     *  @brief      •`‰æ
+     */
+    void        Draw(void);
+
+    /*!
+     *  @brief      ‰ğ•ú
+     */
+    void        Finalize(void);
 
 };

@@ -188,6 +188,10 @@
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\player_bullet_effect\player_bullet_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\shock_wave_effect\shock_wave_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect_manager.cpp" />
+    <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_gimmick.cpp" />
+    <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_object\fall_object.cpp" />
+    <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\gimmick.cpp" />
+    <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\launcher.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\basic\basic.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\burst\burst.cpp" />
@@ -270,6 +274,12 @@
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\shock_wave_effect\shock_wave_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect_manager.h" />
     <ClInclude Include="src\game_manager\game_object\game_object.h" />
+    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_gimmick.h" />
+    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_object\fall_object.h" />
+    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_object\mark_id.h" />
+    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\gimmick.h" />
+    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\gimmick_id.h" />
+    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick_manager.h" />
     <ClInclude Include="src\game_manager\game_object\launcher\launcher.h" />
     <ClInclude Include="src\game_manager\game_object\launcher\shot\basic\basic.h" />
     <ClInclude Include="src\game_manager\game_object\launcher\shot\burst\burst.h" />
