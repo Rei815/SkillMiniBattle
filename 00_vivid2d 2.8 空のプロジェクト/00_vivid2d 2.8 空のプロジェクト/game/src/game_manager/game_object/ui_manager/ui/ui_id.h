@@ -13,5 +13,6 @@ enum class UI_ID
     WAVE_REWARD,    //!< Waveクリア報酬
     RETICLE,        //!< レティクル
     PAUSE,          //!< 一時停止
+    FALL_SELECT,    //!< フォールゲームの落ちるオブジェクトの指定
 
 };

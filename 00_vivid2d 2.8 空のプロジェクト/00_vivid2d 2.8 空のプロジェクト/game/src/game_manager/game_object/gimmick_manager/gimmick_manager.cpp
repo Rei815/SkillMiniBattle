@@ -19,7 +19,7 @@ void
 CGimmickManager::
 Initialize(void)
 {
-
+    m_GimmickList.clear();
 }
 
 /*

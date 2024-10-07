@@ -1,6 +1,8 @@
 #include "player_1.h"
 
-const DxLib::COLOR_F               CPlayer1::m_color = { 1,0,0,1 };
+const DxLib::COLOR_F				CPlayer1::m_color = { 1,0,0,1 };
+const std::string					CPlayer1::m_file_name = "data\\Models\\Player.mv1";
+
 CPlayer1::CPlayer1()
 	: CPlayer(UNIT_ID::PLAYER1)
 {

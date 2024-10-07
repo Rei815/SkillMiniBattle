@@ -3,6 +3,7 @@
 #include "ui/boss_life/boss_life.h"
 #include "ui/reticle/reticle.h"
 #include "ui/pause/pause.h"
+#include "ui/fall_select/fall_select.h"
  /*
   *  インスタンスの取得
   */
@@ -22,7 +23,7 @@ void
 CUIManager::
 Initialize(void)
 {
-
+    m_UIList.clear();
 }
 
 /*

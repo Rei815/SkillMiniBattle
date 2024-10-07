@@ -22,15 +22,18 @@ void CFallGame::Initialize(void)
 
 void CFallGame::Update(void)
 {
+	CGame::Update();
 
 }
 
 void CFallGame::Draw(void)
 {
+	CGame::Draw();
 
 }
 
 void CFallGame::Finalize(void)
 {
+	CGame::Finalize();
 
 }

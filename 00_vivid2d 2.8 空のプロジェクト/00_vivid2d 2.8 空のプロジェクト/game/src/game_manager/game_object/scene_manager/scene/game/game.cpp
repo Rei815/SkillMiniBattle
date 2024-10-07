@@ -5,6 +5,7 @@
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
 #include "../../../controller_manager/controller_manager.h"
+#include "../../../gimmick_manager/gimmick_manager.h"
 #include "../../../unit_manager/unit/player/player.h"
 
 /*
@@ -34,7 +35,7 @@ CGame::Initialize(void)
     CEffectManager::GetInstance().Initialize();
     CControllerManager::GetInstance().Initialize();
     CStage::GetInstance().Initialize();
-
+    CGimmickManager::GetInstance().Initialize();
     m_WaitTime = 0;
 
 
@@ -75,7 +76,7 @@ CGame::Update(void)
         CUIManager::GetInstance().Update();
     }
     CControllerManager::GetInstance().Update();
-
+    CGimmickManager::GetInstance().Update();
 }
 
 /*
@@ -89,6 +90,7 @@ CGame::Draw(void)
     CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
     CUIManager::GetInstance().Draw();
+    CGimmickManager::GetInstance().Draw();
     switch (m_GameState)
     {
     case GAME_STATE::START:
@@ -118,7 +120,7 @@ CGame::Finalize(void)
     CUIManager::GetInstance().Finalize();
     CEffectManager::GetInstance().Finalize();
     CControllerManager::GetInstance().Finalize();
-
+    CGimmickManager::GetInstance().Finalize();
     CStage::GetInstance().Finalize();
 }
 

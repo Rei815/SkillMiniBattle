@@ -2,6 +2,7 @@
 #pragma once
 #include "..\gimmick.h"
 #include "fall_object/fall_object.h"
+#include <list>
 class CFallGimmick : public CGimmick
 {
 public:
@@ -37,11 +38,20 @@ public:
      */
     void    Finalize(void);
 
+    /*!
+     *  @brief      オブジェクト生成
+     *
+     *  @param[in]  id              オブジェクトのID
+     */
+    void        Create(MARK_ID id, const CVector3& position);
+
+    void        Fall(MARK_ID id);
 private:
-    CFallObject     m_FallObject_1;
-    CFallObject     m_FallObject_2;
-    CFallObject     m_FallObject_3;
-    CFallObject     m_FallObject_4;
-    CFallObject     m_FallObject_5;
-    CFallObject     m_FallObject_6;
+    /*!
+     *  @brief      フォールオブジェクトリスト型
+     */
+    using FALL_OBJECT_LIST = std::list<CFallObject*>;
+
+    FALL_OBJECT_LIST             m_FallObjectList;             //!< フォールオブジェクトリスト
+
 };

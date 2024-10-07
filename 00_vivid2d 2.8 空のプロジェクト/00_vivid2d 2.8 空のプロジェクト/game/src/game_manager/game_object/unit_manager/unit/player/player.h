@@ -85,6 +85,7 @@ protected:
     static const int                m_max_invincible_time;          //!< 無敵時間
     static const int                m_invincible_visible_interval;  //!< 無敵時間中の点滅間隔
     static const float              m_fall_accelerator;             //!< 落下加速度
+    static const std::string        m_file_name;                    //!< 読み込むファイル名
 
     CVector3                        m_Offset;                       //!< カメラとの距離
     float                           m_FallSpeed;                    //!< 落下速度

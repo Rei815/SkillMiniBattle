@@ -14,6 +14,7 @@ const float             CPlayer::m_max_life = 3.0f;
 const int               CPlayer::m_max_invincible_time = 60;
 const int               CPlayer::m_invincible_visible_interval = 4;
 const float             CPlayer::m_fall_accelerator = 0.05f;
+const std::string		CPlayer::m_file_name = "data\\Models\\Player.mv1";
 
 CPlayer::CPlayer(UNIT_ID unit_id)
     : IUnit(m_max_life, UNIT_CATEGORY::PLAYER, unit_id)
@@ -41,7 +42,7 @@ void CPlayer::Initialize(const CVector3& position, MOVE_ID moveID)
 
     m_Radius = m_radius;
 
-    m_Model.Initialize("data\\Models\\Player.mv1", position);
+    m_Model.Initialize(m_file_name, position);
 
     MV1SetMaterialDifColor(m_Model.GetModelHandle(), 0, m_Color);
 

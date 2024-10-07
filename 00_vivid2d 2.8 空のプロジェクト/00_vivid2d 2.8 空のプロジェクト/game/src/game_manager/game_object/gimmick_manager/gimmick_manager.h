@@ -72,5 +72,5 @@ private:
      */
     using GIMMICK_LIST = std::list<CGimmick*>;
 
-    GIMMICK_LIST             m_GimmickList;             //!< UIリスト
+    GIMMICK_LIST             m_GimmickList;             //!< ギミックリスト
 };
