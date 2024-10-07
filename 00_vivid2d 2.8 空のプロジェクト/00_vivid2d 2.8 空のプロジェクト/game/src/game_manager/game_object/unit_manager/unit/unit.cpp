@@ -118,7 +118,6 @@ CheckHitBullet(IBullet* bullet)
 
     if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
         return false;
-
     DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim{};
     switch (bullet->GetColliderID())
     {

@@ -2,13 +2,9 @@
 
 const	float	CFallObject::m_fall_speed = 10.0f;
 CFallObject::CFallObject()
-	: m_Model()
-	, m_Transform()
-	, m_FileName()
-	, m_FallSpeed()
+	: m_FallSpeed()
 	, m_MarkID()
 	, m_FallObjectState()
-	, m_ActiveFlag()
 {
 }
 
@@ -16,23 +12,20 @@ CFallObject::~CFallObject()
 {
 }
 
-void CFallObject::Initialize(MARK_ID id, const CVector3& position)
+void CFallObject::Initialize(const CVector3& position)
 {
-	m_MarkID = id;
-	m_FallObjectState = FALL_OBJECT_STATE::WAIT;
-	switch (id)
-	{
-	case MARK_ID::CIRCLE:	m_FileName = "data\\Models\\cube.mv1";	break;
-	case MARK_ID::STAR:		m_FileName = "data\\Models\\cube.mv1";	break;
-	}
+	IObject::Initialize(position);
+	m_FallObjectState = FALL_OBJECT_STATE::FALL;
+	m_FileName = "data\\Models\\cube.mv1";
 	m_Transform.position = position;
-	m_Model.Initialize(m_FileName,m_Transform.position);
+	m_Model.Initialize(m_FileName, m_Transform.position);
 
 	m_FallSpeed = m_fall_speed;
 }
 
 void CFallObject::Update(void)
 {
+	IObject::Update();
 	switch (m_FallObjectState)
 	{
 	case FALL_OBJECT_STATE::WAIT:
@@ -41,17 +34,21 @@ void CFallObject::Update(void)
 		break;
 	}
 	if (m_FallObjectState == FALL_OBJECT_STATE::FALL)
-		m_Transform.position.y -= m_FallSpeed;
+		m_Velocity.y = -m_FallSpeed;
 	m_Model.Update(m_Transform);
 }
 
 void CFallObject::Draw(void)
 {
+	IObject::Draw();
+
 	m_Model.Draw();
 }
 
 void CFallObject::Finalize(void)
 {
+	IObject::Finalize();
+
 	m_Model.Finalize();
 }
 

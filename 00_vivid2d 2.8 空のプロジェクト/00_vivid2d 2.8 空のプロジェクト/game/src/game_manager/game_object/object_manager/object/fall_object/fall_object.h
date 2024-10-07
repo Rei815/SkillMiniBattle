@@ -1,23 +1,24 @@
 #pragma once
-#include "../../../../model_manager/model/model.h"
+#include "../../../model_manager/model/model.h"
 #include "mark_id.h"
+#include "..\object.h"
 
 enum class FALL_OBJECT_STATE
 {
     WAIT,
     FALL,
 };
-class CFallObject
+class CFallObject : public IObject
 {
 public:
-	CFallObject();
-	~CFallObject();
+    CFallObject();
+    ~CFallObject();
 
     /*!
      *  @brief      èâä˙âª
      *
      */
-    void    Initialize(MARK_ID id, const CVector3& position);
+    void    Initialize(const CVector3& position);
 
     /*!
      *  @brief      çXêV
@@ -64,11 +65,7 @@ public:
 
 private:
     static const float  m_fall_speed;
-	CModel			    m_Model;
-	CTransform		    m_Transform;
-    std::string         m_FileName;
     float               m_FallSpeed;
-    bool                m_ActiveFlag;
     FALL_OBJECT_STATE   m_FallObjectState;
     MARK_ID             m_MarkID;
 };

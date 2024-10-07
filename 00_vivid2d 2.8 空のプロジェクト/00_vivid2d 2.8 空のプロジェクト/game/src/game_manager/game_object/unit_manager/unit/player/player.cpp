@@ -154,7 +154,6 @@ Defeat(void)
 
 void CPlayer::Move(void)
 {
-
     //d—Íˆ—
     if (!m_IsGround && !m_StopFlag)
     {
