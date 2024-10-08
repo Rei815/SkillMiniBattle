@@ -1,6 +1,5 @@
 #include "player.h"
 #include "../../../effect_manager/effect_manager.h"
-#include "../../../camera/camera.h"
 #include "../../unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
 
@@ -14,19 +13,18 @@ const float             CPlayer::m_max_life = 3.0f;
 const int               CPlayer::m_max_invincible_time = 60;
 const int               CPlayer::m_invincible_visible_interval = 4;
 const float             CPlayer::m_fall_accelerator = 0.05f;
-const std::string		CPlayer::m_file_name = "data\\Models\\Player.mv1";
 
-CPlayer::CPlayer(UNIT_ID unit_id)
-    : IUnit(m_max_life, UNIT_CATEGORY::PLAYER, unit_id)
+CPlayer::CPlayer()
+    : IUnit(UNIT_CATEGORY::PLAYER)
     , m_Accelerator(CVector3())
     , m_InvincibleTime(0)
-    , m_Offset(CVector3())
     , m_IsGround(true)
     , m_FallSpeed(0)
     , m_StopFlag(false)
     , m_ActionFlag(true)
     , m_Controller()
     , m_WinsNum()
+    , m_Color({1,1,1,1})
 {
 }
 
@@ -34,37 +32,31 @@ CPlayer::~CPlayer()
 {
 }
 
-void CPlayer::Initialize(const CVector3& position, MOVE_ID moveID)
+void CPlayer::Initialize(const CVector3& position, const std::string& file_name, int controller)
 {
     (void)position;
 
-    IUnit::Initialize(position, moveID);
+    IUnit::Initialize(position, file_name, controller);
 
     m_Radius = m_radius;
 
-    m_Model.Initialize(m_file_name, position);
+    m_Model.Initialize(file_name, position);
 
     MV1SetMaterialDifColor(m_Model.GetModelHandle(), 0, m_Color);
 
     m_Accelerator = CVector3(0,0,0);
 
-    m_Life = m_MaxLife = m_max_life;
-
     m_InvincibleTime = m_max_invincible_time;
 
-    CCamera::GetInstance().Initialize();
-
-    m_Offset = CCamera::GetInstance().GetPosition() - m_Transform.position;
-
     m_StopFlag = false;
+
+    m_Controller = controller;
 }
 
 void CPlayer::Update(void)
 {
     IUnit::Update();
     m_Model.Update(m_Transform);
-    CCamera::GetInstance().Follow(m_Transform.position,m_Offset);
-    CCamera::GetInstance().Update();
 }
 
 void CPlayer::Draw(void)
@@ -80,7 +72,6 @@ void CPlayer::Finalize(void)
 {
     IUnit::Finalize();
     m_Model.Finalize();
-    CCamera::GetInstance().Finalize();
 }
 
 void CPlayer::SetActionFlag(bool flag)
@@ -196,9 +187,3 @@ void CPlayer::Damage(void)
     }
 
 }
-
-float CPlayer::GetLife(void)
-{
-    return m_Life;
-}
-

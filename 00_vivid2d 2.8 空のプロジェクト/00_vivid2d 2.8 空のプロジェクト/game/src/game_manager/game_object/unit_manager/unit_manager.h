@@ -44,10 +44,8 @@ public:
      *
      *  @param[in]  id          ユニットID
      *  @param[in]  pos         位置
-     *  @param[in]  moveFlag    動けるかどうか
-     *  @param[in]  aimId    動けるかどうか
      */
-    void        Create(UNIT_ID id, const CVector3& pos, MOVE_ID moveId = MOVE_ID::WAIT, bool aimFlag = false);
+    void        Create(UNIT_ID id, const CVector3& pos);
 
     /*!
      *  @brief      ユニットと弾とのアタリ判定
@@ -127,5 +125,7 @@ private:
     using RANKING_LIST = std::list<CPlayer*>;
 
     RANKING_LIST           m_RankingList;             //!< ランキングリスト
-
+    
+    static const std::string    m_file_name_list[];
+    static const int            m_controller_list[];
 };

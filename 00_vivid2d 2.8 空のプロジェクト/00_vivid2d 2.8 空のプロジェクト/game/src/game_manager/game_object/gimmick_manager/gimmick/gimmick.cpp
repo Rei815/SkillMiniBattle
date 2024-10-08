@@ -8,8 +8,9 @@ CGimmick::~CGimmick(void)
 {
 }
 
-void CGimmick::Initialize()
+void CGimmick::Initialize(IObject* object)
 {
+	m_Object = object;
 }
 
 void CGimmick::Update(void)

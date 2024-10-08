@@ -12,29 +12,17 @@ CFallObject::~CFallObject()
 {
 }
 
-void CFallObject::Initialize(const CVector3& position)
+void CFallObject::Initialize(OBJECT_ID id, const CVector3& position)
 {
-	IObject::Initialize(position);
-	m_FallObjectState = FALL_OBJECT_STATE::FALL;
+	IObject::Initialize(id, position);
 	m_FileName = "data\\Models\\cube.mv1";
 	m_Transform.position = position;
 	m_Model.Initialize(m_FileName, m_Transform.position);
-
-	m_FallSpeed = m_fall_speed;
 }
 
 void CFallObject::Update(void)
 {
 	IObject::Update();
-	switch (m_FallObjectState)
-	{
-	case FALL_OBJECT_STATE::WAIT:
-		break;
-	case FALL_OBJECT_STATE::FALL:
-		break;
-	}
-	if (m_FallObjectState == FALL_OBJECT_STATE::FALL)
-		m_Velocity.y = -m_FallSpeed;
 	m_Model.Update(m_Transform);
 }
 
@@ -65,9 +53,4 @@ void CFallObject::SetActive(bool active)
 MARK_ID CFallObject::GetID(void)
 {
 	return m_MarkID;
-}
-
-void CFallObject::SetState(FALL_OBJECT_STATE state)
-{
-	m_FallObjectState = state;
 }

@@ -35,7 +35,6 @@ CGame::Initialize(void)
     CUIManager::GetInstance().Initialize();
     CEffectManager::GetInstance().Initialize();
     CControllerManager::GetInstance().Initialize();
-    CStage::GetInstance().Initialize();
     CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();
     m_WaitTime = 0;
@@ -70,7 +69,6 @@ CGame::Update(void)
     }
     if(!m_PauseFlag)
     {
-        CStage::GetInstance().Update();
         CUnitManager::GetInstance().Update();
 
         CEffectManager::GetInstance().Update();
@@ -88,13 +86,14 @@ CGame::Update(void)
 void
 CGame::Draw(void)
 {
-    CStage::GetInstance().Draw();
 
     CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
     CUIManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
+
+#ifdef VIVID_DEBUG
     switch (m_GameState)
     {
     case GAME_STATE::START:
@@ -111,7 +110,7 @@ CGame::Draw(void)
         break;
     }
     vivid::DrawText(20, m_DebugText, vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
-
+#endif
 }
 
 /*
@@ -126,7 +125,6 @@ CGame::Finalize(void)
     CControllerManager::GetInstance().Finalize();
     CGimmickManager::GetInstance().Finalize();
     CObjectManager::GetInstance().Finalize();
-    CStage::GetInstance().Finalize();
 }
 
 /*
@@ -182,8 +180,12 @@ void CGame::Play(void)
         CUnitManager::GetInstance().SetAllPlayerAction(true);
     }
 
+#ifdef VIVID_DEBUG
+
     if(vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
         m_GameState = GAME_STATE::FINISH;
+
+#endif // VIVID_DEBUG
 
 }
 
@@ -194,6 +196,9 @@ void
 CGame::
 Finish(void)
 {
+#ifdef VIVID_DEBUG
+
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::RESULT);
+#endif
 }

@@ -20,7 +20,7 @@ public:
      *  @brief      ‰Šú‰»
      *
      */
-    void    Initialize();
+    void    Initialize(IObject* object);
 
     /*!
      *  @brief      XV
@@ -28,16 +28,10 @@ public:
     void    Update(void);
 
     /*!
-     *  @brief      •`‰æ
-     */
-    void    Draw(void);
-
-    /*!
      *  @brief      ‰ğ•ú
      */
     void    Finalize(void);
 
 private:
-    int     m_CreateTime;
-    int     m_CreateTimer;
+    static const float m_fall_speed;
 };

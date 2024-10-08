@@ -15,19 +15,11 @@ enum class UNIT_CATEGORY
  */
 enum class UNIT_ID
 {
-    NONE,
     PLAYER1,            //!< ƒvƒŒƒCƒ„[1
-    NORMAL_ENEMY,       //!< ’Êí’e‚Ì“G
-    THREE_WAY_ENEMY,    //!< 3WAY’e‚Ì“G
-    FIVE_WAY_ENEMY,     //!< 5WAY’e‚Ì“G
-    BURST_ENEMY,        //!< ƒo[ƒXƒg’e‚Ì“G
-    SHOTGUN_ENEMY,      //!< ŽU’e‚Ì“G
-    HOMING_ENEMY,       //!< ƒz[ƒ~ƒ“ƒO’e‚Ì“G
-    BOSS_ENEMY,         //!< ƒ{ƒX‚Ì“G
     PLAYER2,            //!< ƒvƒŒƒCƒ„[2
     PLAYER3,            //!< ƒvƒŒƒCƒ„[3
     PLAYER4,            //!< ƒvƒŒƒCƒ„[4
-
+    NONE,
 };
 
 enum class MOVE_ID

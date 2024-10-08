@@ -4,11 +4,10 @@
 #include "..\effect_manager\effect_manager.h"
 #include "..\sound_manager\sound_manager.h"
 #include "..\..\..\utility\utility.h"
-#include "unit\player\player_1\player_1.h"
-#include "unit\player\player_2\player_2.h"
 #include "../ui_manager/ui_manager.h"
 
-
+const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player.mv1", "data\\Models\\player.mv1" };
+const int           CUnitManager::m_controller_list[] = { DX_INPUT_PAD1, DX_INPUT_PAD2,DX_INPUT_PAD3,DX_INPUT_PAD4 };
 /*
  *  インスタンスの取得
  */
@@ -94,21 +93,24 @@ Finalize(void)
  */
 void
 CUnitManager::
-Create(UNIT_ID id, const CVector3& pos, MOVE_ID moveId, bool aimFlag)
+Create(UNIT_ID id, const CVector3& pos)
 {
     IUnit* unit = nullptr;
 
+    std::string fileName = m_file_name_list[(int)id];
     switch (id)
     {
-    case UNIT_ID::PLAYER1:              unit = new CPlayer1();      break;
-    case UNIT_ID::PLAYER2:              unit = new CPlayer2();      break;
-    case UNIT_ID::PLAYER3:              unit = new CPlayer1();      break;
-    case UNIT_ID::PLAYER4:              unit = new CPlayer1();      break;
+    case UNIT_ID::PLAYER1:
+    case UNIT_ID::PLAYER2:
+    case UNIT_ID::PLAYER3:
+    case UNIT_ID::PLAYER4:
+    unit = new CPlayer();  break;
     }
+    
 
     if (!unit) return;
 
-    unit->Initialize(pos, moveId);
+    unit->Initialize(pos, m_file_name_list[(int)id], m_controller_list[(int)id]);
     m_UnitList.push_back(unit);
 }
 

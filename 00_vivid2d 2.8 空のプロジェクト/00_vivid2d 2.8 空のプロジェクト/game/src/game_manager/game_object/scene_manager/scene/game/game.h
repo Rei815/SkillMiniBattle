@@ -4,6 +4,7 @@
 #include "../../../model_manager/model/model.h"
 #include "../../../stage/stage.h"
 #include "game_id.h"
+#include "../../../object_manager/object/object.h"
 /*!
 *  @brief  ゲームの状態
 */
@@ -70,17 +71,17 @@ protected:
     /*!
      *  @brief      スタート
      */
-    void    Start(void);
+    virtual void    Start(void);
 
     /*!
      *  @brief      プレイ
      */
-    void    Play(void);
+    virtual void    Play(void);
 
     /*!
      *  @brief      終了
      */
-    void    Finish(void);
+    virtual void    Finish(void);
 
     GAME_STATE      m_GameState;    //!< ゲームの状態
 
@@ -89,4 +90,5 @@ protected:
     bool            m_PauseFlag;    //!< ポーズフラグ
     std::string     m_DebugText;    //!< デバッグ用
     bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用
+
 };

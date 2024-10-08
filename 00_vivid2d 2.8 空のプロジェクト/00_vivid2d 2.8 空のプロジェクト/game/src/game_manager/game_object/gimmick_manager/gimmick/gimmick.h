@@ -3,7 +3,7 @@
 #include "gimmick_id.h"
 #include "../../../../mathematics/mathematics.h"
 #include "../../model_manager/model/model.h"
-
+#include "..\..\object_manager\object\object.h"
 class CGimmick
 {
 public:
@@ -21,7 +21,7 @@ public:
      *  @brief      初期化
      *
      */
-    virtual void    Initialize();
+    virtual void    Initialize(IObject* object);
 
     /*!
      *  @brief      更新
@@ -60,6 +60,6 @@ public:
     void            SetActive(bool active);
 
 protected:
-    CTransform	            m_Transform;    //!< トランスフォーム
-    bool                    m_ActiveFlag;       //!< アクティブフラグ
+    bool        m_ActiveFlag;   //!< アクティブフラグ
+    IObject*    m_Object;
 };

@@ -3,6 +3,7 @@
 #include "vivid.h"
 #include <list>
 #include "gimmick/gimmick.h"
+#include "../object_manager/object/object_id.h"
 class CGimmickManager
 {
 public:
@@ -36,9 +37,9 @@ public:
     /*!
      *  @brief      ギミック生成
      *
-     *  @param[in]  id              ギミックのID
+     *  @param[in]  object              オブジェクト
      */
-    void        Create(GIMMICK_ID id);
+    void        Create(GIMMICK_ID id, IObject* object);
 
 private:
     /*!

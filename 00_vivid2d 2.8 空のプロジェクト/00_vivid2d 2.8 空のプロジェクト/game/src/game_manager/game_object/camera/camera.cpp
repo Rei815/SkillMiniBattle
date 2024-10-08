@@ -25,7 +25,7 @@ void CCamera::Initialize()
 {
     m_Position.x = 0.0f;
     m_Position.y = 400.0f;
-    m_Position.z = -1600.0f;
+    m_Position.z = -1000.0f;
 
     SetCameraNearFar(m_near, m_far);
 

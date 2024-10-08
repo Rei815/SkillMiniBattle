@@ -9,7 +9,7 @@ class CPlayer: public IUnit
 {
 public:
 
-	CPlayer(UNIT_ID unit_id);
+	CPlayer();
 
 	~CPlayer();
 
@@ -18,7 +18,7 @@ public:
      *
      *  @param[in]  position    初期位置
      */
-    virtual void        Initialize(const CVector3& position, MOVE_ID moveId);
+    virtual void        Initialize(const CVector3& position, const std::string& file_name, int controller);
 
     /*!
      *  @brief      更新
@@ -34,14 +34,6 @@ public:
      *  @brief      解放
      */
     virtual void        Finalize(void);
-
-    /*!
-     *  @brief      ライフ取得
-     *
-     *  @return     現在のライフ
-     */
-    float        GetLife(void);
-
 
 /*!
      *  @brief      行動可能かどうかを設定
@@ -85,9 +77,7 @@ protected:
     static const int                m_max_invincible_time;          //!< 無敵時間
     static const int                m_invincible_visible_interval;  //!< 無敵時間中の点滅間隔
     static const float              m_fall_accelerator;             //!< 落下加速度
-    static const std::string        m_file_name;                    //!< 読み込むファイル名
 
-    CVector3                        m_Offset;                       //!< カメラとの距離
     float                           m_FallSpeed;                    //!< 落下速度
     CVector3                        m_Accelerator;                  //!< 加速度
     bool                            m_IsGround;                     //!< 地上にいるか

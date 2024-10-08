@@ -92,18 +92,17 @@ void CGimmickManager::Finalize(void)
     m_GimmickList.clear();
 }
 
-void CGimmickManager::Create(GIMMICK_ID id)
+void CGimmickManager::Create(GIMMICK_ID id, IObject* object)
 {
     CGimmick* gimmick = nullptr;
-
     switch (id)
     {
-    case GIMMICK_ID::FALL_GIMMICK:    gimmick = new CFallGimmick();     break;
-        break;
+    case GIMMICK_ID::FALL_GIMMICK: gimmick = new CFallGimmick(); break;
     }
+
     if (!gimmick) return;
 
-    gimmick->Initialize();
+    gimmick->Initialize(object);
     m_GimmickList.push_back(gimmick);
 
 }

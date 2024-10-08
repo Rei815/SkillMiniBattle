@@ -40,7 +40,7 @@ public:
      *  @param[in]  category  ユニット識別子
      *  @param[in]  unit_id     ユニットID
      */
-    IUnit(int life, UNIT_CATEGORY category, UNIT_ID unit_id = UNIT_ID::NONE);
+    IUnit(UNIT_CATEGORY category, UNIT_ID unit_id = UNIT_ID::NONE);
 
     /*!
      *  @brief      デストラクタ
@@ -51,10 +51,8 @@ public:
      *  @brief      初期化
      *
      *  @param[in]  position    位置
-     *  @param[in]  moveID      動きのID
-     *  @param[in]  aimFlag     狙うかどうか
      */
-    virtual void    Initialize(const CVector3& position, MOVE_ID moveID);
+    virtual void    Initialize(const CVector3& position, const std::string& file_name, int controller);
 
     /*!
      *  @brief      更新
@@ -124,27 +122,6 @@ public:
     UNIT_CATEGORY   GetUnitCategory(void);
 
     /*!
-     *  @brief      ライフ取得
-     *
-     *  @return     ライフ
-     */
-    float           GetLife(void);
-
-    /*!
-     *  @brief      最大ライフ取得
-     *
-     *  @return     最大ライフ
-     */
-    float             GetMaxLife(void);
-
-    /*!
-     *  @brief      現在のライフの割合取得
-     *
-     *  @return     ライフ
-     */
-    float             GetLifeRate(void);
-
-    /*!
      *  @brief      無敵フラグ取得
      *
      *  @return     無敵フラグ
@@ -190,12 +167,6 @@ public:
      *  @return     半径
      */
     float           GetRadius(void);
-
-    /*!
-     *  @brief      ライフ追加
-     *
-     */
-    void        AddLife(void);
 
     /*!
      *  @brief      弾数追加
@@ -277,14 +248,11 @@ protected:
     CTransform	            m_Transform;		    //!< トランスフォーム
     CVector3	            m_Max_Vertex;		    //!< 最大頂点座標
     CVector3                m_Velocity;             //!< 速度
-    float                   m_Life;                 //!< ライフ
-    float                   m_MaxLife;              //!< 最大ライフ
     UNIT_CATEGORY           m_Category;             //!< ユニット識別子
     UNIT_ID                 m_UnitID;               //!< ユニットID
     bool                    m_ActiveFlag;           //!< アクティブフラグ
     bool                    m_InvincibleFlag;       //!< 無敵フラグ
     UNIT_STATE              m_UnitState;            //!< 状態ID
-    MOVE_ID                 m_MoveId;
     bool                    m_AimFlag;              //!< 狙うかどうか
     float                   m_DamageRate;
     CShot*                  m_Shot;
@@ -292,6 +260,6 @@ protected:
     bool                    m_DecAlpha;                 //!< アルファ値を減らす
     float                   m_Alpha;                    //!< アルファ値
     bool                    m_DefeatFlag;               //!< 敗北フラグ
-
+    std::string             m_FileName;
 
 };

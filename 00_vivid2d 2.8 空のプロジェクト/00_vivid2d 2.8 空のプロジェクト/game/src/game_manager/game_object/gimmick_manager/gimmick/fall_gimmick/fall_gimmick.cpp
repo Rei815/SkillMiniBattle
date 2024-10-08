@@ -1,5 +1,7 @@
 #include "fall_gimmick.h"
 #include "..\..\..\object_manager\object_manager.h"
+
+const float	CFallGimmick::m_fall_speed = 10.0f;
 CFallGimmick::CFallGimmick()
 {
 }
@@ -8,22 +10,13 @@ CFallGimmick::~CFallGimmick(void)
 {
 }
 
-void CFallGimmick::Initialize()
+void CFallGimmick::Initialize(IObject* object)
 {
-	m_CreateTime = 180;
-	m_CreateTimer = 0;
+	m_Object = object;
+	m_Object->SetVelocity(CVector3(0, -m_fall_speed, 0));
 }
 
 void CFallGimmick::Update(void)
-{
-	if (++m_CreateTimer > m_CreateTime)
-	{
-		m_CreateTimer = 0;
-		CObjectManager::GetInstance().Create(OBJECT_ID::FALL_OBJECT, CVector3(0,100,0));
-	}
-}
-
-void CFallGimmick::Draw(void)
 {
 }
 

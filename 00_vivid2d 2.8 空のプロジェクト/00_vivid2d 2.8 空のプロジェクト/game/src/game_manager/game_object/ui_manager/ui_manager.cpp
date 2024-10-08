@@ -1,5 +1,4 @@
 #include "ui_manager.h"
-#include "ui/player_life/player_life.h"
 #include "ui/boss_life/boss_life.h"
 #include "ui/reticle/reticle.h"
 #include "ui/pause/pause.h"
@@ -102,9 +101,6 @@ void CUIManager::Create(UI_ID id)
 
     switch (id)
     {
-    case UI_ID::PLAYER_LIFE:    ui = new CPlayerLife();     break;
-    case UI_ID::BOSS_LIFE:      ui = new CBossLife();     break;
-    case UI_ID::RETICLE:        ui = new CReticle();        break;
     case UI_ID::PAUSE:          ui = new CPause();          break;
         break;
     }

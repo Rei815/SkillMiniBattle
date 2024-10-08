@@ -36,4 +36,25 @@ public:
      */
     void        Finalize(void);
 
+private:
+
+    /*!
+     *  @brief      スタート
+     */
+    void    Start(void);
+
+    /*!
+     *  @brief      プレイ
+     */
+    void    Play(void);
+
+    /*!
+     *  @brief      終了
+     */
+    void    Finish(void);
+
+    int     m_FallTime;
+    int     m_FallTimer;
+
+    static const CVector3 m_object_position_list[];
 };

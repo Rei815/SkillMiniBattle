@@ -29,12 +29,10 @@ IUnit::IUnit()
  *  コンストラクタ
  */
 IUnit::
-IUnit(int life, UNIT_CATEGORY category, UNIT_ID unit_id)
+IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     : m_Transform(CTransform())
     , m_Velocity(CVector3())
     , m_ActiveFlag(true)
-    , m_MaxLife(life)
-    , m_Life(life)
     , m_Category(category)
     , m_UnitID(unit_id)
     , m_InvincibleFlag(false)
@@ -61,18 +59,17 @@ IUnit::
  */
 void
 IUnit::
-Initialize(const CVector3& position, MOVE_ID moveID)
+Initialize(const CVector3& position, const std::string& file_name, int controller)
 {
     m_Transform.position = position;
     m_Velocity = CVector3();
     m_ActiveFlag = true;
     m_InvincibleFlag = false;
     m_UnitState = UNIT_STATE::APPEAR;
-    m_MoveId = moveID;
     m_Alpha = 0.0f;
     m_RevertAlpha = false;
     m_DecAlpha = false;
-
+    m_FileName = file_name;
 }
 /*
  *  更新
@@ -83,9 +80,9 @@ Update(void)
 {
     switch (m_UnitState)
     {
-    case UNIT_STATE::APPEAR:     Appear();      break;
-    case UNIT_STATE::ATTACK:     Attack();      break;
-    case UNIT_STATE::DEFEAT:       Defeat();        break;
+    case UNIT_STATE::APPEAR:    Appear();      break;
+    case UNIT_STATE::ATTACK:    Attack();      break;
+    case UNIT_STATE::DEFEAT:    Defeat();        break;
     }
 
 }
@@ -146,34 +143,6 @@ CheckHitBullet(IBullet* bullet)
         if (m_InvincibleFlag)
             return hit_flag;
 
-
-        if (m_Category == UNIT_CATEGORY::PLAYER)
-        {
-            m_Life -= bullet->GetBulletDamage();
-            CSoundManager::GetInstance().Play(SOUND_ID::PLAYER_HIT, false);
-            CCamera::GetInstance().Shake();
-            m_InvincibleFlag = true;
-        }
-        else
-        {
-            IUnit* player = nullptr;
-
-            player = CUnitManager::GetInstance().GetPlayer();
-
-            if (player)
-            {
-                m_Life -= bullet->GetBulletDamage() * player->GetDamageRate();
-
-            }
-        }
-
-        if (m_Life <= 0.0f)
-        {
-            float scale = m_Radius / m_destroy_scale_adjust * 24.0f;
-            CEffectManager::GetInstance().Create(EFFECT_ID::DESTROY, m_Transform.position, scale);
-            m_UnitState = UNIT_STATE::DEFEAT;
-
-        }
 
     }
     // 当たり判定情報の後始末
@@ -243,31 +212,6 @@ GetUnitCategory(void)
 }
 
 /*
- *  ライフ取得
- */
-float
-IUnit::
-GetLife(void)
-{
-    return m_Life;
-}
-
-/*
- *  最大ライフ取得
- */
-float
-IUnit::
-GetMaxLife(void)
-{
-    return m_MaxLife;
-}
-
-float IUnit::GetLifeRate(void)
-{
-    return m_Life / m_MaxLife;
-}
-
-/*
  *  無敵フラグ取得
  */
 bool
@@ -320,12 +264,6 @@ void IUnit::SetVelocity(const CVector3& velocity)
 float IUnit::GetRadius(void)
 {
     return m_Radius;
-}
-
-void IUnit::AddLife(void)
-{
-    m_MaxLife++;
-    m_Life = m_MaxLife;
 }
 
 void IUnit::AddShot(void)
