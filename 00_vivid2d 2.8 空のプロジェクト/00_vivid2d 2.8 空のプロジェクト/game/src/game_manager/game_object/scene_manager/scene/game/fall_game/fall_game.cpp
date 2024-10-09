@@ -69,11 +69,20 @@ void CFallGame::Play(void)
 		int object_id = 0;
 		CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
 		CObjectManager::OBJECT_LIST::iterator it = objectList.begin();
-		while ((*it)->GetObjectID() == (OBJECT_ID)object_id)
+		bool flag = false;
+		while (flag == false)
 		{
 			object_id = rand() % (int)OBJECT_ID::MAX;
+			while (it != objectList.end())
+			{
+				if ((*it)->GetObjectID() == (OBJECT_ID)object_id)
+				{
+					flag = true;
+					break;
+				}
+				++it;
 
-			++it;
+			}
 		}
 			m_FallTimer = 0;
 		CObjectManager::GetInstance().SetGimmick(GIMMICK_ID::FALL_GIMMICK, (OBJECT_ID)object_id);
