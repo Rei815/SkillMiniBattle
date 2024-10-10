@@ -3,6 +3,8 @@
 #include "object/fall_object/fall_object.h"
 #include "..\gimmick_manager\gimmick_manager.h"
 const std::string CObjectManager::m_file_name_list[] = { "data\\Models\\cube.mv1", "data\\Models\\cube.mv1" };
+const CVector3 CObjectManager::m_object_position_list[] =
+{ CVector3(-300.0f,-100.0f,0),CVector3(-200.0f,-100.0f,0),CVector3(-100.0f,-100.0f,0),CVector3(0,-100.0f,0),CVector3(100.0f,-100.0f,0),CVector3(200.0f,-100.0f,0) };
 
 /*
  *  インスタンスの取得
@@ -34,7 +36,7 @@ CObjectManager::
 Update(void)
 {
 
-    // ユニット更新
+    // オブジェクト更新
     UpdateObject();
 }
 
@@ -83,9 +85,9 @@ Finalize(void)
 /*
  *  オブジェクト生成
  */
-IObject*
+void
 CObjectManager::
-Create(OBJECT_ID id, const CVector3& pos)
+Create(OBJECT_ID id)
 {
     IObject* object = nullptr;
 
@@ -100,12 +102,10 @@ Create(OBJECT_ID id, const CVector3& pos)
         object = new CFallObject();      break;
     }
 
-    if (!object) return nullptr;
+    if (!object) return;
 
-    object->Initialize(id, pos);
+    object->Initialize(id, m_object_position_list[(int)id -1]);
     m_ObjectList.push_back(object);
-
-    return object;
 }
 
 void CObjectManager::SetGimmick(GIMMICK_ID gimmick_id, OBJECT_ID object_id)
@@ -119,6 +119,24 @@ void CObjectManager::SetGimmick(GIMMICK_ID gimmick_id, OBJECT_ID object_id)
         if ((*it)->GetObjectID() == object_id)
         {
             CGimmickManager::GetInstance().Create(gimmick_id, (*it));
+        }
+
+        ++it;
+    }
+
+}
+
+void CObjectManager::SetGimmick(GIMMICK_ID gimmick_id, OBJECT_ID object_id, float time)
+{
+    if (m_ObjectList.empty()) return;
+
+    OBJECT_LIST::iterator it = m_ObjectList.begin();
+
+    while (it != m_ObjectList.end())
+    {
+        if ((*it)->GetObjectID() == object_id)
+        {
+            CGimmickManager::GetInstance().Create(gimmick_id, (*it), time);
         }
 
         ++it;

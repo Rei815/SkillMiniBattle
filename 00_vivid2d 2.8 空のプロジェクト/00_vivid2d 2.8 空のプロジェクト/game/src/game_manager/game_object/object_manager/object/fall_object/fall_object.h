@@ -2,7 +2,7 @@
 #include "../../../model_manager/model/model.h"
 #include "mark_id.h"
 #include "..\object.h"
-
+#include "..\..\..\..\..\utility\utility.h"
 enum class FALL_OBJECT_STATE
 {
     WAIT,
@@ -56,16 +56,14 @@ public:
      */
     MARK_ID         GetID(void);
 
-    /*!
-     *  @brief      状態設定
-     *
-     *  @param[in]  state  フォールオブジェクトの状態
-     */
-    void            SetState(FALL_OBJECT_STATE active);
-
 private:
-    static const float  m_fall_speed;
-    float               m_FallSpeed;
-    FALL_OBJECT_STATE   m_FallObjectState;
-    MARK_ID             m_MarkID;
+    static const float          m_start_height;
+    static const float          m_remove_height;
+    static const unsigned int   m_invisible_color;
+
+    float                       m_FallSpeed;
+    FALL_OBJECT_STATE           m_FallObjectState;
+    MARK_ID                     m_MarkID;
+    CTimer                      m_Timer;
+
 };

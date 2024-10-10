@@ -53,8 +53,13 @@ private:
      */
     void    Finish(void);
 
-    int     m_FallTime;
-    int     m_FallTimer;
+    /*!
+     *  @brief      落ちるオブジェクトの選択
+     * 
+     *  @return     オブジェクトID
+     */
+    OBJECT_ID    ChooseObject(void);
 
-    static const CVector3 m_object_position_list[];
+    int                     m_FallTime;
+    int                     m_FallTimer;
 };

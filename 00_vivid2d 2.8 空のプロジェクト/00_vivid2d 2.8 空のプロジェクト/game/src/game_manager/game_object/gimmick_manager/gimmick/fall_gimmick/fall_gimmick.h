@@ -23,6 +23,14 @@ public:
     void    Initialize(IObject* object);
 
     /*!
+     *  @brief      初期化
+     *  @param[in]  object          オブジェクトのポインタ
+     *  @param[in]  delayFrame      遅延フレーム
+     *
+     */
+    void    Initialize(IObject* object, int delayFrame);
+
+    /*!
      *  @brief      更新
      */
     void    Update(void);
@@ -33,5 +41,6 @@ public:
     void    Finalize(void);
 
 private:
-    static const float m_fall_speed;
+    static const float  m_fall_speed;
+
 };

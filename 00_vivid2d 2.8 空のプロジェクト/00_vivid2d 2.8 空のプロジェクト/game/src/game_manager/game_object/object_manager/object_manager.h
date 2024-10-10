@@ -40,7 +40,7 @@ public:
      *
      *  @param[in]  id              オブジェクトID
      */
-    IObject*        Create(OBJECT_ID id, const CVector3& pos);
+    void        Create(OBJECT_ID id);
 
     /*!
      *  @brief      ギミック付与
@@ -51,10 +51,24 @@ public:
     void        SetGimmick(GIMMICK_ID gimmick_id, OBJECT_ID object_id);
 
     /*!
+     *  @brief      ギミック付与
+     *
+     *  @param[in]  gimmick_id          ギミックのID
+     *  @param[in]  object_id           オブジェクトのID
+     *  @param[in]  delayFrame          遅延時間
+     */
+    void        SetGimmick(GIMMICK_ID gimmick_id, OBJECT_ID object_id, float time);
+
+    /*!
      *  @brief      オブジェクトリスト型
      */
     using OBJECT_LIST = std::list<IObject*>;
 
+    /*!
+     *  @brief      リスト取得
+     *
+     *  @return     オブジェクトリスト
+     */
     OBJECT_LIST GetList();
 private:
 
@@ -90,13 +104,9 @@ private:
      */
     CObjectManager& operator=(const CObjectManager& rhs);
 
-    /*!
-     *  @brief      オブジェクトリスト型
-     */
-    using OBJECT_LIST = std::list<IObject*>;
-
     OBJECT_LIST             m_ObjectList;             //!< オブジェクトリスト
 
     static const std::string    m_file_name_list[];
+    static const CVector3       m_object_position_list[];
 
 };

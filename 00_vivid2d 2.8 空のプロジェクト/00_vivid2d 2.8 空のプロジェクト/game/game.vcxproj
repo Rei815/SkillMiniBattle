@@ -234,6 +234,7 @@
     <ClCompile Include="src\game_manager\game_object\model_manager\model_manager.cpp" />
     <ClCompile Include="src\utility\csv_loader\csv_loader.cpp" />
     <ClCompile Include="src\utility\easing\easing.cpp" />
+    <ClCompile Include="src\utility\timer\timer.cpp" />
     <ClCompile Include="src\utility\transform\transform.cpp" />
     <ClCompile Include="src\mathematics\vector\vector3\vector3.cpp" />
   </ItemGroup>
@@ -329,6 +330,7 @@
     <ClInclude Include="src\mathematics\vector\vector.h" />
     <ClInclude Include="src\utility\csv_loader\csv_loader.h" />
     <ClInclude Include="src\utility\easing\easing.h" />
+    <ClInclude Include="src\utility\timer\timer.h" />
     <ClInclude Include="src\utility\transform\transform.h" />
     <ClInclude Include="src\mathematics\vector\vector3\vector3.h" />
     <ClInclude Include="src\utility\utility.h" />

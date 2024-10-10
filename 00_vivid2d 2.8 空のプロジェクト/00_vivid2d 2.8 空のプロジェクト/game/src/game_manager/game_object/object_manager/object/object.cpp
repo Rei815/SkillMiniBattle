@@ -1,6 +1,7 @@
 #include "object.h"
 
 IObject::IObject()
+	: m_Color(0xfffffff)
 {
 }
 
@@ -40,6 +41,11 @@ bool IObject::GetActive(void)
 void IObject::SetActive(bool active)
 {
 	m_ActiveFlag = active;
+}
+
+CVector3 IObject::GetPosition()
+{
+	return m_Transform.position;
 }
 
 void IObject::SetPosition(const CVector3& position)

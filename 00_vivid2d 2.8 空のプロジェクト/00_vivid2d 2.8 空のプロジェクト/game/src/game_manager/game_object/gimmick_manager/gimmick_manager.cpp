@@ -107,6 +107,21 @@ void CGimmickManager::Create(GIMMICK_ID id, IObject* object)
 
 }
 
+void CGimmickManager::Create(GIMMICK_ID id, IObject* object, float time)
+{
+    CGimmick* gimmick = nullptr;
+    switch (id)
+    {
+    case GIMMICK_ID::FALL_GIMMICK: gimmick = new CFallGimmick(); break;
+    }
+
+    if (!gimmick) return;
+
+    gimmick->Initialize(object, time);
+    m_GimmickList.push_back(gimmick);
+
+}
+
 /*
  *  コンストラクタ
  */

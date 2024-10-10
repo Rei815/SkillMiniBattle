@@ -89,9 +89,9 @@ CGame::Draw(void)
 
     CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
-    CUIManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
+    CUIManager::GetInstance().Draw();
 
 #ifdef VIVID_DEBUG
     switch (m_GameState)

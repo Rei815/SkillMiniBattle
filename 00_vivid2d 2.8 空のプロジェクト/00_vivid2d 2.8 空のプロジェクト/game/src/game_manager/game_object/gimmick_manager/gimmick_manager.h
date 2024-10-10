@@ -37,9 +37,19 @@ public:
     /*!
      *  @brief      ギミック生成
      *
-     *  @param[in]  object              オブジェクト
+     *  @param[in]  id                  ギミックID
+     *  @param[in]  object              オブジェクトのポインタ
      */
     void        Create(GIMMICK_ID id, IObject* object);
+
+    /*!
+     *  @brief      ギミック生成
+     *
+     *  @param[in]  id                  ギミックID
+     *  @param[in]  object              オブジェクトのポインタ
+     *  @param[in]  time                遅延時間
+     */
+    void        Create(GIMMICK_ID id, IObject* object, float time);
 
 private:
     /*!

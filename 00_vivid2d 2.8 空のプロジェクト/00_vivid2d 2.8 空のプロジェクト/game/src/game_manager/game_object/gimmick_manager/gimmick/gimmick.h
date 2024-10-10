@@ -4,6 +4,7 @@
 #include "../../../../mathematics/mathematics.h"
 #include "../../model_manager/model/model.h"
 #include "..\..\object_manager\object\object.h"
+#include "..\..\..\..\utility\utility.h"
 class CGimmick
 {
 public:
@@ -22,6 +23,14 @@ public:
      *
      */
     virtual void    Initialize(IObject* object);
+
+    /*!
+     *  @brief      初期化
+     *  @param[in]  object          オブジェクトのポインタ
+     *  @param[in]  time            遅延時間
+     *
+     */
+    virtual void    Initialize(IObject* object, float time);
 
     /*!
      *  @brief      更新
@@ -62,4 +71,8 @@ public:
 protected:
     bool        m_ActiveFlag;   //!< アクティブフラグ
     IObject*    m_Object;
+    int         m_DelayTime;
+    int         m_DelayTimer;
+    bool        m_DelayFlag;
+    CTimer      m_Timer;
 };

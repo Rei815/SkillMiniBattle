@@ -51,6 +51,12 @@ public:
     void            SetActive(bool active);
 
     /*!
+     *  @brief      位置取得
+     *
+     *  @return     位置
+     */
+    CVector3        GetPosition();
+    /*!
      *  @brief      位置設定
      *
      *  @param[in]  position  位置
@@ -66,11 +72,10 @@ public:
 
 protected:
     OBJECT_ID           m_ObjectID;
-    static const float  m_fall_speed;
     CModel			    m_Model;
     CTransform		    m_Transform;
     CVector3            m_Velocity;
     std::string         m_FileName;
-    float               m_FallSpeed;
     bool                m_ActiveFlag;
+    unsigned int        m_Color;
 };

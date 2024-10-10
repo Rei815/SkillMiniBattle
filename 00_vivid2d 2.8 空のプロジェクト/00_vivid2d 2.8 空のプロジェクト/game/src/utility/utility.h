@@ -3,7 +3,7 @@
 #include "transform/transform.h"
 #include "csv_loader/csv_loader.h"
 #include "easing/easing.h"
-
+#include "timer/timer.h"
 /*!
  *  @brief      角度をラジアン値に変換
  *

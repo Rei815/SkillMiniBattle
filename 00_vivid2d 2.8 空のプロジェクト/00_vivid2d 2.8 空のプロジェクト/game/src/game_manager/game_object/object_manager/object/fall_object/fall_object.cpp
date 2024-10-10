@@ -1,6 +1,8 @@
 #include "fall_object.h"
 
-const	float	CFallObject::m_fall_speed = 10.0f;
+const	float			CFallObject::m_remove_height = -500.0f;
+const	float			CFallObject::m_start_height = -100.0f;
+const	unsigned int	CFallObject::m_invisible_color = 0x00ffffff;
 CFallObject::CFallObject()
 	: m_FallSpeed()
 	, m_MarkID()
@@ -18,12 +20,27 @@ void CFallObject::Initialize(OBJECT_ID id, const CVector3& position)
 	m_FileName = "data\\Models\\cube.mv1";
 	m_Transform.position = position;
 	m_Model.Initialize(m_FileName, m_Transform.position);
+	m_Timer.SetUp(1.0f);
 }
 
 void CFallObject::Update(void)
 {
 	IObject::Update();
 	m_Model.Update(m_Transform);
+	if (m_Transform.position.y <= m_remove_height)
+	{
+		m_Transform.position.y = m_remove_height;
+		m_Color = m_invisible_color;
+
+	}
+	if(m_Color == m_invisible_color)
+		m_Timer.Update();
+
+	if (m_Timer.Finished())
+	{
+		m_Transform.position.y = m_start_height;
+		m_Color = 0xfffffff;
+	}
 }
 
 void CFallObject::Draw(void)
