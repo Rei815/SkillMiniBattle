@@ -1,7 +1,9 @@
 #include "object.h"
 
+const float IObject::m_limit_alpha = 1.0f;
 IObject::IObject()
-	: m_Color(0xfffffff)
+	: m_Alpha(m_limit_alpha)
+	, m_State(OBJECT_STATE::WAIT)
 {
 }
 
@@ -22,6 +24,7 @@ void IObject::Update(void)
 
 void IObject::Draw(void)
 {
+	MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
 }
 
 void IObject::Finalize(void)
@@ -56,4 +59,14 @@ void IObject::SetPosition(const CVector3& position)
 void IObject::SetVelocity(const CVector3& velocity)
 {
 	m_Velocity = velocity;
+}
+
+OBJECT_STATE IObject::GetState()
+{
+	return m_State;
+}
+
+void IObject::SetState(OBJECT_STATE state)
+{
+	m_State = state;
 }

@@ -28,10 +28,10 @@ void CFallGame::Initialize(void)
 
 	CObjectManager::GetInstance().Create(OBJECT_ID::CIRCLE_FALL_OBJECT);
 	CObjectManager::GetInstance().Create(OBJECT_ID::CROSS_FALL_OBJECT);
-	CObjectManager::GetInstance().Create(OBJECT_ID::MOON_FALL_OBJECT);
-	CObjectManager::GetInstance().Create(OBJECT_ID::SQUARE_FALL_OBJECT);
-	CObjectManager::GetInstance().Create(OBJECT_ID::SUN_FALL_OBJECT);
-	CObjectManager::GetInstance().Create(OBJECT_ID::TRIANGLE_FALL_OBJECT);
+	//CObjectManager::GetInstance().Create(OBJECT_ID::MOON_FALL_OBJECT);
+	//CObjectManager::GetInstance().Create(OBJECT_ID::SQUARE_FALL_OBJECT);
+	//CObjectManager::GetInstance().Create(OBJECT_ID::SUN_FALL_OBJECT);
+	//CObjectManager::GetInstance().Create(OBJECT_ID::TRIANGLE_FALL_OBJECT);
 }
 
 void CFallGame::Update(void)
@@ -86,7 +86,7 @@ void CFallGame::Finish(void)
 
 OBJECT_ID CFallGame::ChooseObject(void)
 {
-	int object_id = (int)OBJECT_ID::NONE;
+	int index = (int)OBJECT_ID::NONE;
 	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
 
 	if (objectList.size() == 1)
@@ -97,21 +97,16 @@ OBJECT_ID CFallGame::ChooseObject(void)
 
 	bool flag = false;
 
+	CObjectManager::OBJECT_LIST::iterator it;
 	while (flag == false)
 	{
-		object_id = rand() % (int)OBJECT_ID::MAX + (int)OBJECT_ID::MOON_FALL_OBJECT;
+		it = objectList.begin();
+		index = rand() % objectList.size();
 
-		CObjectManager::OBJECT_LIST::iterator it = objectList.begin();
+		std::advance(it, index);
 
-		while (it != objectList.end())
-		{
-			if ((*it)->GetObjectID() == (OBJECT_ID)object_id)
-			{
-				flag = true;
-				break;
-			}
-			++it;
-		}
+		if ((*it)->GetState() != OBJECT_STATE::FALL)
+			flag = true;
 	}
-	return (OBJECT_ID)object_id;
+	return (*it)->GetObjectID();
 }

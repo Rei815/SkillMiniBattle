@@ -59,7 +59,7 @@ public:
 private:
     static const float          m_start_height;
     static const float          m_remove_height;
-    static const unsigned int   m_invisible_color;
+    static const float          m_invisible_alpha;
 
     float                       m_FallSpeed;
     FALL_OBJECT_STATE           m_FallObjectState;

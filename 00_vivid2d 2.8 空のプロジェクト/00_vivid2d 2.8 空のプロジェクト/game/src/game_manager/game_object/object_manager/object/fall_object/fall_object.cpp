@@ -2,9 +2,10 @@
 
 const	float			CFallObject::m_remove_height = -500.0f;
 const	float			CFallObject::m_start_height = -100.0f;
-const	unsigned int	CFallObject::m_invisible_color = 0x00ffffff;
+const	float			CFallObject::m_invisible_alpha = 0.0f;
 CFallObject::CFallObject()
-	: m_FallSpeed()
+	: IObject()
+	, m_FallSpeed()
 	, m_MarkID()
 	, m_FallObjectState()
 {
@@ -27,19 +28,20 @@ void CFallObject::Update(void)
 {
 	IObject::Update();
 	m_Model.Update(m_Transform);
+	if (m_Transform.position.y == m_start_height)
+		m_Alpha = m_limit_alpha;
 	if (m_Transform.position.y <= m_remove_height)
 	{
 		m_Transform.position.y = m_remove_height;
-		m_Color = m_invisible_color;
-
+		m_Alpha = m_invisible_alpha;
 	}
-	if(m_Color == m_invisible_color)
+	if(m_Alpha == m_invisible_alpha)
 		m_Timer.Update();
 
 	if (m_Timer.Finished())
 	{
 		m_Transform.position.y = m_start_height;
-		m_Color = 0xfffffff;
+		m_Timer.Reset();
 	}
 }
 
@@ -48,6 +50,7 @@ void CFallObject::Draw(void)
 	IObject::Draw();
 
 	m_Model.Draw();
+
 }
 
 void CFallObject::Finalize(void)

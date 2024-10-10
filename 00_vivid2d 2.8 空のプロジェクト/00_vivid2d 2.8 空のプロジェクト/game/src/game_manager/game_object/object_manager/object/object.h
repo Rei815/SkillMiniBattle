@@ -2,6 +2,12 @@
 #include "../../model_manager/model/model.h"
 #include "object_id.h"
 
+enum class OBJECT_STATE
+{
+    WAIT,
+    FALL,
+};
+
 class IObject
 {
 public:
@@ -70,12 +76,29 @@ public:
      */
     void            SetVelocity(const CVector3& velocity);
 
+
+    /*!
+     *  @brief      èÛë‘éÊìæ
+     *
+     *  @return     èÛë‘
+     */
+    OBJECT_STATE    GetState();
+
+    /*!
+     *  @brief      èÛë‘ê›íË
+     *
+     *  @param[in]  state   èÛë‘
+     */
+    void            SetState(OBJECT_STATE state);
+
 protected:
+    static const float  m_limit_alpha;
     OBJECT_ID           m_ObjectID;
     CModel			    m_Model;
     CTransform		    m_Transform;
     CVector3            m_Velocity;
     std::string         m_FileName;
     bool                m_ActiveFlag;
-    unsigned int        m_Color;
+    float               m_Alpha;
+    OBJECT_STATE        m_State;
 };

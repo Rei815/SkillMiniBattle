@@ -14,6 +14,7 @@ void CFallGimmick::Initialize(IObject* object)
 {
 	CGimmick::Initialize(object);
 	m_Object->SetVelocity(CVector3(0, -m_fall_speed, 0));
+	m_Object->SetState(OBJECT_STATE::FALL);
 }
 
 void CFallGimmick::Initialize(IObject* object, int delayFrame)
