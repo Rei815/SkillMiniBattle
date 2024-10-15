@@ -22,7 +22,6 @@ void CFallObject::Initialize(OBJECT_ID id, const CVector3& position)
 	m_Transform.position = position;
 	m_Model.Initialize(m_FileName, m_Transform.position);
 	m_Timer.SetUp(1.0f);
-	m_State = OBJECT_STATE::WAIT;
 }
 
 void CFallObject::Update(void)
@@ -31,18 +30,22 @@ void CFallObject::Update(void)
 	m_Model.Update(m_Transform);
 	if (m_Transform.position.y <= m_remove_height)
 	{
-		m_State = OBJECT_STATE::FALL;
 		m_Transform.position.y = m_remove_height;
 		m_Alpha = m_invisible_alpha;
 	}
-	if(m_Alpha == m_invisible_alpha)
+	if (m_Alpha == m_invisible_alpha)
+	{
+		m_State = OBJECT_STATE::FALL_FINISH;
 		m_Timer.Update();
+	}
 
 	if (m_Timer.Finished())
 	{
 		m_Timer.Reset();
 		m_Transform.position.y = m_start_height;
 		m_Alpha = m_limit_alpha;
+		m_Velocity = CVector3::ZERO;
+		m_State = OBJECT_STATE::WAIT;
 	}
 }
 

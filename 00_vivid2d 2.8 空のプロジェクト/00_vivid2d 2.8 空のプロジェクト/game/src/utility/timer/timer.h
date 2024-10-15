@@ -13,6 +13,8 @@ public:
 	void Reset();
 
 	bool Finished();
+
+	float		GetTimer();
 private:
 	float		m_LimitTime;
 	float		m_Timer;

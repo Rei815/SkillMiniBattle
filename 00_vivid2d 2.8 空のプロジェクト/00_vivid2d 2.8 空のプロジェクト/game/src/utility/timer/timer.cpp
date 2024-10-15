@@ -30,3 +30,8 @@ bool CTimer::Finished()
 {
 	return m_Timer >= m_LimitTime;
 }
+
+float CTimer::GetTimer()
+{
+	return m_Timer;
+}
