@@ -88,16 +88,24 @@ OBJECT_ID CFallGame::ChooseObject(void)
 {
 	int index = (int)OBJECT_ID::NONE;
 	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
+	if (objectList.empty()) return OBJECT_ID::NONE;
+	CObjectManager::OBJECT_LIST::iterator it = objectList.begin();
+	bool flag = true;
 
-	if (objectList.size() == 1)
+	//待機中のオブジェクトがあるか調査
+	while (it != objectList.end())
+	{
+		if ((*it)->GetState() == OBJECT_STATE::WAIT)
+			break;
+		++it;
+	}
+
+	if ((*it)->GetState() == OBJECT_STATE::FALL)
 	{
 		m_FallTimer = 0;
 		return OBJECT_ID::NONE;
 	}
 
-	bool flag = false;
-
-	CObjectManager::OBJECT_LIST::iterator it;
 	while (flag == false)
 	{
 		it = objectList.begin();
@@ -105,7 +113,7 @@ OBJECT_ID CFallGame::ChooseObject(void)
 
 		std::advance(it, index);
 
-		if ((*it)->GetState() != OBJECT_STATE::FALL)
+		if ((*it)->GetState() == OBJECT_STATE::WAIT)
 			flag = true;
 	}
 	return (*it)->GetObjectID();
