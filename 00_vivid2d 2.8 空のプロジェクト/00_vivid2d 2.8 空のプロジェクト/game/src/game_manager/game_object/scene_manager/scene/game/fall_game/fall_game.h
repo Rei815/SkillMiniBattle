@@ -60,6 +60,7 @@ private:
      */
     OBJECT_ID    ChooseObject(void);
 
-    int                     m_FallTime;
-    int                     m_FallTimer;
+    float           m_FallTime;
+
+    CTimer          m_Timer;
 };

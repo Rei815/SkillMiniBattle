@@ -15,10 +15,8 @@ CFallGame::~CFallGame(void)
 
 void CFallGame::Initialize(void)
 {
-	m_FallTime = 180;
-	m_FallTimer = 0;
-
-
+	m_FallTime = 1.0f;
+	m_Timer.SetUp(0.0f);
 	CGame::Initialize();
 	CCamera::GetInstance().Initialize();
 
@@ -28,10 +26,10 @@ void CFallGame::Initialize(void)
 
 	CObjectManager::GetInstance().Create(OBJECT_ID::CIRCLE_FALL_OBJECT);
 	CObjectManager::GetInstance().Create(OBJECT_ID::CROSS_FALL_OBJECT);
-	//CObjectManager::GetInstance().Create(OBJECT_ID::MOON_FALL_OBJECT);
-	//CObjectManager::GetInstance().Create(OBJECT_ID::SQUARE_FALL_OBJECT);
-	//CObjectManager::GetInstance().Create(OBJECT_ID::SUN_FALL_OBJECT);
-	//CObjectManager::GetInstance().Create(OBJECT_ID::TRIANGLE_FALL_OBJECT);
+	CObjectManager::GetInstance().Create(OBJECT_ID::MOON_FALL_OBJECT);
+	CObjectManager::GetInstance().Create(OBJECT_ID::SQUARE_FALL_OBJECT);
+	CObjectManager::GetInstance().Create(OBJECT_ID::SUN_FALL_OBJECT);
+	CObjectManager::GetInstance().Create(OBJECT_ID::TRIANGLE_FALL_OBJECT);
 }
 
 void CFallGame::Update(void)
@@ -45,7 +43,8 @@ void CFallGame::Draw(void)
 {
 	CGame::Draw();
 #ifdef VIVID_DEBUG
-	vivid::DrawText(30, std::to_string(m_FallTimer), vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_FallTimer)), 0));
+	vivid::DrawText(30, std::to_string(m_Timer.GetTimer()),
+		vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_Timer.GetTimer())), 0));
 #endif // VIVID_DEBUG
 
 }
@@ -65,16 +64,18 @@ void CFallGame::Start(void)
 void CFallGame::Play(void)
 {
 	CGame::Play();
-	if (++m_FallTimer > m_FallTime)
+
+	m_Timer.Update();
+	if (m_Timer.Finished())
 	{
 
-		m_FallTimer = 0;
+		m_Timer.Reset();
 
 		OBJECT_ID objectID = ChooseObject();
 
 
 		if (objectID != OBJECT_ID::NONE)
-		CObjectManager::GetInstance().SetGimmick(GIMMICK_ID::FALL_GIMMICK, objectID, 1.0f);
+		CObjectManager::GetInstance().SetGimmick(GIMMICK_ID::FALL_GIMMICK, objectID);
 	}
 
 }
@@ -90,7 +91,7 @@ OBJECT_ID CFallGame::ChooseObject(void)
 	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
 	if (objectList.empty()) return OBJECT_ID::NONE;
 	CObjectManager::OBJECT_LIST::iterator it = objectList.begin();
-	bool flag = true;
+	bool flag = false;
 
 	//待機中のオブジェクトがあるか調査
 	while (it != objectList.end())
@@ -100,9 +101,8 @@ OBJECT_ID CFallGame::ChooseObject(void)
 		++it;
 	}
 
-	if ((*it)->GetState() == OBJECT_STATE::FALL)
+	if (it == objectList.end())
 	{
-		m_FallTimer = 0;
 		return OBJECT_ID::NONE;
 	}
 

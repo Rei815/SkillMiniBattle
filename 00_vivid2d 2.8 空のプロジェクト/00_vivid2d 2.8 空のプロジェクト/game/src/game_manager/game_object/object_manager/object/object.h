@@ -6,6 +6,7 @@ enum class OBJECT_STATE
 {
     WAIT,
     FALL,
+    FALL_FINISH,
 };
 
 class IObject
