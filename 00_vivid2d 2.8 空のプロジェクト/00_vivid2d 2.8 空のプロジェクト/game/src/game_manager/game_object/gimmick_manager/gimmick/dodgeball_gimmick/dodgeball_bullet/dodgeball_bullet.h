@@ -1,0 +1,35 @@
+#pragma once
+#include "../../../../model_manager/model/model.h"
+class CDodgeBallBullet
+{
+public:
+	CDodgeBallBullet();
+	~CDodgeBallBullet();
+
+    /*!
+     *  @brief      èâä˙âª
+     *
+     */
+    void    Initialize(void);
+
+    /*!
+     *  @brief      çXêV
+     */
+    void    Update(void);
+
+    /*!
+     *  @brief      ï`âÊ
+     */
+    void    Draw(void);
+
+    /*!
+     *  @brief      âï˙
+     */
+    void    Finalize(void);
+
+private:
+	CModel			m_Model;
+	CTransform		m_Transform;
+
+    static const std::string   m_file_name;
+};
