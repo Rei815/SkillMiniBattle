@@ -19,7 +19,7 @@ public:
      *  @brief      ‰Šú‰»
      *
      */
-    virtual void    Initialize(OBJECT_ID id, const CVector3& pos);
+    virtual void    Initialize(OBJECT_ID id, const CTransform& pos);
 
     /*!
      *  @brief      XV

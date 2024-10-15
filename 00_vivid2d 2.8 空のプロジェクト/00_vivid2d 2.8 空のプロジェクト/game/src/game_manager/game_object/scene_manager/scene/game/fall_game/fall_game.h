@@ -1,7 +1,7 @@
 #pragma once
 
 #include "..\game.h"
-
+#include "..\..\..\..\ui_manager\ui\ui_id.h"
 class CFallGame : public CGame
 {
 public:
@@ -38,6 +38,12 @@ public:
 
 private:
 
+    struct FALL_INFO
+    {
+        OBJECT_ID   objectID = OBJECT_ID::NONE;
+        UI_ID       uiID = UI_ID::NONE;
+    };
+
     /*!
      *  @brief      スタート
      */
@@ -58,9 +64,12 @@ private:
      * 
      *  @return     オブジェクトID
      */
-    OBJECT_ID    ChooseObject(void);
+    FALL_INFO    ChooseObject(void);
 
-    float           m_FallTime;
+    static const CTransform         m_object_transform_list[];
+    float                           m_FallTime;
 
-    CTimer          m_Timer;
+    CTimer                          m_Timer;
+
+
 };

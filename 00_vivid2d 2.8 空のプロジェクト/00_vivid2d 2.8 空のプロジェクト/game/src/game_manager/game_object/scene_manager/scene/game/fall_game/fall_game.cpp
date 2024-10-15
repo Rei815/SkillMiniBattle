@@ -3,8 +3,12 @@
 #include "../../../../gimmick_manager/gimmick_manager.h"
 #include "../../../../camera/camera.h"
 #include "../../../../object_manager/object_manager.h"
+#include "../../../../ui_manager/ui_manager.h"
 #include "../../../../object_manager/object/fall_object/mark_id.h"
 
+const CTransform CFallGame::m_object_transform_list[] = 
+{CTransform(CVector3(0,-100,0)),CTransform(CVector3(100,-100,0)), CTransform(CVector3(200,-100,0)),
+CTransform(CVector3(-100,-100,0)), CTransform(CVector3(-200,-100,0)), CTransform(CVector3(-300,-100,0)) };
 CFallGame::CFallGame(void)
 {
 }
@@ -24,12 +28,11 @@ void CFallGame::Initialize(void)
 	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 0, 100));
 	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 200));
 
-	CObjectManager::GetInstance().Create(OBJECT_ID::CIRCLE_FALL_OBJECT);
-	CObjectManager::GetInstance().Create(OBJECT_ID::CROSS_FALL_OBJECT);
-	CObjectManager::GetInstance().Create(OBJECT_ID::MOON_FALL_OBJECT);
-	CObjectManager::GetInstance().Create(OBJECT_ID::SQUARE_FALL_OBJECT);
-	CObjectManager::GetInstance().Create(OBJECT_ID::SUN_FALL_OBJECT);
-	CObjectManager::GetInstance().Create(OBJECT_ID::TRIANGLE_FALL_OBJECT);
+	CObjectManager::GetInstance().Create(OBJECT_ID::CIRCLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::CIRCLE]);
+	CObjectManager::GetInstance().Create(OBJECT_ID::MOON_FALL_OBJECT, m_object_transform_list[(int)MARK_ID::MOON]);
+	CObjectManager::GetInstance().Create(OBJECT_ID::SQUARE_FALL_OBJECT, m_object_transform_list[(int)MARK_ID::SQUARE]);
+	CObjectManager::GetInstance().Create(OBJECT_ID::SUN_FALL_OBJECT, m_object_transform_list[(int)MARK_ID::SUN]);
+	CObjectManager::GetInstance().Create(OBJECT_ID::TRIANGLE_FALL_OBJECT, m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 }
 
 void CFallGame::Update(void)
@@ -71,11 +74,14 @@ void CFallGame::Play(void)
 
 		m_Timer.Reset();
 
-		OBJECT_ID objectID = ChooseObject();
+		FALL_INFO fallInfo = ChooseObject();
 
 
-		if (objectID != OBJECT_ID::NONE)
-		CObjectManager::GetInstance().SetGimmick(GIMMICK_ID::FALL_GIMMICK, objectID);
+		if (fallInfo.objectID != OBJECT_ID::NONE)
+		{
+			CObjectManager::GetInstance().SetGimmick(GIMMICK_ID::FALL_GIMMICK, fallInfo.objectID);
+			//CUIManager::GetInstance().Create(fallInfo.uiID);
+		}
 	}
 
 }
@@ -85,11 +91,12 @@ void CFallGame::Finish(void)
 	CGame::Finish();
 }
 
-OBJECT_ID CFallGame::ChooseObject(void)
+CFallGame::FALL_INFO CFallGame::ChooseObject(void)
 {
+	FALL_INFO fallInfo = FALL_INFO();
 	int index = (int)OBJECT_ID::NONE;
 	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
-	if (objectList.empty()) return OBJECT_ID::NONE;
+	if (objectList.empty()) return fallInfo;
 	CObjectManager::OBJECT_LIST::iterator it = objectList.begin();
 	bool flag = false;
 
@@ -103,7 +110,7 @@ OBJECT_ID CFallGame::ChooseObject(void)
 
 	if (it == objectList.end())
 	{
-		return OBJECT_ID::NONE;
+		return fallInfo;
 	}
 
 	while (flag == false)
@@ -116,5 +123,9 @@ OBJECT_ID CFallGame::ChooseObject(void)
 		if ((*it)->GetState() == OBJECT_STATE::WAIT)
 			flag = true;
 	}
-	return (*it)->GetObjectID();
+	switch ((*it)->GetObjectID())
+	{
+	case OBJECT_ID::MOON_FALL_OBJECT: fallInfo.uiID = UI_ID::FALL_MOON;
+	}
+	return FALL_INFO({ (*it)->GetObjectID() ,UI_ID::FALL_CIRCLE});
 }

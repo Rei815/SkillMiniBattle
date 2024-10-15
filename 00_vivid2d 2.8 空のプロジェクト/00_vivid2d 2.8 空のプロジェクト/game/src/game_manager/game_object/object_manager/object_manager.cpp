@@ -2,9 +2,6 @@
 #include "..\..\..\utility\utility.h"
 #include "object/fall_object/fall_object.h"
 #include "..\gimmick_manager\gimmick_manager.h"
-const std::string CObjectManager::m_file_name_list[] = { "data\\Models\\cube.mv1", "data\\Models\\cube.mv1" };
-const CVector3 CObjectManager::m_object_position_list[] =
-{ CVector3(-300.0f,-100.0f,0),CVector3(-200.0f,-100.0f,0),CVector3(-100.0f,-100.0f,0),CVector3(0,-100.0f,0),CVector3(100.0f,-100.0f,0),CVector3(200.0f,-100.0f,0) };
 
 /*
  *  インスタンスの取得
@@ -87,7 +84,7 @@ Finalize(void)
  */
 void
 CObjectManager::
-Create(OBJECT_ID id)
+Create(OBJECT_ID id, const CTransform& transform)
 {
     IObject* object = nullptr;
 
@@ -104,7 +101,7 @@ Create(OBJECT_ID id)
 
     if (!object) return;
 
-    object->Initialize(id, m_object_position_list[(int)id -1]);
+    object->Initialize(id, transform);
     m_ObjectList.push_back(object);
 }
 

@@ -15,11 +15,32 @@ CFallObject::~CFallObject()
 {
 }
 
-void CFallObject::Initialize(OBJECT_ID id, const CVector3& position)
+void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 {
-	IObject::Initialize(id, position);
+	IObject::Initialize(id, transform);
+	switch (id)
+	{
+	case OBJECT_ID::NONE:
+		break;
+	case OBJECT_ID::MOON_FALL_OBJECT:
+		break;
+	case OBJECT_ID::SUN_FALL_OBJECT:
+		break;
+	case OBJECT_ID::CIRCLE_FALL_OBJECT:
+		break;
+	case OBJECT_ID::SQUARE_FALL_OBJECT:
+		break;
+	case OBJECT_ID::TRIANGLE_FALL_OBJECT:
+		break;
+	case OBJECT_ID::CROSS_FALL_OBJECT:
+		break;
+	case OBJECT_ID::MAX:
+		break;
+	default:
+		break;
+	}
 	m_FileName = "data\\Models\\cube.mv1";
-	m_Transform.position = position;
+	m_Transform = transform;
 	m_Model.Initialize(m_FileName, m_Transform.position);
 	m_Timer.SetUp(1.0f);
 }

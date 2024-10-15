@@ -15,6 +15,15 @@ public:
      *  @brief  コンストラクタ
      */
     CTransform();
+    /*!
+     *  @brief  コンストラクタ
+     */
+    CTransform(const CVector3& pos);
+
+    /*!
+     *  @brief  コンストラクタ
+     */
+    CTransform(const CVector3& pos, const CVector3& rot);
 
     /*!
      *  @brief  デストラクタ

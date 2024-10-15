@@ -12,7 +12,7 @@ const vivid::Vector2    CFallSelect::m_anchor = vivid::Vector2((m_width * m_scal
  *  コンストラクタ
  */
 CFallSelect::
-CFallSelect(void)
+CFallSelect(UI_ID id)
     : CUI(m_width, m_height)
 {
 }
@@ -32,6 +32,15 @@ void
 CFallSelect::
 Initialize(void)
 {
+	switch (m_UIID)
+	{
+	case UI_ID::FALL_CIRCLE:	m_FileName = "data\\Textures\\fall_circle";		break;
+	case UI_ID::FALL_MOON:		m_FileName = "data\\Textures\\fall_moon";		break;
+	case UI_ID::FALL_CROSS:		m_FileName = "data\\Textures\\fall_cross";		break;
+	case UI_ID::FALL_SUN:		m_FileName = "data\\Textures\\fall_sun";		break;
+	case UI_ID::FALL_SQUARE:	m_FileName = "data\\Textures\\fall_square";		break;
+	case UI_ID::FALL_TRIANGLE:	m_FileName = "data\\Textures\\fall_triangle";	break;
+	}
 }
 
 /*
@@ -51,7 +60,7 @@ void
 CFallSelect::
 Draw(void)
 {
-    vivid::DrawTexture("data\\Textures\\player_life.png", m_position, 0xffffffff, m_rect, m_anchor, m_scale);
+    vivid::DrawTexture(m_FileName, m_position, 0xffffffff, m_rect, m_anchor, m_scale);
 
 }
 

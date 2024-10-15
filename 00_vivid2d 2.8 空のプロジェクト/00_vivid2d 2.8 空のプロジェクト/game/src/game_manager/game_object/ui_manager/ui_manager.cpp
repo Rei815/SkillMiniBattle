@@ -102,6 +102,14 @@ void CUIManager::Create(UI_ID id)
     switch (id)
     {
     case UI_ID::PAUSE:          ui = new CPause();          break;
+
+    case UI_ID::FALL_CIRCLE:
+    case UI_ID::FALL_CROSS:
+    case UI_ID::FALL_MOON:
+    case UI_ID::FALL_SQUARE:
+    case UI_ID::FALL_SUN:
+    case UI_ID::FALL_TRIANGLE:
+        ui = new CFallSelect(id);          break;
         break;
     }
     if (!ui) return;

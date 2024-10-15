@@ -11,10 +11,10 @@ IObject::~IObject()
 {
 }
 
-void IObject::Initialize(OBJECT_ID id, const CVector3& pos)
+void IObject::Initialize(OBJECT_ID id, const CTransform& transform)
 {
 	m_ObjectID = id;
-	m_Transform.position = pos;
+	m_Transform = transform;
 }
 
 void IObject::Update(void)

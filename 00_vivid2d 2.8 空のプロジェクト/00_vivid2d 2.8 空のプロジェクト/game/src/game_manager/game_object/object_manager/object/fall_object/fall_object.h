@@ -18,7 +18,7 @@ public:
      *  @brief      ‰Šú‰»
      *
      */
-    void    Initialize(OBJECT_ID id, const CVector3& position);
+    void    Initialize(OBJECT_ID id, const CTransform& transform);
 
     /*!
      *  @brief      XV

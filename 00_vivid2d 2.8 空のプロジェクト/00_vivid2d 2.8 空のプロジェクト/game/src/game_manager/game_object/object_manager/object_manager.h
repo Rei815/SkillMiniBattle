@@ -39,8 +39,9 @@ public:
      *  @brief      オブジェクト生成
      *
      *  @param[in]  id              オブジェクトID
+     *  @param[in]  position        位置
      */
-    void        Create(OBJECT_ID id);
+    void        Create(OBJECT_ID id, const CTransform& transform);
 
     /*!
      *  @brief      ギミック付与
@@ -105,8 +106,4 @@ private:
     CObjectManager& operator=(const CObjectManager& rhs);
 
     OBJECT_LIST             m_ObjectList;             //!< オブジェクトリスト
-
-    static const std::string    m_file_name_list[];
-    static const CVector3       m_object_position_list[];
-
 };
