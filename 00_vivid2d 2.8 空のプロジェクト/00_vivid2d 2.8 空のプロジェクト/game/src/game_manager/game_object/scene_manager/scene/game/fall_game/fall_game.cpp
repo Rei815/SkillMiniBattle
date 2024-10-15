@@ -39,17 +39,18 @@ void CFallGame::Initialize(void)
 	object = om.Create(OBJECT_ID::CIRCLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::CIRCLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
+	object = om.Create(OBJECT_ID::MOON_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::MOON]);
+	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
+
 	object = om.Create(OBJECT_ID::CROSS_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::CROSS]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	object = om.Create(OBJECT_ID::MOON_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::MOON]);
+	object = om.Create(OBJECT_ID::SUN_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SUN]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
 	object = om.Create(OBJECT_ID::SQUARE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SQUARE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	object = om.Create(OBJECT_ID::SUN_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SUN]);
-	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
