@@ -101,6 +101,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\vivid2d\src</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -119,6 +120,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\vivid2d\src</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -139,6 +141,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\vivid2d\src</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -161,6 +164,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\vivid2d\src</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -188,6 +192,8 @@
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\player_bullet_effect\player_bullet_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\shock_wave_effect\shock_wave_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect_manager.cpp" />
+    <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\daruma_falldown_gimmick\daruma_falldown_gimmick.cpp" />
+    <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\daruma_falldown_gimmick\daruma_falldown_object\daruma_falldown_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_gimmick.cpp" />
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_object\fall_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\gimmick.cpp" />
@@ -204,6 +210,7 @@
     <ClCompile Include="src\game_manager\game_object\launcher\shot\shot.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\shotgun\shotgun.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\three_way\three_way.cpp" />
+    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\daruma_falldown_game\daruma_falldown_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\debug_game\debug_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\fall_game\fall_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\game.cpp" />
@@ -273,6 +280,8 @@
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\shock_wave_effect\shock_wave_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect_manager.h" />
     <ClInclude Include="src\game_manager\game_object\game_object.h" />
+    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\daruma_falldown_gimmick\daruma_falldown_gimmick.h" />
+    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\daruma_falldown_gimmick\daruma_falldown_object\daruma_falldown_object.h" />
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_gimmick.h" />
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_object\fall_object.h" />
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_object\mark_id.h" />
@@ -295,6 +304,7 @@
     <ClInclude Include="src\game_manager\game_object\model_manager\model\model.h" />
     <ClInclude Include="src\game_manager\game_object\model_manager\model\model_id.h" />
     <ClInclude Include="src\game_manager\game_object\model_manager\model_manager.h" />
+    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\daruma_falldown_game\daruma_falldown_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\debug_game\debug_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\fall_game\fall_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\game.h" />
