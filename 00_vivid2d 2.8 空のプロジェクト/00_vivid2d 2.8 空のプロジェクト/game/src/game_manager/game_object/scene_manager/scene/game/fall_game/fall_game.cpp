@@ -16,7 +16,7 @@ CFallGame::~CFallGame(void)
 void CFallGame::Initialize(void)
 {
 	m_FallTime = 1.0f;
-	m_Timer.SetUp(0.0f);
+	m_Timer.SetUp(m_FallTime);
 	CGame::Initialize();
 	CCamera::GetInstance().Initialize();
 
