@@ -207,6 +207,7 @@
     <ClCompile Include="src\game_manager\game_object\object_manager\object\object.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\debug_game\debug_game.cpp" />
+    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\dodgeball_game\dodgeball_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\fall_game\fall_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\result\result.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="src\game_manager\game_object\object_manager\object\object_id.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object_manager.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\debug_game\debug_game.h" />
+    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\dodgeball_game\dodgeball_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\fall_game\fall_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\game_id.h" />
