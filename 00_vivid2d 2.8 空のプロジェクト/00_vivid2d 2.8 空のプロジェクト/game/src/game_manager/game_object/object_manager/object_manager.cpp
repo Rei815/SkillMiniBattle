@@ -82,7 +82,7 @@ Finalize(void)
 /*
  *  オブジェクト生成
  */
-void
+IObject*
 CObjectManager::
 Create(OBJECT_ID id, const CTransform& transform)
 {
@@ -99,45 +99,26 @@ Create(OBJECT_ID id, const CTransform& transform)
         object = new CFallObject();      break;
     }
 
-    if (!object) return;
+    if (!object) return nullptr;
 
     object->Initialize(id, transform);
     m_ObjectList.push_back(object);
+
+    return object;
 }
 
-void CObjectManager::SetGimmick(GIMMICK_ID gimmick_id, OBJECT_ID object_id)
+void CObjectManager::StartGimmick(GIMMICK_ID gimmick_id, IObject* object)
 {
     if (m_ObjectList.empty()) return;
 
-    OBJECT_LIST::iterator it = m_ObjectList.begin();
-
-    while (it != m_ObjectList.end())
-    {
-        if ((*it)->GetObjectID() == object_id)
-        {
-            CGimmickManager::GetInstance().Create(gimmick_id, (*it));
-        }
-
-        ++it;
-    }
-
+    CGimmickManager::GetInstance().Create(gimmick_id, object);
 }
 
-void CObjectManager::SetGimmick(GIMMICK_ID gimmick_id, OBJECT_ID object_id, float time)
+void CObjectManager::StartGimmick(GIMMICK_ID gimmick_id, IObject* object, float time)
 {
     if (m_ObjectList.empty()) return;
 
-    OBJECT_LIST::iterator it = m_ObjectList.begin();
-
-    while (it != m_ObjectList.end())
-    {
-        if ((*it)->GetObjectID() == object_id)
-        {
-            CGimmickManager::GetInstance().Create(gimmick_id, (*it), time);
-        }
-
-        ++it;
-    }
+    CGimmickManager::GetInstance().Create(gimmick_id, object, time);
 
 }
 

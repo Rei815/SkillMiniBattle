@@ -5,6 +5,7 @@
 #include "../../model_manager/model/model.h"
 #include "..\..\object_manager\object\object.h"
 #include "..\..\..\..\utility\utility.h"
+class IObject;
 class CGimmick
 {
 public:
@@ -68,6 +69,9 @@ public:
      */
     void            SetActive(bool active);
 
+    virtual void    SetSwitch(bool sw);
+
+    void            SetTimer(float time);
 protected:
     bool        m_ActiveFlag;   //!< アクティブフラグ
     IObject*    m_Object;
@@ -75,4 +79,6 @@ protected:
     int         m_DelayTimer;
     bool        m_DelayFlag;
     CTimer      m_Timer;
+    bool        m_Switch;
+
 };

@@ -4,6 +4,7 @@ const float IObject::m_limit_alpha = 1.0f;
 IObject::IObject()
 	: m_Alpha(m_limit_alpha)
 	, m_State(OBJECT_STATE::WAIT)
+	, m_Velocity()
 {
 }
 
@@ -69,4 +70,14 @@ OBJECT_STATE IObject::GetState()
 void IObject::SetState(OBJECT_STATE state)
 {
 	m_State = state;
+}
+
+void IObject::SetGimmick(CGimmick* gimmick)
+{
+	m_Gimmick = gimmick;
+}
+
+CGimmick* IObject::GetGimmick()
+{
+	return m_Gimmick;
 }

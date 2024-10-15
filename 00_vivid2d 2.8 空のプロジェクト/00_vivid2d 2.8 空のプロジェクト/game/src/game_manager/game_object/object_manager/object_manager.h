@@ -41,24 +41,24 @@ public:
      *  @param[in]  id              オブジェクトID
      *  @param[in]  position        位置
      */
-    void        Create(OBJECT_ID id, const CTransform& transform);
+    IObject*    Create(OBJECT_ID id, const CTransform& transform);
 
     /*!
      *  @brief      ギミック付与
      *
      *  @param[in]  gimmick_id          ギミックのID
-     *  @param[in]  object_id           オブジェクトのID
+     *  @param[in]  object              オブジェクト
      */
-    void        SetGimmick(GIMMICK_ID gimmick_id, OBJECT_ID object_id);
+    void        StartGimmick(GIMMICK_ID gimmick_id, IObject* object);
 
     /*!
      *  @brief      ギミック付与
      *
      *  @param[in]  gimmick_id          ギミックのID
-     *  @param[in]  object_id           オブジェクトのID
+     *  @param[in]  object              オブジェクト
      *  @param[in]  delayFrame          遅延時間
      */
-    void        SetGimmick(GIMMICK_ID gimmick_id, OBJECT_ID object_id, float time);
+    void        StartGimmick(GIMMICK_ID gimmick_id, IObject* object, float time);
 
     /*!
      *  @brief      オブジェクトリスト型

@@ -40,7 +40,7 @@ private:
 
     struct FALL_INFO
     {
-        OBJECT_ID   objectID = OBJECT_ID::NONE;
+        IObject*    object;
         UI_ID       uiID = UI_ID::NONE;
     };
 
@@ -67,9 +67,12 @@ private:
     FALL_INFO    ChooseObject(void);
 
     static const CTransform         m_object_transform_list[];
+    static const float              m_time_accelerator;
+    static const float              m_min_time;
+    static const float              m_initial_time;
     float                           m_FallTime;
 
     CTimer                          m_Timer;
 
-
+    IObject* m_Object;
 };

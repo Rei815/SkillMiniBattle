@@ -1,6 +1,7 @@
 #pragma once
 #include "../../model_manager/model/model.h"
 #include "object_id.h"
+#include "../../gimmick_manager/gimmick/gimmick.h"
 
 enum class OBJECT_STATE
 {
@@ -8,7 +9,7 @@ enum class OBJECT_STATE
     FALL,
     FALL_FINISH,
 };
-
+class CGimmick;
 class IObject
 {
 public:
@@ -92,6 +93,9 @@ public:
      */
     void            SetState(OBJECT_STATE state);
 
+    void            SetGimmick(CGimmick* gimmick);
+    
+    CGimmick*       GetGimmick();
 protected:
     static const float  m_limit_alpha;
     OBJECT_ID           m_ObjectID;
@@ -102,4 +106,6 @@ protected:
     bool                m_ActiveFlag;
     float               m_Alpha;
     OBJECT_STATE        m_State;
+    CGimmick*           m_Gimmick;
+
 };

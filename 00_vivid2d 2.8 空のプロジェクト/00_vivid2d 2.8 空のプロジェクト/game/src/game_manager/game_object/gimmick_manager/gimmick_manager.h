@@ -51,6 +51,11 @@ public:
      */
     void        Create(GIMMICK_ID id, IObject* object, float time);
 
+    /*!
+     *  @brief      ギミックリスト型
+     */
+    using GIMMICK_LIST = std::list<CGimmick*>;
+    GIMMICK_LIST GetList();
 private:
     /*!
      *  @brief      コンストラクタ
@@ -78,10 +83,6 @@ private:
      */
     CGimmickManager& operator=(const CGimmickManager& rhs);
 
-    /*!
-     *  @brief      ギミックリスト型
-     */
-    using GIMMICK_LIST = std::list<CGimmick*>;
 
     GIMMICK_LIST             m_GimmickList;             //!< ギミックリスト
 };

@@ -43,6 +43,7 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	m_Transform = transform;
 	m_Model.Initialize(m_FileName, m_Transform.position);
 	m_Timer.SetUp(1.0f);
+	m_State = OBJECT_STATE::WAIT;
 }
 
 void CFallObject::Update(void)

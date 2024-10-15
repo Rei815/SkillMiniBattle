@@ -40,6 +40,7 @@ public:
      */
     void    Finalize(void);
 
+    void    SetSwitch(bool sw);
 private:
     static const float  m_fall_speed;
 
