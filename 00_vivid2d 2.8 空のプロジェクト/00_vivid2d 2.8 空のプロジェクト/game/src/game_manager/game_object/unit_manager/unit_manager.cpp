@@ -41,9 +41,6 @@ Update(void)
 
     // ユニット更新
     UpdateUnit();
-
-    CheckHitStage();
-
 }
 
 /*
@@ -135,7 +132,7 @@ CheckHitBullet(IBullet* bullet)
     }
 }
 
-void CUnitManager::CheckHitStage()
+void CUnitManager::CheckHitObject(IObject* object)
 {
     if (m_UnitList.empty()) return;
     UNIT_LIST::iterator it = m_UnitList.begin();
@@ -143,33 +140,40 @@ void CUnitManager::CheckHitStage()
     while (it != m_UnitList.end())
     {
 
-        if (CStage::GetInstance().GetModel().GetModelHandle() == VIVID_DX_ERROR)
+        if (object->GetModel().GetModelHandle() == VIVID_DX_ERROR)
             return;
 
         CVector3 startPos = (*it)->GetPosition();
+        startPos.y += (*it)->GetHeight();
         CVector3 dir = (*it)->GetVelocity().Normalize();
 
         //動いている場合常に1か-1を保つ
         dir.x = (dir.x > 0) - (dir.x < 0);
 
-        CVector3 endPos = startPos + dir * (*it)->GetRadius();
+        CVector3 endPos = (*it)->GetPosition();
+        endPos.y -= (*it)->GetHeight();
 
-        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_LineDim(CStage::GetInstance().GetModel().GetModelHandle(), -1, startPos, endPos);
+        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Capsule(object->GetModel().GetModelHandle(), -1, startPos, endPos, (*it)->GetRadius());
 
         // 線分の描画
-        DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
+        DrawCapsule3D(startPos, endPos, (*it)->GetRadius(),8, GetColor(255, 255, 0), GetColor(255, 255, 255), FALSE);
 
         if (hit_poly_dim.HitNum >= 1)
         {
+            for (int i = 0; i < hit_poly_dim.HitNum; i++)
+            {
+                MV1_COLL_RESULT_POLY* pCollResultPoly = &hit_poly_dim.Dim[i];
 
-            (*it)->SetVelocity(CVector3::ZERO);
+                CVector3 hitPos = CVector3(pCollResultPoly->HitPosition.x, pCollResultPoly->HitPosition.y, pCollResultPoly->HitPosition.z);
 
-            CVector3 hitPos = CVector3(hit_poly_dim.Dim->HitPosition.x, hit_poly_dim.Dim->HitPosition.y, hit_poly_dim.Dim->HitPosition.z);
+                CVector3 pos = (*it)->GetPosition();
+                pos.y += (*it)->GetHeight();
+                CVector3 diffPos = pos - hitPos;
 
-            CVector3 diffPos = endPos - hitPos;
+                if (diffPos != CVector3::ZERO)
+                    (*it)->SetPosition((*it)->GetPosition() - diffPos);
 
-            if (diffPos != CVector3::ZERO)
-                (*it)->SetPosition((*it)->GetPosition() - diffPos);
+            }
         }
 
         // 当たり判定情報の後始末

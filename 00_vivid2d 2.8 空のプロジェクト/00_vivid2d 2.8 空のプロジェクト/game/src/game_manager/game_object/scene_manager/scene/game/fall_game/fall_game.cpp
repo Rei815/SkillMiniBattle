@@ -13,6 +13,8 @@ CTransform(CVector3(-100,-100,0)), CTransform(CVector3(-200,-100,0)), CTransform
 const float		CFallGame::m_time_accelerator = 0.1f;
 const float		CFallGame::m_min_time = 1.0f;
 const float		CFallGame::m_initial_time = 3.0f;
+const CVector3	CFallGame::m_camera_position = CVector3(0, 600.0f, -1000.0f);
+const CVector3	CFallGame::m_camera_direction = CVector3(0, -0.75f, 1.0f);
 CFallGame::CFallGame(void)
 {
 }
@@ -27,10 +29,11 @@ void CFallGame::Initialize(void)
 	m_Timer.SetUp(m_FallTime);
 	CGame::Initialize();
 	CCamera::GetInstance().Initialize();
-
+	CCamera::GetInstance().SetPosition(m_camera_position);
+	CCamera::GetInstance().SetDirection(m_camera_direction);
 	m_DebugText = "フォールゲーム";
-	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 0, 100));
-	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 200));
+	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 10, 100));
+	//CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 200));
 
 	CObjectManager& om = CObjectManager::GetInstance();
 	CGimmickManager& gm = CGimmickManager::GetInstance();
@@ -39,11 +42,12 @@ void CFallGame::Initialize(void)
 	object = om.Create(OBJECT_ID::CIRCLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::CIRCLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
+	object = om.Create(OBJECT_ID::CROSS_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::CROSS]);
+	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
+
 	object = om.Create(OBJECT_ID::MOON_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::MOON]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	object = om.Create(OBJECT_ID::CROSS_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::CROSS]);
-	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
 	object = om.Create(OBJECT_ID::SUN_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SUN]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
@@ -54,6 +58,7 @@ void CFallGame::Initialize(void)
 
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
+
 }
 
 void CFallGame::Update(void)

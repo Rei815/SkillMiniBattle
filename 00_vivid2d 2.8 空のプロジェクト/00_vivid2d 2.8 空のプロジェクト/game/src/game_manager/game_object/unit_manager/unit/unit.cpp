@@ -20,6 +20,7 @@
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
+const CVector3          IUnit::m_gravity = CVector3(0, -0.01f, 0.0f);
 
 IUnit::IUnit()
 {
@@ -78,13 +79,13 @@ void
 IUnit::
 Update(void)
 {
+    m_Velocity += m_gravity;
     switch (m_UnitState)
     {
     case UNIT_STATE::APPEAR:    Appear();      break;
     case UNIT_STATE::ATTACK:    Attack();      break;
     case UNIT_STATE::DEFEAT:    Defeat();        break;
     }
-
 }
 
 /*
@@ -264,6 +265,11 @@ void IUnit::SetVelocity(const CVector3& velocity)
 float IUnit::GetRadius(void)
 {
     return m_Radius;
+}
+
+float IUnit::GetHeight(void)
+{
+    return m_Height;
 }
 
 void IUnit::AddShot(void)

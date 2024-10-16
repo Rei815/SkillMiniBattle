@@ -67,6 +67,11 @@ OBJECT_STATE IObject::GetState()
 	return m_State;
 }
 
+CModel IObject::GetModel()
+{
+	return m_Model;
+}
+
 void IObject::SetState(OBJECT_STATE state)
 {
 	m_State = state;

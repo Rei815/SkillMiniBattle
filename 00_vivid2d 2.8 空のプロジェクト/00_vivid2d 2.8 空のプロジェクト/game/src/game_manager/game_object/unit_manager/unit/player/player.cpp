@@ -5,6 +5,7 @@
 
 
 const float             CPlayer::m_radius = 50.0f;
+const float             CPlayer::m_height = 10.0f;
 
 const float             CPlayer::m_move_speed = 0.5f;
 const float             CPlayer::m_jump_power = 15.0f;
@@ -39,6 +40,7 @@ void CPlayer::Initialize(const CVector3& position, const std::string& file_name,
     IUnit::Initialize(position, file_name, controller);
 
     m_Radius = m_radius;
+    m_Height = m_height;
 
     m_Model.Initialize(file_name, position);
 
@@ -155,22 +157,22 @@ void CPlayer::Move(void)
     if (!m_StopFlag)
     m_Velocity += m_Accelerator;
 
-    if(!m_StopFlag)
-    m_Transform.position += m_Velocity;
+    if (!m_StopFlag)
+        m_Transform.position += m_Velocity;
 
     m_Velocity.x *= m_move_friction;
     m_Velocity.y *= m_move_friction;
     m_Velocity.z *= m_move_friction;
 
 
-    if (m_Transform.position.y <= 0)
-    {
-        m_Transform.position.y = 0;
-        m_Velocity.y = 0.0f;
-        m_Accelerator.y = 0;
-        m_FallSpeed = 0.0f;
-        m_IsGround = true;
-    }
+    //if (m_Transform.position.y <= 0)
+    //{
+    //    m_Transform.position.y = 0;
+    //    m_Velocity.y = 0.0f;
+    //    m_Accelerator.y = 0;
+    //    m_FallSpeed = 0.0f;
+    //    m_IsGround = true;
+    //}
 
     m_Accelerator = CVector3::ZERO;
 }

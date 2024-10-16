@@ -44,6 +44,11 @@ public:
 	void SetPosition(const CVector3& position);
 
 	/*!
+	*  @brief      Œü‚«İ’è
+	*/
+	void SetDirection(const CVector3& direction);
+
+	/*!
 	*  @brief      ˆÊ’uæ“¾
 	*/
 	CVector3 GetPosition();

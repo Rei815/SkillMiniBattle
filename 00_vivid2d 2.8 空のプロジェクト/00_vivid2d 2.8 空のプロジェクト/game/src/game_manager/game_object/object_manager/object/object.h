@@ -87,6 +87,13 @@ public:
     OBJECT_STATE    GetState();
 
     /*!
+     *  @brief      ƒ‚ƒfƒ‹æ“¾
+     *
+     *  @return     ƒ‚ƒfƒ‹
+     */
+    CModel          GetModel();
+
+    /*!
      *  @brief      ó‘Ôİ’è
      *
      *  @param[in]  state   ó‘Ô

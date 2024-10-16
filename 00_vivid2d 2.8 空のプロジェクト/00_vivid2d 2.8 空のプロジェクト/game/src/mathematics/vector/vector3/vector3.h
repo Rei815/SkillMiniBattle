@@ -196,6 +196,16 @@ public:
 	friend CVector3     operator+(const CVector3& vA, const CVector3& vB);
 
 	/*!
+		*  @brief      加算演算子のオーバーロード
+		*
+		*  @param[in]  v  ベクトルクラス
+		*  @param[in]  f  float型
+		*
+		*  @return     ベクトルクラス
+		*/
+	friend CVector3     operator+(const CVector3& vA, float f);
+
+	/*!
 		*  @brief      減算演算子のオーバーロード
 		*
 		*  @param[in]  vA  ベクトルクラス

@@ -2,6 +2,7 @@
 #include "..\..\..\utility\utility.h"
 #include "object/fall_object/fall_object.h"
 #include "..\gimmick_manager\gimmick_manager.h"
+#include "..\unit_manager\unit_manager.h"
 
 /*
  *  インスタンスの取得
@@ -35,6 +36,14 @@ Update(void)
 
     // オブジェクト更新
     UpdateObject();
+
+    OBJECT_LIST::iterator it = m_ObjectList.begin();
+
+    while (it != m_ObjectList.end())
+    {
+        CUnitManager::GetInstance().CheckHitObject((*it));
+        ++it;
+    }
 }
 
 /*
