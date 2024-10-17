@@ -202,6 +202,12 @@ public:
 
     CModel      GetModel(void);
 
+    /*!
+         *  @brief      地面の可不可を設定
+         *
+         *  @param[in]  flag    地面フラグ
+     */
+    void        SetIsGround(bool flag);
 
 protected:
 
@@ -272,5 +278,7 @@ protected:
     float                   m_Alpha;                    //!< アルファ値
     bool                    m_DefeatFlag;               //!< 敗北フラグ
     std::string             m_FileName;
+    bool                    m_IsGround;                 //!< 地上にいるか
+
 
 };

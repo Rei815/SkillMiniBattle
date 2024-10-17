@@ -3,12 +3,6 @@
 #include "object_id.h"
 #include "../../gimmick_manager/gimmick/gimmick.h"
 
-enum class OBJECT_STATE
-{
-    WAIT,
-    FALL,
-    FALL_FINISH,
-};
 class CGimmick;
 class IObject
 {
@@ -116,6 +110,13 @@ public:
     void            SetGimmick(CGimmick* gimmick);
     
     CGimmick*       GetGimmick();
+
+    /*!
+     *  @brief      ƒ‚ƒfƒ‹Žæ“¾
+     *
+     *  @return     ƒ‚ƒfƒ‹
+     */
+    std::string     GetTag();
 protected:
     static const float  m_limit_alpha;
     OBJECT_ID           m_ObjectID;
@@ -125,7 +126,6 @@ protected:
     std::string         m_FileName;
     bool                m_ActiveFlag;
     float               m_Alpha;
-    OBJECT_STATE        m_State;
     CGimmick*           m_Gimmick;
-
+    std::string         m_Tag;
 };

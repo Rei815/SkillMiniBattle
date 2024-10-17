@@ -14,7 +14,7 @@ CStage& CStage::GetInstance(void)
 
 void CStage::Initialize(void)
 {
-    m_Transform.position = CVector3(0, -60, -200);
+    m_Transform.position = CVector3(0, -500, -200);
     m_Model.Initialize("data\\Stage_1.mv1", m_Transform.position);
 
     //180“x‰ñ“]

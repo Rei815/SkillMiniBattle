@@ -6,6 +6,13 @@
 #include "..\..\object_manager\object\object.h"
 #include "..\..\..\..\utility\utility.h"
 class IObject;
+enum class GIMMICK_STATE
+{
+    WAIT,
+    PLAY,
+    FINISH,
+};
+
 class CGimmick
 {
 public:

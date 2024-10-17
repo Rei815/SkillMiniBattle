@@ -38,7 +38,7 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	m_Model.Initialize(m_FileName, m_Transform.position);
 	m_Timer.SetUp(1.0f);
 	m_State = OBJECT_STATE::WAIT;
-
+	m_Tag = "Fall";
 }
 
 void CFallObject::Update(void)
@@ -52,8 +52,8 @@ void CFallObject::Update(void)
 	}
 	if (m_Alpha == m_invisible_alpha)
 	{
-		m_State = OBJECT_STATE::FALL_FINISH;
 		m_Timer.Update();
+		m_Gimmick->SetSwitch(false);
 	}
 
 	if (m_Timer.Finished())
@@ -62,7 +62,7 @@ void CFallObject::Update(void)
 		m_Transform.position.y = m_start_height;
 		m_Alpha = m_limit_alpha;
 		m_Velocity = CVector3::ZERO;
-		m_State = OBJECT_STATE::WAIT;
+		m_Gimmick->SetSwitch(true);
 	}
 }
 

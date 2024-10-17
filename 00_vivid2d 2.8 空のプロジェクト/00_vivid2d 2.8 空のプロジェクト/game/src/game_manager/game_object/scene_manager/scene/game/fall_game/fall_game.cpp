@@ -7,14 +7,14 @@
 #include "../../../../object_manager/object/fall_object/mark_id.h"
 
 const CTransform CFallGame::m_object_transform_list[] = 
-{CTransform(CVector3(0,-100,0)),CTransform(CVector3(100,-100,0)), CTransform(CVector3(200,-100,0)),
-CTransform(CVector3(-100,-100,0)), CTransform(CVector3(-200,-100,0)), CTransform(CVector3(-300,-100,0)) };
+{CTransform(CVector3(200,-100,-150)),CTransform(CVector3(-200,-100,150)), CTransform(CVector3(0,-100,200)),
+CTransform(CVector3(-200,-100,-150)), CTransform(CVector3(0,-100,-200)), CTransform(CVector3(200,-100,150)) };
 
 const float		CFallGame::m_time_accelerator = 0.1f;
 const float		CFallGame::m_min_time = 1.0f;
 const float		CFallGame::m_initial_time = 3.0f;
-const CVector3	CFallGame::m_camera_position = CVector3(0, 600.0f, -1000.0f);
-const CVector3	CFallGame::m_camera_direction = CVector3(0, -0.75f, 1.0f);
+const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
+const CVector3	CFallGame::m_camera_direction = CVector3(0, -0.85f, 1.0f);
 CFallGame::CFallGame(void)
 {
 }
@@ -28,11 +28,15 @@ void CFallGame::Initialize(void)
 	m_FallTime = m_initial_time;
 	m_Timer.SetUp(m_FallTime);
 	CGame::Initialize();
+	CStage::GetInstance().Initialize();
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 	m_DebugText = "フォールゲーム";
-	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 100, 0));
+
+	CVector3 playerPos = m_object_transform_list[(int)MARK_ID::CIRCLE].position;
+	playerPos.y += 100.0f;
+	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, playerPos);
 	//CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 200));
 
 	CObjectManager& om = CObjectManager::GetInstance();
@@ -48,12 +52,12 @@ void CFallGame::Initialize(void)
 	object = om.Create(OBJECT_ID::MOON_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::MOON]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
+	object = om.Create(OBJECT_ID::SQUARE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SQUARE]);
+	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
 	object = om.Create(OBJECT_ID::SUN_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SUN]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	object = om.Create(OBJECT_ID::SQUARE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SQUARE]);
-	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
 
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
@@ -63,14 +67,18 @@ void CFallGame::Initialize(void)
 
 void CFallGame::Update(void)
 {
+	CStage::GetInstance().Update();
 	CGame::Update();
+
 	CCamera::GetInstance().Update();
 
 }
 
 void CFallGame::Draw(void)
 {
+	CStage::GetInstance().Draw();
 	CGame::Draw();
+
 #ifdef VIVID_DEBUG
 	vivid::DrawText(30, std::to_string(m_Timer.GetTimer()),
 		vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_Timer.GetTimer())), 0));
@@ -81,6 +89,8 @@ void CFallGame::Draw(void)
 void CFallGame::Finalize(void)
 {
 	CGame::Finalize();
+	CStage::GetInstance().Finalize();
+
 	CCamera::GetInstance().Finalize();
 
 }

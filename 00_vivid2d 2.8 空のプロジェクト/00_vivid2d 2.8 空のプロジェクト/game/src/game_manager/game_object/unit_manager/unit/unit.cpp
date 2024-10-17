@@ -20,7 +20,7 @@
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
-const CVector3          IUnit::m_gravity = CVector3(0, -0.1f, 0.0f);
+const CVector3          IUnit::m_gravity = CVector3(0.0f, -1.0f, 0.0f);
 
 IUnit::IUnit()
 {
@@ -295,6 +295,11 @@ float IUnit::GetDamageRate(void)
 CModel IUnit::GetModel(void)
 {
     return m_Model;
+}
+
+void IUnit::SetIsGround(bool flag)
+{
+    m_IsGround = flag;
 }
 
 void IUnit::RevertAlpha(void)
