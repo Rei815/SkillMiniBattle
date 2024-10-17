@@ -32,7 +32,7 @@ void CFallGame::Initialize(void)
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 	m_DebugText = "フォールゲーム";
-	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 10, 100));
+	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 100, 0));
 	//CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 200));
 
 	CObjectManager& om = CObjectManager::GetInstance();
@@ -58,7 +58,7 @@ void CFallGame::Initialize(void)
 
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
-
+	
 }
 
 void CFallGame::Update(void)

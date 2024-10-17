@@ -164,14 +164,14 @@ void CUnitManager::CheckHitObject(IObject* object)
             {
                 MV1_COLL_RESULT_POLY* pCollResultPoly = &hit_poly_dim.Dim[i];
 
-                CVector3 hitPos = CVector3(pCollResultPoly->HitPosition.x, pCollResultPoly->HitPosition.y, pCollResultPoly->HitPosition.z);
+                CVector3 hitPos = pCollResultPoly->Position[0] + pCollResultPoly->Position[1] + pCollResultPoly->Position[2];
 
                 CVector3 pos = (*it)->GetPosition();
                 pos.y += (*it)->GetHeight();
                 CVector3 diffPos = pos - hitPos;
 
                 if (diffPos != CVector3::ZERO)
-                    (*it)->SetPosition((*it)->GetPosition() - diffPos);
+                    (*it)->SetPosition(CVector3(pos.x,(*it)->GetPosition().y - diffPos.y, pos.z));
 
             }
         }
