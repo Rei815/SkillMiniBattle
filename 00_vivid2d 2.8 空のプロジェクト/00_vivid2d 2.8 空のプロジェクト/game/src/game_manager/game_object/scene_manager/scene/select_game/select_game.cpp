@@ -31,11 +31,10 @@ void CSelectGame::Update(void)
         case (int)GAME_ID::FALLGAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME); break;
         case (int)GAME_ID::DEBUGGAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME); break;
         }
-        
     }
 #if _DEBUG
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
 #endif
     CStage::GetInstance().Update();
 

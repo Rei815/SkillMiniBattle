@@ -24,11 +24,7 @@ void CDaruma_FallDownGimmick::Update(void)
 	{
 		m_TurnAround = true;
 
-		//プレイヤーの数が0になったら
-		if (m_RestPlayer <= 0)
-		{
-
-		}
+		
 
 
 	}
@@ -41,6 +37,11 @@ void CDaruma_FallDownGimmick::Update(void)
 
 	}
 
+	//プレイヤーの数が0になったら
+	if (m_RestPlayer <= 0)
+	{
+
+	}
 }
 
 void CDaruma_FallDownGimmick::Draw(void)

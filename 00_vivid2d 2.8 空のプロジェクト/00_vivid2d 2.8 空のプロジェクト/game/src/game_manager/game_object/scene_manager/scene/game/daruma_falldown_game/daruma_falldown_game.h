@@ -5,20 +5,12 @@
 class CDaruma_FallDownGame : public CGame
 {
 public:
+	CDaruma_FallDownGame();
+	~CDaruma_FallDownGame();
 
     /*!
-     *  @brief      コンストラクタ
-     */
-    CDaruma_FallDownGame(void);
-
-    /*!
-     *  @brief      デストラクタ
-     */
-    ~CDaruma_FallDownGame(void);
-
-    /*!
-     *  @brief      初期化
-     */
+ *  @brief      初期化
+ */
     void        Initialize(void);
 
     /*!
@@ -35,5 +27,7 @@ public:
      *  @brief      解放
      */
     void        Finalize(void);
+
+private:
 
 };

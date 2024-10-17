@@ -68,7 +68,6 @@ void CFallGame::Play(void)
 	m_Timer.Update();
 	if (m_Timer.Finished())
 	{
-
 		m_Timer.Reset();
 
 		OBJECT_ID objectID = ChooseObject();

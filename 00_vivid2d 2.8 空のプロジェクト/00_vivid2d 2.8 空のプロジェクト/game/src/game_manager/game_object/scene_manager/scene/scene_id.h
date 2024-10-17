@@ -11,6 +11,7 @@ enum class SCENE_ID
 	FALLGAME,		//!< フォールゲームシーン
 	DEBUGGAME,		//!< デバッグゲームシーン
 	RESULT,			//!< リザルトシーン
+	DARUMAFALLDOWN,	//!< ダルマさんが転んだシーン
 
 
 	MAX			//!< シーンID数

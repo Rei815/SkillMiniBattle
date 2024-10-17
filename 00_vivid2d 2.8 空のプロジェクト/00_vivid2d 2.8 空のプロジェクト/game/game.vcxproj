@@ -304,6 +304,7 @@
     <ClInclude Include="src\game_manager\game_object\model_manager\model\model.h" />
     <ClInclude Include="src\game_manager\game_object\model_manager\model\model_id.h" />
     <ClInclude Include="src\game_manager\game_object\model_manager\model_manager.h" />
+    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\daruma_falldown_game\daruma_falldown_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\debug_game\debug_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\dodgeball_game\dodgeball_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\fall_game\fall_game.h" />
