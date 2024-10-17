@@ -205,6 +205,11 @@ CVector3 operator+(const CVector3& vA, const CVector3& vB)
 	return CVector3(vA.x + vB.x, vA.y + vB.y, vA.z + vB.z);
 }
 
+CVector3 operator+(const CVector3& vA, float f)
+{
+	return CVector3(vA.x + f, vA.y + f, vA.z + f);
+}
+
 /*
  *  減算演算子のオーバーロード
  */

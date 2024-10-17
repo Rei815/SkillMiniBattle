@@ -169,6 +169,13 @@ public:
     float           GetRadius(void);
 
     /*!
+     *  @brief      高さ取得
+     *
+     *  @return     高さ
+     */
+    float           GetHeight(void);
+
+    /*!
      *  @brief      弾数追加
      *
      */
@@ -193,7 +200,9 @@ public:
      */
     float       GetDamageRate(void);
 
-    CModel        GetModel(void);
+    CModel      GetModel(void);
+
+
 protected:
 
     /*!
@@ -242,8 +251,10 @@ protected:
 
     static const float      m_destroy_scale_adjust;     //!< エフェクト(destroy)の大きさ調整値
     static const float      m_alpha_speed;              //!< アルファ値の速度
+    static const CVector3   m_gravity;                  //!< 重力
 
     float                   m_Radius;
+    float                   m_Height;
     CModel                  m_Model;
     CTransform	            m_Transform;		    //!< トランスフォーム
     CVector3	            m_Max_Vertex;		    //!< 最大頂点座標

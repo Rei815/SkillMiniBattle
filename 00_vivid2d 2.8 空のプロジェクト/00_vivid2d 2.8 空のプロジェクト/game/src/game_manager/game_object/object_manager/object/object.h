@@ -1,6 +1,7 @@
 #pragma once
 #include "../../model_manager/model/model.h"
 #include "object_id.h"
+#include "../../gimmick_manager/gimmick/gimmick.h"
 
 enum class OBJECT_STATE
 {
@@ -8,7 +9,7 @@ enum class OBJECT_STATE
     FALL,
     FALL_FINISH,
 };
-
+class CGimmick;
 class IObject
 {
 public:
@@ -19,7 +20,7 @@ public:
      *  @brief      初期化
      *
      */
-    virtual void    Initialize(OBJECT_ID id, const CVector3& pos);
+    virtual void    Initialize(OBJECT_ID id, const CTransform& pos);
 
     /*!
      *  @brief      更新
@@ -71,6 +72,19 @@ public:
     void            SetPosition(const CVector3& position);
 
     /*!
+     *  @brief      回転取得
+     *
+     *  @return     回転
+     */
+    CVector3        GetRotation();
+    /*!
+     *  @brief      位置設定
+     *
+     *  @param[in]  rotation  位置
+     */
+    void            SetRotation(const CVector3& rotation);
+
+    /*!
      *  @brief      速度設定
      *
      *  @param[in]  velocity  速度
@@ -86,12 +100,22 @@ public:
     OBJECT_STATE    GetState();
 
     /*!
+     *  @brief      モデル取得
+     *
+     *  @return     モデル
+     */
+    CModel          GetModel();
+
+    /*!
      *  @brief      状態設定
      *
      *  @param[in]  state   状態
      */
     void            SetState(OBJECT_STATE state);
 
+    void            SetGimmick(CGimmick* gimmick);
+    
+    CGimmick*       GetGimmick();
 protected:
     static const float  m_limit_alpha;
     OBJECT_ID           m_ObjectID;
@@ -102,4 +126,6 @@ protected:
     bool                m_ActiveFlag;
     float               m_Alpha;
     OBJECT_STATE        m_State;
+    CGimmick*           m_Gimmick;
+
 };

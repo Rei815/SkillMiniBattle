@@ -72,6 +72,11 @@ void CCamera::SetPosition(const CVector3& position)
     m_Position = position;
 }
 
+void CCamera::SetDirection(const CVector3& direction)
+{
+    m_Direction = direction;
+}
+
 CVector3 CCamera::GetPosition()
 {
     return m_Position;

@@ -4,6 +4,7 @@ const float IObject::m_limit_alpha = 1.0f;
 IObject::IObject()
 	: m_Alpha(m_limit_alpha)
 	, m_State(OBJECT_STATE::WAIT)
+	, m_Velocity()
 {
 }
 
@@ -11,10 +12,10 @@ IObject::~IObject()
 {
 }
 
-void IObject::Initialize(OBJECT_ID id, const CVector3& pos)
+void IObject::Initialize(OBJECT_ID id, const CTransform& transform)
 {
 	m_ObjectID = id;
-	m_Transform.position = pos;
+	m_Transform = transform;
 }
 
 void IObject::Update(void)
@@ -56,6 +57,16 @@ void IObject::SetPosition(const CVector3& position)
 	m_Transform.position = position;
 }
 
+CVector3 IObject::GetRotation()
+{
+	return m_Transform.rotation;
+}
+
+void IObject::SetRotation(const CVector3& rotation)
+{
+	m_Transform.rotation = rotation;
+}
+
 void IObject::SetVelocity(const CVector3& velocity)
 {
 	m_Velocity = velocity;
@@ -66,7 +77,22 @@ OBJECT_STATE IObject::GetState()
 	return m_State;
 }
 
+CModel IObject::GetModel()
+{
+	return m_Model;
+}
+
 void IObject::SetState(OBJECT_STATE state)
 {
 	m_State = state;
+}
+
+void IObject::SetGimmick(CGimmick* gimmick)
+{
+	m_Gimmick = gimmick;
+}
+
+CGimmick* IObject::GetGimmick()
+{
+	return m_Gimmick;
 }

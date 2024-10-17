@@ -122,6 +122,11 @@ void CGimmickManager::Create(GIMMICK_ID id, IObject* object, float time)
 
 }
 
+CGimmickManager::GIMMICK_LIST CGimmickManager::GetList()
+{
+    return m_GimmickList;
+}
+
 /*
  *  コンストラクタ
  */

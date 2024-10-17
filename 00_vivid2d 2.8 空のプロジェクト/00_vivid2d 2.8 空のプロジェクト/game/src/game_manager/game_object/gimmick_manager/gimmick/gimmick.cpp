@@ -2,10 +2,8 @@
 
 CGimmick::CGimmick()
 	: m_Object(nullptr)
-	, m_DelayTime()
-	, m_DelayTimer()
-	, m_DelayFlag(false)
 	, m_Timer()
+	, m_Switch(false)
 {
 }
 
@@ -16,28 +14,18 @@ CGimmick::~CGimmick(void)
 void CGimmick::Initialize(IObject* object)
 {
 	m_Object = object;
+	m_Switch = false;
 }
 
 void CGimmick::Initialize(IObject* object, float time)
 {
 	m_Object = object;
-	m_DelayTime = time;
 	m_Timer.SetUp(time);
-
-
 }
 
 void CGimmick::Update(void)
 {
-	if (m_DelayFlag) return;
-
 	m_Timer.Update();
-
-	if (m_Timer.Finished())
-	{
-		m_DelayFlag = true;
-	}
-
 }
 
 void CGimmick::Draw(void)
@@ -61,4 +49,14 @@ bool CGimmick::GetActive(void)
 void CGimmick::SetActive(bool active)
 {
 	m_ActiveFlag = active;
+}
+
+void CGimmick::SetSwitch(bool sw)
+{
+	m_Switch = sw;
+}
+
+void CGimmick::SetTimer(float time)
+{
+	m_Timer.SetUp(time);
 }

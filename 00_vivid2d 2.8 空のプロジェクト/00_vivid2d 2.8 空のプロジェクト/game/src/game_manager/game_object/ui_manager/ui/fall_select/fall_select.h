@@ -8,7 +8,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    CFallSelect(void);
+    CFallSelect(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
@@ -18,7 +18,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize(void);
+    void        Initialize();
 
     /*!
      *  @brief      更新
@@ -43,4 +43,6 @@ private:
     static const vivid::Vector2     m_anchor;       //!< 基準点
     static const vivid::Vector2     m_scale;        //!< 拡縮
 
+    UI_ID                           m_UIID;
+    std::string                     m_FileName;
 };

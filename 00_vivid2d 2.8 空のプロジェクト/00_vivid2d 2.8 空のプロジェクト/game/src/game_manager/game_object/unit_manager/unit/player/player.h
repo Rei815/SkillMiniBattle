@@ -70,6 +70,7 @@ protected:
     void        Damage(void);
 
     static const float              m_radius;                       //!< 半径
+    static const float              m_height;                       //!< 高さ
     static const float              m_move_speed;                   //!< 移動速度
     static const float              m_jump_power;                   //!< ジャンプ力
     static const float              m_move_friction;                //!< 移動用減速率

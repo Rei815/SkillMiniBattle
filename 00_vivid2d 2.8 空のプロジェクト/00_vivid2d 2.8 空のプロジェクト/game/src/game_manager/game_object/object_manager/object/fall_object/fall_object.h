@@ -18,7 +18,7 @@ public:
      *  @brief      èâä˙âª
      *
      */
-    void    Initialize(OBJECT_ID id, const CVector3& position);
+    void    Initialize(OBJECT_ID id, const CTransform& transform);
 
     /*!
      *  @brief      çXêV
@@ -60,7 +60,7 @@ private:
     static const float          m_start_height;
     static const float          m_remove_height;
     static const float          m_invisible_alpha;
-
+    static const std::string    m_file_name_list[];
     float                       m_FallSpeed;
     FALL_OBJECT_STATE           m_FallObjectState;
     MARK_ID                     m_MarkID;

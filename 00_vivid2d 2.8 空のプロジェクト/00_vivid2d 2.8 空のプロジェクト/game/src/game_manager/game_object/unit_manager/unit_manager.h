@@ -59,7 +59,7 @@ public:
      *  @brief      ユニットとステージとのアタリ判定
      *
      */
-    void        CheckHitStage();
+    void        CheckHitObject(IObject* object);
 
     /*!
      *  @brief      プレイヤー取得
