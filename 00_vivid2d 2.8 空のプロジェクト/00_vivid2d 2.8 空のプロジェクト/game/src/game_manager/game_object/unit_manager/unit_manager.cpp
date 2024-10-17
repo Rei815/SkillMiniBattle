@@ -153,10 +153,10 @@ void CUnitManager::CheckHitObject(IObject* object)
         CVector3 endPos = (*it)->GetPosition();
         endPos.y -= (*it)->GetHeight();
 
-        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Capsule(object->GetModel().GetModelHandle(), -1, startPos, endPos, (*it)->GetRadius());
+        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(object->GetModel().GetModelHandle(), -1, (*it)->GetPosition(), (*it)->GetRadius());
 
         // ü•ª‚Ì•`‰æ
-        DrawCapsule3D(startPos, endPos, (*it)->GetRadius(),8, GetColor(255, 255, 0), GetColor(255, 255, 255), FALSE);
+        DrawSphere3D((*it)->GetPosition(), (*it)->GetRadius(), 8, GetColor(255, 255, 0), GetColor(255, 255, 255), FALSE);
 
         if (hit_poly_dim.HitNum >= 1)
         {
@@ -164,14 +164,13 @@ void CUnitManager::CheckHitObject(IObject* object)
             {
                 MV1_COLL_RESULT_POLY* pCollResultPoly = &hit_poly_dim.Dim[i];
 
-                CVector3 hitPos = pCollResultPoly->Position[0] + pCollResultPoly->Position[1] + pCollResultPoly->Position[2];
+                CVector3 hitPos = CVector3(pCollResultPoly->HitPosition.x, pCollResultPoly->HitPosition.y , pCollResultPoly->HitPosition.z);
 
                 CVector3 pos = (*it)->GetPosition();
-                pos.y += (*it)->GetHeight();
                 CVector3 diffPos = pos - hitPos;
 
                 if (diffPos != CVector3::ZERO)
-                    (*it)->SetPosition(CVector3(pos.x,(*it)->GetPosition().y - diffPos.y, pos.z));
+                    (*it)->SetPosition((*it)->GetPosition() - diffPos);
 
             }
         }

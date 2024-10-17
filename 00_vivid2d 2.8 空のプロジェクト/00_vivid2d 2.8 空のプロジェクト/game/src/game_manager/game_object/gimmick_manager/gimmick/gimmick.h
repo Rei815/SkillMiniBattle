@@ -75,9 +75,6 @@ public:
 protected:
     bool        m_ActiveFlag;   //!< アクティブフラグ
     IObject*    m_Object;
-    int         m_DelayTime;
-    int         m_DelayTimer;
-    bool        m_DelayFlag;
     CTimer      m_Timer;
     bool        m_Switch;
 

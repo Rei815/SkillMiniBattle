@@ -62,6 +62,7 @@ void CModel::Update(const CTransform& transform)
 	//ˆÊ’uî•ñ‚ÌXV
 	MV1SetPosition(m_Handle, m_Transform.position);
 
+	MV1SetRotationXYZ(m_Handle, m_Transform.rotation);
 	MV1RefreshCollInfo(m_Handle, -1);
 
 
