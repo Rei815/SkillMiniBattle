@@ -12,7 +12,7 @@ CTransform(CVector3(-200,-100,-150)), CTransform(CVector3(0,-100,-200)), CTransf
 
 const float		CFallGame::m_time_accelerator = 0.1f;
 const float		CFallGame::m_min_time = 1.0f;
-const float		CFallGame::m_initial_time = 3.0f;
+const float		CFallGame::m_initial_time = 1.0f;
 const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallGame::m_camera_direction = CVector3(0, -0.85f, 1.0f);
 CFallGame::CFallGame(void)
@@ -149,7 +149,7 @@ CFallGame::FALL_INFO CFallGame::ChooseObject(void)
 	//待機中のオブジェクトがあるか調査
 	for (it = objectList.begin(); it != objectList.end(); it++)
 	{
-		if ((*it)->GetState() == OBJECT_STATE::WAIT)
+		if ((*it)->GetGimmick()->GetState() == GIMMICK_STATE::WAIT)
 		{
 			waitObjectList.push_back((*it));
 		}
@@ -169,12 +169,12 @@ CFallGame::FALL_INFO CFallGame::ChooseObject(void)
 	fallInfo.object = (*it);
 	switch ((*it)->GetObjectID())
 	{
-	case OBJECT_ID::MOON_FALL_OBJECT: fallInfo.uiID = UI_ID::FALL_MOON; break;
-	case OBJECT_ID::CIRCLE_FALL_OBJECT: fallInfo.uiID = UI_ID::FALL_CIRCLE; break;
-	case OBJECT_ID::CROSS_FALL_OBJECT: fallInfo.uiID = UI_ID::FALL_CROSS; break;
-	case OBJECT_ID::SQUARE_FALL_OBJECT: fallInfo.uiID = UI_ID::FALL_SQUARE; break;
-	case OBJECT_ID::SUN_FALL_OBJECT: fallInfo.uiID = UI_ID::FALL_SUN; break;
-	case OBJECT_ID::TRIANGLE_FALL_OBJECT: fallInfo.uiID = UI_ID::FALL_TRIANGLE; break;
+	case OBJECT_ID::MOON_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_MOON;		break;
+	case OBJECT_ID::CIRCLE_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_CIRCLE;		break;
+	case OBJECT_ID::CROSS_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_CROSS;		break;
+	case OBJECT_ID::SQUARE_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_SQUARE;		break;
+	case OBJECT_ID::SUN_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_SUN;		break;
+	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	fallInfo.uiID = UI_ID::FALL_TRIANGLE;	break;
 	}
 	return fallInfo;
 }

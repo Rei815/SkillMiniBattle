@@ -87,25 +87,11 @@ public:
 
 
     /*!
-     *  @brief      ó‘Ôæ“¾
-     *
-     *  @return     ó‘Ô
-     */
-    OBJECT_STATE    GetState();
-
-    /*!
      *  @brief      ƒ‚ƒfƒ‹æ“¾
      *
      *  @return     ƒ‚ƒfƒ‹
      */
     CModel          GetModel();
-
-    /*!
-     *  @brief      ó‘Ôİ’è
-     *
-     *  @param[in]  state   ó‘Ô
-     */
-    void            SetState(OBJECT_STATE state);
 
     void            SetGimmick(CGimmick* gimmick);
     
