@@ -1,15 +1,19 @@
-
 #pragma once
 #include "..\gimmick.h"
 
-enum class CANNON_DIRECTION
+enum class CANNON_STATE
 {
-    UP,
-    DOWN,
-    RIGHT,
-    LEFT,
-    
-    MAX,
+    SPAWN,
+    MOVE,
+    STOP,
+};
+
+enum class CANNON_ROTATE
+{
+    RIGHT_GO,
+    RIGHT_RETURN,
+    LEFT_GO,
+    LEFT_RETURN,
 };
 
 class CDodgeBallGimmick : public CGimmick
@@ -30,7 +34,7 @@ public:
      *  @brief      èâä˙âª
      *
      */
-    void    Initialize();
+    void    Initialize(CVector3 Pos, CVector3 Rot, IObject* object);
 
     /*!
      *  @brief      çXêV
@@ -48,10 +52,17 @@ public:
     void    Finalize(void);
 
 private:
-    CANNON_DIRECTION NextCannnonDir;
-    static const int m_cannnon_count;
-    static const int m_cannnon_spawn_time;
+    //íeî≠éÀ
+    void    Shot(void);
 
-    int m_CannonSpawnTimer;
+    CTransform          m_SetTransform;
+    CANNON_STATE        m_NowState;
+    CANNON_ROTATE       m_NowRotate;
 
+    static const std::string    m_file_name;
+    static const CVector3       m_spawn_pos;
+    static const float          m_spawn_time;
+    static const float          m_max_rotate_angle;
+    static const float          m_rotate_time;
+    static const float          m_min_rotate_time;
 };
