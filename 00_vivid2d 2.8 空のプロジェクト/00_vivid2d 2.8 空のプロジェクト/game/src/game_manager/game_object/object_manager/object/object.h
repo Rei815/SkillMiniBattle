@@ -72,6 +72,19 @@ public:
     void            SetPosition(const CVector3& position);
 
     /*!
+     *  @brief      回転取得
+     *
+     *  @return     回転
+     */
+    CVector3        GetRotation();
+    /*!
+     *  @brief      位置設定
+     *
+     *  @param[in]  rotation  位置
+     */
+    void            SetRotation(const CVector3& rotation);
+
+    /*!
      *  @brief      速度設定
      *
      *  @param[in]  velocity  速度

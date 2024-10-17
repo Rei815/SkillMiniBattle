@@ -2,9 +2,6 @@
 
 CGimmick::CGimmick()
 	: m_Object(nullptr)
-	, m_DelayTime()
-	, m_DelayTimer()
-	, m_DelayFlag(false)
 	, m_Timer()
 	, m_Switch(false)
 {
@@ -23,7 +20,6 @@ void CGimmick::Initialize(IObject* object)
 void CGimmick::Initialize(IObject* object, float time)
 {
 	m_Object = object;
-	m_DelayTime = time;
 	m_Timer.SetUp(time);
 }
 
