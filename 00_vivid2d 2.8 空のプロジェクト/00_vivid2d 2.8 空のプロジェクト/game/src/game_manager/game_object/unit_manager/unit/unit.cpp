@@ -113,7 +113,6 @@ bool
 IUnit::
 CheckHitBullet(IBullet* bullet)
 {
-
     if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
         return false;
     DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim{};
@@ -123,7 +122,7 @@ CheckHitBullet(IBullet* bullet)
         hit_poly_dim = MV1CollCheck_Sphere(m_Model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
         break;
     case COLLIDER_ID::CAPSULE:
-        hit_poly_dim = MV1CollCheck_Capsule(m_Model.GetModelHandle(), -1, bullet->GetColliderPosA(), bullet->GetColliderPosB(), bullet->GetRadius());
+        hit_poly_dim = MV1CollCheck_Capsule(m_Model.GetModelHandle(), -1, bullet->GetColliderPosA(), bullet->GetColliderPosB(),bullet->GetRadius());
         break;
     }
     bool hit_flag = false;

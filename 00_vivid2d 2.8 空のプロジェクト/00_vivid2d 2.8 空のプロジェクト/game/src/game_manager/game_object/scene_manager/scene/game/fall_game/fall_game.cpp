@@ -58,7 +58,7 @@ void CFallGame::Initialize(void)
 
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
-	
+
 }
 
 void CFallGame::Update(void)
@@ -97,7 +97,6 @@ void CFallGame::Play(void)
 	m_Timer.Update();
 	if (m_Timer.Finished())
 	{
-
 		m_Timer.Reset();
 
 		FALL_INFO fallInfo = ChooseObject();

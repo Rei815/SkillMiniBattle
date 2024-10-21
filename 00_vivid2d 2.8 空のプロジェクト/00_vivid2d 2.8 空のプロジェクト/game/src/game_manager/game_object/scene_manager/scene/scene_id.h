@@ -12,6 +12,7 @@ enum class SCENE_ID
 	DODGEBALLGAME,	//!< ドッジボールゲームシーン
 	DEBUGGAME,		//!< デバッグゲームシーン
 	RESULT,			//!< リザルトシーン
+	DARUMAFALLDOWN,	//!< ダルマさんが転んだシーン
 
 
 	MAX			//!< シーンID数
