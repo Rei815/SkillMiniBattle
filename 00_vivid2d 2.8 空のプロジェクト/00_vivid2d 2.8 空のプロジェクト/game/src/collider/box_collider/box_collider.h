@@ -22,7 +22,5 @@ public:
      */
     void        Finalize(void);
 private:
-    static const std::string m_file_name;
-    CModel          m_Model;
-    CTransform      m_Transform;
+
 };

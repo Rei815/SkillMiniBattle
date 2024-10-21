@@ -144,14 +144,10 @@ void CUnitManager::CheckHitObject(IObject* object)
             return;
 
         CVector3 startPos = (*it)->GetPosition();
-        startPos.y += (*it)->GetHeight();
-        //CVector3 dir = (*it)->GetVelocity().Normalize();
-
-        ////“®‚¢‚Ä‚¢‚éê‡í‚É1‚©-1‚ğ•Û‚Â
-        //dir.x = (dir.x > 0) - (dir.x < 0);
+        startPos.y += (*it)->GetRadius();
 
         CVector3 endPos = (*it)->GetPosition();
-        endPos.y -= (*it)->GetHeight();
+        endPos.y -= (*it)->GetRadius();
 
         DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_LineDim(object->GetModel().GetModelHandle(), -1, startPos, endPos, -1);
 
@@ -160,21 +156,22 @@ void CUnitManager::CheckHitObject(IObject* object)
 
         if (hit_poly_dim.HitNum >= 1)
         {
-            CVector3 velocity = (*it)->GetVelocity();
-            velocity.y = 0.0f;
-            (*it)->SetVelocity(velocity);
             if (object->GetTag() == "Fall")
             (*it)->SetIsGround(true);
             for (int i = 0; i < hit_poly_dim.HitNum; i++)
             {
-
                 MV1_COLL_RESULT_POLY* pCollResultPoly = &hit_poly_dim.Dim[i];
 
-                CVector3 diffPos = endPos - pCollResultPoly->HitPosition;
-                (*it)->SetPosition((*it)->GetPosition() - diffPos);
+                float diffHeight = endPos.y - pCollResultPoly->HitPosition.y;
+
+                CVector3 unitPos = (*it)->GetPosition();
+                unitPos.y -= diffHeight;
+                (*it)->SetPosition(unitPos);
 
             }
         }
+
+
 
         // “–‚½‚è”»’èî•ñ‚ÌŒãn––
         MV1CollResultPolyDimTerminate(hit_poly_dim);

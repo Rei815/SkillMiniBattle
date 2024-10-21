@@ -35,7 +35,7 @@ void CFallGame::Initialize(void)
 	m_DebugText = "フォールゲーム";
 
 	CVector3 playerPos = m_object_transform_list[(int)MARK_ID::CIRCLE].position;
-	playerPos.y += 100.0f;
+	playerPos.y += 200.0f;
 	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, playerPos);
 	//CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 200));
 

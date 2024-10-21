@@ -7,13 +7,13 @@
 const float             CPlayer::m_radius = 50.0f;
 const float             CPlayer::m_height = 10.0f;
 
-const float             CPlayer::m_move_speed = 0.5f;
-const float             CPlayer::m_jump_power = 15.0f;
+const float             CPlayer::m_move_speed = 0.25f;
+const float             CPlayer::m_jump_power = 30.0f;
 const float             CPlayer::m_move_friction = 0.975f;
 const float             CPlayer::m_max_life = 3.0f;
 const int               CPlayer::m_max_invincible_time = 60;
 const int               CPlayer::m_invincible_visible_interval = 4;
-const float             CPlayer::m_fall_accelerator = 0.05f;
+const float             CPlayer::m_fall_accelerator = 0.025f;
 
 CPlayer::CPlayer()
     : IUnit(UNIT_CATEGORY::PLAYER)
@@ -167,7 +167,6 @@ void CPlayer::Move(void)
 
     if (m_IsGround)
     {
-        m_Transform.position.y = 0;
         m_Velocity.y = 0.0f;
         m_Accelerator.y = 0;
         m_FallSpeed = 0.0f;
