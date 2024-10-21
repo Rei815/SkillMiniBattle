@@ -46,4 +46,6 @@ private:
 
     float m_TurnAroundTime;      //鬼が振り向くまでの時間
     int   m_RestPlayer;          //残りのプレイヤー数
+
+    CTimer  m_Timer;
 };

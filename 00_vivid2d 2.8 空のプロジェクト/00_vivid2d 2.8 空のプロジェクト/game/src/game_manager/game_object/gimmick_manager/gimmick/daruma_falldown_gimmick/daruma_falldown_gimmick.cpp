@@ -15,12 +15,15 @@ CDaruma_FallDownGimmick::~CDaruma_FallDownGimmick(void)
 
 void CDaruma_FallDownGimmick::Initialize()
 {
+	m_Timer.SetUp(0);
 }
 
 void CDaruma_FallDownGimmick::Update(void)
 {
+	m_Timer.Update();
+
 	//‹S‚ÌU‚èŒü‚­ƒJƒEƒ“ƒg‚ª0‚É‚È‚Á‚½‚ç
-	if (m_TurnAroundTime <= 0)
+	if (m_TurnAroundTime < m_Timer)
 	{
 		m_TurnAround = true;
 

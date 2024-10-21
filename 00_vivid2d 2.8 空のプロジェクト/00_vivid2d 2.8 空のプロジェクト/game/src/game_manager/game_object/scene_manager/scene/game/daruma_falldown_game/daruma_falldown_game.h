@@ -30,4 +30,8 @@ public:
 
 private:
 
+    static const CVector3           m_camera_position;
+    static const CVector3           m_camera_direction;
+
+    CTimer                          m_Timer;
 };

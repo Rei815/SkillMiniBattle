@@ -4,6 +4,8 @@
 #include "../../../../object_manager/object_manager.h"
 #include "../../../../camera/camera.h"
 
+const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(0, 600.0f, -1000.0f);
+const CVector3	CDaruma_FallDownGame::m_camera_direction = CVector3(0, -0.75f, 1.0f);
 
 CDaruma_FallDownGame::CDaruma_FallDownGame(void)
 {
@@ -16,14 +18,22 @@ CDaruma_FallDownGame::~CDaruma_FallDownGame(void)
 void CDaruma_FallDownGame::Initialize(void)
 {
 	CGame::Initialize();
+	CCamera::GetInstance().SetPosition(m_camera_position);
+	CCamera::GetInstance().SetDirection(m_camera_direction);
 	CCamera::GetInstance().Initialize();
 	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(0, 0, 100));
+
+	m_Timer.SetUp(0);
+	
+	
 }
 
 void CDaruma_FallDownGame::Update(void)
 {
 	CGame::Update();
 	CCamera::GetInstance().Update();
+
+	m_Timer.Update();
 }
 
 void CDaruma_FallDownGame::Draw(void)

@@ -58,7 +58,7 @@ void CFallGame::Initialize(void)
 
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
-	
+
 }
 
 void CFallGame::Update(void)
