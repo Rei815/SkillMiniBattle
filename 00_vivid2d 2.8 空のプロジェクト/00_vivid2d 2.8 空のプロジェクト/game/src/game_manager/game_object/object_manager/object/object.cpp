@@ -3,7 +3,6 @@
 const float IObject::m_limit_alpha = 1.0f;
 IObject::IObject()
 	: m_Alpha(m_limit_alpha)
-	, m_State(OBJECT_STATE::WAIT)
 	, m_Velocity()
 {
 }
@@ -72,19 +71,9 @@ void IObject::SetVelocity(const CVector3& velocity)
 	m_Velocity = velocity;
 }
 
-OBJECT_STATE IObject::GetState()
-{
-	return m_State;
-}
-
 CModel IObject::GetModel()
 {
 	return m_Model;
-}
-
-void IObject::SetState(OBJECT_STATE state)
-{
-	m_State = state;
 }
 
 void IObject::SetGimmick(CGimmick* gimmick)
@@ -95,4 +84,9 @@ void IObject::SetGimmick(CGimmick* gimmick)
 CGimmick* IObject::GetGimmick()
 {
 	return m_Gimmick;
+}
+
+std::string IObject::GetTag()
+{
+	return m_Tag;
 }

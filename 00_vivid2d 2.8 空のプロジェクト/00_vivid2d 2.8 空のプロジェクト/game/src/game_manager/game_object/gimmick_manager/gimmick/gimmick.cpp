@@ -4,6 +4,7 @@ CGimmick::CGimmick()
 	: m_Object(nullptr)
 	, m_Timer()
 	, m_Switch(false)
+	, m_State(GIMMICK_STATE::WAIT)
 {
 }
 
@@ -60,4 +61,14 @@ void CGimmick::SetSwitch(bool sw)
 void CGimmick::SetTimer(float time)
 {
 	m_Timer.SetUp(time);
+}
+
+GIMMICK_STATE CGimmick::GetState(void)
+{
+	return m_State;
+}
+
+void CGimmick::SetState(GIMMICK_STATE state)
+{
+	m_State = state;
 }

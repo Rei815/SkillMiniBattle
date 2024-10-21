@@ -7,19 +7,18 @@
 const float             CPlayer::m_radius = 50.0f;
 const float             CPlayer::m_height = 10.0f;
 
-const float             CPlayer::m_move_speed = 0.5f;
-const float             CPlayer::m_jump_power = 15.0f;
+const float             CPlayer::m_move_speed = 0.25f;
+const float             CPlayer::m_jump_power = 30.0f;
 const float             CPlayer::m_move_friction = 0.975f;
 const float             CPlayer::m_max_life = 3.0f;
 const int               CPlayer::m_max_invincible_time = 60;
 const int               CPlayer::m_invincible_visible_interval = 4;
-const float             CPlayer::m_fall_accelerator = 0.05f;
+const float             CPlayer::m_fall_accelerator = 0.025f;
 
 CPlayer::CPlayer()
     : IUnit(UNIT_CATEGORY::PLAYER)
     , m_Accelerator(CVector3())
     , m_InvincibleTime(0)
-    , m_IsGround(true)
     , m_FallSpeed(0)
     , m_StopFlag(false)
     , m_ActionFlag(true)
@@ -42,6 +41,8 @@ void CPlayer::Initialize(const CVector3& position, const std::string& file_name,
     m_Radius = m_radius;
     m_Height = m_height;
 
+    m_InitialPosition = position;
+
     m_Model.Initialize(file_name, position);
 
     MV1SetMaterialDifColor(m_Model.GetModelHandle(), 0, m_Color);
@@ -51,7 +52,6 @@ void CPlayer::Initialize(const CVector3& position, const std::string& file_name,
     m_InvincibleTime = m_max_invincible_time;
 
     m_StopFlag = false;
-
     m_Controller = controller;
 }
 
@@ -116,7 +116,7 @@ void CPlayer::Control(void)
 
 
     //ジャンプ
-    if (m_IsGround && GetJoypadInputState(m_Controller) & PAD_INPUT_1 && !m_StopFlag)
+    if (m_IsGround && (GetJoypadInputState(m_Controller) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE) && !m_StopFlag)
         if (m_IsGround == true)
         {
             m_IsGround = false;
@@ -147,13 +147,13 @@ Defeat(void)
 
 void CPlayer::Move(void)
 {
-    //重力処理
-    if (!m_IsGround && !m_StopFlag)
-    {
-        m_Accelerator.y -= m_FallSpeed;
+    ////重力処理
+    //if (!m_IsGround && !m_StopFlag)
+    //{
+    //    m_Accelerator.y -= m_FallSpeed;
 
-        m_FallSpeed += m_fall_accelerator;
-    }
+    //    m_FallSpeed += m_fall_accelerator;
+    //}
     if (!m_StopFlag)
     m_Velocity += m_Accelerator;
 
@@ -165,14 +165,12 @@ void CPlayer::Move(void)
     m_Velocity.z *= m_move_friction;
 
 
-    //if (m_Transform.position.y <= 0)
-    //{
-    //    m_Transform.position.y = 0;
-    //    m_Velocity.y = 0.0f;
-    //    m_Accelerator.y = 0;
-    //    m_FallSpeed = 0.0f;
-    //    m_IsGround = true;
-    //}
+    if (m_IsGround)
+    {
+        m_Velocity.y = 0.0f;
+        m_Accelerator.y = 0;
+        m_FallSpeed = 0.0f;
+    }
 
     m_Accelerator = CVector3::ZERO;
 }
