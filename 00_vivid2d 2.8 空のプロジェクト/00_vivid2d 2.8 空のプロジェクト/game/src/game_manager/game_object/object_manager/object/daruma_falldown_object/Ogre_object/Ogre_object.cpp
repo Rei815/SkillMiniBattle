@@ -25,7 +25,6 @@ void COgreObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	m_Transform = transform;
 	m_Model.Initialize(m_FileName, m_Transform.position);
 	m_Timer.SetUp(1.0f);
-	m_State = OBJECT_STATE::WAIT;
 }
 
 void COgreObject::Update(void)
@@ -39,7 +38,6 @@ void COgreObject::Update(void)
 	}
 	if (m_Alpha == m_invisible_alpha)
 	{
-		m_State = OBJECT_STATE::FALL_FINISH;
 		m_Timer.Update();
 	}
 
@@ -49,7 +47,6 @@ void COgreObject::Update(void)
 		m_Transform.position.y = m_start_height;
 		m_Alpha = m_limit_alpha;
 		m_Velocity = CVector3::ZERO;
-		m_State = OBJECT_STATE::WAIT;
 	}
 }
 

@@ -177,14 +177,7 @@ CSceneManager::CreateScene(SCENE_ID id)
     case SCENE_ID::DARUMAFALLDOWN:     m_Scene = new CDaruma_FallDownGame();      break;
     case SCENE_ID::DEBUGGAME:          m_Scene = new CDebugGame();     break;
     case SCENE_ID::RESULT:             m_Scene = new CResult();        break;
-    case SCENE_ID::TITLE:        m_Scene = new CTitle();        break;
-    case SCENE_ID::SELECTMODE:   m_Scene = new CSelectMode();  break;
-    case SCENE_ID::SELECTPLAYER:  m_Scene = new CSelectPlayer();  break;
-    case SCENE_ID::SELECTGAME:  m_Scene = new CSelectGame();  break;
-    case SCENE_ID::FALLGAME:     m_Scene = new CFallGame();     break;
     case SCENE_ID::DODGEBALLGAME: m_Scene = new CDodgeBallGame();   break;
-    case SCENE_ID::DEBUGGAME:     m_Scene = new CDebugGame();     break;
-    case SCENE_ID::RESULT:     m_Scene = new CResult();     break;
     }
 }
 

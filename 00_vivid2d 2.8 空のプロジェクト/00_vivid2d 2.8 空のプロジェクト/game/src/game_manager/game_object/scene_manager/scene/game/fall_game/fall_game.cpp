@@ -13,6 +13,7 @@ CTransform(CVector3(-200,-100,-150)), CTransform(CVector3(0,-100,-200)), CTransf
 const float		CFallGame::m_time_accelerator = 0.1f;
 const float		CFallGame::m_min_time = 1.0f;
 const float		CFallGame::m_initial_time = 1.0f;
+const float		CFallGame::m_object_delay_time = 1.0f;
 const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallGame::m_camera_direction = CVector3(0, -0.85f, 1.0f);
 CFallGame::CFallGame(void)
@@ -26,7 +27,7 @@ CFallGame::~CFallGame(void)
 void CFallGame::Initialize(void)
 {
 	m_FallTime = m_initial_time;
-	m_Timer.SetUp(m_FallTime);
+	m_ChooseObjectTimer.SetUp(m_FallTime);
 	CGame::Initialize();
 	CStage::GetInstance().Initialize();
 	CCamera::GetInstance().Initialize();
@@ -80,8 +81,8 @@ void CFallGame::Draw(void)
 	CGame::Draw();
 
 #ifdef VIVID_DEBUG
-	vivid::DrawText(30, std::to_string(m_Timer.GetTimer()),
-		vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_Timer.GetTimer())), 0));
+	vivid::DrawText(30, std::to_string(m_ChooseObjectTimer.GetTimer()),
+		vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_ChooseObjectTimer.GetTimer())), 0));
 #endif // VIVID_DEBUG
 
 }
@@ -104,21 +105,21 @@ void CFallGame::Play(void)
 {
 	CGame::Play();
 
-	m_Timer.Update();
-	if (m_Timer.Finished())
+	m_ChooseObjectTimer.Update();
+	if (m_ChooseObjectTimer.Finished())
 	{
-		m_Timer.Reset();
+		m_ChooseObjectTimer.Reset();
 
 		FALL_INFO fallInfo = ChooseObject();
 
 		if (fallInfo.object == nullptr) return;
 		if (fallInfo.object->GetObjectID() != OBJECT_ID::NONE)
 		{
-			fallInfo.object->GetGimmick()->SetTimer(1.0f);
+			fallInfo.object->GetGimmick()->SetTimer(m_object_delay_time);
 			fallInfo.object->GetGimmick()->SetSwitch(true);
 
 			m_FallTime -= m_time_accelerator;
-			m_Timer.SetUp(m_FallTime);
+			m_ChooseObjectTimer.SetUp(m_FallTime);
 			if (m_FallTime < m_min_time)
 				m_FallTime = m_min_time;
 			CUIManager::GetInstance().Create(fallInfo.uiID);

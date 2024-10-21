@@ -39,6 +39,8 @@ void CSelectGame::Update(void)
 #if _DEBUG
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
 #endif
     CStage::GetInstance().Update();
 

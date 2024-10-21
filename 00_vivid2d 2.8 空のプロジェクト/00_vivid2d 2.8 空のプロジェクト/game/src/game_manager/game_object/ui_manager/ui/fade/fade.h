@@ -2,18 +2,18 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-class CPlayerLife : public CUI
+class CFade : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CPlayerLife(void);
+    CFade(void);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CPlayerLife(void);
+    ~CFade(void);
 
     /*!
      *  @brief      初期化

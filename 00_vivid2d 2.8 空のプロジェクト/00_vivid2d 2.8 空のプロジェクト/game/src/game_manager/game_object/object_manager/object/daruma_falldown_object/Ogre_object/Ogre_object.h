@@ -58,7 +58,7 @@ private:
     static const float                     m_start_height;
     static const float                     m_remove_height;
     static const float                     m_invisible_alpha;
-    static const std::string               m_file_name_list[];
+    static const std::string               m_file_name;
     float                                  m_FallSpeed;
     OGRE_OBJECT_STATE           m_Daruma_FallDownObjectState;
     CTimer                                 m_Timer;
