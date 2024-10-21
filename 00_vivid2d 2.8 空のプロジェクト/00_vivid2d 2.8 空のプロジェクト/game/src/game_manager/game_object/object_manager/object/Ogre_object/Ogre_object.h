@@ -2,16 +2,16 @@
 #include "../../../model_manager/model/model.h"
 #include "..\object.h"
 #include "..\..\..\..\..\utility\utility.h"
-enum class DARUMA_FALLDOWN_OBJECT_STATE
+enum class OGRE_OBJECT_STATE
 {
     WAIT,
     FALL,
 };
-class CDaruma_FallDownObject : public IObject
+class COgreObject : public IObject
 {
 public:
-    CDaruma_FallDownObject();
-    ~CDaruma_FallDownObject();
+    COgreObject();
+    ~COgreObject();
 
     /*!
      *  @brief      èâä˙âª
@@ -58,8 +58,8 @@ private:
     static const float                     m_start_height;
     static const float                     m_remove_height;
     static const float                     m_invisible_alpha;
-    static const std::string               m_file_name_list[];
+    static const std::string               m_file_name;
     float                                  m_FallSpeed;
-    DARUMA_FALLDOWN_OBJECT_STATE           m_Daruma_FallDownObjectState;
+    OGRE_OBJECT_STATE           m_Daruma_FallDownObjectState;
     CTimer                                 m_Timer;
 };
