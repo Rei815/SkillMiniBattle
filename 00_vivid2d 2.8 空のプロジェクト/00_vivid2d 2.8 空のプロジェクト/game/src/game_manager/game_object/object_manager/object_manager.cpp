@@ -1,6 +1,7 @@
 #include "object_manager.h"
 #include "..\..\..\utility\utility.h"
 #include "object/fall_object/fall_object.h"
+#include "object/cannon_object/cannon_object.h"
 #include "..\gimmick_manager\gimmick_manager.h"
 #include "..\unit_manager\unit_manager.h"
 
@@ -106,6 +107,8 @@ Create(OBJECT_ID id, const CTransform& transform)
     case OBJECT_ID::TRIANGLE_FALL_OBJECT:
     case OBJECT_ID::CROSS_FALL_OBJECT:
         object = new CFallObject();      break;
+    case OBJECT_ID::CANNON_OBJECT:
+        object = new CCannonObject();   break;
     }
 
     if (!object) return nullptr;

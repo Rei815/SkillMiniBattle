@@ -3,6 +3,7 @@ const char* CModelManager::m_model_file_names[] =
 {
     "data\\cube.mv1",
     "data\\flat_cube.mv1",
+    "data\\Models\\cannon_test.mv1",
 };
 
 /*

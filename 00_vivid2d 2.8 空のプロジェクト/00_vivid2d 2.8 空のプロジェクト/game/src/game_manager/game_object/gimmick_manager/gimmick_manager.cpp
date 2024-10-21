@@ -1,5 +1,6 @@
 #include "gimmick_manager.h"
 #include "gimmick/fall_gimmick/fall_gimmick.h"
+#include "gimmick/dodgeball_gimmick/dodgeball_gimmick.h"
 /*
  *  インスタンスの取得
  */
@@ -98,6 +99,7 @@ void CGimmickManager::Create(GIMMICK_ID id, IObject* object)
     switch (id)
     {
     case GIMMICK_ID::FALL_GIMMICK: gimmick = new CFallGimmick(); break;
+    case GIMMICK_ID::DODGEBALL_GIMMICK: gimmick = new CDodgeBallGimmick(); break;
     }
 
     if (!gimmick) return;
@@ -113,6 +115,7 @@ void CGimmickManager::Create(GIMMICK_ID id, IObject* object, float time)
     switch (id)
     {
     case GIMMICK_ID::FALL_GIMMICK: gimmick = new CFallGimmick(); break;
+    case GIMMICK_ID::DODGEBALL_GIMMICK: gimmick = new CDodgeBallGimmick(); break;
     }
 
     if (!gimmick) return;

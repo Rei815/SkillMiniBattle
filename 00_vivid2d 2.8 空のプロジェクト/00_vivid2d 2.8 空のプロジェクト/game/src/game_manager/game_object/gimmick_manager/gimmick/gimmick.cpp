@@ -20,6 +20,7 @@ void CGimmick::Initialize(IObject* object)
 void CGimmick::Initialize(IObject* object, float time)
 {
 	m_Object = object;
+	m_Switch = false;
 	m_Timer.SetUp(time);
 }
 

@@ -6,6 +6,7 @@
 enum class GAME_ID
 {
 	FALLGAME,
+	DODGEBALLGAME,
 	DEBUGGAME,
 
 	MAX,

@@ -39,8 +39,9 @@ public:
     */
     CTransform& operator=(const CTransform& t);
 
-private:
+    CVector3 GetRadianRotation(void);
 
+private:
     CVector3 center;
     CVector3 angle;
     CVector3 scaling;

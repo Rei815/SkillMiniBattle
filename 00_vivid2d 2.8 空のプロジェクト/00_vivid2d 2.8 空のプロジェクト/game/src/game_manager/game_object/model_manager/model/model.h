@@ -28,6 +28,8 @@ public:
 	 */
 	void    Initialize(const std::string& file_name, const CVector3& position);
 
+	void    Initialize(const std::string& file_name, const CTransform& transform);
+
 	void	Load(const std::string& file_name);
 
 	void	Unload(void);

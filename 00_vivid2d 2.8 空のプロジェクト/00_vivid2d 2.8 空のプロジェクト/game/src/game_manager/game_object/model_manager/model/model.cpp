@@ -32,6 +32,18 @@ void CModel::Initialize(const std::string& file_name, const CVector3& position)
 
 }
 
+void CModel::Initialize(const std::string& file_name, const CTransform& transform)
+{
+	m_Transform = transform;
+
+	Load(file_name);
+
+	//位置情報の更新
+	MV1SetPosition(m_Handle, m_Transform.position);
+
+	MV1SetRotationXYZ(m_Handle, m_Transform.GetRadianRotation());
+}
+
 void CModel::Load(const std::string& file_name)
 {
 	m_Handle = DxLib::MV1LoadModel(file_name.c_str());
@@ -62,10 +74,8 @@ void CModel::Update(const CTransform& transform)
 	//位置情報の更新
 	MV1SetPosition(m_Handle, m_Transform.position);
 
-	MV1SetRotationXYZ(m_Handle, m_Transform.rotation);
+	MV1SetRotationXYZ(m_Handle, m_Transform.GetRadianRotation());
 	MV1RefreshCollInfo(m_Handle, -1);
-
-
 }
 
 /*

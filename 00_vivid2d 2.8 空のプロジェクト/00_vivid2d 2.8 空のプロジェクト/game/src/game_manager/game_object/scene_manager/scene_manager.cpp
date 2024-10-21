@@ -16,6 +16,7 @@
 #include "scene\select_game\select_game.h"
 #include "scene\game\game.h"
 #include "scene\game\fall_game\fall_game.h"
+#include "scene\game\dodgeball_game\dodgeball_game.h"
 #include "scene\game\debug_game\debug_game.h"
 #include "scene\result\result.h"
 
@@ -172,6 +173,7 @@ CSceneManager::CreateScene(SCENE_ID id)
     case SCENE_ID::SELECTPLAYER:  m_Scene = new CSelectPlayer();  break;
     case SCENE_ID::SELECTGAME:  m_Scene = new CSelectGame();  break;
     case SCENE_ID::FALLGAME:     m_Scene = new CFallGame();     break;
+    case SCENE_ID::DODGEBALLGAME: m_Scene = new CDodgeBallGame();   break;
     case SCENE_ID::DEBUGGAME:     m_Scene = new CDebugGame();     break;
     case SCENE_ID::RESULT:     m_Scene = new CResult();     break;
     }

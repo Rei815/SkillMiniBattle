@@ -34,7 +34,9 @@ public:
      *  @brief      ‰Šú‰»
      *
      */
-    void    Initialize(CVector3 Pos, CVector3 Rot, IObject* object);
+    void    Initialize(IObject* object);
+
+    void    Initialize(IObject* object, float time);
 
     /*!
      *  @brief      XV
