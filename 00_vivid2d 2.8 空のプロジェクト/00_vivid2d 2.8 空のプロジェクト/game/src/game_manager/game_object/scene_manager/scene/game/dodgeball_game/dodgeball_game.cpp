@@ -8,10 +8,10 @@
 //è„â∫ç∂âEÇÃ4ï˚å¸ Å~ äeï˚å¸Ç…3Ç¬Ç∏Ç¬ ÅÅ 12Ç±
 const CVector3		CDodgeBallGame::m_cannon_pos_list[] = 
 {
-	CVector3(   0,   0, 500),CVector3( 250,   0, 500),CVector3(-250,   0, 500),	//è„
-	CVector3(   0,   0,-500),CVector3(-250,   0,-500),CVector3( 250,   0,-500),	//â∫
-	CVector3( 500,   0,   0),CVector3( 500,   0,-250),CVector3( 500,   0, 250),	//âE
-	CVector3(-500,   0,   0),CVector3(-500,   0, 250),CVector3(-500,   0,-250)	//ç∂
+	CVector3(    0,   0, 1000),CVector3(  500,   0, 1000),CVector3(- 500,   0, 1000),	//è„
+	CVector3(    0,   0,-1000),CVector3(- 500,   0,-1000),CVector3(  500,   0,-1000),	//â∫
+	CVector3( 1000,   0,    0),CVector3( 1000,   0,- 500),CVector3( 1000,   0,  500),	//âE
+	CVector3(-1000,   0,    0),CVector3(-1000,   0,  500),CVector3(-1000,   0,- 500)	//ç∂
 };
 
 //è„â∫ç∂âEÇÃ4ï˚å¸
@@ -28,8 +28,8 @@ const float			CDodgeBallGame::m_cannnon_spawn_time = 3.0f;
 const float			CDodgeBallGame::m_initial_shot_time = 1.5f;
 const float			CDodgeBallGame::m_min_shot_time = 0.5f;
 const float			CDodgeBallGame::m_shot_time_acceleration = 0.1f;
-const CVector3		CDodgeBallGame::m_camera_position = CVector3(0, 600.0f, -1000.0f);
-const CVector3		CDodgeBallGame::m_camera_direction = CVector3(0, -0.75f, 1.0f);
+const CVector3		CDodgeBallGame::m_camera_position = CVector3(0, 1500.0f, -1500.0f);
+const CVector3		CDodgeBallGame::m_camera_direction = CVector3(0, -1.0f, 1.0f);
 
 CDodgeBallGame::CDodgeBallGame(void)
 	:m_CannonCount(0)
@@ -49,7 +49,7 @@ CDodgeBallGame::~CDodgeBallGame(void)
 
 void CDodgeBallGame::Initialize(void)
 {
-	m_SpawnTimer.SetUp(m_cannnon_spawn_time);
+	m_SpawnTimer.SetUp(0);
 	m_ShotTimer.SetUp(m_initial_shot_time);
 	CGame::Initialize();
 	CCamera::GetInstance().Initialize();
@@ -63,35 +63,8 @@ void CDodgeBallGame::Initialize(void)
 
 void CDodgeBallGame::Update(void)
 {
-	if (m_CannonCount < m_max_cannnon_count)
-	{
-		m_SpawnTimer.Update();
-
-		if (m_SpawnTimer.Finished())
-		{
-			m_SpawnTimer.Reset();
-
-			//ëÂñCÇÃê∂ê¨
-			SpawnCannnon();
-
-			//éüÇÃñCÇÃå¸Ç´ÇïœçX
-			int Temp = (int)m_NextCannnonDir;
-			Temp++;
-			if (Temp > (int)CANNON_DIRECTION::LEFT)
-			{
-				Temp = (int)CANNON_DIRECTION::UP;
-				m_CannonCount++;
-			}
-			m_NextCannnonDir = (CANNON_DIRECTION)Temp;
-		}
-	}
-
-	m_ShotTimer.Update();
-	if (m_ShotTimer.Finished())
-	{
-		//ChooseCannon()->GetGimmick()->SetSwitch(true);
-	}
-
+	CGame::Update();
+	CCamera::GetInstance().Update();
 }
 
 void CDodgeBallGame::Draw(void)
@@ -113,6 +86,35 @@ void CDodgeBallGame::Start(void)
 void CDodgeBallGame::Play(void)
 {
 	CGame::Play();
+	
+	if (m_CannonCount < m_max_cannnon_count)
+	{
+		m_SpawnTimer.Update();
+
+		if (m_SpawnTimer.Finished())
+		{
+			m_SpawnTimer.SetUp(m_cannnon_spawn_time);
+
+			//ëÂñCÇÃê∂ê¨
+			SpawnCannnon();
+
+			//éüÇÃñCÇÃå¸Ç´ÇïœçX
+			int Temp = (int)m_NextCannnonDir;
+			Temp++;
+			if (Temp > (int)CANNON_DIRECTION::LEFT)
+			{
+				Temp = (int)CANNON_DIRECTION::UP;
+				m_CannonCount++;
+			}
+			m_NextCannnonDir = (CANNON_DIRECTION)Temp;
+		}
+	}
+
+	m_ShotTimer.Update();
+	if (m_ShotTimer.Finished())
+	{
+		//ChooseCannon()->GetGimmick()->SetSwitch(true);
+	}
 }
 
 void CDodgeBallGame::Finish(void)

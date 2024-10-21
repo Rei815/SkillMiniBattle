@@ -1,5 +1,6 @@
 #include "dodgeball_gimmick.h"
 #include "..\..\..\object_manager\object_manager.h"
+#include "..\..\..\bullet_manager\bullet_manager.h"
 
 const std::string	CDodgeBallGimmick::m_file_name = "data\\Models\\cannon_test.mv1";
 const CVector3		CDodgeBallGimmick::m_spawn_pos = CVector3(0.0f, -1000.0f, 0.0f);
@@ -89,15 +90,19 @@ void CDodgeBallGimmick::Update(void)
 		//回転のセット
 		switch (m_NowRotate)
 		{
-			//右回転
-		case CANNON_ROTATE::LEFT_RETURN:
-		case CANNON_ROTATE::RIGHT_GO:
+		case CANNON_ROTATE::LEFT_RETURN:	//左→前
+			TempRotation.y = m_SetTransform.rotation.y - m_max_rotate_angle * ((m_min_rotate_time - m_Timer.GetTimer()) / m_min_rotate_time);
+			break;
+
+		case CANNON_ROTATE::RIGHT_GO:		//前→右
 			TempRotation.y = m_SetTransform.rotation.y + m_max_rotate_angle * (m_Timer.GetTimer() / m_min_rotate_time);
 			break;
 
-			//左回転
-		case CANNON_ROTATE::RIGHT_RETURN:
-		case CANNON_ROTATE::LEFT_GO:
+		case CANNON_ROTATE::RIGHT_RETURN:	//右→前
+			TempRotation.y = m_SetTransform.rotation.y + m_max_rotate_angle * ((m_min_rotate_time - m_Timer.GetTimer()) / m_min_rotate_time);
+			break;
+
+		case CANNON_ROTATE::LEFT_GO:		//前→左
 			TempRotation.y = m_SetTransform.rotation.y - m_max_rotate_angle * (m_Timer.GetTimer() / m_min_rotate_time);
 			break;
 		}
@@ -109,11 +114,21 @@ void CDodgeBallGimmick::Update(void)
 			m_Timer.Reset();
 
 			//回転状態を次の段階に変更
-			int Temp = (int)m_NowRotate;
-			Temp++;
-			if (Temp > (int)CANNON_ROTATE::LEFT_RETURN)
-				Temp = (int)CANNON_ROTATE::RIGHT_GO;
-			m_NowRotate = (CANNON_ROTATE)Temp;
+			switch (m_NowRotate)
+			{
+			case CANNON_ROTATE::RIGHT_GO:
+				m_NowRotate = CANNON_ROTATE::RIGHT_RETURN;
+				break;
+			case CANNON_ROTATE::RIGHT_RETURN:
+				m_NowRotate = CANNON_ROTATE::LEFT_GO;
+				break;
+			case CANNON_ROTATE::LEFT_GO:
+				m_NowRotate = CANNON_ROTATE::LEFT_RETURN;
+				break;
+			case CANNON_ROTATE::LEFT_RETURN:
+				m_NowRotate = CANNON_ROTATE::RIGHT_GO;
+				break;
+			}
 
 			//角度にずれが発生しないように、現在の回転状態に合わせて修正する
 			switch (m_NowRotate)
@@ -160,5 +175,5 @@ void CDodgeBallGimmick::Finalize(void)
 
 void CDodgeBallGimmick::Shot(void)
 {
-
+	//CBulletManager().GetInstance().Create()
 }
