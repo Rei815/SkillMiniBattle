@@ -34,7 +34,6 @@ void CFallGame::Initialize(void)
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 	m_DebugText = "フォールゲーム";
-
 	CVector3 playerPos = m_object_transform_list[(int)MARK_ID::CIRCLE].position;
 	playerPos.y += 200.0f;
 	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, playerPos);

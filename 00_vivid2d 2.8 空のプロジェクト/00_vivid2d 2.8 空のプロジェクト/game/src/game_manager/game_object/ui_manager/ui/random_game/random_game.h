@@ -36,7 +36,7 @@ public:
     void        Finalize(void);
 
 private:
-
+    static const TCHAR*             m_file_name;
     static const vivid::Vector2     m_position;     //!< ˆÊ’u
     static const int                m_height;       //!< ‚‚³
     static const int                m_width;        //!< •
@@ -44,4 +44,5 @@ private:
     static const vivid::Vector2     m_anchor;       //!< Šî€“_
     static const vivid::Vector2     m_scale;        //!< Šgk
 
+    int                             m_Handle;
 };

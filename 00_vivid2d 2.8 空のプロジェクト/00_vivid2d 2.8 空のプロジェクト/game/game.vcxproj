@@ -234,6 +234,7 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fade\fade.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fall_select\fall_select.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\pause\pause.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\random_game\random_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\reticle\reticle.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\ui.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui_manager.cpp" />
@@ -331,6 +332,7 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fade\fade.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fall_select\fall_select.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\pause\pause.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\random_game\random_game.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\reticle\reticle.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\ui.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\ui_id.h" />
