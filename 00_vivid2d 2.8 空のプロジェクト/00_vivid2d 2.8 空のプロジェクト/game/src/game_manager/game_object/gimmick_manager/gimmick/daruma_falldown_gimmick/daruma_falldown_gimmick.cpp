@@ -23,14 +23,7 @@ void CDaruma_FallDownGimmick::Update(void)
 	m_Timer.Update();
 
 	//鬼の振り向くカウントが0になったら
-	if (m_TurnAroundTime < m_Timer)
-	{
-		m_TurnAround = true;
-
-		
-
-
-	}
+	
 
 	//誰かが鬼にタッチしたら
 	if (m_Touch)
