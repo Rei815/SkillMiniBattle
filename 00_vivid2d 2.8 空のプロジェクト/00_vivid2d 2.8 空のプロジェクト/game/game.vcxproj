@@ -201,6 +201,7 @@
     <ClCompile Include="src\game_manager\game_object\launcher\launcher.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\basic\basic.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\burst\burst.cpp" />
+    <ClCompile Include="src\game_manager\game_object\launcher\shot\dodge_ball\dodge_ball.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\five_way\five_way.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\homing\homing.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\homing_burst\homing_burst.cpp" />
@@ -294,6 +295,7 @@
     <ClInclude Include="src\game_manager\game_object\launcher\launcher.h" />
     <ClInclude Include="src\game_manager\game_object\launcher\shot\basic\basic.h" />
     <ClInclude Include="src\game_manager\game_object\launcher\shot\burst\burst.h" />
+    <ClInclude Include="src\game_manager\game_object\launcher\shot\dodge_ball\dodge_ball.h" />
     <ClInclude Include="src\game_manager\game_object\launcher\shot\five_way\five_way.h" />
     <ClInclude Include="src\game_manager\game_object\launcher\shot\homing\homing.h" />
     <ClInclude Include="src\game_manager\game_object\launcher\shot\homing_burst\homing_burst.h" />

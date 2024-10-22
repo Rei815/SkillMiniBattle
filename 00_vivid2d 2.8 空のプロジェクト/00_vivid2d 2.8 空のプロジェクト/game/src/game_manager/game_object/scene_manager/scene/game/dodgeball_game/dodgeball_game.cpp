@@ -1,9 +1,12 @@
 #include "dodgeball_game.h"
 #include "../../../../unit_manager/unit_manager.h"
 #include "../../../../gimmick_manager/gimmick_manager.h"
+#include "../../../../gimmick_manager/gimmick/dodgeball_gimmick/dodgeball_gimmick.h"
 #include "../../../../camera/camera.h"
 #include "../../../../object_manager/object_manager.h"
 #include "../../../../ui_manager/ui_manager.h"
+#include "../../../../bullet_manager/bullet_manager.h"
+#include "../../../../launcher/launcher.h"
 
 //ã‰º¶‰E‚Ì4•ûŒü ~ Še•ûŒü‚É3‚Â‚¸‚Â  12‚±
 const CVector3		CDodgeBallGame::m_cannon_pos_list[] = 
@@ -59,23 +62,31 @@ void CDodgeBallGame::Initialize(void)
 
 	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(-100, 0, 0));
 	//CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 0));
+
+	CLauncher::GetInstance().Initialize();
+	CBulletManager::GetInstance().Initialize();
 }
 
 void CDodgeBallGame::Update(void)
 {
 	CGame::Update();
 	CCamera::GetInstance().Update();
+	CLauncher::GetInstance().Update();
+	CBulletManager::GetInstance().Update();
 }
 
 void CDodgeBallGame::Draw(void)
 {
 	CGame::Draw();
+	CBulletManager::GetInstance().Draw();
 }
 
 void CDodgeBallGame::Finalize(void)
 {
 	CGame::Finalize();
 	CCamera::GetInstance().Finalize();
+	CLauncher::GetInstance().Finalize();
+	CBulletManager::GetInstance().Finalize();
 }
 
 void CDodgeBallGame::Start(void)
@@ -113,7 +124,9 @@ void CDodgeBallGame::Play(void)
 	m_ShotTimer.Update();
 	if (m_ShotTimer.Finished())
 	{
-		//ChooseCannon()->GetGimmick()->SetSwitch(true);
+		IObject* temp = ChooseCannon();
+		if(temp != nullptr)
+			temp->GetGimmick()->SetSwitch(true);
 	}
 }
 
@@ -138,5 +151,34 @@ void CDodgeBallGame::SpawnCannnon(void)
 
 IObject* CDodgeBallGame::ChooseCannon(void)
 {
-	return nullptr;
+	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
+
+	if (objectList.empty())
+		return nullptr;
+
+	CObjectManager::OBJECT_LIST ReadyCannonObjectList;
+	CObjectManager::OBJECT_LIST::iterator it;
+
+	for (it = objectList.begin(); it != objectList.end(); it++)
+	{
+		CDodgeBallGimmick* DodgeBallGimmick = dynamic_cast<CDodgeBallGimmick*>((*it)->GetGimmick());
+
+		if (DodgeBallGimmick != nullptr)
+		{
+			if (DodgeBallGimmick->GetNowState() == CANNON_STATE::MOVE)
+			{
+				ReadyCannonObjectList.push_back((*it));
+			}
+		}
+	}
+
+	if (ReadyCannonObjectList.size() < 1)
+		return nullptr;
+
+	it = ReadyCannonObjectList.begin();
+	int index = rand() % ReadyCannonObjectList.size();
+
+	std::advance(it, index);
+
+	return *it;
 }

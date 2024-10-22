@@ -14,6 +14,7 @@ CDodgeBallGimmick::CDodgeBallGimmick()
 	, m_SetTransform()
 	, m_NowState(CANNON_STATE::SPAWN)
 	, m_NowRotate(CANNON_ROTATE::RIGHT_GO)
+	, m_Shot()
 {
 }
 
@@ -35,6 +36,8 @@ void CDodgeBallGimmick::Initialize(IObject* object)
 
 	//砲の現在位置のTransformをスポーン位置でセット
 	m_Object->SetPosition(m_SetTransform.position + m_spawn_pos);
+
+	m_Shot = CLauncher::GetInstance().Create(SHOT_ID::DODGE_BALL);
 }
 
 void CDodgeBallGimmick::Initialize(IObject* object, float time)
@@ -153,7 +156,7 @@ void CDodgeBallGimmick::Update(void)
 		if (m_Switch)
 		{
 			m_Switch = false;
-			Shot();
+			//m_Shot->Shot(UNIT_CATEGORY::ENEMY,m_Object->GetPosition(),m_Object->m_Transform.GetForwardVector());
 		}
 	}
 		break;
@@ -173,7 +176,8 @@ void CDodgeBallGimmick::Finalize(void)
 	CGimmick::Finalize();
 }
 
-void CDodgeBallGimmick::Shot(void)
+
+CANNON_STATE CDodgeBallGimmick::GetNowState()
 {
-	//CBulletManager().GetInstance().Create()
+	return m_NowState;
 }
