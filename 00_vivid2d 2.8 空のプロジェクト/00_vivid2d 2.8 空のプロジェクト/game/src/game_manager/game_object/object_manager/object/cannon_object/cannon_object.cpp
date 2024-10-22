@@ -19,7 +19,6 @@ void CCannonObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	IObject::Initialize(id, transform);
 
 	m_Model.Initialize(m_FileName, m_Transform);
-	m_State = OBJECT_STATE::WAIT;
 }
 
 void CCannonObject::Update(void)

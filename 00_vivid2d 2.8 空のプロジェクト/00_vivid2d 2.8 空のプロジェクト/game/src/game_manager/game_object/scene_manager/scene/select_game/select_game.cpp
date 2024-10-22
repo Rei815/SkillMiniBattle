@@ -17,12 +17,14 @@ void CSelectGame::Initialize(void)
     CCamera::GetInstance().Initialize();
 
     CStage::GetInstance().Initialize();
-
-
+    CUIManager::GetInstance().Initialize();
+    CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME);
 }
 
 void CSelectGame::Update(void)
 {
+    CUIManager::GetInstance().Update();
+
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
     {
         /*
@@ -38,6 +40,8 @@ void CSelectGame::Update(void)
     }
 #if _DEBUG
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
 #endif
     CStage::GetInstance().Update();
@@ -46,6 +50,8 @@ void CSelectGame::Update(void)
 
 void CSelectGame::Draw(void)
 {
+    CUIManager::GetInstance().Draw();
+
     vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 
     vivid::DrawText(20, "ÉQÅ[ÉÄëIëíÜ", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
@@ -54,6 +60,8 @@ void CSelectGame::Draw(void)
 
 void CSelectGame::Finalize(void)
 {
+    CUIManager::GetInstance().Finalize();
+
     CStage::GetInstance().Finalize();
 
 }

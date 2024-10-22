@@ -32,9 +32,9 @@ void CFallGimmick::Update(void)
 	{
 		m_Timer.Reset();
 		m_Object->SetVelocity(CVector3(0, -m_fall_speed, 0));
-	}
-	if (m_Object->GetState() == OBJECT_STATE::FALL_FINISH)
+		m_State = GIMMICK_STATE::FINISH;
 		m_Switch = false;
+	}
 
 }
 
@@ -45,7 +45,5 @@ void CFallGimmick::Finalize(void)
 void CFallGimmick::SetSwitch(bool sw)
 {
 	m_Switch = sw;
-	if(m_Switch)
-		m_Object->SetState(OBJECT_STATE::FALL);
-
+	m_State = GIMMICK_STATE::PLAY;
 }

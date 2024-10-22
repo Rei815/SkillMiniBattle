@@ -2,18 +2,18 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-class CFade : public CUI
+class CRandomGame : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CFade(void);
+    CRandomGame(void);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CFade(void);
+    ~CRandomGame(void);
 
     /*!
      *  @brief      初期化
@@ -36,7 +36,7 @@ public:
     void        Finalize(void);
 
 private:
-
+    static const TCHAR*             m_file_name;
     static const vivid::Vector2     m_position;     //!< 位置
     static const int                m_height;       //!< 高さ
     static const int                m_width;        //!< 幅
@@ -44,4 +44,5 @@ private:
     static const vivid::Vector2     m_anchor;       //!< 基準点
     static const vivid::Vector2     m_scale;        //!< 拡縮
 
+    int                             m_Handle;
 };

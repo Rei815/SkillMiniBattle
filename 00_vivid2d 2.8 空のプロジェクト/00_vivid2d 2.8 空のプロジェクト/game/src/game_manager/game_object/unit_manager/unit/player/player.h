@@ -36,11 +36,12 @@ public:
     virtual void        Finalize(void);
 
 /*!
-     *  @brief      行動可能かどうかを設定
+     *  @brief      行動の可不可を設定
      *
-     *  @param[in]  flag    行動可能かどうか
+     *  @param[in]  flag    行動フラグ
  */
     void        SetActionFlag(bool flag);
+
 
 protected:
     /*!
@@ -81,7 +82,7 @@ protected:
 
     float                           m_FallSpeed;                    //!< 落下速度
     CVector3                        m_Accelerator;                  //!< 加速度
-    bool                            m_IsGround;                     //!< 地上にいるか
+    CVector3                        m_InitialPosition;              //!< 初期位置
     bool                            m_StopFlag;                     //!< 停止フラグ
     int                             m_InvincibleTime;               //!< 無敵時間
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ

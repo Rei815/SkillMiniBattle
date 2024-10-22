@@ -20,7 +20,7 @@
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
-const CVector3          IUnit::m_gravity = CVector3(0, -0.1f, 0.0f);
+const CVector3          IUnit::m_gravity = CVector3(0.0f, -1.0f, 0.0f);
 
 IUnit::IUnit()
 {
@@ -113,7 +113,6 @@ bool
 IUnit::
 CheckHitBullet(IBullet* bullet)
 {
-
     if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
         return false;
     DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim{};
@@ -123,7 +122,7 @@ CheckHitBullet(IBullet* bullet)
         hit_poly_dim = MV1CollCheck_Sphere(m_Model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
         break;
     case COLLIDER_ID::CAPSULE:
-        hit_poly_dim = MV1CollCheck_Capsule(m_Model.GetModelHandle(), -1, bullet->GetColliderPosA(), bullet->GetColliderPosB(), bullet->GetRadius());
+        hit_poly_dim = MV1CollCheck_Capsule(m_Model.GetModelHandle(), -1, bullet->GetColliderPosA(), bullet->GetColliderPosB(),bullet->GetRadius());
         break;
     }
     bool hit_flag = false;
@@ -295,6 +294,11 @@ float IUnit::GetDamageRate(void)
 CModel IUnit::GetModel(void)
 {
     return m_Model;
+}
+
+void IUnit::SetIsGround(bool flag)
+{
+    m_IsGround = flag;
 }
 
 void IUnit::RevertAlpha(void)

@@ -5,20 +5,12 @@
 class CDaruma_FallDownGame : public CGame
 {
 public:
+	CDaruma_FallDownGame();
+	~CDaruma_FallDownGame();
 
     /*!
-     *  @brief      コンストラクタ
-     */
-    CDaruma_FallDownGame(void);
-
-    /*!
-     *  @brief      デストラクタ
-     */
-    ~CDaruma_FallDownGame(void);
-
-    /*!
-     *  @brief      初期化
-     */
+ *  @brief      初期化
+ */
     void        Initialize(void);
 
     /*!
@@ -36,4 +28,10 @@ public:
      */
     void        Finalize(void);
 
+private:
+
+    static const CVector3           m_camera_position;
+    static const CVector3           m_camera_direction;
+
+    CTimer                          m_Timer;
 };

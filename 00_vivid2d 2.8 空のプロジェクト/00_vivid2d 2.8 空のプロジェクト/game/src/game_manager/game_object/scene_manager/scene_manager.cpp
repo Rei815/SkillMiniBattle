@@ -16,6 +16,7 @@
 #include "scene\select_game\select_game.h"
 #include "scene\game\game.h"
 #include "scene\game\fall_game\fall_game.h"
+#include "scene\game\daruma_falldown_game\daruma_falldown_game.h"
 #include "scene\game\dodgeball_game\dodgeball_game.h"
 #include "scene\game\debug_game\debug_game.h"
 #include "scene\result\result.h"
@@ -168,14 +169,15 @@ CSceneManager::CreateScene(SCENE_ID id)
     //IDÇäÓèÄÇ…ÉVÅ[ÉìëΩï™äÚ
     switch (id)
     {
-    case SCENE_ID::TITLE:        m_Scene = new CTitle();        break;
-    case SCENE_ID::SELECTMODE:   m_Scene = new CSelectMode();  break;
-    case SCENE_ID::SELECTPLAYER:  m_Scene = new CSelectPlayer();  break;
-    case SCENE_ID::SELECTGAME:  m_Scene = new CSelectGame();  break;
-    case SCENE_ID::FALLGAME:     m_Scene = new CFallGame();     break;
+    case SCENE_ID::TITLE:              m_Scene = new CTitle();         break;
+    case SCENE_ID::SELECTMODE:         m_Scene = new CSelectMode();    break;
+    case SCENE_ID::SELECTPLAYER:       m_Scene = new CSelectPlayer();  break;
+    case SCENE_ID::SELECTGAME:         m_Scene = new CSelectGame();    break;
+    case SCENE_ID::FALLGAME:           m_Scene = new CFallGame();      break;
+    case SCENE_ID::DARUMAFALLDOWN:     m_Scene = new CDaruma_FallDownGame();      break;
+    case SCENE_ID::DEBUGGAME:          m_Scene = new CDebugGame();     break;
+    case SCENE_ID::RESULT:             m_Scene = new CResult();        break;
     case SCENE_ID::DODGEBALLGAME: m_Scene = new CDodgeBallGame();   break;
-    case SCENE_ID::DEBUGGAME:     m_Scene = new CDebugGame();     break;
-    case SCENE_ID::RESULT:     m_Scene = new CResult();     break;
     }
 }
 

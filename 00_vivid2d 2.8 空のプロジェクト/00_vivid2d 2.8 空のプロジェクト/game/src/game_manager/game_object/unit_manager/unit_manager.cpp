@@ -144,36 +144,34 @@ void CUnitManager::CheckHitObject(IObject* object)
             return;
 
         CVector3 startPos = (*it)->GetPosition();
-        startPos.y += (*it)->GetHeight();
-        CVector3 dir = (*it)->GetVelocity().Normalize();
-
-        //“®‚¢‚Ä‚¢‚éê‡í‚É1‚©-1‚ğ•Û‚Â
-        dir.x = (dir.x > 0) - (dir.x < 0);
+        startPos.y += (*it)->GetRadius();
 
         CVector3 endPos = (*it)->GetPosition();
-        endPos.y -= (*it)->GetHeight();
+        endPos.y -= (*it)->GetRadius();
 
-        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(object->GetModel().GetModelHandle(), -1, (*it)->GetPosition(), (*it)->GetRadius());
+        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_LineDim(object->GetModel().GetModelHandle(), -1, startPos, endPos, -1);
 
         // ü•ª‚Ì•`‰æ
-        DrawSphere3D((*it)->GetPosition(), (*it)->GetRadius(), 8, GetColor(255, 255, 0), GetColor(255, 255, 255), FALSE);
+        DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
 
         if (hit_poly_dim.HitNum >= 1)
         {
+            if (object->GetTag() == "Fall")
+            (*it)->SetIsGround(true);
             for (int i = 0; i < hit_poly_dim.HitNum; i++)
             {
                 MV1_COLL_RESULT_POLY* pCollResultPoly = &hit_poly_dim.Dim[i];
 
-                CVector3 hitPos = CVector3(pCollResultPoly->HitPosition.x, pCollResultPoly->HitPosition.y , pCollResultPoly->HitPosition.z);
+                float diffHeight = endPos.y - pCollResultPoly->HitPosition.y;
 
-                CVector3 pos = (*it)->GetPosition();
-                CVector3 diffPos = pos - hitPos;
-
-                if (diffPos != CVector3::ZERO)
-                    (*it)->SetPosition((*it)->GetPosition() - diffPos);
+                CVector3 unitPos = (*it)->GetPosition();
+                unitPos.y -= diffHeight;
+                (*it)->SetPosition(unitPos);
 
             }
         }
+
+
 
         // “–‚½‚è”»’èî•ñ‚ÌŒãn––
         MV1CollResultPolyDimTerminate(hit_poly_dim);
