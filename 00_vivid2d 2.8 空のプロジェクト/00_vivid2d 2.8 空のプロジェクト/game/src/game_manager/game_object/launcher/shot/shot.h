@@ -80,6 +80,13 @@ public:
      * @return      装填数
      */
     int            GetCapacity();
+
+    /*!
+    *  @brief      発射フラグ取得
+    * @return      発射フラグ
+    */
+    bool            GetShotFlag();
+
 protected:
 
     void            Interval();
@@ -89,7 +96,7 @@ protected:
     int                                 m_FireInterval;
     bool                                m_ShotFlag;
     int                                 m_ShotCount;
-    CVector3*                           m_Position;
+    CVector3                            m_Position;
     CVector3                            m_Direction;
     UNIT_CATEGORY                       m_UnitCategory;
 };

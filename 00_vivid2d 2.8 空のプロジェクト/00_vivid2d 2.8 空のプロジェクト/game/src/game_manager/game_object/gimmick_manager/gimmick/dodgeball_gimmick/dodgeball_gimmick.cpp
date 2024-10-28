@@ -5,7 +5,7 @@
 const std::string	CDodgeBallGimmick::m_file_name = "data\\Models\\cannon_test.mv1";
 const CVector3		CDodgeBallGimmick::m_spawn_pos = CVector3(0.0f, -1000.0f, 0.0f);
 const float			CDodgeBallGimmick::m_spawn_time = 2.0f;
-const float			CDodgeBallGimmick::m_max_rotate_angle = 30.0f;
+const float			CDodgeBallGimmick::m_max_rotate_angle = 25.0f;
 const float			CDodgeBallGimmick::m_rotate_time = 4.0f;
 const float			CDodgeBallGimmick::m_min_rotate_time = m_rotate_time / 4.0f;
 
@@ -156,7 +156,16 @@ void CDodgeBallGimmick::Update(void)
 		if (m_Switch)
 		{
 			m_Switch = false;
-			//m_Shot->Shot(UNIT_CATEGORY::ENEMY,m_Object->GetPosition(),m_Object->m_Transform.GetForwardVector());
+
+			//発射座標および発射方向の取得
+			CVector3 ShotPos = m_Object->GetPosition();
+			CVector3 ShotDir = m_Object->GetTransform().GetForwardVector();
+
+			//発射座標の調整
+			ShotPos += ShotDir.Normalize() * 20.0f;
+
+			//発射（弾の生成）
+			m_Shot->Shot(UNIT_CATEGORY::ENEMY, ShotPos, ShotDir);
 		}
 	}
 		break;
@@ -180,4 +189,9 @@ void CDodgeBallGimmick::Finalize(void)
 CANNON_STATE CDodgeBallGimmick::GetNowState()
 {
 	return m_NowState;
+}
+
+bool CDodgeBallGimmick::GetShotFlag()
+{
+	return m_Shot->GetShotFlag();
 }

@@ -56,6 +56,8 @@ public:
 
     CANNON_STATE    GetNowState();
 
+    bool            GetShotFlag();
+
 private:
 
     CTransform          m_SetTransform;
