@@ -1,5 +1,6 @@
 #pragma once
 #include "..\gimmick.h"
+#include "..\..\..\launcher\launcher.h"
 
 enum class CANNON_STATE
 {
@@ -53,13 +54,16 @@ public:
      */
     void    Finalize(void);
 
+    CANNON_STATE    GetNowState();
+
+    bool            GetShotFlag();
+
 private:
-    //’e”­ŽË
-    void    Shot(void);
 
     CTransform          m_SetTransform;
     CANNON_STATE        m_NowState;
     CANNON_ROTATE       m_NowRotate;
+    CShot*              m_Shot;
 
     static const std::string    m_file_name;
     static const CVector3       m_spawn_pos;

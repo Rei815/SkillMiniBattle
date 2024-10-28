@@ -26,11 +26,11 @@ void CFiveWay::Update(void)
     {
         m_BulletInterval = m_BulletParameters->bulletInterval;
 
-        bm.Create(m_UnitCategory, m_BulletParameters, *m_Position, m_Direction);
-        bm.Create(m_UnitCategory, m_BulletParameters, *m_Position, m_Direction + CVector3::RIGHT);
-        bm.Create(m_UnitCategory, m_BulletParameters, *m_Position, m_Direction + CVector3::LEFT);
-        bm.Create(m_UnitCategory, m_BulletParameters, *m_Position, m_Direction + CVector3(0.5,0,0));
-        bm.Create(m_UnitCategory, m_BulletParameters, *m_Position, m_Direction + CVector3(-0.5, 0, 0));
+        bm.Create(m_UnitCategory, m_BulletParameters, m_Position, m_Direction);
+        bm.Create(m_UnitCategory, m_BulletParameters, m_Position, m_Direction + CVector3::RIGHT);
+        bm.Create(m_UnitCategory, m_BulletParameters, m_Position, m_Direction + CVector3::LEFT);
+        bm.Create(m_UnitCategory, m_BulletParameters, m_Position, m_Direction + CVector3(0.5,0,0));
+        bm.Create(m_UnitCategory, m_BulletParameters, m_Position, m_Direction + CVector3(-0.5, 0, 0));
 
         ++m_ShotCount;
     }

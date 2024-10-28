@@ -43,12 +43,15 @@ void CShot::Update(void)
         return;
 
     CBulletManager& bm = CBulletManager::GetInstance();
+
+    /*
     for (int i = 0; i < m_BulletParameters->bullets; i++)
     {
         CVector3 dir = m_Direction;
         dir = CVector3::DeviationToDirection(m_Direction, m_BulletParameters->deviation);
 
     }
+    */
 
     if (--m_BulletInterval < 0 && m_ShotCount < m_BulletParameters->capacity)
     {
@@ -59,11 +62,12 @@ void CShot::Update(void)
             CVector3 dir = m_Direction;
 
             dir = CVector3::DeviationToDirection(m_Direction, m_BulletParameters->deviation);
+
             //’x‚ê‚Äƒz[ƒ~ƒ“ƒO‚Ìê‡³‹K‰»
             if(m_BulletParameters->homingDelayTime != 0)
-            dir = dir.Normalize();
+                dir = dir.Normalize();
 
-            bm.Create(m_UnitCategory, m_BulletParameters, *m_Position, dir);
+            bm.Create(m_UnitCategory, m_BulletParameters, m_Position, dir);
 
         }
 
@@ -82,10 +86,11 @@ void CShot::Shot(UNIT_CATEGORY unitCategory, CVector3& position, const CVector3&
 {
     if (m_ShotFlag)
         return;
-    CBulletManager& bm = CBulletManager::GetInstance();
+
+    //CBulletManager& bm = CBulletManager::GetInstance();
 
     m_UnitCategory = unitCategory;
-    m_Position = &position;
+    m_Position = position;
 
     m_Direction = direction;
 
@@ -116,6 +121,12 @@ int CShot::GetCapacity()
     return m_BulletParameters->capacity;
 }
 
+
+bool CShot::GetShotFlag()
+{
+    return m_ShotFlag;
+}
+
 void CShot::Interval()
 {
     if (m_ShotCount >= m_BulletParameters->capacity && m_ShotFlag)
@@ -125,6 +136,8 @@ void CShot::Interval()
             m_FireInterval = m_BulletParameters->fireInterval;
             m_ShotCount = 0;
             m_ShotFlag = false;
+
+            m_ShotCount = 0;
         }
     }
 }

@@ -29,6 +29,31 @@ CTransform& CTransform::operator=(const CTransform& t)
 }
 
 
+CVector3 CTransform::GetForwardVector(void)
+{
+	return GetRotateVector(CVector3().FORWARD);
+}
+
+CVector3 CTransform::GetRightVector(void)
+{
+	return GetRotateVector(CVector3().RIGHT);
+}
+
+CVector3 CTransform::GetUpVector(void)
+{
+	return GetRotateVector(CVector3().UP);
+}
+
+CVector3 CTransform::GetRotateVector(CVector3 vector)
+{
+	VECTOR TempVector = VGet(vector.x, vector.y, vector.z);
+	CVector3 TempRotation = GetRadianRotation();
+	TempVector = VTransformSR(TempVector, MGetRotX(TempRotation.x));
+	TempVector = VTransformSR(TempVector, MGetRotY(TempRotation.y));
+	TempVector = VTransformSR(TempVector, MGetRotZ(TempRotation.z));
+	return CVector3(TempVector.x, TempVector.y, TempVector.z);
+}
+
 CVector3 CTransform::GetRadianRotation(void)
 {
 	const float math_pi = 3.1415926535897931;

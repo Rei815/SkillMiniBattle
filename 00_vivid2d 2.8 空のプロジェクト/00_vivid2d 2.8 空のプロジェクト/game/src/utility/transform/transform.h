@@ -7,9 +7,12 @@ public:
     CVector3 position;
     CVector3 rotation;
     CVector3 scale;
+
+    /*
     CVector3 forward;
     CVector3 right;
     CVector3 up;
+    */
 
     /*!
      *  @brief  コンストラクタ
@@ -39,9 +42,15 @@ public:
     */
     CTransform& operator=(const CTransform& t);
 
+    CVector3 GetForwardVector(void);
+    CVector3 GetRightVector(void);
+    CVector3 GetUpVector(void);
+
     CVector3 GetRadianRotation(void);
 
 private:
+    CVector3 GetRotateVector(CVector3 vector);
+
     CVector3 center;
     CVector3 angle;
     CVector3 scaling;

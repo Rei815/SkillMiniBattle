@@ -66,6 +66,11 @@ void IObject::SetRotation(const CVector3& rotation)
 	m_Transform.rotation = rotation;
 }
 
+CTransform IObject::GetTransform()
+{
+	return m_Transform;
+}
+
 void IObject::SetVelocity(const CVector3& velocity)
 {
 	m_Velocity = velocity;
