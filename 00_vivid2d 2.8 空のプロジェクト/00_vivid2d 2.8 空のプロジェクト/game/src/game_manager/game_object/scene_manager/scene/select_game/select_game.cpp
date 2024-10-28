@@ -19,12 +19,14 @@ void CSelectGame::Initialize(void)
     CStage::GetInstance().Initialize();
     CUIManager::GetInstance().Initialize();
     CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME);
+    // Ｘ軸のマイナス方向のディレクショナルライトに変更
+    ChangeLightTypeDir(VGet(1.0f, -1.0f, 0.0f));
+
 }
 
 void CSelectGame::Update(void)
 {
     CUIManager::GetInstance().Update();
-
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
     {
         int game_id = rand() % (int)GAME_ID::MAX;
@@ -50,6 +52,7 @@ void CSelectGame::Update(void)
 void CSelectGame::Draw(void)
 {
     CUIManager::GetInstance().Draw();
+    CStage::GetInstance().Draw();
 
     vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 

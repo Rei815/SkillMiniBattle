@@ -36,13 +36,19 @@ public:
     void        Finalize(void);
 
 private:
+
+    void Draw3DRot(const CVector3& position, float _x_rot, float _y_rot, float _z_rot);
+
     static const TCHAR*             m_file_name;
-    static const vivid::Vector2     m_position;     //!< ˆÊ’u
+    CVector3     m_Position;     //!< ˆÊ’u
     static const int                m_height;       //!< ‚‚³
     static const int                m_width;        //!< •
     static const vivid::Rect        m_rect;         //!< “Ç‚Ýž‚Ý”ÍˆÍ
     static const vivid::Vector2     m_anchor;       //!< Šî€“_
     static const vivid::Vector2     m_scale;        //!< Šgk
 
+    int                             m_Width;
+    int                             m_Height;
     int                             m_Handle;
+    float                           m_Angle;
 };
