@@ -46,7 +46,7 @@ private:
     static const vivid::Rect        m_rect;         //!< “Ç‚Ýž‚Ý”ÍˆÍ
     static const vivid::Vector2     m_anchor;       //!< Šî€“_
     static const vivid::Vector2     m_scale;        //!< Šgk
-
+    static const float              m_rotation_speed;
     int                             m_Width;
     int                             m_Height;
     int                             m_Handle;

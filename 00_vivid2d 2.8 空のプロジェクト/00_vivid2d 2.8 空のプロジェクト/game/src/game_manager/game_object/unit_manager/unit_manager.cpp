@@ -174,6 +174,21 @@ void CUnitManager::CheckHitObject(IObject* object)
 
 }
 
+void CUnitManager::CheckDefeat()
+{
+    if (m_UnitList.empty()) return;
+
+    UNIT_LIST::iterator it = m_UnitList.begin();
+
+    while (it != m_UnitList.end())
+    {
+        if ((*it)->GetD() == UNIT_ID::PLAYER)
+            return (CPlayer*)(*it);
+
+        ++it;
+    }
+}
+
 CPlayer* CUnitManager::GetPlayer(void)
 {
     if (m_UnitList.empty()) return nullptr;

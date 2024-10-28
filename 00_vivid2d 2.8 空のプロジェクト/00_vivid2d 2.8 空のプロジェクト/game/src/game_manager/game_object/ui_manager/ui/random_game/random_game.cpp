@@ -3,6 +3,7 @@
 const TCHAR*            CRandomGame::m_file_name = "data\\Textures\\cobblestone_wall_1_fixed_d.png";
 const int               CRandomGame::m_width = 1024;
 const int               CRandomGame::m_height = 1024;
+const float               CRandomGame::m_rotation_speed = 0.05f;
 const vivid::Rect       CRandomGame::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
 const vivid::Vector2    CRandomGame::m_scale = vivid::Vector2(1.0f, 1.0f);
 const vivid::Vector2    CRandomGame::m_anchor = vivid::Vector2((m_width * m_scale.x) / 2, (m_height * m_scale.y) / 2);
@@ -51,7 +52,7 @@ void
 CRandomGame::
 Update(void)
 {
-	m_Angle += 0.05f;
+	m_Angle += m_rotation_speed;
 }
 
 /*
@@ -66,12 +67,14 @@ Draw(void)
 // ‰ñ“]•`‰æ
 void CRandomGame::Draw3DRot(const CVector3& position, float _x_rot, float _y_rot, float _z_rot)
 {
+
 	DxLib::VERTEX3D vertices[] = {
 		{VGet(-m_width / 2,	-m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), 0, 0.0f, 0.0f, 0.0f, 0.0f },
 		{VGet( m_width / 2,	-m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), 0, 1.0f, 0.0f, 0.0f, 0.0f },
 		{VGet( m_width / 2,	 m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), 0, 1.0f, 1.0f, 0.0f, 0.0f },
 		{VGet(-m_width / 2,	 m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), 0, 0.0f, 1.0f, 0.0f, 0.0f },
 	};
+
 	unsigned short index[] = {0,1,3,3,1,2};
 
 	//VECTOR m_pos[4] = {
@@ -97,8 +100,11 @@ void CRandomGame::Draw3DRot(const CVector3& position, float _x_rot, float _y_rot
 	{
 		VectorTransform(&vertices[i].pos, &vertices[i].pos, &mulMat);
 	}
-//	DrawModiGraphF(m_pos[0].x, m_pos[0].y, m_pos[1].x, m_pos[1].y, m_pos[2].x, m_pos[2].y, m_pos[3].x, m_pos[3].y, m_Handle, TRUE);
+
+	//DrawModiGraphF(m_pos[0].x, m_pos[0].y, m_pos[1].x, m_pos[1].y, m_pos[2].x, m_pos[2].y, m_pos[3].x, m_pos[3].y, m_Handle, TRUE);
+
 	DrawPolygonIndexed3D(vertices, 4, index, 2, m_Handle, TRUE);
+
 }
 /*
  *  ‰ð•ú
