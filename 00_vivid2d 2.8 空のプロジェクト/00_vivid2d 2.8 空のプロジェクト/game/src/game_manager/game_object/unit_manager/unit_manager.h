@@ -61,6 +61,13 @@ public:
      */
     void        CheckHitObject(IObject* object);
 
+
+    /*!
+     *  @brief      プレイヤーが負けているかどうか
+     *
+     */
+    void        CheckDefeat();
+
     /*!
      *  @brief      プレイヤー取得
      *

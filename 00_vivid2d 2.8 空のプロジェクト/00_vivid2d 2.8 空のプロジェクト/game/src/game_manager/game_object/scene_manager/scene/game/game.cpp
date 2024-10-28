@@ -15,6 +15,7 @@
 CGame::CGame(void)
     : m_DebugText()
     , m_SetActionflag(false)
+    , m_DefeatList()
 {
 }
 
@@ -31,6 +32,7 @@ CGame::~CGame(void)
 void
 CGame::Initialize(void)
 {
+    m_DefeatList.clear();
     CUnitManager::GetInstance().Initialize();
     CUIManager::GetInstance().Initialize();
     CEffectManager::GetInstance().Initialize();
@@ -78,6 +80,7 @@ CGame::Update(void)
     CControllerManager::GetInstance().Update();
     CGimmickManager::GetInstance().Update();
     CObjectManager::GetInstance().Update();
+    CUnitManager::GetInstance().CheckDefeat();
 }
 
 /*
