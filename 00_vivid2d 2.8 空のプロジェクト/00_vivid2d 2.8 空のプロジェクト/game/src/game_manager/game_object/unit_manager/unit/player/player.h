@@ -50,6 +50,14 @@ protected:
     void        Attack(void);
 
     /*!
+     *  @brief      ”í’e
+     *  @param[in]  bullet          ”í’e‚µ‚½’e
+     *  @param[in]  hit_position    ”í’eˆÊ’u
+     */
+    void    HitBullet(IBullet* bullet, CVector3 hit_position);
+
+
+    /*!
      *  @brief      Ž€–S
      */
     void        Defeat(void);

@@ -247,9 +247,17 @@ protected:
     void        Fire(CShot* shot, bool aim, CVector3& position, const CVector3& direction);
 
     /*!
+     *  @brief      ”í’e
+     *  @param[in]  bullet          ”í’e‚µ‚½’e
+     *  @param[in]  hit_position    ”í’eˆÊ’u
+     */
+    virtual void    HitBullet(IBullet* bullet, CVector3 hit_position);
+
+    /*!
      *  @brief      ”s–k
      */
     virtual void    Defeat(void);
+
     /*!
      *  @brief      íœ
      */

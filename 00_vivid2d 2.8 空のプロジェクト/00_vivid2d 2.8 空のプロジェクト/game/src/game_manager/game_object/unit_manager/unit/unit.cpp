@@ -126,6 +126,7 @@ CheckHitBullet(IBullet* bullet)
         break;
     }
     bool hit_flag = false;
+
     if (hit_poly_dim.HitNum >= 1)
     {
         hit_flag = true;
@@ -143,7 +144,7 @@ CheckHitBullet(IBullet* bullet)
         if (m_InvincibleFlag)
             return hit_flag;
 
-
+        HitBullet(bullet, hitPosition);
     }
     // “–‚½‚è”»’èî•ñ‚ÌŒãn––
     MV1CollResultPolyDimTerminate(hit_poly_dim);
@@ -386,6 +387,12 @@ void IUnit::Fire(CShot* shot, bool aim, CVector3& position, const CVector3& dire
     shot->Shot(m_Category, position, dir);
 
 }
+
+void IUnit::HitBullet(IBullet* bullet, CVector3 hit_position)
+{
+    //Œp³æ‚Åˆ—‚ğì‚é
+}
+
 
 /*
  *  €–S

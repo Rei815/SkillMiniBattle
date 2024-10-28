@@ -97,6 +97,15 @@ Attack(void)
         Damage();
 }
 
+
+/*
+ *  ”í’e
+ */
+void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
+{
+    
+}
+
 void CPlayer::Control(void)
 {
     //¶ˆÚ“®
