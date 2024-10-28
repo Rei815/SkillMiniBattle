@@ -6,7 +6,7 @@
 #include "..\..\..\utility\utility.h"
 #include "../ui_manager/ui_manager.h"
 
-const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player.mv1", "data\\Models\\player.mv1" };
+const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1" };
 const int           CUnitManager::m_controller_list[] = { DX_INPUT_PAD1, DX_INPUT_PAD2,DX_INPUT_PAD3,DX_INPUT_PAD4 };
 /*
  *  インスタンスの取得
@@ -29,6 +29,7 @@ Initialize(void)
 {
     m_UnitList.clear();
     m_RankingList.clear();
+    m_DefeatList.clear();
 }
 
 /*
@@ -107,7 +108,7 @@ Create(UNIT_ID id, const CVector3& pos)
 
     if (!unit) return;
 
-    unit->Initialize(pos, m_file_name_list[(int)id], m_controller_list[(int)id]);
+    unit->Initialize(id, pos, m_file_name_list[(int)id], m_controller_list[(int)id]);
     m_UnitList.push_back(unit);
 }
 
@@ -154,11 +155,10 @@ void CUnitManager::CheckHitObject(IObject* object)
         // 線分の描画
         DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
 
-        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true)
+        if (object->GetModel().CheckHitLine(startPos, endPos) == true)
         {
 
-            hitPos = (*it)->GetModel().GetHitLinePosition(startPos, endPos);
-
+            hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
 
             if (object->GetTag() == "Fall")
             (*it)->SetIsGround(true);
@@ -182,8 +182,20 @@ void CUnitManager::CheckDefeat()
 
     while (it != m_UnitList.end())
     {
-        if ((*it)->GetD() == UNIT_ID::PLAYER)
-            return (CPlayer*)(*it);
+        if ((*it)->GetDefeatFlag())
+        {
+            if (m_DefeatList.empty())
+            {
+                m_DefeatList.push_back((*it));
+                return;
+            }
+            for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
+            {
+                if ((*it)->GetUnitID() == (*i)->GetUnitID()) return;
+            }
+            m_DefeatList.push_back((*it));
+
+        }
 
         ++it;
     }
@@ -257,6 +269,27 @@ bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& e
     }
 
     return false;
+}
+
+int CUnitManager::GetCurrentPlayer()
+{
+    return m_CurrentPlayerNum;
+}
+
+CUnitManager::UNIT_LIST CUnitManager::GetUnitList()
+{
+    return m_UnitList;
+}
+
+CUnitManager::DEFEAT_LIST CUnitManager::GetDefeatList()
+{
+    return m_DefeatList;
+}
+
+void CUnitManager::SetCurrentPlayer(int num)
+{
+    if (num > 4 || num < 1) return;
+    m_CurrentPlayerNum = num;
 }
 
 /*

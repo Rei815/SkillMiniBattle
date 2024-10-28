@@ -32,11 +32,11 @@ CPlayer::~CPlayer()
 {
 }
 
-void CPlayer::Initialize(const CVector3& position, const std::string& file_name, int controller)
+void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, int controller)
 {
     (void)position;
 
-    IUnit::Initialize(position, file_name, controller);
+    IUnit::Initialize(id, position, file_name, controller);
 
     m_Radius = m_radius;
     m_Height = m_height;

@@ -60,8 +60,9 @@ IUnit::
  */
 void
 IUnit::
-Initialize(const CVector3& position, const std::string& file_name, int controller)
+Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, int controller)
 {
+    m_UnitID = id;
     m_Transform.position = position;
     m_Velocity = CVector3();
     m_ActiveFlag = true;
@@ -290,6 +291,16 @@ void IUnit::DamageUp(float damageRate)
 float IUnit::GetDamageRate(void)
 {
     return m_DamageRate;
+}
+
+bool IUnit::GetDefeatFlag(void)
+{
+    return m_DefeatFlag;
+}
+
+void IUnit::SetDefeatFlag(bool flag)
+{
+    m_DefeatFlag = flag;
 }
 
 CModel IUnit::GetModel(void)

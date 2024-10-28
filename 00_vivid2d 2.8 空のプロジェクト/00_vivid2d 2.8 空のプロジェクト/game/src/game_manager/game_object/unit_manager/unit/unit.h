@@ -52,7 +52,7 @@ public:
      *
      *  @param[in]  position    ˆÊ’u
      */
-    virtual void    Initialize(const CVector3& position, const std::string& file_name, int controller);
+    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, int controller);
 
     /*!
      *  @brief      XV
@@ -199,6 +199,20 @@ public:
      *  @return     UŒ‚—¦
      */
     float       GetDamageRate(void);
+
+    /*!
+     *  @brief      ”s–kƒtƒ‰ƒOæ“¾
+     *
+     *  @return     ”s–kƒtƒ‰ƒO
+     */
+    bool       GetDefeatFlag(void);
+
+    /*!
+     *  @brief      ”s–kƒtƒ‰ƒOİ’è
+     *
+     *  @param[in]  flag    ”s–kƒtƒ‰ƒO
+     */
+    void       SetDefeatFlag(bool flag);
 
     CModel      GetModel(void);
 

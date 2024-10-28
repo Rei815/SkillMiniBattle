@@ -91,10 +91,4 @@ protected:
     std::string     m_DebugText;    //!< デバッグ用
     bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用
 
-    /*!
-     *  @brief      プレイヤーリスト型
-     */
-    using DEFEAT_LIST = std::list<CPlayer*>;
-
-    DEFEAT_LIST     m_DefeatList;
 };

@@ -15,7 +15,6 @@
 CGame::CGame(void)
     : m_DebugText()
     , m_SetActionflag(false)
-    , m_DefeatList()
 {
 }
 
@@ -32,7 +31,6 @@ CGame::~CGame(void)
 void
 CGame::Initialize(void)
 {
-    m_DefeatList.clear();
     CUnitManager::GetInstance().Initialize();
     CUIManager::GetInstance().Initialize();
     CEffectManager::GetInstance().Initialize();
@@ -182,6 +180,9 @@ void CGame::Play(void)
         m_SetActionflag = false;
         CUnitManager::GetInstance().SetAllPlayerAction(true);
     }
+
+     if ((CUnitManager::GetInstance().GetCurrentPlayer() - CUnitManager::GetInstance().GetDefeatList().size()) < 1)
+        m_GameState = GAME_STATE::FINISH;
 
 #ifdef VIVID_DEBUG
 
