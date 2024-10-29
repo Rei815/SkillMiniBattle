@@ -2,6 +2,7 @@
 #include "ui/pause/pause.h"
 #include "ui/fall_select/fall_select.h"
 #include "ui/random_game/random_game.h"
+#include "ui/finish_backGround/finish_backGround.h"
  /*
   *  インスタンスの取得
   */
@@ -111,6 +112,8 @@ void CUIManager::Create(UI_ID id)
         ui = new CFallSelect(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);     break;
+    case UI_ID::FINISH_BACKGROUND:
+        ui = new CFinishBackGround(id);     break;
         break;
     }
     if (!ui) return;

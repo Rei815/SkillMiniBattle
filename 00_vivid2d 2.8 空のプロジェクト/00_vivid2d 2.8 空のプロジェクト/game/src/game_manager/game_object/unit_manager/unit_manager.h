@@ -73,7 +73,7 @@ public:
      *
      *  @return     プレイヤー
      */
-    CPlayer*      GetPlayer(void);
+    CPlayer*      GetPlayer(UNIT_ID id);
 
     /*!
      *  @brief      全てのプレイヤーのアクションフラグの設定

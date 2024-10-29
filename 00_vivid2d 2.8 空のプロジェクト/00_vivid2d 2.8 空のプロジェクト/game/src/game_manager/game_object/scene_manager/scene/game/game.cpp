@@ -15,6 +15,7 @@
 CGame::CGame(void)
     : m_DebugText()
     , m_SetActionflag(false)
+    , m_FinishUIFlag(false)
 {
 }
 
@@ -107,7 +108,9 @@ CGame::Draw(void)
         break;
     case GAME_STATE::FINISH:
         vivid::DrawText(20, "フィニッシュ", vivid::Vector2(0, 0));
-
+        vivid::DrawText(20, std::to_string(CUnitManager::GetInstance().GetPlayer(UNIT_ID::PLAYER1)->GetWins()),
+            vivid::Vector2(vivid::GetWindowWidth() - 20, 0)
+        );
         break;
     }
     vivid::DrawText(20, m_DebugText, vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
@@ -205,4 +208,10 @@ Finish(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::RESULT);
 #endif
+    if (!m_FinishUIFlag)
+    {
+        m_FinishUIFlag = true;
+        CUIManager::GetInstance().Create(UI_ID::FINISH_BACKGROUND);
+    }
+
 }

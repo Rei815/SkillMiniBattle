@@ -90,5 +90,5 @@ protected:
     bool            m_PauseFlag;    //!< ポーズフラグ
     std::string     m_DebugText;    //!< デバッグ用
     bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用
-
+    bool            m_FinishUIFlag;
 };
