@@ -231,12 +231,11 @@
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\sound_manager\sound_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\stage\stage.cpp" />
-    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\boss_life\boss_life.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fade\fade.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fall_select\fall_select.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\finish_backGround\finish_backGround.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\pause\pause.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\random_game\random_game.cpp" />
-    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\reticle\reticle.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\ui.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\player\player.cpp" />
@@ -330,12 +329,11 @@
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill_manager.h" />
     <ClInclude Include="src\game_manager\game_object\sound_manager\sound_manager.h" />
     <ClInclude Include="src\game_manager\game_object\stage\stage.h" />
-    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\boss_life\boss_life.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fade\fade.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fall_select\fall_select.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\finish_backGround\finish_backGround.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\pause\pause.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\random_game\random_game.h" />
-    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\reticle\reticle.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\ui.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\ui_id.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui_manager.h" />

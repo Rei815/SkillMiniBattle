@@ -1,7 +1,8 @@
 #include "fall_select.h"
 #include "../../../unit_manager/unit_manager.h"
 
-const vivid::Vector2    CFallSelect::m_position = vivid::Vector2(0, 0);
+const vivid::Vector2    CFallSelect::m_positionList[] = { vivid::Vector2(0, 0),vivid::Vector2(200, 0),vivid::Vector2(400, 0),
+vivid::Vector2(600, 0),vivid::Vector2(800, 0),vivid::Vector2(1000, 0) };
 const int               CFallSelect::m_height = 368;
 const int               CFallSelect::m_width = 368;
 const vivid::Rect       CFallSelect::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
@@ -13,8 +14,7 @@ const vivid::Vector2    CFallSelect::m_anchor = vivid::Vector2((m_width * m_scal
  */
 CFallSelect::
 CFallSelect(UI_ID id)
-    : CUI(m_width, m_height)
-	, m_UIID(id)
+    : CUI(m_width, m_height, id)
 {
 }
 
@@ -33,7 +33,7 @@ void
 CFallSelect::
 Initialize(void)
 {
-	switch (m_UIID)
+	switch (m_UI_ID)
 	{
 	case UI_ID::FALL_CIRCLE:	m_FileName = "data\\Textures\\fall_circle.png";		break;
 	case UI_ID::FALL_MOON:		m_FileName = "data\\Textures\\fall_moon.png";		break;
@@ -42,6 +42,7 @@ Initialize(void)
 	case UI_ID::FALL_SQUARE:	m_FileName = "data\\Textures\\fall_square.png";		break;
 	case UI_ID::FALL_TRIANGLE:	m_FileName = "data\\Textures\\fall_triangle.png";	break;
 	}
+	m_Position = m_positionList[(int)m_UI_ID - 2];
 }
 
 /*
@@ -51,7 +52,6 @@ void
 CFallSelect::
 Update(void)
 {
-
 }
 
 /*
@@ -61,8 +61,7 @@ void
 CFallSelect::
 Draw(void)
 {
-    vivid::DrawTexture(m_FileName, m_position, 0xffffffff, m_rect, m_anchor, m_scale);
-
+    vivid::DrawTexture(m_FileName, m_Position, 0xffffffff, m_rect, m_anchor, m_scale);
 }
 
 /*

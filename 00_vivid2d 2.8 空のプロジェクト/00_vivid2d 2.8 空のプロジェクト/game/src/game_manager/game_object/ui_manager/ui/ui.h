@@ -20,7 +20,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    CUI(int width, int height);
+    CUI(int width, int height, UI_ID id);
 
     /*!
      *  @brief      デストラクタ

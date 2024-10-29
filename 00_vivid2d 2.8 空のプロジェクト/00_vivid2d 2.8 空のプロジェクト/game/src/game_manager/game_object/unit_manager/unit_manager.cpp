@@ -189,11 +189,20 @@ void CUnitManager::CheckDefeat()
                 m_DefeatList.push_back((*it));
                 return;
             }
+
+            bool checkFlag = false;
+            //2‰ñ–Ú‚Í“ü‚ê‚È‚¢‚æ‚¤‚É
             for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
             {
-                if ((*it)->GetUnitID() == (*i)->GetUnitID()) return;
+                if ((*it)->GetUnitID() == (*i)->GetUnitID())
+                {
+                    checkFlag = true;
+                    break;
+                }
             }
-            m_DefeatList.push_back((*it));
+
+            if(!checkFlag)
+                m_DefeatList.push_back((*it));
 
         }
 

@@ -9,8 +9,8 @@ const int    CPause::m_height = 780;
  *  コンストラクタ
  */
 CPause::
-CPause(void)
-    : CUI(m_width, m_height)
+CPause(UI_ID id)
+    : CUI(m_width, m_height, id)
 {
 }
 

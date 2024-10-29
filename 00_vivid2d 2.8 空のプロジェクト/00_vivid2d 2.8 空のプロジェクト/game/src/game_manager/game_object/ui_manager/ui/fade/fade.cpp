@@ -2,8 +2,8 @@
 
 const int CFade::m_width = 65.0f;
 const int CFade::m_height = 65.0f;
-CFade::CFade(void)
-	: CUI(m_width, m_height)
+CFade::CFade(UI_ID id)
+	: CUI(m_width, m_height, id)
 {
 }
 

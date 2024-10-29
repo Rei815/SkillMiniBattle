@@ -5,11 +5,12 @@
  *  コンストラクタ
  */
 CUI::
-CUI(int width, int height)
+CUI(int width, int height, UI_ID id)
     : m_ActiveFlag(true)
     , m_Attributes{ CUI::UI_ATTRIBUTE::NONE }
     , m_Width(width)
     , m_Height(height)
+    , m_UI_ID(id)
 {
 }
 

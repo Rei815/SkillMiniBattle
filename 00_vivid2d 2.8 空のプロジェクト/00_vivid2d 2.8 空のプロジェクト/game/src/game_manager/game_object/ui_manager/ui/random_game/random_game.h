@@ -8,7 +8,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    CRandomGame(void);
+    CRandomGame(UI_ID id);
 
     /*!
      *  @brief      デストラクタ

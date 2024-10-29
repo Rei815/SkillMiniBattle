@@ -1,6 +1,6 @@
 #include "random_game.h"
 
-const TCHAR*            CRandomGame::m_file_name = "data\\Textures\\cobblestone_wall_1_fixed_d.png";
+const TCHAR*            CRandomGame::m_file_name = "data\\Textures\\test.png";
 const int               CRandomGame::m_width = 1024;
 const int               CRandomGame::m_height = 1024;
 const float               CRandomGame::m_rotation_speed = 0.05f;
@@ -12,8 +12,8 @@ const vivid::Vector2    CRandomGame::m_anchor = vivid::Vector2((m_width * m_scal
  *  コンストラクタ
  */
 CRandomGame::
-CRandomGame(void)
-    : CUI(m_width, m_height)
+CRandomGame(UI_ID id)
+    : CUI(m_width, m_height, id)
 	, m_Angle()
 {
 }
@@ -69,10 +69,10 @@ void CRandomGame::Draw3DRot(const CVector3& position, float _x_rot, float _y_rot
 {
 
 	DxLib::VERTEX3D vertices[] = {
-		{VGet(-m_width / 2,	-m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), 0, 0.0f, 0.0f, 0.0f, 0.0f },
-		{VGet( m_width / 2,	-m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), 0, 1.0f, 0.0f, 0.0f, 0.0f },
-		{VGet( m_width / 2,	 m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), 0, 1.0f, 1.0f, 0.0f, 0.0f },
-		{VGet(-m_width / 2,	 m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), 0, 0.0f, 1.0f, 0.0f, 0.0f },
+		{VGet(-m_width / 2,	-m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), DxLib::GetColorU8(255, 255, 255, 255), 0.0f, 1.0f, 0.0f, 0.0f },
+		{VGet(m_width / 2,	-m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), DxLib::GetColorU8(255, 255, 255, 255), 1.0f, 1.0f, 0.0f, 0.0f },
+		{VGet(m_width / 2,	 m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), DxLib::GetColorU8(255, 255, 255, 255), 1.0f, 0.0f, 0.0f, 0.0f },
+		{VGet(-m_width / 2,	 m_height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), DxLib::GetColorU8(255, 255, 255, 255), 0.0f, 0.0f, 0.0f, 0.0f },
 	};
 
 	unsigned short index[] = {0,1,3,3,1,2};
