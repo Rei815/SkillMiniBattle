@@ -160,8 +160,7 @@ void CUnitManager::CheckHitObject(IObject* object)
 
             hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
 
-            if (object->GetTag() == "Fall")
-                (*it)->SetIsGround(true);
+            (*it)->SetIsGround(true);
             float diffHeight = endPos.y - hitPos.y;
 
             CVector3 unitPos = (*it)->GetPosition();
@@ -204,13 +203,39 @@ void CUnitManager::CheckDefeat()
             if(!checkFlag)
                 m_DefeatList.push_back((*it));
 
+            //ÅŒã‚Ìˆêl‚ðˆêˆÊ‚Æ‚µ‚Äˆ—
+            if (m_DefeatList.size() == m_CurrentPlayerNum - 1)
+            {
+                UNIT_LIST::iterator it = m_UnitList.begin();
+
+                while (it != m_UnitList.end())
+                {
+                    bool checkFlag = true;
+                    for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
+                    {
+                        if ((*it)->GetUnitID() == (*i)->GetUnitID())
+                        {
+                            checkFlag = false;
+                            break;
+                        }
+                    }
+                    if (checkFlag)
+                    {
+                        CPlayer* player = GetPlayer((*it)->GetUnitID());
+                        player->AddWins();
+                    }
+
+                    ++it;
+                }
+            }
+
         }
 
         ++it;
     }
 }
 
-CPlayer* CUnitManager::GetPlayer(void)
+CPlayer* CUnitManager::GetPlayer(UNIT_ID id)
 {
     if (m_UnitList.empty()) return nullptr;
 
@@ -218,7 +243,7 @@ CPlayer* CUnitManager::GetPlayer(void)
 
     while (it != m_UnitList.end())
     {
-        if ((*it)->GetUnitID() == UNIT_ID::PLAYER1)
+        if ((*it)->GetUnitID() == id)
             return (CPlayer*)(*it);
 
         ++it;

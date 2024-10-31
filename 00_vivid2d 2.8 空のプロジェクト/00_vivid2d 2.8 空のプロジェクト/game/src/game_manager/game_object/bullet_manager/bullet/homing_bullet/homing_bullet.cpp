@@ -64,7 +64,7 @@ void CHomingBullet::Update()
         {
 
             //弾から対象に向けてのベクトルを求める
-            IUnit* player = CUnitManager::GetInstance().GetPlayer();
+            IUnit* player = CUnitManager::GetInstance().GetPlayer(UNIT_ID::PLAYER1);
 
             if (!player) return;
             //弾から対象に向かうベクトル

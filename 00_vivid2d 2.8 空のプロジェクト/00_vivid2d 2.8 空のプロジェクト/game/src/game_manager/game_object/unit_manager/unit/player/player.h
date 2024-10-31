@@ -42,7 +42,9 @@ public:
  */
     void        SetActionFlag(bool flag);
 
+    void        AddWins();
 
+    int         GetWins();
 protected:
     /*!
      *  @brief      çUåÇ

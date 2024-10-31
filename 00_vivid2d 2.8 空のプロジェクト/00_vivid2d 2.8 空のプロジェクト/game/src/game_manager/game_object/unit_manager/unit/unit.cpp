@@ -366,7 +366,7 @@ void IUnit::Fire(CShot* shot, bool aim, CVector3& position)
         return;
     if (aim)
     {
-        player = CUnitManager::GetInstance().GetPlayer();
+        player = CUnitManager::GetInstance().GetPlayer(UNIT_ID::PLAYER1);
     }
     if (player)
     {
@@ -387,7 +387,7 @@ void IUnit::Fire(CShot* shot, bool aim, CVector3& position, const CVector3& dire
         return;
     if (aim)
     {
-        player = CUnitManager::GetInstance().GetPlayer();
+        player = CUnitManager::GetInstance().GetPlayer(UNIT_ID::PLAYER1);
     }
     if (player)
     {

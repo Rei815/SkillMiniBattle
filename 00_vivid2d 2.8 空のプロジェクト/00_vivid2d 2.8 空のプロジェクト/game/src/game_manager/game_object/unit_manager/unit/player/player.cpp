@@ -84,6 +84,22 @@ void CPlayer::SetActionFlag(bool flag)
     m_ActionFlag = flag;
 }
 
+void CPlayer::AddWins()
+{
+    if (m_WinsNum < 5)
+        m_WinsNum++;
+}
+
+int CPlayer::GetWins()
+{
+    return m_WinsNum;
+}
+
+int CPlayer::GetController()
+{
+    return m_Controller;
+}
+
 /*
  *  UŒ‚
  */
@@ -91,7 +107,7 @@ void
 CPlayer::
 Attack(void)
 {
-    if (m_ActionFlag)
+    if (m_ActionFlag || !m_DefeatFlag)
     {
         Control();
     }
