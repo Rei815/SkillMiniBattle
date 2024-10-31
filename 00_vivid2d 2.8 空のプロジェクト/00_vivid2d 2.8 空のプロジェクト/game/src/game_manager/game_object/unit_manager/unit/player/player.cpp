@@ -104,7 +104,7 @@ void
 CPlayer::
 Attack(void)
 {
-    if (m_ActionFlag)
+    if (m_ActionFlag || !m_DefeatFlag)
     {
         Control();
     }

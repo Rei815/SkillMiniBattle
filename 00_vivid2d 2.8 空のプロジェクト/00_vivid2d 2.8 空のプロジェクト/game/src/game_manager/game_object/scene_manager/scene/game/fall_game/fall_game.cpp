@@ -145,7 +145,7 @@ void CFallGame::Play(void)
 	//	if (vivid::controller::GetAnalogStickLeft((vivid::controller::DEVICE_ID)player->GetController()).x != 0.0f ||
 	//		vivid::controller::GetAnalogStickLeft((vivid::controller::DEVICE_ID)player->GetController()).y != 0.0f)
 	//	{
-
+			//player->SetDefeatFlag(true);
 	//	}
 	//}
 }
