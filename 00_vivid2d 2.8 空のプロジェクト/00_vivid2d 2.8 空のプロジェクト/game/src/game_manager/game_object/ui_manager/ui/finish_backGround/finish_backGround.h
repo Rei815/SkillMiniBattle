@@ -2,18 +2,18 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-class CFallSelect : public CUI
+class CFinishBackGround : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CFallSelect(UI_ID id);
+    CFinishBackGround(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CFallSelect(void);
+    ~CFinishBackGround(void);
 
     /*!
      *  @brief      初期化

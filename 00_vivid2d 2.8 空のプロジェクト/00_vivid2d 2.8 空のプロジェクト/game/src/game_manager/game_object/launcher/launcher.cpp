@@ -10,6 +10,7 @@
 #include "shot/shock_wave/shock_wave.h"
 #include "shot/three_way/three_way.h"
 #include "shot/five_way/five_way.h"
+#include "shot/dodge_ball/dodge_ball.h"
 
 /*
  *  ‰Šú‰»
@@ -81,8 +82,10 @@ CShot* CLauncher::Create(SHOT_ID shotID)
     case SHOT_ID::HOMING_SHOTGUN:        shot = new CHomingShotgun();       break;
     case SHOT_ID::HOMING_SHOTGUN_DELAY:  shot = new CHomingShotgunDelay();  break;
     case SHOT_ID::SHOCK_WAVE:            shot = new CShockWave();           break;
+    case SHOT_ID::DODGE_BALL:            shot = new CDodgeBall();           break;
     case SHOT_ID::MAX:                                                      break;
     }
+
     if (!shot)
         return nullptr;
     shot->Initialize();

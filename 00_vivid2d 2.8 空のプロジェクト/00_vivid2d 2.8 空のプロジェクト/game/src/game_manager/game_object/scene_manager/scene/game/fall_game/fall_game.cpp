@@ -13,6 +13,7 @@ CTransform(CVector3(-200,-100,-150)), CTransform(CVector3(0,-100,-200)), CTransf
 const float		CFallGame::m_time_accelerator = 0.1f;
 const float		CFallGame::m_min_time = 1.0f;
 const float		CFallGame::m_initial_time = 1.0f;
+const float		CFallGame::m_defeat_height = -500.0f;
 const float		CFallGame::m_object_delay_time = 1.0f;
 const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallGame::m_camera_direction = CVector3(0, -0.85f, 1.0f);
@@ -34,11 +35,14 @@ void CFallGame::Initialize(void)
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 	m_DebugText = "フォールゲーム";
+	CVector3 playerPos[] = { m_object_transform_list[(int)MARK_ID::CIRCLE].position, m_object_transform_list[(int)MARK_ID::CROSS].position,
+	m_object_transform_list[(int)MARK_ID::MOON].position,m_object_transform_list[(int)MARK_ID::SQUARE].position };
 
-	CVector3 playerPos = m_object_transform_list[(int)MARK_ID::CIRCLE].position;
-	playerPos.y += 200.0f;
-	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, playerPos);
-	//CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 200));
+	for (int i = 0; i < CUnitManager::GetInstance().GetCurrentPlayer(); i++)
+	{
+		playerPos[i].y += 200.0f;
+		CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
+	}
 
 	CObjectManager& om = CObjectManager::GetInstance();
 	CGimmickManager& gm = CGimmickManager::GetInstance();
@@ -126,6 +130,14 @@ void CFallGame::Play(void)
 		}
 	}
 
+	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
+	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
+	while (it != unitList.end())
+	{
+		if ((*it)->GetPosition().y < m_defeat_height)
+			(*it)->SetDefeatFlag(true);
+		++it;
+	}
 }
 
 void CFallGame::Finish(void)

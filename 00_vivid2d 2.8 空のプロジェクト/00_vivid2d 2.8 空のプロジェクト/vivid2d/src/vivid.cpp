@@ -391,10 +391,12 @@ Initialize(HINSTANCE hInst)
     // DirectX11のバージョンを指定する
     if (SetUseDirect3DVersion(DX_DIRECT3D_11) == VIVID_DX_ERROR)
         return;
-
     // DXライブラリ初期化
     if (DxLib_Init() == VIVID_DX_ERROR)
         return;
+
+    //ライトの計算をする
+    SetUsePixelLighting(TRUE);
 
     // Zバッファの有効化
     SetUseZBuffer3D(TRUE);

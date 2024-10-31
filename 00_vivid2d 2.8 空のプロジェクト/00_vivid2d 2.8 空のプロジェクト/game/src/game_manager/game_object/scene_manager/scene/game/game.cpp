@@ -78,6 +78,7 @@ CGame::Update(void)
     CControllerManager::GetInstance().Update();
     CGimmickManager::GetInstance().Update();
     CObjectManager::GetInstance().Update();
+    CUnitManager::GetInstance().CheckDefeat();
 }
 
 /*
@@ -178,6 +179,9 @@ void CGame::Play(void)
         m_SetActionflag = false;
         CUnitManager::GetInstance().SetAllPlayerAction(true);
     }
+
+     if ((CUnitManager::GetInstance().GetCurrentPlayer() - CUnitManager::GetInstance().GetDefeatList().size()) < 1)
+        m_GameState = GAME_STATE::FINISH;
 
 #ifdef VIVID_DEBUG
 

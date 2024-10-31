@@ -1,5 +1,5 @@
 #include "fall_object.h"
-
+#include "..\..\..\ui_manager\ui_manager.h"
 const	float			CFallObject::m_remove_height = -500.0f;
 const	float			CFallObject::m_start_height = -100.0f;
 const	float			CFallObject::m_invisible_alpha = 0.0f;
@@ -23,17 +23,16 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 {
 	IObject::Initialize(id, transform);
 
-	MARK_ID markID = MARK_ID::CIRCLE;
 	switch (id)
 	{
-	case OBJECT_ID::CIRCLE_FALL_OBJECT:		markID = MARK_ID::CIRCLE;	break;
-	case OBJECT_ID::CROSS_FALL_OBJECT:		markID = MARK_ID::CROSS;	break;
-	case OBJECT_ID::MOON_FALL_OBJECT:		markID = MARK_ID::MOON;		break;
-	case OBJECT_ID::SQUARE_FALL_OBJECT:		markID = MARK_ID::SQUARE;	break;
-	case OBJECT_ID::SUN_FALL_OBJECT:		markID = MARK_ID::SUN;		break;
-	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	markID = MARK_ID::TRIANGLE;	break;
+	case OBJECT_ID::CIRCLE_FALL_OBJECT:		m_MarkID = MARK_ID::CIRCLE;		break;
+	case OBJECT_ID::CROSS_FALL_OBJECT:		m_MarkID = MARK_ID::CROSS;		break;
+	case OBJECT_ID::MOON_FALL_OBJECT:		m_MarkID = MARK_ID::MOON;		break;
+	case OBJECT_ID::SQUARE_FALL_OBJECT:		m_MarkID = MARK_ID::SQUARE;		break;
+	case OBJECT_ID::SUN_FALL_OBJECT:		m_MarkID = MARK_ID::SUN;		break;
+	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	m_MarkID = MARK_ID::TRIANGLE;	break;
 	}
-	m_FileName = m_file_name_list[(int)markID];
+	m_FileName = m_file_name_list[(int)m_MarkID];
 	m_Transform = transform;
 	m_Model.Initialize(m_FileName, m_Transform.position);
 	m_Timer.SetUp(1.0f);
@@ -46,6 +45,7 @@ void CFallObject::Update(void)
 	m_Model.Update(m_Transform);
 	if (m_Transform.position.y <= m_remove_height)
 	{
+		CUIManager::GetInstance().Delete((UI_ID)((int)m_MarkID + 2));
 		m_Transform.position.y = m_remove_height;
 		m_Alpha = m_invisible_alpha;
 	}

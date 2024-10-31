@@ -8,7 +8,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    CRandomGame(void);
+    CRandomGame(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
@@ -37,11 +37,18 @@ public:
 
 private:
 
-    static const vivid::Vector2     m_position;     //!< 位置
+    void Draw3DRot(const CVector3& position, float _x_rot, float _y_rot, float _z_rot);
+
+    static const TCHAR*             m_file_name;
+    CVector3     m_Position;     //!< 位置
     static const int                m_height;       //!< 高さ
     static const int                m_width;        //!< 幅
     static const vivid::Rect        m_rect;         //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;       //!< 基準点
     static const vivid::Vector2     m_scale;        //!< 拡縮
-
+    static const float              m_rotation_speed;
+    int                             m_Width;
+    int                             m_Height;
+    int                             m_Handle;
+    float                           m_Angle;
 };

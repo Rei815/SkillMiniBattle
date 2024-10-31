@@ -8,7 +8,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    CFade(void);
+    CFade(UI_ID id);
 
     /*!
      *  @brief      デストラクタ

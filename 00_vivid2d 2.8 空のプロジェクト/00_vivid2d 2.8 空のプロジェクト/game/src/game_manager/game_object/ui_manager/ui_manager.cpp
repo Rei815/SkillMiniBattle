@@ -1,8 +1,7 @@
 #include "ui_manager.h"
-#include "ui/boss_life/boss_life.h"
-#include "ui/reticle/reticle.h"
 #include "ui/pause/pause.h"
 #include "ui/fall_select/fall_select.h"
+#include "ui/random_game/random_game.h"
  /*
   *  インスタンスの取得
   */
@@ -101,15 +100,17 @@ void CUIManager::Create(UI_ID id)
 
     switch (id)
     {
-    case UI_ID::PAUSE:          ui = new CPause();          break;
-
+    case UI_ID::PAUSE:
+        ui = new CPause(id);          break;
     case UI_ID::FALL_CIRCLE:
     case UI_ID::FALL_CROSS:
     case UI_ID::FALL_MOON:
     case UI_ID::FALL_SQUARE:
     case UI_ID::FALL_SUN:
     case UI_ID::FALL_TRIANGLE:
-        ui = new CFallSelect(id);          break;
+        ui = new CFallSelect(id);   break;
+    case UI_ID::RANDOM_GAME:
+        ui = new CRandomGame(id);     break;
         break;
     }
     if (!ui) return;

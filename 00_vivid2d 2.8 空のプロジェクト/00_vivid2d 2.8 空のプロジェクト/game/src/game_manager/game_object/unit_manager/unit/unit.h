@@ -52,7 +52,7 @@ public:
      *
      *  @param[in]  position    ˆÊ’u
      */
-    virtual void    Initialize(const CVector3& position, const std::string& file_name, int controller);
+    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, int controller);
 
     /*!
      *  @brief      XV
@@ -200,6 +200,20 @@ public:
      */
     float       GetDamageRate(void);
 
+    /*!
+     *  @brief      ”s–kƒtƒ‰ƒOæ“¾
+     *
+     *  @return     ”s–kƒtƒ‰ƒO
+     */
+    bool       GetDefeatFlag(void);
+
+    /*!
+     *  @brief      ”s–kƒtƒ‰ƒOİ’è
+     *
+     *  @param[in]  flag    ”s–kƒtƒ‰ƒO
+     */
+    void       SetDefeatFlag(bool flag);
+
     CModel      GetModel(void);
 
     /*!
@@ -247,9 +261,17 @@ protected:
     void        Fire(CShot* shot, bool aim, CVector3& position, const CVector3& direction);
 
     /*!
+     *  @brief      ”í’e
+     *  @param[in]  bullet          ”í’e‚µ‚½’e
+     *  @param[in]  hit_position    ”í’eˆÊ’u
+     */
+    virtual void    HitBullet(IBullet* bullet, CVector3 hit_position);
+
+    /*!
      *  @brief      ”s–k
      */
     virtual void    Defeat(void);
+
     /*!
      *  @brief      íœ
      */

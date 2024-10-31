@@ -71,6 +71,14 @@ public:
      *  @return     ‰ñ“]
      */
     CVector3        GetRotation();
+
+    /*!
+     *  @brief      Tramsformæ“¾
+     *
+     *  @return     Tramsform
+     */
+    CTransform      GetTransform();
+
     /*!
      *  @brief      ˆÊ’uİ’è
      *

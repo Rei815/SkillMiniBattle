@@ -8,7 +8,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    CPause(void);
+    CPause(UI_ID id);
 
     /*!
      *  @brief      デストラクタ

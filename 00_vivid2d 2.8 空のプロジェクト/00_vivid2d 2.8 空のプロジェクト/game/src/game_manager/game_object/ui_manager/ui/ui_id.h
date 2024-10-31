@@ -13,5 +13,5 @@ enum class UI_ID
     FALL_SUN,       //!< フォールゲームの太陽
     FALL_SQUARE,    //!< フォールゲームの四角
     FALL_TRIANGLE,  //!< フォールゲームの三角
-
+    RANDOM_GAME,
 };

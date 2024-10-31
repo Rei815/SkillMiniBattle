@@ -12,5 +12,6 @@ enum class SHOT_ID
     HOMING_SHOTGUN,
     HOMING_SHOTGUN_DELAY,
     SHOCK_WAVE,
+    DODGE_BALL,
     MAX,
 };

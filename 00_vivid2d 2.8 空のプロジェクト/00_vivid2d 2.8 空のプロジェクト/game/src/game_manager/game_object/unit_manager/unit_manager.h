@@ -61,6 +61,13 @@ public:
      */
     void        CheckHitObject(IObject* object);
 
+
+    /*!
+     *  @brief      プレイヤーが負けているかどうか
+     *
+     */
+    void        CheckDefeat();
+
     /*!
      *  @brief      プレイヤー取得
      *
@@ -78,7 +85,19 @@ public:
 
     bool CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos);
 
+    int         GetCurrentPlayer();
+    /*!
+     *  @brief      ユニットリスト型
+     */
+    using UNIT_LIST = std::list<IUnit*>;
+    UNIT_LIST   GetUnitList();
+    /*!
+     *  @brief      プレイヤーリスト型
+     */
+    using DEFEAT_LIST = std::list<IUnit*>;
 
+    DEFEAT_LIST GetDefeatList();
+    void        SetCurrentPlayer(int num);
 private:
 
     /*!
@@ -112,10 +131,6 @@ private:
      */
     void        UpdateUnit(void);
 
-    /*!
-     *  @brief      ユニットリスト型
-     */
-    using UNIT_LIST = std::list<IUnit*>;
 
     UNIT_LIST           m_UnitList;             //!< ユニットリスト
 
@@ -125,7 +140,12 @@ private:
     using RANKING_LIST = std::list<CPlayer*>;
 
     RANKING_LIST           m_RankingList;             //!< ランキングリスト
-    
+
     static const std::string    m_file_name_list[];
     static const int            m_controller_list[];
+
+
+    DEFEAT_LIST             m_DefeatList;             //!< ランキングリスト
+
+    int                     m_CurrentPlayerNum;
 };

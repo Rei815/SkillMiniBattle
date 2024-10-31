@@ -6,7 +6,7 @@
 #include "..\..\..\utility\utility.h"
 #include "../ui_manager/ui_manager.h"
 
-const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player.mv1", "data\\Models\\player.mv1" };
+const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1" };
 const int           CUnitManager::m_controller_list[] = { DX_INPUT_PAD1, DX_INPUT_PAD2,DX_INPUT_PAD3,DX_INPUT_PAD4 };
 /*
  *  インスタンスの取得
@@ -29,6 +29,7 @@ Initialize(void)
 {
     m_UnitList.clear();
     m_RankingList.clear();
+    m_DefeatList.clear();
 }
 
 /*
@@ -107,7 +108,7 @@ Create(UNIT_ID id, const CVector3& pos)
 
     if (!unit) return;
 
-    unit->Initialize(pos, m_file_name_list[(int)id], m_controller_list[(int)id]);
+    unit->Initialize(id, pos, m_file_name_list[(int)id], m_controller_list[(int)id]);
     m_UnitList.push_back(unit);
 }
 
@@ -149,36 +150,64 @@ void CUnitManager::CheckHitObject(IObject* object)
         CVector3 endPos = (*it)->GetPosition();
         endPos.y -= (*it)->GetRadius();
 
-        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_LineDim(object->GetModel().GetModelHandle(), -1, startPos, endPos, -1);
+        CVector3 hitPos;
 
         // 線分の描画
         DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
 
-        if (hit_poly_dim.HitNum >= 1)
+        if (object->GetModel().CheckHitLine(startPos, endPos) == true)
         {
+
+            hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
+
             if (object->GetTag() == "Fall")
             (*it)->SetIsGround(true);
-            for (int i = 0; i < hit_poly_dim.HitNum; i++)
-            {
-                MV1_COLL_RESULT_POLY* pCollResultPoly = &hit_poly_dim.Dim[i];
+            float diffHeight = endPos.y - hitPos.y;
 
-                float diffHeight = endPos.y - pCollResultPoly->HitPosition.y;
-
-                CVector3 unitPos = (*it)->GetPosition();
-                unitPos.y -= diffHeight;
-                (*it)->SetPosition(unitPos);
-
-            }
+            CVector3 unitPos = (*it)->GetPosition();
+            unitPos.y -= diffHeight;
+            (*it)->SetPosition(unitPos);
         }
-
-
-
-        // 当たり判定情報の後始末
-        MV1CollResultPolyDimTerminate(hit_poly_dim);
 
         ++it;
     }
 
+}
+
+void CUnitManager::CheckDefeat()
+{
+    if (m_UnitList.empty()) return;
+
+    UNIT_LIST::iterator it = m_UnitList.begin();
+
+    while (it != m_UnitList.end())
+    {
+        if ((*it)->GetDefeatFlag())
+        {
+            if (m_DefeatList.empty())
+            {
+                m_DefeatList.push_back((*it));
+                return;
+            }
+
+            bool checkFlag = false;
+            //2回目は入れないように
+            for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
+            {
+                if ((*it)->GetUnitID() == (*i)->GetUnitID())
+                {
+                    checkFlag = true;
+                    break;
+                }
+            }
+
+            if(!checkFlag)
+                m_DefeatList.push_back((*it));
+
+        }
+
+        ++it;
+    }
 }
 
 CPlayer* CUnitManager::GetPlayer(void)
@@ -249,6 +278,27 @@ bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& e
     }
 
     return false;
+}
+
+int CUnitManager::GetCurrentPlayer()
+{
+    return m_CurrentPlayerNum;
+}
+
+CUnitManager::UNIT_LIST CUnitManager::GetUnitList()
+{
+    return m_UnitList;
+}
+
+CUnitManager::DEFEAT_LIST CUnitManager::GetDefeatList()
+{
+    return m_DefeatList;
+}
+
+void CUnitManager::SetCurrentPlayer(int num)
+{
+    if (num > 4 || num < 1) return;
+    m_CurrentPlayerNum = num;
 }
 
 /*

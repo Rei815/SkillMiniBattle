@@ -18,7 +18,7 @@ public:
      *
      *  @param[in]  position    ‰ŠúˆÊ’u
      */
-    virtual void        Initialize(const CVector3& position, const std::string& file_name, int controller);
+    virtual void        Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, int controller);
 
     /*!
      *  @brief      XV
@@ -48,6 +48,14 @@ protected:
      *  @brief      UŒ‚
      */
     void        Attack(void);
+
+    /*!
+     *  @brief      ”í’e
+     *  @param[in]  bullet          ”í’e‚µ‚½’e
+     *  @param[in]  hit_position    ”í’eˆÊ’u
+     */
+    void    HitBullet(IBullet* bullet, CVector3 hit_position);
+
 
     /*!
      *  @brief      €–S

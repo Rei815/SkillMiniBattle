@@ -71,6 +71,7 @@ private:
     static const float              m_min_time;
     static const float              m_initial_time;
     static const float              m_object_delay_time;
+    static const float              m_defeat_height;
     static const CVector3           m_camera_position;
     static const CVector3           m_camera_direction;
     float                           m_FallTime;
