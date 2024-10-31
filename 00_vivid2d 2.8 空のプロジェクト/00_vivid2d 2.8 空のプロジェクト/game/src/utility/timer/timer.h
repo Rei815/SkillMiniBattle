@@ -4,6 +4,7 @@ class CTimer
 {
 public:
 	CTimer();
+	CTimer(float time);
 	~CTimer();
 
 	void SetUp(float time);

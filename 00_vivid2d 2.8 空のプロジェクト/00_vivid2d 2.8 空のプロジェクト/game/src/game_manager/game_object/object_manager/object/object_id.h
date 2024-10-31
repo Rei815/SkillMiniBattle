@@ -13,5 +13,6 @@ enum class OBJECT_ID
     TRIANGLE_FALL_OBJECT,   //!< 落ちるオブジェクト(三角マーク)
     CROSS_FALL_OBJECT,      //!< 落ちるオブジェクト(バツマーク)
     CANNON_OBJECT,                 //!< 大砲オブジェクト
+    OGRE_OBJECT,            //!< だるまさんが転んだの鬼
     MAX,
 };

@@ -32,6 +32,7 @@ private:
 
     static const CVector3           m_camera_position;
     static const CVector3           m_camera_direction;
-
+    static const CVector3           m_ogre_position;
+    static const CVector3           m_ogre_rotation;
     CTimer                          m_Timer;
 };

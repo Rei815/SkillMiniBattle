@@ -86,7 +86,6 @@ CGame::Update(void)
 void
 CGame::Draw(void)
 {
-
     CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
