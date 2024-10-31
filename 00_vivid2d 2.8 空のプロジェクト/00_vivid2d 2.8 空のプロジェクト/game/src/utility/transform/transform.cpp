@@ -1,5 +1,5 @@
 #include "transform.h"
-
+#include "vivid.h"
 
 CTransform::CTransform()
 	: position()
@@ -60,8 +60,8 @@ void CTransform::RotateAround(const CVector3& point, const CVector3& axis, float
 	MATRIX mat = MGetRotAxis(axis, (DX_TWO_PI_F / 360.0f) * angle);
 
 	CVector3 localPosition = VTransform(position, mat);
-	position = VAdd(point, localPosition);
-	//position = VTransform(position, mat) + localPosition;
+	//position = VAdd(point, localPosition);
+	position = localPosition + point;
 }
 
 CVector3 CTransform::GetRotateVector(CVector3 vector)

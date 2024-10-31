@@ -52,4 +52,5 @@ private:
     int                             m_Height;
     int                             m_Handle;
     float                           m_Angle;
+    int                             m_PosAngle;
 };

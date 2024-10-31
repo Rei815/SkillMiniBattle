@@ -15,8 +15,8 @@ void CSelectGame::Initialize(void)
 {
 
     CCamera::GetInstance().Initialize();
-
-    CStage::GetInstance().Initialize();
+    CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -5000.0f));
+    CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CUIManager::GetInstance().Initialize();
     CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME);
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
@@ -26,6 +26,7 @@ void CSelectGame::Initialize(void)
 
 void CSelectGame::Update(void)
 {
+    CCamera::GetInstance().Update();
     CUIManager::GetInstance().Update();
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
     {
@@ -45,14 +46,12 @@ void CSelectGame::Update(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::THREE))
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
 #endif
-    CStage::GetInstance().Update();
 
 }
 
 void CSelectGame::Draw(void)
 {
     CUIManager::GetInstance().Draw();
-    CStage::GetInstance().Draw();
 
     vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 
@@ -62,8 +61,9 @@ void CSelectGame::Draw(void)
 
 void CSelectGame::Finalize(void)
 {
+    CCamera::GetInstance().Finalize();
+
     CUIManager::GetInstance().Finalize();
 
-    CStage::GetInstance().Finalize();
 
 }
