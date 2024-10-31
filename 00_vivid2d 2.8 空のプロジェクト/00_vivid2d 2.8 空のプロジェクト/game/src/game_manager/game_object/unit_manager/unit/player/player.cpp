@@ -10,6 +10,7 @@ const float             CPlayer::m_height = 10.0f;
 const float             CPlayer::m_move_speed = 0.25f;
 const float             CPlayer::m_jump_power = 30.0f;
 const float             CPlayer::m_move_friction = 0.975f;
+const float             CPlayer::m_fly_away_speed = 40.0f;
 const float             CPlayer::m_max_life = 3.0f;
 const int               CPlayer::m_max_invincible_time = 60;
 const int               CPlayer::m_invincible_visible_interval = 4;
@@ -21,6 +22,7 @@ CPlayer::CPlayer()
     , m_InvincibleTime(0)
     , m_FallSpeed(0)
     , m_StopFlag(false)
+    , m_FrictionFlag(true)
     , m_ActionFlag(true)
     , m_Controller()
     , m_WinsNum()
@@ -52,6 +54,7 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
     m_InvincibleTime = m_max_invincible_time;
 
     m_StopFlag = false;
+    m_FrictionFlag = true;
     m_Controller = controller;
 }
 
@@ -103,7 +106,27 @@ Attack(void)
  */
 void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
 {
-    
+    m_ActionFlag = false;
+    m_FrictionFlag = false;
+    m_InvincibleFlag = true;
+    m_Accelerator = CVector3::ZERO;
+
+    //当たった向きを取得
+    CVector3 TempVelocity = (m_Transform.position - hit_position);
+    //垂直方向の速度は最後に計算するので、一度ゼロにする
+    TempVelocity.y = 0.0f;
+    //ベクトルの大きさを２にする
+    TempVelocity = TempVelocity.Normalize() * 2.0f;
+    //弾の速度ベクトルの大きさを１にして加算する（当たった向きと弾の速度が真逆の場合に、横方向の速度が打ち消されるのを防ぐため）
+    TempVelocity += (bullet->GetVelocity().Normalize());
+    //垂直方向の速度は最後に計算するので、再びゼロにする
+    TempVelocity.y = 0.0f;
+    //速度を倍率で調整するため、ベクトルの大きさを１にする
+    TempVelocity = TempVelocity.Normalize();
+    //垂直方向のベクトルを追加
+    TempVelocity.y = 1.0f;
+    //速度をベクトルとその倍率でセットする
+    m_Velocity = TempVelocity * m_fly_away_speed;
 }
 
 void CPlayer::Control(void)
@@ -163,16 +186,19 @@ void CPlayer::Move(void)
 
     //    m_FallSpeed += m_fall_accelerator;
     //}
+
     if (!m_StopFlag)
-    m_Velocity += m_Accelerator;
+        m_Velocity += m_Accelerator;
 
     if (!m_StopFlag)
         m_Transform.position += m_Velocity;
 
-    m_Velocity.x *= m_move_friction;
-    m_Velocity.y *= m_move_friction;
-    m_Velocity.z *= m_move_friction;
-
+    if (m_FrictionFlag)
+    {
+        m_Velocity.x *= m_move_friction;
+        m_Velocity.y *= m_move_friction;
+        m_Velocity.z *= m_move_friction;
+    }
 
     if (m_IsGround)
     {

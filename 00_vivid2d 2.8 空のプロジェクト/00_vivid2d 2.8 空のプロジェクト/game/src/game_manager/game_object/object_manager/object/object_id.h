@@ -12,6 +12,7 @@ enum class OBJECT_ID
     SQUARE_FALL_OBJECT,     //!< 落ちるオブジェクト(四角マーク)
     TRIANGLE_FALL_OBJECT,   //!< 落ちるオブジェクト(三角マーク)
     CROSS_FALL_OBJECT,      //!< 落ちるオブジェクト(バツマーク)
-    CANNON_OBJECT,                 //!< 大砲オブジェクト
+    CANNON_OBJECT,          //!< 大砲オブジェクト
+    DODGEBALL_STAGE_OBJECT, //!< ドッジボールシーンのステージオブジェクト
     MAX,
 };

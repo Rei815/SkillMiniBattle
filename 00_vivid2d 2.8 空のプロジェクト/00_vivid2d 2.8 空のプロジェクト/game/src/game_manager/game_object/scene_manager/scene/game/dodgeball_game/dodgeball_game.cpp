@@ -11,10 +11,10 @@
 //上下左右の4方向 × 各方向に3つずつ ＝ 12こ
 const CVector3		CDodgeBallGame::m_cannon_pos_list[] = 
 {
-	CVector3(    0,   0, 1000),CVector3(  500,   0, 850),CVector3(- 500,   0, 850),	//上
-	CVector3(    0,   0,-1000),CVector3(- 500,   0,-850),CVector3(  500,   0,-850),	//下
-	CVector3( 1000,   0,    0),CVector3( 850,   0,- 500),CVector3( 850,   0,  500),	//右
-	CVector3(-1000,   0,    0),CVector3(-850,   0,  500),CVector3(-850,   0,- 500)	//左
+	CVector3(    0,   0, 1800),CVector3(  900,   0, 1550),CVector3(- 900,   0, 1550),	//上
+	CVector3(    0,   0,-1800),CVector3(- 900,   0,-1550),CVector3(  900,   0,-1550),	//下
+	CVector3( 1800,   0,    0),CVector3( 1550,   0,- 900),CVector3( 1550,   0,  900),	//右
+	CVector3(-1800,   0,    0),CVector3(-1550,   0,  900),CVector3(-1550,   0,- 900)	//左
 };
 
 //上下左右の4方向
@@ -29,10 +29,10 @@ const CVector3		CDodgeBallGame::m_cannon_rot_list[] =
 const int			CDodgeBallGame::m_max_cannnon_count = 3;
 const float			CDodgeBallGame::m_cannnon_spawn_time = 5.0f;
 const float			CDodgeBallGame::m_initial_shot_time = 2.0f;
-const float			CDodgeBallGame::m_min_shot_time = 0.3f;
-const float			CDodgeBallGame::m_shot_time_acceleration = 0.05f;
-const CVector3		CDodgeBallGame::m_camera_position = CVector3(0, 1500.0f, -1500.0f);
-const CVector3		CDodgeBallGame::m_camera_direction = CVector3(0, -1.0f, 1.0f);
+const float			CDodgeBallGame::m_min_shot_time = 0.2f;
+const float			CDodgeBallGame::m_shot_time_acceleration = 0.02f;
+const CVector3		CDodgeBallGame::m_camera_position = CVector3(0, 2500.0f, -1800.0f);
+const CVector3		CDodgeBallGame::m_camera_direction = CVector3(0, -1.0f, 0.6f);
 
 CDodgeBallGame::CDodgeBallGame(void)
 	:m_CannonCount(0)
@@ -42,7 +42,6 @@ CDodgeBallGame::CDodgeBallGame(void)
 	,m_NextCannnonDir(CANNON_DIRECTION::UP)
 
 {
-
 }
 
 CDodgeBallGame::~CDodgeBallGame(void)
@@ -55,7 +54,10 @@ void CDodgeBallGame::Initialize(void)
 	m_SpawnTimer.SetUp(0);
 	m_ShotTimer.SetUp(m_initial_shot_time);
 	CGame::Initialize();
-	CStage::GetInstance().Initialize();
+
+	//CStage::GetInstance().Initialize();
+	CObjectManager::GetInstance().Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT,CTransform(CVector3(0.0f,-100.0f,0.0f)));
+
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
@@ -70,7 +72,7 @@ void CDodgeBallGame::Initialize(void)
 
 void CDodgeBallGame::Update(void)
 {
-	CStage::GetInstance().Update();
+	//CStage::GetInstance().Update();
 	CGame::Update();
 	CCamera::GetInstance().Update();
 	CLauncher::GetInstance().Update();
@@ -79,7 +81,7 @@ void CDodgeBallGame::Update(void)
 
 void CDodgeBallGame::Draw(void)
 {
-	CStage::GetInstance().Draw();
+	//CStage::GetInstance().Draw();
 	CGame::Draw();
 	CBulletManager::GetInstance().Draw();
 }
@@ -87,7 +89,7 @@ void CDodgeBallGame::Draw(void)
 void CDodgeBallGame::Finalize(void)
 {
 	CGame::Finalize();
-	CStage::GetInstance().Finalize();
+	//CStage::GetInstance().Finalize();
 	CCamera::GetInstance().Finalize();
 	CLauncher::GetInstance().Finalize();
 	CBulletManager::GetInstance().Finalize();
@@ -176,7 +178,11 @@ IObject* CDodgeBallGame::ChooseCannon(void)
 
 	for (it = objectList.begin(); it != objectList.end(); it++)
 	{
-		CDodgeBallGimmick* DodgeBallGimmick = dynamic_cast<CDodgeBallGimmick*>((*it)->GetGimmick());
+		CDodgeBallGimmick* DodgeBallGimmick = nullptr;
+
+		if((*it)->GetGimmick() != nullptr)
+			DodgeBallGimmick = dynamic_cast<CDodgeBallGimmick*>((*it)->GetGimmick());
+
 
 		if (DodgeBallGimmick != nullptr)
 		{

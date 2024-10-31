@@ -4,6 +4,7 @@ const float IObject::m_limit_alpha = 1.0f;
 IObject::IObject()
 	: m_Alpha(m_limit_alpha)
 	, m_Velocity()
+	, m_Gimmick(nullptr)
 {
 }
 

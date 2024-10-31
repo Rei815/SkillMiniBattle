@@ -59,6 +59,13 @@ public:
     void            SetPosition(const CVector3& position);
 
     /*!
+     *  @brief      速度ベクトル取得
+     *
+     *  @return     速度ベクトル
+     */
+    CVector3        GetVelocity(void);
+
+    /*!
      *  @brief      半径取得
      *
      *  @return     半径

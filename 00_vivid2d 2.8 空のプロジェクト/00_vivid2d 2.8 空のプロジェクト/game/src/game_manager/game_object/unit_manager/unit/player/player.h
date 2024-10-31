@@ -83,6 +83,7 @@ protected:
     static const float              m_move_speed;                   //!< 移動速度
     static const float              m_jump_power;                   //!< ジャンプ力
     static const float              m_move_friction;                //!< 移動用減速率
+    static const float              m_fly_away_speed;               //!< 被弾時の吹っ飛び速度
     static const float              m_max_life;                     //!< 最大ライフ
     static const int                m_max_invincible_time;          //!< 無敵時間
     static const int                m_invincible_visible_interval;  //!< 無敵時間中の点滅間隔
@@ -92,6 +93,7 @@ protected:
     CVector3                        m_Accelerator;                  //!< 加速度
     CVector3                        m_InitialPosition;              //!< 初期位置
     bool                            m_StopFlag;                     //!< 停止フラグ
+    bool                            m_FrictionFlag;                 //!< 減速フラグ
     int                             m_InvincibleTime;               //!< 無敵時間
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     DxLib::COLOR_F                  m_Color;

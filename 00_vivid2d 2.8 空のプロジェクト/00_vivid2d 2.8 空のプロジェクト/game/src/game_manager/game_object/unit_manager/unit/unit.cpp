@@ -81,6 +81,7 @@ IUnit::
 Update(void)
 {
     m_Velocity += m_gravity;
+
     switch (m_UnitState)
     {
     case UNIT_STATE::APPEAR:    Appear();      break;

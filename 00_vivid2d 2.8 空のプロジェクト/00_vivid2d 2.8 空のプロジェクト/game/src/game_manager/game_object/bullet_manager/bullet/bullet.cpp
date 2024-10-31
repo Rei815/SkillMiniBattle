@@ -105,7 +105,9 @@ Finalize(void)
 /*
  *  位置取得
  */
-CVector3 IBullet::GetPosition(void)
+CVector3
+IBullet::
+GetPosition(void)
 {
     return m_Transform.position;
 }
@@ -114,15 +116,27 @@ CVector3 IBullet::GetPosition(void)
  *  位置設定
  */
 void
-IBullet::SetPosition(const CVector3& positioin)
+IBullet::
+SetPosition(const CVector3& positioin)
 {
     m_Transform.position = positioin;
+}
+/*
+ *  速度ベクトル取得
+ */
+CVector3
+IBullet::
+GetVelocity(void)
+{
+    return m_Velocity;
 }
 
 /*
  *  半径取得
  */
-float IBullet::GetRadius(void)
+float
+IBullet::
+GetRadius(void)
 {
     return m_Radius;
 }
@@ -167,22 +181,30 @@ GetBulletColor(void)
     return m_Color;
 }
 
-float IBullet::GetBulletDamage(void)
+float
+IBullet::
+GetBulletDamage(void)
 {
     return m_Damage;
 }
 
-COLLIDER_ID IBullet::GetColliderID(void)
+COLLIDER_ID
+IBullet::
+GetColliderID(void)
 {
     return m_ColliderID;
 }
 
-CVector3 IBullet::GetColliderPosA(void)
+CVector3
+IBullet::
+GetColliderPosA(void)
 {
     return m_Transform.position + m_CapsulePosA;
 }
 
-CVector3 IBullet::GetColliderPosB(void)
+CVector3
+IBullet::
+GetColliderPosB(void)
 {
     return m_Transform.position + m_CapsulePosB;
 }

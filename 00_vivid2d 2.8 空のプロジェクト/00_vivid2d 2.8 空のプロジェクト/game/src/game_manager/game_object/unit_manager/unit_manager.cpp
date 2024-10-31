@@ -161,7 +161,7 @@ void CUnitManager::CheckHitObject(IObject* object)
             hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
 
             if (object->GetTag() == "Fall")
-            (*it)->SetIsGround(true);
+                (*it)->SetIsGround(true);
             float diffHeight = endPos.y - hitPos.y;
 
             CVector3 unitPos = (*it)->GetPosition();

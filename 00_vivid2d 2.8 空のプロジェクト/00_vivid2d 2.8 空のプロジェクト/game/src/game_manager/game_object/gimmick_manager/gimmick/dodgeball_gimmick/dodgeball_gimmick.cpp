@@ -5,7 +5,7 @@
 const std::string	CDodgeBallGimmick::m_file_name = "data\\Models\\cannon_test.mv1";
 const CVector3		CDodgeBallGimmick::m_spawn_pos = CVector3(0.0f, -1000.0f, 0.0f);
 const float			CDodgeBallGimmick::m_spawn_time = 2.0f;
-const float			CDodgeBallGimmick::m_max_rotate_angle = 25.0f;
+const float			CDodgeBallGimmick::m_max_rotate_angle = 20.0f;
 const float			CDodgeBallGimmick::m_rotate_time = 4.0f;
 const float			CDodgeBallGimmick::m_min_rotate_time = m_rotate_time / 4.0f;
 

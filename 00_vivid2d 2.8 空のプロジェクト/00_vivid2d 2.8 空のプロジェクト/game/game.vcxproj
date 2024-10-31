@@ -211,6 +211,7 @@
     <ClCompile Include="src\game_manager\game_object\launcher\shot\shot.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\shotgun\shotgun.cpp" />
     <ClCompile Include="src\game_manager\game_object\launcher\shot\three_way\three_way.cpp" />
+    <ClCompile Include="src\game_manager\game_object\object_manager\object\dodgeball_stage_object\dodgeball_stage_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\Ogre_object\Ogre_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\cannon_object\cannon_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\daruma_falldown_game\daruma_falldown_game.cpp" />
@@ -311,6 +312,7 @@
     <ClInclude Include="src\game_manager\game_object\model_manager\model\model_id.h" />
     <ClInclude Include="src\game_manager\game_object\model_manager\model_manager.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object\cannon_object\cannon_object.h" />
+    <ClInclude Include="src\game_manager\game_object\object_manager\object\dodgeball_stage_object\dodgeball_stage_object.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object\Ogre_object\Ogre_object.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\daruma_falldown_game\daruma_falldown_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\debug_game\debug_game.h" />
