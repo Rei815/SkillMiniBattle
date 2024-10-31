@@ -11,6 +11,7 @@ CUI(int width, int height, UI_ID id)
     , m_Width(width)
     , m_Height(height)
     , m_UI_ID(id)
+    , m_Transform()
 {
 }
 

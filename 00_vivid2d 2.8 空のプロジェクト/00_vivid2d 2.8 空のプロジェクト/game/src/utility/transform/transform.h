@@ -47,7 +47,28 @@ public:
     CVector3 GetUpVector(void);
 
     CVector3 GetRadianRotation(void);
+    
+    /*!
+    *  @brief      指定の軸を中心に回転(フレーム)
+    *
+    *  @param[in]  handle       モデルのハンドル
+    *  @param[in]  frameIndex   フレームの番号
+    *  @param[in]  point        軸の座標
+    *  @param[in]  axis         回転軸
+    *  @param[in]  angle        角度
+    *
+    */
+    void     RotateAround(int handle, int frameIndex, const CVector3& point, const CVector3& axis, float angle);
 
+    /*!
+    *  @brief      指定の軸を中心に回転
+    *
+    *  @param[in]  point        軸の座標
+    *  @param[in]  axis         回転軸
+    *  @param[in]  angle        角度
+    *
+    */
+    void     RotateAround(const CVector3& point, const CVector3& axis, float angle);
 private:
     CVector3 GetRotateVector(CVector3 vector);
 

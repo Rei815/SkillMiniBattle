@@ -3,7 +3,8 @@
 const TCHAR*            CRandomGame::m_file_name = "data\\Textures\\test.png";
 const int               CRandomGame::m_width = 1024;
 const int               CRandomGame::m_height = 1024;
-const float               CRandomGame::m_rotation_speed = 0.05f;
+const float             CRandomGame::m_rotation_speed = 0.05f;
+const float             CRandomGame::m_speed = 0.05f;
 const vivid::Rect       CRandomGame::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
 const vivid::Vector2    CRandomGame::m_scale = vivid::Vector2(1.0f, 1.0f);
 const vivid::Vector2    CRandomGame::m_anchor = vivid::Vector2((m_width * m_scale.x) / 2, (m_height * m_scale.y) / 2);
@@ -33,7 +34,7 @@ void
 CRandomGame::
 Initialize(void)
 {
-	m_Position = CVector3(0.0f, 0.0f, 0.0f);
+	m_Transform.position = CVector3(0.0f, 0.0f, 0.0f);
     // âÊëúÇÃì«Ç›çûÇ›
     m_Handle = LoadGraph(m_file_name, TRUE);
 	MATERIALPARAM Material;
@@ -52,7 +53,9 @@ void
 CRandomGame::
 Update(void)
 {
-	m_Angle += m_rotation_speed;
+	//m_Angle -= m_rotation_speed;
+
+	m_Transform.RotateAround(CVector3(0.0f, 0.0f, 0.0f), CVector3(0.0f, 1.0f, 0.0f), 90);
 }
 
 /*
@@ -62,7 +65,7 @@ void
 CRandomGame::
 Draw(void)
 {
-	Draw3DRot(m_Position, 0,m_Angle,0);
+	Draw3DRot(m_Transform.position, 0,m_Angle,0);
 }
 // âÒì]ï`âÊ
 void CRandomGame::Draw3DRot(const CVector3& position, float _x_rot, float _y_rot, float _z_rot)

@@ -44,6 +44,26 @@ CVector3 CTransform::GetUpVector(void)
 	return GetRotateVector(CVector3().UP);
 }
 
+/*
+ *  指定の軸を中心に回転(フレーム)
+ */
+void CTransform::RotateAround(int handle, int frameIndex, const CVector3& point, const CVector3& axis, float angle)
+{
+	MV1SetFrameUserLocalMatrix(handle, frameIndex, MGetTranslate(VTransform(point, MGetRotAxis(axis, (DX_TWO_PI_F / 360.0f) * angle))));
+}
+
+/*
+ *  指定の軸を中心に回転
+ */
+void CTransform::RotateAround(const CVector3& point, const CVector3& axis, float angle)
+{
+	MATRIX mat = MGetRotAxis(axis, (DX_TWO_PI_F / 360.0f) * angle);
+
+	CVector3 localPosition = VTransform(position, mat);
+	position = VAdd(point, localPosition);
+	//position = VTransform(position, mat) + localPosition;
+}
+
 CVector3 CTransform::GetRotateVector(CVector3 vector)
 {
 	VECTOR TempVector = VGet(vector.x, vector.y, vector.z);
@@ -65,3 +85,4 @@ CVector3 CTransform::GetRadianRotation(void)
 
 	return temp;
 }
+

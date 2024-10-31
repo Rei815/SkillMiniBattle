@@ -45,6 +45,8 @@ public:
     void        AddWins();
 
     int         GetWins();
+
+    int         GetController();
 protected:
     /*!
      *  @brief      UŒ‚
