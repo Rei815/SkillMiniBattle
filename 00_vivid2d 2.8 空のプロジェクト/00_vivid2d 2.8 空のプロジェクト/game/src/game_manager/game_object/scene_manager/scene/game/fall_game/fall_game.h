@@ -75,7 +75,6 @@ private:
     static const CVector3           m_camera_position;
     static const CVector3           m_camera_direction;
     float                           m_FallTime;
-
     CTimer                          m_ChooseObjectTimer;
 
     IObject* m_Object;

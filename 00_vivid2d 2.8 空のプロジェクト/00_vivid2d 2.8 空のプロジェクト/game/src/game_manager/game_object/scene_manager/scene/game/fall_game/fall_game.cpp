@@ -130,14 +130,24 @@ void CFallGame::Play(void)
 		}
 	}
 
-	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
+	CUnitManager& um = CUnitManager::GetInstance();
+	CUnitManager::UNIT_LIST unitList = um.GetUnitList();
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
 		if ((*it)->GetPosition().y < m_defeat_height)
-			(*it)->SetDefeatFlag(true);
+				(*it)->SetDefeatFlag(true);
 		++it;
 	}
+	//for (int i = 0; i < um.GetCurrentPlayer(); i++)
+	//{
+	//	CPlayer* player = um.GetPlayer((UNIT_ID)i);
+	//	if (vivid::controller::GetAnalogStickLeft((vivid::controller::DEVICE_ID)player->GetController()).x != 0.0f ||
+	//		vivid::controller::GetAnalogStickLeft((vivid::controller::DEVICE_ID)player->GetController()).y != 0.0f)
+	//	{
+			//player->SetDefeatFlag(true);
+	//	}
+	//}
 }
 
 void CFallGame::Finish(void)
