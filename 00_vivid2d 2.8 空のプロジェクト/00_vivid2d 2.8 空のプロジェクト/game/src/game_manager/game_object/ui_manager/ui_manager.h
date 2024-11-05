@@ -63,6 +63,14 @@ public:
     void        Create(UI_ID id);
 
     /*!
+     *  @brief      UIê∂ê¨
+     *
+     *  @param[in]  id          UIÇÃID
+     *  @param[in]  position    UIÇÃà íu
+     */
+    void        Create(UI_ID id, const CVector3& position);
+
+    /*!
      *  @brief      UIçÌèú
      *
      *  @param[in]  id          UIÇÃID

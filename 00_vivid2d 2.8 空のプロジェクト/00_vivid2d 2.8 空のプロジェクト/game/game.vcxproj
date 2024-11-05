@@ -168,6 +168,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
+    <ClCompile Include="src\polygon\polygon.cpp" />
     <ClCompile Include="src\collider\box_collider\box_collider.cpp" />
     <ClCompile Include="src\collider\capsule_collider\capsule_collider.cpp" />
     <ClCompile Include="src\collider\collider.cpp" />
@@ -257,6 +259,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\mathematics\matrix\matrix.h" />
+    <ClInclude Include="src\polygon\polygon.h" />
     <ClInclude Include="src\collider\box_collider\box_collider.h" />
     <ClInclude Include="src\collider\capsule_collider\capsule_collider.h" />
     <ClInclude Include="src\collider\collider.h" />

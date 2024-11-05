@@ -66,9 +66,19 @@ public:
     *  @param[in]  point        ²‚ÌÀ•W
     *  @param[in]  axis         ‰ñ“]²
     *  @param[in]  angle        Šp“x
+    *  @param[in]  initPos      ‰ŠúˆÊ’u
     *
     */
-    void     RotateAround(const CVector3& point, const CVector3& axis, float angle);
+    void     RotateAround(const CVector3& point, const CVector3& axis, float angle, const CVector3& initPos);
+    /*!
+    *  @brief      w’è‚Ì²‚ğ’†S‚É‰ñ“]
+    *
+    *  @param[in]  point        ²‚ÌÀ•W
+    *  @param[in]  axis         ‰ñ“]²
+    *  @param[in]  speed        ‰ñ“]‘¬“x
+    *
+    */
+    void     RotateAround(const CVector3& point, const CVector3& axis, float rotateSpeed);
 private:
     CVector3 GetRotateVector(CVector3 vector);
 

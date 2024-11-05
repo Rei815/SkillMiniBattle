@@ -37,10 +37,9 @@ public:
 
 private:
 
-    void Draw3DRot(const CVector3& position, float _x_rot, float _y_rot, float _z_rot);
 
     static const TCHAR*             m_file_name;
-    CVector3     m_Position;     //!< ˆÊ’u
+    static const CVector3           m_initial_position;     //!< ‰ŠúˆÊ’u
     static const int                m_height;       //!< ‚‚³
     static const int                m_width;        //!< •
     static const vivid::Rect        m_rect;         //!< “Ç‚Ýž‚Ý”ÍˆÍ
@@ -52,5 +51,5 @@ private:
     int                             m_Height;
     int                             m_Handle;
     float                           m_Angle;
-    int                             m_PosAngle;
+    float                           m_PosAngle;
 };

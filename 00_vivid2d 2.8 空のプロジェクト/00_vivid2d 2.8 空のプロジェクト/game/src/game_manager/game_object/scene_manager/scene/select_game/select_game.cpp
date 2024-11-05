@@ -18,7 +18,11 @@ void CSelectGame::Initialize(void)
     CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -5000.0f));
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CUIManager::GetInstance().Initialize();
-    CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME);
+    for (int i = 0; i < 10; i++)
+    {
+        CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME);
+
+    }
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
     ChangeLightTypeDir(VGet(1.0f, -1.0f, 0.0f));
 
