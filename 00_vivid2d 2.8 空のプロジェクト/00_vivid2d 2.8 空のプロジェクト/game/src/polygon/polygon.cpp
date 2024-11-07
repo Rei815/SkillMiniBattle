@@ -33,7 +33,7 @@ void polygon::Draw3DRot(int handle, const CVector3& position, int width, int hei
 
 }
 
-void polygon::Draw3DRot(int handle, CMatrix* mat, int width, int height, const CVector3& rot)
+void polygon::Draw3DRot(int handle, const CVector3& position, const CVector3& point, int width, int height, const CVector3& rot)
 {
 	DxLib::VERTEX3D vertices[] = {
 	{VGet(-width / 2,	-height / 2,	0.0f), {0.0f, 0.0f, 1.0f}, DxLib::GetColorU8(255, 255, 255, 255), DxLib::GetColorU8(255, 255, 255, 255), 0.0f, 1.0f, 0.0f, 0.0f },
@@ -44,17 +44,17 @@ void polygon::Draw3DRot(int handle, CMatrix* mat, int width, int height, const C
 
 	unsigned short index[] = { 0,1,3,3,1,2 };
 
-	MATRIX transMat, mulMat;
+	CMatrix transMat, rotMat, mulMat;
 
-	//CreateTranslationMatrix(&transMat, position.x, position.y, position.z);
-	CreateRotationYXZMatrix(mat, rot.x, rot.y, rot.z);
+	CreateTranslationMatrix(&transMat, position.x, position.y, position.z);
+	CreateRotationYXZMatrix(&rotMat, rot.x, rot.y, rot.z);
 
 	// 単位行列
-	CreateIdentityMatrix(&mulMat);
-	// 回転させる 
-	CreateMultiplyMatrix(&mulMat, &mulMat, mat);
+	mulMat = CMatrix::GetIdentity(mulMat);
 	// 移動させる
-	CreateMultiplyMatrix(&mulMat, &mulMat, &transMat);
+	mulMat *= ;
+	// 回転させる 
+	CreateMultiplyMatrix(&mulMat, &mulMat, &rotMat);
 
 	// 各頂点に行列を適用
 	for (int i = 0; i < 4; i++)

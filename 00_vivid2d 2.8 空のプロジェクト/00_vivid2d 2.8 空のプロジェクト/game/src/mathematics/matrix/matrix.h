@@ -15,7 +15,7 @@ public:
 	~CMatrix();
 
 
-	void	GetIdentity();
+	static CMatrix	GetIdentity(CMatrix& m);
 
 	void	SetTranspose();
 
@@ -53,6 +53,15 @@ public:
 	CMatrix     operator*=(float scale);
 
 	/*!
+		*  @brief      乗算演算子のオーバーロード
+		*
+		*  @param[in]  m  マトリックスクラス
+		*
+		*  @return    マトリックスクラス
+		*/
+	CMatrix     operator*=(const CMatrix* m);
+
+	/*!
 		*  @brief      加算演算子のオーバーロード
 		*
 		*  @param[in]  mA  マトリックスクラス
@@ -71,6 +80,16 @@ public:
 		*  @return    マトリックスクラス
 		*/
 	friend CMatrix     operator*(const CMatrix& m, float scale);
+
+	/*!
+		*  @brief      乗算演算子のオーバーロード
+		*
+		*  @param[in]  mA  マトリックスクラス
+		*  @param[in]  mB  マトリックスクラス
+		*
+		*  @return    マトリックスクラス
+		*/
+	friend CMatrix     operator*(const CMatrix& mA, const CMatrix& mB);
 
 private:
 };

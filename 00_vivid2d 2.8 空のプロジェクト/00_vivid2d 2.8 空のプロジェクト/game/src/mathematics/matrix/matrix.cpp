@@ -18,9 +18,10 @@ CMatrix::~CMatrix()
 {
 }
 
-void CMatrix::GetIdentity()
+CMatrix CMatrix::GetIdentity(CMatrix& m)
 {
-    CreateIdentityMatrix(this);
+    CreateIdentityMatrix(&m);
+    return m;
 }
 
 void CMatrix::SetTranspose()
@@ -28,19 +29,21 @@ void CMatrix::SetTranspose()
     CreateTransposeMatrix(this, this);
 }
 
-CMatrix CMatrix::CreateTranspose(const CMatrix& m)
-{
-    return MTranspose(m);
-}
-
 void CMatrix::SetInverse()
 {
     CreateInverseMatrix(this, this);
 }
+CMatrix CMatrix::CreateTranspose(const CMatrix& m)
+{
+    CreateTransposeMatrix(this, &m);
+    return *this;
+}
+
 
 CMatrix CMatrix::CreateInverse(const CMatrix& m)
 {
-    return MInverse(m);
+    CreateInverseMatrix(this, &m);
+    return *this;
 }
 
 CMatrix& CMatrix::operator=(const CMatrix& mat)
@@ -48,6 +51,7 @@ CMatrix& CMatrix::operator=(const CMatrix& mat)
     for (int i = 0; i < 4; ++i)
         for (int k = 0; k < 4; ++k)
             m[i][k] = mat.m[i][k];
+    return *this;
 }
 
 CMatrix& CMatrix::operator+=(const CMatrix& m)
@@ -60,6 +64,12 @@ CMatrix CMatrix::operator*=(float scale)
     return *this = MScale(*this, scale);
 }
 
+CMatrix CMatrix::operator*=(const CMatrix* m)
+{
+    CreateMultiplyMatrix(this, this, m);
+    return *this;
+}
+
 CMatrix operator+(const CMatrix& mA, const CMatrix& mB)
 {
     return MAdd(mA, mB);
@@ -68,4 +78,9 @@ CMatrix operator+(const CMatrix& mA, const CMatrix& mB)
 CMatrix operator*(const CMatrix& m, float scale)
 {
     return MScale(m, scale);
+}
+
+CMatrix operator*(const CMatrix& mA, const CMatrix& mB)
+{
+    return MMult(mA, mB);
 }
