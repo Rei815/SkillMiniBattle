@@ -2,6 +2,7 @@
 
 #include "vivid.h"
 #include "..\ui.h"
+#include "..\..\..\..\..\mathematics\mathematics.h"
 class CRandomGame : public CUI
 {
 public:
