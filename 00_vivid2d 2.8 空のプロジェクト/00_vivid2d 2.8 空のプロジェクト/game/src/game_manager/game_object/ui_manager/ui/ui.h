@@ -34,6 +34,16 @@ public:
     virtual void        Initialize(void);
 
     /*!
+     *  @brief      ‰Šú‰»
+     */
+    virtual void        Initialize(const CVector3& position);
+
+    /*!
+     *  @brief      ‰Šú‰»
+     */
+    virtual void        Initialize(const CTransform& transform);
+
+    /*!
      *  @brief      XV
      */
     virtual void        Update(void);

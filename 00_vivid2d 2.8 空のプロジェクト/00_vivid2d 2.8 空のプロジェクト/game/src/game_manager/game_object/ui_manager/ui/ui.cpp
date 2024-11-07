@@ -32,6 +32,16 @@ Initialize(void)
 {
 }
 
+void CUI::Initialize(const CVector3& position)
+{
+    m_Transform.position = position;
+}
+
+void CUI::Initialize(const CTransform& transform)
+{
+    m_Transform = transform;
+}
+
 /*
  *  çXêV
  */

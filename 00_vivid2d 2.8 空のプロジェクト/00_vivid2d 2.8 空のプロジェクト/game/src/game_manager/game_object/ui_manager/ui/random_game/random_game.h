@@ -2,7 +2,8 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-#include "..\..\..\..\..\mathematics\mathematics.h"
+#include "..\..\..\..\..\primitive\primitive.h"
+
 class CRandomGame : public CUI
 {
 public:
@@ -39,7 +40,7 @@ public:
 private:
 
 
-    static const TCHAR*             m_file_name;
+    static const std::string             m_file_name;
     static const CVector3           m_initial_position;     //!< ‰ŠúˆÊ’u
     static const int                m_height;       //!< ‚‚³
     static const int                m_width;        //!< •
@@ -53,4 +54,5 @@ private:
     int                             m_Handle;
     float                           m_Angle;
     float                           m_PosAngle;
+    CPlane                          m_Plane;
 };

@@ -18,10 +18,18 @@ void CSelectGame::Initialize(void)
     CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -5000.0f));
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CUIManager::GetInstance().Initialize();
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 8; i++)
     {
-        CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME);
-
+        CTransform transform;
+        const float rad = i / 8 * DX_TWO_PI;
+        const float _x = 3000.0f * cos(rad);
+        const float _y = 3000.0f * sin(rad);
+        const float _z = 3000.0f * tan(rad);
+        transform.rotation.y = rad;
+        transform.position.x = _x;
+        transform.position.y = _y;
+        transform.position.z = _z;
+        CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME, transform);
     }
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
     ChangeLightTypeDir(VGet(1.0f, -1.0f, 0.0f));

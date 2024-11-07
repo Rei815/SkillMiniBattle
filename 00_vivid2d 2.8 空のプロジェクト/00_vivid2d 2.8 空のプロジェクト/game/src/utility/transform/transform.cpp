@@ -4,7 +4,7 @@
 CTransform::CTransform()
 	: position()
 	, rotation()
-	, scale()
+	, scale(CVector3(1.0f, 1.0f, 1.0f))
 {
 }
 

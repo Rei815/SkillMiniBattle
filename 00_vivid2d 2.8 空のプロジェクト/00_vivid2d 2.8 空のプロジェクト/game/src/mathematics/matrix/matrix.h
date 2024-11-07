@@ -17,10 +17,6 @@ public:
 
 	static CMatrix	GetIdentity(CMatrix& m);
 
-	void	SetTranspose();
-
-	void	SetInverse();
-
 	CMatrix	CreateTranspose(const CMatrix& m);
 
 	CMatrix	CreateInverse(const CMatrix& m);
@@ -50,7 +46,7 @@ public:
 		*
 		*  @return    マトリックスクラス
 		*/
-	CMatrix     operator*=(float scale);
+	CMatrix&     operator*=(float scale);
 
 	/*!
 		*  @brief      乗算演算子のオーバーロード
@@ -59,7 +55,7 @@ public:
 		*
 		*  @return    マトリックスクラス
 		*/
-	CMatrix     operator*=(const CMatrix* m);
+	CMatrix&     operator*=(const CMatrix& m);
 
 	/*!
 		*  @brief      加算演算子のオーバーロード

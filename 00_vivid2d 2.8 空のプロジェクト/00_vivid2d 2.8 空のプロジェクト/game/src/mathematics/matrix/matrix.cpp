@@ -24,15 +24,6 @@ CMatrix CMatrix::GetIdentity(CMatrix& m)
     return m;
 }
 
-void CMatrix::SetTranspose()
-{
-    CreateTransposeMatrix(this, this);
-}
-
-void CMatrix::SetInverse()
-{
-    CreateInverseMatrix(this, this);
-}
 CMatrix CMatrix::CreateTranspose(const CMatrix& m)
 {
     CreateTransposeMatrix(this, &m);
@@ -59,14 +50,14 @@ CMatrix& CMatrix::operator+=(const CMatrix& m)
     return *this = MAdd(*this, m);
 }
 
-CMatrix CMatrix::operator*=(float scale)
+CMatrix& CMatrix::operator*=(float scale)
 {
     return *this = MScale(*this, scale);
 }
 
-CMatrix CMatrix::operator*=(const CMatrix* m)
+CMatrix& CMatrix::operator*=(const CMatrix& m)
 {
-    CreateMultiplyMatrix(this, this, m);
+    CreateMultiplyMatrix(this, this, &m);
     return *this;
 }
 

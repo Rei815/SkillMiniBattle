@@ -151,6 +151,34 @@ void CUIManager::Create(UI_ID id, const CVector3& position)
 
 }
 
+void CUIManager::Create(UI_ID id, const CTransform& transform)
+{
+    CUI* ui = nullptr;
+
+    switch (id)
+    {
+    case UI_ID::PAUSE:
+        ui = new CPause(id);          break;
+    case UI_ID::FALL_CIRCLE:
+    case UI_ID::FALL_CROSS:
+    case UI_ID::FALL_MOON:
+    case UI_ID::FALL_SQUARE:
+    case UI_ID::FALL_SUN:
+    case UI_ID::FALL_TRIANGLE:
+        ui = new CFallSelect(id);   break;
+    case UI_ID::RANDOM_GAME:
+        ui = new CRandomGame(id);     break;
+    case UI_ID::FINISH_BACKGROUND:
+        ui = new CFinishBackGround(id);     break;
+        break;
+    }
+    if (!ui) return;
+
+    ui->Initialize(transform);
+    m_UIList.push_back(ui);
+
+}
+
 void CUIManager::Delete(UI_ID id)
 {
     if (m_UIList.empty()) return;

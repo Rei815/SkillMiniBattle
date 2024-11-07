@@ -71,6 +71,14 @@ public:
     void        Create(UI_ID id, const CVector3& position);
 
     /*!
+     *  @brief      UI生成
+     *
+     *  @param[in]  id          UIのID
+     *  @param[in]  transform    UIのトランスフォーム
+     */
+    void        Create(UI_ID id, const CTransform& transform);
+
+    /*!
      *  @brief      UI削除
      *
      *  @param[in]  id          UIのID
