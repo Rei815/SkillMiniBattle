@@ -1645,6 +1645,27 @@ bool vivid::effekseer::DrawEffect(const int handle, const CVector3& pos)
 
     return true;
 }
+
+/*
+ *  エフェクト描画
+ */
+bool vivid::effekseer::DrawEffect(const int handle, const CVector3& pos, const CVector3& rot)
+{
+    if (IsEffekseer3DEffectPlaying(handle)) return false;
+
+    // エフェクトの位置を変更する
+    SetPosPlayingEffekseer3DEffect(handle, pos.x, pos.y, pos.z);
+    //エフェクトの回転を変更する
+    SetRotationPlayingEffekseer3DEffect(handle, rot.x, rot.y, rot.z);
+
+    // エフェクトを描画する
+    DrawEffekseer3D_Begin();
+    DrawEffekseer3D_Draw(handle);
+    DrawEffekseer3D_End();
+
+    return true;
+}
+
 /*
  *  エフェクト再生終了チェック
  *  s.kosugi

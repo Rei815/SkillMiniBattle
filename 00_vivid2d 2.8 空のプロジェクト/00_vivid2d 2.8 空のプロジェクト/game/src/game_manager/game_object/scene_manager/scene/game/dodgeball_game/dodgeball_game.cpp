@@ -31,6 +31,7 @@ const float			CDodgeBallGame::m_cannnon_spawn_time = 5.0f;
 const float			CDodgeBallGame::m_initial_shot_time = 2.0f;
 const float			CDodgeBallGame::m_min_shot_time = 0.2f;
 const float			CDodgeBallGame::m_shot_time_acceleration = 0.02f;
+const float			CDodgeBallGame::m_defeat_distance = 3000.0f;
 const CVector3		CDodgeBallGame::m_camera_position = CVector3(0, 2500.0f, -1800.0f);
 const CVector3		CDodgeBallGame::m_camera_direction = CVector3(0, -1.0f, 0.6f);
 
@@ -144,6 +145,16 @@ void CDodgeBallGame::Play(void)
 		if(temp != nullptr)
 			temp->GetGimmick()->SetSwitch(true);
 	}
+
+	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
+	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
+	while (it != unitList.end())
+	{
+		if ((*it)->GetPosition().Length() > m_defeat_distance)
+			(*it)->SetDefeatFlag(true);
+
+		++it;
+	}
 }
 
 void CDodgeBallGame::Finish(void)
@@ -153,6 +164,7 @@ void CDodgeBallGame::Finish(void)
 
 void CDodgeBallGame::SpawnCannnon(void)
 {
+
 	//大砲オブジェクトの生成座標および生成回転値のセット
 	CTransform Temp;
 	Temp.position = m_cannon_pos_list[(int)m_NextCannnonDir * 3 + m_CannonCount];

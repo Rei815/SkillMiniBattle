@@ -83,7 +83,23 @@ void IEffect::Initialize(const CVector3& position, const float scale)
     m_ActiveFlag = true;
     m_Scale = scale;
     Load(m_FileName);
+}
 
+void IEffect::Initialize(const CVector3& position, const CVector3& rotation)
+{
+    m_Transform.position = position;
+    m_Transform.rotation = rotation;
+    m_ActiveFlag = true;
+    Load(m_FileName);
+}
+
+void IEffect::Initialize(const CVector3& position, const CVector3& rotation, const float scale)
+{
+    m_Transform.position = position;
+    m_Transform.rotation = rotation;
+    m_ActiveFlag = true;
+    m_Scale = scale;
+    Load(m_FileName);
 }
 
 void IEffect::Load(const std::string& file_name)
@@ -119,7 +135,7 @@ void
 IEffect::
 Draw(void)
 {
-    vivid::effekseer::DrawEffect(m_PlayHandle, m_Transform.position);
+    vivid::effekseer::DrawEffect(m_PlayHandle, m_Transform.position, m_Transform.rotation);
 }
 
 /*
@@ -152,6 +168,24 @@ SetPosition(const CVector3& position)
 {
     if(m_PlayHandle != VIVID_DX_ERROR)
     m_Transform.position = position;
+}
+
+/*
+ *  âÒì]éÊìæ
+ */
+CVector3
+IEffect::
+GetRotation(void)
+{
+    return m_Transform.rotation;
+}
+
+/*
+ *  âÒì]ê›íË
+ */
+void IEffect::SetRotation(const CVector3& rotation)
+{
+    m_Transform.rotation = rotation;
 }
 
 /*

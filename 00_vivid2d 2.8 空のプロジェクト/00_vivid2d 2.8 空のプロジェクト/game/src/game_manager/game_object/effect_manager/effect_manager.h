@@ -67,6 +67,29 @@ public:
      *  @param[in]  scale       拡大率
      */
     IEffect*        Create(EFFECT_ID id, const CVector3& pos, const float scale);
+
+
+    /*!
+     *  @brief      エフェクト生成
+     *
+     *  @param[in]  id          エフェクトID
+     *  @param[in]  pos         位置
+     *  @param[in]  rot         回転
+     */
+    IEffect*        Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot);
+
+
+    /*!
+     *  @brief      エフェクト生成
+     *
+     *  @param[in]  id          エフェクトID
+     *  @param[in]  pos         位置
+     *  @param[in]  rot         回転
+     *  @param[in]  scale       拡大率
+     */
+    IEffect*        Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const float scale);
+
+
     /*!
      *  @brief      エフェクト生成
      *

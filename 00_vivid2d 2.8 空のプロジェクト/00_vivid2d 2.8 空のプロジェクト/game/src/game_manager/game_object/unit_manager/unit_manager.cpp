@@ -144,28 +144,41 @@ void CUnitManager::CheckHitObject(IObject* object)
         if (object->GetModel().GetModelHandle() == VIVID_DX_ERROR)
             return;
 
+        //垂直方向の判定-----------------------------------------------------
+
         CVector3 startPos = (*it)->GetPosition();
-        startPos.y += (*it)->GetRadius();
+        startPos.y += (*it)->GetHeight() / 2.0f;
 
         CVector3 endPos = (*it)->GetPosition();
-        endPos.y -= (*it)->GetRadius();
+        endPos.y -= (*it)->GetHeight() / 2.0f;
 
-        CVector3 hitPos;
+        CheckHitObjectVertical(object, (*it), startPos, endPos);
 
-        // 線分の描画
-        DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
-
-        if (object->GetModel().CheckHitLine(startPos, endPos) == true)
+        //水平方向の判定-----------------------------------------------------
+        if ((*it)->GetVelocity().x != 0 || (*it)->GetVelocity().z != 0)
         {
+            //移動方向の正面
+            startPos = (*it)->GetPosition();
+            endPos = startPos;
+            CVector3 tempVelocity = (*it)->GetVelocity().Normalize();
+            endPos += tempVelocity * (*it)->GetRadius();
+            CheckHitObjectHorizontal(object, (*it), startPos, endPos);
 
-            hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
+            
+            //移動方向の右側45°
+            startPos = (*it)->GetPosition();
+            endPos = startPos;
+            tempVelocity = (*it)->GetVelocity().RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f).Normalize();
+            endPos += tempVelocity * (*it)->GetRadius();
+            CheckHitObjectHorizontal(object, (*it), startPos, endPos);
 
-            (*it)->SetIsGround(true);
-            float diffHeight = endPos.y - hitPos.y;
 
-            CVector3 unitPos = (*it)->GetPosition();
-            unitPos.y -= diffHeight;
-            (*it)->SetPosition(unitPos);
+            //移動方向の左側45°
+            startPos = (*it)->GetPosition();
+            endPos = startPos;
+            tempVelocity = (*it)->GetVelocity().RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, -45.0f).Normalize();
+            endPos += tempVelocity * (*it)->GetRadius();
+            CheckHitObjectHorizontal(object, (*it), startPos, endPos);
         }
 
         ++it;
@@ -358,7 +371,58 @@ UpdateUnit(void)
     }
 }
 
+/*
+ *  ユニットとステージとのアタリ判定の処理（垂直）
+ */
+void
+CUnitManager::
+CheckHitObjectVertical(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos)
+{
+    CVector3 hitPos;
 
+    // 線分の描画
+    //DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
+
+    if (object->GetModel().CheckHitLine(startPos, endPos) == true)
+    {
+
+        hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
+
+        unit->SetIsGround(true);
+        float diffHeight = endPos.y - hitPos.y;
+
+        CVector3 unitPos = unit->GetPosition();
+        unitPos.y -= diffHeight;
+        unit->SetPosition(unitPos);
+    }
+}
+
+/*
+ *  @brief      ユニットとステージとのアタリ判定の処理（水平）
+ */
+void
+CUnitManager::
+CheckHitObjectHorizontal(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos)
+{
+    CVector3 hitPos;
+
+    // 線分の描画
+    //DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
+
+    if (object->GetModel().CheckHitLine(startPos, endPos) == true)
+    {
+
+        hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
+
+        float diffX = endPos.x - hitPos.x;
+        float diffZ = endPos.z - hitPos.z;
+
+        CVector3 unitPos = unit->GetPosition();
+        unitPos.x -= diffX;
+        unitPos.z -= diffZ;
+        unit->SetPosition(unitPos);
+    }
+}
 
 /*
  *  コンストラクタ

@@ -1,6 +1,14 @@
 #pragma once
 
 #include <DxLib.h>
+
+enum COORDINATES_AXIS
+{
+	X,
+	Y,
+	Z,
+};
+
 /*!
 	*  @brief      三次元ベクトルクラス
 	*/
@@ -245,6 +253,15 @@ public:
 		*/
 	friend CVector3     operator*(float scalar, const CVector3& v);
 
+	/*!
+		*  @brief      ベクトルを座標軸周りで回転させる
+		*
+		*  @param[in]  axis          回転軸になる座標軸の種類
+		*  @param[in]  degree_angle  回転させる角度（度数法）
+		*
+		*  @return     回転後のベクトル
+		*/
+	CVector3 RotateAroundCoordinatesAxis(COORDINATES_AXIS axis, float degree_angle);
 
 	/*!
 	 *  @brief      発射方向にブレを持たせる

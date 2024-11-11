@@ -15,4 +15,5 @@ enum class EFFECT_ID
     SHOCK_WAVE,             //!< 衝撃波エフェクト
     PLAYER_BULLET,          //!< プレイヤー弾エフェクト
     ENEMY_BULLET,           //!< エネミー弾エフェクト
+    FORECAST_LINE,          //!< 大砲の砲撃予測線
 };

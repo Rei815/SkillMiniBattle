@@ -1,6 +1,7 @@
 #include "dodgeball_gimmick.h"
 #include "..\..\..\object_manager\object_manager.h"
 #include "..\..\..\bullet_manager\bullet_manager.h"
+#include "../../../effect_manager/effect_manager.h"
 
 const std::string	CDodgeBallGimmick::m_file_name = "data\\Models\\cannon_test.mv1";
 const CVector3		CDodgeBallGimmick::m_spawn_pos = CVector3(0.0f, -1000.0f, 0.0f);

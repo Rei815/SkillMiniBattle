@@ -242,6 +242,45 @@ CVector3 operator*(float scalar, const CVector3& v)
 	return CVector3(v.x * scalar, v.y * scalar, v.z * scalar);
 }
 
+CVector3 CVector3::RotateAroundCoordinatesAxis(COORDINATES_AXIS axis, float degree_angle)
+{
+	const float math_pi = 3.1415926535897931;
+
+	//degree_angle（度数法の角度）が『-180度 <= degree_angle <= 180度』になるように修正する
+	while (degree_angle > 180.0f)
+		degree_angle -= 360.0f;
+	while (degree_angle < -180.0f)
+		degree_angle += 360.0f;
+
+	//degree_angle（度数法の角度）から、弧度法の角度を求めてradianにセットする
+	float radian = -degree_angle / 180.0f * math_pi;
+
+	//回転させるために、各要素のベクトルに分解する
+	CVector3 TempVectorX = CVector3(x,0,0);
+	CVector3 TempVectorY = CVector3(0,y,0);
+	CVector3 TempVectorZ = CVector3(0,0,z);
+
+	switch (axis)
+	{
+	case X:		//X軸回転なので、YベクトルとZベクトルを回転させる
+		TempVectorY = CVector3(0.0f, y * cos(radian), -y * sin(radian));
+		TempVectorZ = CVector3(0.0f, z * sin(radian), z * cos(radian));
+		break;
+	case Y:		//Y軸回転なので、ZベクトルとXベクトルを回転させる
+		TempVectorZ = CVector3(-z * sin(radian), 0.0f, z * cos(radian));
+		TempVectorX = CVector3(x * cos(radian), 0.0f, x * sin(radian));
+		break;
+	case Z:		//Z軸回転なので、XベクトルとYベクトルを回転させる
+		TempVectorX = CVector3(x * cos(radian), -x * sin(radian), 0.0f);
+		TempVectorY = CVector3(y * sin(radian), y * cos(radian), 0.0f);
+		break;
+	default:
+		break;
+	}
+
+	//回転させた各要素のベクトルを合成する
+	return (TempVectorX + TempVectorY + TempVectorZ);
+}
 
 CVector3 CVector3::DeviationToDirection(const CVector3& direction, float deviationAmount)
 {

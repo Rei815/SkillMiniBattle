@@ -55,6 +55,25 @@ public:
 
     virtual void    Initialize(const CVector3& position, const float scale);
 
+    /*!
+     *  @brief      初期化
+     *
+     *  @param[in]  position    位置
+     *  @param[in]  rotation    回転
+     */
+
+    virtual void    Initialize(const CVector3& position, const CVector3& rotation);
+
+    /*!
+     *  @brief      初期化
+     *
+     *  @param[in]  position    位置
+     *  @param[in]  rotation    回転
+     *  @param[in]  scale       拡大率
+     */
+
+    virtual void    Initialize(const CVector3& position, const CVector3& rotation, const float scale);
+
     void	Load(const std::string& file_name);
 
     void    Start();
@@ -86,6 +105,20 @@ public:
      *  @param[in]  position    位置
      */
     void            SetPosition(const CVector3& position);
+
+    /*!
+     *  @brief      回転取得
+     *
+     *  @return     回転
+     */
+    CVector3  GetRotation(void);
+
+    /*!
+     *  @brief      回転設定
+     *
+     *  @param[in]  position    回転
+     */
+    void           SetRotation(const CVector3& rotation);
 
     /*!
      *  @brief      アクティブフラグ取得
