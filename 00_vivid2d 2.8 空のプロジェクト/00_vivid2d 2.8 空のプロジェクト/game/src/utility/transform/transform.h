@@ -1,5 +1,6 @@
 #pragma once
 #include "..\..\mathematics\mathematics.h"
+
 class CTransform
 {
 public:
@@ -79,6 +80,15 @@ public:
     *
     */
     void     RotateAround(const CVector3& point, const CVector3& axis, float rotateSpeed);
+    /*!
+    *  @brief      指定の軸を中心に回転(行列)
+    *
+    *  @param[in]  point        軸の座標
+    *  @param[in]  axis         回転軸
+    *  @param[in]  speed        回転速度
+    *
+    */
+    CMatrix     GetRotateAroundMatrix(const CVector3& point, const CVector3& axis, CMatrix& mulMat, CMatrix& tranMat, CMatrix& rotMat, float rotateSpeed, float angle);
 private:
     CVector3 GetRotateVector(CVector3 vector);
 

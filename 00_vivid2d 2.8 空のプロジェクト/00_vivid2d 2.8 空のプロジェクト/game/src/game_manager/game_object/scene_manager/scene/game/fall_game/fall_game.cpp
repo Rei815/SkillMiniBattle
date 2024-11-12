@@ -88,7 +88,6 @@ void CFallGame::Draw(void)
 	vivid::DrawText(30, std::to_string(m_ChooseObjectTimer.GetTimer()),
 		vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_ChooseObjectTimer.GetTimer())), 0));
 #endif // VIVID_DEBUG
-
 }
 
 void CFallGame::Finalize(void)

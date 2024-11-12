@@ -18,22 +18,22 @@ CMatrix::~CMatrix()
 {
 }
 
-CMatrix CMatrix::GetIdentity(CMatrix& m)
+CMatrix CMatrix::GetIdentity(CMatrix& mat)
 {
-    CreateIdentityMatrix(&m);
-    return m;
+    CreateIdentityMatrix(&mat);
+    return mat;
 }
 
-CMatrix CMatrix::CreateTranspose(const CMatrix& m)
+CMatrix CMatrix::CreateTranspose(const CMatrix& mat)
 {
-    CreateTransposeMatrix(this, &m);
+    CreateTransposeMatrix(this, &mat);
     return *this;
 }
 
 
-CMatrix CMatrix::CreateInverse(const CMatrix& m)
+CMatrix CMatrix::CreateInverse(const CMatrix& mat)
 {
-    CreateInverseMatrix(this, &m);
+    CreateInverseMatrix(this, &mat);
     return *this;
 }
 
@@ -45,9 +45,9 @@ CMatrix& CMatrix::operator=(const CMatrix& mat)
     return *this;
 }
 
-CMatrix& CMatrix::operator+=(const CMatrix& m)
+CMatrix& CMatrix::operator+=(const CMatrix& mat)
 {
-    return *this = MAdd(*this, m);
+    return *this = MAdd(*this, mat);
 }
 
 CMatrix& CMatrix::operator*=(float scale)
@@ -59,6 +59,21 @@ CMatrix& CMatrix::operator*=(const CMatrix& m)
 {
     CreateMultiplyMatrix(this, this, &m);
     return *this;
+}
+
+CMatrix CMatrix::Translate(const CVector3& translate)
+{
+    return DxLib::MGetTranslate(translate);
+}
+
+CMatrix CMatrix::Rotate(const CVector3& rotate)
+{
+    return DxLib::MMult(DxLib::MMult( DxLib::MGetRotZ(rotate.z), DxLib::MGetRotX(rotate.x)), DxLib::MGetRotY(rotate.y));
+}
+
+CMatrix CMatrix::Scale(const CVector3& scale)
+{
+    return DxLib::MGetScale(scale);
 }
 
 CMatrix operator+(const CMatrix& mA, const CMatrix& mB)
@@ -74,4 +89,14 @@ CMatrix operator*(const CMatrix& m, float scale)
 CMatrix operator*(const CMatrix& mA, const CMatrix& mB)
 {
     return MMult(mA, mB);
+}
+
+CVector3 operator*(const CMatrix& mat, const CVector3& v)
+{
+    return DxLib::VTransform(v, mat);
+}
+
+CVector3 operator*(const CVector3& v, const CMatrix& mat)
+{
+    return mat * v;
 }

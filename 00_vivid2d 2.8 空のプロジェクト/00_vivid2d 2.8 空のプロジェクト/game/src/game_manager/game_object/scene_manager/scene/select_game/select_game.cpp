@@ -2,6 +2,8 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 
+const int CSelectGame::m_games_num = 20;
+const float CSelectGame::m_circle_radius = 3500.0f;
 CSelectGame::CSelectGame(void)
 {
 
@@ -18,17 +20,16 @@ void CSelectGame::Initialize(void)
     CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -5000.0f));
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CUIManager::GetInstance().Initialize();
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < m_games_num; i++)
     {
         CTransform transform;
-        const float rad = i / 8 * DX_TWO_PI;
-        const float _x = 3000.0f * cos(rad);
-        const float _y = 3000.0f * sin(rad);
-        const float _z = 3000.0f * tan(rad);
-        transform.rotation.y = rad;
-        transform.position.x = _x;
-        transform.position.y = _y;
-        transform.position.z = _z;
+        const float rad = i / (float)m_games_num * DX_TWO_PI;
+        const float _x = m_circle_radius * sin(rad);
+        const float _z = m_circle_radius * cos(rad);
+        transform.rotation.y = DEG_TO_RAD( i * (360.0f / (float)m_games_num));
+        transform.position.y = 500.0f;
+        transform.position.x = 0.0f;// _x;
+        transform.position.z = -m_circle_radius;//_z;
         CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME, transform);
     }
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
@@ -65,7 +66,6 @@ void CSelectGame::Draw(void)
 {
     CUIManager::GetInstance().Draw();
 
-    vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 
     vivid::DrawText(20, "ゲーム選択中", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
 

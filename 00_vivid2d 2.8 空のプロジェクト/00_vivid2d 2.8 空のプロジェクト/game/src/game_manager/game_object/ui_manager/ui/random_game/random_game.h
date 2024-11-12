@@ -23,6 +23,11 @@ public:
     void        Initialize(void);
 
     /*!
+     *  @brief      初期化
+     */
+    void        Initialize(const CTransform& transform);
+
+    /*!
      *  @brief      更新
      */
     void        Update(void);
@@ -41,7 +46,6 @@ private:
 
 
     static const std::string             m_file_name;
-    static const CVector3           m_initial_position;     //!< 初期位置
     static const int                m_height;       //!< 高さ
     static const int                m_width;        //!< 幅
     static const vivid::Rect        m_rect;         //!< 読み込み範囲
@@ -55,4 +59,5 @@ private:
     float                           m_Angle;
     float                           m_PosAngle;
     CPlane                          m_Plane;
+    CVector3                        m_InitialPosition;     //!< 初期位置
 };

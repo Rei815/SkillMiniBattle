@@ -145,7 +145,7 @@ void CUnitManager::CheckHitObject(IObject* object)
             return;
 
         CVector3 startPos = (*it)->GetPosition();
-        startPos.y += (*it)->GetRadius();
+        //startPos.y += (*it)->GetRadius();
 
         CVector3 endPos = (*it)->GetPosition();
         endPos.y -= (*it)->GetRadius();

@@ -1,5 +1,6 @@
 #include "transform.h"
 #include "vivid.h"
+#include "../utility.h"
 
 CTransform::CTransform()
 	: position()
@@ -57,18 +58,42 @@ void CTransform::RotateAround(int handle, int frameIndex, const CVector3& point,
  */
 void CTransform::RotateAround(const CVector3& point, const CVector3& axis, float angle, const CVector3& initPos)
 {
-	MATRIX mat = MGetRotAxis(axis, (DX_TWO_PI_F / 360.0f) * angle);
+	CMatrix mat = MGetRotAxis(axis, (DX_TWO_PI_F / 360.0f) * angle);
 
 	CVector3 localPosition = VTransform(initPos, mat);
 	position = localPosition + point;
+
 }
 
 void CTransform::RotateAround(const CVector3& point, const CVector3& axis, float rotateSpeed)
 {
-	MATRIX mat = MGetRotAxis(axis, (DX_TWO_PI_F / 360.0f) * rotateSpeed);
+	CMatrix mat = MGetRotAxis(axis, (DX_TWO_PI_F / 360.0f) * rotateSpeed);
 
 	CVector3 localPosition = VTransform(position, mat);
 	position = localPosition + point;
+}
+
+CMatrix CTransform::GetRotateAroundMatrix(const CVector3& point, const CVector3& axis, CMatrix& mulMat, CMatrix& tranMat, CMatrix& rotMat, float rotateSpeed, float angle)
+{
+
+	CMatrix rotAroundAxis, selfRotation, translation, finalTransform;
+	CreateRotationYXZMatrix(&rotAroundAxis, DEG_TO_RAD(axis.x * rotateSpeed), DEG_TO_RAD(axis.y * rotateSpeed), DEG_TO_RAD(axis.z * rotateSpeed));
+	CreateRotationYMatrix(&selfRotation, DEG_TO_RAD(angle));
+	// íPà çsóÒ
+	translation = CMatrix::GetIdentity(translation);
+	CreateTranslationMatrix(&translation, position.x, position.y, position.z);
+	// à⁄ìÆÇ≥ÇπÇÈ
+	//mulMat *= tranMat;
+	// âÒì]Ç≥ÇπÇÈ 
+	//mulMat *= rotMat;
+
+	//mulMat *= matrix;
+	// à⁄ìÆÇ≥ÇπÇÈ
+	mulMat *= tranMat;
+	// âÒì]Ç≥ÇπÇÈ 
+	//mulMat *= rotMat;
+	finalTransform = translation * rotAroundAxis * selfRotation;
+	return finalTransform;
 }
 
 CVector3 CTransform::GetRotateVector(CVector3 vector)

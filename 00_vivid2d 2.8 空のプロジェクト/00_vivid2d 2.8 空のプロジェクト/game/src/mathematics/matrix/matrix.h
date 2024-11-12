@@ -1,8 +1,12 @@
 #pragma once
 #include "DxLib.h"
+
+class CVector3;
+
 class CMatrix : public DxLib::MATRIX
 {
 public:
+
 	CMatrix();
 
 	/*!
@@ -10,16 +14,16 @@ public:
 		*
 		*  @param[in]  m  行列
 		*/
-	CMatrix(const DxLib::MATRIX& m);
+	CMatrix(const DxLib::MATRIX& mat);
 
 	~CMatrix();
 
 
-	static CMatrix	GetIdentity(CMatrix& m);
+	static CMatrix	GetIdentity(CMatrix& mat);
 
-	CMatrix	CreateTranspose(const CMatrix& m);
+	CMatrix	CreateTranspose(const CMatrix& mat);
 
-	CMatrix	CreateInverse(const CMatrix& m);
+	CMatrix	CreateInverse(const CMatrix& mat);
 
 	/*!
 		*  @brief      代入演算子のオーバーロード
@@ -28,7 +32,7 @@ public:
 		*
 		*  @return     マトリックスクラス
 		*/
-	CMatrix& operator=(const CMatrix& m);
+	CMatrix& operator=(const CMatrix& mat);
 
 	/*!
 		*  @brief      加算演算子のオーバーロード
@@ -37,7 +41,7 @@ public:
 		*
 		*  @return     マトリックスクラス
 		*/
-	CMatrix& operator+=(const CMatrix& m);
+	CMatrix& operator+=(const CMatrix& mat);
 
 	/*!
 		*  @brief      乗算演算子のオーバーロード
@@ -55,7 +59,7 @@ public:
 		*
 		*  @return    マトリックスクラス
 		*/
-	CMatrix&     operator*=(const CMatrix& m);
+	CMatrix&     operator*=(const CMatrix& mat);
 
 	/*!
 		*  @brief      加算演算子のオーバーロード
@@ -87,5 +91,11 @@ public:
 		*/
 	friend CMatrix     operator*(const CMatrix& mA, const CMatrix& mB);
 
+	friend CVector3		operator*(const CMatrix& mat, const CVector3& v);
+	friend CVector3		operator*(const CVector3& v, const CMatrix& mat);
+
+	static CMatrix Translate(const CVector3& translate);
+	static CMatrix Rotate(const CVector3& rotate);
+	static CMatrix Scale(const CVector3& scale);
 private:
 };
