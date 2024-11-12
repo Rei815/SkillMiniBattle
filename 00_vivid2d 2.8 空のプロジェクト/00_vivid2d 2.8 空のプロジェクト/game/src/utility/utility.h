@@ -11,4 +11,4 @@
  *
  *  @return     ƒ‰ƒWƒAƒ“’l
  */
-#define DEG_TO_RAD( d )     (float)( (d) * 3.14f / 180.0f )
+#define DEG_TO_RAD( d )     (float)( (d) * DX_PI_F / 180.0f )

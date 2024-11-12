@@ -30,7 +30,5 @@ public:
 private:
     static const std::string    m_file_name;        //!< 読み込むファイル名
     static const float	        m_max_speed;        //!< 最高速度
-    static const float	        m_effect2_speed;    //!< エフェクトの表示位置の移動速度
-    IEffect*                     m_Effect;
-    IEffect*                     m_Effect2;
+    IEffect*                    m_Effect;
 };

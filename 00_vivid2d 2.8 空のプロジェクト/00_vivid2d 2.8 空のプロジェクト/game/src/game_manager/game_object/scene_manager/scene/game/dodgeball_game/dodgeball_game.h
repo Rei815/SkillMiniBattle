@@ -87,6 +87,4 @@ private:
     CTimer              m_ShotTimer;
     float               m_NowShotTime;
     CANNON_DIRECTION    m_NextCannnonDir;
-
-    CVector3 Test;
 };

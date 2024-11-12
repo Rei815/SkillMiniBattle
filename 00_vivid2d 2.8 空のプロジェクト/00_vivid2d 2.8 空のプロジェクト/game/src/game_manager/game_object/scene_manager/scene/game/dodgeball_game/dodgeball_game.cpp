@@ -27,10 +27,10 @@ const CVector3		CDodgeBallGame::m_cannon_rot_list[] =
 };
 
 const int			CDodgeBallGame::m_max_cannnon_count = 3;
-const float			CDodgeBallGame::m_cannnon_spawn_time = 5.0f;
+const float			CDodgeBallGame::m_cannnon_spawn_time = 3.0f;
 const float			CDodgeBallGame::m_initial_shot_time = 2.0f;
-const float			CDodgeBallGame::m_min_shot_time = 0.2f;
-const float			CDodgeBallGame::m_shot_time_acceleration = 0.02f;
+const float			CDodgeBallGame::m_min_shot_time = 0.1f;
+const float			CDodgeBallGame::m_shot_time_acceleration = 0.03f;
 const float			CDodgeBallGame::m_defeat_distance = 3000.0f;
 const CVector3		CDodgeBallGame::m_camera_position = CVector3(0, 2500.0f, -1800.0f);
 const CVector3		CDodgeBallGame::m_camera_direction = CVector3(0, -1.0f, 0.6f);
