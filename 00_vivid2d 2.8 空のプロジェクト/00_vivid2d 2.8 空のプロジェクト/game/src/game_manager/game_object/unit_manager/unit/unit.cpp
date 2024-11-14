@@ -20,6 +20,7 @@
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
+const CVector3          IUnit::m_gravity = CVector3(0.0f, -1.0f, 0.0f);
 
 IUnit::IUnit()
 {
@@ -43,6 +44,7 @@ IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     , m_Shot()
     , m_Alpha()
     , m_DefeatFlag(false)
+    , m_Gravity()
 {
 }
 
@@ -71,6 +73,7 @@ Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, v
     m_RevertAlpha = false;
     m_DecAlpha = false;
     m_FileName = file_name;
+    m_Gravity = m_gravity;
 }
 /*
  *  çXêV

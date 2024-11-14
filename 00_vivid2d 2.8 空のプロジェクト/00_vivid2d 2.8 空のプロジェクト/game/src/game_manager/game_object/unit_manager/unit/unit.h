@@ -286,6 +286,7 @@ protected:
 
     static const float      m_destroy_scale_adjust;     //!< エフェクト(destroy)の大きさ調整値
     static const float      m_alpha_speed;              //!< アルファ値の速度
+    static const CVector3   m_gravity;
 
     float                   m_Radius;
     float                   m_Height;
