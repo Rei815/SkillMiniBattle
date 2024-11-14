@@ -144,14 +144,14 @@ CObjectManager::OBJECT_LIST CObjectManager::GetList()
 
 IObject* CObjectManager::CheckHitObject(CPlayer* player)
 {
-    if (m_ObjectList.empty()) return;
+    if (m_ObjectList.empty()) return nullptr;
     OBJECT_LIST::iterator it = m_ObjectList.begin();
 
     while (it != m_ObjectList.end())
     {
 
         if ((*it)->GetModel().GetModelHandle() == VIVID_DX_ERROR)
-            return;
+            return nullptr;
 
         CVector3 startPos = player->GetPosition();
 
@@ -173,12 +173,13 @@ IObject* CObjectManager::CheckHitObject(CPlayer* player)
             CVector3 unitPos = player->GetPosition();
             unitPos.y -= diffHeight;
             player->SetPosition(unitPos);
+
+            return (*it);
         }
 
         ++it;
     }
 
-    return nullptr;
 }
 
 /*

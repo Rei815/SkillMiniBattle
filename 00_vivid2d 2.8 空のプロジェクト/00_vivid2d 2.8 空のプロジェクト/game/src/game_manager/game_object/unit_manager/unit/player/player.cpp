@@ -95,12 +95,6 @@ int CPlayer::GetWins()
     return m_WinsNum;
 }
 
-/*
-int CPlayer::GetController()
-{
-    return m_Controller;
-}
-*/
 
 /*
  *  UŒ‚

@@ -5,6 +5,7 @@
 #include "object/object.h"
 #include "object/object_id.h"
 #include "../gimmick_manager/gimmick/gimmick_id.h"
+#include "..\unit_manager\unit\player\player.h"
 class CObjectManager
 {
 public:
@@ -71,6 +72,7 @@ public:
      *  @return     オブジェクトリスト
      */
     OBJECT_LIST GetList();
+    IObject* CheckHitObject(CPlayer* player);
 private:
 
     /*!
