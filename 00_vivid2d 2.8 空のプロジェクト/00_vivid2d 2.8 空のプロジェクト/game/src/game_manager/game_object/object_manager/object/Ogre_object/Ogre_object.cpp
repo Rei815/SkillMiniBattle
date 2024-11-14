@@ -5,7 +5,6 @@ const	float			COgreObject::m_start_height = -100.0f;
 const	float			COgreObject::m_invisible_alpha = 0.0f;
 const	std::string		COgreObject::m_file_name = "data\\Models\\cannon_test.mv1";
 
-
 COgreObject::COgreObject()
 	: IObject()
 	, m_FallSpeed()
@@ -39,7 +38,7 @@ void COgreObject::Draw(void)
 	IObject::Draw();
 
 	m_Model.Draw();
-
+	vivid::DrawText(30, std::to_string((int)m_Gimmick->GetState()), vivid::Vector2(500,500));
 }
 
 void COgreObject::Finalize(void)

@@ -73,11 +73,11 @@ void CDaruma_FallDownGimmick::Ready()//U‚è•Ô‚é€”õ
 			Feint();
 			break;
 		case TURN_TYPE::SLOW:
-			m_Timer.SetUp(3);
+			m_Timer.SetUp((rand()+1) % 5);
 			Slow();
 			break;
 		case TURN_TYPE::FAST:
-			m_Timer.SetUp(0.3);
+			m_Timer.SetUp((rand()+1) % 3*0.3);
 			Fast();
 			break;
 		case TURN_TYPE::TYPE_NUM:
@@ -105,6 +105,7 @@ void CDaruma_FallDownGimmick::Play()//U‚è•Ô‚é
 	{
 		if (m_Object->GetRotation().y < m_TurnAngle)
 		{
+
 			m_Transform.rotation.y += m_TurnSpeed;
 
 			if (m_TurnAngle <= m_Transform.rotation.y)
@@ -116,6 +117,10 @@ void CDaruma_FallDownGimmick::Play()//U‚è•Ô‚é
 		{
 			m_ReadyTime = 2;
 			m_Timer.SetUp(m_WaitTime);
+
+			if(m_TurnType != TURN_TYPE::FEINT)
+			m_State = GIMMICK_STATE::PLAY;
+
 			m_OgreState = OGRE_STATE::WAIT;
 		}
 	}
@@ -127,7 +132,11 @@ void CDaruma_FallDownGimmick::Wait()//U‚è•Ô‚Á‚½ó‘Ô‚Å‘Ò‹@
 
 
 	if (m_Timer.Finished())
+	{
+		m_State = GIMMICK_STATE::FINISH;
 		m_OgreState = OGRE_STATE::FINISH;
+	}
+		
 }
 
 void CDaruma_FallDownGimmick::Finish()//–ß‚é
@@ -160,7 +169,6 @@ void CDaruma_FallDownGimmick::Fast()
 void CDaruma_FallDownGimmick::Slow()
 {
 	m_TurnAngle = 180;
-	vivid::controller::GetAnalogStickLeft;
 }
 
 
