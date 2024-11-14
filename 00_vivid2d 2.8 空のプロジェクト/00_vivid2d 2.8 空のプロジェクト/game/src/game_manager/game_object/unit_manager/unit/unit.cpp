@@ -79,7 +79,7 @@ void
 IUnit::
 Update(void)
 {
-    m_Velocity += m_gravity;
+    m_Velocity += m_Gravity;
 
     switch (m_UnitState)
     {
