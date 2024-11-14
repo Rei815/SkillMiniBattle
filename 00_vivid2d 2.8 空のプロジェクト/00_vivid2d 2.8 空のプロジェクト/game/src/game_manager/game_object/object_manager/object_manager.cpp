@@ -2,6 +2,7 @@
 #include "..\..\..\utility\utility.h"
 #include "object/fall_object/fall_object.h"
 #include "object/cannon_object/cannon_object.h"
+#include "object/ogre_object/ogre_object.h"
 #include "object/dodgeball_stage_object/dodgeball_stage_object.h"
 #include "..\gimmick_manager\gimmick_manager.h"
 #include "..\unit_manager\unit_manager.h"
@@ -101,6 +102,7 @@ Create(OBJECT_ID id, const CTransform& transform)
 
     switch (id)
     {
+
     case OBJECT_ID::MOON_FALL_OBJECT:
     case OBJECT_ID::SUN_FALL_OBJECT:
     case OBJECT_ID::CIRCLE_FALL_OBJECT:
@@ -110,6 +112,8 @@ Create(OBJECT_ID id, const CTransform& transform)
         object = new CFallObject();      break;
     case OBJECT_ID::CANNON_OBJECT:
         object = new CCannonObject();   break;
+    case OBJECT_ID::OGRE_OBJECT:
+        object = new COgreObject();     break;
     case OBJECT_ID::DODGEBALL_STAGE_OBJECT:
         object = new CDogeballStageObject(); break;
     }

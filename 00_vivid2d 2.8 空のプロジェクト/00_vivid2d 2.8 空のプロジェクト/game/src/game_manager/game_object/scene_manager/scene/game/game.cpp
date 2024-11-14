@@ -79,7 +79,6 @@ CGame::Update(void)
     CControllerManager::GetInstance().Update();
     CGimmickManager::GetInstance().Update();
     CObjectManager::GetInstance().Update();
-    CUnitManager::GetInstance().CheckDefeat();
 }
 
 /*
@@ -88,7 +87,6 @@ CGame::Update(void)
 void
 CGame::Draw(void)
 {
-
     CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();

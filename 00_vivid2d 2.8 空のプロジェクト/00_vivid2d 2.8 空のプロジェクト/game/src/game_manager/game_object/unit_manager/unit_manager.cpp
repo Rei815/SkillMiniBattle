@@ -7,7 +7,7 @@
 #include "../ui_manager/ui_manager.h"
 
 const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1" };
-const int           CUnitManager::m_controller_list[] = { DX_INPUT_PAD1, DX_INPUT_PAD2,DX_INPUT_PAD3,DX_INPUT_PAD4 };
+const vivid::controller::DEVICE_ID           CUnitManager::m_controller_list[] = { vivid::controller::DEVICE_ID::PLAYER1 , vivid::controller::DEVICE_ID::PLAYER2,vivid::controller::DEVICE_ID::PLAYER3,vivid::controller::DEVICE_ID::PLAYER4 };
 /*
  *  インスタンスの取得
  */
@@ -42,6 +42,8 @@ Update(void)
 
     // ユニット更新
     UpdateUnit();
+
+    CheckDefeat();
 }
 
 /*
@@ -186,67 +188,6 @@ void CUnitManager::CheckHitObject(IObject* object)
 
 }
 
-void CUnitManager::CheckDefeat()
-{
-    if (m_UnitList.empty()) return;
-
-    UNIT_LIST::iterator it = m_UnitList.begin();
-
-    while (it != m_UnitList.end())
-    {
-        if ((*it)->GetDefeatFlag())
-        {
-            if (m_DefeatList.empty())
-            {
-                m_DefeatList.push_back((*it));
-                return;
-            }
-
-            bool checkFlag = false;
-            //2回目は入れないように
-            for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
-            {
-                if ((*it)->GetUnitID() == (*i)->GetUnitID())
-                {
-                    checkFlag = true;
-                    break;
-                }
-            }
-
-            if(!checkFlag)
-                m_DefeatList.push_back((*it));
-
-            //最後の一人を一位として処理
-            if (m_DefeatList.size() == m_CurrentPlayerNum - 1)
-            {
-                UNIT_LIST::iterator it = m_UnitList.begin();
-
-                while (it != m_UnitList.end())
-                {
-                    bool checkFlag = true;
-                    for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
-                    {
-                        if ((*it)->GetUnitID() == (*i)->GetUnitID())
-                        {
-                            checkFlag = false;
-                            break;
-                        }
-                    }
-                    if (checkFlag)
-                    {
-                        CPlayer* player = GetPlayer((*it)->GetUnitID());
-                        player->AddWins();
-                    }
-
-                    ++it;
-                }
-            }
-
-        }
-
-        ++it;
-    }
-}
 
 CPlayer* CUnitManager::GetPlayer(UNIT_ID id)
 {
@@ -371,6 +312,67 @@ UpdateUnit(void)
     }
 }
 
+void CUnitManager::CheckDefeat()
+{
+    if (m_UnitList.empty()) return;
+
+    UNIT_LIST::iterator it = m_UnitList.begin();
+
+    while (it != m_UnitList.end())
+    {
+        if ((*it)->GetDefeatFlag())
+        {
+            if (m_DefeatList.empty())
+            {
+                m_DefeatList.push_back((*it));
+                return;
+            }
+
+            bool checkFlag = false;
+            //2回目は入れないように
+            for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
+            {
+                if ((*it)->GetUnitID() == (*i)->GetUnitID())
+                {
+                    checkFlag = true;
+                    break;
+                }
+            }
+
+            if (!checkFlag)
+                m_DefeatList.push_back((*it));
+
+            //最後の一人を一位として処理
+            if (m_DefeatList.size() == m_CurrentPlayerNum - 1)
+            {
+                UNIT_LIST::iterator it = m_UnitList.begin();
+
+                while (it != m_UnitList.end())
+                {
+                    bool checkFlag = true;
+                    for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
+                    {
+                        if ((*it)->GetUnitID() == (*i)->GetUnitID())
+                        {
+                            checkFlag = false;
+                            break;
+                        }
+                    }
+                    if (checkFlag)
+                    {
+                        CPlayer* player = GetPlayer((*it)->GetUnitID());
+                        player->AddWins();
+                    }
+
+                    ++it;
+                }
+            }
+
+        }
+
+        ++it;
+    }
+}
 /*
  *  ユニットとステージとのアタリ判定の処理（垂直）
  */

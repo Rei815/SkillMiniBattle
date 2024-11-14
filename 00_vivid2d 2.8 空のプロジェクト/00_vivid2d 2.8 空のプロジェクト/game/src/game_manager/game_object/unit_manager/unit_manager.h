@@ -62,11 +62,6 @@ public:
     void        CheckHitObject(IObject* object);
 
 
-    /*!
-     *  @brief      プレイヤーが負けているかどうか
-     *
-     */
-    void        CheckDefeat();
 
     /*!
      *  @brief      プレイヤー取得
@@ -100,6 +95,11 @@ public:
     void        SetCurrentPlayer(int num);
 private:
 
+    /*!
+     *  @brief      プレイヤーが負けているかどうか
+     *
+     */
+    void        CheckDefeat();
     /*!
      *  @brief      コンストラクタ
      */
@@ -161,8 +161,8 @@ private:
 
     RANKING_LIST           m_RankingList;             //!< ランキングリスト
 
-    static const std::string    m_file_name_list[];
-    static const int            m_controller_list[];
+    static const std::string                            m_file_name_list[];
+    static const vivid::controller::DEVICE_ID           m_controller_list[];
 
 
     DEFEAT_LIST             m_DefeatList;             //!< ランキングリスト

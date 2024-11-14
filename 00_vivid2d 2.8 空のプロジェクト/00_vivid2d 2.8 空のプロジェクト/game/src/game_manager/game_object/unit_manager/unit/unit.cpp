@@ -20,7 +20,6 @@
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
-const CVector3          IUnit::m_gravity = CVector3(0.0f, -1.0f, 0.0f);
 
 IUnit::IUnit()
 {
@@ -60,7 +59,7 @@ IUnit::
  */
 void
 IUnit::
-Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, int controller)
+Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller)
 {
     m_UnitID = id;
     m_Transform.position = position;
@@ -86,7 +85,7 @@ Update(void)
     {
     case UNIT_STATE::APPEAR:    Appear();      break;
     case UNIT_STATE::ATTACK:    Attack();      break;
-    case UNIT_STATE::DEFEAT:    Defeat();        break;
+    case UNIT_STATE::DEFEAT:    Defeat();      break;
     }
 }
 
@@ -312,6 +311,11 @@ CModel IUnit::GetModel(void)
 void IUnit::SetIsGround(bool flag)
 {
     m_IsGround = flag;
+}
+
+void IUnit::SetGravity(const CVector3& gravity)
+{
+    m_Gravity = gravity;
 }
 
 void IUnit::RevertAlpha(void)

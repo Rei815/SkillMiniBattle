@@ -6,6 +6,14 @@ CTimer::CTimer()
 {
 }
 
+
+CTimer::CTimer(float time)
+	: m_LimitTime(time)
+	, m_Timer(0)
+{
+
+}
+
 CTimer::~CTimer()
 {
 }
