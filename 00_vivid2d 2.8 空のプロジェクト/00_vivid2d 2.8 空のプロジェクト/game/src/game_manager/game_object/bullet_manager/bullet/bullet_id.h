@@ -9,4 +9,5 @@ enum class BULLET_ID
     HOMING,         //!< ƒz[ƒ~ƒ“ƒO’e
     SHOCK_WAVE,     //!< ÕŒ‚”g
     BOSS,           //!< ƒ{ƒX’e
+    CANNON,         //!< ‘å–C’e
 };

@@ -1317,6 +1317,17 @@ namespace vivid
         bool DrawEffect(const int handle, const CVector3& pos);
 
         /*!
+         *  @brief      エフェクトの描画
+         *
+         *  @param[in]  handle      エフェクトの再生ハンドル
+         *  @param[in]  pos         エフェクトの再生位置
+         *  @param[in]  rot         エフェクトの再生する回転
+         *
+         *  @return     描画成功:true  再生終了済:false
+         */
+        bool DrawEffect(const int handle, const CVector3& pos, const CVector3& rot);
+
+        /*!
          *  @brief      エフェクトの再生終了チェック
          *
          *  @param[in]  handle      エフェクトの再生ハンドル

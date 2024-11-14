@@ -176,6 +176,7 @@
     <ClCompile Include="src\collider\collider.cpp" />
     <ClCompile Include="src\collider\sphere_collider\sphere_collider.cpp" />
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\bullet.cpp" />
+    <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\cannon_bullet\cannon_bullet.cpp" />
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\homing_bullet\homing_bullet.cpp" />
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\normal_bullet\normal_bullet.cpp" />
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\shock_wave_bullet\shock_wave_bullet.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\effekseer_effect\effekseer_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\emergency_effect\emergency_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\enemy_bullet_effect\enemy_bullet_effect.cpp" />
+    <ClCompile Include="src\game_manager\game_object\effect_manager\effect\forecast_line_effect\forecast_line_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\hit_effect\hit_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\hit_invincible_effect\hit_invincible_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\jump_effect\jump_effect.cpp" />
@@ -271,6 +273,7 @@
     <ClInclude Include="src\collider\collider_attribute.h" />
     <ClInclude Include="src\collider\sphere_collider\sphere_collider.h" />
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\bullet.h" />
+    <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\cannon_bullet\cannon_bullet.h" />
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\collider_id.h" />
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\bullet_id.h" />
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\homing_bullet\homing_bullet.h" />
@@ -287,6 +290,7 @@
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\effekseer_effect\effekseer_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\emergency_effect\emergency_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\enemy_bullet_effect\enemy_bullet_effect.h" />
+    <ClInclude Include="src\game_manager\game_object\effect_manager\effect\forecast_line_effect\forecast_line_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\hit_effect\hit_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\hit_invincible_effect\hit_invincible_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\jump_effect\jump_effect.h" />

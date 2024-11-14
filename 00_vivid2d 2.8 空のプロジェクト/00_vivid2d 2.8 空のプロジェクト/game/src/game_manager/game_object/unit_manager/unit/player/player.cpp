@@ -5,7 +5,7 @@
 
 
 const float             CPlayer::m_radius = 50.0f;
-const float             CPlayer::m_height = 10.0f;
+const float             CPlayer::m_height = 100.0f;
 
 const float             CPlayer::m_move_speed = 0.25f;
 const float             CPlayer::m_jump_power = 30.0f;
@@ -95,10 +95,12 @@ int CPlayer::GetWins()
     return m_WinsNum;
 }
 
+/*
 int CPlayer::GetController()
 {
     return m_Controller;
 }
+*/
 
 /*
  *  攻撃
@@ -133,14 +135,14 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
     TempVelocity.y = 0.0f;
     //ベクトルの大きさを２にする
     TempVelocity = TempVelocity.Normalize() * 2.0f;
-    //弾の速度ベクトルの大きさを１にして加算する（当たった向きと弾の速度が真逆の場合に、横方向の速度が打ち消されるのを防ぐため）
+    //弾の速度ベクトルの大きさを１にして加算する（当たった向きと弾の速度が真逆の場合に、水平方向の速度が打ち消されるのを防ぐため）
     TempVelocity += (bullet->GetVelocity().Normalize());
     //垂直方向の速度は最後に計算するので、再びゼロにする
     TempVelocity.y = 0.0f;
     //速度を倍率で調整するため、ベクトルの大きさを１にする
     TempVelocity = TempVelocity.Normalize();
     //垂直方向のベクトルを追加
-    TempVelocity.y = 1.0f;
+    TempVelocity.y = 10.0f;
     //速度をベクトルとその倍率でセットする
     m_Velocity = TempVelocity * m_fly_away_speed;
 }

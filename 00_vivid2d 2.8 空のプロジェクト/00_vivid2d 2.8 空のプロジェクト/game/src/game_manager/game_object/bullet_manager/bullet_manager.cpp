@@ -14,6 +14,7 @@
 #include "bullet\normal_bullet\normal_bullet.h"
 #include "bullet\homing_bullet\homing_bullet.h"
 #include "bullet\shock_wave_bullet\shock_wave_bullet.h"
+#include "bullet\cannon_bullet\cannon_bullet.h"
 #include "../stage/stage.h"
 #include "../effect_manager/effect_manager.h"
 
@@ -141,6 +142,7 @@ Create(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter,  CVecto
     case BULLET_ID::NORMAL:         bullet = new CNormalBullet();   break;
     case BULLET_ID::HOMING:         bullet = new CHomingBullet();   break;
     case BULLET_ID::SHOCK_WAVE:     bullet = new CShockWaveBullet();   break;
+    case BULLET_ID::CANNON:         bullet = new CCannonBullet();   break;
     }
 
     if (!bullet) return nullptr;

@@ -131,6 +131,26 @@ private:
      */
     void        UpdateUnit(void);
 
+    /*!
+     *  @brief      ユニットとステージとのアタリ判定の処理（垂直）
+     *
+     *  @param[in]  object      当たり判定をする相手オブジェクト
+     *  @param[in]  unit        当たり判定をするユニット
+     *  @param[in]  startPos    当たり判定をする線分の開始地点
+     *  @param[in]  endPos      当たり判定をする線分の終了地点
+     */
+    void    CheckHitObjectVertical(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos);
+    
+    /*!
+     *  @brief      ユニットとステージとのアタリ判定の処理（水平）
+     *
+     *  @param[in]  object      当たり判定をする相手オブジェクト
+     *  @param[in]  unit        当たり判定をするユニット
+     *  @param[in]  startPos    当たり判定をする線分の開始地点
+     *  @param[in]  endPos      当たり判定をする線分の終了地点
+     */
+    void    CheckHitObjectHorizontal(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos);
+
 
     UNIT_LIST           m_UnitList;             //!< ユニットリスト
 

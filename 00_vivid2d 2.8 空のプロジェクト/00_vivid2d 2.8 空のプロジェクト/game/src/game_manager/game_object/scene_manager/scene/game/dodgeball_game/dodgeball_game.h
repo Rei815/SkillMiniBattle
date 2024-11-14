@@ -76,6 +76,9 @@ private:
     static const float      m_initial_shot_time;
     static const float      m_min_shot_time;
     static const float      m_shot_time_acceleration;
+
+    static const float      m_defeat_distance;
+
     static const CVector3   m_camera_position;
     static const CVector3   m_camera_direction;
 

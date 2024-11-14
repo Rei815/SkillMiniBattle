@@ -1,11 +1,13 @@
 #pragma once
 #include "..\gimmick.h"
 #include "..\..\..\launcher\launcher.h"
+#include "..\..\..\effect_manager\effect\effect.h"
 
 enum class CANNON_STATE
 {
     SPAWN,
     MOVE,
+    SHOT,
     STOP,
 };
 
@@ -60,10 +62,18 @@ public:
 
 private:
 
+    void Spawn();
+    void Move();
+    void Shot();
+    void Stop();
+
     CTransform          m_SetTransform;
     CANNON_STATE        m_NowState;
     CANNON_ROTATE       m_NowRotate;
     CShot*              m_Shot;
+    CTimer              m_MoveTimer;
+    CTimer              m_ShotTimer;
+    IEffect*            m_Effect;
 
     static const std::string    m_file_name;
     static const CVector3       m_spawn_pos;
@@ -71,4 +81,6 @@ private:
     static const float          m_max_rotate_angle;
     static const float          m_rotate_time;
     static const float          m_min_rotate_time;
+    static const float          m_shot_time;
+    static const float	        m_effect_speed;    //!< エフェクトの表示位置の移動速度
 };
