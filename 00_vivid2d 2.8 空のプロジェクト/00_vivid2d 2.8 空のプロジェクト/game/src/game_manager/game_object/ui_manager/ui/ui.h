@@ -3,6 +3,7 @@
 #include "vivid.h"
 #include<vector>
 #include "ui_id.h"
+#include "../../../../utility/utility.h"
 class CUI
 {
 public:
@@ -31,6 +32,16 @@ public:
      *  @brief      ‰Šú‰»
      */
     virtual void        Initialize(void);
+
+    /*!
+     *  @brief      ‰Šú‰»
+     */
+    virtual void        Initialize(const CVector3& position);
+
+    /*!
+     *  @brief      ‰Šú‰»
+     */
+    virtual void        Initialize(const CTransform& transform);
 
     /*!
      *  @brief      XV
@@ -99,7 +110,7 @@ public:
 
 protected:
 
-
+    CTransform                      m_Transform;
     vivid::Vector2                  m_Position;         //!< ˆÊ’u
     int                             m_Height;       //!< ‚‚³
     int                             m_Width;        //!< •

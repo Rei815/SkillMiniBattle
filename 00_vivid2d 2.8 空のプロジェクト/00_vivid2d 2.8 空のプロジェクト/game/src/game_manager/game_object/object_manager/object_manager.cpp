@@ -142,6 +142,45 @@ CObjectManager::OBJECT_LIST CObjectManager::GetList()
     return m_ObjectList;
 }
 
+IObject* CObjectManager::CheckHitObject(CPlayer* player)
+{
+    if (m_ObjectList.empty()) return;
+    OBJECT_LIST::iterator it = m_ObjectList.begin();
+
+    while (it != m_ObjectList.end())
+    {
+
+        if ((*it)->GetModel().GetModelHandle() == VIVID_DX_ERROR)
+            return;
+
+        CVector3 startPos = player->GetPosition();
+
+        CVector3 endPos = player->GetPosition();
+        endPos.y -= player->GetRadius();
+
+        CVector3 hitPos;
+
+        // 線分の描画
+        DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
+
+        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true)
+        {
+
+            hitPos = (*it)->GetModel().GetHitLinePosition(startPos, endPos);
+
+            float diffHeight = endPos.y - hitPos.y;
+
+            CVector3 unitPos = player->GetPosition();
+            unitPos.y -= diffHeight;
+            player->SetPosition(unitPos);
+        }
+
+        ++it;
+    }
+
+    return nullptr;
+}
+
 /*
  *  オブジェクト更新
  */

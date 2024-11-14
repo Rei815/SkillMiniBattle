@@ -168,6 +168,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
+    <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
+    <ClCompile Include="src\primitive\plane\plane.cpp" />
     <ClCompile Include="src\collider\box_collider\box_collider.cpp" />
     <ClCompile Include="src\collider\capsule_collider\capsule_collider.cpp" />
     <ClCompile Include="src\collider\collider.cpp" />
@@ -258,6 +261,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
+    <ClInclude Include="src\mathematics\matrix\matrix.h" />
+    <ClInclude Include="src\primitive\plane\plane.h" />
     <ClInclude Include="src\collider\box_collider\box_collider.h" />
     <ClInclude Include="src\collider\capsule_collider\capsule_collider.h" />
     <ClInclude Include="src\collider\collider.h" />
@@ -347,6 +353,7 @@
     <ClInclude Include="src\game_manager\game_object\unit_manager\unit_manager.h" />
     <ClInclude Include="src\mathematics\mathematics.h" />
     <ClInclude Include="src\mathematics\vector\vector.h" />
+    <ClInclude Include="src\primitive\primitive.h" />
     <ClInclude Include="src\utility\csv_loader\csv_loader.h" />
     <ClInclude Include="src\utility\easing\easing.h" />
     <ClInclude Include="src\utility\timer\timer.h" />

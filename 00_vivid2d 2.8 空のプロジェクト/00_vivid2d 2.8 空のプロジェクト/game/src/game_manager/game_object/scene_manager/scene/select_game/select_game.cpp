@@ -2,6 +2,8 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 
+const int CSelectGame::m_games_num = 20;
+const float CSelectGame::m_circle_radius = 3500.0f;
 CSelectGame::CSelectGame(void)
 {
 
@@ -15,10 +17,21 @@ void CSelectGame::Initialize(void)
 {
 
     CCamera::GetInstance().Initialize();
-
-    CStage::GetInstance().Initialize();
+    CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -5000.0f));
+    CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CUIManager::GetInstance().Initialize();
-    CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME);
+    for (int i = 0; i < m_games_num; i++)
+    {
+        CTransform transform;
+        const float rad = i / (float)m_games_num * DX_TWO_PI;
+        const float _x = m_circle_radius * sin(rad);
+        const float _z = m_circle_radius * cos(rad);
+        transform.rotation.y = DEG_TO_RAD( i * (360.0f / (float)m_games_num));
+        transform.position.y = 500.0f;
+        transform.position.x = 0.0f;// _x;
+        transform.position.z = -m_circle_radius;//_z;
+        CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME, transform);
+    }
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
     ChangeLightTypeDir(VGet(1.0f, -1.0f, 0.0f));
 
@@ -26,6 +39,7 @@ void CSelectGame::Initialize(void)
 
 void CSelectGame::Update(void)
 {
+    CCamera::GetInstance().Update();
     CUIManager::GetInstance().Update();
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
     {
@@ -45,16 +59,13 @@ void CSelectGame::Update(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::THREE))
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
 #endif
-    CStage::GetInstance().Update();
 
 }
 
 void CSelectGame::Draw(void)
 {
     CUIManager::GetInstance().Draw();
-    CStage::GetInstance().Draw();
 
-    vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 
     vivid::DrawText(20, "ゲーム選択中", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
 
@@ -62,8 +73,9 @@ void CSelectGame::Draw(void)
 
 void CSelectGame::Finalize(void)
 {
+    CCamera::GetInstance().Finalize();
+
     CUIManager::GetInstance().Finalize();
 
-    CStage::GetInstance().Finalize();
 
 }

@@ -11,6 +11,7 @@ CUI(int width, int height, UI_ID id)
     , m_Width(width)
     , m_Height(height)
     , m_UI_ID(id)
+    , m_Transform()
 {
 }
 
@@ -29,6 +30,16 @@ void
 CUI::
 Initialize(void)
 {
+}
+
+void CUI::Initialize(const CVector3& position)
+{
+    m_Transform.position = position;
+}
+
+void CUI::Initialize(const CTransform& transform)
+{
+    m_Transform = transform;
 }
 
 /*

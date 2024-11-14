@@ -5,7 +5,7 @@
 
 const float CCamera::m_lerp_speed = 0.1f;
 const float CCamera::m_near = 100.0f;
-const float CCamera::m_far = 20000.0f;
+const float CCamera::m_far = 200000.0f;
 const int   CCamera::m_shake_interval = 3;  //—h‚ê‚ÌŠÔŠu
 const int   CCamera::m_shake_max_num = 5;   //—h‚ê‚é‰ñ”
 const float   CCamera::m_shake_value = 5.0f;//—h‚ê‚Ì‘å‚«‚³

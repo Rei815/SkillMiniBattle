@@ -37,6 +37,7 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	m_Model.Initialize(m_FileName, m_Transform.position);
 	m_Timer.SetUp(1.0f);
 	m_Tag = "Fall";
+	MV1SetMeshBackCulling(m_Model.GetModelHandle(), 0, TRUE);
 }
 
 void CFallObject::Update(void)

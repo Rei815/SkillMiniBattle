@@ -2,6 +2,8 @@
 
 #include "vivid.h"
 #include "..\ui.h"
+#include "..\..\..\..\..\primitive\primitive.h"
+
 class CRandomGame : public CUI
 {
 public:
@@ -21,6 +23,11 @@ public:
     void        Initialize(void);
 
     /*!
+     *  @brief      初期化
+     */
+    void        Initialize(const CTransform& transform);
+
+    /*!
      *  @brief      更新
      */
     void        Update(void);
@@ -37,18 +44,20 @@ public:
 
 private:
 
-    void Draw3DRot(const CVector3& position, float _x_rot, float _y_rot, float _z_rot);
 
-    static const TCHAR*             m_file_name;
-    CVector3     m_Position;     //!< 位置
+    static const std::string             m_file_name;
     static const int                m_height;       //!< 高さ
     static const int                m_width;        //!< 幅
     static const vivid::Rect        m_rect;         //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;       //!< 基準点
     static const vivid::Vector2     m_scale;        //!< 拡縮
     static const float              m_rotation_speed;
+    static const float              m_speed;
     int                             m_Width;
     int                             m_Height;
     int                             m_Handle;
     float                           m_Angle;
+    float                           m_PosAngle;
+    CPlane                          m_Plane;
+    CVector3                        m_InitialPosition;     //!< 初期位置
 };
