@@ -60,7 +60,9 @@ public:
 	void SetPosition(const CVector3& position);
 
 	bool CheckHitLine(const CVector3& startPos, const CVector3& endPos);
+	bool CheckHitTriangle(const CVector3& posA, const CVector3& posB, const CVector3& posC);
 	CVector3 GetHitLinePosition(const CVector3& startPos, const CVector3& endPos);
+	CVector3 GetHitTrianglePosition(const CVector3& posA, const CVector3& posB, const CVector3& posC);
 private:
 	int			m_Handle;			//!< ƒnƒ“ƒhƒ‹
 

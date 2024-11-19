@@ -145,21 +145,23 @@ void CUnitManager::CheckHitObject(IObject* object)
 
         if (object->GetModel().GetModelHandle() == VIVID_DX_ERROR)
             return;
-
+        IUnit* unit = (*it);
         //‚’¼•ûŒü‚Ì”»’è-----------------------------------------------------
 
-        CVector3 startPos = (*it)->GetPosition();
-        startPos.y += (*it)->GetHeight() / 2.0f;
-
-        CVector3 endPos = (*it)->GetPosition();
-        endPos.y -= (*it)->GetHeight() / 2.0f;
-
-        CheckHitObjectVertical(object, (*it), startPos, endPos);
+        float radius = unit->GetRadius();
+        const int check_point_count = 4;
+        for (int i = 0; i < 9; ++i)
+        {
+            CVector3 unit_pos = unit->GetPosition();
+            CVector3 start = unit_pos + CVector3(-radius + (radius) * (i % 3), 0.0, -radius + (radius) * (i / 3));
+            CheckHitObjectVertical(object, (*it), start, CVector3(0.0f, -radius*2, 0.0f));
+        }
 
         //…•½•ûŒü‚Ì”»’è-----------------------------------------------------
         if ((*it)->GetVelocity().x != 0 || (*it)->GetVelocity().z != 0)
         {
             //ˆÚ“®•ûŒü‚Ì³–Ê
+            CVector3 startPos, endPos;
             startPos = (*it)->GetPosition();
             endPos = startPos;
             CVector3 tempVelocity = (*it)->GetVelocity().Normalize();
@@ -185,7 +187,7 @@ void CUnitManager::CheckHitObject(IObject* object)
 
         ++it;
     }
-
+    return;
 }
 
 
@@ -378,25 +380,28 @@ void CUnitManager::CheckDefeat()
  */
 void
 CUnitManager::
-CheckHitObjectVertical(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos)
+CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir, float length)
 {
     CVector3 hitPos;
+    CVector3 end_position = startPos + (down_dir * length);
+#ifdef VIVID_DEBUG
 
     // ü•ª‚Ì•`‰æ
-    //DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
+    DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
 
-    if (object->GetModel().CheckHitLine(startPos, endPos) == true)
+#endif // VIVID_DEBUG
+    if (object->GetModel().CheckHitLine(startPos, end_position) == true)
     {
 
-        hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
+        hitPos = object->GetModel().GetHitLinePosition(startPos, end_position);
 
-        unit->SetIsGround(true);
-        float diffHeight = endPos.y - hitPos.y;
+        float diffHeight = hitPos.y - end_position.y;
 
         CVector3 unitPos = unit->GetPosition();
-        unitPos.y -= diffHeight;
+        unitPos.y += diffHeight;
         unit->SetPosition(unitPos);
     }
+
 }
 
 /*
@@ -404,7 +409,7 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, CVector3 startPos, CVector3
  */
 void
 CUnitManager::
-CheckHitObjectHorizontal(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos)
+CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos)
 {
     CVector3 hitPos;
 

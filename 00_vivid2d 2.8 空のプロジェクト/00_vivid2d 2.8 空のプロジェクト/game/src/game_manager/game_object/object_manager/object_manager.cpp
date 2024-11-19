@@ -157,33 +157,47 @@ IObject* CObjectManager::CheckHitObject(CPlayer* player)
         if ((*it)->GetModel().GetModelHandle() == VIVID_DX_ERROR)
             return nullptr;
 
-        CVector3 startPos = player->GetPosition();
+        //垂直方向の判定-----------------------------------------------------
 
-        CVector3 endPos = player->GetPosition();
-        endPos.y -= player->GetRadius();
+        CVector3 startPos[4];
 
-        CVector3 hitPos;
-
-        // 線分の描画
-        DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
-
-        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true)
+        for (int i = 0; i < 4; i++)
         {
-
-            hitPos = (*it)->GetModel().GetHitLinePosition(startPos, endPos);
-
-            float diffHeight = endPos.y - hitPos.y;
-
-            CVector3 unitPos = player->GetPosition();
-            unitPos.y -= diffHeight;
-            player->SetPosition(unitPos);
-
-            return (*it);
+            startPos[i] = player->GetPosition();
         }
+
+        //左奥にする
+        startPos[0].x -= player->GetRadius();
+        startPos[0].z += player->GetRadius();
+
+        //右奥にする
+        startPos[1].x += player->GetRadius();
+        startPos[1].z += player->GetRadius();
+
+        //左前にする
+        startPos[2].x -= player->GetRadius();
+        startPos[2].z -= player->GetRadius();
+
+        //右前にする
+        startPos[3].x += player->GetRadius();
+        startPos[3].z -= player->GetRadius();
+
+        CVector3 endPos[4];
+
+        for (int i = 0; i < 4; i++)
+        {
+            endPos[i] = player->GetPosition();
+            endPos[i].y -= player->GetHeight() / 2.0f;
+
+        }
+
+        for (int i = 0; i < 4; i++)
+            if ((*it)->GetModel().CheckHitLine(startPos[i], endPos[i]) == true)
+                return (*it);
 
         ++it;
     }
-
+    return nullptr;
 }
 
 /*

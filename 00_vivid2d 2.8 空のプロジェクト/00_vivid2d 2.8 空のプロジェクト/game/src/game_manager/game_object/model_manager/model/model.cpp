@@ -40,8 +40,8 @@ void CModel::Initialize(const std::string& file_name, const CTransform& transfor
 
 	//ˆÊ’uî•ñ‚ÌXV
 	MV1SetPosition(m_Handle, m_Transform.position);
-
 	MV1SetRotationXYZ(m_Handle, m_Transform.GetRadianRotation());
+
 }
 
 void CModel::Load(const std::string& file_name)
@@ -120,11 +120,27 @@ bool CModel::CheckHitLine(const CVector3& startPos, const CVector3& endPos)
 	return false;
 }
 
+bool CModel::CheckHitTriangle(const CVector3& posA, const CVector3& posB, const CVector3& posC)
+{
+	MV1_COLL_RESULT_POLY_DIM hitPolyDim = MV1CollCheck_Triangle(m_Handle, -1, posA, posB, posC);
+	if (hitPolyDim.HitNum > 0)
+		return true;
+	return false;
+}
+
 CVector3 CModel::GetHitLinePosition(const CVector3& startPos, const CVector3& endPos)
 {
 	MV1_COLL_RESULT_POLY hitPoly = MV1CollCheck_Line(m_Handle, -1, startPos, endPos);
 	if (hitPoly.HitFlag == 1)
 		return hitPoly.HitPosition;
 	return endPos;
+}
+
+CVector3 CModel::GetHitTrianglePosition(const CVector3& posA, const CVector3& posB, const CVector3& posC)
+{
+	MV1_COLL_RESULT_POLY_DIM hitPolyDim = MV1CollCheck_Triangle(m_Handle, -1, posA, posB, posC);
+	if (hitPolyDim.HitNum > 0)
+		return hitPolyDim.Dim->HitPosition;
+	return CVector3();
 }
 

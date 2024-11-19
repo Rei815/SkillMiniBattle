@@ -2,6 +2,7 @@
 #include "../../../effect_manager/effect_manager.h"
 #include "../../unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
+#include "../../../object_manager/object_manager.h"
 
 
 const float             CPlayer::m_radius = 50.0f;
@@ -222,6 +223,15 @@ void CPlayer::Move(void)
 
     if (!m_StopFlag)
         m_Transform.position += m_Velocity;
+
+    IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
+    if (floorObject)
+    {
+        if (floorObject->GetTag() == "Fall")
+            m_IsGround = true;
+    }
+    else
+        m_IsGround = false;
 
     if (m_FrictionFlag)
     {

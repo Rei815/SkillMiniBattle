@@ -7,16 +7,16 @@
 #include "../../../../object_manager/object/fall_object/mark_id.h"
 
 const CTransform CFallGame::m_object_transform_list[] = 
-{CTransform(CVector3(200,-100,-150)),CTransform(CVector3(-200,-100,150)), CTransform(CVector3(0,-100,200)),
-CTransform(CVector3(-200,-100,-150)), CTransform(CVector3(0,-100,-200)), CTransform(CVector3(200,-100,150)) };
+{CTransform(CVector3(600,-100,-300)),CTransform(CVector3(-600,-100,300)), CTransform(CVector3(0,-100,300)),
+CTransform(CVector3(-600,-100,-300)), CTransform(CVector3(0,-100,-300)), CTransform(CVector3(600,-100,300)) };
 
 const float		CFallGame::m_time_accelerator = 0.1f;
 const float		CFallGame::m_min_time = 1.0f;
 const float		CFallGame::m_initial_time = 1.0f;
 const float		CFallGame::m_defeat_height = -500.0f;
 const float		CFallGame::m_object_delay_time = 1.0f;
-const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
-const CVector3	CFallGame::m_camera_direction = CVector3(0, -0.85f, 1.0f);
+const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -600.0f);
+const CVector3	CFallGame::m_camera_direction = CVector3(0.0f, -2.0f, 1.0f);
 CFallGame::CFallGame(void)
 {
 }

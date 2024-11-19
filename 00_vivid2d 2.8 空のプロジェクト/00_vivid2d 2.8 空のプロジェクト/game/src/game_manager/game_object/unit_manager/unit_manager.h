@@ -7,7 +7,6 @@
 #include "../stage/stage.h"
 #include "..\scene_manager\scene\game\game.h"
 #include "unit/player/player.h"
-
 class CUnitManager
 {
 public:
@@ -139,7 +138,7 @@ private:
      *  @param[in]  startPos    当たり判定をする線分の開始地点
      *  @param[in]  endPos      当たり判定をする線分の終了地点
      */
-    void    CheckHitObjectVertical(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos);
+    void    CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir = CVector3(0.0f, -1.0f, 0.0f), float length = 1.0f);
     
     /*!
      *  @brief      ユニットとステージとのアタリ判定の処理（水平）
@@ -149,7 +148,7 @@ private:
      *  @param[in]  startPos    当たり判定をする線分の開始地点
      *  @param[in]  endPos      当たり判定をする線分の終了地点
      */
-    void    CheckHitObjectHorizontal(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos);
+    void    CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos);
 
 
     UNIT_LIST           m_UnitList;             //!< ユニットリスト
