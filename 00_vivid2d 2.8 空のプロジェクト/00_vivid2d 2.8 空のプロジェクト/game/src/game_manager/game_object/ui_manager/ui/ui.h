@@ -41,6 +41,16 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
+    virtual void        Initialize(const vivid::Vector2& position);
+
+    /*!
+     *  @brief      ‰Šú‰»
+     */
+    virtual void        Initialize(const CVector3& position);
+
+    /*!
+     *  @brief      ‰Šú‰»
+     */
     virtual void        Initialize(const CTransform& transform);
 
     /*!

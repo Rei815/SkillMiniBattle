@@ -153,12 +153,6 @@ private:
 
     UNIT_LIST           m_UnitList;             //!< ユニットリスト
 
-    /*!
-     *  @brief      プレイヤーリスト型
-     */
-    using RANKING_LIST = std::list<CPlayer*>;
-
-    RANKING_LIST           m_RankingList;             //!< ランキングリスト
 
     static const std::string                            m_file_name_list[];
     static const vivid::controller::DEVICE_ID           m_controller_list[];

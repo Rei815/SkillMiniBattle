@@ -91,4 +91,11 @@ protected:
     std::string     m_DebugText;    //!< デバッグ用
     bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用
     bool            m_FinishUIFlag;
+    /*!
+     *  @brief      プレイヤーリスト型
+     */
+    using RANKING_LIST = std::list<CPlayer*>;
+
+    RANKING_LIST           m_RankingList;             //!< ランキングリスト
+
 };

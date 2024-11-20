@@ -159,41 +159,18 @@ IObject* CObjectManager::CheckHitObject(CPlayer* player)
 
         //垂直方向の判定-----------------------------------------------------
 
-        CVector3 startPos[4];
-
-        for (int i = 0; i < 4; i++)
+        float radius = player->GetRadius();
+        const int check_point_count = 4;
+        for (int i = 0; i < 9; ++i)
         {
-            startPos[i] = player->GetPosition();
-        }
+            CVector3 unit_pos = player->GetPosition();
 
-        //左奥にする
-        startPos[0].x -= player->GetRadius();
-        startPos[0].z += player->GetRadius();
+            CVector3 start = unit_pos + CVector3(-radius + (radius) * (i % 3), 0.0, -radius + (radius) * (i / 3));
+            CVector3 end_position = start + CVector3(0, - radius * 2, 0);
 
-        //右奥にする
-        startPos[1].x += player->GetRadius();
-        startPos[1].z += player->GetRadius();
-
-        //左前にする
-        startPos[2].x -= player->GetRadius();
-        startPos[2].z -= player->GetRadius();
-
-        //右前にする
-        startPos[3].x += player->GetRadius();
-        startPos[3].z -= player->GetRadius();
-
-        CVector3 endPos[4];
-
-        for (int i = 0; i < 4; i++)
-        {
-            endPos[i] = player->GetPosition();
-            endPos[i].y -= player->GetHeight() / 2.0f;
-
-        }
-
-        for (int i = 0; i < 4; i++)
-            if ((*it)->GetModel().CheckHitLine(startPos[i], endPos[i]) == true)
+            if ((*it)->GetModel().CheckHitLine(start, end_position) == true)
                 return (*it);
+        }
 
         ++it;
     }

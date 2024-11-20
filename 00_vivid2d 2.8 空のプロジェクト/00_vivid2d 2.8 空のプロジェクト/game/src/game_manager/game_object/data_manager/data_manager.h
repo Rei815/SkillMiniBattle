@@ -2,6 +2,7 @@
 
 #include "vivid.h"
 #include <list>
+#include "../unit_manager/unit/player/player.h"
 
 class CDataManager
 {
@@ -56,5 +57,11 @@ private:
      */
     CDataManager& operator=(const CDataManager& rhs);
 
+    /*!
+     *  @brief      プレイヤーリスト型
+     */
+    using RANKING_LIST = std::list<CPlayer*>;
+
+    RANKING_LIST           m_OverallRankingList;             //!< 全体のランキングリスト
 
 };

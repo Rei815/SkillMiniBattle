@@ -209,7 +209,7 @@ Finish(void)
     if (!m_FinishUIFlag)
     {
         m_FinishUIFlag = true;
-        CUIManager::GetInstance().Create(UI_ID::FINISH_BACKGROUND);
+        CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
     }
 
 }

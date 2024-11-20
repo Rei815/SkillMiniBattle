@@ -18,6 +18,8 @@ void CDogeballStageObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	IObject::Initialize(id, transform);
 
 	m_Model.Initialize(m_FileName, m_Transform);
+	m_Tag = "Floor";
+
 }
 
 void CDogeballStageObject::Update(void)

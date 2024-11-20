@@ -36,7 +36,7 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	m_FileName = m_file_name_list[(int)m_MarkID];
 	m_Model.Initialize(m_FileName, m_Transform);
 	m_Timer.SetUp(1.0f);
-	m_Tag = "Fall";
+	m_Tag = "Floor";
 	MV1SetMeshBackCulling(m_Model.GetModelHandle(), 0, TRUE);
 }
 

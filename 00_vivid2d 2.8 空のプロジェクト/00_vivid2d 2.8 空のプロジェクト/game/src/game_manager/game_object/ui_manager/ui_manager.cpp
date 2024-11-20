@@ -112,8 +112,8 @@ void CUIManager::Create(UI_ID id)
         ui = new CFallSelect(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);     break;
-    case UI_ID::FINISH_BACKGROUND:
-        ui = new CFinishBackGround(id);     break;
+    case UI_ID::FINISH_GAME_BG:
+        ui = new CFinishGameBG(id);     break;
         break;
     }
     if (!ui) return;
@@ -140,8 +140,8 @@ void CUIManager::Create(UI_ID id, const CVector3& position)
         ui = new CFallSelect(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);     break;
-    case UI_ID::FINISH_BACKGROUND:
-        ui = new CFinishBackGround(id);     break;
+    case UI_ID::FINISH_GAME_BG:
+        ui = new CFinishGameBG(id);     break;
         break;
     }
     if (!ui) return;
@@ -168,8 +168,8 @@ void CUIManager::Create(UI_ID id, const CTransform& transform)
         ui = new CFallSelect(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);     break;
-    case UI_ID::FINISH_BACKGROUND:
-        ui = new CFinishBackGround(id);     break;
+    case UI_ID::FINISH_GAME_BG:
+        ui = new CFinishGameBG(id);     break;
         break;
     }
     if (!ui) return;

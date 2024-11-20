@@ -227,7 +227,7 @@ void CPlayer::Move(void)
     IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
     if (floorObject)
     {
-        if (floorObject->GetTag() == "Fall")
+        if (floorObject->GetTag() == "Floor")
             m_IsGround = true;
     }
     else

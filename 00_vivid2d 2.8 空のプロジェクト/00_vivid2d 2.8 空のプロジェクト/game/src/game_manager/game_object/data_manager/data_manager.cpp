@@ -26,6 +26,7 @@ Initialize(void)
 void
 CDataManager::Update(void)
 {
+
 }
 
 /*
