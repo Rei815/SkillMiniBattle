@@ -85,17 +85,6 @@ void CPlayer::SetActionFlag(bool flag)
     m_ActionFlag = flag;
 }
 
-void CPlayer::AddWins()
-{
-    if (m_WinsNum < 5)
-        m_WinsNum++;
-}
-
-int CPlayer::GetWins()
-{
-    return m_WinsNum;
-}
-
 vivid::controller::DEVICE_ID CPlayer::GetController()
 {
     return m_Controller;

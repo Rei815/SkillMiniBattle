@@ -7,6 +7,7 @@
 #include "../../../controller_manager/controller_manager.h"
 #include "../../../gimmick_manager/gimmick_manager.h"
 #include "../../../object_manager/object_manager.h"
+#include "../../../data_manager/data_manager.h"
 #include "../../../unit_manager/unit/player/player.h"
 
 /*
@@ -16,6 +17,7 @@ CGame::CGame(void)
     : m_DebugText()
     , m_SetActionflag(false)
     , m_FinishUIFlag(false)
+    , m_ResultList()
 {
 }
 
@@ -39,7 +41,6 @@ CGame::Initialize(void)
     CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();
     m_WaitTime = 0;
-
 
     m_GameState = GAME_STATE::START;
 
@@ -106,9 +107,6 @@ CGame::Draw(void)
         break;
     case GAME_STATE::FINISH:
         vivid::DrawText(20, "フィニッシュ", vivid::Vector2(0, 0));
-        vivid::DrawText(20, std::to_string(CUnitManager::GetInstance().GetPlayer(UNIT_ID::PLAYER1)->GetWins()),
-            vivid::Vector2(vivid::GetWindowWidth() - 20, 0)
-        );
         break;
     }
     vivid::DrawText(20, m_DebugText, vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
@@ -148,6 +146,21 @@ SetGameState(GAME_STATE state)
     m_GameState = state;
 }
 
+void CGame::AddRanking(UNIT_ID unitID)
+{
+    IUnit* unit = CUnitManager::GetInstance().GetPlayer(unitID);
+
+    int max = CDataManager::GetInstance().GetCurrentPlayer();
+    for (int i = max; i >= 0; i--)
+    {
+        if (m_ResultList[i] != UNIT_ID::NONE)
+        {
+            m_ResultList[i] = unitID;
+            break;
+        }
+    }
+}
+
 
 /*
  *  スタート
@@ -182,9 +195,6 @@ void CGame::Play(void)
         CUnitManager::GetInstance().SetAllPlayerAction(true);
     }
 
-     if ((CUnitManager::GetInstance().GetCurrentPlayer() - CUnitManager::GetInstance().GetDefeatList().size()) < 1)
-        m_GameState = GAME_STATE::FINISH;
-
 #ifdef VIVID_DEBUG
 
     if(vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
@@ -211,5 +221,5 @@ Finish(void)
         m_FinishUIFlag = true;
         CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
     }
-
+    CDataManager::GetInstance().PlayerWin(m_ResultList[0]);
 }

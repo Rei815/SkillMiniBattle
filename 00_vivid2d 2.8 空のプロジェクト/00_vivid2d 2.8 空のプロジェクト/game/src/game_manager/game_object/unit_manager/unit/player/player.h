@@ -42,10 +42,6 @@ public:
  */
     void        SetActionFlag(bool flag);
 
-    void        AddWins();
-
-    int         GetWins();
-
     vivid::controller::DEVICE_ID         GetController();
 
     bool        GetPlayerMoving();
@@ -104,5 +100,4 @@ protected:
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     DxLib::COLOR_F                  m_Color;
     vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
-    int                             m_WinsNum;                      //!< 勝った回数
 };

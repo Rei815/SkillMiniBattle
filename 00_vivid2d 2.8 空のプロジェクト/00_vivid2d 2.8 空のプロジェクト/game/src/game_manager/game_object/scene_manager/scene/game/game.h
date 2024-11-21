@@ -67,6 +67,7 @@ public:
 
 protected:
 
+    void AddRanking(UNIT_ID unitID);
 
     /*!
      *  @brief      スタート
@@ -94,8 +95,10 @@ protected:
     /*!
      *  @brief      プレイヤーリスト型
      */
-    using RANKING_LIST = std::list<CPlayer*>;
 
-    RANKING_LIST           m_RankingList;             //!< ランキングリスト
+    UNIT_ID         m_ResultList[4];             //!< ランキングリスト
 
+    using ENTRY_LIST = std::list<IUnit*>;
+
+    ENTRY_LIST          m_EntryList;
 };

@@ -5,6 +5,7 @@
 #include "../../../../object_manager/object_manager.h"
 #include "../../../../ui_manager/ui_manager.h"
 #include "../../../../object_manager/object/fall_object/mark_id.h"
+#include "../../../../data_manager/data_manager.h"
 
 const CTransform CFallGame::m_object_transform_list[] = 
 {CTransform(CVector3(600,-100,-300)),CTransform(CVector3(-600,-100,300)), CTransform(CVector3(0,-100,300)),
@@ -38,10 +39,11 @@ void CFallGame::Initialize(void)
 	CVector3 playerPos[] = { m_object_transform_list[(int)MARK_ID::CIRCLE].position, m_object_transform_list[(int)MARK_ID::CROSS].position,
 	m_object_transform_list[(int)MARK_ID::MOON].position,m_object_transform_list[(int)MARK_ID::SQUARE].position };
 
-	for (int i = 0; i < CUnitManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
 		playerPos[i].y += 200.0f;
-		CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
+		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
+		m_EntryList.push_back(unit);
 	}
 
 	CObjectManager& om = CObjectManager::GetInstance();
@@ -131,12 +133,25 @@ void CFallGame::Play(void)
 
 	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
+	int defeatNum = 0;
 	while (it != unitList.end())
 	{
+		IUnit* unit = (*it);
+		if (unit->GetDefeatFlag() == false) return;
+		unit->SetDefeatFlag(true);
+		defeatNum++;
 		if ((*it)->GetPosition().y < m_defeat_height)
-				(*it)->SetDefeatFlag(true);
+			AddRanking((*it)->GetUnitID());
 		++it;
 	}
+	if (defeatNum == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+	{
+
+		}
+			//m_ResultList[0] = 
+	//if (m_RankingList[0] != UNIT_ID::NONE)
+	//	m_GameState = GAME_STATE::FINISH;
+
 }
 
 void CFallGame::Finish(void)

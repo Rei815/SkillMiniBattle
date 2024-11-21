@@ -3,6 +3,7 @@
 #include "..\bullet_manager\bullet_manager.h"
 #include "..\effect_manager\effect_manager.h"
 #include "..\sound_manager\sound_manager.h"
+#include "..\data_manager\data_manager.h"
 #include "..\..\..\utility\utility.h"
 #include "../ui_manager/ui_manager.h"
 
@@ -28,7 +29,6 @@ CUnitManager::
 Initialize(void)
 {
     m_UnitList.clear();
-    m_RankingList.clear();
     m_DefeatList.clear();
 }
 
@@ -91,7 +91,7 @@ Finalize(void)
 /*
  *  ユニット生成
  */
-void
+IUnit*
 CUnitManager::
 Create(UNIT_ID id, const CVector3& pos)
 {
@@ -108,10 +108,11 @@ Create(UNIT_ID id, const CVector3& pos)
     }
     
 
-    if (!unit) return;
+    if (!unit) return nullptr;
 
     unit->Initialize(id, pos, m_file_name_list[(int)id], m_controller_list[(int)id]);
     m_UnitList.push_back(unit);
+    return unit;
 }
 
 /*
@@ -261,10 +262,6 @@ bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& e
     return false;
 }
 
-int CUnitManager::GetCurrentPlayer()
-{
-    return m_CurrentPlayerNum;
-}
 
 CUnitManager::UNIT_LIST CUnitManager::GetUnitList()
 {
@@ -276,11 +273,6 @@ CUnitManager::DEFEAT_LIST CUnitManager::GetDefeatList()
     return m_DefeatList;
 }
 
-void CUnitManager::SetCurrentPlayer(int num)
-{
-    if (num > 4 || num < 1) return;
-    m_CurrentPlayerNum = num;
-}
 
 /*
  *  ユニット更新
@@ -322,11 +314,12 @@ void CUnitManager::CheckDefeat()
 
     while (it != m_UnitList.end())
     {
-        if ((*it)->GetDefeatFlag())
+        IUnit* unit = (*it);
+        if (unit->GetDefeatFlag())
         {
             if (m_DefeatList.empty())
             {
-                m_DefeatList.push_back((*it));
+                m_DefeatList.push_back(unit);
                 return;
             }
 
@@ -334,7 +327,7 @@ void CUnitManager::CheckDefeat()
             //2回目は入れないように
             for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
             {
-                if ((*it)->GetUnitID() == (*i)->GetUnitID())
+                if (unit->GetUnitID() == (*i)->GetUnitID())
                 {
                     checkFlag = true;
                     break;
@@ -342,32 +335,30 @@ void CUnitManager::CheckDefeat()
             }
 
             if (!checkFlag)
-                m_DefeatList.push_back((*it));
+                m_DefeatList.push_back(unit);
 
             //最後の一人を一位として処理
-            if (m_DefeatList.size() == m_CurrentPlayerNum - 1)
-            {
-                UNIT_LIST::iterator it = m_UnitList.begin();
+            //if (m_DefeatList.size() == m_CurrentPlayerNum - 1)
+            //{
+            //    UNIT_LIST::iterator it = m_UnitList.begin();
 
-                while (it != m_UnitList.end())
-                {
-                    bool checkFlag = true;
-                    for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
-                    {
-                        if ((*it)->GetUnitID() == (*i)->GetUnitID())
-                        {
-                            checkFlag = false;
-                            break;
-                        }
-                    }
-                    if (checkFlag)
-                    {
-                        CPlayer* player = GetPlayer((*it)->GetUnitID());
-                        player->AddWins();
-                    }
+            //    while (it != m_UnitList.end())
+            //    {
+            //        unit = (*it);
+            //        checkFlag = true;
+            //        for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
+            //        {
+            //            if (unit->GetUnitID() == (*i)->GetUnitID())
+            //            {
+            //                checkFlag = false;
+            //                break;
+            //            }
+            //        }
+            //        if (checkFlag)
+            //            CDataManager::GetInstance().PlayerWin((*it)->GetUnitID());
 
-                    ++it;
-                }
+            //        ++it;
+            //    }
             }
 
         }

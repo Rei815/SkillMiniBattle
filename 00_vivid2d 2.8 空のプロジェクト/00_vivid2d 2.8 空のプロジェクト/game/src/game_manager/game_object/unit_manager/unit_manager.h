@@ -44,7 +44,7 @@ public:
      *  @param[in]  id          ユニットID
      *  @param[in]  pos         位置
      */
-    void        Create(UNIT_ID id, const CVector3& pos);
+    IUnit*      Create(UNIT_ID id, const CVector3& pos);
 
     /*!
      *  @brief      ユニットと弾とのアタリ判定
@@ -79,7 +79,6 @@ public:
 
     bool CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos);
 
-    int         GetCurrentPlayer();
     /*!
      *  @brief      ユニットリスト型
      */
@@ -91,7 +90,6 @@ public:
     using DEFEAT_LIST = std::list<IUnit*>;
 
     DEFEAT_LIST GetDefeatList();
-    void        SetCurrentPlayer(int num);
 private:
 
     /*!
@@ -150,15 +148,9 @@ private:
      */
     void    CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos);
 
-
-    UNIT_LIST           m_UnitList;             //!< ユニットリスト
-
-
     static const std::string                            m_file_name_list[];
     static const vivid::controller::DEVICE_ID           m_controller_list[];
 
-
-    DEFEAT_LIST             m_DefeatList;             //!< ランキングリスト
-
-    int                     m_CurrentPlayerNum;
+    UNIT_LIST                                           m_UnitList;             //!< ユニットリスト
+    DEFEAT_LIST                                         m_DefeatList;             //!< ランキングリスト
 };
