@@ -17,6 +17,7 @@ CGame::CGame(void)
     : m_DebugText()
     , m_SetActionflag(false)
     , m_FinishUIFlag(false)
+    , m_EntryList()
     , m_ResultList()
 {
 }
@@ -34,6 +35,8 @@ CGame::~CGame(void)
 void
 CGame::Initialize(void)
 {
+    m_EntryList.clear();
+    m_ResultList.clear();
     CUnitManager::GetInstance().Initialize();
     CUIManager::GetInstance().Initialize();
     CEffectManager::GetInstance().Initialize();
@@ -150,13 +153,16 @@ void CGame::AddRanking(UNIT_ID unitID)
 {
     IUnit* unit = CUnitManager::GetInstance().GetPlayer(unitID);
 
-    int max = CDataManager::GetInstance().GetCurrentPlayer();
-    for (int i = max; i >= 0; i--)
+    for (ENTRY_LIST::iterator entry_it = m_EntryList.begin(); entry_it != m_EntryList.end(); entry_it++)
     {
-        if (m_ResultList[i] != UNIT_ID::NONE)
+        if (unitID != UNIT_ID::NONE)
         {
-            m_ResultList[i] = unitID;
-            break;
+            m_ResultList.push_back(CUnitManager::GetInstance().GetPlayer(unitID));
+            if ((*entry_it)->GetUnitID() == unitID)
+            {
+                m_EntryList.erase(entry_it);
+                break;
+            }
         }
     }
 }
@@ -202,6 +208,7 @@ void CGame::Play(void)
 
 #endif // VIVID_DEBUG
 
+    CheckFinish();
 }
 
 /*
@@ -221,5 +228,10 @@ Finish(void)
         m_FinishUIFlag = true;
         CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
     }
-    CDataManager::GetInstance().PlayerWin(m_ResultList[0]);
+    if(m_EntryList.size() == 1)
+    CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
+}
+
+void CGame::CheckFinish()
+{
 }

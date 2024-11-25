@@ -18,6 +18,7 @@ void CSelectPlayer::Initialize(void)
     CCamera::GetInstance().Initialize();
 
     CStage::GetInstance().Initialize();
+
     CDataManager::GetInstance().Initialize();
 }
 

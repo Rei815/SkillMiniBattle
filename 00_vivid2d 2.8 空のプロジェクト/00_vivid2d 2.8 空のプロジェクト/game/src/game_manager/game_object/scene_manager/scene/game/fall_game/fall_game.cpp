@@ -16,8 +16,8 @@ const float		CFallGame::m_min_time = 1.0f;
 const float		CFallGame::m_initial_time = 1.0f;
 const float		CFallGame::m_defeat_height = -500.0f;
 const float		CFallGame::m_object_delay_time = 1.0f;
-const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -600.0f);
-const CVector3	CFallGame::m_camera_direction = CVector3(0.0f, -2.0f, 1.0f);
+const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
+const CVector3	CFallGame::m_camera_direction = CVector3(0.0f, -1.0f, 1.0f);
 CFallGame::CFallGame(void)
 {
 }
@@ -131,32 +131,33 @@ void CFallGame::Play(void)
 		}
 	}
 
-	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
-	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
-	int defeatNum = 0;
-	while (it != unitList.end())
-	{
-		IUnit* unit = (*it);
-		if (unit->GetDefeatFlag() == false) return;
-		unit->SetDefeatFlag(true);
-		defeatNum++;
-		if ((*it)->GetPosition().y < m_defeat_height)
-			AddRanking((*it)->GetUnitID());
-		++it;
-	}
-	if (defeatNum == CDataManager::GetInstance().GetCurrentPlayer() - 1)
-	{
-
-		}
-			//m_ResultList[0] = 
-	//if (m_RankingList[0] != UNIT_ID::NONE)
-	//	m_GameState = GAME_STATE::FINISH;
 
 }
 
 void CFallGame::Finish(void)
 {
 	CGame::Finish();
+}
+
+void CFallGame::CheckFinish()
+{
+	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
+	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
+	while (it != unitList.end())
+	{
+		IUnit* unit = (*it);
+		if (unit->GetDefeatFlag() == true) break;
+		if ((*it)->GetPosition().y < m_defeat_height)
+		{
+			AddRanking((*it)->GetUnitID());
+			unit->SetDefeatFlag(true);
+
+		}
+		++it;
+	}
+
+	if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
+		CGame::SetGameState(GAME_STATE::FINISH);
 }
 
 CFallGame::FALL_INFO CFallGame::ChooseObject(void)

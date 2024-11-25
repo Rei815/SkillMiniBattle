@@ -5,6 +5,7 @@
 #include "../../../stage/stage.h"
 #include "game_id.h"
 #include "../../../object_manager/object/object.h"
+#include "../../../unit_manager/unit/unit.h"
 /*!
 *  @brief  ゲームの状態
 */
@@ -84,6 +85,10 @@ protected:
      */
     virtual void    Finish(void);
 
+    /*!
+     *  @brief      終了判定
+     */
+    virtual void    CheckFinish(void);
     GAME_STATE      m_GameState;    //!< ゲームの状態
 
 
@@ -96,9 +101,10 @@ protected:
      *  @brief      プレイヤーリスト型
      */
 
-    UNIT_ID         m_ResultList[4];             //!< ランキングリスト
 
     using ENTRY_LIST = std::list<IUnit*>;
+    using RESULT_LIST = std::list<IUnit*>;
 
     ENTRY_LIST          m_EntryList;
+    RESULT_LIST         m_ResultList;             //!< リザルトリスト
 };

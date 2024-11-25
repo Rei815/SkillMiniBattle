@@ -93,11 +93,6 @@ public:
 private:
 
     /*!
-     *  @brief      プレイヤーが負けているかどうか
-     *
-     */
-    void        CheckDefeat();
-    /*!
      *  @brief      コンストラクタ
      */
     CUnitManager(void);

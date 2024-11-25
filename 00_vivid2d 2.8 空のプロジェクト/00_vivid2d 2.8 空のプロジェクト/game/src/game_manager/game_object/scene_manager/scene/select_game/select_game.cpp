@@ -43,7 +43,7 @@ void CSelectGame::Update(void)
     CCamera::GetInstance().Update();
     CUIManager::GetInstance().Update();
     CDataManager& dm = CDataManager::GetInstance();
-    GAME_ID _gameID;
+    GAME_ID _gameID = GAME_ID::MAX;
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
     {
         int game_id = rand() % (int)GAME_ID::MAX;

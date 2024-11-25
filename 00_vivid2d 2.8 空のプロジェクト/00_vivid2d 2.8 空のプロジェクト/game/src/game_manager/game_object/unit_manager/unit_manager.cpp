@@ -43,7 +43,6 @@ Update(void)
     // ユニット更新
     UpdateUnit();
 
-    CheckDefeat();
 }
 
 /*
@@ -306,66 +305,6 @@ UpdateUnit(void)
     }
 }
 
-void CUnitManager::CheckDefeat()
-{
-    if (m_UnitList.empty()) return;
-
-    UNIT_LIST::iterator it = m_UnitList.begin();
-
-    while (it != m_UnitList.end())
-    {
-        IUnit* unit = (*it);
-        if (unit->GetDefeatFlag())
-        {
-            if (m_DefeatList.empty())
-            {
-                m_DefeatList.push_back(unit);
-                return;
-            }
-
-            bool checkFlag = false;
-            //2回目は入れないように
-            for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
-            {
-                if (unit->GetUnitID() == (*i)->GetUnitID())
-                {
-                    checkFlag = true;
-                    break;
-                }
-            }
-
-            if (!checkFlag)
-                m_DefeatList.push_back(unit);
-
-            //最後の一人を一位として処理
-            //if (m_DefeatList.size() == m_CurrentPlayerNum - 1)
-            //{
-            //    UNIT_LIST::iterator it = m_UnitList.begin();
-
-            //    while (it != m_UnitList.end())
-            //    {
-            //        unit = (*it);
-            //        checkFlag = true;
-            //        for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
-            //        {
-            //            if (unit->GetUnitID() == (*i)->GetUnitID())
-            //            {
-            //                checkFlag = false;
-            //                break;
-            //            }
-            //        }
-            //        if (checkFlag)
-            //            CDataManager::GetInstance().PlayerWin((*it)->GetUnitID());
-
-            //        ++it;
-            //    }
-            }
-
-        }
-
-        ++it;
-    }
-}
 /*
  *  ユニットとステージとのアタリ判定の処理（垂直）
  */

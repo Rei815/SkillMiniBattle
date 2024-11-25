@@ -26,7 +26,6 @@ CPlayer::CPlayer()
     , m_FrictionFlag(true)
     , m_ActionFlag(true)
     , m_Controller()
-    , m_WinsNum()
     , m_Color({1,1,1,1})
 {
 }
