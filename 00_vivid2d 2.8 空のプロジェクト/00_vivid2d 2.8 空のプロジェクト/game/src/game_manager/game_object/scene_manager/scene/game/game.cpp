@@ -3,6 +3,7 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 #include "../../../unit_manager/unit_manager.h"
+#include "../../../skill_manager/skill_manager.h"
 #include "../../../ui_manager/ui_manager.h"
 #include "../../../controller_manager/controller_manager.h"
 #include "../../../gimmick_manager/gimmick_manager.h"
@@ -63,8 +64,9 @@ CGame::Update(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB))
     {
         if (m_PauseFlag)
-             CUIManager::GetInstance().Delete(UI_ID::PAUSE);
-        else CUIManager::GetInstance().Create(UI_ID::PAUSE);
+            CUIManager::GetInstance().Delete(UI_ID::PAUSE);
+        else
+            CUIManager::GetInstance().Create(UI_ID::PAUSE);
 
         m_PauseFlag ^= true;
     }
@@ -72,13 +74,16 @@ CGame::Update(void)
     {
         CUnitManager::GetInstance().Update();
 
-        CEffectManager::GetInstance().Update();
+        CSkillManager::GetInstance().Update();
 
         CUIManager::GetInstance().Update();
+
+        CEffectManager::GetInstance().Update();
     }
     CControllerManager::GetInstance().Update();
     CGimmickManager::GetInstance().Update();
     CObjectManager::GetInstance().Update();
+
     CUnitManager::GetInstance().CheckDefeat();
 }
 
@@ -88,12 +93,12 @@ CGame::Update(void)
 void
 CGame::Draw(void)
 {
-
-    CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
+    CSkillManager::GetInstance().Draw();
+    CUIManager::GetInstance().Draw();
+    CEffectManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
-    CUIManager::GetInstance().Draw();
 
 #ifdef VIVID_DEBUG
     switch (m_GameState)
@@ -124,6 +129,7 @@ void
 CGame::Finalize(void)
 {
     CUnitManager::GetInstance().Finalize();
+    CSkillManager::GetInstance().Finalize();
     CUIManager::GetInstance().Finalize();
     CEffectManager::GetInstance().Finalize();
     CControllerManager::GetInstance().Finalize();

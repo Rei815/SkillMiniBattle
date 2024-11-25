@@ -35,7 +35,6 @@ void
 CObjectManager::
 Update(void)
 {
-
     // オブジェクト更新
     UpdateObject();
 
@@ -43,7 +42,9 @@ Update(void)
 
     while (it != m_ObjectList.end())
     {
-        CUnitManager::GetInstance().CheckHitObject((*it));
+        if((*it)->GetObjectID() != OBJECT_ID::CANNON_OBJECT)
+            CUnitManager::GetInstance().CheckHitObject((*it));
+
         ++it;
     }
 }

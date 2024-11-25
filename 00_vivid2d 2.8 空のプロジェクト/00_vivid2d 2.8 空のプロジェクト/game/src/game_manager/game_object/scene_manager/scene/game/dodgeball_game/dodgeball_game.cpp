@@ -8,6 +8,8 @@
 #include "../../../../bullet_manager/bullet_manager.h"
 #include "../../../../launcher/launcher.h"
 
+#include "../../../../skill_manager/skill_manager.h"
+
 //上下左右の4方向 × 各方向に3つずつ ＝ 12こ
 const CVector3		CDodgeBallGame::m_cannon_pos_list[] = 
 {
@@ -64,8 +66,14 @@ void CDodgeBallGame::Initialize(void)
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 	m_DebugText = "ドッジボールゲーム";
 
+	//スキルテスト用
+	//CSkillManager::GetInstance().Initialize();
+	//CSkillManager::GetInstance().CreateSkill(SKILL_ID_DODGEBALL::SPEED_UP, UNIT_ID::PLAYER1);
+	//スキルテスト用ここまで
+
 	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(-100, 0, 0));
-	//CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 0));
+
+	CSkillManager::GetInstance().SetSkill();
 
 	CLauncher::GetInstance().Initialize();
 	CBulletManager::GetInstance().Initialize();

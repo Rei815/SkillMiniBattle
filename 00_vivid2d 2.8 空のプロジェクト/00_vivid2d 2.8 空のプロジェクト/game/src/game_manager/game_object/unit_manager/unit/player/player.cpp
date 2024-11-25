@@ -18,6 +18,9 @@ const float             CPlayer::m_fall_accelerator = 0.025f;
 
 CPlayer::CPlayer()
     : IUnit(UNIT_CATEGORY::PLAYER)
+    , m_MoveSpeedRate(1.0f)
+    , m_JumpPowerRate(1.0f)
+    , m_Skill(nullptr)
     , m_Accelerator(CVector3())
     , m_InvincibleTime(0)
     , m_FallSpeed(0)
@@ -95,6 +98,21 @@ int CPlayer::GetWins()
     return m_WinsNum;
 }
 
+void CPlayer::SetSkill(CSkill* skill)
+{
+    m_Skill = skill;
+}
+
+void CPlayer::SetMoveSpeedRate(float rate)
+{
+    m_MoveSpeedRate = rate;
+}
+
+void CPlayer::SetJumpPowerRate(float rate)
+{
+    m_JumpPowerRate = rate;
+}
+
 
 /*
  *  攻撃
@@ -121,7 +139,9 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
     m_ActionFlag = false;
     m_FrictionFlag = false;
     m_InvincibleFlag = true;
+    m_IsGround = false;
     m_Accelerator = CVector3::ZERO;
+    m_Accelerator.y = m_jump_power;
 
     //当たった向きを取得
     CVector3 TempVelocity = (m_Transform.position - hit_position);
@@ -136,7 +156,7 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
     //速度を倍率で調整するため、ベクトルの大きさを１にする
     TempVelocity = TempVelocity.Normalize();
     //垂直方向のベクトルを追加
-    TempVelocity.y = 10.0f;
+    TempVelocity.y = 0.2f;
     //速度をベクトルとその倍率でセットする
     m_Velocity = TempVelocity * m_fly_away_speed;
 }
@@ -145,18 +165,18 @@ void CPlayer::Control(void)
 {
     //左移動
     if (GetJoypadInputState(m_Controller) & PAD_INPUT_LEFT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
-        m_Accelerator.x += -m_move_speed;
+        m_Accelerator.x += -m_move_speed * m_MoveSpeedRate;
 
     //右移動
     if (GetJoypadInputState(m_Controller) & PAD_INPUT_RIGHT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
-        m_Accelerator.x += m_move_speed;
+        m_Accelerator.x += m_move_speed * m_MoveSpeedRate;
     //上移動
     if (GetJoypadInputState(m_Controller) & PAD_INPUT_UP || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
-        m_Accelerator.z += m_move_speed;
+        m_Accelerator.z += m_move_speed * m_MoveSpeedRate;
 
     //下移動
     if (GetJoypadInputState(m_Controller) & PAD_INPUT_DOWN || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
-        m_Accelerator.z += -m_move_speed;
+        m_Accelerator.z += -m_move_speed * m_MoveSpeedRate;
 
 
     //ジャンプ
@@ -165,11 +185,16 @@ void CPlayer::Control(void)
         {
             m_IsGround = false;
 
-            m_Accelerator.y = m_jump_power;
+            m_Accelerator.y = m_jump_power * m_JumpPowerRate;
 
             CEffectManager::GetInstance().Create(EFFECT_ID::JUMP, m_Transform.position);
 
         }
+
+    //スキル
+    if(m_Skill != nullptr)
+        if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::RETURN) && !m_StopFlag)
+            m_Skill->Action();
 
     //停止
     if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::LSHIFT))

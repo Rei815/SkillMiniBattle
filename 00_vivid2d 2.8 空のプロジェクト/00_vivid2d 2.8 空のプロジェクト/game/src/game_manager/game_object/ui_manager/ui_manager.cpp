@@ -3,6 +3,8 @@
 #include "ui/fall_select/fall_select.h"
 #include "ui/random_game/random_game.h"
 #include "ui/finish_backGround/finish_backGround.h"
+#include "ui/skill_select_icon/skill_select_icon.h"
+#include "ui/skill_select_cursor/skill_select_cursor.h"
  /*
   *  インスタンスの取得
   */
@@ -95,7 +97,7 @@ void CUIManager::Finalize(void)
     m_UIList.clear();
 }
 
-void CUIManager::Create(UI_ID id)
+CUI* CUIManager::Create(UI_ID id)
 {
     CUI* ui = nullptr;
 
@@ -114,44 +116,53 @@ void CUIManager::Create(UI_ID id)
         ui = new CRandomGame(id);     break;
     case UI_ID::FINISH_BACKGROUND:
         ui = new CFinishBackGround(id);     break;
-        break;
+    case UI_ID::SKILL_SELECT_ICON:
+        ui = new CSkillSelectIcon(id);      break;
+    case UI_ID::SKILL_SELECT_CURSOR:
+        ui = new CSkillSelectCursor(id);    break;
     }
-    if (!ui) return;
+    if (!ui) return nullptr;
 
     ui->Initialize();
     m_UIList.push_back(ui);
 
+    return ui;
 }
 
-void CUIManager::Create(UI_ID id, const CVector3& position)
+CUI* CUIManager::Create(UI_ID id, const CVector3& position)
 {
     CUI* ui = nullptr;
 
     switch (id)
     {
     case UI_ID::PAUSE:
-        ui = new CPause(id);          break;
+        ui = new CPause(id);                break;
     case UI_ID::FALL_CIRCLE:
     case UI_ID::FALL_CROSS:
     case UI_ID::FALL_MOON:
     case UI_ID::FALL_SQUARE:
     case UI_ID::FALL_SUN:
     case UI_ID::FALL_TRIANGLE:
-        ui = new CFallSelect(id);   break;
+        ui = new CFallSelect(id);           break;
     case UI_ID::RANDOM_GAME:
-        ui = new CRandomGame(id);     break;
+        ui = new CRandomGame(id);           break;
     case UI_ID::FINISH_BACKGROUND:
         ui = new CFinishBackGround(id);     break;
-        break;
+    case UI_ID::SKILL_SELECT_ICON:
+        ui = new CSkillSelectIcon(id);      break;
+    case UI_ID::SKILL_SELECT_CURSOR:
+        ui = new CSkillSelectCursor(id);    break;
     }
-    if (!ui) return;
 
-    ui->Initialize();
+    if (!ui) return nullptr;
+
+    ui->Initialize(position);
     m_UIList.push_back(ui);
 
+    return ui;
 }
 
-void CUIManager::Create(UI_ID id, const CTransform& transform)
+CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
 {
     CUI* ui = nullptr;
 
@@ -170,13 +181,17 @@ void CUIManager::Create(UI_ID id, const CTransform& transform)
         ui = new CRandomGame(id);     break;
     case UI_ID::FINISH_BACKGROUND:
         ui = new CFinishBackGround(id);     break;
-        break;
+    case UI_ID::SKILL_SELECT_ICON:
+        ui = new CSkillSelectIcon(id);      break;
+    case UI_ID::SKILL_SELECT_CURSOR:
+        ui = new CSkillSelectCursor(id);    break;
     }
-    if (!ui) return;
+    if (!ui) return nullptr;
 
     ui->Initialize(transform);
     m_UIList.push_back(ui);
 
+    return ui;
 }
 
 void CUIManager::Delete(UI_ID id)

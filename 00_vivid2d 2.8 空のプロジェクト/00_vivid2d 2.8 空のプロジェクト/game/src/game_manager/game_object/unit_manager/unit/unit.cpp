@@ -86,7 +86,7 @@ Update(void)
     {
     case UNIT_STATE::APPEAR:    Appear();      break;
     case UNIT_STATE::ATTACK:    Attack();      break;
-    case UNIT_STATE::DEFEAT:    Defeat();        break;
+    case UNIT_STATE::DEFEAT:    Defeat();      break;
     }
 }
 

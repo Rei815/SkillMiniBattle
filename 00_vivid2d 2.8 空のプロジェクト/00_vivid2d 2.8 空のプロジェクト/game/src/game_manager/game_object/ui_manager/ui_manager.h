@@ -60,7 +60,7 @@ public:
      *
      *  @param[in]  id          UIのID
      */
-    void        Create(UI_ID id);
+    CUI*        Create(UI_ID id);
 
     /*!
      *  @brief      UI生成
@@ -68,7 +68,7 @@ public:
      *  @param[in]  id          UIのID
      *  @param[in]  position    UIの位置
      */
-    void        Create(UI_ID id, const CVector3& position);
+    CUI*        Create(UI_ID id, const CVector3& position);
 
     /*!
      *  @brief      UI生成
@@ -76,7 +76,7 @@ public:
      *  @param[in]  id          UIのID
      *  @param[in]  transform    UIのトランスフォーム
      */
-    void        Create(UI_ID id, const CTransform& transform);
+    CUI*        Create(UI_ID id, const CTransform& transform);
 
     /*!
      *  @brief      UI削除

@@ -15,4 +15,6 @@ enum class UI_ID
     FALL_TRIANGLE,  //!< フォールゲームの三角
     RANDOM_GAME,
     FINISH_BACKGROUND,
+    SKILL_SELECT_ICON,
+    SKILL_SELECT_CURSOR,
 };

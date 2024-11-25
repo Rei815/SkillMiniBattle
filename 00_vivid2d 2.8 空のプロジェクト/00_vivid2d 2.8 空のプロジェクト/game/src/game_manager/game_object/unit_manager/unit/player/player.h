@@ -4,6 +4,9 @@
 #include "..\unit.h"
 #include "../../../model_manager/model/model.h"
 #include "../../../bullet_manager/bullet/bullet.h"
+#include "../../../skill_manager/skill/skill.h"
+
+class CSkill;
 
 class CPlayer: public IUnit
 {
@@ -45,6 +48,27 @@ public:
     void        AddWins();
 
     int         GetWins();
+
+    /*!
+     *  @brief      スキルのセット
+     *
+     *  @param[in]  skill    スキルのポインタ
+     */
+    void        SetSkill(CSkill* skill);
+
+    /*!
+     *  @brief      スキルによるスピード倍率のセット
+     *
+     *  @param[in]  rate    倍率
+     */
+    void        SetMoveSpeedRate(float rate = 1.0f);
+
+    /*!
+     *  @brief      スキルによるジャンプ倍率のセット
+     *
+     *  @param[in]  rate    倍率
+     */
+    void        SetJumpPowerRate(float rate = 1.0f);
 
 protected:
     /*!
@@ -91,6 +115,11 @@ protected:
     static const int                m_max_invincible_time;          //!< 無敵時間
     static const int                m_invincible_visible_interval;  //!< 無敵時間中の点滅間隔
     static const float              m_fall_accelerator;             //!< 落下加速度
+
+    float                           m_MoveSpeedRate;                //!< 移動速度の倍率
+    float                           m_JumpPowerRate;                //!< ジャンプ力の倍率
+
+    CSkill* m_Skill;
 
     float                           m_FallSpeed;                    //!< 落下速度
     CVector3                        m_Accelerator;                  //!< 加速度
