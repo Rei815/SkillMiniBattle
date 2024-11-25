@@ -14,8 +14,9 @@ CSelectGame::~CSelectGame(void)
 {
 }
 
-void CSelectGame::Initialize(void)
+void CSelectGame::Initialize(SCENE_ID scene_id)
 {
+    IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
     CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -5000.0f));
@@ -89,6 +90,8 @@ void CSelectGame::Draw(void)
 
 void CSelectGame::Finalize(void)
 {
+    IScene::Finalize();
+
     CCamera::GetInstance().Finalize();
 
     CUIManager::GetInstance().Finalize();

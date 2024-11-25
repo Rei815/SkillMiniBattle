@@ -24,7 +24,7 @@ CDaruma_FallDownGame::~CDaruma_FallDownGame(void)
 {
 }
 
-void CDaruma_FallDownGame::Initialize(void)
+void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 {
 	m_RemainCount = CDataManager::GetInstance().GetCurrentPlayer();
 
@@ -39,7 +39,7 @@ void CDaruma_FallDownGame::Initialize(void)
 	IUnit iu;
 	iu.SetGravity(CVector3(0,0,0));
 	
-	CGame::Initialize();
+	CGame::Initialize(scene_id);
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);

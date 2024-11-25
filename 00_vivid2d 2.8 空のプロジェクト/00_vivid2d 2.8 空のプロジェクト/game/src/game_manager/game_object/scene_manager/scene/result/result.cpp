@@ -11,8 +11,9 @@ CResult::~CResult(void)
 {
 }
 
-void CResult::Initialize(void)
+void CResult::Initialize(SCENE_ID scene_id)
 {
+    IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
 
@@ -43,6 +44,8 @@ void CResult::Draw(void)
 
 void CResult::Finalize(void)
 {
+    IScene::Finalize();
+
     CStage::GetInstance().Finalize();
 
 }

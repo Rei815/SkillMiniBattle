@@ -15,6 +15,8 @@
   *  コンストラクタ
   */
 IScene::IScene(void)
+    : m_Active(true)
+    , m_State(SCENE_STATE::ACTIVE)
 {
 }
 
@@ -29,8 +31,10 @@ IScene::~IScene(void)
  *  初期化
  */
 void
-IScene::Initialize(void)
+IScene::Initialize(SCENE_ID scene_id)
 {
+    m_SceneID = scene_id;
+    m_State = SCENE_STATE::ACTIVE;
 }
 
 /*
@@ -56,4 +60,26 @@ IScene::Draw(void)
 void
 IScene::Finalize(void)
 {
+    m_Active = false;
+}
+
+bool IScene::GetActive()
+{
+    return m_Active;
+}
+
+SCENE_ID IScene::GetSceneID()
+{
+    return m_SceneID;
+}
+
+
+SCENE_STATE IScene::GetSceneState()
+{
+    return m_State;
+}
+
+void IScene::SetSceneState(SCENE_STATE state)
+{
+    m_State = state;
 }

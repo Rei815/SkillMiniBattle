@@ -40,7 +40,7 @@ void CDataManager::PlayerWin(UNIT_ID unitID)
 {
     if (0 > (int)unitID || (int)unitID > 4) return;
 
-    m_PlayerWins[(int)unitID];
+    ++m_PlayerWins[(int)unitID];
 }
 
 int CDataManager::GetCurrentPlayer()

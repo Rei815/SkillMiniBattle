@@ -9,9 +9,9 @@ public:
 	~CDaruma_FallDownGame();
 
     /*!
- *  @brief      ‰Šú‰»
- */
-    void        Initialize(void);
+     *  @brief      ‰Šú‰»
+     */
+    void        Initialize(SCENE_ID scene_id);
 
     /*!
      *  @brief      XV

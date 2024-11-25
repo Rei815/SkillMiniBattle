@@ -26,11 +26,11 @@ CFallGame::~CFallGame(void)
 {
 }
 
-void CFallGame::Initialize(void)
+void CFallGame::Initialize(SCENE_ID scene_id)
 {
 	m_FallTime = m_initial_time;
 	m_ChooseObjectTimer.SetUp(m_FallTime);
-	CGame::Initialize();
+	CGame::Initialize(scene_id);
 	CStage::GetInstance().Initialize();
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
@@ -136,6 +136,9 @@ void CFallGame::Play(void)
 
 void CFallGame::Finish(void)
 {
+	if (m_ResultList.size() == 1)
+		CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
+
 	CGame::Finish();
 }
 
@@ -150,12 +153,12 @@ void CFallGame::CheckFinish()
 		if ((*it)->GetPosition().y < m_defeat_height)
 		{
 			AddRanking((*it)->GetUnitID());
+
 			unit->SetDefeatFlag(true);
 
 		}
 		++it;
 	}
-
 	if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
 		CGame::SetGameState(GAME_STATE::FINISH);
 }

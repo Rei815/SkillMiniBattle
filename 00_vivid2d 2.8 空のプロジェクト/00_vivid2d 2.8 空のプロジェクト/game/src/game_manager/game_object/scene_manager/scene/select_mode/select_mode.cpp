@@ -11,8 +11,9 @@ CSelectMode::~CSelectMode(void)
 {
 }
 
-void CSelectMode::Initialize(void)
+void CSelectMode::Initialize(SCENE_ID scene_id)
 {
+    IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
 
@@ -44,6 +45,8 @@ void CSelectMode::Draw(void)
 
 void CSelectMode::Finalize(void)
 {
+    IScene::Finalize();
+
     CStage::GetInstance().Finalize();
 
 }
