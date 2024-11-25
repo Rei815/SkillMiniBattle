@@ -8,6 +8,7 @@
 #include "../../../controller_manager/controller_manager.h"
 #include "../../../gimmick_manager/gimmick_manager.h"
 #include "../../../object_manager/object_manager.h"
+#include "../../../data_manager/data_manager.h"
 #include "../../../unit_manager/unit/player/player.h"
 
 /*
@@ -17,6 +18,8 @@ CGame::CGame(void)
     : m_DebugText()
     , m_SetActionflag(false)
     , m_FinishUIFlag(false)
+    , m_EntryList()
+    , m_ResultList()
 {
 }
 
@@ -33,6 +36,8 @@ CGame::~CGame(void)
 void
 CGame::Initialize(void)
 {
+    m_EntryList.clear();
+    m_ResultList.clear();
     CUnitManager::GetInstance().Initialize();
     CUIManager::GetInstance().Initialize();
     CEffectManager::GetInstance().Initialize();
@@ -40,7 +45,6 @@ CGame::Initialize(void)
     CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();
     m_WaitTime = 0;
-
 
     m_GameState = GAME_STATE::START;
 
@@ -83,8 +87,6 @@ CGame::Update(void)
     CControllerManager::GetInstance().Update();
     CGimmickManager::GetInstance().Update();
     CObjectManager::GetInstance().Update();
-
-    CUnitManager::GetInstance().CheckDefeat();
 }
 
 /*
@@ -113,9 +115,6 @@ CGame::Draw(void)
         break;
     case GAME_STATE::FINISH:
         vivid::DrawText(20, "フィニッシュ", vivid::Vector2(0, 0));
-        vivid::DrawText(20, std::to_string(CUnitManager::GetInstance().GetPlayer(UNIT_ID::PLAYER1)->GetWins()),
-            vivid::Vector2(vivid::GetWindowWidth() - 20, 0)
-        );
         break;
     }
     vivid::DrawText(20, m_DebugText, vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
@@ -156,6 +155,24 @@ SetGameState(GAME_STATE state)
     m_GameState = state;
 }
 
+void CGame::AddRanking(UNIT_ID unitID)
+{
+    IUnit* unit = CUnitManager::GetInstance().GetPlayer(unitID);
+
+    for (ENTRY_LIST::iterator entry_it = m_EntryList.begin(); entry_it != m_EntryList.end(); entry_it++)
+    {
+        if (unitID != UNIT_ID::NONE)
+        {
+            m_ResultList.push_back(CUnitManager::GetInstance().GetPlayer(unitID));
+            if ((*entry_it)->GetUnitID() == unitID)
+            {
+                m_EntryList.erase(entry_it);
+                break;
+            }
+        }
+    }
+}
+
 
 /*
  *  スタート
@@ -190,9 +207,6 @@ void CGame::Play(void)
         CUnitManager::GetInstance().SetAllPlayerAction(true);
     }
 
-     if ((CUnitManager::GetInstance().GetCurrentPlayer() - CUnitManager::GetInstance().GetDefeatList().size()) < 1)
-        m_GameState = GAME_STATE::FINISH;
-
 #ifdef VIVID_DEBUG
 
     if(vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
@@ -200,6 +214,7 @@ void CGame::Play(void)
 
 #endif // VIVID_DEBUG
 
+    CheckFinish();
 }
 
 /*
@@ -217,7 +232,12 @@ Finish(void)
     if (!m_FinishUIFlag)
     {
         m_FinishUIFlag = true;
-        CUIManager::GetInstance().Create(UI_ID::FINISH_BACKGROUND);
+        CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
     }
+    if(m_EntryList.size() == 1)
+    CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
+}
 
+void CGame::CheckFinish()
+{
 }

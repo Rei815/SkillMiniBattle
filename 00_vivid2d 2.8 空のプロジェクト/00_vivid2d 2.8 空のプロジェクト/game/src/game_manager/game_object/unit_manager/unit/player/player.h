@@ -21,7 +21,7 @@ public:
      *
      *  @param[in]  position    初期位置
      */
-    virtual void        Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, int controller);
+    virtual void        Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller);
 
     /*!
      *  @brief      更新
@@ -44,8 +44,6 @@ public:
      *  @param[in]  flag    行動フラグ
  */
     void        SetActionFlag(bool flag);
-
-    void        AddWins();
 
     int         GetWins();
 
@@ -70,6 +68,7 @@ public:
      */
     void        SetJumpPowerRate(float rate = 1.0f);
 
+    bool        GetPlayerMoving();
 protected:
     /*!
      *  @brief      攻撃
@@ -129,6 +128,5 @@ protected:
     int                             m_InvincibleTime;               //!< 無敵時間
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     DxLib::COLOR_F                  m_Color;
-    int                             m_Controller;                   //!< コントローラー識別
-    int                             m_WinsNum;                      //!< 勝った回数
+    vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
 };

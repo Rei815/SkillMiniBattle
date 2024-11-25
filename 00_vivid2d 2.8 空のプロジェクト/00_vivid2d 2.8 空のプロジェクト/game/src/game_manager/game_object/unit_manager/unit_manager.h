@@ -7,7 +7,6 @@
 #include "../stage/stage.h"
 #include "..\scene_manager\scene\game\game.h"
 #include "unit/player/player.h"
-
 class CUnitManager
 {
 public:
@@ -45,7 +44,7 @@ public:
      *  @param[in]  id          ユニットID
      *  @param[in]  pos         位置
      */
-    void        Create(UNIT_ID id, const CVector3& pos);
+    IUnit*      Create(UNIT_ID id, const CVector3& pos);
 
     /*!
      *  @brief      ユニットと弾とのアタリ判定
@@ -62,11 +61,6 @@ public:
     void        CheckHitObject(IObject* object);
 
 
-    /*!
-     *  @brief      プレイヤーが負けているかどうか
-     *
-     */
-    void        CheckDefeat();
 
     /*!
      *  @brief      プレイヤー取得
@@ -85,7 +79,6 @@ public:
 
     bool CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos);
 
-    int         GetCurrentPlayer();
     /*!
      *  @brief      ユニットリスト型
      */
@@ -97,7 +90,6 @@ public:
     using DEFEAT_LIST = std::list<IUnit*>;
 
     DEFEAT_LIST GetDefeatList();
-    void        SetCurrentPlayer(int num);
 private:
 
     /*!
@@ -139,7 +131,7 @@ private:
      *  @param[in]  startPos    当たり判定をする線分の開始地点
      *  @param[in]  endPos      当たり判定をする線分の終了地点
      */
-    void    CheckHitObjectVertical(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos);
+    void    CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir = CVector3(0.0f, -1.0f, 0.0f), float length = 1.0f);
     
     /*!
      *  @brief      ユニットとステージとのアタリ判定の処理（水平）
@@ -149,23 +141,11 @@ private:
      *  @param[in]  startPos    当たり判定をする線分の開始地点
      *  @param[in]  endPos      当たり判定をする線分の終了地点
      */
-    void    CheckHitObjectHorizontal(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos);
+    void    CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos);
 
+    static const std::string                            m_file_name_list[];
+    static const vivid::controller::DEVICE_ID           m_controller_list[];
 
-    UNIT_LIST           m_UnitList;             //!< ユニットリスト
-
-    /*!
-     *  @brief      プレイヤーリスト型
-     */
-    using RANKING_LIST = std::list<CPlayer*>;
-
-    RANKING_LIST           m_RankingList;             //!< ランキングリスト
-
-    static const std::string    m_file_name_list[];
-    static const int            m_controller_list[];
-
-
-    DEFEAT_LIST             m_DefeatList;             //!< ランキングリスト
-
-    int                     m_CurrentPlayerNum;
+    UNIT_LIST                                           m_UnitList;             //!< ユニットリスト
+    DEFEAT_LIST                                         m_DefeatList;             //!< ランキングリスト
 };

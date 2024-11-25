@@ -3,11 +3,12 @@
 #include "..\bullet_manager\bullet_manager.h"
 #include "..\effect_manager\effect_manager.h"
 #include "..\sound_manager\sound_manager.h"
+#include "..\data_manager\data_manager.h"
 #include "..\..\..\utility\utility.h"
 #include "../ui_manager/ui_manager.h"
 
 const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1" };
-const int           CUnitManager::m_controller_list[] = { DX_INPUT_PAD1, DX_INPUT_PAD2,DX_INPUT_PAD3,DX_INPUT_PAD4 };
+const vivid::controller::DEVICE_ID           CUnitManager::m_controller_list[] = { vivid::controller::DEVICE_ID::PLAYER1 , vivid::controller::DEVICE_ID::PLAYER2,vivid::controller::DEVICE_ID::PLAYER3,vivid::controller::DEVICE_ID::PLAYER4 };
 /*
  *  インスタンスの取得
  */
@@ -28,7 +29,6 @@ CUnitManager::
 Initialize(void)
 {
     m_UnitList.clear();
-    m_RankingList.clear();
     m_DefeatList.clear();
 }
 
@@ -42,6 +42,7 @@ Update(void)
 
     // ユニット更新
     UpdateUnit();
+
 }
 
 /*
@@ -89,7 +90,7 @@ Finalize(void)
 /*
  *  ユニット生成
  */
-void
+IUnit*
 CUnitManager::
 Create(UNIT_ID id, const CVector3& pos)
 {
@@ -106,10 +107,11 @@ Create(UNIT_ID id, const CVector3& pos)
     }
     
 
-    if (!unit) return;
+    if (!unit) return nullptr;
 
     unit->Initialize(id, pos, m_file_name_list[(int)id], m_controller_list[(int)id]);
     m_UnitList.push_back(unit);
+    return unit;
 }
 
 /*
@@ -143,21 +145,23 @@ void CUnitManager::CheckHitObject(IObject* object)
 
         if (object->GetModel().GetModelHandle() == VIVID_DX_ERROR)
             return;
-
+        IUnit* unit = (*it);
         //垂直方向の判定-----------------------------------------------------
 
-        CVector3 startPos = (*it)->GetPosition();
-        startPos.y += (*it)->GetHeight() / 2.0f;
-
-        CVector3 endPos = (*it)->GetPosition();
-        endPos.y -= (*it)->GetHeight() / 2.0f;
-
-        CheckHitObjectVertical(object, (*it), startPos, endPos);
+        float radius = unit->GetRadius();
+        const int check_point_count = 4;
+        for (int i = 0; i < 9; ++i)
+        {
+            CVector3 unit_pos = unit->GetPosition();
+            CVector3 start = unit_pos + CVector3(-radius + (radius) * (i % 3), 0.0, -radius + (radius) * (i / 3));
+            CheckHitObjectVertical(object, (*it), start, CVector3(0.0f, -radius*2, 0.0f));
+        }
 
         //水平方向の判定-----------------------------------------------------
         if ((*it)->GetVelocity().x != 0 || (*it)->GetVelocity().z != 0)
         {
             //移動方向の正面
+            CVector3 startPos, endPos;
             startPos = (*it)->GetPosition();
             endPos = startPos;
             CVector3 tempVelocity = (*it)->GetVelocity().Normalize();
@@ -183,70 +187,9 @@ void CUnitManager::CheckHitObject(IObject* object)
 
         ++it;
     }
-
+    return;
 }
 
-void CUnitManager::CheckDefeat()
-{
-    if (m_UnitList.empty()) return;
-
-    UNIT_LIST::iterator it = m_UnitList.begin();
-
-    while (it != m_UnitList.end())
-    {
-        if ((*it)->GetDefeatFlag())
-        {
-            if (m_DefeatList.empty())
-            {
-                m_DefeatList.push_back((*it));
-                return;
-            }
-
-            bool checkFlag = false;
-            //2回目は入れないように
-            for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
-            {
-                if ((*it)->GetUnitID() == (*i)->GetUnitID())
-                {
-                    checkFlag = true;
-                    break;
-                }
-            }
-
-            if(!checkFlag)
-                m_DefeatList.push_back((*it));
-
-            //最後の一人を一位として処理
-            if (m_DefeatList.size() == m_CurrentPlayerNum - 1)
-            {
-                UNIT_LIST::iterator it = m_UnitList.begin();
-
-                while (it != m_UnitList.end())
-                {
-                    bool checkFlag = true;
-                    for (DEFEAT_LIST::iterator i = m_DefeatList.begin(); i != m_DefeatList.end(); i++)
-                    {
-                        if ((*it)->GetUnitID() == (*i)->GetUnitID())
-                        {
-                            checkFlag = false;
-                            break;
-                        }
-                    }
-                    if (checkFlag)
-                    {
-                        CPlayer* player = GetPlayer((*it)->GetUnitID());
-                        player->AddWins();
-                    }
-
-                    ++it;
-                }
-            }
-
-        }
-
-        ++it;
-    }
-}
 
 CPlayer* CUnitManager::GetPlayer(UNIT_ID id)
 {
@@ -318,10 +261,6 @@ bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& e
     return false;
 }
 
-int CUnitManager::GetCurrentPlayer()
-{
-    return m_CurrentPlayerNum;
-}
 
 CUnitManager::UNIT_LIST CUnitManager::GetUnitList()
 {
@@ -333,11 +272,6 @@ CUnitManager::DEFEAT_LIST CUnitManager::GetDefeatList()
     return m_DefeatList;
 }
 
-void CUnitManager::SetCurrentPlayer(int num)
-{
-    if (num > 4 || num < 1) return;
-    m_CurrentPlayerNum = num;
-}
 
 /*
  *  ユニット更新
@@ -376,25 +310,28 @@ UpdateUnit(void)
  */
 void
 CUnitManager::
-CheckHitObjectVertical(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos)
+CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir, float length)
 {
     CVector3 hitPos;
+    CVector3 end_position = startPos + (down_dir * length);
+#ifdef VIVID_DEBUG
 
     // 線分の描画
-    //DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
+    DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
 
-    if (object->GetModel().CheckHitLine(startPos, endPos) == true)
+#endif // VIVID_DEBUG
+    if (object->GetModel().CheckHitLine(startPos, end_position) == true)
     {
 
-        hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
+        hitPos = object->GetModel().GetHitLinePosition(startPos, end_position);
 
-        unit->SetIsGround(true);
-        float diffHeight = endPos.y - hitPos.y;
+        float diffHeight = hitPos.y - end_position.y;
 
         CVector3 unitPos = unit->GetPosition();
-        unitPos.y -= diffHeight;
+        unitPos.y += diffHeight;
         unit->SetPosition(unitPos);
     }
+
 }
 
 /*
@@ -402,7 +339,7 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, CVector3 startPos, CVector3
  */
 void
 CUnitManager::
-CheckHitObjectHorizontal(IObject* object, IUnit* unit, CVector3 startPos, CVector3 endPos)
+CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos)
 {
     CVector3 hitPos;
 

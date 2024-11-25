@@ -52,7 +52,7 @@ public:
      *
      *  @param[in]  position    位置
      */
-    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, int controller);
+    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller);
 
     /*!
      *  @brief      更新
@@ -223,6 +223,13 @@ public:
      */
     void        SetIsGround(bool flag);
 
+    /*!
+     *  @brief      地面の可不可を設定
+     *
+     *  @param[in]  flag    地面フラグ
+     */
+    void        SetGravity(const CVector3& gravity);
+
 protected:
 
     /*!
@@ -279,7 +286,7 @@ protected:
 
     static const float      m_destroy_scale_adjust;     //!< エフェクト(destroy)の大きさ調整値
     static const float      m_alpha_speed;              //!< アルファ値の速度
-    static const CVector3   m_gravity;                  //!< 重力
+    static const CVector3   m_gravity;
 
     float                   m_Radius;
     float                   m_Height;
@@ -287,6 +294,7 @@ protected:
     CTransform	            m_Transform;		    //!< トランスフォーム
     CVector3	            m_Max_Vertex;		    //!< 最大頂点座標
     CVector3                m_Velocity;             //!< 速度
+    CVector3                m_Gravity;              //!< 重力
     UNIT_CATEGORY           m_Category;             //!< ユニット識別子
     UNIT_ID                 m_UnitID;               //!< ユニットID
     bool                    m_ActiveFlag;           //!< アクティブフラグ

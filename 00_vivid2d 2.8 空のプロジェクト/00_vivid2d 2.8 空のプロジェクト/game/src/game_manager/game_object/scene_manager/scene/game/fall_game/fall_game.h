@@ -60,6 +60,11 @@ private:
     void    Finish(void);
 
     /*!
+     *  @brief      終了判定
+     */
+    void    CheckFinish(void) override;
+
+    /*!
      *  @brief      落ちるオブジェクトの選択
      * 
      *  @return     オブジェクトID

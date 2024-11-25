@@ -2,6 +2,7 @@
 #include "../../../effect_manager/effect_manager.h"
 #include "../../unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
+#include "../../../object_manager/object_manager.h"
 
 
 const float             CPlayer::m_radius = 50.0f;
@@ -28,7 +29,6 @@ CPlayer::CPlayer()
     , m_FrictionFlag(true)
     , m_ActionFlag(true)
     , m_Controller()
-    , m_WinsNum()
     , m_Color({1,1,1,1})
 {
 }
@@ -37,7 +37,7 @@ CPlayer::~CPlayer()
 {
 }
 
-void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, int controller)
+void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller)
 {
     (void)position;
 
@@ -87,15 +87,15 @@ void CPlayer::SetActionFlag(bool flag)
     m_ActionFlag = flag;
 }
 
-void CPlayer::AddWins()
+vivid::controller::DEVICE_ID CPlayer::GetController()
 {
-    if (m_WinsNum < 5)
-        m_WinsNum++;
+    return m_Controller;
 }
 
-int CPlayer::GetWins()
+bool CPlayer::GetPlayerMoving()
 {
-    return m_WinsNum;
+    return     vivid::controller::GetAnalogStickLeft(m_Controller).x != 0.0f ||
+        vivid::controller::GetAnalogStickLeft(m_Controller).y != 0.0f    ;
 }
 
 void CPlayer::SetSkill(CSkill* skill)
@@ -121,7 +121,7 @@ void
 CPlayer::
 Attack(void)
 {
-    if (m_ActionFlag || !m_DefeatFlag)
+    if (m_ActionFlag && !m_DefeatFlag)
     {
         Control();
     }
@@ -163,24 +163,32 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
 
 void CPlayer::Control(void)
 {
+    int     joyPad = 0;
+    switch (m_Controller)
+    {
+    case vivid::controller::DEVICE_ID::PLAYER1: joyPad = DX_INPUT_PAD1; break;
+    case vivid::controller::DEVICE_ID::PLAYER2: joyPad = DX_INPUT_PAD2; break;
+    case vivid::controller::DEVICE_ID::PLAYER3: joyPad = DX_INPUT_PAD3; break;
+    case vivid::controller::DEVICE_ID::PLAYER4: joyPad = DX_INPUT_PAD4; break;
+    }
     //¶ˆÚ“®
-    if (GetJoypadInputState(m_Controller) & PAD_INPUT_LEFT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+    if (GetJoypadInputState(joyPad) & PAD_INPUT_LEFT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         m_Accelerator.x += -m_move_speed * m_MoveSpeedRate;
 
     //‰EˆÚ“®
-    if (GetJoypadInputState(m_Controller) & PAD_INPUT_RIGHT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+    if (GetJoypadInputState(joyPad) & PAD_INPUT_RIGHT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
         m_Accelerator.x += m_move_speed * m_MoveSpeedRate;
     //ãˆÚ“®
-    if (GetJoypadInputState(m_Controller) & PAD_INPUT_UP || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+    if (GetJoypadInputState(joyPad) & PAD_INPUT_UP || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
         m_Accelerator.z += m_move_speed * m_MoveSpeedRate;
 
     //‰ºˆÚ“®
-    if (GetJoypadInputState(m_Controller) & PAD_INPUT_DOWN || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
+    if (GetJoypadInputState(joyPad) & PAD_INPUT_DOWN || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
         m_Accelerator.z += -m_move_speed * m_MoveSpeedRate;
 
 
     //ƒWƒƒƒ“ƒv
-    if (m_IsGround && (GetJoypadInputState(m_Controller) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE) && !m_StopFlag)
+    if (m_IsGround && (GetJoypadInputState(joyPad) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE) && !m_StopFlag)
         if (m_IsGround == true)
         {
             m_IsGround = false;
@@ -229,6 +237,15 @@ void CPlayer::Move(void)
 
     if (!m_StopFlag)
         m_Transform.position += m_Velocity;
+
+    IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
+    if (floorObject)
+    {
+        if (floorObject->GetTag() == "Floor")
+            m_IsGround = true;
+    }
+    else
+        m_IsGround = false;
 
     if (m_FrictionFlag)
     {

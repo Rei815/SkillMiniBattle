@@ -2,6 +2,7 @@
 #include "..\..\..\utility\utility.h"
 #include "object/fall_object/fall_object.h"
 #include "object/cannon_object/cannon_object.h"
+#include "object/ogre_object/ogre_object.h"
 #include "object/dodgeball_stage_object/dodgeball_stage_object.h"
 #include "..\gimmick_manager\gimmick_manager.h"
 #include "..\unit_manager\unit_manager.h"
@@ -102,6 +103,7 @@ Create(OBJECT_ID id, const CTransform& transform)
 
     switch (id)
     {
+
     case OBJECT_ID::MOON_FALL_OBJECT:
     case OBJECT_ID::SUN_FALL_OBJECT:
     case OBJECT_ID::CIRCLE_FALL_OBJECT:
@@ -111,6 +113,8 @@ Create(OBJECT_ID id, const CTransform& transform)
         object = new CFallObject();      break;
     case OBJECT_ID::CANNON_OBJECT:
         object = new CCannonObject();   break;
+    case OBJECT_ID::OGRE_OBJECT:
+        object = new COgreObject();     break;
     case OBJECT_ID::DODGEBALL_STAGE_OBJECT:
         object = new CDogeballStageObject(); break;
     }
@@ -154,33 +158,24 @@ IObject* CObjectManager::CheckHitObject(CPlayer* player)
         if ((*it)->GetModel().GetModelHandle() == VIVID_DX_ERROR)
             return nullptr;
 
-        CVector3 startPos = player->GetPosition();
+        //‚’¼•ûŒü‚Ì”»’è-----------------------------------------------------
 
-        CVector3 endPos = player->GetPosition();
-        endPos.y -= player->GetRadius();
-
-        CVector3 hitPos;
-
-        // ü•ª‚Ì•`‰æ
-        DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
-
-        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true)
+        float radius = player->GetRadius();
+        const int check_point_count = 4;
+        for (int i = 0; i < 9; ++i)
         {
+            CVector3 unit_pos = player->GetPosition();
 
-            hitPos = (*it)->GetModel().GetHitLinePosition(startPos, endPos);
+            CVector3 start = unit_pos + CVector3(-radius + (radius) * (i % 3), 0.0, -radius + (radius) * (i / 3));
+            CVector3 end_position = start + CVector3(0, - radius * 2, 0);
 
-            float diffHeight = endPos.y - hitPos.y;
-
-            CVector3 unitPos = player->GetPosition();
-            unitPos.y -= diffHeight;
-            player->SetPosition(unitPos);
-
-            return (*it);
+            if ((*it)->GetModel().CheckHitLine(start, end_position) == true)
+                return (*it);
         }
 
         ++it;
     }
-
+    return nullptr;
 }
 
 /*

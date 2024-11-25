@@ -40,6 +40,21 @@ void CCamera::Initialize()
  */
 void CCamera::Update()
 {
+    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::LSHIFT))
+    {
+        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+            m_Position.z += 5.0f;
+        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
+            m_Position.z -= 5.0f;
+        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+            m_Position.x += 5.0f;
+        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+            m_Position.x -= 5.0f;
+        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::E))
+            m_Position.y += 5.0f;
+        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::Q))
+            m_Position.y -= 5.0f;
+    }
     //ÉJÉÅÉâÇóhÇÁÇ∑èàóù
     _Shake();
 

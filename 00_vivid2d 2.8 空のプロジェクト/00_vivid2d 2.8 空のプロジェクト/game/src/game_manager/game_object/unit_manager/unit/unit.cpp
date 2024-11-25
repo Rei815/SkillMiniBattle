@@ -20,7 +20,7 @@
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
-const CVector3          IUnit::m_gravity = CVector3(0.0f, -1.0f, 0.0f);
+const CVector3          IUnit::m_gravity = CVector3(0.0f, -0.85f, 0.0f);
 
 IUnit::IUnit()
 {
@@ -44,6 +44,7 @@ IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     , m_Shot()
     , m_Alpha()
     , m_DefeatFlag(false)
+    , m_Gravity()
 {
 }
 
@@ -60,7 +61,7 @@ IUnit::
  */
 void
 IUnit::
-Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, int controller)
+Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller)
 {
     m_UnitID = id;
     m_Transform.position = position;
@@ -72,6 +73,7 @@ Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, i
     m_RevertAlpha = false;
     m_DecAlpha = false;
     m_FileName = file_name;
+    m_Gravity = m_gravity;
 }
 /*
  *  çXêV
@@ -80,7 +82,7 @@ void
 IUnit::
 Update(void)
 {
-    m_Velocity += m_gravity;
+    m_Velocity += m_Gravity;
 
     switch (m_UnitState)
     {
@@ -312,6 +314,11 @@ CModel IUnit::GetModel(void)
 void IUnit::SetIsGround(bool flag)
 {
     m_IsGround = flag;
+}
+
+void IUnit::SetGravity(const CVector3& gravity)
+{
+    m_Gravity = gravity;
 }
 
 void IUnit::RevertAlpha(void)
