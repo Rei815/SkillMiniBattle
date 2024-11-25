@@ -45,8 +45,8 @@ public:
  */
     void        SetActionFlag(bool flag);
 
-    int         GetWins();
-
+    vivid::controller::DEVICE_ID GetController(void);
+    
     /*!
      *  @brief      スキルのセット
      *

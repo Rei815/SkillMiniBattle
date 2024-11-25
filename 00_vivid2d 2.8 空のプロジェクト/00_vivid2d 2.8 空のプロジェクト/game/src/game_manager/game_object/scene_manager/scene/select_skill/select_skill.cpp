@@ -97,15 +97,15 @@ void CSelectSkill::ChooseSkill(void)
 
     switch (m_NextGameID)
     {
-    case GAME_ID::FALLGAME:
+    case GAME_ID::FALL_GAME:
         for (int i = 0; i < (int)SKILL_ID_FALLGAME::MAX; i++)
             TempSkillNumList.push_back(i);
         break;
-    case GAME_ID::DODGEBALLGAME:
+    case GAME_ID::DODGE_BALL_GAME:
         for (int i = 0; i < (int)SKILL_ID_DODGEBALL::MAX; i++)
             TempSkillNumList.push_back(i);
         break;
-    case GAME_ID::DEBUGGAME:
+    case GAME_ID::DEBUG_GAME:
         break;
     }
 
@@ -130,13 +130,13 @@ void CSelectSkill::ChooseSkill(void)
         {
             switch (m_NextGameID)
             {
-            case GAME_ID::FALLGAME:
+            case GAME_ID::FALL_GAME:
                 m_ChooseSkillNum[i] = (int)(SKILL_ID_FALLGAME::MAX);
                 break;
-            case GAME_ID::DODGEBALLGAME:
+            case GAME_ID::DODGE_BALL_GAME:
                 m_ChooseSkillNum[i] = (int)(SKILL_ID_DODGEBALL::MAX);
                 break;
-            case GAME_ID::DEBUGGAME:
+            case GAME_ID::DEBUG_GAME:
                 break;
             }
         }
@@ -164,13 +164,13 @@ void CSelectSkill::CreateSkillIcon(void)
         {
             switch (m_NextGameID)
             {
-            case GAME_ID::FALLGAME:
+            case GAME_ID::FALL_GAME:
                 SkillIconUI->SetIcon(SKILL_ID_FALLGAME::MAX, i);
                 break;
-            case GAME_ID::DODGEBALLGAME:
+            case GAME_ID::DODGE_BALL_GAME:
                 SkillIconUI->SetIcon(SKILL_ID_DODGEBALL::MAX, i);
                 break;
-            case GAME_ID::DEBUGGAME:
+            case GAME_ID::DEBUG_GAME:
                 SkillIconUI->SetIcon(SKILL_ID_DODGEBALL::MAX, i);
                 break;
             }
@@ -179,13 +179,13 @@ void CSelectSkill::CreateSkillIcon(void)
         {
             switch (m_NextGameID)
             {
-            case GAME_ID::FALLGAME:
+            case GAME_ID::FALL_GAME:
                 SkillIconUI->SetIcon((SKILL_ID_FALLGAME)m_ChooseSkillNum[i], i);
                 break;
-            case GAME_ID::DODGEBALLGAME:
+            case GAME_ID::DODGE_BALL_GAME:
                 SkillIconUI->SetIcon((SKILL_ID_DODGEBALL)m_ChooseSkillNum[i], i);
                 break;
-            case GAME_ID::DEBUGGAME:
+            case GAME_ID::DEBUG_GAME:
                 SkillIconUI->SetIcon(SKILL_ID_DODGEBALL::MAX, i);
                 break;
             }
