@@ -3,10 +3,12 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 #include "../../../unit_manager/unit_manager.h"
+#include "../../../skill_manager/skill_manager.h"
 #include "../../../ui_manager/ui_manager.h"
 #include "../../../controller_manager/controller_manager.h"
 #include "../../../gimmick_manager/gimmick_manager.h"
 #include "../../../object_manager/object_manager.h"
+#include "../../../data_manager/data_manager.h"
 #include "../../../unit_manager/unit/player/player.h"
 
 /*
@@ -16,6 +18,8 @@ CGame::CGame(void)
     : m_DebugText()
     , m_SetActionflag(false)
     , m_FinishUIFlag(false)
+    , m_EntryList()
+    , m_ResultList()
 {
 }
 
@@ -30,16 +34,17 @@ CGame::~CGame(void)
  *  初期化
  */
 void
-CGame::Initialize(void)
+CGame::Initialize(SCENE_ID scene_id)
 {
+    IScene::Initialize(scene_id);
+    m_EntryList.clear();
+    m_ResultList.clear();
     CUnitManager::GetInstance().Initialize();
     CUIManager::GetInstance().Initialize();
-    CEffectManager::GetInstance().Initialize();
     CControllerManager::GetInstance().Initialize();
     CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();
     m_WaitTime = 0;
-
 
     m_GameState = GAME_STATE::START;
 
@@ -63,8 +68,9 @@ CGame::Update(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB))
     {
         if (m_PauseFlag)
-             CUIManager::GetInstance().Delete(UI_ID::PAUSE);
-        else CUIManager::GetInstance().Create(UI_ID::PAUSE);
+            CUIManager::GetInstance().Delete(UI_ID::PAUSE);
+        else
+            CUIManager::GetInstance().Create(UI_ID::PAUSE);
 
         m_PauseFlag ^= true;
     }
@@ -72,9 +78,11 @@ CGame::Update(void)
     {
         CUnitManager::GetInstance().Update();
 
-        CEffectManager::GetInstance().Update();
+        CSkillManager::GetInstance().Update();
 
         CUIManager::GetInstance().Update();
+
+        CEffectManager::GetInstance().Update();
     }
     CControllerManager::GetInstance().Update();
     CGimmickManager::GetInstance().Update();
@@ -87,8 +95,9 @@ CGame::Update(void)
 void
 CGame::Draw(void)
 {
-    CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
+    CSkillManager::GetInstance().Draw();
+    CEffectManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
     CUIManager::GetInstance().Draw();
@@ -106,9 +115,6 @@ CGame::Draw(void)
         break;
     case GAME_STATE::FINISH:
         vivid::DrawText(20, "フィニッシュ", vivid::Vector2(0, 0));
-        vivid::DrawText(20, std::to_string(CUnitManager::GetInstance().GetPlayer(UNIT_ID::PLAYER1)->GetWins()),
-            vivid::Vector2(vivid::GetWindowWidth() - 20, 0)
-        );
         break;
     }
     vivid::DrawText(20, m_DebugText, vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
@@ -121,7 +127,10 @@ CGame::Draw(void)
 void
 CGame::Finalize(void)
 {
+    IScene::Finalize();
+
     CUnitManager::GetInstance().Finalize();
+    CSkillManager::GetInstance().Finalize();
     CUIManager::GetInstance().Finalize();
     CEffectManager::GetInstance().Finalize();
     CControllerManager::GetInstance().Finalize();
@@ -146,6 +155,24 @@ CGame::
 SetGameState(GAME_STATE state)
 {
     m_GameState = state;
+}
+
+void CGame::AddRanking(UNIT_ID unitID)
+{
+    IUnit* unit = CUnitManager::GetInstance().GetPlayer(unitID);
+
+    for (ENTRY_LIST::iterator entry_it = m_EntryList.begin(); entry_it != m_EntryList.end(); entry_it++)
+    {
+        if (unitID != UNIT_ID::NONE)
+        {
+            m_ResultList.push_back(CUnitManager::GetInstance().GetPlayer(unitID));
+            if ((*entry_it)->GetUnitID() == unitID)
+            {
+                m_EntryList.erase(entry_it);
+                break;
+            }
+        }
+    }
 }
 
 
@@ -182,9 +209,6 @@ void CGame::Play(void)
         CUnitManager::GetInstance().SetAllPlayerAction(true);
     }
 
-     if ((CUnitManager::GetInstance().GetCurrentPlayer() - CUnitManager::GetInstance().GetDefeatList().size()) < 1)
-        m_GameState = GAME_STATE::FINISH;
-
 #ifdef VIVID_DEBUG
 
     if(vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
@@ -192,6 +216,7 @@ void CGame::Play(void)
 
 #endif // VIVID_DEBUG
 
+    CheckFinish();
 }
 
 /*
@@ -204,11 +229,16 @@ Finish(void)
 #ifdef VIVID_DEBUG
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::RESULT);
+    {
+        Push(SCENE_ID::RESULT);
+    }
 #endif
     if (!m_FinishUIFlag)
     {
         m_FinishUIFlag = true;
-        CUIManager::GetInstance().Create(UI_ID::FINISH_BACKGROUND);
     }
+}
+
+void CGame::CheckFinish()
+{
 }

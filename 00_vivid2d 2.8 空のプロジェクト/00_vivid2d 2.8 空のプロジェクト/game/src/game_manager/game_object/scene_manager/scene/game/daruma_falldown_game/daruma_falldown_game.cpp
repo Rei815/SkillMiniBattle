@@ -6,6 +6,7 @@
 #include "../../../../camera/camera.h"
 #include "../../../../unit_manager/unit/player/player.h"
 #include "../../../../unit_manager/unit/unit.h"
+#include "../../../../data_manager/data_manager.h"
 
 const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(200, 1200.0f, -1500.0f);
 const CVector3	CDaruma_FallDownGame::m_camera_direction = CVector3(0, -100, 100);
@@ -22,12 +23,12 @@ CDaruma_FallDownGame::~CDaruma_FallDownGame(void)
 {
 }
 
-void CDaruma_FallDownGame::Initialize(void)
+void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 {
-	CGame::Initialize();
-	m_RemainCount = CUnitManager::GetInstance().GetCurrentPlayer();
+	CGame::Initialize(scene_id);
+	m_RemainCount = CDataManager::GetInstance().GetCurrentPlayer();
 
-	for (int i = 0; i < CUnitManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
 		m_PlayerPosition[i] = CVector3();
 	}
@@ -35,11 +36,9 @@ void CDaruma_FallDownGame::Initialize(void)
 	Temp.position = m_ogre_position;
 	Temp.rotation = m_ogre_rotation;
 
-
-
-	for (int i = 0; i < CUnitManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
-		CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 0, 100 * i));
+		CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 100, 100 * i));
 	}
 
 	CCamera::GetInstance().Initialize();
@@ -66,6 +65,7 @@ void CDaruma_FallDownGame::Update(void)
 	CCamera::GetInstance().Update();
 
 	CUnitManager& um = CUnitManager::GetInstance();
+	CDataManager& dm = CDataManager::GetInstance();
 
 	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
 	CObjectManager::OBJECT_LIST::iterator it;
@@ -80,7 +80,7 @@ void CDaruma_FallDownGame::Update(void)
 		//ãSÇ™êUÇËï‘Ç¡ÇƒÇÈéûÇÃèàóù
 		if (gimmick->GetState() == GIMMICK_STATE::PLAY)
 		{
-			for (int i = 0; i < um.GetCurrentPlayer(); i++)
+			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 			{
 				player = um.GetPlayer((UNIT_ID)i);
 
@@ -99,7 +99,7 @@ void CDaruma_FallDownGame::Update(void)
 
 		if (gimmick->GetState() != GIMMICK_STATE::PLAY)
 		{
-			for (int i = 0; i < um.GetCurrentPlayer(); i++)
+			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 			{
 				player = um.GetPlayer((UNIT_ID)i);
 				if ((player->GetPosition().x >= 1400))
@@ -116,7 +116,7 @@ void CDaruma_FallDownGame::Update(void)
 	//ÉvÉåÉCÉÑÅ[ÇÃê∂Ç´écÇËÇ™0êlÇ…Ç»Ç¡ÇΩÇÁ
 	if (m_RemainCount == 0)
 	{
-		for (int j = 0; j < CUnitManager::GetInstance().GetCurrentPlayer();j++)
+		for (int j = 0; j < dm.GetCurrentPlayer();j++)
 		{
 			float m_PlayerDis = (m_PlayerPosition[j] - m_ogre_position).Length();
 
@@ -149,7 +149,7 @@ void CDaruma_FallDownGame::Ranking(void)
 {
 	CUnitManager& um = CUnitManager::GetInstance();
 	//àÍà à»äOÇîsñkèÛë‘Ç…Ç∑ÇÈ
-	for (int j = 0; j < CUnitManager::GetInstance().GetCurrentPlayer(); j++)
+	for (int j = 0; j < CDataManager::GetInstance().GetCurrentPlayer(); j++)
 	{
 		if (j != m_TempFirstNum)
 		{

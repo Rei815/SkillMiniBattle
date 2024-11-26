@@ -18,7 +18,7 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
-    void        Initialize();
+    void        Initialize(const vivid::Vector2& position);
 
     /*!
      *  @brief      XV
@@ -36,7 +36,6 @@ public:
     void        Finalize(void);
 
 private:
-    static const vivid::Vector2     m_position;   //!< ˆÊ’u
     static const std::string        m_file_name;
     static const int                m_height;           //!< ‚‚³
     static const int                m_width;            //!< •

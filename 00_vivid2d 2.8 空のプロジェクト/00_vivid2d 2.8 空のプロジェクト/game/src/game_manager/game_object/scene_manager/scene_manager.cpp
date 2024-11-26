@@ -14,13 +14,13 @@
 #include "scene\select_mode\select_mode.h"
 #include "scene\select_player\select_player.h"
 #include "scene\select_game\select_game.h"
+#include "scene\select_skill\select_skill.h"
 #include "scene\game\game.h"
 #include "scene\game\fall_game\fall_game.h"
 #include "scene\game\daruma_falldown_game\daruma_falldown_game.h"
 #include "scene\game\dodgeball_game\dodgeball_game.h"
 #include "scene\game\debug_game\debug_game.h"
 #include "scene\result\result.h"
-
 const int               CSceneManager::m_fade_speed = 5;
 const vivid::Vector2    CSceneManager::m_fade_position = { 0.0f, 0.0f };
 const unsigned int      CSceneManager::m_fade_color = 0xff000000;
@@ -73,7 +73,16 @@ void
 CSceneManager::Draw(void)
 {
     // シーン描画
-    if (m_Scene) m_Scene->Draw();
+    if (m_SceneList.empty()) return;
+
+    SCENE_LIST::iterator it = m_SceneList.begin();
+
+    while (it != m_SceneList.end())
+    {
+        (*it)->Draw();
+
+        ++it;
+    }
 }
 
 /*
@@ -90,15 +99,23 @@ CSceneManager::DrawSceneEffect(void)
 void
 CSceneManager::Finalize(void)
 {
-    // シーン解放
-    if (m_Scene)
-    {
-        m_Scene->Finalize();
+    //// シーン解放
+    //if (m_SceneList.empty()) return;
 
-        delete m_Scene;
+    //SCENE_LIST::iterator it = m_SceneList.begin();
 
-        m_Scene = nullptr;
-    }
+    //while (it != m_SceneList.end())
+    //{
+    //    (*it)->Finalize();
+
+    //    delete (*it);
+
+    //    m_SceneList.erase(it);
+
+    //    ++it;
+    //}
+
+    //m_SceneList.clear();
 }
 
 /*
@@ -113,20 +130,43 @@ CSceneManager::ChangeScene(SCENE_ID id)
     m_ChangeScene = true;
 }
 
+void CSceneManager::PushScene(SCENE_ID id)
+{
+    CreateScene(id);
+}
+
+void CSceneManager::PopScene(SCENE_ID id)
+{
+    if (m_SceneList.size() <= 1) return;
+
+    SCENE_LIST::iterator it = m_SceneList.begin();
+    while (it != m_SceneList.end())
+    {
+        IScene* scene = (IScene*)(*it);
+
+        if (scene->GetSceneID() == id)
+        {
+            scene->SetActive(false);
+            return;
+        }
+        ++it;
+    }
+}
+
 /*
  *  現在のシーンを取得
  */
-IScene*
-CSceneManager::GetScene(void)
-{
-    return m_Scene;
-}
+//IScene*
+//CSceneManager::GetScene(void)
+//{
+//    return m_Scene;
+//}
 
 /*
  *  コンストラクタ
  */
 CSceneManager::CSceneManager(void)
-    : m_Scene(nullptr)
+    : m_SceneList()
     , m_CurrentSceneID(SCENE_ID::WAIT)
     , m_NextSceneID(SCENE_ID::WAIT)
     , m_ChangeScene(false)
@@ -163,22 +203,28 @@ CSceneManager::operator=(const CSceneManager& rhs)
 /*
  *  シーン生成
  */
-void
+IScene*
 CSceneManager::CreateScene(SCENE_ID id)
 {
     //IDを基準にシーン多分岐
+    IScene* scene = nullptr;
+
     switch (id)
     {
-    case SCENE_ID::TITLE:              m_Scene = new CTitle();         break;
-    case SCENE_ID::SELECTMODE:         m_Scene = new CSelectMode();    break;
-    case SCENE_ID::SELECTPLAYER:       m_Scene = new CSelectPlayer();  break;
-    case SCENE_ID::SELECTGAME:         m_Scene = new CSelectGame();    break;
-    case SCENE_ID::FALLGAME:           m_Scene = new CFallGame();      break;
-    case SCENE_ID::DARUMAFALLDOWN:     m_Scene = new CDaruma_FallDownGame();      break;
-    case SCENE_ID::DEBUGGAME:          m_Scene = new CDebugGame();     break;
-    case SCENE_ID::RESULT:             m_Scene = new CResult();        break;
-    case SCENE_ID::DODGEBALLGAME: m_Scene = new CDodgeBallGame();   break;
+    case SCENE_ID::TITLE:              scene = new CTitle();                      break;
+    case SCENE_ID::SELECTMODE:         scene = new CSelectMode();                 break;
+    case SCENE_ID::SELECTPLAYER:       scene = new CSelectPlayer();               break;
+    case SCENE_ID::SELECTSKILL:        scene = new CSelectSkill();               break;
+    case SCENE_ID::SELECTGAME:         scene = new CSelectGame();                 break;
+    case SCENE_ID::FALLGAME:           scene = new CFallGame();                   break;
+    case SCENE_ID::DARUMAFALLDOWN:     scene = new CDaruma_FallDownGame();        break;
+    case SCENE_ID::DEBUGGAME:          scene = new CDebugGame();                  break;
+    case SCENE_ID::DODGEBALLGAME:      scene = new CDodgeBallGame();              break;
+    case SCENE_ID::RESULT:             scene = new CResult();                     break;
     }
+    m_SceneList.push_back(scene);
+    scene->Initialize(id);
+    return scene;
 }
 
 /*
@@ -205,7 +251,29 @@ void
 CSceneManager::SceneUpdate(void)
 {
     // シーン更新
-    if (m_Scene) m_Scene->Update();
+    if (m_SceneList.empty()) return;
+
+    SCENE_LIST::iterator it = m_SceneList.begin();
+
+    while (it != m_SceneList.end())
+    {
+        IScene* scene = (IScene*)(*it);
+        if(scene->GetSceneState() == SCENE_STATE::ACTIVE)
+            scene->Update();
+
+        if (!scene->GetActive())
+        {
+            scene->Finalize();
+
+            delete scene;
+
+            it = m_SceneList.erase(it);
+
+            continue;
+        }
+
+        ++it;
+    }
 
     // シーン変更が発生
     if (m_CurrentSceneID != m_NextSceneID || m_ChangeScene)
@@ -238,29 +306,52 @@ CSceneManager::FadeOut(void)
  *  シーン変更
  */
 void
-CSceneManager::SceneChange(void)
+CSceneManager::SceneChange()
 {
-    if (m_Scene)
+    if (!m_SceneList.empty())
     {
-        m_Scene->Finalize();
+        SCENE_LIST::iterator it = m_SceneList.begin();
+        while (it != m_SceneList.end())
+        {
+            IScene* scene = (IScene*)(*it);
+            if (scene->GetActive() == true)
+            {
+                scene->Finalize();
 
-        delete m_Scene;
+                delete scene;
 
-        m_Scene = nullptr;
+                it = m_SceneList.erase(it);
+
+                scene = nullptr;
+            }
+
+        }
     }
 
     // 新しいシーン生成
     CreateScene(m_NextSceneID);
-
-    // 初期化
-    m_Scene->Initialize();
-
-    // 更新
-    m_Scene->Update();
 
     m_CurrentSceneID = m_NextSceneID;
 
     // フェードイン
     //m_State = STATE::SCENE_CHANGE;
     m_State = STATE::SCENE_UPDATE;
+}
+
+IScene* CSceneManager::GetScene(SCENE_ID scene_id)
+{
+    if (m_SceneList.empty()) return nullptr;
+
+    SCENE_LIST::iterator it = m_SceneList.begin();
+
+    while (it != m_SceneList.end())
+    {
+        IScene* scene = (IScene*)(*it);
+
+        if (scene->GetActive() && scene->GetSceneID() == scene_id)
+            return scene;
+
+        ++it;
+    }
+    return nullptr;
 }

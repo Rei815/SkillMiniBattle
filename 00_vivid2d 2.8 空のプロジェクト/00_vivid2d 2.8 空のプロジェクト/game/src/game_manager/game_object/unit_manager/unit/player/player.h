@@ -4,6 +4,9 @@
 #include "..\unit.h"
 #include "../../../model_manager/model/model.h"
 #include "../../../bullet_manager/bullet/bullet.h"
+#include "../../../skill_manager/skill/skill.h"
+
+class CSkill;
 
 class CPlayer: public IUnit
 {
@@ -42,11 +45,28 @@ public:
  */
     void        SetActionFlag(bool flag);
 
-    void        AddWins();
+    vivid::controller::DEVICE_ID GetController(void);
+    
+    /*!
+     *  @brief      スキルのセット
+     *
+     *  @param[in]  skill    スキルのポインタ
+     */
+    void        SetSkill(CSkill* skill);
 
-    int         GetWins();
+    /*!
+     *  @brief      スキルによるスピード倍率のセット
+     *
+     *  @param[in]  rate    倍率
+     */
+    void        SetMoveSpeedRate(float rate = 1.0f);
 
-    vivid::controller::DEVICE_ID         GetController();
+    /*!
+     *  @brief      スキルによるジャンプ倍率のセット
+     *
+     *  @param[in]  rate    倍率
+     */
+    void        SetJumpPowerRate(float rate = 1.0f);
 
     bool        GetPlayerMoving();
 protected:
@@ -95,6 +115,11 @@ protected:
     static const int                m_invincible_visible_interval;  //!< 無敵時間中の点滅間隔
     static const float              m_fall_accelerator;             //!< 落下加速度
 
+    float                           m_MoveSpeedRate;                //!< 移動速度の倍率
+    float                           m_JumpPowerRate;                //!< ジャンプ力の倍率
+
+    CSkill* m_Skill;
+
     float                           m_FallSpeed;                    //!< 落下速度
     CVector3                        m_Accelerator;                  //!< 加速度
     CVector3                        m_InitialPosition;              //!< 初期位置
@@ -104,5 +129,4 @@ protected:
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     DxLib::COLOR_F                  m_Color;
     vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
-    int                             m_WinsNum;                      //!< 勝った回数
 };

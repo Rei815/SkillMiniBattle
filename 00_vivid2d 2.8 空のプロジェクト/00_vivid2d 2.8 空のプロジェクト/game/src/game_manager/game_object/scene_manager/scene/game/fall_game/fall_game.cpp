@@ -5,10 +5,12 @@
 #include "../../../../object_manager/object_manager.h"
 #include "../../../../ui_manager/ui_manager.h"
 #include "../../../../object_manager/object/fall_object/mark_id.h"
+#include "../../../../data_manager/data_manager.h"
+#include "../../../../skill_manager/skill_manager.h"
 
 const CTransform CFallGame::m_object_transform_list[] = 
-{CTransform(CVector3(200,-100,-150)),CTransform(CVector3(-200,-100,150)), CTransform(CVector3(0,-100,200)),
-CTransform(CVector3(-200,-100,-150)), CTransform(CVector3(0,-100,-200)), CTransform(CVector3(200,-100,150)) };
+{CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
+CTransform(CVector3(-450,-100,-300)), CTransform(CVector3(0,-100,-500)), CTransform(CVector3(450,-100,250)) };
 
 const float		CFallGame::m_time_accelerator = 0.1f;
 const float		CFallGame::m_min_time = 1.0f;
@@ -16,7 +18,7 @@ const float		CFallGame::m_initial_time = 1.0f;
 const float		CFallGame::m_defeat_height = -500.0f;
 const float		CFallGame::m_object_delay_time = 1.0f;
 const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
-const CVector3	CFallGame::m_camera_direction = CVector3(0, -0.85f, 1.0f);
+const CVector3	CFallGame::m_camera_direction = CVector3(0.0f, -1.0f, 1.0f);
 CFallGame::CFallGame(void)
 {
 }
@@ -25,11 +27,11 @@ CFallGame::~CFallGame(void)
 {
 }
 
-void CFallGame::Initialize(void)
+void CFallGame::Initialize(SCENE_ID scene_id)
 {
 	m_FallTime = m_initial_time;
 	m_ChooseObjectTimer.SetUp(m_FallTime);
-	CGame::Initialize();
+	CGame::Initialize(scene_id);
 	CStage::GetInstance().Initialize();
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
@@ -38,12 +40,14 @@ void CFallGame::Initialize(void)
 	CVector3 playerPos[] = { m_object_transform_list[(int)MARK_ID::CIRCLE].position, m_object_transform_list[(int)MARK_ID::CROSS].position,
 	m_object_transform_list[(int)MARK_ID::MOON].position,m_object_transform_list[(int)MARK_ID::SQUARE].position };
 
-	for (int i = 0; i < CUnitManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
 		playerPos[i].y += 200.0f;
-		CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
+		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
+		m_EntryList.push_back(unit);
 	}
 
+	CSkillManager::GetInstance().SetSkill();
 	CObjectManager& om = CObjectManager::GetInstance();
 	CGimmickManager& gm = CGimmickManager::GetInstance();
 
@@ -63,8 +67,6 @@ void CFallGame::Initialize(void)
 	object = om.Create(OBJECT_ID::SUN_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SUN]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-
-
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
@@ -81,7 +83,7 @@ void CFallGame::Update(void)
 
 void CFallGame::Draw(void)
 {
-	CStage::GetInstance().Draw();
+	//CStage::GetInstance().Draw();
 	CGame::Draw();
 
 #ifdef VIVID_DEBUG
@@ -96,7 +98,6 @@ void CFallGame::Finalize(void)
 	CStage::GetInstance().Finalize();
 
 	CCamera::GetInstance().Finalize();
-
 }
 
 void CFallGame::Start(void)
@@ -128,30 +129,39 @@ void CFallGame::Play(void)
 			CUIManager::GetInstance().Create(fallInfo.uiID);
 		}
 	}
-
-	CUnitManager& um = CUnitManager::GetInstance();
-	CUnitManager::UNIT_LIST unitList = um.GetUnitList();
-	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
-	while (it != unitList.end())
-	{
-		if ((*it)->GetPosition().y < m_defeat_height)
-				(*it)->SetDefeatFlag(true);
-		++it;
-	}
-	//for (int i = 0; i < um.GetCurrentPlayer(); i++)
-	//{
-	//	CPlayer* player = um.GetPlayer((UNIT_ID)i);
-	//	if (vivid::controller::GetAnalogStickLeft((vivid::controller::DEVICE_ID)player->GetController()).x != 0.0f ||
-	//		vivid::controller::GetAnalogStickLeft((vivid::controller::DEVICE_ID)player->GetController()).y != 0.0f)
-	//	{
-			//player->SetDefeatFlag(true);
-	//	}
-	//}
 }
 
 void CFallGame::Finish(void)
 {
+	if (m_ResultList.size() == 1)
+		CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
+
 	CGame::Finish();
+}
+
+void CFallGame::CheckFinish()
+{
+	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
+	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
+	while (it != unitList.end())
+	{
+		IUnit* unit = (*it);
+		if (unit->GetDefeatFlag() == true)
+		{
+			++it;
+			continue;
+		}
+
+		if (unit->GetPosition().y < m_defeat_height)
+		{
+			AddRanking(unit->GetUnitID());
+			unit->SetDefeatFlag(true);
+
+		}
+		++it;
+	}
+	if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
+		CGame::SetGameState(GAME_STATE::FINISH);
 }
 
 CFallGame::FALL_INFO CFallGame::ChooseObject(void)

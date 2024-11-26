@@ -1,4 +1,5 @@
 #include "dodgeball_game.h"
+#include "../../../../data_manager/data_manager.h"
 #include "../../../../unit_manager/unit_manager.h"
 #include "../../../../gimmick_manager/gimmick_manager.h"
 #include "../../../../gimmick_manager/gimmick/dodgeball_gimmick/dodgeball_gimmick.h"
@@ -7,6 +8,8 @@
 #include "../../../../ui_manager/ui_manager.h"
 #include "../../../../bullet_manager/bullet_manager.h"
 #include "../../../../launcher/launcher.h"
+
+#include "../../../../skill_manager/skill_manager.h"
 
 //上下左右の4方向 × 各方向に3つずつ ＝ 12こ
 const CVector3		CDodgeBallGame::m_cannon_pos_list[] = 
@@ -24,6 +27,14 @@ const CVector3		CDodgeBallGame::m_cannon_rot_list[] =
 	CVector3(0,   0,0),CVector3(0,  30,0),CVector3(0, -30,0),	//下
 	CVector3(0, -90,0),CVector3(0, -60,0),CVector3(0,-120,0),	//右
 	CVector3(0,  90,0),CVector3(0, 120,0),CVector3(0,  60,0)	//左
+};
+
+const CVector3 CDodgeBallGame::m_player_spawnpos_list[] =
+{
+	CVector3(-100, 0,  100),	//Player1
+	CVector3( 100, 0,  100),	//Player2
+	CVector3(-100, 0, -100),	//Player3
+	CVector3( 100, 0, -100)		//Player4
 };
 
 const int			CDodgeBallGame::m_max_cannnon_count = 3;
@@ -50,11 +61,11 @@ CDodgeBallGame::~CDodgeBallGame(void)
 
 }
 
-void CDodgeBallGame::Initialize(void)
+void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 {
 	m_SpawnTimer.SetUp(0);
 	m_ShotTimer.SetUp(m_initial_shot_time);
-	CGame::Initialize();
+	CGame::Initialize(scene_id);
 
 	//CStage::GetInstance().Initialize();
 	CObjectManager::GetInstance().Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT,CTransform(CVector3(0.0f,-100.0f,0.0f)));
@@ -64,8 +75,14 @@ void CDodgeBallGame::Initialize(void)
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 	m_DebugText = "ドッジボールゲーム";
 
-	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1, CVector3(-100, 0, 0));
-	//CUnitManager::GetInstance().Create(UNIT_ID::PLAYER2, CVector3(100, 0, 0));
+	//プレイヤーのスポーン
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	{
+		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, m_player_spawnpos_list[i]);
+		m_EntryList.push_back(unit);
+	}
+
+	CSkillManager::GetInstance().SetSkill();
 
 	CLauncher::GetInstance().Initialize();
 	CBulletManager::GetInstance().Initialize();
@@ -145,21 +162,37 @@ void CDodgeBallGame::Play(void)
 		if(temp != nullptr)
 			temp->GetGimmick()->SetSwitch(true);
 	}
-
-	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
-	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
-	while (it != unitList.end())
-	{
-		if ((*it)->GetPosition().Length() > m_defeat_distance)
-			(*it)->SetDefeatFlag(true);
-
-		++it;
-	}
 }
 
 void CDodgeBallGame::Finish(void)
 {
 	CGame::Finish();
+}
+
+/*!
+	 *  @brief      終了判定
+	 */
+void CDodgeBallGame::CheckFinish(void)
+{
+	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
+	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
+	while (it != unitList.end())
+	{
+		IUnit* unit = (*it);
+		++it;
+
+		if (unit->GetDefeatFlag() == true)	continue;
+
+		if (unit->GetPosition().Length() > m_defeat_distance)
+		{
+			AddRanking(unit->GetUnitID());
+			unit->SetDefeatFlag(true);
+		}
+	}
+
+
+	if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
+		CGame::SetGameState(GAME_STATE::FINISH);
 }
 
 void CDodgeBallGame::SpawnCannnon(void)

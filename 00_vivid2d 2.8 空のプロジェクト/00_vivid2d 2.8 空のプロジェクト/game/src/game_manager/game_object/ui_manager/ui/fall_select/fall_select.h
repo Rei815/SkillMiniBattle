@@ -2,6 +2,7 @@
 
 #include "vivid.h"
 #include "..\ui.h"
+#include "..\fallout_select_bg\fallout_select_bg.h"
 class CFallSelect : public CUI
 {
 public:
@@ -44,4 +45,6 @@ private:
     static const vivid::Vector2     m_scale;            //!< Šgk
 
     std::string                     m_FileName;
+
+    CFalloutSellectBG               m_BackGround;
 };

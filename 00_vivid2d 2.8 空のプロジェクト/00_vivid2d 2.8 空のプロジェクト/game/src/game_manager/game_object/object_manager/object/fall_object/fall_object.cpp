@@ -3,8 +3,8 @@
 const	float			CFallObject::m_remove_height = -500.0f;
 const	float			CFallObject::m_start_height = -100.0f;
 const	float			CFallObject::m_invisible_alpha = 0.0f;
-const	std::string		CFallObject::m_file_name_list[] = {"data\\circle.mv1","data\\cross.mv1" ,"data\\moon.mv1" ,
-"data\\square.mv1" ,"data\\sun.mv1" ,"data\\triangle.mv1" };
+const	std::string		CFallObject::m_file_name_list[] = {"data\\fallout_floor_circle.mv1","data\\fallout_floor_cross.mv1" ,"data\\fallout_floor_moon.mv1" ,
+"data\\fallout_floor_square.mv1" ,"data\\fallout_floor_sun.mv1" ,"data\\fallout_floor_triangle.mv1" };
 
 
 CFallObject::CFallObject()
@@ -21,22 +21,28 @@ CFallObject::~CFallObject()
 
 void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 {
-	IObject::Initialize(id, transform);
+	m_Transform = transform;
+	IObject::Initialize(id, m_Transform);
 
 	switch (id)
 	{
-	case OBJECT_ID::CIRCLE_FALL_OBJECT:		m_MarkID = MARK_ID::CIRCLE;		break;
-	case OBJECT_ID::CROSS_FALL_OBJECT:		m_MarkID = MARK_ID::CROSS;		break;
-	case OBJECT_ID::MOON_FALL_OBJECT:		m_MarkID = MARK_ID::MOON;		break;
-	case OBJECT_ID::SQUARE_FALL_OBJECT:		m_MarkID = MARK_ID::SQUARE;		break;
-	case OBJECT_ID::SUN_FALL_OBJECT:		m_MarkID = MARK_ID::SUN;		break;
-	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	m_MarkID = MARK_ID::TRIANGLE;	break;
+	case OBJECT_ID::CIRCLE_FALL_OBJECT:		m_MarkID = MARK_ID::CIRCLE;		m_Transform.rotation.y = 30;	break;
+	case OBJECT_ID::CROSS_FALL_OBJECT:		m_MarkID = MARK_ID::CROSS;		m_Transform.rotation.y = 30;	break;
+	case OBJECT_ID::MOON_FALL_OBJECT:		m_MarkID = MARK_ID::MOON;		m_Transform.rotation.y = 90;		break;
+	case OBJECT_ID::SQUARE_FALL_OBJECT:		m_MarkID = MARK_ID::SQUARE;		m_Transform.rotation.y = -30;	break;
+	case OBJECT_ID::SUN_FALL_OBJECT:		m_MarkID = MARK_ID::SUN;		m_Transform.rotation.y = 90;	break;
+	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	m_MarkID = MARK_ID::TRIANGLE;	m_Transform.rotation.y = -30;	break;
+	//case OBJECT_ID::CIRCLE_FALL_OBJECT:		m_MarkID = MARK_ID::CIRCLE;		m_Transform.rotation.y = 35;	break;
+	//case OBJECT_ID::CROSS_FALL_OBJECT:		m_MarkID = MARK_ID::CROSS;		m_Transform.rotation.y = 35;	break;
+	//case OBJECT_ID::MOON_FALL_OBJECT:		m_MarkID = MARK_ID::MOON;		m_Transform.rotation.y = 90;		break;
+	//case OBJECT_ID::SQUARE_FALL_OBJECT:		m_MarkID = MARK_ID::SQUARE;		m_Transform.rotation.y = -35;	break;
+	//case OBJECT_ID::SUN_FALL_OBJECT:		m_MarkID = MARK_ID::SUN;		m_Transform.rotation.y = 90;	break;
+	//case OBJECT_ID::TRIANGLE_FALL_OBJECT:	m_MarkID = MARK_ID::TRIANGLE;	m_Transform.rotation.y = -35;	break;
 	}
 	m_FileName = m_file_name_list[(int)m_MarkID];
-	m_Transform = transform;
-	m_Model.Initialize(m_FileName, m_Transform.position);
+	m_Model.Initialize(m_FileName, m_Transform);
 	m_Timer.SetUp(1.0f);
-	m_Tag = "Fall";
+	m_Tag = "Floor";
 	MV1SetMeshBackCulling(m_Model.GetModelHandle(), 0, TRUE);
 }
 
@@ -46,7 +52,6 @@ void CFallObject::Update(void)
 	m_Model.Update(m_Transform);
 	if (m_Transform.position.y <= m_remove_height)
 	{
-		CUIManager::GetInstance().Delete((UI_ID)((int)m_MarkID + 2));
 		m_Transform.position.y = m_remove_height;
 		m_Alpha = m_invisible_alpha;
 	}
@@ -57,6 +62,7 @@ void CFallObject::Update(void)
 
 	if (m_Timer.Finished())
 	{
+		CUIManager::GetInstance().Delete((UI_ID)((int)m_MarkID + 2));
 		m_Timer.Reset();
 		m_Gimmick->SetState(GIMMICK_STATE::WAIT);
 		m_Transform.position.y = m_start_height;

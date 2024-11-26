@@ -30,7 +30,7 @@ public:
     /*!
      *  @brief      èâä˙âª
      */
-    void Initialize(void);
+    void Initialize(SCENE_ID scene_id);
     
     /*!
      *  @brief      çXêV
@@ -63,6 +63,11 @@ private:
      */
     void    Finish(void);
 
+    /*!
+     *  @brief      èIóπîªíË
+     */
+    void    CheckFinish(void) override;
+
     void SpawnCannnon(void);
 
     IObject* ChooseCannon(void);
@@ -70,6 +75,7 @@ private:
 
     static const CVector3 m_cannon_pos_list[];
     static const CVector3 m_cannon_rot_list[];
+    static const CVector3 m_player_spawnpos_list[];
 
     static const int        m_max_cannnon_count;
     static const float      m_cannnon_spawn_time;

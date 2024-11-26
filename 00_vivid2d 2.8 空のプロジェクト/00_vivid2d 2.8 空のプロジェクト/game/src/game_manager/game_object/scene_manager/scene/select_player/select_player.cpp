@@ -1,6 +1,7 @@
 #include "select_player.h"
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
+#include "../../../data_manager/data_manager.h"
 
 CSelectPlayer::CSelectPlayer(void)
 {
@@ -11,23 +12,24 @@ CSelectPlayer::~CSelectPlayer(void)
 {
 }
 
-void CSelectPlayer::Initialize(void)
+void CSelectPlayer::Initialize(SCENE_ID scene_id)
 {
+    IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
 
     CStage::GetInstance().Initialize();
-    CUnitManager::GetInstance().SetCurrentPlayer(1);
 
+    CDataManager::GetInstance().Initialize();
 }
 
 void CSelectPlayer::Update(void)
 {
-    CUnitManager& um = CUnitManager::GetInstance();
+    CDataManager& dm = CDataManager::GetInstance();
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::LEFT))
-        um.SetCurrentPlayer(um.GetCurrentPlayer() - 1);
+        dm.SetCurrentPlayer(dm.GetCurrentPlayer() - 1);
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RIGHT))
-        um.SetCurrentPlayer(um.GetCurrentPlayer() + 1);
+        dm.SetCurrentPlayer(dm.GetCurrentPlayer() + 1);
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
     {
@@ -42,12 +44,14 @@ void CSelectPlayer::Draw(void)
     vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 
     vivid::DrawText(20, "プレイヤーセレクト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
-    vivid::DrawText(20, std::to_string(CUnitManager::GetInstance().GetCurrentPlayer()), vivid::Vector2(500, vivid::WINDOW_HEIGHT - 20));
+    vivid::DrawText(20, std::to_string(CDataManager::GetInstance().GetCurrentPlayer()), vivid::Vector2(500, vivid::WINDOW_HEIGHT - 20));
 
 }
 
 void CSelectPlayer::Finalize(void)
 {
+    IScene::Finalize();
+
     CStage::GetInstance().Finalize();
 
 }

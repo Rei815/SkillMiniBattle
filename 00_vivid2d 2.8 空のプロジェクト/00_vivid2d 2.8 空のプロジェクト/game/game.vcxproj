@@ -169,8 +169,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
+    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_skill\select_skill.cpp" />
+    <ClCompile Include="src\game_manager\game_object\skill_manager\skill\jump_up\jump_up.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\daruma_falldown_stage_object\daruma_falldown_stage_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_icon\player_icon.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fallout_select_bg\fallout_select_bg.cpp" />
     <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
     <ClCompile Include="src\primitive\plane\plane.cpp" />
     <ClCompile Include="src\collider\box_collider\box_collider.cpp" />
@@ -235,6 +240,8 @@
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_player\select_player.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\title\title.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene_manager.cpp" />
+    <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill.cpp" />
+    <ClCompile Include="src\game_manager\game_object\skill_manager\skill\speed_up\speed_up.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\sound_manager\sound_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\stage\stage.cpp" />
@@ -265,8 +272,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
-    <ClInclude Include="src\game_manager\game_object\object_manager\object\daruma_falldown_stage_object\daruma_falldown_stage_object.h" />
-    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_icon\player_icon.h" />
+    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_skill\select_skill.h" />
+    <ClInclude Include="src\game_manager\game_object\skill_manager\skill\jump_up\jump_up.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_select_bg\fallout_select_bg.h" />
     <ClInclude Include="src\mathematics\matrix\matrix.h" />
     <ClInclude Include="src\primitive\plane\plane.h" />
     <ClInclude Include="src\collider\box_collider\box_collider.h" />
@@ -341,6 +351,9 @@
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_player\select_player.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\title\title.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene_manager.h" />
+    <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill.h" />
+    <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_id.h" />
+    <ClInclude Include="src\game_manager\game_object\skill_manager\skill\speed_up\speed_up.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill_manager.h" />
     <ClInclude Include="src\game_manager\game_object\sound_manager\sound_manager.h" />
     <ClInclude Include="src\game_manager\game_object\stage\stage.h" />

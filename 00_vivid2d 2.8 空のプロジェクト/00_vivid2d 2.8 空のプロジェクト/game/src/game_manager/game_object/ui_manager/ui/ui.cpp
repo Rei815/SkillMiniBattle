@@ -37,6 +37,11 @@ void CUI::Initialize(const CVector3& position)
     m_Transform.position = position;
 }
 
+void CUI::Initialize(const vivid::Vector2& position)
+{
+    m_Position = position;
+}
+
 void CUI::Initialize(const CTransform& transform)
 {
     m_Transform = transform;

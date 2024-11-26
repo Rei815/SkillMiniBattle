@@ -19,7 +19,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize(void);
+    void        Initialize(SCENE_ID scene_id);
 
     /*!
      *  @brief      更新
@@ -58,6 +58,11 @@ private:
      *  @brief      終了
      */
     void    Finish(void);
+
+    /*!
+     *  @brief      終了判定
+     */
+    void    CheckFinish(void) override;
 
     /*!
      *  @brief      落ちるオブジェクトの選択

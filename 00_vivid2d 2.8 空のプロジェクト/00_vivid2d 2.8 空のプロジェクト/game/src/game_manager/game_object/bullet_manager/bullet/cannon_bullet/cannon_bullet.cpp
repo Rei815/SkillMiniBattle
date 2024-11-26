@@ -10,7 +10,7 @@ const float         CCannonBullet::m_max_speed = 50.0f;
  */
 CCannonBullet::CCannonBullet()
     : IBullet(m_file_name, COLLIDER_ID::SPHERE)
-    , m_Effect(nullptr)
+//    , m_Effect(nullptr)
 {
 
 }
@@ -24,7 +24,7 @@ void CCannonBullet::Initialize(UNIT_CATEGORY category, CShot::BulletParameters* 
     
     MV1SetMaterialDifColor(m_Model.GetModelHandle(), 0, GetColorF(1.0f, 0.0f, 0.0f, 1.0f));
 
-    m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::ENEMY_BULLET, position);
+    //m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::ENEMY_BULLET, position);
 }
 
 void CCannonBullet::Update()
@@ -36,8 +36,8 @@ void CCannonBullet::Update()
         m_Speed = m_max_speed;
     m_Velocity = m_Direction * m_Speed;
     
-    if (m_Effect != nullptr)
-        m_Effect->SetPosition(m_Transform.position);
+    //if (m_Effect != nullptr)
+    //    m_Effect->SetPosition(m_Transform.position);
 
     IBullet::Update();
 
@@ -45,7 +45,8 @@ void CCannonBullet::Update()
 
 void CCannonBullet::Finalize(void)
 {
-    if (m_Effect != nullptr)
-        m_Effect->SetActive(false);
+    //if (m_Effect != nullptr)
+    //    m_Effect->SetActive(false);
+
     IBullet::Finalize();
 }

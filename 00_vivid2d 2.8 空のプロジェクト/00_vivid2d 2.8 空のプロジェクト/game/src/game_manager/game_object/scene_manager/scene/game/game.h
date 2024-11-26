@@ -5,6 +5,7 @@
 #include "../../../stage/stage.h"
 #include "game_id.h"
 #include "../../../object_manager/object/object.h"
+#include "../../../unit_manager/unit/unit.h"
 /*!
 *  @brief  ゲームの状態
 */
@@ -33,7 +34,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    virtual void        Initialize(void);
+    virtual void        Initialize(SCENE_ID scene_id);
 
     /*!
      *  @brief      更新
@@ -67,6 +68,7 @@ public:
 
 protected:
 
+    void AddRanking(UNIT_ID unitID);
 
     /*!
      *  @brief      スタート
@@ -83,6 +85,11 @@ protected:
      */
     virtual void    Finish(void);
 
+    /*!
+     *  @brief      終了判定
+     */
+    virtual void    CheckFinish(void);
+
     GAME_STATE      m_GameState;    //!< ゲームの状態
 
 
@@ -91,4 +98,14 @@ protected:
     std::string     m_DebugText;    //!< デバッグ用
     bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用
     bool            m_FinishUIFlag;
+    /*!
+     *  @brief      プレイヤーリスト型
+     */
+
+
+    using ENTRY_LIST = std::list<IUnit*>;
+    using RESULT_LIST = std::list<IUnit*>;
+
+    ENTRY_LIST          m_EntryList;
+    RESULT_LIST         m_ResultList;             //!< リザルトリスト
 };

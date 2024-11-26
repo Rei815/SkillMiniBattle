@@ -37,7 +37,6 @@ void
 CObjectManager::
 Update(void)
 {
-
     // オブジェクト更新
     UpdateObject();
 
@@ -45,7 +44,9 @@ Update(void)
 
     while (it != m_ObjectList.end())
     {
-        CUnitManager::GetInstance().CheckHitObject((*it));
+        if((*it)->GetObjectID() != OBJECT_ID::CANNON_OBJECT)
+            CUnitManager::GetInstance().CheckHitObject((*it));
+
         ++it;
     }
 }
@@ -160,33 +161,24 @@ IObject* CObjectManager::CheckHitObject(CPlayer* player)
         if ((*it)->GetModel().GetModelHandle() == VIVID_DX_ERROR)
             return nullptr;
 
-        CVector3 startPos = player->GetPosition();
+        //垂直方向の判定-----------------------------------------------------
 
-        CVector3 endPos = player->GetPosition();
-        endPos.y -= player->GetRadius();
-
-        CVector3 hitPos;
-
-        // 線分の描画
-        DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
-
-        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true)
+        float radius = player->GetRadius();
+        const int check_point_count = 4;
+        for (int i = 0; i < 9; ++i)
         {
+            CVector3 unit_pos = player->GetPosition();
 
-            hitPos = (*it)->GetModel().GetHitLinePosition(startPos, endPos);
+            CVector3 start = unit_pos + CVector3(-radius + (radius) * (i % 3), 0.0, -radius + (radius) * (i / 3));
+            CVector3 end_position = start + CVector3(0, - radius * 2, 0);
 
-            float diffHeight = endPos.y - hitPos.y;
-
-            CVector3 unitPos = player->GetPosition();
-            unitPos.y -= diffHeight;
-            player->SetPosition(unitPos);
-
-            return (*it);
+            if ((*it)->GetModel().CheckHitLine(start, end_position) == true)
+                return (*it);
         }
 
         ++it;
     }
-
+    return nullptr;
 }
 
 /*

@@ -1,0 +1,38 @@
+#include "..\ui.h"
+class CFalloutSellectBG : public CUI
+{
+public:
+	CFalloutSellectBG(UI_ID id);
+	~CFalloutSellectBG();
+
+    /*!
+     *  @brief      初期化
+     */
+    void        Initialize(const vivid::Vector2& position);
+
+    /*!
+     *  @brief      更新
+     */
+    void        Update(void);
+
+    /*!
+     *  @brief      描画
+     */
+    void        Draw(void);
+
+    /*!
+     *  @brief      解放
+     */
+    void        Finalize(void);
+
+private:
+    static const std::string        m_file_name;
+    static const int                m_height;           //!< 高さ
+    static const int                m_width;            //!< 幅
+    static const vivid::Rect        m_rect;             //!< 読み込み範囲
+    static const vivid::Vector2     m_anchor;           //!< 基準点
+    static const vivid::Vector2     m_scale;            //!< 拡縮
+
+    vivid::Vector2                  m_Position;   //!< 位置
+
+};

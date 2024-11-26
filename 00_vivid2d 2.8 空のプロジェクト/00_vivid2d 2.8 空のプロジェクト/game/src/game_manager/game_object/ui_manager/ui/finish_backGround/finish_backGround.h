@@ -2,18 +2,18 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-class CFinishBackGround : public CUI
+class CFinishGameBG : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CFinishBackGround(UI_ID id);
+    CFinishGameBG(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CFinishBackGround(void);
+    ~CFinishGameBG(void);
 
     /*!
      *  @brief      初期化

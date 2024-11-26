@@ -5,6 +5,7 @@ IObject::IObject()
 	: m_Alpha(m_limit_alpha)
 	, m_Velocity()
 	, m_Gimmick(nullptr)
+	, m_Tag("None")
 	,m_ActiveFlag(true)
 {
 }
