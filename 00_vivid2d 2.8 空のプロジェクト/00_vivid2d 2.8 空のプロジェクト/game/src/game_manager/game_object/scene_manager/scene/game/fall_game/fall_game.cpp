@@ -146,10 +146,15 @@ void CFallGame::CheckFinish()
 	while (it != unitList.end())
 	{
 		IUnit* unit = (*it);
-		if (unit->GetDefeatFlag() == true) break;
-		if ((*it)->GetPosition().y < m_defeat_height)
+		if (unit->GetDefeatFlag() == true)
 		{
-			AddRanking((*it)->GetUnitID());
+			++it;
+			continue;
+		}
+
+		if (unit->GetPosition().y < m_defeat_height)
+		{
+			AddRanking(unit->GetUnitID());
 			unit->SetDefeatFlag(true);
 
 		}

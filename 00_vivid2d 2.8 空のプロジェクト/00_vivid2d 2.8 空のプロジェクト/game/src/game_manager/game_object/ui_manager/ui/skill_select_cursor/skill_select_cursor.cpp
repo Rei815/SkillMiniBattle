@@ -2,10 +2,10 @@
 
 const vivid::Vector2    CSkillSelectCursor::m_positionList[] = 
 	{
-		vivid::Vector2(200 - 96, 348 - 96),		//スキル1
-		vivid::Vector2(400 - 96, 348 - 96),		//スキル2
-		vivid::Vector2(600 - 96, 348 - 96),		//スキル3
-		vivid::Vector2(800 - 96, 348 - 96)		//スキル4
+		vivid::Vector2(100 - 72, 348 - 72),		//スキル1
+		vivid::Vector2(367 - 72, 348 - 72),		//スキル2
+		vivid::Vector2(633 - 72, 348 - 72),		//スキル3
+		vivid::Vector2(900 - 72, 348 - 72)		//スキル4
 	};
 
 const int               CSkillSelectCursor::m_height = 576;

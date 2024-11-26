@@ -48,30 +48,37 @@ void CSelectGame::Update(void)
     {
         int game_id = rand() % (int)GAME_ID::MAX;
         _gameID = (GAME_ID)game_id;
+
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
+        /*
         switch (game_id)
         {
         case (int)GAME_ID::FALL_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME); break;
         case (int)GAME_ID::DODGE_BALL_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME); break;
         case (int)GAME_ID::DEBUG_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME); break;
         }
+        */
     }
 #if _DEBUG
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
     {
         _gameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
+        //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
     }
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
     {
         _gameID = GAME_ID::FALL_GAME;
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
+        //CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
     }
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::THREE))
     {
         _gameID = GAME_ID::DODGE_BALL_GAME;
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
+        //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
     }
 #endif
         dm.SetGameID(_gameID);

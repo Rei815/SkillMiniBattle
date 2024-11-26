@@ -188,7 +188,7 @@ void CPlayer::Control(void)
 
 
     //ƒWƒƒƒ“ƒv
-    if (m_IsGround && (GetJoypadInputState(joyPad) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE) && !m_StopFlag)
+    if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
         if (m_IsGround == true)
         {
             m_IsGround = false;
@@ -274,5 +274,4 @@ void CPlayer::Damage(void)
 
         m_InvincibleFlag = false;
     }
-
 }

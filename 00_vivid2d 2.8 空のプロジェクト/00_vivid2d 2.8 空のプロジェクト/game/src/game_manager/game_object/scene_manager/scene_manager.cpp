@@ -14,6 +14,7 @@
 #include "scene\select_mode\select_mode.h"
 #include "scene\select_player\select_player.h"
 #include "scene\select_game\select_game.h"
+#include "scene\select_skill\select_skill.h"
 #include "scene\game\game.h"
 #include "scene\game\fall_game\fall_game.h"
 #include "scene\game\daruma_falldown_game\daruma_falldown_game.h"
@@ -172,6 +173,7 @@ CSceneManager::CreateScene(SCENE_ID id)
     case SCENE_ID::TITLE:              m_Scene = new CTitle();                      break;
     case SCENE_ID::SELECTMODE:         m_Scene = new CSelectMode();                 break;
     case SCENE_ID::SELECTPLAYER:       m_Scene = new CSelectPlayer();               break;
+    case SCENE_ID::SELECTSKILL:       m_Scene = new CSelectSkill();               break;
     case SCENE_ID::SELECTGAME:         m_Scene = new CSelectGame();                 break;
     case SCENE_ID::FALLGAME:           m_Scene = new CFallGame();                   break;
     case SCENE_ID::DARUMAFALLDOWN:     m_Scene = new CDaruma_FallDownGame();        break;

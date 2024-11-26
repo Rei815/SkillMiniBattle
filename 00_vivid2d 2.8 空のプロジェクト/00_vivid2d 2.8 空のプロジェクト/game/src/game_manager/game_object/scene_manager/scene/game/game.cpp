@@ -40,7 +40,6 @@ CGame::Initialize(void)
     m_ResultList.clear();
     CUnitManager::GetInstance().Initialize();
     CUIManager::GetInstance().Initialize();
-    CEffectManager::GetInstance().Initialize();
     CControllerManager::GetInstance().Initialize();
     CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();
@@ -97,10 +96,10 @@ CGame::Draw(void)
 {
     CUnitManager::GetInstance().Draw();
     CSkillManager::GetInstance().Draw();
-    CUIManager::GetInstance().Draw();
     CEffectManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
+    CUIManager::GetInstance().Draw();
 
 #ifdef VIVID_DEBUG
     switch (m_GameState)
