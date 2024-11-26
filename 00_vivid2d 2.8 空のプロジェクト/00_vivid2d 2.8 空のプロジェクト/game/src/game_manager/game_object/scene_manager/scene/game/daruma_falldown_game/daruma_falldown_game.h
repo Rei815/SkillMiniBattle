@@ -28,6 +28,11 @@ public:
      */
     void        Finalize(void);
 
+    /*!
+ *  @brief      ‰ð•ú
+ */
+    void        Ranking(void);
+
 private:
 
     static const CVector3           m_camera_position;
@@ -36,7 +41,8 @@ private:
     static const CVector3           m_ogre_rotation;
     CTimer                          m_Timer;
     CVector3                        m_PlayerPosition[4];
-
     int                             m_RemainCount;
+    int                             m_TempFirstNum;
+    float                           m_TempFirstDis;
 
 };

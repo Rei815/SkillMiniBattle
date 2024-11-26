@@ -120,7 +120,6 @@ void CUIManager::Create(UI_ID id)
 
     ui->Initialize();
     m_UIList.push_back(ui);
-
 }
 
 void CUIManager::Create(UI_ID id, const CVector3& position)
@@ -208,7 +207,6 @@ bool CUIManager::CheckUIAttribute(CUI::UI_ATTRIBUTE ui_attribute)
     while (it != m_UIList.end())
     {
         CUI* ui = (CUI*)(*it);
-
 
         if (ui->CheckAttribute(ui_attribute) == true)
             return true;

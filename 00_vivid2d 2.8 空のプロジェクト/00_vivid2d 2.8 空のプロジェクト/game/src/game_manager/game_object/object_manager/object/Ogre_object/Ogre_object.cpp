@@ -3,7 +3,7 @@
 const	float			COgreObject::m_remove_height = -500.0f;
 const	float			COgreObject::m_start_height = -100.0f;
 const	float			COgreObject::m_invisible_alpha = 0.0f;
-const	std::string		COgreObject::m_file_name = "data\\Models\\cannon_test.mv1";
+const	std::string		COgreObject::m_file_name = "data\\Models\\ogre.mv1";
 
 COgreObject::COgreObject()
 	: IObject()

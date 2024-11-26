@@ -165,7 +165,6 @@ private:
 
     UI_LIST             m_UIList;             //!< UIƒŠƒXƒg
 
-
     bool                m_ReceivedReward;
     bool                m_WaveClearUIActiveFlag;
 };

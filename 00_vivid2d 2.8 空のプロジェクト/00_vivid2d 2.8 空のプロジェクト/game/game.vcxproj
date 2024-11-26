@@ -169,6 +169,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
+    <ClCompile Include="src\game_manager\game_object\object_manager\object\daruma_falldown_stage_object\daruma_falldown_stage_object.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_icon\player_icon.cpp" />
     <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
     <ClCompile Include="src\primitive\plane\plane.cpp" />
     <ClCompile Include="src\collider\box_collider\box_collider.cpp" />
@@ -198,7 +200,6 @@
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\shock_wave_effect\shock_wave_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\daruma_falldown_gimmick\daruma_falldown_gimmick.cpp" />
-    <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\daruma_falldown_gimmick\daruma_falldown_object\daruma_falldown_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\dodgeball_gimmick\dodgeball_gimmick.cpp" />
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_gimmick.cpp" />
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\gimmick.cpp" />
@@ -264,6 +265,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
+    <ClInclude Include="src\game_manager\game_object\object_manager\object\daruma_falldown_stage_object\daruma_falldown_stage_object.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_icon\player_icon.h" />
     <ClInclude Include="src\mathematics\matrix\matrix.h" />
     <ClInclude Include="src\primitive\plane\plane.h" />
     <ClInclude Include="src\collider\box_collider\box_collider.h" />
@@ -299,7 +302,6 @@
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect_manager.h" />
     <ClInclude Include="src\game_manager\game_object\game_object.h" />
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\daruma_falldown_gimmick\daruma_falldown_gimmick.h" />
-    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\daruma_falldown_gimmick\daruma_falldown_object\daruma_falldown_object.h" />
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\dodgeball_gimmick\dodgeball_gimmick.h" />
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\fall_gimmick\fall_gimmick.h" />
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\gimmick.h" />

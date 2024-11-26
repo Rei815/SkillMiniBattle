@@ -211,5 +211,4 @@ Finish(void)
         m_FinishUIFlag = true;
         CUIManager::GetInstance().Create(UI_ID::FINISH_BACKGROUND);
     }
-
 }

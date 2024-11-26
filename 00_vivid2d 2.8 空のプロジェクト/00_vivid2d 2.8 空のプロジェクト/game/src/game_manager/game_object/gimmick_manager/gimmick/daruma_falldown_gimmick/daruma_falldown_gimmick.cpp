@@ -3,17 +3,15 @@
 #include <stdlib.h> rand(), srand()
 
 CDaruma_FallDownGimmick::CDaruma_FallDownGimmick()
-	: m_SeenMove(false)
-	, m_Touch(false)
-	, m_ReadyTime(2)
+	: m_ReadyTime(2)
 	, m_WaitTime(1)
 	, m_TurnSpeed(15)
 	, m_RestPlayer(0)
 	, m_Transform()
 	, m_OgreState(OGRE_STATE::READY)
-	,m_TurnType(TURN_TYPE::FAST)
-	,m_Timer(3)
-	,m_TurnAngle(180)
+	, m_TurnType(TURN_TYPE::FAST)
+	, m_Timer(3)
+	, m_TurnAngle(180)
 {
 }
 
@@ -37,18 +35,6 @@ void CDaruma_FallDownGimmick::Update(void)
 	case OGRE_STATE::WAIT:      Wait();        break;
 	case OGRE_STATE::FINISH:    Finish();      break;
 	}
-
-	//íNÇ©Ç™ãSÇ…É^ÉbÉ`ÇµÇΩÇÁ
-	if (m_Touch)
-	{
-
-	}
-
-	//ÉvÉåÉCÉÑÅ[ÇÃêîÇ™0Ç…Ç»Ç¡ÇΩÇÁ
-	if (m_RestPlayer <= 0)
-	{
-
-	}
 }
 
 void CDaruma_FallDownGimmick::Draw(void)
@@ -61,7 +47,7 @@ void CDaruma_FallDownGimmick::Finalize(void)
 }
 
 
-void CDaruma_FallDownGimmick::Ready()//êUÇËï‘ÇÈèÄîı
+void CDaruma_FallDownGimmick::Ready()//êUÇËï‘ÇËï˚ÇÃê›íË
 {
 	if(m_Timer.Finished())
 	{
@@ -73,11 +59,11 @@ void CDaruma_FallDownGimmick::Ready()//êUÇËï‘ÇÈèÄîı
 			Feint();
 			break;
 		case TURN_TYPE::SLOW:
-			m_Timer.SetUp((rand()+1) % 5);
+			m_Timer.SetUp(2 + (rand() % 3));
 			Slow();
 			break;
 		case TURN_TYPE::FAST:
-			m_Timer.SetUp((rand()+1) % 3*0.3);
+			m_Timer.SetUp(0.3 + ((rand() % 7) * 0.1));
 			Fast();
 			break;
 		case TURN_TYPE::TYPE_NUM:
@@ -105,7 +91,6 @@ void CDaruma_FallDownGimmick::Play()//êUÇËï‘ÇÈ
 	{
 		if (m_Object->GetRotation().y < m_TurnAngle)
 		{
-
 			m_Transform.rotation.y += m_TurnSpeed;
 
 			if (m_TurnAngle <= m_Transform.rotation.y)
@@ -128,15 +113,11 @@ void CDaruma_FallDownGimmick::Play()//êUÇËï‘ÇÈ
 
 void CDaruma_FallDownGimmick::Wait()//êUÇËï‘Ç¡ÇΩèÛë‘Ç≈ë“ã@
 {
-	
-
-
 	if (m_Timer.Finished())
 	{
 		m_State = GIMMICK_STATE::FINISH;
 		m_OgreState = OGRE_STATE::FINISH;
 	}
-		
 }
 
 void CDaruma_FallDownGimmick::Finish()//ñﬂÇÈ
@@ -148,25 +129,36 @@ void CDaruma_FallDownGimmick::Finish()//ñﬂÇÈ
 	}
 	else
 	{
-		m_WaitTime = 1;
-		m_Timer.SetUp(m_ReadyTime);
-		m_OgreState = OGRE_STATE::READY;
+		if (m_TurnType == TURN_TYPE::FEINT && (rand() % 2 == 0))
+		{
+			m_TurnType = TURN_TYPE::FAST;
+			Fast();
+			m_Timer.SetUp(0);
+			m_OgreState = OGRE_STATE::PLAY;
+		}
+		else
+		{
+			m_WaitTime = 1;
+			m_Timer.SetUp(m_ReadyTime);
+			m_OgreState = OGRE_STATE::READY;
+		}
+		
 	}
 }
 
-void CDaruma_FallDownGimmick::Feint()
+void CDaruma_FallDownGimmick::Feint()//ÉtÉFÉCÉìÉg,êUÇËå¸Ç©Ç»Ç¢
 {
 	m_TurnAngle = 90;
 	m_ReadyTime = 0.5f;
-	m_WaitTime = 0.4f;
+	m_WaitTime  = 0.4f;
 }
 
-void CDaruma_FallDownGimmick::Fast()
+void CDaruma_FallDownGimmick::Fast()//ëfëÅÇ≠êUÇËå¸Ç≠
 {
 	m_TurnAngle = 180;
 }
 
-void CDaruma_FallDownGimmick::Slow()
+void CDaruma_FallDownGimmick::Slow()//éûä‘ÇãÛÇØÇƒêUÇËå¸Ç≠
 {
 	m_TurnAngle = 180;
 }

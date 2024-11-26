@@ -94,8 +94,6 @@ private:
     OGRE_STATE m_OgreState;
     TURN_TYPE  m_TurnType;
 
-    bool m_SeenMove;             //‹S‚ÉŒ©‚ç‚ê‚Ä‚é‚É“®‚¢‚½‚©
-    bool m_Touch;                //‹S‚ÉG‚Á‚½‚©‚Ç‚¤‚©
     bool m_GameEnd;              //ƒQ[ƒ€I—¹ğŒ‚ğ–‚½‚µ‚½‚©
 
     float m_ReadyTime;      //‹S‚ªU‚èŒü‚­‚Ü‚Å‚ÌŠÔ
