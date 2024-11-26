@@ -31,6 +31,7 @@ void CResult::Draw(void)
 {
 
     vivid::DrawText(20, "リザルト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
+    vivid::DrawText(20, "Xでタイトルへ", vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, 0));
 
 }
 
