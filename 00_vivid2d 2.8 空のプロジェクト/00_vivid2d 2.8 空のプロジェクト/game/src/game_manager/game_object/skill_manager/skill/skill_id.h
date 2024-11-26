@@ -6,6 +6,7 @@
 enum class SKILL_ID_FALLGAME
 {
 	SPEED_UP,
+	JUMP_UP,
 
 	MAX,
 };
@@ -26,5 +27,7 @@ enum class SKILL_ID_DARUMA
 enum class SKILL_ID_DODGEBALL
 {
 	SPEED_UP,
+	JUMP_UP,
+
 	MAX,
 };

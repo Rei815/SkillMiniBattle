@@ -170,6 +170,7 @@
   <ItemGroup>
     <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_skill\select_skill.cpp" />
+    <ClCompile Include="src\game_manager\game_object\skill_manager\skill\jump_up\jump_up.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.cpp" />
     <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
@@ -270,6 +271,7 @@
   <ItemGroup>
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_skill\select_skill.h" />
+    <ClInclude Include="src\game_manager\game_object\skill_manager\skill\jump_up\jump_up.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.h" />
     <ClInclude Include="src\mathematics\matrix\matrix.h" />

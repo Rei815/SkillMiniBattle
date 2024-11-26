@@ -1,5 +1,6 @@
 #include "skill_manager.h"
 #include "skill/speed_up/speed_up.h"
+#include "skill/jump_up/jump_up.h"
 
 /*
  *  インスタンスの取得
@@ -127,6 +128,8 @@ CreateSkill(SKILL_ID_FALLGAME skill_id, UNIT_ID player_id)
     {
     case SKILL_ID_FALLGAME::SPEED_UP:
         skill = new CSpeedUp();     break;
+    case SKILL_ID_FALLGAME::JUMP_UP:
+        skill = new CJumpUp();     break;
     }
 
     if (!skill) return;
@@ -147,6 +150,8 @@ CreateSkill(SKILL_ID_DODGEBALL skill_id, UNIT_ID player_id)
     {
     case SKILL_ID_DODGEBALL::SPEED_UP:
         skill = new CSpeedUp();     break;
+    case SKILL_ID_DODGEBALL::JUMP_UP:
+        skill = new CJumpUp();     break;
     }
 
     if (!skill) return;

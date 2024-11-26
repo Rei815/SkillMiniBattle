@@ -190,7 +190,8 @@ void CDodgeBallGame::CheckFinish(void)
 		}
 	}
 
-	if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+
+	if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
 		CGame::SetGameState(GAME_STATE::FINISH);
 }
 

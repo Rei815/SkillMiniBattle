@@ -18,6 +18,7 @@ const vivid::Vector2    CSkillSelectIcon::m_anchor = vivid::Vector2((m_width * m
 const std::string CSkillSelectIcon::m_fallgameFileName[] = 
 	{
 		"data\\Textures\\skill_icon_speedup_test.png",
+		"data\\Textures\\skill_icon_jumpup_test.png",
 		"data\\Textures\\skill_icon_null_test.png" 
 	};
 
@@ -30,6 +31,7 @@ const std::string CSkillSelectIcon::m_darumaFileName[] =
 const std::string CSkillSelectIcon::m_dodgeballFileName[] = 
 	{
 		"data\\Textures\\skill_icon_speedup_test.png",
+		"data\\Textures\\skill_icon_jumpup_test.png",
 		"data\\Textures\\skill_icon_null_test.png" 
 	};
 
