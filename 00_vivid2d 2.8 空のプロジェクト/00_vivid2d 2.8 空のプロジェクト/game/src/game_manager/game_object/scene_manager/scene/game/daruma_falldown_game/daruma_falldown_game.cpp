@@ -9,14 +9,13 @@
 #include "../../../../data_manager/data_manager.h"
 
 const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(200, 1200.0f, -1500.0f);
-
 const CVector3	CDaruma_FallDownGame::m_camera_direction = CVector3(0, -100, 100);
 
-const CVector3	CDaruma_FallDownGame::m_ogre_position = CVector3(1500, 0, 0);
+const CVector3	CDaruma_FallDownGame::m_ogre_position = CVector3(1500, 100, 0);
 const CVector3	CDaruma_FallDownGame::m_ogre_rotation = CVector3(0, 0, 0);
 
 CDaruma_FallDownGame::CDaruma_FallDownGame(void)
-	: m_PlayerPosition{ (CVector3()) }
+	: m_PlayerPosition{ (CVector3(-1500,0,100)) }
 {
 }
 
@@ -26,7 +25,8 @@ CDaruma_FallDownGame::~CDaruma_FallDownGame(void)
 
 void CDaruma_FallDownGame::Initialize(void)
 {
-	m_RemainCount = CDataManager::GetInstance().GetCurrentPlayer();
+	CGame::Initialize();
+	m_RemainCount = CUnitManager::GetInstance().GetCurrentPlayer();
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
@@ -36,14 +36,16 @@ void CDaruma_FallDownGame::Initialize(void)
 	Temp.position = m_ogre_position;
 	Temp.rotation = m_ogre_rotation;
 
-	IUnit iu;
-	iu.SetGravity(CVector3(0,0,0));
-	
-	CGame::Initialize();
+
+
+	for (int i = 0; i < CUnitManager::GetInstance().GetCurrentPlayer(); i++)
+	{
+		CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 0, 100 * i));
+	}
+
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
-	CUnitManager::GetInstance().Create(UNIT_ID::PLAYER1,CVector3(-1500, 0, 100));
 
 	m_DebugText = "だるまさんがころんだシーン";
 
@@ -53,6 +55,10 @@ void CDaruma_FallDownGame::Initialize(void)
 	CGimmickManager& gm = CGimmickManager::GetInstance();
 	gm.Create(GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK, OgreObject);
 	CUnitManager::GetInstance();
+	CObjectManager::GetInstance().Create(OBJECT_ID::DARUMA_FALLDOWN_STAGE_OBJECT, CTransform(CVector3(0, -2500, -100)));
+
+	m_TempFirstDis = FLT_MAX;
+	m_TempFirstNum = -1;
 }
 
 void CDaruma_FallDownGame::Update(void)
@@ -66,13 +72,19 @@ void CDaruma_FallDownGame::Update(void)
 	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
 	CObjectManager::OBJECT_LIST::iterator it;
 
-	for (it = objectList.begin();it != objectList.end();it++)
+	for (it = objectList.begin(); it != objectList.end(); it++)
 	{
-		if ((*it)->GetGimmick()->GetState() == GIMMICK_STATE::PLAY)
+		CGimmick* gimmick = (*it)->GetGimmick();
+		CPlayer* player;
+
+		if (!gimmick) continue;
+
+		//鬼が振り返ってる時の処理
+		if (gimmick->GetState() == GIMMICK_STATE::PLAY)
 		{
 			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 			{
-				CPlayer* player = um.GetPlayer((UNIT_ID)i);
+				player = um.GetPlayer((UNIT_ID)i);
 
 				if (!player) continue;
 
@@ -81,29 +93,32 @@ void CDaruma_FallDownGame::Update(void)
 					if (m_PlayerPosition[i] != CVector3::ZERO)
 						m_PlayerPosition[i] = player->GetPosition();
 
-
-					//player->SetDefeatFlag(true);
 					player->SetActionFlag(false);
 					m_RemainCount--;
-
-					
 				}
 			}
 		}
+
+		if (gimmick->GetState() != GIMMICK_STATE::PLAY)
+		{
+			for (int i = 0; i < um.GetCurrentPlayer(); i++)
+			{
+				player = um.GetPlayer((UNIT_ID)i);
+				if ((player->GetPosition().x >= 1400))
+				{
+					m_TempFirstNum = i;
+					Ranking();
+				}
+			}
+
+		}
+		
 	}
 
+	//プレイヤーの生き残りが0人になったら
 	if (m_RemainCount == 0)
 	{
-		/*
-		CVector3 temp = CVector3(1, 1, 1);　　　見本
-		float length = temp.Length();
-		*/
-
-		float m_TempFirstDis = FLT_MAX;
-		int   m_TempFirstNum = -1;
-
-
-		for (int j = 0; j < dm.GetCurrentPlayer();j++)
+		for (int j = 0; j < CUnitManager::GetInstance().GetCurrentPlayer();j++)
 		{
 			float m_PlayerDis = (m_PlayerPosition[j] - m_ogre_position).Length();
 
@@ -112,16 +127,8 @@ void CDaruma_FallDownGame::Update(void)
 				m_TempFirstDis = m_PlayerDis;
 				m_TempFirstNum = j;
 			}
-
 		}
-
-		for (int j = 0; j < dm.GetCurrentPlayer(); j++)
-		{
-			if (j != m_TempFirstNum)
-			{
-				um.GetPlayer((UNIT_ID)j)->SetDefeatFlag(true);
-			}
-		}
+		Ranking();
 	}
 }
 
@@ -129,10 +136,26 @@ void CDaruma_FallDownGame::Draw(void)
 {
 	CGame::Draw();
 	vivid::DrawText(30, std::to_string(vivid::controller::GetAnalogStickLeft(vivid::controller::DEVICE_ID::PLAYER1).x),vivid::Vector2(100.0f, 10.0f));
-	vivid::DrawText(30, std::to_string(vivid::controller::GetAnalogStickLeft(vivid::controller::DEVICE_ID::PLAYER1).y),vivid::Vector2(100.0f, 40.0f));
+	vivid::DrawText(30, std::to_string(vivid::controller::GetAnalogStickLeft
+	(vivid::controller::DEVICE_ID::PLAYER1).y),vivid::Vector2(100.0f, 40.0f));
+
+	
 }
 
 void CDaruma_FallDownGame::Finalize(void)
 {
 
+}
+
+void CDaruma_FallDownGame::Ranking(void)
+{
+	CUnitManager& um = CUnitManager::GetInstance();
+	//一位以外を敗北状態にする
+	for (int j = 0; j < CUnitManager::GetInstance().GetCurrentPlayer(); j++)
+	{
+		if (j != m_TempFirstNum)
+		{
+			um.GetPlayer((UNIT_ID)j)->SetDefeatFlag(true);
+		}
+	}
 }

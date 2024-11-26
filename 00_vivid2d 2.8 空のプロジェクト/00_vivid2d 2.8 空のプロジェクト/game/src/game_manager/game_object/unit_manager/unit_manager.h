@@ -60,8 +60,6 @@ public:
      */
     void        CheckHitObject(IObject* object);
 
-
-
     /*!
      *  @brief      ƒvƒŒƒCƒ„[æ“¾
      *

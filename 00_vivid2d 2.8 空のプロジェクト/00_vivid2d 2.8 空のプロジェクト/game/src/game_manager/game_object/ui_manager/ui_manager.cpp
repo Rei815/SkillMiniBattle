@@ -228,7 +228,6 @@ bool CUIManager::CheckUIAttribute(CUI::UI_ATTRIBUTE ui_attribute)
     {
         CUI* ui = (CUI*)(*it);
 
-
         if (ui->CheckAttribute(ui_attribute) == true)
             return true;
 
