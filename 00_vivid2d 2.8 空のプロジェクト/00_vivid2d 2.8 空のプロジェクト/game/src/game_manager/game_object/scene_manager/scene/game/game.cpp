@@ -3,7 +3,6 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 #include "../../../unit_manager/unit_manager.h"
-#include "../../../ui_manager/ui_manager.h"
 #include "../../../controller_manager/controller_manager.h"
 #include "../../../gimmick_manager/gimmick_manager.h"
 #include "../../../object_manager/object_manager.h"
@@ -224,12 +223,13 @@ Finish(void)
 #ifdef VIVID_DEBUG
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
-        CSceneManager::GetInstance().PushScene(SCENE_ID::RESULT);
+    {
+        Push(SCENE_ID::RESULT);
+    }
 #endif
     if (!m_FinishUIFlag)
     {
         m_FinishUIFlag = true;
-        //CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
     }
 }
 

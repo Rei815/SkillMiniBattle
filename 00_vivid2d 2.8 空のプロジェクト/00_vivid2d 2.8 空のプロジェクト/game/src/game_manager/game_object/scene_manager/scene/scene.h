@@ -51,14 +51,29 @@ public:
      */
     virtual void        Finalize(void);
 
+
     bool        GetActive();
+
+    void        SetActive(bool active);
 
     SCENE_ID    GetSceneID();
 
     SCENE_STATE GetSceneState();
     void        SetSceneState(SCENE_STATE state);
 protected:
-    bool        m_Active;
+
+    /*!
+        *  @brief      シーンをスタックする
+        *
+        *  @param[in]  id      シーンID
+        */
+    void    Push(SCENE_ID id);
+
+    /*!
+     *  @brief      スタックされたシーンを取り出す
+     */
+    void    Pop(SCENE_ID id);
+    bool        m_ActiveFlag;
     SCENE_ID    m_SceneID;
     SCENE_STATE m_State;
 };

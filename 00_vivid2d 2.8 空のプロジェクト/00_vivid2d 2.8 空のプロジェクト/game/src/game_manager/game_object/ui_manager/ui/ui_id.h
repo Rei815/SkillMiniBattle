@@ -15,5 +15,6 @@ enum class UI_ID
     FALL_TRIANGLE,  //!< フォールゲームの三角
     RANDOM_GAME,
     FINISH_GAME_BG,
+    FALLOUT_SELECT_BG,
     KEY,
 };

@@ -131,17 +131,25 @@ CSceneManager::ChangeScene(SCENE_ID id)
 
 void CSceneManager::PushScene(SCENE_ID id)
 {
-    IScene* scene = CreateScene(id);
-    if (scene)
-    {
-        m_SceneList.push_back(scene);
-        scene->SetSceneState(SCENE_STATE::WAIT);
-    }
-
+    CreateScene(id);
 }
 
 void CSceneManager::PopScene(SCENE_ID id)
 {
+    if (m_SceneList.size() <= 1) return;
+
+    SCENE_LIST::iterator it = m_SceneList.begin();
+    while (it != m_SceneList.end())
+    {
+        IScene* scene = (IScene*)(*it);
+
+        if (scene->GetSceneID() == id)
+        {
+            scene->SetActive(false);
+            return;
+        }
+        ++it;
+    }
 }
 
 /*
@@ -304,7 +312,7 @@ CSceneManager::SceneChange()
         while (it != m_SceneList.end())
         {
             IScene* scene = (IScene*)(*it);
-            if (scene->GetSceneID() == m_CurrentSceneID)
+            if (scene->GetActive() == true)
             {
                 scene->Finalize();
 

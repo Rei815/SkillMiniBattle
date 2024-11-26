@@ -1,25 +1,14 @@
-#pragma once
-
-#include "vivid.h"
 #include "..\ui.h"
-#include "..\fallout_select_bg\fallout_select_bg.h"
-class CFallSelect : public CUI
+class CFalloutSellectBG : public CUI
 {
 public:
-    /*!
-     *  @brief      コンストラクタ
-     */
-    CFallSelect(UI_ID id);
-
-    /*!
-     *  @brief      デストラクタ
-     */
-    ~CFallSelect(void);
+	CFalloutSellectBG(UI_ID id);
+	~CFalloutSellectBG();
 
     /*!
      *  @brief      初期化
      */
-    void        Initialize();
+    void        Initialize(const vivid::Vector2& position);
 
     /*!
      *  @brief      更新
@@ -37,14 +26,13 @@ public:
     void        Finalize(void);
 
 private:
-    static const vivid::Vector2     m_positionList[];   //!< 位置
+    static const std::string        m_file_name;
     static const int                m_height;           //!< 高さ
     static const int                m_width;            //!< 幅
     static const vivid::Rect        m_rect;             //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;           //!< 基準点
     static const vivid::Vector2     m_scale;            //!< 拡縮
 
-    std::string                     m_FileName;
+    vivid::Vector2                  m_Position;   //!< 位置
 
-    CFalloutSellectBG               m_BackGround;
 };

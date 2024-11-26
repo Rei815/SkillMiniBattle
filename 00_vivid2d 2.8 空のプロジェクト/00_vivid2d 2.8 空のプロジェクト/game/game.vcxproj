@@ -169,6 +169,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fallout_select_bg\fallout_select_bg.cpp" />
     <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
     <ClCompile Include="src\primitive\plane\plane.cpp" />
     <ClCompile Include="src\collider\box_collider\box_collider.cpp" />
@@ -264,6 +265,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_select_bg\fallout_select_bg.h" />
     <ClInclude Include="src\mathematics\matrix\matrix.h" />
     <ClInclude Include="src\primitive\plane\plane.h" />
     <ClInclude Include="src\collider\box_collider\box_collider.h" />
