@@ -27,7 +27,7 @@ CControllerManager::Update(void)
 {
     m_ControllerNum = vivid::controller::GetConnectCount();
 
-    vivid::DrawText(30,std::to_string(m_ControllerNum), vivid::Vector2(0, 0));
+    //vivid::DrawText(30,std::to_string(m_ControllerNum), vivid::Vector2(0, 0));
 
     //m_ControllerIDList.
 }

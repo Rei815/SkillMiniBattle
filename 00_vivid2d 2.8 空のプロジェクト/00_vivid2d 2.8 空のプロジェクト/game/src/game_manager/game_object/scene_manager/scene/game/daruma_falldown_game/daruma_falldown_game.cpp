@@ -26,7 +26,7 @@ CDaruma_FallDownGame::~CDaruma_FallDownGame(void)
 void CDaruma_FallDownGame::Initialize(void)
 {
 	CGame::Initialize();
-	m_RemainCount = CUnitManager::GetInstance().GetCurrentPlayer();
+	m_RemainCount = CDataManager::GetInstance().GetCurrentPlayer();
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
@@ -36,11 +36,9 @@ void CDaruma_FallDownGame::Initialize(void)
 	Temp.position = m_ogre_position;
 	Temp.rotation = m_ogre_rotation;
 
-
-
-	for (int i = 0; i < CUnitManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
-		CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 0, 100 * i));
+		CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 100, 100 * i));
 	}
 
 	CCamera::GetInstance().Initialize();
@@ -101,7 +99,7 @@ void CDaruma_FallDownGame::Update(void)
 
 		if (gimmick->GetState() != GIMMICK_STATE::PLAY)
 		{
-			for (int i = 0; i < um.GetCurrentPlayer(); i++)
+			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 			{
 				player = um.GetPlayer((UNIT_ID)i);
 				if ((player->GetPosition().x >= 1400))
@@ -118,7 +116,7 @@ void CDaruma_FallDownGame::Update(void)
 	//プレイヤーの生き残りが0人になったら
 	if (m_RemainCount == 0)
 	{
-		for (int j = 0; j < CUnitManager::GetInstance().GetCurrentPlayer();j++)
+		for (int j = 0; j < dm.GetCurrentPlayer();j++)
 		{
 			float m_PlayerDis = (m_PlayerPosition[j] - m_ogre_position).Length();
 
@@ -151,7 +149,7 @@ void CDaruma_FallDownGame::Ranking(void)
 {
 	CUnitManager& um = CUnitManager::GetInstance();
 	//一位以外を敗北状態にする
-	for (int j = 0; j < CUnitManager::GetInstance().GetCurrentPlayer(); j++)
+	for (int j = 0; j < CDataManager::GetInstance().GetCurrentPlayer(); j++)
 	{
 		if (j != m_TempFirstNum)
 		{
