@@ -25,7 +25,7 @@ CDaruma_FallDownGame::~CDaruma_FallDownGame(void)
 
 void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 {
-	CGame::Initialize();
+	CGame::Initialize(scene_id);
 	m_RemainCount = CDataManager::GetInstance().GetCurrentPlayer();
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)

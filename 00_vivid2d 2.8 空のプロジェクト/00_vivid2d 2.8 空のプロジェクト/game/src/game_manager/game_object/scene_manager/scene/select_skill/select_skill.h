@@ -26,7 +26,7 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
-    void Initialize(void);
+    void Initialize(SCENE_ID scene_id);
 
     /*!
      *  @brief      XV

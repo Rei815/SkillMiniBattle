@@ -6,6 +6,7 @@
 #include "../../../../ui_manager/ui_manager.h"
 #include "../../../../object_manager/object/fall_object/mark_id.h"
 #include "../../../../data_manager/data_manager.h"
+#include "../../../../skill_manager/skill_manager.h"
 
 const CTransform CFallGame::m_object_transform_list[] = 
 {CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
@@ -46,6 +47,7 @@ void CFallGame::Initialize(SCENE_ID scene_id)
 		m_EntryList.push_back(unit);
 	}
 
+	CSkillManager::GetInstance().SetSkill();
 	CObjectManager& om = CObjectManager::GetInstance();
 	CGimmickManager& gm = CGimmickManager::GetInstance();
 

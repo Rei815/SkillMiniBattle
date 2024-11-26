@@ -21,8 +21,9 @@ CSelectSkill::~CSelectSkill(void)
 {
 }
 
-void CSelectSkill::Initialize(void)
+void CSelectSkill::Initialize(SCENE_ID scene_id)
 {
+    IScene::Initialize(scene_id);
     CCamera::GetInstance().Initialize();
     CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -5000.0f));
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
