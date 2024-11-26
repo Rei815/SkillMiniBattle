@@ -143,7 +143,8 @@ void CSelectSkill::ChooseSkill(void)
             case GAME_ID::DODGE_BALL_GAME:
                 m_ChooseSkillNum[i] = (int)(SKILL_ID_DODGEBALL::MAX);
                 break;
-                (SKILL_ID_DARUMA::MAX);
+            case GAME_ID::DARUMA_FALL_DOWN_GAME:
+                m_ChooseSkillNum[i] = (int)(SKILL_ID_DARUMA::MAX);
                 break;
             case GAME_ID::DEBUG_GAME:
                 m_ChooseSkillNum[i] = (int)(SKILL_ID_DODGEBALL::MAX);
@@ -307,7 +308,7 @@ void CSelectSkill::MoveCursor(void)
 
     if ((GetJoypadInputState(joyPad) & PAD_INPUT_2) || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
     {
-        //プレイヤーにスキルをセットする（未完成）
+        //プレイヤーにスキルをセットする
         int tempSkillNum = m_ChooseSkillNum[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];
         UNIT_ID tempPlayerID = m_CursorID[m_NowCursorID_Num];
 
