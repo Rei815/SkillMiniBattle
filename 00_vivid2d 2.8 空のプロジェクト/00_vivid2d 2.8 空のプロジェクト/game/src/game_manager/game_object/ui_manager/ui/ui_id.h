@@ -17,5 +17,6 @@ enum class UI_ID
     SKILL_SELECT_ICON,
     SKILL_SELECT_CURSOR,
     FINISH_GAME_BG,
+    FALLOUT_SELECT_BG,
     KEY,
 };

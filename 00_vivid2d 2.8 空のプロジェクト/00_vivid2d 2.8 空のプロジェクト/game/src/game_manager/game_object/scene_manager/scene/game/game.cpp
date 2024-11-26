@@ -34,8 +34,9 @@ CGame::~CGame(void)
  *  ‰Šú‰»
  */
 void
-CGame::Initialize(void)
+CGame::Initialize(SCENE_ID scene_id)
 {
+    IScene::Initialize(scene_id);
     m_EntryList.clear();
     m_ResultList.clear();
     CUnitManager::GetInstance().Initialize();
@@ -126,6 +127,8 @@ CGame::Draw(void)
 void
 CGame::Finalize(void)
 {
+    IScene::Finalize();
+
     CUnitManager::GetInstance().Finalize();
     CSkillManager::GetInstance().Finalize();
     CUIManager::GetInstance().Finalize();
@@ -226,15 +229,14 @@ Finish(void)
 #ifdef VIVID_DEBUG
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::RESULT);
+    {
+        Push(SCENE_ID::RESULT);
+    }
 #endif
     if (!m_FinishUIFlag)
     {
         m_FinishUIFlag = true;
-        CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
     }
-    if(m_EntryList.size() == 1)
-    CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
 }
 
 void CGame::CheckFinish()

@@ -175,6 +175,7 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\daruma_falldown_stage_object\daruma_falldown_stage_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_icon\player_icon.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fallout_select_bg\fallout_select_bg.cpp" />
     <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
     <ClCompile Include="src\primitive\plane\plane.cpp" />
     <ClCompile Include="src\collider\box_collider\box_collider.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\jump_up\jump_up.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_select_bg\fallout_select_bg.h" />
     <ClInclude Include="src\mathematics\matrix\matrix.h" />
     <ClInclude Include="src\primitive\plane\plane.h" />
     <ClInclude Include="src\collider\box_collider\box_collider.h" />

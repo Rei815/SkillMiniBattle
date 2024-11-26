@@ -12,8 +12,9 @@ CSelectPlayer::~CSelectPlayer(void)
 {
 }
 
-void CSelectPlayer::Initialize(void)
+void CSelectPlayer::Initialize(SCENE_ID scene_id)
 {
+    IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
 
@@ -49,6 +50,8 @@ void CSelectPlayer::Draw(void)
 
 void CSelectPlayer::Finalize(void)
 {
+    IScene::Finalize();
+
     CStage::GetInstance().Finalize();
 
 }

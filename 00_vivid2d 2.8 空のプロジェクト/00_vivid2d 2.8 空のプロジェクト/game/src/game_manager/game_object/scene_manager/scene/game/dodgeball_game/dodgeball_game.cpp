@@ -61,11 +61,11 @@ CDodgeBallGame::~CDodgeBallGame(void)
 
 }
 
-void CDodgeBallGame::Initialize(void)
+void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 {
 	m_SpawnTimer.SetUp(0);
 	m_ShotTimer.SetUp(m_initial_shot_time);
-	CGame::Initialize();
+	CGame::Initialize(scene_id);
 
 	//CStage::GetInstance().Initialize();
 	CObjectManager::GetInstance().Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT,CTransform(CVector3(0.0f,-100.0f,0.0f)));

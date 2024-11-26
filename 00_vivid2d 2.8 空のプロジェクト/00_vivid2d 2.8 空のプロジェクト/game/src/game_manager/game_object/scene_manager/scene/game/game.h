@@ -34,7 +34,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    virtual void        Initialize(void);
+    virtual void        Initialize(SCENE_ID scene_id);
 
     /*!
      *  @brief      更新
@@ -89,6 +89,7 @@ protected:
      *  @brief      終了判定
      */
     virtual void    CheckFinish(void);
+
     GAME_STATE      m_GameState;    //!< ゲームの状態
 
 

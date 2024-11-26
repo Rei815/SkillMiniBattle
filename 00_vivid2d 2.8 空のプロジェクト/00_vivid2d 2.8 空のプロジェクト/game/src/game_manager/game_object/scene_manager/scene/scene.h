@@ -10,18 +10,14 @@
  */
 
 #pragma once
+#include "scene_id.h"
 
- /*!
-  *  @class      IScene
-  *
-  *  @brief      シーンベースクラス
-  *
-  *  @author     Kazuya Maruyama
-  *
-  *  @date       2020/11/13
-  *
-  *  @since      1.0
-  */
+enum class SCENE_STATE
+{
+    WAIT,
+    ACTIVE,
+};
+
 class IScene
 {
 public:
@@ -38,7 +34,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    virtual void        Initialize(void);
+    virtual void        Initialize(SCENE_ID scene_id);
 
     /*!
      *  @brief      更新
@@ -54,4 +50,30 @@ public:
      *  @brief      解放
      */
     virtual void        Finalize(void);
+
+
+    bool        GetActive();
+
+    void        SetActive(bool active);
+
+    SCENE_ID    GetSceneID();
+
+    SCENE_STATE GetSceneState();
+    void        SetSceneState(SCENE_STATE state);
+protected:
+
+    /*!
+        *  @brief      シーンをスタックする
+        *
+        *  @param[in]  id      シーンID
+        */
+    void    Push(SCENE_ID id);
+
+    /*!
+     *  @brief      スタックされたシーンを取り出す
+     */
+    void    Pop(SCENE_ID id);
+    bool        m_ActiveFlag;
+    SCENE_ID    m_SceneID;
+    SCENE_STATE m_State;
 };

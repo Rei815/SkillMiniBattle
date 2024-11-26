@@ -9,9 +9,9 @@ CDebugGame::~CDebugGame(void)
 {
 }
 
-void CDebugGame::Initialize(void)
+void CDebugGame::Initialize(SCENE_ID scene_id)
 {
 
-	CGame::Initialize();
+	CGame::Initialize(scene_id);
 	m_DebugText = "デバッグゲーム";
 }

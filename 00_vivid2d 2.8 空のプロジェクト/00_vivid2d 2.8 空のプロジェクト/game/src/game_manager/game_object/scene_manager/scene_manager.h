@@ -13,7 +13,7 @@
 
 #include "vivid.h"
 #include"scene\scene_id.h"
-
+#include <list>
 class IScene;
 
 /*!
@@ -71,11 +71,27 @@ public:
     void        ChangeScene(SCENE_ID id);
 
     /*!
+     *  @brief      シーンをスタックする
+     *
+     *  @param[in]  id  シーンID
+     */
+    void        PushScene(SCENE_ID id);
+
+    /*!
+     *  @brief      スタックされたシーンを取り出す
+     *
+     *  @param[in]  id  シーンID
+     */
+    void        PopScene(SCENE_ID id);
+
+
+
+    /*!
      *  @brief      現在のシーンを取得
      *
      *  @return     現在のシーン
      */
-    IScene* GetScene(void);
+    //IScene* GetScene(void);
 
 private:
     /*!
@@ -109,7 +125,7 @@ private:
      *
      *  @param[in]  id  シーンID
      */
-    void    CreateScene(SCENE_ID id);
+    IScene*    CreateScene(SCENE_ID id);
 
     /*!
      *  @brief      フェードイン
@@ -129,7 +145,13 @@ private:
     /*!
      *  @brief      シーン変更
      */
-    void    SceneChange(void);
+    void    SceneChange();
+
+    /*!
+     *  @brief      シーン変更
+     */
+    IScene* GetScene(SCENE_ID scene_id);
+
 
     /*!
      *  @brief      状態ID
@@ -149,7 +171,9 @@ private:
     static const int            m_max_fade_alpha;   //!< フェード用アルファの最大値
     SCENE_ID                    m_CurrentSceneID;   //!< 現在のシーンID
     SCENE_ID                    m_NextSceneID;      //!< 次のシーンID
-    IScene*                     m_Scene;            //!< シーンクラス
+
+    using SCENE_LIST = std::list<IScene*>;
+    SCENE_LIST                  m_SceneList;            //!< シーンクラス
     STATE                       m_State;            //!< 状態
     bool                        m_ChangeScene;      //!< シーン変更フラグ
     int                         m_FadeAlpha;        //!< フェード時のアルファ値

@@ -11,8 +11,10 @@ CTitle::~CTitle(void)
 {
 }
 
-void CTitle::Initialize(void)
+void CTitle::Initialize(SCENE_ID scene_id)
 {
+    IScene::Initialize(scene_id);
+
 	m_State = STATE::WAIT;
 
     CCamera::GetInstance().Initialize();
@@ -58,6 +60,7 @@ void CTitle::Draw(void)
 
 void CTitle::Finalize(void)
 {
+    IScene::Finalize();
     CStage::GetInstance().Finalize();
     CStage::GetInstance().Finalize();
 

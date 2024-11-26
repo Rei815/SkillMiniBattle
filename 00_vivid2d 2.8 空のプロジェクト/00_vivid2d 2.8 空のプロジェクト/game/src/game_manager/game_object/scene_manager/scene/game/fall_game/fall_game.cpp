@@ -8,8 +8,8 @@
 #include "../../../../data_manager/data_manager.h"
 
 const CTransform CFallGame::m_object_transform_list[] = 
-{CTransform(CVector3(600,-100,-300)),CTransform(CVector3(-600,-100,300)), CTransform(CVector3(0,-100,300)),
-CTransform(CVector3(-600,-100,-300)), CTransform(CVector3(0,-100,-300)), CTransform(CVector3(600,-100,300)) };
+{CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
+CTransform(CVector3(-450,-100,-300)), CTransform(CVector3(0,-100,-500)), CTransform(CVector3(450,-100,250)) };
 
 const float		CFallGame::m_time_accelerator = 0.1f;
 const float		CFallGame::m_min_time = 1.0f;
@@ -26,11 +26,11 @@ CFallGame::~CFallGame(void)
 {
 }
 
-void CFallGame::Initialize(void)
+void CFallGame::Initialize(SCENE_ID scene_id)
 {
 	m_FallTime = m_initial_time;
 	m_ChooseObjectTimer.SetUp(m_FallTime);
-	CGame::Initialize();
+	CGame::Initialize(scene_id);
 	CStage::GetInstance().Initialize();
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
@@ -65,8 +65,6 @@ void CFallGame::Initialize(void)
 	object = om.Create(OBJECT_ID::SUN_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SUN]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-
-
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
@@ -83,7 +81,7 @@ void CFallGame::Update(void)
 
 void CFallGame::Draw(void)
 {
-	CStage::GetInstance().Draw();
+	//CStage::GetInstance().Draw();
 	CGame::Draw();
 
 #ifdef VIVID_DEBUG
@@ -98,7 +96,6 @@ void CFallGame::Finalize(void)
 	CStage::GetInstance().Finalize();
 
 	CCamera::GetInstance().Finalize();
-
 }
 
 void CFallGame::Start(void)
@@ -130,12 +127,13 @@ void CFallGame::Play(void)
 			CUIManager::GetInstance().Create(fallInfo.uiID);
 		}
 	}
-
-
 }
 
 void CFallGame::Finish(void)
 {
+	if (m_ResultList.size() == 1)
+		CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
+
 	CGame::Finish();
 }
 
@@ -160,7 +158,6 @@ void CFallGame::CheckFinish()
 		}
 		++it;
 	}
-
 	if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
 		CGame::SetGameState(GAME_STATE::FINISH);
 }
