@@ -90,7 +90,7 @@ void CDaruma_FallDownGame::Update(void)
 				{
 					if (m_PlayerPosition[i] != CVector3::ZERO)
 						m_PlayerPosition[i] = player->GetPosition();
-
+					
 					player->SetActionFlag(false);
 					m_RemainCount--;
 				}
