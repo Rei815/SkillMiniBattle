@@ -26,6 +26,5 @@ enum class SKILL_ID_DARUMA
 enum class SKILL_ID_DODGEBALL
 {
 	SPEED_UP,
-
 	MAX,
 };

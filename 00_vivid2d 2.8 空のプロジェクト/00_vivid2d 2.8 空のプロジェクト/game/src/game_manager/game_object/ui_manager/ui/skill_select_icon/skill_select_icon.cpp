@@ -3,10 +3,10 @@
 
 const vivid::Vector2    CSkillSelectIcon::m_positionList[] = 
 	{
-		vivid::Vector2(200, 348),		//Player1
-		vivid::Vector2(400, 348),		//Player2
-		vivid::Vector2(600, 348),		//Player3
-		vivid::Vector2(800, 348)		//Player4
+		vivid::Vector2(100, 348),		//Player1
+		vivid::Vector2(367, 348),		//Player2
+		vivid::Vector2(633, 348),		//Player3
+		vivid::Vector2(900, 348)		//Player4
 	};
 
 const int               CSkillSelectIcon::m_height = 384;

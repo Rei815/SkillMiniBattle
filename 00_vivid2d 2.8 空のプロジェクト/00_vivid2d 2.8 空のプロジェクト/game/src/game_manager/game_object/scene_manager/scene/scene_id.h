@@ -6,7 +6,8 @@ enum class SCENE_ID
 	TITLE,			//!< タイトルシーン
 	SELECTMODE,		//!< モードセレクトシーン
 	SELECTPLAYER,	//!< プレイヤーセレクトシーン
-	SELECTGAME,		//!< ゲームとスキルを決めるシーン
+	SELECTGAME,		//!< ゲームを決めるシーン
+	SELECTSKILL,	//!< スキルを決めるシーン
 	GAMEMAIN,		//!< ゲームメインシーン
 	FALLGAME,		//!< フォールゲームシーン
 	DODGEBALLGAME,	//!< ドッジボールゲームシーン

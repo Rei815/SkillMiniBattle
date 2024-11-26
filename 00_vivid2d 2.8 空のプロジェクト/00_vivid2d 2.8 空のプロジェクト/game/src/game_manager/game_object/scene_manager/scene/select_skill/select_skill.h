@@ -43,26 +43,29 @@ public:
      */
     void Finalize(void);
 
-    void SetNextGameID(GAME_ID game_id);
     void ChooseSkill(void);
     void CreateSkillIcon(void);
 
 private:
     void ResetChooseSkill(void);
 
+    void SetCursorID(void);
     void CreateCursor(void);
     void MoveCursor(void);
 
     static const float m_cursor_move_time;
 
-    GAME_ID             m_NextGameID;
     int                 m_ChooseSkillNum[(int)UNIT_ID::NONE];
     CSkillSelectIcon*   m_SkillSelectIcon[(int)UNIT_ID::NONE];
 
     std::list<int> m_CursorPosNumList;
     int m_NowCursorPosNum;
 
-    UNIT_ID m_CursorID;
+    UNIT_ID m_CursorID[(int)UNIT_ID::NONE];
+    int m_NowCursorID_Num;
+
     CSkillSelectCursor* m_SkillSelectCursor;
     CTimer m_CursorMoveTimer;
+
+    GAME_ID m_GameID;
 };
