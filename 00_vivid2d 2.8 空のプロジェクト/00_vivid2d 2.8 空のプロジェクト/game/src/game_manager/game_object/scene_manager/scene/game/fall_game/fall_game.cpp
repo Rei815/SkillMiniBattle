@@ -160,8 +160,16 @@ void CFallGame::CheckFinish()
 		}
 		++it;
 	}
-	if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
-		CGame::SetGameState(GAME_STATE::FINISH);
+	if (CDataManager::GetInstance().GetCurrentPlayer() > 1)
+	{
+		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+			CGame::SetGameState(GAME_STATE::FINISH);
+	}
+	else
+	{
+		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
+			CGame::SetGameState(GAME_STATE::FINISH);
+	}
 }
 
 CFallGame::FALL_INFO CFallGame::ChooseObject(void)

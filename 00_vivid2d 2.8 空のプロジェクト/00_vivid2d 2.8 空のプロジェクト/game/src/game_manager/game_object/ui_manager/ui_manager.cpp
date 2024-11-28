@@ -5,6 +5,7 @@
 #include "ui/finish_backGround/finish_backGround.h"
 #include "ui/skill_select_icon/skill_select_icon.h"
 #include "ui/skill_select_cursor/skill_select_cursor.h"
+#include "ui/key/key.h"
  /*
   *  インスタンスの取得
   */
@@ -125,6 +126,43 @@ CUI* CUIManager::Create(UI_ID id)
     if (!ui) return nullptr;
 
     ui->Initialize();
+    m_UIList.push_back(ui);
+
+    return ui;
+}
+
+CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
+{
+    CUI* ui = nullptr;
+
+    switch (id)
+    {
+    case UI_ID::PAUSE:
+        ui = new CPause(id);                break;
+    case UI_ID::FALL_CIRCLE:
+    case UI_ID::FALL_CROSS:
+    case UI_ID::FALL_MOON:
+    case UI_ID::FALL_SQUARE:
+    case UI_ID::FALL_SUN:
+    case UI_ID::FALL_TRIANGLE:
+        ui = new CFallSelect(id);           break;
+    case UI_ID::RANDOM_GAME:
+        ui = new CRandomGame(id);           break;
+    case UI_ID::SKILL_SELECT_ICON:
+        ui = new CSkillSelectIcon(id);      break;
+    case UI_ID::SKILL_SELECT_CURSOR:
+        ui = new CSkillSelectCursor(id);    break;
+        ui = new CRandomGame(id);     break;
+    case UI_ID::FINISH_GAME_BG:
+        ui = new CFinishGameBG(id);     break;
+    case UI_ID::KEY:
+        ui = new CKey(id);     break;
+        break;
+    }
+
+    if (!ui) return nullptr;
+
+    ui->Initialize(position);
     m_UIList.push_back(ui);
 
     return ui;

@@ -190,9 +190,17 @@ void CDodgeBallGame::CheckFinish(void)
 		}
 	}
 
+	if (CDataManager::GetInstance().GetCurrentPlayer() > 1)
+	{
+		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+			CGame::SetGameState(GAME_STATE::FINISH);
+	}
+	else
+	{
+		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
+			CGame::SetGameState(GAME_STATE::FINISH);
+	}
 
-	if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
-		CGame::SetGameState(GAME_STATE::FINISH);
 }
 
 void CDodgeBallGame::SpawnCannnon(void)

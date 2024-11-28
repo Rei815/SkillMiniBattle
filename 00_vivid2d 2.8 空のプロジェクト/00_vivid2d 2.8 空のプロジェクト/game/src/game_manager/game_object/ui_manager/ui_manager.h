@@ -68,6 +68,14 @@ public:
      *  @param[in]  id          UIÇÃID
      *  @param[in]  position    UIÇÃà íu
      */
+    CUI*        Create(UI_ID id, const vivid::Vector2& position);
+
+    /*!
+     *  @brief      UIê∂ê¨
+     *
+     *  @param[in]  id          UIÇÃID
+     *  @param[in]  position    UIÇÃà íu
+     */
     CUI*        Create(UI_ID id, const CVector3& position);
 
     /*!

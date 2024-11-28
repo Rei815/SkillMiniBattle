@@ -30,7 +30,7 @@ void CTitle::Update(void)
     {
     case STATE::WAIT:
     {
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
+        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
         {
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTPLAYER);
         }
@@ -49,9 +49,10 @@ void CTitle::Draw(void)
     {
     case STATE::WAIT:
     {
-        vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
+        vivid::DrawText(50, "スキルミニバトル", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "スキルミニバトル") / 2, vivid::WINDOW_HEIGHT / 2));
+        //vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
 
-        vivid::DrawText(20, "Zで開始,左クリックで射撃または決定,ADキーで移動,スペースキーでジャンプ,Tabキーで一時停止", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
+        vivid::DrawText(20, "ENTERキーで開始,WASDキーで移動,スペースキーでジャンプ,Tabキーで一時停止", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
     }
     break;
     }
