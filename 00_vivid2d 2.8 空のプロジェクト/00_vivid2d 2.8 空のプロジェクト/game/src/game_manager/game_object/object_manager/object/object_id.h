@@ -16,5 +16,6 @@ enum class OBJECT_ID
     CANNON_OBJECT,          //!< 大砲オブジェクト
     DODGEBALL_STAGE_OBJECT, //!< ドッジボールシーンのステージオブジェクト
     DARUMA_FALLDOWN_STAGE_OBJECT, //!< ドッジボールシーンのステージオブジェクト
+    SKILL_WALL_OBJECT,      //!< スキルでスポーンできる壁オブジェクト
     MAX,
 };

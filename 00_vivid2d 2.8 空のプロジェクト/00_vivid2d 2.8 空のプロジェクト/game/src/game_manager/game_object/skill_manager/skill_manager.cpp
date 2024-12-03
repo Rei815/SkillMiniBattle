@@ -1,6 +1,8 @@
 #include "skill_manager.h"
-#include "skill/speed_up/speed_up.h"
-#include "skill/jump_up/jump_up.h"
+#include "skill/skill_speed_up/skill_speed_up.h"
+#include "skill/skill_jump_up/skill_jump_up.h"
+#include "skill/skill_dash/skill_dash.h"
+#include "skill/skill_spawn_wall/skill_spawn_wall.h"
 
 /*
  *  インスタンスの取得
@@ -107,7 +109,7 @@ CreateSkill(SKILL_ID_DARUMA skill_id, UNIT_ID player_id)
     switch (skill_id)
     {
     case SKILL_ID_DARUMA::SPEED_UP:
-        skill = new CSpeedUp();     break;
+        skill = new CSkillSpeedUp();     break;
     }
 
     if (!skill) return;
@@ -127,9 +129,9 @@ CreateSkill(SKILL_ID_FALLGAME skill_id, UNIT_ID player_id)
     switch (skill_id)
     {
     case SKILL_ID_FALLGAME::SPEED_UP:
-        skill = new CSpeedUp();     break;
+        skill = new CSkillSpeedUp();     break;
     case SKILL_ID_FALLGAME::JUMP_UP:
-        skill = new CJumpUp();     break;
+        skill = new CSkillJumpUp();     break;
     }
 
     if (!skill) return;
@@ -149,9 +151,13 @@ CreateSkill(SKILL_ID_DODGEBALL skill_id, UNIT_ID player_id)
     switch (skill_id)
     {
     case SKILL_ID_DODGEBALL::SPEED_UP:
-        skill = new CSpeedUp();     break;
+        skill = new CSkillSpeedUp();    break;
     case SKILL_ID_DODGEBALL::JUMP_UP:
-        skill = new CJumpUp();     break;
+        skill = new CSkillJumpUp();     break;
+    case SKILL_ID_DODGEBALL::DASH:
+        skill = new CSkillDash();       break;
+    case SKILL_ID_DODGEBALL::SPAWN_WALL:
+        skill = new CSkillSpawnWall();  break;
     }
 
     if (!skill) return;

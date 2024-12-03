@@ -1,15 +1,15 @@
-#include "jump_up.h"
+#include "skill_jump_up.h"
 #include "../../../unit_manager/unit_manager.h"
 
-const float CJumpUp::jump_up_rate = 1.5f;
+const float CSkillJumpUp::m_jump_up_rate = 1.5f;
 
-CJumpUp::CJumpUp(void)
+CSkillJumpUp::CSkillJumpUp(void)
 	:CSkill()
 {
 
 }
 
-CJumpUp::~CJumpUp(void)
+CSkillJumpUp::~CSkillJumpUp(void)
 {
 
 }
@@ -18,19 +18,19 @@ CJumpUp::~CJumpUp(void)
  *  @brief      初期化
  */
 void
-CJumpUp::
+CSkillJumpUp::
 Initialize(CPlayer* player)
 {
 	CSkill::Initialize(player);
 
-	player->SetJumpPowerRate(jump_up_rate);
+	player->SetJumpPowerRate(m_jump_up_rate);
 }
 
 /*!
  *  @brief      更新
  */
 void
-CJumpUp::
+CSkillJumpUp::
 Update(void)
 {
 	CSkill::Update();
@@ -42,7 +42,7 @@ Update(void)
  *  @brief      描画
  */
 void
-CJumpUp::
+CSkillJumpUp::
 Draw(void)
 {
 	CSkill::Draw();
@@ -54,7 +54,7 @@ Draw(void)
  *  @brief      解放
  */
 void
-CJumpUp::
+CSkillJumpUp::
 Finalize(void)
 {
 	CSkill::Finalize();
@@ -67,7 +67,7 @@ Finalize(void)
  *  @brief      アクション呼び出し
  */
 void
-CJumpUp::
+CSkillJumpUp::
 Action(void)
 {
 

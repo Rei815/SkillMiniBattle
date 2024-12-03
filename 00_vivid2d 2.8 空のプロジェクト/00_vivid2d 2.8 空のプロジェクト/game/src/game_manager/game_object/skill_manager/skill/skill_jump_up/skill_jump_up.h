@@ -1,11 +1,11 @@
 #pragma once
 #include "../skill.h"
 
-class CJumpUp : public CSkill
+class CSkillJumpUp : public CSkill
 {
 public:
-    CJumpUp(void);
-    ~CJumpUp(void);
+    CSkillJumpUp(void);
+    ~CSkillJumpUp(void);
 
     /*!
      *  @brief      èâä˙âª
@@ -34,5 +34,5 @@ public:
     void Action(void);
 
 protected:
-    static const float jump_up_rate;
+    static const float m_jump_up_rate;
 };

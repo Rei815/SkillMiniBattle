@@ -1,11 +1,11 @@
 #pragma once
 #include "../skill.h"
 
-class CSpeedUp : public CSkill
+class CSkillDash : public CSkill
 {
 public:
-	CSpeedUp(void);
-	~CSpeedUp(void);
+    CSkillDash(void);
+    ~CSkillDash(void);
 
     /*!
      *  @brief      èâä˙âª
@@ -34,5 +34,18 @@ public:
     void Action(void);
 
 protected:
-    static const float speed_up_rate;
+    enum class DASH_STATE
+    {
+        WAIT,
+        IS_DASH,
+        IS_COOL_TIME,
+    };
+
+    static const float  m_dash_speed_up_rate;
+    static const float  m_dash_time;
+    static const float  m_dash_cool_time;
+
+    DASH_STATE m_NowDashState;
+
+    CTimer              m_Timer;
 };

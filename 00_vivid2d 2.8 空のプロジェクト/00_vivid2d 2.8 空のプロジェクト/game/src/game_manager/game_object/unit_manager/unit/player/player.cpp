@@ -30,6 +30,7 @@ CPlayer::CPlayer()
     , m_ActionFlag(true)
     , m_Controller()
     , m_Color({1,1,1,1})
+    , m_ForwardVector(CVector3::FORWARD)
 {
 }
 
@@ -65,6 +66,9 @@ void CPlayer::Update(void)
 {
     IUnit::Update();
     m_Model.Update(m_Transform);
+
+    if (m_Velocity != CVector3::ZERO)
+        m_ForwardVector = CVector3(m_Velocity.x, 0, m_Velocity.z).Normalize();
 }
 
 void CPlayer::Draw(void)
@@ -98,6 +102,11 @@ bool CPlayer::GetPlayerMoving()
         vivid::controller::GetAnalogStickLeft(m_Controller).y != 0.0f    ;
 }
 
+CVector3 CPlayer::GetForwardVector()
+{
+    return m_ForwardVector;
+}
+
 void CPlayer::SetSkill(CSkill* skill)
 {
     m_Skill = skill;
@@ -108,9 +117,29 @@ void CPlayer::SetMoveSpeedRate(float rate)
     m_MoveSpeedRate = rate;
 }
 
+void CPlayer::MulMoveSpeedRate(float rate)
+{
+    m_MoveSpeedRate = m_MoveSpeedRate * rate;
+}
+
+void CPlayer::DivMoveSpeedRate(float rate)
+{
+    m_MoveSpeedRate = m_MoveSpeedRate / rate;
+}
+
 void CPlayer::SetJumpPowerRate(float rate)
 {
     m_JumpPowerRate = rate;
+}
+
+void CPlayer::MulJumpPowerRate(float rate)
+{
+    m_JumpPowerRate = m_JumpPowerRate * rate;
+}
+
+void CPlayer::DivJumpPowerRate(float rate)
+{
+    m_JumpPowerRate = m_JumpPowerRate / rate;
 }
 
 
@@ -201,13 +230,14 @@ void CPlayer::Control(void)
 
     //ÉXÉLÉã
     if(m_Skill != nullptr)
-        if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::RETURN) && !m_StopFlag)
+        if (((GetJoypadInputState(joyPad) & PAD_INPUT_1) || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN)) && !m_StopFlag)
             m_Skill->Action();
 
     //í‚é~
     if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::LSHIFT))
-         m_StopFlag = true;
-    else m_StopFlag = false;
+        m_StopFlag = true;
+    else
+        m_StopFlag = false;
 
 }
 

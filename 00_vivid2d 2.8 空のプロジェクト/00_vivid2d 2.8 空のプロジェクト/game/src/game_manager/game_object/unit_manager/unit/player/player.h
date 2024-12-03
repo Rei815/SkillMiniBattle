@@ -55,20 +55,48 @@ public:
     void        SetSkill(CSkill* skill);
 
     /*!
-     *  @brief      スキルによるスピード倍率のセット
+     *  @brief      スキル等によるスピード倍率のセット
      *
      *  @param[in]  rate    倍率
      */
     void        SetMoveSpeedRate(float rate = 1.0f);
 
     /*!
-     *  @brief      スキルによるジャンプ倍率のセット
+     *  @brief      スキル等によるスピード倍率の乗算
+     *  @param[in]  rate    倍率
+     */
+    void        MulMoveSpeedRate(float rate = 1.0f);
+
+    /*!
+     *  @brief      スキル等によるスピード倍率の除算
+     *  @param[in]  rate    倍率
+     */
+    void        DivMoveSpeedRate(float rate = 1.0f);
+
+    /*!
+     *  @brief      スキル等によるジャンプ倍率のセット
      *
      *  @param[in]  rate    倍率
      */
     void        SetJumpPowerRate(float rate = 1.0f);
 
+    /*!
+     *  @brief      スキル等によるジャンプ倍率の乗算
+     *
+     *  @param[in]  rate    倍率
+     */
+    void        MulJumpPowerRate(float rate = 1.0f);
+
+    /*!
+     *  @brief      スキル等によるジャンプ倍率の除算
+     *
+     *  @param[in]  rate    倍率
+     */
+    void        DivJumpPowerRate(float rate = 1.0f);
+
     bool        GetPlayerMoving();
+
+    CVector3    GetForwardVector();
 protected:
     /*!
      *  @brief      攻撃
@@ -129,4 +157,5 @@ protected:
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     DxLib::COLOR_F                  m_Color;
     vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
+    CVector3                        m_ForwardVector;                //!< 正面方向のベクトル
 };

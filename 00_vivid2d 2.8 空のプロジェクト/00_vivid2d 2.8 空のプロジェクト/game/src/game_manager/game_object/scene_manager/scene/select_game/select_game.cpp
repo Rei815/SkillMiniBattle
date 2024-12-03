@@ -35,7 +35,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
         CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME, transform);
     }
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
-    ChangeLightTypeDir(VGet(1.0f, -1.0f, 0.0f));
+    ChangeLightTypeDir(VGet(1.0f, -1.0f, 1.0f));
 
 }
 

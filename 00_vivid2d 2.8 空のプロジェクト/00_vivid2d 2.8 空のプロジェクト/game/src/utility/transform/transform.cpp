@@ -108,12 +108,10 @@ CVector3 CTransform::GetRotateVector(CVector3 vector)
 
 CVector3 CTransform::GetRadianRotation(void)
 {
-	const float math_pi = 3.1415926535897931;
-
 	CVector3 temp;
-	temp.x = rotation.x / 180.0f * math_pi;
-	temp.y = rotation.y / 180.0f * math_pi;
-	temp.z = rotation.z / 180.0f * math_pi;
+	temp.x = rotation.x / 180.0f * DX_PI_F;
+	temp.y = rotation.y / 180.0f * DX_PI_F;
+	temp.z = rotation.z / 180.0f * DX_PI_F;
 
 	return temp;
 }
