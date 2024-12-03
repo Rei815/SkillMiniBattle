@@ -127,7 +127,7 @@ void CSelectSkill::ChooseSkill(void)
             }
             else
             {
-                int TempNum = rand() % (TempSkillNumList.size() - 1);
+                int TempNum = rand() % TempSkillNumList.size();
                 
                 m_ChooseSkillNum[i] = *(std::next(TempSkillNumList.begin(), TempNum));
                 TempSkillNumList.erase(std::next(TempSkillNumList.begin(), TempNum));
@@ -151,6 +151,14 @@ void CSelectSkill::ChooseSkill(void)
                 break;
             }
         }
+    }
+}
+
+void CSelectSkill::ResetChooseSkill(void)
+{
+    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    {
+        m_ChooseSkillNum[i] = 0;
     }
 }
 
@@ -209,14 +217,6 @@ void CSelectSkill::CreateSkillIcon(void)
         }
 
         m_SkillSelectIcon[i] = SkillIconUI;
-    }
-}
-
-void CSelectSkill::ResetChooseSkill(void)
-{
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
-    {
-        m_ChooseSkillNum[i] = 0;
     }
 }
 
