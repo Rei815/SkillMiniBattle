@@ -160,13 +160,17 @@ void CFallGame::CheckFinish()
 		}
 		++it;
 	}
+
+	//二人以上の場合
 	if (CDataManager::GetInstance().GetCurrentPlayer() > 1)
 	{
+		//一人が生き残った時に終了
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
 			CGame::SetGameState(GAME_STATE::FINISH);
 	}
-	else
+	else //一人の場合
 	{
+		//やられたら終了
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
 			CGame::SetGameState(GAME_STATE::FINISH);
 	}
