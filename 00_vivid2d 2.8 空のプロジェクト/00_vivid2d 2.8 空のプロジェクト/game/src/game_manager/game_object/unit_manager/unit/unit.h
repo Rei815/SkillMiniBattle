@@ -224,9 +224,9 @@ public:
     void        SetIsGround(bool flag);
 
     /*!
-     *  @brief      地面の可不可を設定
+     *  @brief      重力を設定
      *
-     *  @param[in]  flag    地面フラグ
+     *  @param[in]  gravity    重力値
      */
     void        SetGravity(const CVector3& gravity);
 

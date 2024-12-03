@@ -45,6 +45,7 @@ void CFallGame::Initialize(SCENE_ID scene_id)
 		playerPos[i].y += 200.0f;
 		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
 		m_EntryList.push_back(unit);
+		unit->SetGravity(CVector3());
 	}
 
 	CSkillManager::GetInstance().SetSkill();
@@ -87,6 +88,7 @@ void CFallGame::Draw(void)
 	CGame::Draw();
 
 #ifdef VIVID_DEBUG
+
 	vivid::DrawText(30, std::to_string(m_ChooseObjectTimer.GetTimer()),
 		vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_ChooseObjectTimer.GetTimer())), 0));
 #endif // VIVID_DEBUG
