@@ -73,7 +73,7 @@ void CSelectSkill::Draw(void)
     CUIManager::GetInstance().Draw();
 
 
-    vivid::DrawText(20, "スキル選択中", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
+    vivid::DrawText(20, "スキル選択中, ENTERキーで決定", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
 }
 
 void CSelectSkill::Finalize(void)

@@ -40,4 +40,6 @@ public:
     void Finalize(void);
 
 private:
+    static const vivid::Vector2 m_OriginKeyPos;
+    static const float          m_KeyOffset;
 };

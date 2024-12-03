@@ -26,12 +26,12 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
 void CSelectPlayer::Update(void)
 {
     CDataManager& dm = CDataManager::GetInstance();
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::LEFT))
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A))
         dm.SetCurrentPlayer(dm.GetCurrentPlayer() - 1);
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RIGHT))
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::D))
         dm.SetCurrentPlayer(dm.GetCurrentPlayer() + 1);
 
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
     {
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTMODE);
     }
@@ -41,10 +41,10 @@ void CSelectPlayer::Update(void)
 
 void CSelectPlayer::Draw(void)
 {
-    vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
+    vivid::DrawText(50, "スキルミニバトル", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "スキルミニバトル") / 2, vivid::WINDOW_HEIGHT / 2));
 
-    vivid::DrawText(20, "プレイヤーセレクト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
-    vivid::DrawText(20, std::to_string(CDataManager::GetInstance().GetCurrentPlayer()), vivid::Vector2(500, vivid::WINDOW_HEIGHT - 20));
+    vivid::DrawText(20, "ADキーで人数の増減, ENTERキーで決定", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
+    vivid::DrawText(20, "現在" + std::to_string(CDataManager::GetInstance().GetCurrentPlayer()) + "人", vivid::Vector2(500, vivid::WINDOW_HEIGHT - 20));
 
 }
 

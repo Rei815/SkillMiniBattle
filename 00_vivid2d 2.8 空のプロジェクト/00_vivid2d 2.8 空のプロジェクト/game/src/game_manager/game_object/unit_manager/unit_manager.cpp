@@ -147,13 +147,12 @@ void CUnitManager::CheckHitObject(IObject* object)
             return;
         IUnit* unit = (*it);
         //‚’¼•ûŒü‚Ì”»’è-----------------------------------------------------
-
         float radius = unit->GetRadius();
         const int check_point_count = 4;
         for (int i = 0; i < 9; ++i)
         {
             CVector3 unit_pos = unit->GetPosition();
-            CVector3 start = unit_pos + CVector3(-radius + (radius) * (i % 3), 0.0, -radius + (radius) * (i / 3));
+            CVector3 start = unit_pos + CVector3(-radius + (radius) * (i % 3), 0.0f, -radius + (radius) * (i / 3));
             CheckHitObjectVertical(object, (*it), start, CVector3(0.0f, -radius*2, 0.0f));
         }
 

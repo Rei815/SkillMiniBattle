@@ -3,8 +3,8 @@
 #include "..\..\..\game_object.h"
 #include "../../../data_manager/data_manager.h"
 
-const int CSelectGame::m_games_num = 20;
-const float CSelectGame::m_circle_radius = 3500.0f;
+const int CSelectGame::m_games_num = 3;
+const float CSelectGame::m_circle_radius = 1000.0f;
 CSelectGame::CSelectGame(void)
 {
 
@@ -19,7 +19,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
-    CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -5000.0f));
+    CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -2500.0f));
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CUIManager::GetInstance().Initialize();
     for (int i = 0; i < m_games_num; i++)
@@ -92,6 +92,9 @@ void CSelectGame::Draw(void)
 
 
     vivid::DrawText(20, "ゲーム選択中", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
+    vivid::DrawText(20, "1キーでだるまさんがころんだゲーム", vivid::Vector2(0, 0));
+    vivid::DrawText(20, "2キーでフォールアウトゲーム", vivid::Vector2(0, 30));
+    vivid::DrawText(20, "3キーでドッジボールゲーム", vivid::Vector2(0, 60));
 
 }
 

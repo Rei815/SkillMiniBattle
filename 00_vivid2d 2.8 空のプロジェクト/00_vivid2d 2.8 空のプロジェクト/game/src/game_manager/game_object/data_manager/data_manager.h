@@ -40,7 +40,11 @@ public:
 
     void        SetGameID(GAME_ID gameID);
 
+    int         GetPlayerWin(int unitID);
 
+    int         GetMaxGameNum();
+
+    void        SetMaxGameNum(int num);
 private:
 
     /*!
@@ -80,4 +84,6 @@ private:
     int                 m_CurrentPlayerNum;
 
     GAME_ID             m_CurrentGameID;
+
+    int                 m_MaxGameNum;
 };

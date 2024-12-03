@@ -2,7 +2,10 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 #include "../../../ui_manager/ui_manager.h"
+#include "../../../data_manager/data_manager.h"
 
+const vivid::Vector2  CResult::m_OriginKeyPos = vivid::Vector2(0, 0);
+const float  CResult::m_KeyOffset = 100.0f;
 CResult::CResult(void)
 {
 
@@ -17,13 +20,29 @@ void CResult::Initialize(SCENE_ID scene_id)
     IScene::Initialize(scene_id);
 
     CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
+
+    //‚±‚ê‚Ü‚Å‚ÌŸ—˜”•\¦
+    for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+    {
+        for (int j = 0; j < CDataManager::GetInstance().GetPlayerWin(i) - 1; j++)
+        {
+            CUIManager::GetInstance().Create(UI_ID::KEY, m_OriginKeyPos + vivid::Vector2(m_KeyOffset * j, m_KeyOffset * i));
+        }
+    }
 }
 
 void CResult::Update(void)
 {
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::X))
     {
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::TITLE);
+        CDataManager& dm = CDataManager::GetInstance();
+        SCENE_ID sceneID = SCENE_ID::TITLE;
+        for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+        {
+            if (dm.GetPlayerWin(i) != dm.GetMaxGameNum())
+                sceneID = SCENE_ID::SELECTGAME;
+        }
+        CSceneManager::GetInstance().ChangeScene(sceneID);
     }
 }
 

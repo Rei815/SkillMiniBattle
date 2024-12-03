@@ -17,7 +17,7 @@
 CGame::CGame(void)
     : m_DebugText()
     , m_SetActionflag(false)
-    , m_FinishUIFlag(false)
+    , m_FinishFlag(false)
     , m_EntryList()
     , m_ResultList()
 {
@@ -165,9 +165,9 @@ void CGame::AddRanking(UNIT_ID unitID)
     {
         if (unitID != UNIT_ID::NONE)
         {
-            m_ResultList.push_back(CUnitManager::GetInstance().GetPlayer(unitID));
             if ((*entry_it)->GetUnitID() == unitID)
             {
+                m_ResultList.push_back(CUnitManager::GetInstance().GetPlayer(unitID));
                 m_EntryList.erase(entry_it);
                 break;
             }
@@ -228,14 +228,11 @@ Finish(void)
 {
 #ifdef VIVID_DEBUG
 
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
+#endif
+    if (!m_FinishFlag)
     {
         Push(SCENE_ID::RESULT);
-    }
-#endif
-    if (!m_FinishUIFlag)
-    {
-        m_FinishUIFlag = true;
+        m_FinishFlag = true;
     }
 }
 

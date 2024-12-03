@@ -64,6 +64,21 @@ void CDataManager::SetGameID(GAME_ID gameID)
     m_CurrentGameID = gameID;
 }
 
+int CDataManager::GetPlayerWin(int unitID)
+{
+    return m_PlayerWins[unitID];
+}
+
+int CDataManager::GetMaxGameNum()
+{
+    return m_MaxGameNum;
+}
+
+void CDataManager::SetMaxGameNum(int num)
+{
+    m_MaxGameNum = num;
+}
+
 
 /*
  *  コンストラクタ
