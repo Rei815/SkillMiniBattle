@@ -39,7 +39,16 @@ void CDaruma_FallDownGimmick::Update(void)
 
 void CDaruma_FallDownGimmick::Draw(void)
 {
-	
+	vivid::Vector2 debug_pos = vivid::Vector2(1000.0f, 200.0f);
+	std::string text = "null";
+
+	switch (m_State)
+	{
+	case GIMMICK_STATE::WAIT:	text = "ë“ã@"; break;
+	case GIMMICK_STATE::PLAY:	text = "êUÇËå¸Ç¢ÇƒÇÈ"; break;
+	case GIMMICK_STATE::FINISH:	text = "ñﬂÇ¡ÇƒÇÈ"; break;
+	}
+	vivid::DrawText(30, text, debug_pos);
 }
 
 void CDaruma_FallDownGimmick::Finalize(void)
@@ -102,11 +111,13 @@ void CDaruma_FallDownGimmick::Play()//êUÇËï‘ÇÈ
 		{
 			m_ReadyTime = 2;
 			m_Timer.SetUp(m_WaitTime);
-
-			if(m_TurnType != TURN_TYPE::FEINT)
-			m_State = GIMMICK_STATE::PLAY;
-
 			m_OgreState = OGRE_STATE::WAIT;
+
+			if (m_TurnType != TURN_TYPE::FEINT)
+				m_State = GIMMICK_STATE::PLAY;
+			else
+				m_State = GIMMICK_STATE::FINISH;
+			
 		}
 	}
 }
@@ -141,8 +152,8 @@ void CDaruma_FallDownGimmick::Finish()//ñﬂÇÈ
 			m_WaitTime = 1;
 			m_Timer.SetUp(m_ReadyTime);
 			m_OgreState = OGRE_STATE::READY;
+			m_State = GIMMICK_STATE::WAIT;
 		}
-		
 	}
 }
 
