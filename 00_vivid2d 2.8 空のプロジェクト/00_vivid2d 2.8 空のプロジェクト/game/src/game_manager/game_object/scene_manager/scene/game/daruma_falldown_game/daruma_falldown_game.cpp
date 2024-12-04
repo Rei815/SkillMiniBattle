@@ -78,55 +78,40 @@ void CDaruma_FallDownGame::Update(void)
 		if (!gimmick) continue;
 
 		//鬼が振り返ってる時の処理
-		if (gimmick->GetState() == GIMMICK_STATE::PLAY)
+		
+		for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 		{
-			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+			player = um.GetPlayer((UNIT_ID)i);
+
+			if (!player) continue;
+
+			if (gimmick->GetState() == GIMMICK_STATE::PLAY)
 			{
-				player = um.GetPlayer((UNIT_ID)i);
-
-				if (!player) continue;
-
 				if (player->GetPlayerMoving())
 				{
 					if (m_PlayerPosition[i] != CVector3::ZERO)
 						m_PlayerPosition[i] = player->GetPosition();
 					
 					player->SetActionFlag(false);
+					player->SetVelocity(CVector3::ZERO);
+					player->SetPosition(CVector3(-1500, 100, 100 * i));
 					m_RemainCount--;
 				}
 			}
-		}
-
-		if (gimmick->GetState() != GIMMICK_STATE::PLAY)
-		{
-			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+			else
 			{
-				player = um.GetPlayer((UNIT_ID)i);
+				if (player->GetPosition().x <= -1500)
+				{
+					player->SetActionFlag(true);
+				}
+
 				if ((player->GetPosition().x >= 1400))
 				{
 					m_TempFirstNum = i;
 					Ranking();
 				}
 			}
-
 		}
-		
-	}
-
-	//プレイヤーの生き残りが0人になったら
-	if (m_RemainCount == 0)
-	{
-		for (int j = 0; j < dm.GetCurrentPlayer();j++)
-		{
-			float m_PlayerDis = (m_PlayerPosition[j] - m_ogre_position).Length();
-
-			if (m_PlayerDis < m_TempFirstDis)
-			{
-				m_TempFirstDis = m_PlayerDis;
-				m_TempFirstNum = j;
-			}
-		}
-		Ranking();
 	}
 }
 
@@ -136,8 +121,6 @@ void CDaruma_FallDownGame::Draw(void)
 	vivid::DrawText(30, std::to_string(vivid::controller::GetAnalogStickLeft(vivid::controller::DEVICE_ID::PLAYER1).x),vivid::Vector2(100.0f, 10.0f));
 	vivid::DrawText(30, std::to_string(vivid::controller::GetAnalogStickLeft
 	(vivid::controller::DEVICE_ID::PLAYER1).y),vivid::Vector2(100.0f, 40.0f));
-
-	
 }
 
 void CDaruma_FallDownGame::Finalize(void)
