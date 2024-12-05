@@ -5,6 +5,11 @@ CSkill::CSkill(void)
 
 }
 
+CSkill::CSkill(SKILL_CATEGORY category)
+	: m_Category(category)
+{
+}
+
 CSkill::~CSkill(void)
 {
 
@@ -49,4 +54,13 @@ void CSkill::Finalize(void)
 void CSkill::Action(void)
 {
 
+}
+
+void CSkill::Action(UNIT_CATEGORY category)
+{
+}
+
+SKILL_CATEGORY CSkill::GetSkillCategory()
+{
+	return m_Category;
 }

@@ -12,6 +12,7 @@ const float             CPlayer::m_move_speed = 0.25f;
 const float             CPlayer::m_jump_power = 30.0f;
 const float             CPlayer::m_move_friction = 0.975f;
 const float             CPlayer::m_fly_away_speed = 40.0f;
+
 const float             CPlayer::m_max_life = 3.0f;
 const int               CPlayer::m_max_invincible_time = 60;
 const int               CPlayer::m_invincible_visible_interval = 4;
@@ -42,7 +43,17 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
     (void)position;
 
     IUnit::Initialize(id, position, file_name, controller);
-
+    switch (id)
+    {
+    case UNIT_ID::PLAYER1: m_Category = UNIT_CATEGORY::PLAYER1;
+        break;
+    case UNIT_ID::PLAYER2: m_Category = UNIT_CATEGORY::PLAYER2;
+        break;
+    case UNIT_ID::PLAYER3: m_Category = UNIT_CATEGORY::PLAYER3;
+        break;
+    case UNIT_ID::PLAYER4: m_Category = UNIT_CATEGORY::PLAYER4;
+        break;
+    }
     m_Radius = m_radius;
     m_Height = m_height;
 
@@ -90,6 +101,11 @@ void CPlayer::SetActionFlag(bool flag)
 vivid::controller::DEVICE_ID CPlayer::GetController()
 {
     return m_Controller;
+}
+
+CSkill* CPlayer::GetSkill()
+{
+    return m_Skill;
 }
 
 bool CPlayer::GetPlayerMoving()
@@ -143,6 +159,15 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
     m_Accelerator = CVector3::ZERO;
     m_Accelerator.y = m_jump_power;
 
+    //衝撃を与える
+    Impact(hit_position, bullet->GetVelocity().Normalize(), bullet->GetPower());
+}
+
+/*
+*  衝撃
+*/
+void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, float power)
+{
     //当たった向きを取得
     CVector3 TempVelocity = (m_Transform.position - hit_position);
     //垂直方向の速度は最後に計算するので、一度ゼロにする
@@ -150,7 +175,7 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
     //ベクトルの大きさを２にする
     TempVelocity = TempVelocity.Normalize() * 2.0f;
     //弾の速度ベクトルの大きさを１にして加算する（当たった向きと弾の速度が真逆の場合に、水平方向の速度が打ち消されるのを防ぐため）
-    TempVelocity += (bullet->GetVelocity().Normalize());
+    TempVelocity += direction;
     //垂直方向の速度は最後に計算するので、再びゼロにする
     TempVelocity.y = 0.0f;
     //速度を倍率で調整するため、ベクトルの大きさを１にする
@@ -158,9 +183,9 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
     //垂直方向のベクトルを追加
     TempVelocity.y = 0.2f;
     //速度をベクトルとその倍率でセットする
-    m_Velocity = TempVelocity * m_fly_away_speed;
-}
+    m_Velocity = TempVelocity * m_fly_away_speed * power;
 
+}
 void CPlayer::Control(void)
 {
     int     joyPad = 0;
@@ -201,8 +226,13 @@ void CPlayer::Control(void)
 
     //スキル
     if(m_Skill != nullptr)
-        if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::RETURN) && !m_StopFlag)
-            m_Skill->Action();
+        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && !m_StopFlag)
+        {
+            if (m_Category == UNIT_CATEGORY::PLAYER)
+                m_Skill->Action();
+            else
+                m_Skill->Action(m_Category);
+        }
 
     //停止
     if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::LSHIFT))
@@ -210,6 +240,7 @@ void CPlayer::Control(void)
     else m_StopFlag = false;
 
 }
+
 
 /*
  *  死亡

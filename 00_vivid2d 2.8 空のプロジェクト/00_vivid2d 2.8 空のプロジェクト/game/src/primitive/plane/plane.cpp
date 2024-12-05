@@ -107,10 +107,7 @@ void CPlane::Draw(const CMatrix& mat)
 	vertices[3].dif = m_Color;
 	vertices[3].spc = m_Color;
 
-	if (m_Handle != VIVID_DX_ERROR)
-		DrawPolygonIndexed3D(vertices, 4, m_index, 2, m_Handle, TRUE);
-	else
-		DrawPolygonIndexed3D(vertices, 4, m_index, 2, DX_NONE_GRAPH, TRUE);
+	DrawPolygonIndexed3D(vertices, 4, m_index, 2, m_Handle, TRUE);
 }
 
 void CPlane::Finalize()

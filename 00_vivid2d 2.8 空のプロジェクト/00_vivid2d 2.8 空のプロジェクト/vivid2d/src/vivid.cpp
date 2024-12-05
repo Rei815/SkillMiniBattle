@@ -1570,7 +1570,9 @@ int vivid::effekseer::LoadEffect(const std::string& file_name)
  */
 int vivid::effekseer::StartEffect(const std::string& file_name, const CVector3& pos)
 {
-    return StartEffect(file_name,pos, g_DefaultEffectScale);
+    CVector3 defaultScale;
+    defaultScale = g_DefaultEffectScale;
+    return StartEffect(file_name,pos, defaultScale);
 }
 
 /*
@@ -1578,13 +1580,15 @@ int vivid::effekseer::StartEffect(const std::string& file_name, const CVector3& 
  */
 int vivid::effekseer::StartEffect(int handle, const CVector3& pos)
 {
-    return StartEffect(handle, pos, g_DefaultEffectScale);
+    CVector3 defaultScale;
+    defaultScale = g_DefaultEffectScale;
+    return StartEffect(handle, pos, defaultScale);
 }
 /*
  *  エフェクト再生開始
  *  s.kosugi
  */
-int vivid::effekseer::StartEffect(const std::string& file_name, const CVector3& pos,const float scale)
+int vivid::effekseer::StartEffect(const std::string& file_name, const CVector3& pos, const CVector3& scale)
 {
     // エフェクト読み込み
     if (-1 == LoadEffect(file_name))
@@ -1592,7 +1596,33 @@ int vivid::effekseer::StartEffect(const std::string& file_name, const CVector3& 
     int PlayHandle = PlayEffekseer3DEffect(g_EffekseerList[file_name]);
 
     // エフェクトの拡大率を指定
-    SetScalePlayingEffekseer3DEffect(PlayHandle, scale, scale, scale);
+    SetScalePlayingEffekseer3DEffect(PlayHandle, scale.x, scale.y, scale.z);
+
+    PLAYEFFECT_DATA effect;
+    effect.handle = PlayHandle;
+    effect.pos = pos;
+    // エフェクト再生リストに追加
+    g_EffectPlayList.push_back(effect);
+
+    return PlayHandle;
+}
+
+/*
+ *  エフェクト再生開始
+ *  s.kosugi
+ */
+int vivid::effekseer::StartEffect(const std::string& file_name, const CVector3& pos, const CVector3& scale, const float speed)
+{
+    // エフェクト読み込み
+    if (-1 == LoadEffect(file_name))
+        return -1;
+    int PlayHandle = PlayEffekseer3DEffect(g_EffekseerList[file_name]);
+
+    // エフェクトの拡大率を指定
+    SetScalePlayingEffekseer3DEffect(PlayHandle, scale.x, scale.y, scale.z);
+
+    // エフェクトの再生速度を指定
+    SetSpeedPlayingEffekseer3DEffect(PlayHandle, speed);
 
     PLAYEFFECT_DATA effect;
     effect.handle = PlayHandle;
@@ -1606,18 +1636,16 @@ int vivid::effekseer::StartEffect(const std::string& file_name, const CVector3& 
 /*
  *  エフェクト再生開始
  */
-int vivid::effekseer::StartEffect(int handle, const CVector3& pos, const float scale)
+int vivid::effekseer::StartEffect(int handle, const CVector3& pos, const CVector3& scale)
 {
     // エフェクト読み込み
     if (-1 == handle)
         return -1;
 
     int PlayHandle = PlayEffekseer3DEffect(handle);
+
     // エフェクトの拡大率を指定
-    if(scale == g_DefaultEffectScale)
-        SetScalePlayingEffekseer3DEffect(PlayHandle, scale, scale, scale);
-    else
-        SetScalePlayingEffekseer3DEffect(PlayHandle, scale * g_DefaultEffectScale, scale * g_DefaultEffectScale, scale * g_DefaultEffectScale);
+    SetScalePlayingEffekseer3DEffect(PlayHandle, scale.x, scale.y, scale.z);
 
     PLAYEFFECT_DATA effect;
     effect.handle = PlayHandle;

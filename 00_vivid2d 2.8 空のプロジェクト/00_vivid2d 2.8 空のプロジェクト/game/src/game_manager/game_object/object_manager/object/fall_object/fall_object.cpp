@@ -32,12 +32,6 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	case OBJECT_ID::SQUARE_FALL_OBJECT:		m_MarkID = MARK_ID::SQUARE;		m_Transform.rotation.y = -30;	break;
 	case OBJECT_ID::SUN_FALL_OBJECT:		m_MarkID = MARK_ID::SUN;		m_Transform.rotation.y = 90;	break;
 	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	m_MarkID = MARK_ID::TRIANGLE;	m_Transform.rotation.y = -30;	break;
-	//case OBJECT_ID::CIRCLE_FALL_OBJECT:		m_MarkID = MARK_ID::CIRCLE;		m_Transform.rotation.y = 35;	break;
-	//case OBJECT_ID::CROSS_FALL_OBJECT:		m_MarkID = MARK_ID::CROSS;		m_Transform.rotation.y = 35;	break;
-	//case OBJECT_ID::MOON_FALL_OBJECT:		m_MarkID = MARK_ID::MOON;		m_Transform.rotation.y = 90;		break;
-	//case OBJECT_ID::SQUARE_FALL_OBJECT:		m_MarkID = MARK_ID::SQUARE;		m_Transform.rotation.y = -35;	break;
-	//case OBJECT_ID::SUN_FALL_OBJECT:		m_MarkID = MARK_ID::SUN;		m_Transform.rotation.y = 90;	break;
-	//case OBJECT_ID::TRIANGLE_FALL_OBJECT:	m_MarkID = MARK_ID::TRIANGLE;	m_Transform.rotation.y = -35;	break;
 	}
 	m_FileName = m_file_name_list[(int)m_MarkID];
 	m_Model.Initialize(m_FileName, m_Transform);
@@ -48,6 +42,7 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 
 void CFallObject::Update(void)
 {
+
 	IObject::Update();
 	m_Model.Update(m_Transform);
 	if (m_Transform.position.y <= m_remove_height)

@@ -80,6 +80,16 @@ public:
     virtual bool    CheckHitBullet(IBullet* bullet);
 
     /*!
+     *  @brief      アタリ判定チェック
+     *
+     *  @param[in]  bullet  弾クラス
+     *
+     *  @retval     true    当たっている
+     *  @retval     false   当たっていない
+     */
+    virtual bool    CheckHitBulletModel(IBullet* bullet);
+
+    /*!
      *  @brief      ユニットID取得
      *
      *  @return     ユニットID
@@ -230,6 +240,13 @@ public:
      */
     void        SetGravity(const CVector3& gravity);
 
+    /*!
+     *  @brief      基礎重力を取得
+     *
+     *  @return     重力値
+     */
+    CVector3        GetDefaultGravity();
+
 protected:
 
     /*!
@@ -273,6 +290,14 @@ protected:
      *  @param[in]  hit_position    被弾位置
      */
     virtual void    HitBullet(IBullet* bullet, CVector3 hit_position);
+
+    /*!
+     *  @brief      衝撃を与える
+     *  @param[in]  hit_position   衝撃の位置
+     *  @param[in]  direction      向き
+     *  @param[in]  float          衝撃力
+     */
+    virtual void    Impact(const CVector3& hit_position, const CVector3& direction, float power);
 
     /*!
      *  @brief      敗北

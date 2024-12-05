@@ -1292,7 +1292,20 @@ namespace vivid
          *
          *  @return     エラー:-1   正常終了:それ以外
          */
-        int StartEffect(const std::string& file_name, const CVector3& pos,float scale);
+        int StartEffect(const std::string& file_name, const CVector3& pos, const CVector3& scale);
+
+        /*!
+         *  @brief      エフェクトの再生開始
+         *              成功するとエフェクトハンドルが返る
+         *
+         *  @param[in]  file_name   ファイル名
+         *  @param[in]  pos         再生位置
+         *  @param[in]  scale       拡大率
+         *  @param[in]  speed       再生速度
+         *
+         *  @return     エラー:-1   正常終了:それ以外
+         */
+        int StartEffect(const std::string& file_name, const CVector3& pos, const CVector3& scale, float speed);
 
         /*!
          *  @brief      エフェクトの再生開始
@@ -1304,7 +1317,7 @@ namespace vivid
          *
          *  @return     エラー:-1   正常終了:それ以外
          */
-        int StartEffect(const int handle, const CVector3& pos, float scale);
+        int StartEffect(const int handle, const CVector3& pos, const CVector3& scale);
 
         /*!
          *  @brief      エフェクトの描画

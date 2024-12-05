@@ -95,9 +95,9 @@ CGame::Update(void)
 void
 CGame::Draw(void)
 {
+    CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
     CSkillManager::GetInstance().Draw();
-    CEffectManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
     CUIManager::GetInstance().Draw();
@@ -231,7 +231,7 @@ Finish(void)
 #endif
     if (!m_FinishFlag)
     {
-        Push(SCENE_ID::RESULT);
+        Push(SCENE_ID::RESULT_MINIGAME);
         m_FinishFlag = true;
     }
 }

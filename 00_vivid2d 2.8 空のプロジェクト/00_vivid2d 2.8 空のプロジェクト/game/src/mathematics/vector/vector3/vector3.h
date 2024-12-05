@@ -118,6 +118,15 @@ public:
 	CVector3& operator=(const CVector3& v);
 
 	/*!
+		*  @brief      代入演算子のオーバーロード
+		*
+		*  @param[in]  f   フロート値
+		*
+		*  @return     ベクトルクラス
+		*/
+	CVector3& operator=(float f);
+
+	/*!
 		*  @brief      加算演算子のオーバーロード
 		*
 		*  @param[in]  v   ベクトルクラス
@@ -143,6 +152,15 @@ public:
 		*  @return     ベクトルクラス
 		*/
 	CVector3& operator*=(float scalar);
+
+	/*!
+		*  @brief      乗算演算子のオーバーロード
+		*
+		*  @param[in]  v  ベクトルクラス
+		*
+		*  @return     ベクトルクラス
+		*/
+	CVector3& operator*=(const CVector3& v);
 
 	/*!
 		*  @brief      除算演算子のオーバーロード

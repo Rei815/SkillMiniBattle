@@ -1,6 +1,9 @@
 #include "skill_manager.h"
 #include "skill/speed_up/speed_up.h"
 #include "skill/jump_up/jump_up.h"
+#include "skill/floating/floating.h"
+#include "skill/stomp/stomp.h"
+#include "skill/resurrect_fallout/resurrect_fallout.h"
 
 /*
  *  インスタンスの取得
@@ -130,6 +133,12 @@ CreateSkill(SKILL_ID_FALLGAME skill_id, UNIT_ID player_id)
         skill = new CSpeedUp();     break;
     case SKILL_ID_FALLGAME::JUMP_UP:
         skill = new CJumpUp();     break;
+    case SKILL_ID_FALLGAME::FLOATING:
+        skill = new CFloating();     break;
+    case SKILL_ID_FALLGAME::STOMP:
+        skill = new CStomp();     break;
+    case SKILL_ID_FALLGAME::RESURRECT:
+        skill = new CResurrectFallout();     break;
     }
 
     if (!skill) return;

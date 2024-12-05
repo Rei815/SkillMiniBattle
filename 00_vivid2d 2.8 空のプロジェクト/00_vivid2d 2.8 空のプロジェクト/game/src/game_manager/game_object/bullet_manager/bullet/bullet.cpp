@@ -26,6 +26,7 @@ IBullet(const std::string& file_name, COLLIDER_ID collider_id)
     , m_ColliderID(collider_id)
     , m_CapsulePosA(CVector3())
     , m_CapsulePosB(CVector3())
+    , m_Power(1.0f)
 {
 }
 
@@ -50,10 +51,21 @@ Initialize(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter, con
     m_Radius = bulletParameter->radius;
     m_Color = (category == UNIT_CATEGORY::PLAYER ? m_player_color : m_enemy_color);
     m_Model.Initialize(m_FileName, m_Transform.position);
-    MV1SetScale(m_Model.GetModelHandle(), CVector3(m_Radius / m_radius, m_Radius / m_radius, m_Radius / m_radius));
     m_ActiveFlag = true;
     m_Damage = bulletParameter->damage;
     m_LifeTimer = m_life_time;
+}
+
+void IBullet::Initialize(UNIT_CATEGORY category, const CVector3& position, const CVector3& direction)
+{
+    m_Category = category;
+    m_Transform.position = position;
+    m_Velocity = direction;
+    m_Color = (category == UNIT_CATEGORY::PLAYER ? m_player_color : m_enemy_color);
+    m_Model.Initialize(m_FileName, m_Transform.position);
+    m_ActiveFlag = true;
+    m_LifeTimer = m_life_time;
+
 }
 
 /*
@@ -207,4 +219,14 @@ IBullet::
 GetColliderPosB(void)
 {
     return m_Transform.position + m_CapsulePosB;
+}
+
+CModel IBullet::GetModel(void)
+{
+    return m_Model;
+}
+
+float IBullet::GetPower()
+{
+    return m_Power;
 }

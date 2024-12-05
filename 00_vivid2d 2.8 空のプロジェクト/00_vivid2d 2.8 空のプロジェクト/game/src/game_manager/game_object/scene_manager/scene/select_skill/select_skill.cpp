@@ -127,7 +127,7 @@ void CSelectSkill::ChooseSkill(void)
             }
             else
             {
-                int TempNum = rand() % (TempSkillNumList.size() - 1);
+                int TempNum = rand() % TempSkillNumList.size();
                 
                 m_ChooseSkillNum[i] = *(std::next(TempSkillNumList.begin(), TempNum));
                 TempSkillNumList.erase(std::next(TempSkillNumList.begin(), TempNum));

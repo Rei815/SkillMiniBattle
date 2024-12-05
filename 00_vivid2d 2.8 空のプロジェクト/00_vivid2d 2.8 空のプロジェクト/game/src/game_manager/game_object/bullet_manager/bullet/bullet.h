@@ -30,6 +30,16 @@ public:
     virtual void    Initialize(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter, const CVector3& position, const CVector3& direction);
 
     /*!
+     *  @brief      初期化
+     *
+     *  @param[in]  category        ユニット識別子
+     *  @param[in]  id              弾のID
+     *  @param[in]  position        位置
+     *  @param[in]  direction       向き
+     */
+    virtual void    Initialize(UNIT_CATEGORY category, const CVector3& position, const CVector3& direction);
+
+    /*!
      *  @brief      更新
      */
     virtual void    Update(void);
@@ -128,7 +138,9 @@ public:
      */
     CVector3        GetColliderPosB(void);
 
+    CModel          GetModel(void);
 
+    float           GetPower();
 protected:
 
 
@@ -150,6 +162,7 @@ protected:
     UNIT_CATEGORY               m_Category;         //!< 弾識別子
     int                         m_LifeTimer;        //!< 生存時間タイマー
     float                       m_Damage;           //!< ダメージ
+    float                       m_Power;            //!< パワー
     float				        m_Speed;            //!< 速さ
     float				        m_Accleration;		//!< 加速力
     CVector3			        m_Direction;

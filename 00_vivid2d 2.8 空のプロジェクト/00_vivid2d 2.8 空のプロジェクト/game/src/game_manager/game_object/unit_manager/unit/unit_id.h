@@ -5,8 +5,12 @@
   */
 enum class UNIT_CATEGORY
 {
-    UNKNOWN,         //!< 所属不明
+    UNKNOWN,        //!< 所属不明
     PLAYER,         //!< プレイヤー
+    PLAYER1,        //!< プレイヤー1
+    PLAYER2,        //!< プレイヤー2
+    PLAYER3,        //!< プレイヤー3
+    PLAYER4,        //!< プレイヤー4
     ENEMY,          //!< 敵
 };
 
