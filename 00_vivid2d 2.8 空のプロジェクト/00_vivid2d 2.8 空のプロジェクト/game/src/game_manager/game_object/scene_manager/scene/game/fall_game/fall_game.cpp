@@ -7,6 +7,7 @@
 #include "../../../../object_manager/object/fall_object/mark_id.h"
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
+#include "../../../../bullet_manager/bullet_manager.h"
 
 const CTransform CFallGame::m_object_transform_list[] = 
 {CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
@@ -45,7 +46,7 @@ void CFallGame::Initialize(SCENE_ID scene_id)
 		playerPos[i].y += 200.0f;
 		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
 		m_EntryList.push_back(unit);
-		unit->SetGravity(CVector3());
+
 	}
 
 	CSkillManager::GetInstance().SetSkill();
@@ -75,6 +76,8 @@ void CFallGame::Initialize(SCENE_ID scene_id)
 
 void CFallGame::Update(void)
 {
+	CBulletManager::GetInstance().Update();
+
 	CStage::GetInstance().Update();
 	CGame::Update();
 
@@ -84,8 +87,8 @@ void CFallGame::Update(void)
 
 void CFallGame::Draw(void)
 {
-	//CStage::GetInstance().Draw();
 	CGame::Draw();
+	CBulletManager::GetInstance().Draw();
 
 #ifdef VIVID_DEBUG
 
@@ -135,9 +138,17 @@ void CFallGame::Play(void)
 
 void CFallGame::Finish(void)
 {
-	if (m_ResultList.size() == 1)
+	//一人生き残った場合(二人以上)
+	if (m_EntryList.size() == 1)
+	{
+		//生き残った一人を勝ちにする
+		CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
+	}
+	else //一人の場合
+	{
+		//やられているためリザルトリストから勝ちにする
 		CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
-
+	}
 	CGame::Finish();
 }
 
@@ -156,6 +167,13 @@ void CFallGame::CheckFinish()
 
 		if (unit->GetPosition().y < m_defeat_height)
 		{
+			CPlayer* player = (CPlayer*)unit;
+
+			if (player->GetSkill()->GetSkillCategory() == SKILL_CATEGORY::RESURRECT)
+			{
+				player->GetSkill()->Action();
+				return;
+			}
 			AddRanking(unit->GetUnitID());
 			unit->SetDefeatFlag(true);
 

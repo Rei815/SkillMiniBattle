@@ -5,19 +5,19 @@
 #include "..\..\..\camera\camera.h"
 #include "../../../stage/stage.h"
 
-class CResult
+class CResultMiniGame
     : public IScene
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CResult(void);
+    CResultMiniGame(void);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CResult(void);
+    ~CResultMiniGame(void);
 
     /*!
      *  @brief      初期化

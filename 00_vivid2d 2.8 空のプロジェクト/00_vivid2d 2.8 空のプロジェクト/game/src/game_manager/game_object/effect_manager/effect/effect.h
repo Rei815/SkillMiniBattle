@@ -19,6 +19,11 @@ public:
 
     /*!
      *  @brief      コンストラクタ
+     */
+    IEffect(const std::string& file_name, EFFECT_ID effectID, float speed);
+
+    /*!
+     *  @brief      コンストラクタ
      *
      *  @param[in]  width   幅
      *  @param[in]  height  高さ
@@ -53,7 +58,7 @@ public:
      *  @param[in]  scale       拡大率
      */
 
-    virtual void    Initialize(const CVector3& position, const float scale);
+    virtual void    Initialize(const CVector3& position, float scale);
 
     /*!
      *  @brief      初期化
@@ -72,7 +77,28 @@ public:
      *  @param[in]  scale       拡大率
      */
 
-    virtual void    Initialize(const CVector3& position, const CVector3& rotation, const float scale);
+    virtual void    Initialize(const CVector3& position, const CVector3& rotation, float scale);
+
+    /*!
+     *  @brief      初期化
+     *
+     *  @param[in]  position    位置
+     *  @param[in]  rotation    回転
+     *  @param[in]  scale       拡大率
+     */
+
+    virtual void    Initialize(const CVector3& position, const CVector3& rotation, const CVector3& scale);
+
+    /*!
+     *  @brief      初期化
+     *
+     *  @param[in]  position    位置
+     *  @param[in]  rotation    回転
+     *  @param[in]  scale       拡大率
+     *  @param[in]  speed       再生速度
+     */
+
+    virtual void    Initialize(const CVector3& position, const CVector3& rotation, float scale, float speed);
 
     void	Load(const std::string& file_name);
 
@@ -111,7 +137,7 @@ public:
      *
      *  @return     回転
      */
-    CVector3  GetRotation(void);
+    CVector3        GetRotation(void);
 
     /*!
      *  @brief      回転設定
@@ -146,20 +172,20 @@ public:
      *
      *  @return     エフェクトID
      */
-    EFFECT_ID            GetEffectID(void);
+    EFFECT_ID       GetEffectID(void);
 
     /*!
      *  @brief      エフェクトハンドル取得
      *
      *  @return     エフェクトハンドル
      */
-    int            GetEffectHandle(void);
+    int             GetEffectHandle(void);
 
 protected:
-    int			            m_PlayHandle;		//!< ハンドル
-    CTransform              m_Transform;
+    int			            m_PlayHandle;   //!< ハンドル
+    CTransform              m_Transform;    //!< トランスフォーム
     std::string             m_FileName;     //!< エフェクトのファイル名
-    float                   m_Scale;        //!< 拡大率
+    CVector3                m_Scale;        //!< 拡大率
     bool                    m_ActiveFlag;   //!< アクティブフラグ
     int                     m_Width;        //!< 幅
     int                     m_Height;       //!< 高さ
@@ -169,6 +195,7 @@ protected:
     vivid::Rect             m_Rect;         //!< 読み込み範囲
     vivid::Vector2          m_Scale2D;      //!< 2Dの拡大率
     float                   m_Rotation;     //!< 回転値
-    CVector3*               m_ParentPos;
-    EFFECT_ID               m_EffectID;
+    CVector3*               m_ParentPos;    //!< 親の位置
+    EFFECT_ID               m_EffectID;     //!< エフェクトID
+    float                   m_Speed;        //!< 再生速度
 };

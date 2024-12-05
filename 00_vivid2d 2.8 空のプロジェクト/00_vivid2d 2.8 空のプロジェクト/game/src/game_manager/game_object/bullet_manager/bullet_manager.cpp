@@ -67,6 +67,7 @@ Update(void)
         // 弾が非アクティブなら削除してリストから外す
         if (!bullet->GetActive())
         {
+
             bullet->Finalize();
 
             delete bullet;
@@ -148,6 +149,31 @@ Create(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter,  CVecto
     if (!bullet) return nullptr;
 
     bullet->Initialize(category, bulletParameter, pos, dir);
+
+    // 生成した弾をリストに追加
+    m_BulletList.push_back(bullet);
+
+    return bullet;
+}
+
+/*
+ *  弾生成
+ */
+IBullet* CBulletManager::Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir)
+{
+    IBullet* bullet = nullptr;
+
+    switch (id)
+    {
+    case BULLET_ID::NORMAL:         bullet = new CNormalBullet();   break;
+    case BULLET_ID::HOMING:         bullet = new CHomingBullet();   break;
+    case BULLET_ID::SHOCK_WAVE:     bullet = new CShockWaveBullet();   break;
+    case BULLET_ID::CANNON:         bullet = new CCannonBullet();   break;
+    }
+
+    if (!bullet) return nullptr;
+
+    bullet->Initialize(category, pos, dir);
 
     // 生成した弾をリストに追加
     m_BulletList.push_back(bullet);

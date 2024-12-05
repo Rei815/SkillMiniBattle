@@ -19,7 +19,10 @@ const std::string CSkillSelectIcon::m_fallgameFileName[] =
 	{
 		"data\\Textures\\skill_icon_speedup_test.png",
 		"data\\Textures\\skill_icon_jumpup_test.png",
-		"data\\Textures\\skill_icon_null_test.png" 
+		"data\\Textures\\skill_icon_floating.png",
+		"data\\Textures\\skill_icon_stomp.png",
+		"data\\Textures\\skill_icon_resurrect.png",
+		"data\\Textures\\skill_icon_null_test.png",
 	};
 
 const std::string CSkillSelectIcon::m_darumaFileName[] = 

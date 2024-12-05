@@ -20,7 +20,8 @@
 #include "scene\game\daruma_falldown_game\daruma_falldown_game.h"
 #include "scene\game\dodgeball_game\dodgeball_game.h"
 #include "scene\game\debug_game\debug_game.h"
-#include "scene\result\result.h"
+#include "scene\result_minigame\result_minigame.h"
+#include "scene\result_game\result_game.h"
 const int               CSceneManager::m_fade_speed = 5;
 const vivid::Vector2    CSceneManager::m_fade_position = { 0.0f, 0.0f };
 const unsigned int      CSceneManager::m_fade_color = 0xff000000;
@@ -211,16 +212,17 @@ CSceneManager::CreateScene(SCENE_ID id)
 
     switch (id)
     {
-    case SCENE_ID::TITLE:              scene = new CTitle();                      break;
-    case SCENE_ID::SELECTMODE:         scene = new CSelectMode();                 break;
-    case SCENE_ID::SELECTPLAYER:       scene = new CSelectPlayer();               break;
-    case SCENE_ID::SELECTSKILL:        scene = new CSelectSkill();               break;
-    case SCENE_ID::SELECTGAME:         scene = new CSelectGame();                 break;
-    case SCENE_ID::FALLGAME:           scene = new CFallGame();                   break;
-    case SCENE_ID::DARUMAFALLDOWN:     scene = new CDaruma_FallDownGame();        break;
-    case SCENE_ID::DEBUGGAME:          scene = new CDebugGame();                  break;
-    case SCENE_ID::DODGEBALLGAME:      scene = new CDodgeBallGame();              break;
-    case SCENE_ID::RESULT:             scene = new CResult();                     break;
+    case SCENE_ID::TITLE:               scene = new CTitle();                      break;
+    case SCENE_ID::SELECTMODE:          scene = new CSelectMode();                 break;
+    case SCENE_ID::SELECTPLAYER:        scene = new CSelectPlayer();               break;
+    case SCENE_ID::SELECTSKILL:         scene = new CSelectSkill();               break;
+    case SCENE_ID::SELECTGAME:          scene = new CSelectGame();                 break;
+    case SCENE_ID::FALLGAME:            scene = new CFallGame();                   break;
+    case SCENE_ID::DARUMAFALLDOWN:      scene = new CDaruma_FallDownGame();        break;
+    case SCENE_ID::DEBUGGAME:           scene = new CDebugGame();                  break;
+    case SCENE_ID::DODGEBALLGAME:       scene = new CDodgeBallGame();              break;
+    case SCENE_ID::RESULT_MINIGAME:     scene = new CResultMiniGame();                     break;
+    case SCENE_ID::RESULT_GAME:         scene = new CResultGame();                     break;
     }
     m_SceneList.push_back(scene);
     scene->Initialize(id);

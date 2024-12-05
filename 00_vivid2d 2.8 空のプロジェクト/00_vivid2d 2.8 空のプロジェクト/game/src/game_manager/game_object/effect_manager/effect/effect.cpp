@@ -3,10 +3,11 @@
 #include <EffekseerForDXLib.h>
 
 IEffect::IEffect()
-    : m_Scale(1.0f)
+    : m_Scale(CVector3(25.0f, 25.0f, 25.0f))
     , m_ActiveFlag(true)
     , m_PlayHandle(VIVID_DX_ERROR)
     , m_ParentPos(nullptr)
+    , m_Speed(1.0f)
 {
 }
 
@@ -15,12 +16,23 @@ IEffect::IEffect()
   */
 IEffect::
 IEffect(const std::string& file_name, EFFECT_ID effectID)
-    : m_Scale(25.0f)
+    : m_Scale(CVector3(25.0f, 25.0f, 25.0f))
     , m_ActiveFlag(true)
     , m_FileName(file_name)
     , m_PlayHandle(VIVID_DX_ERROR)
     , m_ParentPos(nullptr)
     , m_EffectID(effectID)
+    , m_Speed(1.0f)
+{
+}
+IEffect::IEffect(const std::string& file_name, EFFECT_ID effectID, float speed)
+    : m_Scale(CVector3(25.0f, 25.0f, 25.0f))
+    , m_ActiveFlag(true)
+    , m_FileName(file_name)
+    , m_PlayHandle(VIVID_DX_ERROR)
+    , m_ParentPos(nullptr)
+    , m_EffectID(effectID)
+    , m_Speed(speed)
 {
 }
 /*
@@ -39,6 +51,7 @@ IEffect(int width, int height)
     , m_ActiveFlag(true)
     , m_ParentPos(nullptr)
     , m_EffectID()
+    , m_Speed(1.0f)
 {
 }
 
@@ -98,7 +111,26 @@ void IEffect::Initialize(const CVector3& position, const CVector3& rotation, con
     m_Transform.position = position;
     m_Transform.rotation = rotation;
     m_ActiveFlag = true;
+    m_Scale *= scale;
+    Load(m_FileName);
+}
+
+void IEffect::Initialize(const CVector3& position, const CVector3& rotation, const CVector3& scale)
+{
+    m_Transform.position = position;
+    m_Transform.rotation = rotation;
+    m_ActiveFlag = true;
+    m_Scale *= scale;
+    Load(m_FileName);
+}
+
+void IEffect::Initialize(const CVector3& position, const CVector3& rotation, const float scale, const float speed)
+{
+    m_Transform.position = position;
+    m_Transform.rotation = rotation;
+    m_ActiveFlag = true;
     m_Scale = scale;
+    m_Speed = speed;
     Load(m_FileName);
 }
 
@@ -114,7 +146,7 @@ void IEffect::Load(const std::string& file_name)
 
 void IEffect::Start()
 {
-        m_PlayHandle = vivid::effekseer::StartEffect(m_FileName, m_Transform.position, m_Scale);
+        m_PlayHandle = vivid::effekseer::StartEffect(m_FileName, m_Transform.position, m_Scale, m_Speed);
 }
 
 /*

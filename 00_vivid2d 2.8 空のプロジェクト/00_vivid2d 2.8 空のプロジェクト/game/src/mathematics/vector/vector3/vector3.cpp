@@ -120,6 +120,14 @@ CVector3& CVector3::operator=(const CVector3& v)
 	return *this;
 }
 
+CVector3& CVector3::operator=(const float f)
+{
+	x = f;
+	y = f;
+	z = f;
+	return *this;
+}
+
 /*
  *  加算演算子のオーバーロード
  */
@@ -152,6 +160,15 @@ CVector3& CVector3::operator*=(float scalar)
 	x *= scalar;
 	y *= scalar;
 	z *= scalar;
+
+	return *this;
+}
+
+CVector3& CVector3::operator*=(const CVector3& v)
+{
+	x *= v.x;
+	y *= v.y;
+	z *= v.z;
 
 	return *this;
 }

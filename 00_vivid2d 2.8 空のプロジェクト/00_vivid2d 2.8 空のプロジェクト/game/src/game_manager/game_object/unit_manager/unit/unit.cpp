@@ -156,6 +156,38 @@ CheckHitBullet(IBullet* bullet)
 }
 
 
+bool IUnit::CheckHitBulletModel(IBullet* bullet)
+{
+    if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
+        return false;
+    DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim{};
+    hit_poly_dim = MV1CollCheck_Sphere(bullet->GetModel().GetModelHandle(), -1, GetPosition(), GetRadius());
+    bool hit_flag = false;
+
+    if (hit_poly_dim.HitNum >= 1)
+    {
+        hit_flag = true;
+        CVector3 hitPosition;
+        hitPosition.x = hit_poly_dim.Dim->HitPosition.x;
+        hitPosition.y = hit_poly_dim.Dim->HitPosition.y;
+        hitPosition.z = hit_poly_dim.Dim->HitPosition.z;
+        if (m_InvincibleFlag)
+            CEffectManager::GetInstance().Create(EFFECT_ID::HIT_INVINCBLE, hitPosition);
+        else
+            CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
+
+        bullet->SetActive(false);
+
+        if (m_InvincibleFlag)
+            return hit_flag;
+
+        Impact(hitPosition, bullet->GetVelocity().Normalize(), bullet->GetPower());
+    }
+    // 当たり判定情報の後始末
+    MV1CollResultPolyDimTerminate(hit_poly_dim);
+    return hit_flag;
+}
+
 /*
  *  ユニットID取得
  */
@@ -321,6 +353,11 @@ void IUnit::SetGravity(const CVector3& gravity)
     m_Gravity = gravity;
 }
 
+CVector3 IUnit::GetDefaultGravity()
+{
+    return m_gravity;
+}
+
 void IUnit::RevertAlpha(void)
 {
     if (m_Alpha >= 1.0f)
@@ -410,6 +447,10 @@ void IUnit::Fire(CShot* shot, bool aim, CVector3& position, const CVector3& dire
 void IUnit::HitBullet(IBullet* bullet, CVector3 hit_position)
 {
     //継承先で処理を作る
+}
+
+void IUnit::Impact(const CVector3& hit_position, const CVector3& direction, const float power)
+{
 }
 
 

@@ -34,6 +34,12 @@ void CTimer::Reset()
 	m_Timer = 0;
 }
 
+void CTimer::AllReset()
+{
+	m_LimitTime = 0;
+	m_Timer = 0;
+}
+
 bool CTimer::Finished()
 {
 	return m_Timer >= m_LimitTime;

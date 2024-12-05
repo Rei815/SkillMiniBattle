@@ -48,6 +48,13 @@ public:
     vivid::controller::DEVICE_ID GetController(void);
     
     /*!
+     *  @brief      スキルの取得
+     *
+     *  @return     スキル
+     */
+    CSkill*         GetSkill();
+
+    /*!
      *  @brief      スキルのセット
      *
      *  @param[in]  skill    スキルのポインタ
@@ -110,7 +117,13 @@ protected:
      */
     void    HitBullet(IBullet* bullet, CVector3 hit_position);
 
-
+    /*!
+     *  @brief      衝撃を与える
+     *  @param[in]  hit_position   衝撃の位置
+     *  @param[in]  direction      向き
+     *  @param[in]  float          衝撃力
+     */
+    void    Impact(const CVector3& hit_position, const CVector3& direction, float power);
     /*!
      *  @brief      死亡
      */
@@ -146,7 +159,7 @@ protected:
     float                           m_MoveSpeedRate;                //!< 移動速度の倍率
     float                           m_JumpPowerRate;                //!< ジャンプ力の倍率
 
-    CSkill* m_Skill;
+    CSkill*                         m_Skill;                        //!< スキル
 
     float                           m_FallSpeed;                    //!< 落下速度
     CVector3                        m_Accelerator;                  //!< 加速度

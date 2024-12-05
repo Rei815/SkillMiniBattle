@@ -43,8 +43,9 @@ private:
     static const vivid::Rect        m_rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
     static const vivid::Vector2     m_anchor;           //!< Šî€“_
     static const vivid::Vector2     m_scale;            //!< Šgk
+    static const float              m_speed;            //!< “®‚«‚Ì‘¬“x
 
     std::string                     m_FileName;
-
+    vivid::Rect                     m_Rect;
     CFalloutSellectBG               m_BackGround;
 };

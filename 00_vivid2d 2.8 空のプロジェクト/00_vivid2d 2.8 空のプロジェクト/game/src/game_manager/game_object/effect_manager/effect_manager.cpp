@@ -9,6 +9,7 @@
 #include "effect/player_bullet_effect/player_bullet_effect.h"
 #include "effect/enemy_bullet_effect/enemy_bullet_effect.h"
 #include "effect/forecast_line_effect/forecast_line_effect.h"
+#include "effect/floating_effect/floating_effect.h"
  /*
   *  インスタンスの取得
   */
@@ -126,6 +127,7 @@ Create(EFFECT_ID id, const CVector3& pos)
     case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
     case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
 
     }
 
@@ -152,6 +154,8 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const float s
     case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
     case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
+
     }
 
     if (!effect) return nullptr;
@@ -178,6 +182,8 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector
     case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
     case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
+
     }
 
     if (!effect) return nullptr;
@@ -204,6 +210,36 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector
     case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
     case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
+
+    }
+
+    if (!effect) return nullptr;
+
+    effect->Initialize(pos, rot, scale);
+
+    m_EffectList.push_back(effect);
+
+    return effect;
+}
+
+IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const CVector3& scale)
+{
+    IEffect* effect = nullptr;
+
+    switch (id)
+    {
+    case EFFECT_ID::DESTROY:                effect = new CDestroyEffect();          break;
+    case EFFECT_ID::HIT:                    effect = new CHitEffect();              break;
+    case EFFECT_ID::HIT_INVINCBLE:          effect = new CHitInvincibleEffect();    break;
+    case EFFECT_ID::JUMP:                   effect = new CJumpEffect();             break;
+    case EFFECT_ID::DUST_CLOUD:             effect = new CDustCloudEffect();        break;
+    case EFFECT_ID::SHOCK_WAVE:             effect = new CShockWaveEffect();        break;
+    case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
+    case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
+    case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
+
     }
 
     if (!effect) return nullptr;

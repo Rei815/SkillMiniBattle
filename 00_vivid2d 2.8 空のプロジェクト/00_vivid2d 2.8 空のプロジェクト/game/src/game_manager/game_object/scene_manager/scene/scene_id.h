@@ -12,7 +12,8 @@ enum class SCENE_ID
 	FALLGAME,		//!< フォールゲームシーン
 	DODGEBALLGAME,	//!< ドッジボールゲームシーン
 	DEBUGGAME,		//!< デバッグゲームシーン
-	RESULT,			//!< リザルトシーン
+	RESULT_MINIGAME,//!< ミニゲームリザルトシーン
+	RESULT_GAME,	//!< ミニゲームリザルトシーン
 	DARUMAFALLDOWN,	//!< ダルマさんが転んだシーン
 
 

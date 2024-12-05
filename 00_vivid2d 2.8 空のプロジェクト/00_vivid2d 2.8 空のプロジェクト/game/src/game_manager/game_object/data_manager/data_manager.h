@@ -78,6 +78,7 @@ private:
      */
     using RANKING_LIST = std::vector<CPlayer*>;
     
+    
     RANKING_LIST        m_OverallRankingList[4];             //!< 全体のランキングリスト
 
     int                 m_PlayerWins[4];

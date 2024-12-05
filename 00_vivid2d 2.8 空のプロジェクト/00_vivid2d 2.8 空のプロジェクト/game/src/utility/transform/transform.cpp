@@ -11,12 +11,15 @@ CTransform::CTransform()
 
 CTransform::CTransform(const CVector3& pos)
 	: position(pos)
+	, rotation()
+	, scale(CVector3(1.0f, 1.0f, 1.0f))
 {
 }
 
 CTransform::CTransform(const CVector3& pos, const CVector3& rot)
 	: position(pos)
 	, rotation(rot)
+	, scale(CVector3(1.0f, 1.0f, 1.0f))
 {
 }
 

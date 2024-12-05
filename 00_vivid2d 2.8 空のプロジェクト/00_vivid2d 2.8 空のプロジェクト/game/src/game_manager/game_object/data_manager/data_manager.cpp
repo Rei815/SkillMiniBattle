@@ -19,6 +19,8 @@ CDataManager::
 Initialize(void)
 {
     m_OverallRankingList->clear();
+
+    m_MaxGameNum = 3;
 }
 
 /*

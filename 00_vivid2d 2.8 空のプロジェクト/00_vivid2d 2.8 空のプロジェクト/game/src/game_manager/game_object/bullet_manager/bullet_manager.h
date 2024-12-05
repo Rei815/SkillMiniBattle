@@ -73,6 +73,16 @@ public:
     IBullet*        Create(UNIT_CATEGORY category,CShot::BulletParameters* bulletParameters, CVector3& pos, const CVector3& dir);
 
     /*!
+     *  @brief      弾生成
+     *
+     *  @param[in]  category  ユニット識別子
+     *  @param[in]  id          弾ID
+     *  @param[in]  pos         位置
+     *  @param[in]  dir         向き
+     */
+    IBullet*        Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir);
+
+    /*!
      *  @brief      モデルとの判定
      */
     void        CheckHitModel(const CModel& model);

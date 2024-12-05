@@ -13,6 +13,8 @@ public:
 
 	void Reset();
 
+	void AllReset();
+
 	bool Finished();
 
 	float		GetTimer();

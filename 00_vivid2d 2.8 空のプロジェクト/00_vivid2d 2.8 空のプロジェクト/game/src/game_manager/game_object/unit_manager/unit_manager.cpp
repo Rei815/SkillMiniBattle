@@ -110,6 +110,7 @@ Create(UNIT_ID id, const CVector3& pos)
     if (!unit) return nullptr;
 
     unit->Initialize(id, pos, m_file_name_list[(int)id], m_controller_list[(int)id]);
+
     m_UnitList.push_back(unit);
     return unit;
 }
@@ -127,9 +128,11 @@ CheckHitBullet(IBullet* bullet)
 
     while (it != m_UnitList.end())
     {
-
-        if ((*it)->CheckHitBullet(bullet))
-            return;
+        IUnit* unit = (IUnit*)(*it);
+        if (bullet->GetColliderID() == COLLIDER_ID::MODEL)
+            unit->CheckHitBulletModel(bullet);
+        else
+            unit->CheckHitBullet(bullet);
 
         ++it;
     }
