@@ -39,10 +39,10 @@ private:
     static const CVector3           m_camera_direction;
     static const CVector3           m_ogre_position;
     static const CVector3           m_ogre_rotation;
+    static const float              m_move_speed;
     CTimer                          m_Timer;
     CVector3                        m_PlayerPosition[4];
     int                             m_RemainCount;
     int                             m_TempFirstNum;
     float                           m_TempFirstDis;
-
 };
