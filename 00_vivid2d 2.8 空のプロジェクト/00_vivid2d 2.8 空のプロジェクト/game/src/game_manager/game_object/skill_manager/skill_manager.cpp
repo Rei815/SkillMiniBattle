@@ -3,8 +3,6 @@
 #include "skill/skill_jump_up/skill_jump_up.h"
 #include "skill/skill_dash/skill_dash.h"
 #include "skill/skill_spawn_wall/skill_spawn_wall.h"
-#include "skill/speed_up/speed_up.h"
-#include "skill/jump_up/jump_up.h"
 #include "skill/floating/floating.h"
 #include "skill/stomp/stomp.h"
 #include "skill/resurrect_fallout/resurrect_fallout.h"
@@ -136,14 +134,13 @@ CreateSkill(SKILL_ID_FALLGAME skill_id, UNIT_ID player_id)
     case SKILL_ID_FALLGAME::SPEED_UP:
         skill = new CSkillSpeedUp();     break;
     case SKILL_ID_FALLGAME::JUMP_UP:
-        skill = new CJumpUp();     break;
+        skill = new CSkillJumpUp();     break;
     case SKILL_ID_FALLGAME::FLOATING:
         skill = new CFloating();     break;
     case SKILL_ID_FALLGAME::STOMP:
         skill = new CStomp();     break;
     case SKILL_ID_FALLGAME::RESURRECT:
         skill = new CResurrectFallout();     break;
-        skill = new CSkillJumpUp();     break;
     }
 
     if (!skill) return;
