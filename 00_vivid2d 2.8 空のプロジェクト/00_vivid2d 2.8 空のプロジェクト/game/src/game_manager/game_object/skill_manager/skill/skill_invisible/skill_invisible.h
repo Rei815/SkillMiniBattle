@@ -27,6 +27,11 @@ public:
      */
     void        Finalize(void);
 
+    /*!
+     *  @brief      アクション呼び出し
+     */
+    void        Action(void);
+
 
 protected:
     enum class STATE
@@ -35,8 +40,8 @@ protected:
         INVISIBLE,
         IS_COOL_TIME,
     };
-    static const float m_cooltime;
-    static const float m_invisibletime;
+    static const float m_cool_time;
+    static const float m_invisible_time;
 
     STATE              m_State;
     CTimer             m_Timer;
