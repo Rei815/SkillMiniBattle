@@ -64,6 +64,13 @@ public:
      *  @return     速度ベクトル
      */
     CVector3        GetVelocity(void);
+    
+    /*!
+     *  @brief      速度ベクトルの設定
+     *
+     *  @param[in]  velocity    速度ベクトル
+     */
+    void            SetVelocity(const CVector3& velocity);
 
     /*!
      *  @brief      半径取得

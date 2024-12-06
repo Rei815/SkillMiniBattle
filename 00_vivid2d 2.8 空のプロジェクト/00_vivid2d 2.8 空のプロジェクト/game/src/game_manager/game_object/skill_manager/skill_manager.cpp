@@ -3,6 +3,7 @@
 #include "skill/skill_jump_up/skill_jump_up.h"
 #include "skill/skill_dash/skill_dash.h"
 #include "skill/skill_spawn_wall/skill_spawn_wall.h"
+#include "skill/skill_barrier/skill_barrier.h"
 
 /*
  *  インスタンスの取得
@@ -158,6 +159,8 @@ CreateSkill(SKILL_ID_DODGEBALL skill_id, UNIT_ID player_id)
         skill = new CSkillDash();       break;
     case SKILL_ID_DODGEBALL::SPAWN_WALL:
         skill = new CSkillSpawnWall();  break;
+    case SKILL_ID_DODGEBALL::BARRIER:
+        skill = new CSkillBarrier();  break;
     }
 
     if (!skill) return;

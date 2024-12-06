@@ -29,13 +29,15 @@ void CCannonBullet::Initialize(UNIT_CATEGORY category, CShot::BulletParameters* 
 
 void CCannonBullet::Update()
 {
+    /*
     m_Speed += m_Accleration;    // ™X‚É‰Á‘¬‚³‚¹‚é
 
     // Å‚‘¬“x§ŒÀ
     if (m_Speed > m_max_speed)
         m_Speed = m_max_speed;
     m_Velocity = m_Direction * m_Speed;
-    
+    */
+
     //if (m_Effect != nullptr)
     //    m_Effect->SetPosition(m_Transform.position);
 

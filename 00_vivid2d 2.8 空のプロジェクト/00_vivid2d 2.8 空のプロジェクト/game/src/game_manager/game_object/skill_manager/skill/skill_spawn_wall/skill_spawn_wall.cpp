@@ -1,6 +1,7 @@
 #include "skill_spawn_wall.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../object_manager/object_manager.h"
+#include "../../../bullet_manager/bullet_manager.h"
 
 const float CSkillSpawnWall::m_spawn_cool_time = 20.0f;
 const float CSkillSpawnWall::m_wall_exist_time = 5.0f;
@@ -55,10 +56,15 @@ Update(void)
 			m_Timer.SetUp(m_spawn_cool_time);
 			m_NowState = STATE::WAIT;
 
-			if(m_WallObj != nullptr)
+			if (m_WallObj != nullptr)
 				m_WallObj->SetActive(false);
 
 			m_WallObj = nullptr;
+		}
+		else
+		{
+			if (m_WallObj != nullptr)
+				CBulletManager::GetInstance().CheckReflectModel(m_WallObj->GetModel());
 		}
 		break;
 

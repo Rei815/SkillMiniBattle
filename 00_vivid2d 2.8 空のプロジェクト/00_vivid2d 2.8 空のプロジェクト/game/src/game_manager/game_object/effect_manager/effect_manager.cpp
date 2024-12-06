@@ -9,6 +9,7 @@
 #include "effect/player_bullet_effect/player_bullet_effect.h"
 #include "effect/enemy_bullet_effect/enemy_bullet_effect.h"
 #include "effect/forecast_line_effect/forecast_line_effect.h"
+#include "effect/skill_barrier_effect/skill_barrier_effect.h"
  /*
   *  インスタンスの取得
   */
@@ -126,6 +127,7 @@ Create(EFFECT_ID id, const CVector3& pos)
     case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
     case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
 
     }
 
@@ -152,6 +154,7 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const float s
     case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
     case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
     }
 
     if (!effect) return nullptr;
@@ -178,6 +181,7 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector
     case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
     case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
     }
 
     if (!effect) return nullptr;
@@ -204,6 +208,7 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector
     case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
     case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
     }
 
     if (!effect) return nullptr;

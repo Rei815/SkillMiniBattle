@@ -16,5 +16,6 @@ enum class MODEL_ID
     CUBE,
     FLAT_CUBE,
     CANNON,
+    SKILL_BARRIER,
     MAX
 };

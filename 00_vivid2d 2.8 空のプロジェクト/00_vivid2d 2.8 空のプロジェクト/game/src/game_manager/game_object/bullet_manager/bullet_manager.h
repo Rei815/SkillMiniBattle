@@ -73,9 +73,14 @@ public:
     IBullet*        Create(UNIT_CATEGORY category,CShot::BulletParameters* bulletParameters, CVector3& pos, const CVector3& dir);
 
     /*!
-     *  @brief      ƒ‚ƒfƒ‹‚Æ‚Ì”»’è
+     *  @brief      ƒ‚ƒfƒ‹‚Æ‚Ì“–‚½‚è”»’è
      */
     void        CheckHitModel(const CModel& model);
+    
+    /*!
+     *  @brief      ƒ‚ƒfƒ‹‚Æ‚Ì”½ŽË”»’è
+     */
+    void        CheckReflectModel(const CModel& model);
 
 private:
     /*!

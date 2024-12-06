@@ -34,6 +34,7 @@ const std::string CSkillSelectIcon::m_dodgeballFileName[] =
 		"data\\Textures\\skill_icon_jumpup_test.png",
 		"data\\Textures\\skill_icon_dash_test.png",
 		"data\\Textures\\skill_icon_spawnwall_test.png",
+		"data\\Textures\\skill_icon_barrier_test.png",
 		"data\\Textures\\skill_icon_null_test.png" 
 	};
 

@@ -30,6 +30,7 @@ enum class SKILL_ID_DODGEBALL
 	JUMP_UP,
 	DASH,
 	SPAWN_WALL,
+	BARRIER,
 
 	MAX,
 };

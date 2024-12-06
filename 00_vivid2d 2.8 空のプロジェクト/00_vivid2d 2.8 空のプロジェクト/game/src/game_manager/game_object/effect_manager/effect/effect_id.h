@@ -16,4 +16,5 @@ enum class EFFECT_ID
     PLAYER_BULLET,          //!< プレイヤー弾エフェクト
     ENEMY_BULLET,           //!< エネミー弾エフェクト
     FORECAST_LINE,          //!< 大砲の砲撃予測線
+    SKILL_BARRIER,          //!< スキルによるバリアエフェクト
 };
