@@ -200,7 +200,6 @@ void CBulletManager::CheckHitModel(const CModel& model)
         {
             CEffectManager::GetInstance().Create(EFFECT_ID::HIT_INVINCBLE, bullet->GetPosition());
             bullet->SetActive(false);
-
         }
 
         // 当たり判定情報の後始末
@@ -210,7 +209,49 @@ void CBulletManager::CheckHitModel(const CModel& model)
     }
 }
 
+void CBulletManager::CheckReflectModel(const CModel& model)
+{
+    // リストが空なら終了
+    if (m_BulletList.empty()) return;
 
+    BULLET_LIST::iterator it = m_BulletList.begin();
+
+    while (it != m_BulletList.end())
+    {
+        IBullet* bullet = (IBullet*)(*it);
+
+        if (!bullet || model.GetModelHandle() == VIVID_DX_ERROR)
+            return;
+
+        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
+        if (hit_poly_dim.HitNum >= 1)
+        {
+            for (int i = 0; i < hit_poly_dim.HitNum; i++)
+            {
+                CVector3 NowVelocity = -((*it)->GetVelocity());
+                CVector3 Normal = hit_poly_dim.Dim[i].Normal;
+                float Cos = VDot(NowVelocity, Normal) / (VSize(NowVelocity) * VSize(Normal));
+                float Angle = acos(Cos) / DX_PI_F * 180.0f;
+
+                if (Angle >= 90.0f)
+                    continue;
+
+                MATRIX Mat = MGetRotVec2(NowVelocity.Normalize(), Normal);
+
+                NowVelocity = VTransform(NowVelocity, Mat);
+                NowVelocity = VTransform(NowVelocity, Mat);
+
+                (*it)->SetVelocity(NowVelocity);
+                break;
+            }
+        }
+
+        // 当たり判定情報の後始末
+        MV1CollResultPolyDimTerminate(hit_poly_dim);
+
+        ++it;
+    }
+}
 
 /*
  *  コンストラクタ

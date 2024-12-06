@@ -133,6 +133,7 @@ SetPosition(const CVector3& positioin)
 {
     m_Transform.position = positioin;
 }
+
 /*
  *  速度ベクトル取得
  */
@@ -141,6 +142,16 @@ IBullet::
 GetVelocity(void)
 {
     return m_Velocity;
+}
+
+/*
+ *  速度ベクトル設定
+ */
+void
+IBullet::
+SetVelocity(const CVector3& velocity)
+{
+    m_Velocity = velocity;
 }
 
 /*

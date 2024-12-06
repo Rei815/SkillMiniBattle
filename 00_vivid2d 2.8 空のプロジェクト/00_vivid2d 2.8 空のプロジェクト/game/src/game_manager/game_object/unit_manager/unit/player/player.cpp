@@ -14,7 +14,7 @@ const float             CPlayer::m_move_friction = 0.975f;
 const float             CPlayer::m_fly_away_speed = 40.0f;
 
 const float             CPlayer::m_max_life = 3.0f;
-const int               CPlayer::m_max_invincible_time = 60;
+const float             CPlayer::m_max_invincible_time = 1.0f;
 const int               CPlayer::m_invincible_visible_interval = 4;
 const float             CPlayer::m_fall_accelerator = 0.025f;
 
@@ -23,8 +23,8 @@ CPlayer::CPlayer()
     , m_MoveSpeedRate(1.0f)
     , m_JumpPowerRate(1.0f)
     , m_Skill(nullptr)
-    , m_Accelerator(CVector3())
-    , m_InvincibleTime(0)
+    , m_Accelerator(CVector3::ZERO)
+    , m_InvincibleTimer(m_max_invincible_time)
     , m_FallSpeed(0)
     , m_StopFlag(false)
     , m_FrictionFlag(true)
@@ -66,7 +66,7 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
 
     m_Accelerator = CVector3(0,0,0);
 
-    m_InvincibleTime = m_max_invincible_time;
+    m_InvincibleTimer.SetUp(m_max_invincible_time);
 
     m_StopFlag = false;
     m_FrictionFlag = true;
@@ -84,11 +84,11 @@ void CPlayer::Update(void)
 
 void CPlayer::Draw(void)
 {
-    if ((m_InvincibleTime / m_invincible_visible_interval) % 2 == 1)
-    {
+    //if (((int)(m_InvincibleTimer.GetTimer() * 60) / m_invincible_visible_interval) % 2 == 1)
+    //{
         IUnit::Draw();
         m_Model.Draw();
-    }
+    //}
 }
 
 void CPlayer::Finalize(void)
@@ -158,6 +158,12 @@ void CPlayer::DivJumpPowerRate(float rate)
     m_JumpPowerRate = m_JumpPowerRate / rate;
 }
 
+void CPlayer::StartInvincible(float invincible_time)
+{
+    m_InvincibleFlag = true;
+    m_InvincibleTimer.SetUp(invincible_time);
+}
+
 
 /*
  *  çUåÇ
@@ -181,6 +187,9 @@ Attack(void)
  */
 void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
 {
+    if (m_InvincibleFlag)
+        return;
+    
     m_ActionFlag = false;
     m_FrictionFlag = false;
     m_InvincibleFlag = true;
@@ -329,9 +338,11 @@ void CPlayer::Damage(void)
 {
     if (!m_InvincibleFlag)
         return;
-    if (--m_InvincibleTime < 0)
+
+    m_InvincibleTimer.Update();
+    if (m_InvincibleTimer.Finished())
     {
-        m_InvincibleTime = m_max_invincible_time;
+        m_InvincibleTimer.SetUp(m_max_invincible_time);
 
         m_InvincibleFlag = false;
     }

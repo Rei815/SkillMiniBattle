@@ -101,6 +101,13 @@ public:
      */
     void        DivJumpPowerRate(float rate = 1.0f);
 
+    /*!
+     *  @brief      無敵効果の付与
+     *
+     *  @param[in]  invincible_time    無敵時間
+     */
+    void        StartInvincible(float invincible_time);
+
     bool        GetPlayerMoving();
 
     CVector3    GetForwardVector();
@@ -152,7 +159,7 @@ protected:
     static const float              m_move_friction;                //!< 移動用減速率
     static const float              m_fly_away_speed;               //!< 被弾時の吹っ飛び速度
     static const float              m_max_life;                     //!< 最大ライフ
-    static const int                m_max_invincible_time;          //!< 無敵時間
+    static const float              m_max_invincible_time;          //!< 無敵時間
     static const int                m_invincible_visible_interval;  //!< 無敵時間中の点滅間隔
     static const float              m_fall_accelerator;             //!< 落下加速度
 
@@ -166,7 +173,7 @@ protected:
     CVector3                        m_InitialPosition;              //!< 初期位置
     bool                            m_StopFlag;                     //!< 停止フラグ
     bool                            m_FrictionFlag;                 //!< 減速フラグ
-    int                             m_InvincibleTime;               //!< 無敵時間
+    CTimer                          m_InvincibleTimer;              //!< 無敵時間タイマー
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     DxLib::COLOR_F                  m_Color;
     vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
