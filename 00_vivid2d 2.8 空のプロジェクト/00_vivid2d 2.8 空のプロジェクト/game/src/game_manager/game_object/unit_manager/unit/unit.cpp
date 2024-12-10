@@ -71,7 +71,6 @@ Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, v
     m_UnitState = UNIT_STATE::APPEAR;
     m_Alpha = 0.0f;
     m_RevertAlpha = false;
-    m_DecAlpha = false;
     m_FileName = file_name;
     m_Gravity = m_gravity;
 }
@@ -371,13 +370,14 @@ void IUnit::RevertAlpha(void)
     MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
 }
 
-void IUnit::DecAlpha(void)
+void IUnit::DecAlpha(float alpha)
 {
-    if (m_Alpha <= 0.0f)
-        m_Alpha = 0.0f;
-
-    //アルファ値が0になったら終了
-    if (m_Alpha == 0.0f) { m_DecAlpha = false; return; }
+    //アルファ値が設定値になったら終了
+    if (m_Alpha == alpha)
+    {
+        m_Alpha = alpha;
+        return;
+    }
 
     m_Alpha -= m_alpha_speed;
 

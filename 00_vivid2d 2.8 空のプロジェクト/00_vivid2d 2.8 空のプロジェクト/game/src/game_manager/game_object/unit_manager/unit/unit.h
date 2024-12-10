@@ -247,6 +247,11 @@ public:
      */
     CVector3        GetDefaultGravity();
 
+
+    /*!
+     *  @brief      アルファ値を減らしていく
+     */
+    void    DecAlpha(float alpha = 0.0f);
 protected:
 
     /*!
@@ -254,10 +259,6 @@ protected:
      */
     void    RevertAlpha(void);
 
-    /*!
-     *  @brief      アルファ値を減らしていく
-     */
-    void    DecAlpha(void);
 
 
     /*!
@@ -329,7 +330,6 @@ protected:
     float                   m_DamageRate;
     CShot*                  m_Shot;
     bool                    m_RevertAlpha;              //!< アルファ値を戻す
-    bool                    m_DecAlpha;                 //!< アルファ値を減らす
     float                   m_Alpha;                    //!< アルファ値
     bool                    m_DefeatFlag;               //!< 敗北フラグ
     std::string             m_FileName;

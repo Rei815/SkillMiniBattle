@@ -37,11 +37,6 @@ public:
     virtual void    Action(void);
 
     /*!
-     *  @brief      アクション呼び出し
-     */
-    virtual void    Action(UNIT_CATEGORY category);
-
-    /*!
      *  @brief      カテゴリー取得
      */
     SKILL_CATEGORY  GetSkillCategory();

@@ -3,13 +3,13 @@
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
 
-const float CSkillBarrier::m_barrier_exist_time = 3.0f;
+const float CSkillBarrier::m_barrier_exist_time = 3000.0f;
 const float CSkillBarrier::m_barrier_max_cool_time = 17.0f;
 const float CSkillBarrier::m_barrier_min_cool_time = 7.0f;
 const std::string CSkillBarrier::m_collider_model_file_name = "data\\Models\\skill_barrier_collider.mv1";
 
 CSkillBarrier::CSkillBarrier(void)
-	: CSkill()
+	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_ColliderModel()
 	, m_Effect(nullptr)
 	, m_NowBarrierState(BARRIER_STATE::IS_COOL_TIME)

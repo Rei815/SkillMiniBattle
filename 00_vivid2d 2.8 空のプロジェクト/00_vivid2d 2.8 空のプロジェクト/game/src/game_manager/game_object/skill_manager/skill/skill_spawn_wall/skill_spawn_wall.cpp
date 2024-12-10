@@ -8,7 +8,7 @@ const float CSkillSpawnWall::m_wall_exist_time = 5.0f;
 const float CSkillSpawnWall::m_wall_spawn_distance = 200.0f;
 
 CSkillSpawnWall::CSkillSpawnWall(void)
-	:CSkill()
+	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_NowState(STATE::WAIT)
 	, m_Timer()
 	, m_WallObj(nullptr)

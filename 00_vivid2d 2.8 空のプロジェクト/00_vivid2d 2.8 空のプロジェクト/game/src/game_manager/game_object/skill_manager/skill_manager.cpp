@@ -7,6 +7,7 @@
 #include "skill/floating/floating.h"
 #include "skill/stomp/stomp.h"
 #include "skill/resurrect_fallout/resurrect_fallout.h"
+#include "skill/skill_invisible/skill_invisible.h"
 
 /*
  *  インスタンスの取得
@@ -114,6 +115,8 @@ CreateSkill(SKILL_ID_DARUMA skill_id, UNIT_ID player_id)
     {
     case SKILL_ID_DARUMA::SPEED_UP:
         skill = new CSkillSpeedUp();     break;
+    case SKILL_ID_DARUMA::INVISIBLE:
+        skill = new CSkillInvisible();     break;
     }
 
     if (!skill) return;

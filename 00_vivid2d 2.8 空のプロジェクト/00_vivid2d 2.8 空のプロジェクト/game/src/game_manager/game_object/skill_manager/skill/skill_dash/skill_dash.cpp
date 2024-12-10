@@ -6,7 +6,7 @@ const float CSkillDash:: m_dash_time = 0.35f;
 const float CSkillDash:: m_dash_cool_time = 5.0f;
 
 CSkillDash::CSkillDash(void)
-	:CSkill()
+	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_NowDashState(DASH_STATE::WAIT)
 	, m_Timer()
 {
@@ -28,6 +28,7 @@ Initialize(CPlayer* player)
 	CSkill::Initialize(player);
 
 	m_NowDashState = DASH_STATE::WAIT;
+	m_Category = SKILL_CATEGORY::ACTIVE;
 
 	m_Timer.SetUp(m_dash_time);
 }

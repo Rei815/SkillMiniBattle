@@ -6,6 +6,8 @@
 enum class SKILL_CATEGORY
 {
 	UNKNOWN,        //!< 所属不明
+	ACTIVE,         //!< アクティブ
+	PASSIVE,        //!< パッシブ
 	RESURRECT,      //!< 復活
 };
 
@@ -30,6 +32,7 @@ enum class SKILL_ID_FALLGAME
 enum class SKILL_ID_DARUMA
 {
 	SPEED_UP,
+	INVISIBLE,
 
 	MAX,
 };

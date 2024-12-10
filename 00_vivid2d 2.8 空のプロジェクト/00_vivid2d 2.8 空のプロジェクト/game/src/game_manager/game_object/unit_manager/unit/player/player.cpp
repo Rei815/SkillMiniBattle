@@ -261,15 +261,12 @@ void CPlayer::Control(void)
             CEffectManager::GetInstance().Create(EFFECT_ID::JUMP, m_Transform.position);
 
         }
-
+    
     //ÉXÉLÉã
     if(m_Skill != nullptr)
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && !m_StopFlag)
+        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && !m_StopFlag && m_Skill->GetSkillCategory() == SKILL_CATEGORY::ACTIVE)
         {
-            if (m_Category == UNIT_CATEGORY::PLAYER)
-                m_Skill->Action();
-            else
-                m_Skill->Action(m_Category);
+            m_Skill->Action();
         }
 
     //í‚é~

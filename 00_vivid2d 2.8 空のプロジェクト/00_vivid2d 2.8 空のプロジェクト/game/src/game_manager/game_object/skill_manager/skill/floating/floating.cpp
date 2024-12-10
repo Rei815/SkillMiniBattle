@@ -7,7 +7,7 @@ const float		CFloating::m_cool_time = 3.0f;
 const CVector3	CFloating::m_scale = CVector3(4.0f, 1.0f, 4.0f);
 
 CFloating::CFloating(void)
-	:CSkill()
+	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_Effect(nullptr)
 
 {
@@ -27,6 +27,7 @@ CFloating::
 Initialize(CPlayer* player)
 {
 	CSkill::Initialize(player);
+	m_Category = SKILL_CATEGORY::ACTIVE;
 }
 
 /*!
