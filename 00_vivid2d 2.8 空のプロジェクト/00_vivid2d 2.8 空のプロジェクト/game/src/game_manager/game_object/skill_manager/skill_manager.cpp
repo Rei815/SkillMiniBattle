@@ -189,6 +189,7 @@ SetSkill(void)
         if (m_SetSkill[i] != nullptr)
         {
             m_SetSkill[i]->Initialize(CUnitManager::GetInstance().GetPlayer((UNIT_ID)i));
+            
             m_SkillList.push_back(m_SetSkill[i]);
         }
     }

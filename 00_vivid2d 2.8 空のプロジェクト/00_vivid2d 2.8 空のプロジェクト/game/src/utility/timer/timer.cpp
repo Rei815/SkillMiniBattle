@@ -3,6 +3,7 @@
 CTimer::CTimer()
 	: m_LimitTime(0)
 	, m_Timer(0)
+	, m_Active(true)
 {
 }
 
@@ -10,6 +11,7 @@ CTimer::CTimer()
 CTimer::CTimer(float time)
 	: m_LimitTime(time)
 	, m_Timer(0)
+	, m_Active(true)
 {
 
 }
@@ -26,6 +28,8 @@ void CTimer::SetUp(float time)
 
 void CTimer::Update()
 {
+	if (!m_Active) return;
+
 	m_Timer += vivid::GetDeltaTime();
 }
 
@@ -34,7 +38,7 @@ void CTimer::Reset()
 	m_Timer = 0;
 }
 
-void CTimer::AllReset()
+void CTimer::Initialize()
 {
 	m_LimitTime = 0;
 	m_Timer = 0;
@@ -48,4 +52,14 @@ bool CTimer::Finished()
 float CTimer::GetTimer()
 {
 	return m_Timer;
+}
+
+float CTimer::GetLimitTime()
+{
+	return m_LimitTime;
+}
+
+void CTimer::SetActive(bool active)
+{
+	m_Active = active;
 }

@@ -9,7 +9,7 @@ const float             CPlayer::m_radius = 50.0f;
 const float             CPlayer::m_height = 100.0f;
 
 const float             CPlayer::m_move_speed = 0.25f;
-const float             CPlayer::m_jump_power = 30.0f;
+const float             CPlayer::m_jump_power = 15.0f;
 const float             CPlayer::m_move_friction = 0.975f;
 const float             CPlayer::m_fly_away_speed = 40.0f;
 

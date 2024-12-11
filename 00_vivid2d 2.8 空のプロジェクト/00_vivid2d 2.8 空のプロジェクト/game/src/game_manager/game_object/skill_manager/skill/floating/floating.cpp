@@ -41,7 +41,7 @@ Update(void)
 
 	if (m_SkillDuration.Finished())
 	{
-		m_SkillDuration.AllReset();
+		m_SkillDuration.Initialize();
 		m_Player->SetGravity(m_Player->GetDefaultGravity());
 		m_CoolTime.Update();
 	}

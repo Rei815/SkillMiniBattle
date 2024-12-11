@@ -7,18 +7,23 @@ public:
 	CTimer(float time);
 	~CTimer();
 
+	void Initialize();
+
 	void SetUp(float time);
 
 	void Update();
 
 	void Reset();
 
-	void AllReset();
 
 	bool Finished();
 
 	float		GetTimer();
+	float		GetLimitTime();
+
+	void		SetActive(bool active);
 private:
 	float		m_LimitTime;
 	float		m_Timer;
+	bool		m_Active;
 };

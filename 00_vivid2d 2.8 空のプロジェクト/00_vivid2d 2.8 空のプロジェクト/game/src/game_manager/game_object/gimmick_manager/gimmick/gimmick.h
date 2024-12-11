@@ -35,7 +35,7 @@ public:
     /*!
      *  @brief      初期化
      *  @param[in]  object          オブジェクトのポインタ
-     *  @param[in]  time            遅延時間
+     *  @param[in]  time            タイマーの設定
      *
      */
     virtual void    Initialize(IObject* object, float time);

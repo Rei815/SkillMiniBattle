@@ -146,4 +146,5 @@ private:
 
     UNIT_LIST                                           m_UnitList;             //!< ユニットリスト
     DEFEAT_LIST                                         m_DefeatList;             //!< ランキングリスト
+
 };

@@ -25,10 +25,10 @@ public:
     /*!
      *  @brief      初期化
      *  @param[in]  object          オブジェクトのポインタ
-     *  @param[in]  delayFrame      遅延フレーム
+     *  @param[in]  timer           タイマーの設定
      *
      */
-    void    Initialize(IObject* object, int delayFrame);
+    void    Initialize(IObject* object, float time);
 
     /*!
      *  @brief      更新
@@ -40,7 +40,6 @@ public:
      */
     void    Finalize(void);
 
-    void    SetSwitch(bool sw);
 private:
     static const float  m_fall_speed;
 

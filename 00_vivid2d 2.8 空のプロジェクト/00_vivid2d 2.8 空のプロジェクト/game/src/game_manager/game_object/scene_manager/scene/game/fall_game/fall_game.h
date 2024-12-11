@@ -2,6 +2,7 @@
 
 #include "..\game.h"
 #include "..\..\..\..\ui_manager\ui\ui_id.h"
+#include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
 class CFallGame : public CGame
 {
 public:
@@ -36,12 +37,14 @@ public:
      */
     void        Finalize(void);
 
+    using TOPIC_LIST = std::list<CFallOutTopic*>;
+
 private:
 
     struct FALL_INFO
     {
         IObject*    object;
-        UI_ID       uiID = UI_ID::NONE;
+        MARK_ID     markID = MARK_ID::CIRCLE;
     };
 
     /*!
@@ -71,16 +74,20 @@ private:
      */
     FALL_INFO    ChooseObject(void);
 
-    static const CTransform         m_object_transform_list[];
-    static const float              m_time_accelerator;
-    static const float              m_min_time;
-    static const float              m_initial_time;
-    static const float              m_object_delay_time;
-    static const float              m_defeat_height;
-    static const CVector3           m_camera_position;
-    static const CVector3           m_camera_direction;
-    float                           m_FallTime;
-    CTimer                          m_ChooseObjectTimer;
+    static const CTransform         m_object_transform_list[];  //!< 落ちるオブジェクトのトランスフォーム
+    static const float              m_time_accelerator;         //!< 落ちるまでの速度を増やす
+    static const float              m_min_time;                 //!< 落ちるまでの最小時間
+    static const float              m_initial_time;             //!< 落ちるまでの初期時間
+    static const float              m_object_delay_time;        //!< 再抽選までの時間
+    static const float              m_add_topic_time;           //!< お題が増えるまでの時間
+    static const float              m_defeat_height;            //!< 負ける高さ
+    static const CVector3           m_camera_position;          //!< カメラの位置
+    static const CVector3           m_camera_direction;         //!< カメラの方向
+    static const vivid::Vector2     m_topic_positionList[];     //!< お題位置
 
-    IObject* m_Object;
+    float                           m_FallTime;                 //!< 落ちるまでの時間
+    CTimer                          m_ChooseObjectTimer[6];        //!< 抽選タイマー
+    CTimer                          m_AddTopicTimer;            //!< お題が増えるタイマー
+    IObject*                        m_Object;                   //!< オブジェクト
+    TOPIC_LIST                      m_TopicList;                //!< お題のリスト
 };

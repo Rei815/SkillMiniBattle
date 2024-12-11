@@ -8,16 +8,21 @@
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
 #include "../../../../bullet_manager/bullet_manager.h"
+#include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
 
 const CTransform CFallGame::m_object_transform_list[] = 
 {CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
 CTransform(CVector3(-450,-100,-300)), CTransform(CVector3(0,-100,-500)), CTransform(CVector3(450,-100,250)) };
 
+const vivid::Vector2    CFallGame::m_topic_positionList[] = { vivid::Vector2(0, 0),vivid::Vector2(200, 0),vivid::Vector2(400, 0),
+vivid::Vector2(600, 0),vivid::Vector2(800, 0),vivid::Vector2(1000, 0) };
+
 const float		CFallGame::m_time_accelerator = 0.1f;
-const float		CFallGame::m_min_time = 1.0f;
-const float		CFallGame::m_initial_time = 1.0f;
+const float		CFallGame::m_min_time = 1.5f;
+const float		CFallGame::m_initial_time = 5.0f;
 const float		CFallGame::m_defeat_height = -500.0f;
 const float		CFallGame::m_object_delay_time = 1.0f;
+const float		CFallGame::m_add_topic_time = 10.0f;
 const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallGame::m_camera_direction = CVector3(0.0f, -1.0f, 1.0f);
 CFallGame::CFallGame(void)
@@ -31,7 +36,12 @@ CFallGame::~CFallGame(void)
 void CFallGame::Initialize(SCENE_ID scene_id)
 {
 	m_FallTime = m_initial_time;
-	m_ChooseObjectTimer.SetUp(m_FallTime);
+	for (int i = 0; i < 6; i++)
+	{
+		m_ChooseObjectTimer[i].SetUp(m_FallTime);
+		m_ChooseObjectTimer[i].SetActive(false);
+	}
+	m_AddTopicTimer.SetUp(m_add_topic_time);
 	CGame::Initialize(scene_id);
 	CStage::GetInstance().Initialize();
 	CCamera::GetInstance().Initialize();
@@ -72,6 +82,10 @@ void CFallGame::Initialize(SCENE_ID scene_id)
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
+	CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
+
+	m_TopicList.push_back((CFallOutTopic*)ui);
+	m_ChooseObjectTimer[m_TopicList.size()].SetActive(true);
 }
 
 void CFallGame::Update(void)
@@ -92,8 +106,11 @@ void CFallGame::Draw(void)
 
 #ifdef VIVID_DEBUG
 
-	vivid::DrawText(30, std::to_string(m_ChooseObjectTimer.GetTimer()),
-		vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_ChooseObjectTimer.GetTimer())), 0));
+	for (int i = 0; i < 6; i++)
+	{
+		vivid::DrawText(30, std::to_string(m_ChooseObjectTimer[i].GetTimer()), vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_ChooseObjectTimer[i].GetTimer())), 10 * i));
+
+	}
 #endif // VIVID_DEBUG
 }
 
@@ -114,25 +131,69 @@ void CFallGame::Play(void)
 {
 	CGame::Play();
 
-	m_ChooseObjectTimer.Update();
-	if (m_ChooseObjectTimer.Finished())
+	for (int i = 0; i < 6; i++)
+		m_ChooseObjectTimer[i].Update();
+	m_AddTopicTimer.Update();
+	for (int i = 0; i < 6; i++)
 	{
-		m_ChooseObjectTimer.Reset();
-
-		FALL_INFO fallInfo = ChooseObject();
-
-		if (fallInfo.object == nullptr) return;
-		if (fallInfo.object->GetObjectID() != OBJECT_ID::NONE)
+		if (m_ChooseObjectTimer[i].Finished())
 		{
-			fallInfo.object->GetGimmick()->SetTimer(m_object_delay_time);
-			fallInfo.object->GetGimmick()->SetSwitch(true);
+			TOPIC_LIST::iterator it = m_TopicList.begin();
 
-			m_FallTime -= m_time_accelerator;
-			m_ChooseObjectTimer.SetUp(m_FallTime);
-			if (m_FallTime < m_min_time)
-				m_FallTime = m_min_time;
-			CUIManager::GetInstance().Create(fallInfo.uiID);
-		}
+			m_ChooseObjectTimer[i].Reset();
+
+			bool chooseFlag = false;
+			CFallOutTopic* topic;
+			while (it != m_TopicList.end())
+			{
+				topic = (CFallOutTopic*)(*it);
+
+				if (!topic)
+				{
+					++it;
+					continue;
+				}
+
+				if (topic->GetState() == CFallOutTopic::STATE::CHANGE)
+				{
+					chooseFlag = true;
+					break;
+				}
+				++it;
+			}
+			if (!chooseFlag) return;
+		
+			FALL_INFO fallInfo = ChooseObject();
+
+			if (fallInfo.object == nullptr) return;
+			if (fallInfo.object->GetObjectID() != OBJECT_ID::NONE)
+			{
+				fallInfo.object->GetGimmick()->SetTimer(m_object_delay_time);
+				fallInfo.object->GetGimmick()->SetState(GIMMICK_STATE::PLAY);
+
+				m_FallTime -= m_time_accelerator;
+				m_ChooseObjectTimer[i].SetUp(m_FallTime);
+
+				if (m_FallTime < m_min_time)
+					m_FallTime = m_min_time;
+
+				topic->SetMarkID(fallInfo.markID);
+				topic->SetTimer(m_FallTime);
+			
+			}
+	}
+	}
+
+	if (m_AddTopicTimer.Finished())
+	{
+		m_AddTopicTimer.Reset();
+		if (m_TopicList.size() >= 6) return;
+
+		CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
+
+		m_TopicList.push_back((CFallOutTopic*)ui);
+		m_ChooseObjectTimer[m_TopicList.size()].SetActive(true);
+
 	}
 }
 
@@ -232,12 +293,12 @@ CFallGame::FALL_INFO CFallGame::ChooseObject(void)
 	fallInfo.object = (*it);
 	switch ((*it)->GetObjectID())
 	{
-	case OBJECT_ID::MOON_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_MOON;		break;
-	case OBJECT_ID::CIRCLE_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_CIRCLE;		break;
-	case OBJECT_ID::CROSS_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_CROSS;		break;
-	case OBJECT_ID::SQUARE_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_SQUARE;		break;
-	case OBJECT_ID::SUN_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_SUN;		break;
-	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	fallInfo.uiID = UI_ID::FALL_TRIANGLE;	break;
+	case OBJECT_ID::MOON_FALL_OBJECT:		fallInfo.markID = MARK_ID::MOON;		break;
+	case OBJECT_ID::CIRCLE_FALL_OBJECT:		fallInfo.markID = MARK_ID::CIRCLE;		break;
+	case OBJECT_ID::CROSS_FALL_OBJECT:		fallInfo.markID = MARK_ID::CROSS;		break;
+	case OBJECT_ID::SQUARE_FALL_OBJECT:		fallInfo.markID = MARK_ID::SQUARE;		break;
+	case OBJECT_ID::SUN_FALL_OBJECT:		fallInfo.markID = MARK_ID::SUN;			break;
+	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	fallInfo.markID = MARK_ID::TRIANGLE;	break;
 	}
 	return fallInfo;
 }

@@ -28,16 +28,17 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	{
 	case OBJECT_ID::CIRCLE_FALL_OBJECT:		m_MarkID = MARK_ID::CIRCLE;		m_Transform.rotation.y = 30;	break;
 	case OBJECT_ID::CROSS_FALL_OBJECT:		m_MarkID = MARK_ID::CROSS;		m_Transform.rotation.y = 30;	break;
-	case OBJECT_ID::MOON_FALL_OBJECT:		m_MarkID = MARK_ID::MOON;		m_Transform.rotation.y = 90;		break;
+	case OBJECT_ID::MOON_FALL_OBJECT:		m_MarkID = MARK_ID::MOON;		m_Transform.rotation.y = 90;	break;
 	case OBJECT_ID::SQUARE_FALL_OBJECT:		m_MarkID = MARK_ID::SQUARE;		m_Transform.rotation.y = -30;	break;
 	case OBJECT_ID::SUN_FALL_OBJECT:		m_MarkID = MARK_ID::SUN;		m_Transform.rotation.y = 90;	break;
 	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	m_MarkID = MARK_ID::TRIANGLE;	m_Transform.rotation.y = -30;	break;
 	}
-	m_FileName = m_file_name_list[(int)m_MarkID];
+	m_FileName = m_file_name_list[static_cast<int>(m_MarkID)];
 	m_Model.Initialize(m_FileName, m_Transform);
 	m_Timer.SetUp(1.0f);
 	m_Tag = "Floor";
 	MV1SetMeshBackCulling(m_Model.GetModelHandle(), 0, TRUE);
+
 }
 
 void CFallObject::Update(void)
@@ -57,7 +58,7 @@ void CFallObject::Update(void)
 
 	if (m_Timer.Finished())
 	{
-		CUIManager::GetInstance().Delete((UI_ID)((int)m_MarkID + 2));
+
 		m_Timer.Reset();
 		m_Gimmick->SetState(GIMMICK_STATE::WAIT);
 		m_Transform.position.y = m_start_height;

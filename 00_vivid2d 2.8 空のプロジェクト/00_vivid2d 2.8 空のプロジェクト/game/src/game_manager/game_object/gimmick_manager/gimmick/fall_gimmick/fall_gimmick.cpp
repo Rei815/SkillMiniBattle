@@ -18,32 +18,32 @@ void CFallGimmick::Initialize(IObject* object)
 
 }
 
-void CFallGimmick::Initialize(IObject* object, int delayFrame)
+void CFallGimmick::Initialize(IObject* object, float time)
 {
-	CGimmick::Initialize(object, delayFrame);
+	CGimmick::Initialize(object, time);
 	m_Object->SetGimmick(this);
 }
 
 void CFallGimmick::Update(void)
 {
-	if (!m_Switch) return;
 	CGimmick::Update();
-	if (m_Timer.Finished())
+	switch (m_State)
 	{
-		m_Timer.Reset();
-		m_Object->SetVelocity(CVector3(0, -m_fall_speed, 0));
-		m_State = GIMMICK_STATE::FINISH;
-		m_Switch = false;
+	case GIMMICK_STATE::WAIT:
+		break;
+	case GIMMICK_STATE::PLAY:
+		if (m_Timer.Finished())
+		{
+			m_Timer.Reset();
+			m_Object->SetVelocity(CVector3(0, -m_fall_speed, 0));
+			m_State = GIMMICK_STATE::FINISH;
+		}
+		break;
+	case GIMMICK_STATE::FINISH:
+		break;
 	}
 
 }
-
 void CFallGimmick::Finalize(void)
 {
-}
-
-void CFallGimmick::SetSwitch(bool sw)
-{
-	m_Switch = sw;
-	m_State = GIMMICK_STATE::PLAY;
 }

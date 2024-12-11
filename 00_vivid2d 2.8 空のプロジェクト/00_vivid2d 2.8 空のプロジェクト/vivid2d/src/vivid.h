@@ -360,6 +360,14 @@ namespace vivid
         INVSRC   = DX_BLENDMODE_INVSRC,      //! 反転合成
     };
 
+    enum class ADDRESS_MODE
+    {
+        WRAP = DX_TEXADDRESS_WRAP,
+        MIRROR = DX_TEXADDRESS_MIRROR,
+        CLAMP = DX_TEXADDRESS_CLAMP,
+        BORDER = DX_TEXADDRESS_BORDER,
+    };
+
     /*!
      *  @brief      描画用関数ポインタ型
      */
@@ -863,7 +871,7 @@ namespace vivid
      *  @param[in]  rotation    回転値(ラジアン)
      *  @param[in]  blend_mode  アルファブレンドモード
      */
-    void    DrawTexture(const std::string& file_name, const Vector2& position, unsigned int color, const Rect& rect, const Vector2& anchor, const Vector2& scale, float rotation, ALPHABLEND blend_mode);
+    void    DrawTexture(const std::string& file_name, const Vector2& position, unsigned int color, const Rect& rect, const Vector2& anchor, const Vector2& scale, float rotation, ALPHABLEND blend_mode, ADDRESS_MODE address_mode = ADDRESS_MODE::CLAMP);
 
     /*!
      *  @brief      テクスチャの幅を取得

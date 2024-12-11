@@ -113,6 +113,13 @@ public:
      */
     UI_ID            GetUI_ID(void);
 
+    /*!
+     *  @brief      IDê›íË
+     *
+     *  @param[in]  uiID  UIÇÃID
+     */
+    void             SetUI_ID(UI_ID uiID);
+
 protected:
 
     CTransform                      m_Transform;
