@@ -19,9 +19,9 @@ CPunchUp::~CPunchUp(void)
  */
 void
 CPunchUp::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
 
 	//player->SetMoveSpeedRate(speed_up_rate);
 }

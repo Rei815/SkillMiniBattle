@@ -94,62 +94,50 @@ void CSelectSkill::ChooseSkill(void)
 {
     ResetChooseSkill();
 
-    std::list<int> TempSkillNumList;
+    std::list<SKILL_ID> TempSkillNumList;
 
+    //候補の取り出し
     switch (m_GameID)
     {
     case GAME_ID::FALL_GAME:
-        for (int i = 0; i < (int)SKILL_ID_FALLGAME::MAX; i++)
-            TempSkillNumList.push_back(i);
+        for (int i = 0; i < (int)SKILL_ID_FALLOUT::MAX; i++)
+            TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_FALLOUT)i));
         break;
     case GAME_ID::DODGE_BALL_GAME:
         for (int i = 0; i < (int)SKILL_ID_DODGEBALL::MAX; i++)
-            TempSkillNumList.push_back(i);
+            TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_DODGEBALL)i));
         break;
     case GAME_ID::DARUMA_FALL_DOWN_GAME:
         for (int i = 0; i < (int)SKILL_ID_DARUMA::MAX; i++)
-            TempSkillNumList.push_back(i);
+            TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_DARUMA)i));
         break;
     case GAME_ID::DEBUG_GAME:
         for (int i = 0; i < (int)SKILL_ID_DODGEBALL::MAX; i++)
-            TempSkillNumList.push_back(i);
+            TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_DODGEBALL)i));
         break;
     }
 
+    //抽選
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
         if (!TempSkillNumList.empty())
         {
             if (TempSkillNumList.size() == 1)
             {
-                m_ChooseSkillNum[i] = *(TempSkillNumList.begin());
+                m_ChooseSkillID[i] = *(TempSkillNumList.begin());
                 TempSkillNumList.clear();
             }
             else
             {
                 int TempNum = rand() % TempSkillNumList.size();
                 
-                m_ChooseSkillNum[i] = *(std::next(TempSkillNumList.begin(), TempNum));
+                m_ChooseSkillID[i] = *(std::next(TempSkillNumList.begin(), TempNum));
                 TempSkillNumList.erase(std::next(TempSkillNumList.begin(), TempNum));
             }
         }
         else
         {
-            switch (m_GameID)
-            {
-            case GAME_ID::FALL_GAME:
-                m_ChooseSkillNum[i] = (int)(SKILL_ID_FALLGAME::MAX);
-                break;
-            case GAME_ID::DODGE_BALL_GAME:
-                m_ChooseSkillNum[i] = (int)(SKILL_ID_DODGEBALL::MAX);
-                break;
-            case GAME_ID::DARUMA_FALL_DOWN_GAME:
-                m_ChooseSkillNum[i] = (int)(SKILL_ID_DARUMA::MAX);
-                break;
-            case GAME_ID::DEBUG_GAME:
-                m_ChooseSkillNum[i] = (int)(SKILL_ID_DODGEBALL::MAX);
-                break;
-            }
+            m_ChooseSkillID[i] = SKILL_ID::MAX;
         }
     }
 }
@@ -158,7 +146,7 @@ void CSelectSkill::ResetChooseSkill(void)
 {
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
-        m_ChooseSkillNum[i] = 0;
+        m_ChooseSkillID[i] = SKILL_ID::MAX;
     }
 }
 
@@ -179,42 +167,7 @@ void CSelectSkill::CreateSkillIcon(void)
             continue;
         }
 
-        if (m_ChooseSkillNum[i] == -1)
-        {
-            switch (m_GameID)
-            {
-            case GAME_ID::FALL_GAME:
-                SkillIconUI->SetIcon(SKILL_ID_FALLGAME::MAX, i);
-                break;
-            case GAME_ID::DODGE_BALL_GAME:
-                SkillIconUI->SetIcon(SKILL_ID_DODGEBALL::MAX, i);
-                break;
-            case GAME_ID::DARUMA_FALL_DOWN_GAME:
-                SkillIconUI->SetIcon(SKILL_ID_DARUMA::MAX, i);
-                break;
-            case GAME_ID::DEBUG_GAME:
-                SkillIconUI->SetIcon(SKILL_ID_DODGEBALL::MAX, i);
-                break;
-            }
-        }
-        else
-        {
-            switch (m_GameID)
-            {
-            case GAME_ID::FALL_GAME:
-                SkillIconUI->SetIcon((SKILL_ID_FALLGAME)m_ChooseSkillNum[i], i);
-                break;
-            case GAME_ID::DODGE_BALL_GAME:
-                SkillIconUI->SetIcon((SKILL_ID_DODGEBALL)m_ChooseSkillNum[i], i);
-                break;
-            case GAME_ID::DARUMA_FALL_DOWN_GAME:
-                SkillIconUI->SetIcon((SKILL_ID_DARUMA)m_ChooseSkillNum[i], i);
-                break;
-            case GAME_ID::DEBUG_GAME:
-                SkillIconUI->SetIcon(SKILL_ID_DODGEBALL::MAX, i);
-                break;
-            }
-        }
+        SkillIconUI->SetIcon(m_ChooseSkillID[i], i);
 
         m_SkillSelectIcon[i] = SkillIconUI;
     }
@@ -309,24 +262,10 @@ void CSelectSkill::MoveCursor(void)
     if ((GetJoypadInputState(joyPad) & PAD_INPUT_2) || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
     {
         //プレイヤーにスキルをセットする
-        int tempSkillNum = m_ChooseSkillNum[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];
+        SKILL_ID tempSkillID = m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];
         UNIT_ID tempPlayerID = m_CursorID[m_NowCursorID_Num];
 
-        switch (m_GameID)
-        {
-        case GAME_ID::FALL_GAME:
-            CSkillManager::GetInstance().CreateSkill((SKILL_ID_FALLGAME)tempSkillNum, tempPlayerID);
-            break;
-        case GAME_ID::DODGE_BALL_GAME:
-            CSkillManager::GetInstance().CreateSkill((SKILL_ID_DODGEBALL)tempSkillNum, tempPlayerID);
-            break;
-        case GAME_ID::DARUMA_FALL_DOWN_GAME:
-            CSkillManager::GetInstance().CreateSkill((SKILL_ID_DARUMA)tempSkillNum, tempPlayerID);
-            break;
-        case GAME_ID::DEBUG_GAME:
-            CSkillManager::GetInstance().CreateSkill((SKILL_ID_DODGEBALL)tempSkillNum, tempPlayerID);
-            break;
-        }
+        CSkillManager::GetInstance().CreateSkill(tempSkillID, tempPlayerID);
 
         //選択されたスキルを選択肢から取り除く
         m_CursorPosNumList.erase(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum));
@@ -359,4 +298,79 @@ void CSelectSkill::MoveCursor(void)
             }
         }
     }
+}
+
+SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_DARUMA skill_id)
+{
+    SKILL_ID temp = SKILL_ID::MAX;
+
+    switch (skill_id)
+    {
+    case SKILL_ID_DARUMA::SPEED_UP:
+        temp = SKILL_ID::SPEED_UP;
+        break;
+    case SKILL_ID_DARUMA::MAX:
+        temp = SKILL_ID::MAX;
+        break;
+    }
+
+    return temp;
+}
+
+SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_DODGEBALL skill_id)
+{
+    SKILL_ID temp = SKILL_ID::MAX;
+
+    switch (skill_id)
+    {
+    case SKILL_ID_DODGEBALL::SPEED_UP:
+        temp = SKILL_ID::SPEED_UP;
+        break;
+    case SKILL_ID_DODGEBALL::JUMP_UP:
+        temp = SKILL_ID::JUMP_UP;
+        break;
+    case SKILL_ID_DODGEBALL::DASH:
+        temp = SKILL_ID::DASH;
+        break;
+    case SKILL_ID_DODGEBALL::SPAWN_WALL:
+        temp = SKILL_ID::SPAWN_WALL;
+        break;
+    case SKILL_ID_DODGEBALL::BARRIER:
+        temp = SKILL_ID::BARRIER;
+        break;
+    case SKILL_ID_DODGEBALL::MAX:
+        temp = SKILL_ID::MAX;
+        break;
+    }
+
+    return temp;
+}
+
+SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_FALLOUT skill_id)
+{
+    SKILL_ID temp = SKILL_ID::MAX;
+
+    switch (skill_id)
+    {
+    case SKILL_ID_FALLOUT::SPEED_UP:
+        temp = SKILL_ID::SPEED_UP;
+        break;
+    case SKILL_ID_FALLOUT::JUMP_UP:
+        temp = SKILL_ID::JUMP_UP;
+        break;
+    case SKILL_ID_FALLOUT::FLOATING:
+        temp = SKILL_ID::FLOATING;
+        break;
+    case SKILL_ID_FALLOUT::STOMP:
+        temp = SKILL_ID::STOMP;
+        break;
+    case SKILL_ID_FALLOUT::RESURRECT:
+        temp = SKILL_ID::RESURRECT_FALLOUT;
+        break;
+    case SKILL_ID_FALLOUT::MAX:
+        temp = SKILL_ID::MAX;
+        break;
+    }
+
+    return temp;
 }

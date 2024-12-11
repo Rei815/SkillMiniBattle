@@ -28,9 +28,9 @@ CSkillBarrier::~CSkillBarrier(void)
  */
 void
 CSkillBarrier::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
 
 	m_ColliderModel.Initialize(m_collider_model_file_name, m_Player->GetPosition());
 	m_NowBarrierState = BARRIER_STATE::IS_COOL_TIME;

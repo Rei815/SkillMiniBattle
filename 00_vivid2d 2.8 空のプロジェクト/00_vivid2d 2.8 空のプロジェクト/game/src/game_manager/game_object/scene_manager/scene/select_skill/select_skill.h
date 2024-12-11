@@ -46,6 +46,10 @@ public:
     void ChooseSkill(void);
     void CreateSkillIcon(void);
 
+    SKILL_ID ConvertGameSkillID(SKILL_ID_DARUMA skill_id);
+    SKILL_ID ConvertGameSkillID(SKILL_ID_DODGEBALL skill_id);
+    SKILL_ID ConvertGameSkillID(SKILL_ID_FALLOUT skill_id);
+
 private:
     void ResetChooseSkill(void);
 
@@ -55,7 +59,7 @@ private:
 
     static const float m_cursor_move_time;
 
-    int                 m_ChooseSkillNum[(int)UNIT_ID::NONE];
+    SKILL_ID            m_ChooseSkillID[(int)UNIT_ID::NONE];
     CSkillSelectIcon*   m_SkillSelectIcon[(int)UNIT_ID::NONE];
 
     std::list<int> m_CursorPosNumList;

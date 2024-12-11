@@ -26,9 +26,9 @@ CSkillSpawnWall::~CSkillSpawnWall(void)
  */
 void
 CSkillSpawnWall::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
 
 	m_NowState = STATE::WAIT;
 

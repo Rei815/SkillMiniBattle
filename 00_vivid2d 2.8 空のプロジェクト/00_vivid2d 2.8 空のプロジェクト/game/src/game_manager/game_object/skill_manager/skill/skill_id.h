@@ -9,11 +9,28 @@ enum class SKILL_CATEGORY
 	RESURRECT,      //!< 復活
 };
 
+/*!
+ *  @brief      スキルID
+ */
+enum class SKILL_ID
+{
+	SPEED_UP,
+	JUMP_UP,
+	FLOATING,
+	STOMP,
+	DASH,
+	SPAWN_WALL,
+	BARRIER,
+
+	RESURRECT_FALLOUT,
+
+	MAX,
+};
 
 /*!
  *  @brief      フォールアウトのスキルID
  */
-enum class SKILL_ID_FALLGAME
+enum class SKILL_ID_FALLOUT
 {
 	SPEED_UP,
 	JUMP_UP,

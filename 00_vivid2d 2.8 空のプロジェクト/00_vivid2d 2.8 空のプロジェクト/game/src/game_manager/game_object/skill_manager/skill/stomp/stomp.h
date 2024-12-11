@@ -11,7 +11,7 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
-    void        Initialize(CPlayer* player);
+    void        Initialize(SKILL_ID skill_id);
 
     /*!
      *  @brief      XV

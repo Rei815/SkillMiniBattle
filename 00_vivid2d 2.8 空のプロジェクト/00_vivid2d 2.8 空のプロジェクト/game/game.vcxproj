@@ -182,6 +182,7 @@
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\punch_up\punch_up.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\resurrect_fallout\resurrect_fallout.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\stomp\stomp.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_gauge\skill_gauge.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\daruma_falldown_stage_object\daruma_falldown_stage_object.cpp" />
@@ -294,6 +295,7 @@
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_spawn_wall\skill_spawn_wall.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\resurrect_fallout\resurrect_fallout.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\stomp\stomp.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_gauge\skill_gauge.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_select_bg\fallout_select_bg.h" />

@@ -102,78 +102,39 @@ Finalize(void)
 }
 
 /*!
- *  @brief      スキル生成（だるまさんがころんだ）
+ *  @brief      スキル生成
  */
 void
 CSkillManager::
-CreateSkill(SKILL_ID_DARUMA skill_id, UNIT_ID player_id)
+CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
 {
     CSkill* skill = nullptr;
 
     switch (skill_id)
     {
-    case SKILL_ID_DARUMA::SPEED_UP:
-        skill = new CSkillSpeedUp();     break;
+    case SKILL_ID::SPEED_UP:
+        skill = new CSkillSpeedUp();        break;
+    case SKILL_ID::JUMP_UP:
+        skill = new CSkillJumpUp();         break;
+    case SKILL_ID::FLOATING:
+        skill = new CFloating();            break;
+    case SKILL_ID::STOMP:
+        skill = new CStomp();               break;
+    case SKILL_ID::DASH:
+        skill = new CSkillDash();           break;
+    case SKILL_ID::SPAWN_WALL:
+        skill = new CSkillSpawnWall();      break;
+    case SKILL_ID::BARRIER:
+        skill = new CSkillBarrier();        break;
+    case SKILL_ID::RESURRECT_FALLOUT:
+        skill = new CResurrectFallout();    break;
+    default:
+        break;
     }
 
     if (!skill) return;
 
-    m_SetSkill[(int)player_id] = skill;
-}
-
-/*!
- *  @brief      スキル生成（フォールゲーム）
- */
-void
-CSkillManager::
-CreateSkill(SKILL_ID_FALLGAME skill_id, UNIT_ID player_id)
-{
-    CSkill* skill = nullptr;
-
-    switch (skill_id)
-    {
-    case SKILL_ID_FALLGAME::SPEED_UP:
-        skill = new CSkillSpeedUp();     break;
-    case SKILL_ID_FALLGAME::JUMP_UP:
-        skill = new CSkillJumpUp();     break;
-    case SKILL_ID_FALLGAME::FLOATING:
-        skill = new CFloating();     break;
-    case SKILL_ID_FALLGAME::STOMP:
-        skill = new CStomp();     break;
-    case SKILL_ID_FALLGAME::RESURRECT:
-        skill = new CResurrectFallout();     break;
-    }
-
-    if (!skill) return;
-
-    m_SetSkill[(int)player_id] = skill;
-}
-
-/*!
- *  @brief      スキル生成（ドッジボール）
- */
-void
-CSkillManager::
-CreateSkill(SKILL_ID_DODGEBALL skill_id, UNIT_ID player_id)
-{
-    CSkill* skill = nullptr;
-
-    switch (skill_id)
-    {
-    case SKILL_ID_DODGEBALL::SPEED_UP:
-        skill = new CSkillSpeedUp();    break;
-    case SKILL_ID_DODGEBALL::JUMP_UP:
-        skill = new CSkillJumpUp();     break;
-    case SKILL_ID_DODGEBALL::DASH:
-        skill = new CSkillDash();       break;
-    case SKILL_ID_DODGEBALL::SPAWN_WALL:
-        skill = new CSkillSpawnWall();  break;
-    case SKILL_ID_DODGEBALL::BARRIER:
-        skill = new CSkillBarrier();  break;
-    }
-
-    if (!skill) return;
-
+    skill->Initialize(skill_id);
     m_SetSkill[(int)player_id] = skill;
 }
 
@@ -188,7 +149,7 @@ SetSkill(void)
     {
         if (m_SetSkill[i] != nullptr)
         {
-            m_SetSkill[i]->Initialize(CUnitManager::GetInstance().GetPlayer((UNIT_ID)i));
+            m_SetSkill[i]->SetPlayer(CUnitManager::GetInstance().GetPlayer((UNIT_ID)i));
             m_SkillList.push_back(m_SetSkill[i]);
         }
     }
