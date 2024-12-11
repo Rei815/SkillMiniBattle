@@ -97,7 +97,7 @@ void CDaruma_FallDownGame::Update(void)
 			if (!player) continue;
 			
 
-			if (gimmick->GetState() == GIMMICK_STATE::PLAY)
+			if (gimmick->GetState() == GIMMICK_STATE::PLAY && player->GetInvincibleFlag() == false)
 			{
 				if (player->GetPlayerMoving())
 				{

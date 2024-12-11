@@ -6,6 +6,12 @@
 
 class CPlayer;
 
+enum class SKILL_STATE
+{
+    WAIT,
+    ACTIVE,
+    COOLDOWN,
+};
 class CSkill
 {
 public:
@@ -53,11 +59,20 @@ public:
      */
     SKILL_ID        GetSkillID();
 
+
+    void SkillWait(void);
+    void SkillActive(void);
+    void SkillCoolDown(void);
+
+
 protected:
+
     CPlayer*            m_Player;
 
     SKILL_CATEGORY      m_Category;
     SKILL_ID            m_SkillID;
 
     CSkillGauge*        m_UiSkillGauge;
+
+    SKILL_STATE          m_State;
 };
