@@ -1,28 +1,30 @@
-#include "skill_invisible.h"
+#include "skill_stun.h"
+#include "../../../unit_manager/unit_manager.h"
+#include "../../../data_manager/data_manager.h"
 
 
-const float CSkillInvisible::m_cool_time = 2.0f;
-const float CSkillInvisible::m_invisible_time = 5.0f;
+const float CSkillStun::m_cool_time = 2.0f;
+const float CSkillStun::m_active_time = 5.0f;
 
-CSkillInvisible::CSkillInvisible(void)
+CSkillStun::CSkillStun(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_State(SKILL_STATE::WAIT)
 	, m_Timer()
 {
 }
 
-CSkillInvisible::~CSkillInvisible(void)
+CSkillStun::~CSkillStun(void)
 {
 }
 
-void CSkillInvisible::Initialize(SKILL_ID skill_id)
+void CSkillStun::Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
 	m_State = SKILL_STATE::WAIT;
-	m_Timer.SetUp(m_invisible_time);
+	m_Timer.SetUp(m_active_time);
 }
 
-void CSkillInvisible::Update(void)
+void CSkillStun::Update(void)
 {
 	CSkill::Update();
 	m_Timer.Update();
@@ -32,7 +34,6 @@ void CSkillInvisible::Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
-		m_Player->DecAlpha(0.5f);
 		if (m_Timer.Finished())
 		{
 			m_Timer.Reset();
@@ -41,33 +42,37 @@ void CSkillInvisible::Update(void)
 		}
 		break;
 	case SKILL_STATE::COOLDOWN:
-		m_Player->RevertAlpha(1.0f);
 
 		if (m_Timer.Finished())
 		{
-			m_Player->SetAlpha(1.0f);
 			m_State = SKILL_STATE::WAIT;
 		}
 		break;
 	}
 }
 
-void CSkillInvisible::Draw(void)
+void CSkillStun::Draw(void)
 {
 	CSkill::Draw();
 }
 
-void CSkillInvisible::Finalize(void)
+void CSkillStun::Finalize(void)
 {
 	CSkill::Finalize();
 }
 
-void CSkillInvisible::Action()
+void CSkillStun::Action()
 {
 	if (m_State == SKILL_STATE::WAIT)
 	{
-		m_Player->StartInvincible(m_invisible_time);
-		m_Timer.SetUp(m_invisible_time);
+		CDataManager& dm = CDataManager::GetInstance();
+		for (int i = 0; i < dm.GetCurrentPlayer();i++)
+		{
+			
+		}
+			
+		m_Timer.SetUp(m_active_time);
 		m_State = SKILL_STATE::ACTIVE;
+
 	}
 }

@@ -1,11 +1,11 @@
 #pragma once
 #include "../skill.h"
 
-class CSkillInvisible : public CSkill
+class CSkillStun : public CSkill
 {
 public:
-    CSkillInvisible(void);
-    ~CSkillInvisible(void);
+    CSkillStun(void);
+    ~CSkillStun(void);
 
     /*!
      *  @brief      èâä˙âª
@@ -35,7 +35,7 @@ public:
 
 protected:
     static const float m_cool_time;
-    static const float m_invisible_time;
+    static const float m_active_time;
 
     SKILL_STATE         m_State;
     CTimer              m_Timer;

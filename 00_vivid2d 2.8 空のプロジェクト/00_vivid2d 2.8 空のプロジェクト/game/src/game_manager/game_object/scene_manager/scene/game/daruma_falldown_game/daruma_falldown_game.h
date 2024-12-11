@@ -35,9 +35,9 @@ public:
 
 private:
 
-    static const CVector3           m_camera_position;
-    static const CVector3           m_camera_direction;
-    static const CVector3           m_ogre_position;
+    static const CVector3           m_camera_position;          //カメラのポジション
+    static const CVector3           m_camera_direction;         //カメラの角度
+    static const CVector3           m_ogre_position;            //鬼のポジション
     static const CVector3           m_ogre_rotation;
     static const float              m_move_speed;
     CTimer                          m_Timer;
