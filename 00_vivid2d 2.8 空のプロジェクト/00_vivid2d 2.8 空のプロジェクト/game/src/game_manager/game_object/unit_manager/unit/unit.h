@@ -252,12 +252,15 @@ public:
      *  @brief      アルファ値を減らしていく
      */
     void    DecAlpha(float alpha = 0.0f);
-protected:
-
     /*!
      *  @brief      アルファ値を元に戻す
      */
-    void    RevertAlpha(void);
+    void    RevertAlpha(float alpha);
+
+    void    SetAlpha(float alpha);
+
+protected:
+
 
 
 
