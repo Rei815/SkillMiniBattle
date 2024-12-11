@@ -3,9 +3,9 @@
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
 
-const float CSkillBarrier::m_barrier_exist_time = 3000.0f;
-const float CSkillBarrier::m_barrier_max_cool_time = 17.0f;
-const float CSkillBarrier::m_barrier_min_cool_time = 7.0f;
+const float CSkillBarrier::m_barrier_exist_time = 5.0f;
+const float CSkillBarrier::m_barrier_max_cool_time = 15.0f;
+const float CSkillBarrier::m_barrier_min_cool_time = 5.0f;
 const std::string CSkillBarrier::m_collider_model_file_name = "data\\Models\\skill_barrier_collider.mv1";
 
 CSkillBarrier::CSkillBarrier(void)
@@ -32,7 +32,6 @@ Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
 
-	m_ColliderModel.Initialize(m_collider_model_file_name, m_Player->GetPosition());
 	m_NowBarrierState = BARRIER_STATE::IS_COOL_TIME;
 
 	if (m_barrier_max_cool_time - m_barrier_min_cool_time > 0)
@@ -116,6 +115,15 @@ Finalize(void)
 	m_ColliderModel.Finalize();
 }
 
+/*!
+ *  @brief      プレイヤーのセット
+ */
+void CSkillBarrier::SetPlayer(CPlayer* player)
+{
+	CSkill::SetPlayer(player);
+
+	m_ColliderModel.Initialize(m_collider_model_file_name, m_Player->GetPosition());
+}
 
 /*!
  *  @brief      アクション呼び出し

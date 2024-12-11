@@ -58,6 +58,8 @@ private:
     void MoveCursor(void);
 
     static const float m_cursor_move_time;
+    static const float m_icon_scale;
+    static const vivid::Vector2     m_icon_positionList[];
 
     SKILL_ID            m_ChooseSkillID[(int)UNIT_ID::NONE];
     CSkillSelectIcon*   m_SkillSelectIcon[(int)UNIT_ID::NONE];

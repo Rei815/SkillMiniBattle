@@ -38,19 +38,30 @@ public:
      */
     void        Finalize(void);
 
-    void        SetCursor(UNIT_ID player_id, int PosNum);
+    void        SetCursor(UNIT_ID player_id, vivid::Vector2 position, float scale);
+    void        SetCursor(UNIT_ID player_id, vivid::Vector2 position, vivid::Vector2 scale);
+
+    void        SetPlayer(UNIT_ID player_id);
+
+    void        SetPosition(vivid::Vector2 position);
+
+    void        SetScale(float scale);
+    void        SetScale(vivid::Vector2 scale);
 
 private:
-    static const vivid::Vector2     m_positionList[];   //!< ˆÊ’u
     static const int                m_height;           //!< ‚‚³
     static const int                m_width;            //!< •
     static const vivid::Rect        m_rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
-    static const vivid::Vector2     m_anchor;           //!< Šî€“_
-    static const vivid::Vector2     m_scale;            //!< Šgk
+    static const vivid::Vector2     m_default_anchor;           //!< Šî€“_
+    static const vivid::Vector2     m_default_scale;            //!< Šgk
 
     static const std::string        m_cursorFileName[];
 
     bool                            m_Selected;
 
     std::string                     m_FileName;
+
+    vivid::Vector2      m_Anchor;
+    vivid::Vector2      m_Scale;
+    vivid::Vector2      m_CenterPosition;
 };

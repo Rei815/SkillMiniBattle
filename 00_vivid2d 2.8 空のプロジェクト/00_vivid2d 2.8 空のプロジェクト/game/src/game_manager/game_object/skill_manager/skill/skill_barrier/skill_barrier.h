@@ -29,6 +29,10 @@ public:
      */
     void        Finalize(void);
 
+    /*!
+     *  @brief      プレイヤーのセット
+     */
+    void    SetPlayer(CPlayer* player);
 
     /*!
      *  @brief      アクション呼び出し

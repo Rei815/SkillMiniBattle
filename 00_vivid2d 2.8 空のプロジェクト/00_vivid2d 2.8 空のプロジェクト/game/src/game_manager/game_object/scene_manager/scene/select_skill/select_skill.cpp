@@ -8,6 +8,14 @@
 #include "..\..\..\ui_manager\ui\skill_select_icon\skill_select_icon.h"
 
 const float CSelectSkill::m_cursor_move_time = 0.2f;
+const float CSelectSkill::m_icon_scale = 0.4f;
+const vivid::Vector2    CSelectSkill::m_icon_positionList[] =
+{
+    vivid::Vector2( 192, 360),		//Player1
+    vivid::Vector2( 448, 360),		//Player2
+    vivid::Vector2( 704, 360),		//Player3
+    vivid::Vector2( 960, 360)		//Player4
+};
 
 CSelectSkill::CSelectSkill(void)
     :m_CursorMoveTimer()
@@ -167,7 +175,7 @@ void CSelectSkill::CreateSkillIcon(void)
             continue;
         }
 
-        SkillIconUI->SetIcon(m_ChooseSkillID[i], i);
+        SkillIconUI->SetIcon(m_ChooseSkillID[i], m_icon_positionList[i],m_icon_scale);
 
         m_SkillSelectIcon[i] = SkillIconUI;
     }
@@ -207,7 +215,7 @@ void CSelectSkill::CreateCursor(void)
     m_NowCursorPosNum = 0;
 
     
-    m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], *(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));
+    m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))], m_icon_scale);
 }
 
 void CSelectSkill::MoveCursor(void)
@@ -255,7 +263,7 @@ void CSelectSkill::MoveCursor(void)
         if (m_NowCursorPosNum != TempPosNum)
         {
             m_CursorMoveTimer.Reset();
-            m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], *(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));
+            m_SkillSelectCursor->SetPosition(m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))]);
         }
     }
 

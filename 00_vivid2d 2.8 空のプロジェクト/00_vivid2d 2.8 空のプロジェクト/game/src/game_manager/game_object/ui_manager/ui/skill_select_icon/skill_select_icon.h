@@ -21,7 +21,7 @@ public:
      *  @brief      èâä˙âª
      */
     void        Initialize(void);
-
+    
     /*!
      *  @brief      çXêV
      */
@@ -37,19 +37,27 @@ public:
      */
     void        Finalize(void);
 
-    void        SetIcon(SKILL_ID skill_id, int PosNum);
+    void        SetIcon(SKILL_ID skill_id,vivid::Vector2 position, float scale);
+    void        SetIcon(SKILL_ID skill_id,vivid::Vector2 position, vivid::Vector2 scale);
+
+    void        SetSkill(SKILL_ID skill_id);
+
+    void        SetPosition(vivid::Vector2 position);
+
+    void        SetScale(float scale);
+    void        SetScale(vivid::Vector2 scale);
 
 private:
-    static const vivid::Vector2     m_positionList[];   //!< à íu
     static const int                m_height;           //!< çÇÇ≥
     static const int                m_width;            //!< ïù
     static const vivid::Rect        m_rect;             //!< ì«Ç›çûÇ›îÕàÕ
-    static const vivid::Vector2     m_anchor;           //!< äÓèÄì_
-    static const vivid::Vector2     m_scale;            //!< ägèk
+    static const vivid::Vector2     m_default_anchor;           //!< äÓèÄì_
+    static const vivid::Vector2     m_default_scale;            //!< ägèk
 
     static const std::string        m_SkillIconFileName[];
-
-    bool                            m_Selected;
-
     std::string                     m_FileName;
+
+    vivid::Vector2      m_Anchor;
+    vivid::Vector2      m_Scale;
+    vivid::Vector2      m_CenterPosition;
 };
