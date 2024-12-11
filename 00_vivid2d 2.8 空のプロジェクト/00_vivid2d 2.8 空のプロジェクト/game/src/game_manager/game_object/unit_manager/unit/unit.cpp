@@ -357,17 +357,25 @@ CVector3 IUnit::GetDefaultGravity()
     return m_gravity;
 }
 
-void IUnit::RevertAlpha(void)
+void IUnit::RevertAlpha(float alpha = 1.0f)
 {
-    if (m_Alpha >= 1.0f)
-        m_Alpha = 1.0f;
-
-    //アルファ値が元に戻ったら終了
-    if (m_Alpha == 1.0f) { m_RevertAlpha = false; return; }
+    //アルファ値が設定値になったら終了
+    if (m_Alpha >= alpha)
+    {
+        m_Alpha = alpha;
+        return;
+    }
 
     m_Alpha += m_alpha_speed;
 
     MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
+}
+
+void IUnit::SetAlpha(float alpha)
+{
+    m_Alpha = alpha;
+    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
+
 }
 
 void IUnit::DecAlpha(float alpha)
@@ -379,7 +387,10 @@ void IUnit::DecAlpha(float alpha)
         return;
     }
 
-    m_Alpha -= m_alpha_speed;
+    if (m_Alpha > 0.0f)
+        m_Alpha -= m_alpha_speed;
+    else
+        m_Alpha = 0.0f;
 
     MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
 
@@ -387,10 +398,10 @@ void IUnit::DecAlpha(float alpha)
 
 void IUnit::Appear(void)
 {
+    RevertAlpha();
     if (m_Alpha == 1.0f)
         m_UnitState = UNIT_STATE::ATTACK;
 
-    RevertAlpha();
 }
 
 /*

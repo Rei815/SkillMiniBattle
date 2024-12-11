@@ -95,6 +95,7 @@ void CDaruma_FallDownGame::Update(void)
 			player = um.GetPlayer((UNIT_ID)i);
 
 			if (!player) continue;
+			
 
 			if (gimmick->GetState() == GIMMICK_STATE::PLAY)
 			{
