@@ -309,6 +309,9 @@ SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_DARUMA skill_id)
     case SKILL_ID_DARUMA::SPEED_UP:
         temp = SKILL_ID::SPEED_UP;
         break;
+    case SKILL_ID_DARUMA::INVISIBLE:
+        temp = SKILL_ID::INVISIBLE;
+        break;
     case SKILL_ID_DARUMA::MAX:
         temp = SKILL_ID::MAX;
         break;

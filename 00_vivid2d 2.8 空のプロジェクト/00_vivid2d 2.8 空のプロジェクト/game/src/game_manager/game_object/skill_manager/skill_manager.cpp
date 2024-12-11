@@ -127,6 +127,8 @@ CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
         skill = new CSkillSpawnWall();      break;
     case SKILL_ID::BARRIER:
         skill = new CSkillBarrier();        break;
+    case SKILL_ID::INVISIBLE:
+        skill = new CSkillInvisible();      break;
     case SKILL_ID::RESURRECT_FALLOUT:
         skill = new CResurrectFallout();    break;
     default:
