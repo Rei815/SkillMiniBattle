@@ -44,19 +44,9 @@ public:
     using SKILL_LIST = std::list<CSkill*>;
 
     /*!
-     *  @brief      スキル生成（だるまさんがころんだ）
+     *  @brief      スキル生成
      */
-    void        CreateSkill(SKILL_ID_DARUMA skill_id, UNIT_ID player_id);
-
-    /*!
-     *  @brief      スキル生成（フォールゲーム）
-     */
-    void        CreateSkill(SKILL_ID_FALLGAME skill_id, UNIT_ID player_id);
-
-    /*!
-     *  @brief      スキル生成（ドッジボール）
-     */
-    void        CreateSkill(SKILL_ID_DODGEBALL skill_id, UNIT_ID player_id);
+    void        CreateSkill(SKILL_ID skill_id, UNIT_ID player_id);
 
     /*!
      *  @brief      スキル付与

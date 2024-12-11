@@ -4,18 +4,18 @@
 #include "..\ui.h"
 #include "../../../skill_manager/skill/skill_id.h"
 
-class CSkillSelectIcon : public CUI
+class CSkillGauge : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CSkillSelectIcon(UI_ID id);
+    CSkillGauge(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CSkillSelectIcon(void);
+    ~CSkillGauge(void);
 
     /*!
      *  @brief      初期化
@@ -37,19 +37,24 @@ public:
      */
     void        Finalize(void);
 
-    void        SetIcon(SKILL_ID skill_id, int PosNum);
+    void        SetIcon(int PosNum);
+
+    void        SetGauge(float percent);
 
 private:
     static const vivid::Vector2     m_positionList[];   //!< 位置
     static const int                m_height;           //!< 高さ
     static const int                m_width;            //!< 幅
+    /*
     static const vivid::Rect        m_rect;             //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;           //!< 基準点
     static const vivid::Vector2     m_scale;            //!< 拡縮
+    */
 
-    static const std::string        m_SkillIconFileName[];
+    static const std::string        m_file_name;
+    static const double             m_start_percent;
+    static const double             m_scale;
 
-    bool                            m_Selected;
-
-    std::string                     m_FileName;
+    int m_ImageHandle;
+    double m_Percent;
 };

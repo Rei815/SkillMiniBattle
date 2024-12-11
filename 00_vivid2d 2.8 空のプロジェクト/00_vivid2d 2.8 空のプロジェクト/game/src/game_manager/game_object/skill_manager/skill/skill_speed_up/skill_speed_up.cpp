@@ -19,11 +19,9 @@ CSkillSpeedUp::~CSkillSpeedUp(void)
  */
 void
 CSkillSpeedUp::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
-
-	player->SetMoveSpeedRate(m_speed_up_rate);
+	CSkill::Initialize(skill_id);
 }
 
 /*!
@@ -62,6 +60,18 @@ Finalize(void)
 
 }
 
+
+/*!
+ *  @brief      プレイヤーのセット
+ */
+void
+CSkillSpeedUp::
+SetPlayer(CPlayer* player)
+{
+	CSkill::SetPlayer(player);
+
+	player->SetMoveSpeedRate(m_speed_up_rate);
+}
 
 /*!
  *  @brief      アクション呼び出し

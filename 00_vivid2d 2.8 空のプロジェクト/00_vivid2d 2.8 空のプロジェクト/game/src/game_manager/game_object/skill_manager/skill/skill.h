@@ -1,5 +1,7 @@
 #pragma once
 #include "../../unit_manager/unit/player/player.h"
+#include "../../ui_manager/ui_manager.h"
+#include "../../ui_manager/ui/skill_gauge/skill_gauge.h"
 #include "skill_id.h"
 
 class CPlayer;
@@ -14,7 +16,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    virtual void    Initialize(CPlayer* player);
+    virtual void    Initialize(SKILL_ID skill_id);
 
     /*!
      *  @brief      更新
@@ -32,6 +34,11 @@ public:
     virtual void    Finalize(void);
 
     /*!
+     *  @brief      プレイヤーのセット
+     */
+    virtual void    SetPlayer(CPlayer* player);
+
+    /*!
      *  @brief      アクション呼び出し
      */
     virtual void    Action(void);
@@ -40,8 +47,17 @@ public:
      *  @brief      カテゴリー取得
      */
     SKILL_CATEGORY  GetSkillCategory();
+
+    /*!
+     *  @brief      ID取得
+     */
+    SKILL_ID        GetSkillID();
+
 protected:
     CPlayer*            m_Player;
 
     SKILL_CATEGORY      m_Category;
+    SKILL_ID            m_SkillID;
+
+    CSkillGauge*        m_UiSkillGauge;
 };

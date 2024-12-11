@@ -88,7 +88,7 @@ SetCursor(UNIT_ID player_id, int PosNum)
 {
 	m_FileName = m_cursorFileName[(int)player_id];
 
-	if ((int)PosNum >= 0 && (int)PosNum < (int)UNIT_ID::NONE)
+	if (PosNum >= 0 && PosNum < (int)UNIT_ID::NONE)
 		m_Position = m_positionList[PosNum];
 	else
 		m_Position = vivid::Vector2().ZERO;

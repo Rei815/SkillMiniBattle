@@ -23,9 +23,9 @@ CSkillDash::~CSkillDash(void)
  */
 void
 CSkillDash::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
 
 	m_NowDashState = DASH_STATE::WAIT;
 	m_Category = SKILL_CATEGORY::ACTIVE;

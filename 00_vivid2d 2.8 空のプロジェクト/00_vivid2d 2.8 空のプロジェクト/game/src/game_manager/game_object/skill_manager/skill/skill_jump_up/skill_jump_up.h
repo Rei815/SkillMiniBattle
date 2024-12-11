@@ -10,7 +10,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize(CPlayer* player);
+    void        Initialize(SKILL_ID skill_id);
 
     /*!
      *  @brief      更新
@@ -27,6 +27,10 @@ public:
      */
     void        Finalize(void);
 
+    /*!
+     *  @brief      プレイヤーのセット
+     */
+    void    SetPlayer(CPlayer* player);
 
     /*!
      *  @brief      アクション呼び出し

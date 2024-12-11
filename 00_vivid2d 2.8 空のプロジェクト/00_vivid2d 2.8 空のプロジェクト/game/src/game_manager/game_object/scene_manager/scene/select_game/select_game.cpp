@@ -54,7 +54,7 @@ void CSelectGame::Update(void)
         /*
         switch (game_id)
         {
-        case (int)GAME_ID::FALL_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME); break;
+        case (int)GAME_ID::FALL_OUT: CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME); break;
         case (int)GAME_ID::DODGE_BALL_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME); break;
         case (int)GAME_ID::DEBUG_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME); break;
         }

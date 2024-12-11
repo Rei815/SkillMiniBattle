@@ -24,9 +24,9 @@ CFloating::~CFloating(void)
  */
 void
 CFloating::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
 	m_Category = SKILL_CATEGORY::ACTIVE;
 }
 
@@ -100,5 +100,4 @@ Action(UNIT_CATEGORY category)
 	effectPosition.y -= m_Player->GetHeight() / 2;
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::FLOATING, effectPosition, CVector3::UP, m_scale);
-
 }

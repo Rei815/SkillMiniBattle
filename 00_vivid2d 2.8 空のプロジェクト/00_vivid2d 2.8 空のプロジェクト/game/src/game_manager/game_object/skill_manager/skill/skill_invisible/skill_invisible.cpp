@@ -14,9 +14,9 @@ CSkillInvisible::~CSkillInvisible(void)
 {
 }
 
-void CSkillInvisible::Initialize(CPlayer* player)
+void CSkillInvisible::Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
 	m_State = STATE::WAIT;
 
 	m_Timer.SetUp(m_invisible_time);
