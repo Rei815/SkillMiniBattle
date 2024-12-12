@@ -34,18 +34,9 @@ public:
     void Action(void);
 
 protected:
-    enum class DASH_STATE
-    {
-        WAIT,
-        IS_DASH,
-        IS_COOL_TIME,
-    };
-
     static const float  m_dash_speed_up_rate;
     static const float  m_dash_time;
     static const float  m_dash_cool_time;
-
-    DASH_STATE m_NowDashState;
 
     CTimer              m_Timer;
 };

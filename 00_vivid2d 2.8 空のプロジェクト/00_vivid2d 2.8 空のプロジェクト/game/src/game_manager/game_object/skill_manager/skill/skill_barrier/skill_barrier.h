@@ -40,12 +40,6 @@ public:
     void Action(void);
 
 protected:
-    enum class BARRIER_STATE
-    {
-        BARRIER,
-        IS_COOL_TIME,
-    };
-
     static const float m_barrier_exist_time;
     static const float m_barrier_max_cool_time;
     static const float m_barrier_min_cool_time;
@@ -53,6 +47,6 @@ protected:
 
     CModel			    m_ColliderModel;
     IEffect*            m_Effect;
-    BARRIER_STATE       m_NowBarrierState;
     CTimer              m_Timer;
+    float               m_NowCoolTime;
 };

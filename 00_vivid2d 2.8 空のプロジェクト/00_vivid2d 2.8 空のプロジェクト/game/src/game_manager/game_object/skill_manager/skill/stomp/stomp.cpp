@@ -25,6 +25,7 @@ Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
 	m_Category = SKILL_CATEGORY::ACTIVE;
+	m_State = SKILL_STATE::WAIT;
 }
 
 /*!

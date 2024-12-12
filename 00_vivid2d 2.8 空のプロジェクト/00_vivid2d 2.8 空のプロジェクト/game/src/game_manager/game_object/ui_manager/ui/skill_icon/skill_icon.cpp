@@ -1,13 +1,16 @@
-#include "skill_select_icon.h"
+#include "skill_icon.h"
 #include "../../../unit_manager/unit/unit_id.h"
 
-const int               CSkillSelectIcon::m_height = 600;
-const int               CSkillSelectIcon::m_width = 600;
-const vivid::Rect       CSkillSelectIcon::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
-const vivid::Vector2    CSkillSelectIcon::m_default_scale = vivid::Vector2(0.5f, 0.5f);
-const vivid::Vector2    CSkillSelectIcon::m_default_anchor = vivid::Vector2((m_width * m_default_scale.x) / 2, (m_height * m_default_scale.y) / 2);
+const int               CSkillIcon::m_height = 600;
+const int               CSkillIcon::m_width = 600;
+const vivid::Rect       CSkillIcon::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
+const vivid::Vector2    CSkillIcon::m_default_scale = vivid::Vector2(0.5f, 0.5f);
+const vivid::Vector2    CSkillIcon::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
 
-const std::string CSkillSelectIcon::m_SkillIconFileName[] =
+const unsigned int CSkillIcon::m_brightness_color = 0xffffffff;
+const unsigned int CSkillIcon::m_dark_color = 0xff888888;
+
+const std::string CSkillIcon::m_SkillIconFileName[] =
 {
 		"data\\Textures\\skill_icon_speedup.png",
 		"data\\Textures\\skill_icon_jumpup.png",
@@ -24,20 +27,21 @@ const std::string CSkillSelectIcon::m_SkillIconFileName[] =
 /*
  *  コンストラクタ
  */
-CSkillSelectIcon::
-CSkillSelectIcon(UI_ID id)
+CSkillIcon::
+CSkillIcon(UI_ID id)
 	: CUI(m_width, m_height, id)
-	, m_Anchor(m_default_anchor)
+	, m_FileName("")
 	, m_Scale(m_default_scale)
 	, m_CenterPosition(vivid::Vector2::ZERO)
+	, m_Brightness(ICON_BRIGHTNESS::BRIGHT)
 {
 }
 
 /*
  *  デストラクタ
  */
-CSkillSelectIcon::
-~CSkillSelectIcon(void)
+CSkillIcon::
+~CSkillIcon(void)
 {
 }
 
@@ -45,48 +49,61 @@ CSkillSelectIcon::
  *  初期化
  */
 void
-CSkillSelectIcon::
+CSkillIcon::
 Initialize(void)
 {
 	CUI::Initialize();
+
+	m_Brightness = ICON_BRIGHTNESS::BRIGHT;
 }
 
 /*
  *  更新
  */
 void
-CSkillSelectIcon::
+CSkillIcon::
 Update(void)
 {
 	CUI::Update();
 
-	m_Position = m_CenterPosition - m_Anchor;
+	m_Position = m_CenterPosition - m_anchor;
 }
 
 /*
  *  描画
  */
 void
-CSkillSelectIcon::
+CSkillIcon::
 Draw(void)
 {
 	CUI::Draw();
 
-	vivid::DrawTexture(m_FileName, m_Position, 0xffffffff, m_rect, m_Anchor, m_Scale);
+	if (m_FileName == "")
+		return;
+
+	switch (m_Brightness)
+	{
+	case CSkillIcon::ICON_BRIGHTNESS::BRIGHT:
+		vivid::DrawTexture(m_FileName, m_Position, m_brightness_color, m_rect, m_anchor, m_Scale);
+		break;
+	case CSkillIcon::ICON_BRIGHTNESS::DARK:
+		vivid::DrawTexture(m_FileName, m_Position, m_dark_color, m_rect, m_anchor, m_Scale);
+		break;
+	}
 }
 
 /*
  *  解放
  */
 void
-CSkillSelectIcon::
+CSkillIcon::
 Finalize(void)
 {
 	CUI::Finalize();
 }
 
 void
-CSkillSelectIcon::
+CSkillIcon::
 SetIcon(SKILL_ID skill_id, vivid::Vector2 position, float scale)
 {
 	SetSkill(skill_id);
@@ -95,7 +112,7 @@ SetIcon(SKILL_ID skill_id, vivid::Vector2 position, float scale)
 }
 
 void
-CSkillSelectIcon::
+CSkillIcon::
 SetIcon(SKILL_ID skill_id, vivid::Vector2 position, vivid::Vector2 scale)
 {
 	SetSkill(skill_id);
@@ -104,30 +121,37 @@ SetIcon(SKILL_ID skill_id, vivid::Vector2 position, vivid::Vector2 scale)
 }
 
 void
-CSkillSelectIcon::
+CSkillIcon::
 SetSkill(SKILL_ID skill_id)
 {
 	m_FileName = m_SkillIconFileName[(int)skill_id];
 }
 
 void
-CSkillSelectIcon::
+CSkillIcon::
 SetPosition(vivid::Vector2 position)
 {
 	m_CenterPosition = position;
 }
 
 void
-CSkillSelectIcon::
+CSkillIcon::
 SetScale(float scale)
 {
 	SetScale(vivid::Vector2(scale, scale));
 }
 
 void
-CSkillSelectIcon::
+CSkillIcon::
 SetScale(vivid::Vector2 scale)
 {
 	m_Scale = scale;
-	m_Anchor = vivid::Vector2((m_width * m_Scale.x) / 2, (m_height * m_Scale.y) / 2);
+}
+
+
+void
+CSkillIcon::
+SetBrightness(ICON_BRIGHTNESS icon_brightness)
+{
+	m_Brightness = icon_brightness;
 }

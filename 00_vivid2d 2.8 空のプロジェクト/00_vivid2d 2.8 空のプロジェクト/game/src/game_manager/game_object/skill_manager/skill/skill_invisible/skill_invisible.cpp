@@ -6,7 +6,6 @@ const float CSkillInvisible::m_invisible_time = 5.0f;
 
 CSkillInvisible::CSkillInvisible(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
-	, m_State(SKILL_STATE::WAIT)
 	, m_Timer()
 {
 }

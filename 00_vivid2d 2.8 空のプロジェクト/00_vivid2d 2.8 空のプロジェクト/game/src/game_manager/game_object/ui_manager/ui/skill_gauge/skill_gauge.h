@@ -37,23 +37,27 @@ public:
      */
     void        Finalize(void);
 
-    void        SetIcon(int PosNum);
+    void        SetGauge(vivid::Vector2 position, float scale);
 
-    void        SetGauge(float percent);
+    void        SetPosition(vivid::Vector2 position);
+
+    void        SetScale(float scale);
+
+    void        SetPercent(float percent);
 
 private:
-    static const vivid::Vector2     m_positionList[];   //!< ˆÊ’u
     static const int                m_height;           //!< ‚‚³
     static const int                m_width;            //!< •
-    /*
     static const vivid::Rect        m_rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
     static const vivid::Vector2     m_anchor;           //!< Šî€“_
-    static const vivid::Vector2     m_scale;            //!< Šgk
-    */
+    static const vivid::Vector2     m_default_scale;            //!< Šgk
+    static const unsigned int       m_background_color;
 
     static const std::string        m_file_name;
     static const double             m_start_percent;
-    static const double             m_scale;
+    
+    double              m_Scale;
+    vivid::Vector2      m_CenterPosition;
 
     int m_ImageHandle;
     double m_Percent;

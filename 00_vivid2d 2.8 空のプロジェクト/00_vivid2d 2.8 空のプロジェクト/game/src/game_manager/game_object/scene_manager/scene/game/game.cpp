@@ -40,7 +40,6 @@ CGame::Initialize(SCENE_ID scene_id)
     m_EntryList.clear();
     m_ResultList.clear();
     CUnitManager::GetInstance().Initialize();
-    CUIManager::GetInstance().Initialize();
     CControllerManager::GetInstance().Initialize();
     CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();

@@ -3,25 +3,26 @@
 #include "vivid.h"
 #include "..\ui.h"
 #include "../../../skill_manager/skill/skill_id.h"
+#include "../../../unit_manager/unit/unit_id.h"
 
-class CSkillSelectIcon : public CUI
+class CSkillCursor : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CSkillSelectIcon(UI_ID id);
+    CSkillCursor(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CSkillSelectIcon(void);
+    ~CSkillCursor(void);
 
     /*!
      *  @brief      初期化
      */
     void        Initialize(void);
-    
+
     /*!
      *  @brief      更新
      */
@@ -37,10 +38,10 @@ public:
      */
     void        Finalize(void);
 
-    void        SetIcon(SKILL_ID skill_id,vivid::Vector2 position, float scale);
-    void        SetIcon(SKILL_ID skill_id,vivid::Vector2 position, vivid::Vector2 scale);
+    void        SetCursor(UNIT_ID player_id, vivid::Vector2 position, float scale);
+    void        SetCursor(UNIT_ID player_id, vivid::Vector2 position, vivid::Vector2 scale);
 
-    void        SetSkill(SKILL_ID skill_id);
+    void        SetPlayer(UNIT_ID player_id);
 
     void        SetPosition(vivid::Vector2 position);
 
@@ -51,13 +52,15 @@ private:
     static const int                m_height;           //!< 高さ
     static const int                m_width;            //!< 幅
     static const vivid::Rect        m_rect;             //!< 読み込み範囲
-    static const vivid::Vector2     m_default_anchor;           //!< 基準点
+    static const vivid::Vector2     m_anchor;           //!< 基準点
     static const vivid::Vector2     m_default_scale;            //!< 拡縮
 
-    static const std::string        m_SkillIconFileName[];
+    static const std::string        m_cursorFileName[];
+
+    bool                            m_Selected;
+
     std::string                     m_FileName;
 
-    vivid::Vector2      m_Anchor;
     vivid::Vector2      m_Scale;
     vivid::Vector2      m_CenterPosition;
 };

@@ -1,12 +1,12 @@
-#include "skill_select_cursor.h"
+#include "skill_cursor.h"
 
-const int               CSkillSelectCursor::m_height = 600;
-const int               CSkillSelectCursor::m_width = 600;
-const vivid::Rect       CSkillSelectCursor::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
-const vivid::Vector2    CSkillSelectCursor::m_default_scale = vivid::Vector2(0.5f, 0.5f);
-const vivid::Vector2    CSkillSelectCursor::m_default_anchor = vivid::Vector2((m_width * m_default_scale.x) / 2, (m_height * m_default_scale.y) / 2);
+const int               CSkillCursor::m_height = 600;
+const int               CSkillCursor::m_width = 600;
+const vivid::Rect       CSkillCursor::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
+const vivid::Vector2    CSkillCursor::m_default_scale = vivid::Vector2(0.5f, 0.5f);
+const vivid::Vector2    CSkillCursor::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
 
-const std::string CSkillSelectCursor::m_cursorFileName[] = 
+const std::string CSkillCursor::m_cursorFileName[] = 
 	{
 		"data\\Textures\\skill_cursor_1P.png",
 		"data\\Textures\\skill_cursor_2P.png",
@@ -17,10 +17,10 @@ const std::string CSkillSelectCursor::m_cursorFileName[] =
 /*
  *  コンストラクタ
  */
-CSkillSelectCursor::
-CSkillSelectCursor(UI_ID id)
+CSkillCursor::
+CSkillCursor(UI_ID id)
 	: CUI(m_width, m_height, id)
-	, m_Anchor(m_default_anchor)
+	, m_FileName("")
 	, m_Scale(m_default_scale)
 	, m_CenterPosition(vivid::Vector2::ZERO)
 {
@@ -29,8 +29,8 @@ CSkillSelectCursor(UI_ID id)
 /*
  *  デストラクタ
  */
-CSkillSelectCursor::
-~CSkillSelectCursor(void)
+CSkillCursor::
+~CSkillCursor(void)
 {
 }
 
@@ -38,7 +38,7 @@ CSkillSelectCursor::
  *  初期化
  */
 void
-CSkillSelectCursor::
+CSkillCursor::
 Initialize(void)
 {
 	CUI::Initialize();
@@ -48,31 +48,34 @@ Initialize(void)
  *  更新
  */
 void
-CSkillSelectCursor::
+CSkillCursor::
 Update(void)
 {
 	CUI::Update();
 
-	m_Position = m_CenterPosition - m_Anchor;
+	m_Position = m_CenterPosition - m_anchor;
 }
 
 /*
  *  描画
  */
 void
-CSkillSelectCursor::
+CSkillCursor::
 Draw(void)
 {
 	CUI::Draw();
 
-	vivid::DrawTexture(m_FileName, m_Position, 0xffffffff, m_rect, m_Anchor, m_Scale);
+	if (m_FileName == "")
+		return;
+
+	vivid::DrawTexture(m_FileName, m_Position, 0xffffffff, m_rect, m_anchor, m_Scale);
 }
 
 /*
  *  解放
  */
 void
-CSkillSelectCursor::
+CSkillCursor::
 Finalize(void)
 {
 	CUI::Finalize();
@@ -80,7 +83,7 @@ Finalize(void)
 
 
 void
-CSkillSelectCursor::
+CSkillCursor::
 SetCursor(UNIT_ID player_id, vivid::Vector2 position, float scale)
 {
 	SetPlayer(player_id);
@@ -89,7 +92,7 @@ SetCursor(UNIT_ID player_id, vivid::Vector2 position, float scale)
 }
 
 void
-CSkillSelectCursor::
+CSkillCursor::
 SetCursor(UNIT_ID player_id, vivid::Vector2 position, vivid::Vector2 scale)
 {
 	SetPlayer(player_id);
@@ -98,30 +101,29 @@ SetCursor(UNIT_ID player_id, vivid::Vector2 position, vivid::Vector2 scale)
 }
 
 void
-CSkillSelectCursor::
+CSkillCursor::
 SetPlayer(UNIT_ID player_id)
 {
 	m_FileName = m_cursorFileName[(int)player_id];	
 }
 
 void
-CSkillSelectCursor::
+CSkillCursor::
 SetPosition(vivid::Vector2 position)
 {
 	m_CenterPosition = position;
 }
 
 void
-CSkillSelectCursor::
+CSkillCursor::
 SetScale(float scale)
 {
 	SetScale(vivid::Vector2(scale, scale));
 }
 
 void
-CSkillSelectCursor::
+CSkillCursor::
 SetScale(vivid::Vector2 scale)
 {
 	m_Scale = scale;
-	m_Anchor = vivid::Vector2((m_width * m_Scale.x) / 2, (m_height * m_Scale.y) / 2);
 }

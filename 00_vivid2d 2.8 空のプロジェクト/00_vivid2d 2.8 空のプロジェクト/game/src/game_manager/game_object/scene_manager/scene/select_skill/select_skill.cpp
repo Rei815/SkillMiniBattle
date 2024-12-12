@@ -5,21 +5,22 @@
 #include "..\..\..\skill_manager\skill_manager.h"
 #include "..\..\..\data_manager\data_manager.h"
 #include "..\..\..\ui_manager\ui\ui.h"
-#include "..\..\..\ui_manager\ui\skill_select_icon\skill_select_icon.h"
+#include "..\..\..\ui_manager\ui\skill_icon\skill_icon.h"
 
 const float CSelectSkill::m_cursor_move_time = 0.2f;
 const float CSelectSkill::m_icon_scale = 0.4f;
 const vivid::Vector2    CSelectSkill::m_icon_positionList[] =
 {
-    vivid::Vector2( 192, 360),		//Player1
-    vivid::Vector2( 448, 360),		//Player2
-    vivid::Vector2( 704, 360),		//Player3
-    vivid::Vector2( 960, 360)		//Player4
+    vivid::Vector2( 256, 360),		//Player1
+    vivid::Vector2( 512, 360),		//Player2
+    vivid::Vector2( 768, 360),		//Player3
+    vivid::Vector2( 1024, 360)		//Player4
 };
 
 CSelectSkill::CSelectSkill(void)
     :m_CursorMoveTimer()
     ,m_NowCursorID_Num(0)
+    , m_SkillSelectCursor(nullptr)
     ,m_GameID(GAME_ID::MAX)
 {
 
@@ -40,11 +41,6 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
 
     m_GameID = CDataManager::GetInstance().GetGameID();
 
-    //スキル抽選
-    ChooseSkill();
-    //スキルアイコンの表示
-    CreateSkillIcon();
-
     //アイコンの配列を初期化
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
@@ -59,13 +55,21 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     }
     m_NowCursorPosNum = 0;
 
+    //カーソルリストの初期化
+    m_SkillCursorList.clear();
+
+    //カーソル移動タイマーのリセット
+    m_CursorMoveTimer.SetUp(m_cursor_move_time);
+
+    //スキル抽選
+    ChooseSkill();
+    //スキルアイコンの表示
+    CreateSkillIcon();
+
     //カーソルの初期化
     SetCursorID();
     m_SkillSelectCursor = nullptr;
     CreateCursor();
-
-    //カーソル移動タイマーのリセット
-    m_CursorMoveTimer.SetUp(m_cursor_move_time);
 }
 
 void CSelectSkill::Update(void)
@@ -88,14 +92,30 @@ void CSelectSkill::Finalize(void)
 {
     CCamera::GetInstance().Finalize();
 
-    CUIManager::GetInstance().Finalize();
-
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
-        m_SkillSelectIcon[i] = nullptr;
+        if (m_SkillSelectIcon[i] != nullptr)
+        {
+            m_SkillSelectIcon[i]->SetActive(false);
+            m_SkillSelectIcon[i] = nullptr;
+        }
     }
 
-    m_SkillSelectCursor = nullptr;
+    if (m_SkillCursorList.size() != 0)
+    {
+        std::list<CSkillCursor*>::iterator it = m_SkillCursorList.begin();
+        while (it != m_SkillCursorList.end())
+        {
+            (*it)->SetActive(false);
+            ++it;
+        }
+    }
+
+    if (m_SkillSelectCursor != nullptr)
+    {
+        m_SkillSelectCursor->SetActive(false);
+        m_SkillSelectCursor = nullptr;
+    }
 }
 
 void CSelectSkill::ChooseSkill(void)
@@ -162,14 +182,14 @@ void CSelectSkill::CreateSkillIcon(void)
 {
     CUIManager& uim = CUIManager::GetInstance();
 
-    CSkillSelectIcon* SkillIconUI = nullptr;
+    CSkillIcon* SkillIconUI = nullptr;
 
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
-        CUI* ui = uim.Create(UI_ID::SKILL_SELECT_ICON);
-        SkillIconUI = dynamic_cast<CSkillSelectIcon*>(ui);
+        CUI* ui = uim.Create(UI_ID::SKILL_ICON);
+        SkillIconUI = dynamic_cast<CSkillIcon*>(ui);
         
-        if (SkillIconUI == nullptr) //ダウンキャストのチェック（念のため）
+        if (SkillIconUI == nullptr) //ダウンキャストのチェック
         {
             ui->SetActive(false);
             continue;
@@ -202,11 +222,15 @@ void CSelectSkill::SetCursorID(void)
 
 void CSelectSkill::CreateCursor(void)
 {
-    CUI* ui = CUIManager::GetInstance().Create(UI_ID::SKILL_SELECT_CURSOR);
-    m_SkillSelectCursor = nullptr;
-    m_SkillSelectCursor = dynamic_cast<CSkillSelectCursor*>(ui);
+    CUI* ui = CUIManager::GetInstance().Create(UI_ID::SKILL_CURSOR);
+    if (m_SkillSelectCursor != nullptr)
+    {
+        m_SkillCursorList.push_back(m_SkillSelectCursor);
+        m_SkillSelectCursor = nullptr;
+    }
+    m_SkillSelectCursor = dynamic_cast<CSkillCursor*>(ui);
 
-    if (m_SkillSelectCursor == nullptr) //ダウンキャストのチェック（念のため）
+    if (m_SkillSelectCursor == nullptr) //ダウンキャストのチェック
     {
         ui->SetActive(false);
         return;

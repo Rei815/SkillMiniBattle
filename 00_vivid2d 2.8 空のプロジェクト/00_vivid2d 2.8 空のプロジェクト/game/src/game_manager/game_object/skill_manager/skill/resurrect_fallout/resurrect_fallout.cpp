@@ -29,6 +29,8 @@ CResurrectFallout::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
+	
+	m_State = SKILL_STATE::WAIT;
 }
 
 /*!

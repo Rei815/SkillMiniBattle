@@ -1,25 +1,15 @@
 #include "skill_gauge.h"
 #include "../../../unit_manager/unit/unit_id.h"
 
-const vivid::Vector2    CSkillGauge::m_positionList[] = 
-	{
-		vivid::Vector2(100, 700),		//Player1
-		vivid::Vector2(367, 700),		//Player2
-		vivid::Vector2(633, 700),		//Player3
-		vivid::Vector2(900, 700)		//Player4
-	};
-
-const int               CSkillGauge::m_height = 384;
-const int               CSkillGauge::m_width = 384;
-/*
+const int               CSkillGauge::m_height = 600;
+const int               CSkillGauge::m_width = 600;
 const vivid::Rect       CSkillGauge::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
-const vivid::Vector2    CSkillGauge::m_scale = vivid::Vector2(0.5f, 0.5f);
-const vivid::Vector2    CSkillGauge::m_anchor = vivid::Vector2((m_width * m_scale.x) / 2, (m_height * m_scale.y) / 2);
-*/
+const vivid::Vector2    CSkillGauge::m_default_scale = vivid::Vector2(0.5f, 0.5f);
+const vivid::Vector2    CSkillGauge::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
+const unsigned int      CSkillGauge::m_background_color = 0xff888888;
 
-const std::string       CSkillGauge::m_file_name = "data\\Textures\\skill_gauge_test.png";
+const std::string       CSkillGauge::m_file_name = "data\\Textures\\skill_gauge.png";
 const double            CSkillGauge::m_start_percent = 0.0;
-const double            CSkillGauge::m_scale = 0.5f;
 
 /*
  *  コンストラクタ
@@ -27,9 +17,12 @@ const double            CSkillGauge::m_scale = 0.5f;
 CSkillGauge::
 CSkillGauge(UI_ID id)
 	: CUI(m_width, m_height, id)
+	, m_Scale(1.0)
+	, m_CenterPosition(vivid::Vector2::ZERO)
 	, m_ImageHandle(0)
 	, m_Percent(0)
 {
+
 }
 
 /*
@@ -54,6 +47,7 @@ Initialize(void)
 }
 
 /*
+{
  *  更新
  */
 void
@@ -61,6 +55,8 @@ CSkillGauge::
 Update(void)
 {
 	CUI::Update();
+
+	m_Position = m_CenterPosition - m_anchor;
 }
 
 /*
@@ -72,7 +68,13 @@ Draw(void)
 {
 	CUI::Draw();
 
-	DrawCircleGauge(m_Position.x,m_Position.y,m_Percent,m_ImageHandle,m_start_percent,m_scale);
+	if (0 < m_Percent && m_Percent < 100)
+	{
+		vivid::DrawTexture(m_file_name, m_Position, m_background_color, { 0,0,m_width, m_height }, m_anchor, vivid::Vector2(m_Scale, m_Scale));
+		
+		DrawCircleGauge(m_CenterPosition.x, m_CenterPosition.y, m_Percent, m_ImageHandle, m_start_percent, m_Scale, 1);
+	}
+
 }
 
 /*
@@ -88,18 +90,35 @@ Finalize(void)
 
 void
 CSkillGauge::
-SetIcon(int PosNum)
+SetGauge(vivid::Vector2 position, float scale)
 {
-	if (PosNum >= 0 && PosNum < (int)UNIT_ID::NONE)
-		m_Position = m_positionList[PosNum];
-	else
-		m_Position = vivid::Vector2().ZERO;
+	SetPosition(position);
+	SetScale(scale);
 }
-
 
 void
 CSkillGauge::
-SetGauge(float percent)
+SetPosition(vivid::Vector2 position)
 {
+	m_CenterPosition = position;
+}
+
+void
+CSkillGauge::
+SetScale(float scale)
+{
+	m_Scale = (double)scale;
+}
+
+void
+CSkillGauge::
+SetPercent(float percent)
+{
+	if (percent < 0)
+		percent = 0;
+
+	if (percent > 100)
+		percent = 100;
+
 	m_Percent = (double)percent;
 }

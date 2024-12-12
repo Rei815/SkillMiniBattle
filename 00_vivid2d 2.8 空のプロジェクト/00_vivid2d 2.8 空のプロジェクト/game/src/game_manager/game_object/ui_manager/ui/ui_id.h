@@ -14,8 +14,9 @@ enum class UI_ID
     FALL_SQUARE,    //!< フォールゲームの四角
     FALL_TRIANGLE,  //!< フォールゲームの三角
     RANDOM_GAME,
-    SKILL_SELECT_ICON,
-    SKILL_SELECT_CURSOR,
+    SKILL_ICON,
+    SKILL_GAUGE,
+    SKILL_CURSOR,
     FINISH_GAME_BG,
     FALLOUT_SELECT_BG,
     KEY,
