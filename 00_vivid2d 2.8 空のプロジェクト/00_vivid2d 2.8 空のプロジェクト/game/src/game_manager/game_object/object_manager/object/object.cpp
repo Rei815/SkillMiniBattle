@@ -7,6 +7,7 @@ IObject::IObject()
 	, m_Gimmick(nullptr)
 	, m_Tag("None")
 	,m_ActiveFlag(true)
+	, m_ColliderActiveFlag(true)
 {
 }
 
@@ -97,4 +98,19 @@ CGimmick* IObject::GetGimmick()
 std::string IObject::GetTag()
 {
 	return m_Tag;
+}
+
+void IObject::SetAlpha(float alpha)
+{
+	m_Alpha = alpha;
+}
+
+bool IObject::GetColliderActiveFlag()
+{
+	return m_ColliderActiveFlag;
+}
+
+void IObject::SetColliderActiveFlag(bool active)
+{
+	m_ColliderActiveFlag = active;
 }

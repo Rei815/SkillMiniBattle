@@ -129,6 +129,7 @@ CheckHitBullet(IBullet* bullet)
     while (it != m_UnitList.end())
     {
         IUnit* unit = (IUnit*)(*it);
+
         if (bullet->GetColliderID() == COLLIDER_ID::MODEL)
             unit->CheckHitBulletModel(bullet);
         else
@@ -138,6 +139,9 @@ CheckHitBullet(IBullet* bullet)
     }
 }
 
+/*
+* オブジェクトとの当たり判定
+*/
 void CUnitManager::CheckHitObject(IObject* object)
 {
     if (m_UnitList.empty()) return;
@@ -146,7 +150,7 @@ void CUnitManager::CheckHitObject(IObject* object)
     while (it != m_UnitList.end())
     {
 
-        if (object->GetModel().GetModelHandle() == VIVID_DX_ERROR)
+        if (object->GetModel().GetModelHandle() == VIVID_DX_ERROR || object->GetColliderActiveFlag() == false)
             return;
         IUnit* unit = (*it);
         //垂直方向の判定-----------------------------------------------------

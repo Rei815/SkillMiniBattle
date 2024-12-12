@@ -9,8 +9,8 @@ public:
     enum class STATE
     {
         WAIT,   //!< ‰½‚à‚µ‚È‚¢
-        CHANGE, //!< ŠG‚ªØ‚è‘Ö‚í‚è‘±‚¯‚Ä‚¢‚éó‘Ô
-        SELECT  //!< ŠG‚ªŒˆ‚Ü‚Á‚½ó‘Ô
+        SWITCHING, //!< ŠG‚ªØ‚è‘Ö‚í‚è‘±‚¯‚Ä‚¢‚éó‘Ô
+        PICK_UP  //!< ŠG‚ªŒˆ‚Ü‚Á‚½ó‘Ô
     };
 
     /*!
@@ -47,7 +47,9 @@ public:
 
     void        SetTimer(float time);
 
-    STATE        GetState();
+    STATE       GetState();
+
+    void        SetState(CFallOutTopic::STATE state);
 private:
 
     static const int                m_height;           //!< ‚‚³

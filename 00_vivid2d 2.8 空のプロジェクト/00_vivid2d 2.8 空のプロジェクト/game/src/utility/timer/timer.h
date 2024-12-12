@@ -21,6 +21,8 @@ public:
 	float		GetTimer();
 	float		GetLimitTime();
 
+	bool		GetActive();
+
 	void		SetActive(bool active);
 private:
 	float		m_LimitTime;

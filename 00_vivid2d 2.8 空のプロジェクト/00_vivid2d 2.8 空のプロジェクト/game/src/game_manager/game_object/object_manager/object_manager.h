@@ -72,7 +72,14 @@ public:
      *  @return     オブジェクトリスト
      */
     OBJECT_LIST GetList();
-    IObject* CheckHitObject(CPlayer* player);
+
+    /*!
+     *  @brief      当たったオブジェクトを返す
+     *
+     *  @param[in]  player          プレイヤークラス
+     *  @return     オブジェクト(ポインタ)
+     */
+    IObject*    CheckHitObject(CPlayer* player);
 private:
 
     /*!

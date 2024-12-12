@@ -41,6 +41,9 @@ public:
     void    Finalize(void);
 
 private:
-    static const float  m_fall_speed;
+    static const float  m_fall_speed;       //!< —Ž‚¿‚é‘¬“x
+    static const float  m_remove_height;    //!< Œ³‚É–ß‚é‚‚³
+    static const float  m_remove_time;      //!< Œ³‚É–ß‚é‚Ü‚Å‚ÌŽžŠÔ
+    float               m_StartHeight;      //!< ‰Šú‚Ì‚‚³
 
 };

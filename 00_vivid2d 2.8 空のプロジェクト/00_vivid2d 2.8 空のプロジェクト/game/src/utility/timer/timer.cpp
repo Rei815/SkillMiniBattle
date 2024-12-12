@@ -46,6 +46,7 @@ void CTimer::Initialize()
 
 bool CTimer::Finished()
 {
+	if (!m_Active) return false;
 	return m_Timer >= m_LimitTime;
 }
 
@@ -57,6 +58,11 @@ float CTimer::GetTimer()
 float CTimer::GetLimitTime()
 {
 	return m_LimitTime;
+}
+
+bool CTimer::GetActive()
+{
+	return m_Active;
 }
 
 void CTimer::SetActive(bool active)

@@ -45,8 +45,7 @@ Update(void)
 
     while (it != m_ObjectList.end())
     {
-        if((*it)->GetObjectID() != OBJECT_ID::CANNON_OBJECT)
-            CUnitManager::GetInstance().CheckHitObject((*it));
+        CUnitManager::GetInstance().CheckHitObject((*it));
 
         ++it;
     }
@@ -153,6 +152,9 @@ CObjectManager::OBJECT_LIST CObjectManager::GetList()
     return m_ObjectList;
 }
 
+/*
+* 当たったオブジェクトを返す
+*/
 IObject* CObjectManager::CheckHitObject(CPlayer* player)
 {
     if (m_ObjectList.empty()) return nullptr;
@@ -161,7 +163,7 @@ IObject* CObjectManager::CheckHitObject(CPlayer* player)
     while (it != m_ObjectList.end())
     {
 
-        if ((*it)->GetModel().GetModelHandle() == VIVID_DX_ERROR)
+        if ((*it)->GetModel().GetModelHandle() == VIVID_DX_ERROR || (*it)->GetColliderActiveFlag() == false)
             return nullptr;
 
         //垂直方向の判定-----------------------------------------------------

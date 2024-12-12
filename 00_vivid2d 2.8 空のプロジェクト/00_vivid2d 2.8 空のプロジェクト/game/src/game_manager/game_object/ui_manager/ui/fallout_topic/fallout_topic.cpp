@@ -21,7 +21,7 @@ CFallOutTopic(UI_ID id)
 	, m_CurrentID(MARK_ID::NONE)
 	, m_PreviousID(MARK_ID::NONE
 	)
-	, m_State(STATE::WAIT)
+	, m_State(STATE::SWITCHING)
 {
 }
 
@@ -45,7 +45,7 @@ Initialize(const vivid::Vector2& position)
 	CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, m_Position);
 	m_Rect = m_rect;
 	m_FileName = "data\\Textures\\fall_circle_ui.png";
-	m_Timer.SetUp(m_wait_time);
+	m_Timer.SetUp(m_change_time);
 }
 
 /*
@@ -59,13 +59,13 @@ Update(void)
 	switch (m_State)
 	{
 	case CFallOutTopic::STATE::WAIT:
-		if (m_Timer.Finished())
-		{
-			m_State = STATE::CHANGE;
-			m_Timer.SetUp(m_change_time);
-		}
+		//if (m_Timer.Finished())
+		//{
+		//	m_State = STATE::SWITCHING;
+		//	m_Timer.SetUp(m_change_time);
+		//}
 		break;
-	case CFallOutTopic::STATE::CHANGE:
+	case CFallOutTopic::STATE::SWITCHING:
 		if (m_Timer.Finished())
 		{
 			m_Timer.Reset();
@@ -80,10 +80,10 @@ Update(void)
 		//m_SelectTimer.Update();
 		//if (m_SelectTimer.Finished())
 		//{
-		//	m_State = STATE::SELECT;
+		//	m_State = STATE::PICK_UP;
 		//}
 		break;
-	case CFallOutTopic::STATE::SELECT:
+	case CFallOutTopic::STATE::PICK_UP:
 
 		//èâä˙ílÇ…ñﬂÇ∑
 		m_Rect = m_rect;
@@ -94,7 +94,7 @@ Update(void)
 
 			
 		m_State = STATE::WAIT;
-		m_Timer.SetUp(m_wait_time);
+		//m_Timer.SetUp(m_wait_time);
 		break;
 	}
 }
@@ -127,10 +127,15 @@ void CFallOutTopic::SetMarkID(MARK_ID markID)
 void CFallOutTopic::SetTimer(float time)
 {
 	m_SelectTimer.SetUp(time);
-	m_State = STATE::SELECT;
+	m_State = STATE::PICK_UP;
 }
 
 CFallOutTopic::STATE CFallOutTopic::GetState()
 {
 	return m_State;
+}
+
+void CFallOutTopic::SetState(CFallOutTopic::STATE state)
+{
+	m_State = state;
 }

@@ -37,7 +37,6 @@ public:
      */
     void        Finalize(void);
 
-    using TOPIC_LIST = std::list<CFallOutTopic*>;
 
 private:
 
@@ -77,17 +76,22 @@ private:
     static const CTransform         m_object_transform_list[];  //!< 落ちるオブジェクトのトランスフォーム
     static const float              m_time_accelerator;         //!< 落ちるまでの速度を増やす
     static const float              m_min_time;                 //!< 落ちるまでの最小時間
-    static const float              m_initial_time;             //!< 落ちるまでの初期時間
+    static const float              m_fall_time;             //!< 落ちるまでの初期時間
     static const float              m_object_delay_time;        //!< 再抽選までの時間
     static const float              m_add_topic_time;           //!< お題が増えるまでの時間
+    static const float              m_reset_topic_time;           //!< リセットまでの待機時間
     static const float              m_defeat_height;            //!< 負ける高さ
     static const CVector3           m_camera_position;          //!< カメラの位置
     static const CVector3           m_camera_direction;         //!< カメラの方向
     static const vivid::Vector2     m_topic_positionList[];     //!< お題位置
-
+    static const int                m_max_topic_num;            //!< お題数
     float                           m_FallTime;                 //!< 落ちるまでの時間
-    CTimer                          m_ChooseObjectTimer[6];        //!< 抽選タイマー
+    CTimer                          m_ChooseObjectTimer[5];     //!< 抽選タイマー
     CTimer                          m_AddTopicTimer;            //!< お題が増えるタイマー
+    CTimer                          m_ResetTopicTimer;          //!< お題リセットタイマー
     IObject*                        m_Object;                   //!< オブジェクト
+
+    using TOPIC_LIST = std::list<CFallOutTopic*>;
+
     TOPIC_LIST                      m_TopicList;                //!< お題のリスト
 };
