@@ -135,11 +135,17 @@ void CPlayer::SetMoveSpeedRate(float rate)
 
 void CPlayer::MulMoveSpeedRate(float rate)
 {
+    if (rate == 0.0f)
+        return;
+
     m_MoveSpeedRate = m_MoveSpeedRate * rate;
 }
 
 void CPlayer::DivMoveSpeedRate(float rate)
 {
+    if (rate == 0.0f)
+        return;
+
     m_MoveSpeedRate = m_MoveSpeedRate / rate;
 }
 
@@ -150,11 +156,17 @@ void CPlayer::SetJumpPowerRate(float rate)
 
 void CPlayer::MulJumpPowerRate(float rate)
 {
+    if (rate == 0.0f)
+        return;
+
     m_JumpPowerRate = m_JumpPowerRate * rate;
 }
 
 void CPlayer::DivJumpPowerRate(float rate)
 {
+    if (rate == 0.0f)
+        return;
+
     m_JumpPowerRate = m_JumpPowerRate / rate;
 }
 

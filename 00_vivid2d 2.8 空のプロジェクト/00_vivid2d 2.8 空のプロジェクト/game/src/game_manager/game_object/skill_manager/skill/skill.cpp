@@ -73,24 +73,32 @@ void CSkill::Initialize(SKILL_ID skill_id)
  */
 void CSkill::Update(void)
 {
-	if (m_UiSkillIcon != nullptr)
+	if (m_Player != nullptr && !m_Player->GetDefeatFlag())
 	{
-		//明るさ変更（未実装）
-		switch (m_State)
+		if (m_UiSkillIcon != nullptr)
 		{
-		case SKILL_STATE::WAIT:
-		case SKILL_STATE::ACTIVE:
-			m_UiSkillIcon->SetBrightness(CSkillIcon::ICON_BRIGHTNESS::BRIGHT);
-			break;
-		case SKILL_STATE::COOLDOWN:
-			m_UiSkillIcon->SetBrightness(CSkillIcon::ICON_BRIGHTNESS::DARK);
-			break;
+			//明るさ変更（未実装）
+			switch (m_State)
+			{
+			case SKILL_STATE::WAIT:
+			case SKILL_STATE::ACTIVE:
+				m_UiSkillIcon->SetBrightness(CSkillIcon::ICON_BRIGHTNESS::BRIGHT);
+				break;
+			case SKILL_STATE::COOLDOWN:
+				m_UiSkillIcon->SetBrightness(CSkillIcon::ICON_BRIGHTNESS::DARK);
+				break;
+			}
+		}
+
+		if (m_UiSkillGauge != nullptr)
+		{
+			m_UiSkillGauge->SetPercent(m_GaugePercent);
 		}
 	}
-
-	if (m_UiSkillGauge != nullptr)
+	else
 	{
-		m_UiSkillGauge->SetPercent(m_GaugePercent);
+		m_UiSkillIcon->SetBrightness(CSkillIcon::ICON_BRIGHTNESS::DARK);
+		m_UiSkillGauge->SetPercent(0);
 	}
 }
 
