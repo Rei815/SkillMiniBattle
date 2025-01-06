@@ -2,14 +2,15 @@
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
 
-const int               CFallOutTopic::m_height = 184;
-const int               CFallOutTopic::m_width = 200;
+const std::string		CFallOutTopic::m_file_name = "data\\Textures\\fall_topic_ui.png";
+const int               CFallOutTopic::m_height = 100;
+const int               CFallOutTopic::m_width = 100;
 const float             CFallOutTopic::m_wait_time = 2.0f;
 const float             CFallOutTopic::m_change_time = 0.1f;
 const vivid::Rect       CFallOutTopic::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
-const vivid::Vector2    CFallOutTopic::m_scale = vivid::Vector2(0.5f, 0.5f);
+const vivid::Vector2    CFallOutTopic::m_scale = vivid::Vector2(1.0f, 1.0f);
 const vivid::Vector2    CFallOutTopic::m_anchor = vivid::Vector2((m_width * m_scale.x) / 2, (m_height * m_scale.y) / 2);
-const vivid::Vector2    CFallOutTopic::m_adjustPosition = vivid::Vector2(77.0f, 27.0f);
+const vivid::Vector2    CFallOutTopic::m_adjustPosition = vivid::Vector2(60.0f, 40.0f);
 const float				CFallOutTopic::m_speed = 300;
 
 /*
@@ -18,9 +19,8 @@ const float				CFallOutTopic::m_speed = 300;
 CFallOutTopic::
 CFallOutTopic(UI_ID id)
     : CUI(m_width, m_height, id)
-	, m_CurrentID(MARK_ID::NONE)
-	, m_PreviousID(MARK_ID::NONE
-	)
+	, m_CurrentID(MARK_ID::NONE)				   
+	, m_PreviousID(MARK_ID::NONE)
 	, m_State(STATE::SWITCHING)
 {
 }
@@ -44,8 +44,8 @@ Initialize(const vivid::Vector2& position)
 	m_Position = position;
 	CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, m_Position);
 	m_Rect = m_rect;
-	m_FileName = "data\\Textures\\fall_circle_ui.png";
 	m_Timer.SetUp(m_change_time);
+	
 }
 
 /*
@@ -106,7 +106,7 @@ void
 CFallOutTopic::
 Draw(void)
 {
-    vivid::DrawTexture(m_FileName, m_Position + m_adjustPosition, 0xffffffff, m_Rect, m_anchor, m_scale, 0.0f, vivid::ALPHABLEND::NOBELEND, vivid::ADDRESS_MODE::MIRROR);
+    vivid::DrawTexture(m_file_name, m_Position + m_adjustPosition, 0xffffffff, m_Rect, m_anchor, m_scale, 0.0f, vivid::ALPHABLEND::NOBELEND, vivid::ADDRESS_MODE::MIRROR);
 }
 
 /*

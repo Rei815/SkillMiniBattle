@@ -14,7 +14,6 @@ CUI(int width, int height, UI_ID id)
     , m_Transform()
 {
 }
-
 /*
  *  デストラクタ
  */

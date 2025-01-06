@@ -187,6 +187,7 @@
     <ClCompile Include="src\game_manager\game_object\object_manager\object\daruma_falldown_stage_object\daruma_falldown_stage_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_icon\player_icon.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fallout_topic_bg\fallout_topic_bg.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\ui.cpp" />
     <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
     <ClCompile Include="src\primitive\plane\plane.cpp" />
     <ClCompile Include="src\collider\box_collider\box_collider.cpp" />
@@ -262,7 +263,6 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\key\key.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\pause\pause.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\random_game\random_game.cpp" />
-    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\ui.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\player\player.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\unit.cpp" />

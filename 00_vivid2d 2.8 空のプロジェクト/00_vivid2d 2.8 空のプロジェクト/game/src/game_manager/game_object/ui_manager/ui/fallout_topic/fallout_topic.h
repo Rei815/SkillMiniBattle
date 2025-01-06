@@ -51,7 +51,7 @@ public:
 
     void        SetState(CFallOutTopic::STATE state);
 private:
-
+    static const std::string        m_file_name;        //!< ƒtƒ@ƒCƒ‹–¼
     static const int                m_height;           //!< ‚‚³
     static const int                m_width;            //!< •
     static const vivid::Rect        m_rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
