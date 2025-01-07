@@ -1,11 +1,11 @@
 #pragma once
 #include "../skill.h"
 
-class CSkillInvisible : public CSkill
+class CSkillMimicry : public CSkill
 {
 public:
-    CSkillInvisible(void);
-    ~CSkillInvisible(void);
+    CSkillMimicry(void);
+    ~CSkillMimicry(void);
 
     /*!
      *  @brief      èâä˙âª

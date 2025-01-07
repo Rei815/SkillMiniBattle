@@ -106,8 +106,12 @@ void CDaruma_FallDownGame::Update(void)
 					
 					player->SetActionFlag(false);
 					player->SetVelocity(CVector3::ZERO);
-					player->SetPosition(CVector3(-1500, 100, 100 * i));
-					m_RemainCount--;
+
+					if (player->GetSkill()->GetSkillCategory() != SKILL_CATEGORY::RESURRECT)
+						player->SetPosition(CVector3(-1500, 100, 100 * i));
+					else
+						player->GetSkill()->Action();
+
 				}
 			}
 			else

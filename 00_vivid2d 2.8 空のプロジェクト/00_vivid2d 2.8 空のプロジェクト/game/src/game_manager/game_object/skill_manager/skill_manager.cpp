@@ -8,6 +8,12 @@
 #include "skill/stomp/stomp.h"
 #include "skill/resurrect_fallout/resurrect_fallout.h"
 #include "skill/skill_invisible/skill_invisible.h"
+#include "skill/skill_stun/skill_stun.h"
+#include "skill/skill_mimicry/skill_mimicry.h"
+#include "skill/skill_slow/skill_slow.h"
+#include "skill/skill_ogre_control/skill_ogre_control.h"
+#include "skill/skill_resurrect_daruma/skill_resurrect_daruma.h"
+
 
 /*
  *  インスタンスの取得
@@ -129,8 +135,19 @@ CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
         skill = new CSkillBarrier();        break;
     case SKILL_ID::INVISIBLE:
         skill = new CSkillInvisible();      break;
+    case SKILL_ID::STUN:
+        skill = new CSkillStun();           break;
+    case SKILL_ID::MIMICRY:
+        skill = new CSkillMimicry();        break;
+    case SKILL_ID::SLOW:
+        skill = new CSkillSlow();           break;
+    case SKILL_ID::OGRE_CONTOROL:
+        skill = new CSkillOgreControl();    break;
+    case SKILL_ID::RESURRECT_DARUMA:
+        skill = new CSkillResurrectDaruma();    break;
     case SKILL_ID::RESURRECT_FALLOUT:
         skill = new CResurrectFallout();    break;
+
     default:
         break;
     }

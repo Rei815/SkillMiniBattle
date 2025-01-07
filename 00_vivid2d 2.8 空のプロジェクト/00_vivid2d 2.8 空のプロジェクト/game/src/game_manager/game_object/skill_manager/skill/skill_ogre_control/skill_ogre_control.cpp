@@ -1,30 +1,28 @@
-#include "skill_stun.h"
+#include "skill_ogre_control.h"
 
+const float CSkillOgreControl::m_cool_time = 0.0f;
+const float CSkillOgreControl::m_active_time = 10.0f;
 
-const float CSkillStun::m_cool_time = 2.0f;
-const float CSkillStun::m_active_time = 5.0f;
-
-
-
-
-CSkillStun::CSkillStun(void)
+CSkillOgreControl::CSkillOgreControl(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_Timer()
 {
 }
 
-CSkillStun::~CSkillStun(void)
+
+CSkillOgreControl::~CSkillOgreControl(void)
 {
 }
 
-void CSkillStun::Initialize(SKILL_ID skill_id)
+void CSkillOgreControl::Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
 	m_State = SKILL_STATE::WAIT;
 	m_Timer.SetUp(m_active_time);
+	m_Target = nullptr;
 }
 
-void CSkillStun::Update(void)
+void CSkillOgreControl::Update(void)
 {
 	CSkill::Update();
 	m_Timer.Update();
@@ -35,14 +33,13 @@ void CSkillStun::Update(void)
 		break;
 	case SKILL_STATE::ACTIVE:
 
+		if (!m_Player->GetPlayerMoving())
+		{
+			dg.OgreControlTurn();
+		}
+
 		if (m_Timer.Finished())
 		{
-			
-
-			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
-			{
-					um.GetPlayer(UNIT_ID(i))->SetActionFlag(true);
-			}
 			m_Timer.Reset();
 			m_Timer.SetUp(m_cool_time);
 			m_State = SKILL_STATE::COOLDOWN;
@@ -58,27 +55,20 @@ void CSkillStun::Update(void)
 	}
 }
 
-void CSkillStun::Draw(void)
+void CSkillOgreControl::Draw(void)
 {
 	CSkill::Draw();
 }
 
-void CSkillStun::Finalize(void)
+void CSkillOgreControl::Finalize(void)
 {
 	CSkill::Finalize();
 }
 
-void CSkillStun::Action()
+void CSkillOgreControl::Action()
 {
 	if (m_State == SKILL_STATE::WAIT)
 	{
-		for (int i = 0; i < dm.GetCurrentPlayer();i++)
-		{
-			if (um.GetPlayer(UNIT_ID(i)) != m_Player)
-			{
-				um.GetPlayer(UNIT_ID(i))->SetActionFlag(false);
-			}
-		}
 		m_Timer.SetUp(m_active_time);
 		m_State = SKILL_STATE::ACTIVE;
 	}

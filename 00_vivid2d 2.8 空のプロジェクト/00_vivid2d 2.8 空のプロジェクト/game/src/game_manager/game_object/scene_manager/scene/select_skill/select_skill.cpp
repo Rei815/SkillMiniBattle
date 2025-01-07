@@ -312,6 +312,21 @@ SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_DARUMA skill_id)
     case SKILL_ID_DARUMA::INVISIBLE:
         temp = SKILL_ID::INVISIBLE;
         break;
+    case SKILL_ID_DARUMA::STUN:
+        temp = SKILL_ID::STUN;
+        break;
+    case SKILL_ID_DARUMA::MIMICRY:
+        temp = SKILL_ID::MIMICRY;
+        break;
+    case SKILL_ID_DARUMA::SLOW:
+        temp = SKILL_ID::SLOW;
+        break;
+    case SKILL_ID_DARUMA::OGRE_CONTOROL:
+        temp = SKILL_ID::OGRE_CONTOROL;
+        break;
+    case SKILL_ID_DARUMA::RESURRECT_DARUMA:
+        temp = SKILL_ID::RESURRECT_DARUMA;
+        break;
     case SKILL_ID_DARUMA::MAX:
         temp = SKILL_ID::MAX;
         break;
