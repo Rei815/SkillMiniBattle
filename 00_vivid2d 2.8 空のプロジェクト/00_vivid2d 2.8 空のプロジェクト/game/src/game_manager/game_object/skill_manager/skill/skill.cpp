@@ -1,6 +1,7 @@
 #include "skill.h"
 
 CSkill::CSkill(void)
+	: m_Category(SKILL_CATEGORY::UNKNOWN)
 {
 
 }

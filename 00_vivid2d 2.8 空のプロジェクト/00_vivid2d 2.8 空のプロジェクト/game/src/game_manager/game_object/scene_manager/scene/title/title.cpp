@@ -28,8 +28,8 @@ void CTitle::Initialize(SCENE_ID scene_id)
     CCamera::GetInstance().Initialize();
 
     CStage::GetInstance().Initialize();
-
-
+    CUIManager::GetInstance().Initialize();
+    CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
 }
 
 void CTitle::Update(void)
@@ -47,6 +47,7 @@ void CTitle::Update(void)
     }
     CStage::GetInstance().Update();
     CStage::GetInstance().Update();
+    CUIManager::GetInstance().Update();
 
 }
 
@@ -64,6 +65,7 @@ void CTitle::Draw(void)
     }
     break;
     }
+    CUIManager::GetInstance().Draw();
 
 }
 
@@ -72,5 +74,6 @@ void CTitle::Finalize(void)
     IScene::Finalize();
     CStage::GetInstance().Finalize();
     CStage::GetInstance().Finalize();
+    CUIManager::GetInstance().Finalize();
 
 }

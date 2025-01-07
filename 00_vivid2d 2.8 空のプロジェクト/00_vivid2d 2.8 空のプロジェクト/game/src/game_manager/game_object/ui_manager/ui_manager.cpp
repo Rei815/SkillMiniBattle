@@ -7,6 +7,7 @@
 #include "ui/skill_select_icon/skill_select_icon.h"
 #include "ui/skill_select_cursor/skill_select_cursor.h"
 #include "ui/key/key.h"
+#include "ui/title_logo/title_logo.h"
  /*
   *  インスタンスの取得
   */
@@ -117,6 +118,8 @@ CUI* CUIManager::Create(UI_ID id)
         ui = new CSkillSelectCursor(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
+    case UI_ID::TITLE_LOGO:
+        ui = new CTitleLogo(id);     break;
         break;
     }
     if (!ui) return nullptr;

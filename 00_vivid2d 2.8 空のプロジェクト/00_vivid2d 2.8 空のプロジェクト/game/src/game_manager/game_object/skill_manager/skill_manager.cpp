@@ -4,9 +4,10 @@
 #include "skill/skill_dash/skill_dash.h"
 #include "skill/skill_spawn_wall/skill_spawn_wall.h"
 #include "skill/skill_barrier/skill_barrier.h"
-#include "skill/floating/floating.h"
-#include "skill/stomp/stomp.h"
-#include "skill/resurrect_fallout/resurrect_fallout.h"
+#include "skill/skill_floating/floating.h"
+#include "skill/skill_stomp/stomp.h"
+#include "skill/skill_resurrect_fallout/resurrect_fallout.h"
+#include "skill/skill_strong_wind/skill_strong_wind.h"
 
 /*
  *  インスタンスの取得
@@ -142,6 +143,8 @@ CreateSkill(SKILL_ID_FALLGAME skill_id, UNIT_ID player_id)
         skill = new CStomp();     break;
     case SKILL_ID_FALLGAME::RESURRECT:
         skill = new CResurrectFallout();     break;
+    case SKILL_ID_FALLGAME::STRONG_WIND:
+        skill = new CSkillStrongWind();     break;
     }
 
     if (!skill) return;

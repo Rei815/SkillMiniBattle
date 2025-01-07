@@ -267,12 +267,7 @@ void CPlayer::Control(void)
     //ÉXÉLÉã
     if(m_Skill != nullptr)
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && !m_StopFlag)
-        {
-            if (m_Category == UNIT_CATEGORY::PLAYER)
-                m_Skill->Action();
-            else
-                m_Skill->Action(m_Category);
-        }
+            m_Skill->Action();
 
     //í‚é~
     if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::LSHIFT))
