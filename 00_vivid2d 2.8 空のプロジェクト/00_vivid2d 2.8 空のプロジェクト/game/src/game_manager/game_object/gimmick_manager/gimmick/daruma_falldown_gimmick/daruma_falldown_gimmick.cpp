@@ -58,7 +58,7 @@ void CDaruma_FallDownGimmick::Finalize(void)
 
 void CDaruma_FallDownGimmick::Ready()//U‚è•Ô‚è•û‚Ìİ’è
 {
-	if(m_Timer.Finished())
+	if(m_Timer.Finished()&&m_OgreState == OGRE_STATE::READY)
 	{
 		m_TurnType = (TURN_TYPE)(rand() % (int)TURN_TYPE::TYPE_NUM);
 		switch (m_TurnType)
@@ -117,7 +117,6 @@ void CDaruma_FallDownGimmick::Play()//U‚è•Ô‚é
 				m_State = GIMMICK_STATE::PLAY;
 			else
 				m_State = GIMMICK_STATE::FINISH;
-			
 		}
 	}
 }
@@ -174,4 +173,10 @@ void CDaruma_FallDownGimmick::Slow()//ŠÔ‚ğ‹ó‚¯‚ÄU‚èŒü‚­
 	m_TurnAngle = 180;
 }
 
+void CDaruma_FallDownGimmick::OgreControlTurn()
+{
+	m_ReadyTime = 0.0f;
+	m_WaitTime = 0.0f;
+	m_OgreState = OGRE_STATE::PLAY;
 
+}

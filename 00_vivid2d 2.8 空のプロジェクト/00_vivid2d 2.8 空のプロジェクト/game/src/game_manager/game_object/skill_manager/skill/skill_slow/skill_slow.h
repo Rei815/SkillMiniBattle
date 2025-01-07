@@ -1,11 +1,13 @@
 #pragma once
 #include "../skill.h"
+#include "../../../unit_manager/unit_manager.h"
+#include "../../../data_manager/data_manager.h"
 
-class CSkillInvisible : public CSkill
+class CSkillSlow : public CSkill
 {
 public:
-    CSkillInvisible(void);
-    ~CSkillInvisible(void);
+    CSkillSlow(void);
+    ~CSkillSlow(void);
 
     /*!
      *  @brief      èâä˙âª
@@ -37,6 +39,10 @@ protected:
     static const float m_cool_time;
     static const float m_active_time;
 
+    CPlayer*            m_Target;
     SKILL_STATE         m_State;
     CTimer              m_Timer;
+
+    CDataManager&       dm = CDataManager::GetInstance();
+    CUnitManager&       um = CUnitManager::GetInstance();
 };

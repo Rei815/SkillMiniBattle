@@ -2,7 +2,7 @@
 
 
 const float CSkillInvisible::m_cool_time = 2.0f;
-const float CSkillInvisible::m_invisible_time = 5.0f;
+const float CSkillInvisible::m_active_time = 2.0f;
 
 CSkillInvisible::CSkillInvisible(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
@@ -18,7 +18,7 @@ void CSkillInvisible::Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
 	m_State = SKILL_STATE::WAIT;
-	m_Timer.SetUp(m_invisible_time);
+	m_Timer.SetUp(m_active_time);
 }
 
 void CSkillInvisible::Update(void)
@@ -65,8 +65,8 @@ void CSkillInvisible::Action()
 {
 	if (m_State == SKILL_STATE::WAIT)
 	{
-		m_Player->StartInvincible(m_invisible_time);
-		m_Timer.SetUp(m_invisible_time);
+		m_Player->StartInvincible(m_active_time);
+		m_Timer.SetUp(m_active_time);
 		m_State = SKILL_STATE::ACTIVE;
 	}
 }

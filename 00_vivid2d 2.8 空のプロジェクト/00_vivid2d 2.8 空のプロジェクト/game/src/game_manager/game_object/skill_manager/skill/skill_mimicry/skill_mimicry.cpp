@@ -1,30 +1,26 @@
-#include "skill_stun.h"
+#include "skill_mimicry.h"
 
-
-const float CSkillStun::m_cool_time = 2.0f;
-const float CSkillStun::m_active_time = 5.0f;
-
-
-
-
-CSkillStun::CSkillStun(void)
+const float CSkillMimicry::m_cool_time = 2.0f;
+const float CSkillMimicry::m_active_time = 5.0f;
+CSkillMimicry::CSkillMimicry(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
+	, m_State(SKILL_STATE::WAIT)
 	, m_Timer()
 {
 }
 
-CSkillStun::~CSkillStun(void)
+CSkillMimicry::~CSkillMimicry(void)
 {
 }
 
-void CSkillStun::Initialize(SKILL_ID skill_id)
+void CSkillMimicry::Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
 	m_State = SKILL_STATE::WAIT;
 	m_Timer.SetUp(m_active_time);
 }
 
-void CSkillStun::Update(void)
+void CSkillMimicry::Update(void)
 {
 	CSkill::Update();
 	m_Timer.Update();
@@ -35,14 +31,12 @@ void CSkillStun::Update(void)
 		break;
 	case SKILL_STATE::ACTIVE:
 
+		m_Player->DecAlpha(0.5f);
+		
+
 		if (m_Timer.Finished())
 		{
-			
-
-			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
-			{
-					um.GetPlayer(UNIT_ID(i))->SetActionFlag(true);
-			}
+			m_Player->DivMoveSpeedRate(0.5f);
 			m_Timer.Reset();
 			m_Timer.SetUp(m_cool_time);
 			m_State = SKILL_STATE::COOLDOWN;
@@ -50,35 +44,33 @@ void CSkillStun::Update(void)
 		break;
 	case SKILL_STATE::COOLDOWN:
 
+		m_Player->RevertAlpha(1.0f);
+
 		if (m_Timer.Finished())
 		{
+			m_Player->SetAlpha(1.0f);
 			m_State = SKILL_STATE::WAIT;
 		}
 		break;
 	}
 }
 
-void CSkillStun::Draw(void)
+void CSkillMimicry::Draw(void)
 {
 	CSkill::Draw();
 }
 
-void CSkillStun::Finalize(void)
+void CSkillMimicry::Finalize(void)
 {
 	CSkill::Finalize();
 }
 
-void CSkillStun::Action()
+void CSkillMimicry::Action()
 {
 	if (m_State == SKILL_STATE::WAIT)
 	{
-		for (int i = 0; i < dm.GetCurrentPlayer();i++)
-		{
-			if (um.GetPlayer(UNIT_ID(i)) != m_Player)
-			{
-				um.GetPlayer(UNIT_ID(i))->SetActionFlag(false);
-			}
-		}
+		m_Player->MulMoveSpeedRate(0.5f);
+		m_Player->StartInvincible(m_active_time);
 		m_Timer.SetUp(m_active_time);
 		m_State = SKILL_STATE::ACTIVE;
 	}

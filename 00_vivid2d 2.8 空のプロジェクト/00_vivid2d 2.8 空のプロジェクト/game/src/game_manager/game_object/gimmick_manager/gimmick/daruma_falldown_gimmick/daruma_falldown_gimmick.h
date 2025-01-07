@@ -89,6 +89,8 @@ public:
     */
     virtual void    Slow(void);
 
+    virtual void    OgreControlTurn(void);
+
 private:
 
     OGRE_STATE m_OgreState;
@@ -96,7 +98,7 @@ private:
 
     bool m_GameEnd;              //ƒQ[ƒ€I—¹ğŒ‚ğ–‚½‚µ‚½‚©
 
-    float m_ReadyTime;      //‹S‚ªU‚èŒü‚­‚Ü‚Å‚ÌŠÔ
+    float m_ReadyTime;           //‹S‚ªU‚èŒü‚­‚Ü‚Å‚ÌŠÔ
     float m_WaitTime;            //‹S‚Ì‘Ò‹@ŠÔ
     float m_TurnSpeed;           //‹S‚ÌU‚èŒü‚­‘¬“x
     float m_TurnAngle;           //U‚èŒü‚­Šp“x
