@@ -95,8 +95,9 @@ void CDaruma_FallDownGame::Update(void)
 			player = um.GetPlayer((UNIT_ID)i);
 
 			if (!player) continue;
+			
 
-			if (gimmick->GetState() == GIMMICK_STATE::PLAY)
+			if (gimmick->GetState() == GIMMICK_STATE::PLAY && player->GetInvincibleFlag() == false)
 			{
 				if (player->GetPlayerMoving())
 				{
@@ -105,8 +106,12 @@ void CDaruma_FallDownGame::Update(void)
 					
 					player->SetActionFlag(false);
 					player->SetVelocity(CVector3::ZERO);
-					player->SetPosition(CVector3(-1500, 100, 100 * i));
-					m_RemainCount--;
+
+					if (player->GetSkill()->GetSkillCategory() != SKILL_CATEGORY::RESURRECT)
+						player->SetPosition(CVector3(-1500, 100, 100 * i));
+					else
+						player->GetSkill()->Action();
+
 				}
 			}
 			else

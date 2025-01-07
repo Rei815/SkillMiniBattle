@@ -6,14 +6,39 @@
 enum class SKILL_CATEGORY
 {
 	UNKNOWN,        //!< 所属不明
+	ACTIVE,         //!< アクティブ
+	PASSIVE,        //!< パッシブ
 	RESURRECT,      //!< 復活
 };
 
+/*!
+ *  @brief      スキルID
+ */
+enum class SKILL_ID
+{
+	SPEED_UP,
+	JUMP_UP,
+	FLOATING,
+	STOMP,
+	DASH,
+	SPAWN_WALL,
+	BARRIER,
+	INVISIBLE,
+	STUN,
+	MIMICRY,
+	SLOW,
+	OGRE_CONTOROL,
+
+	RESURRECT_DARUMA,
+	RESURRECT_FALLOUT,
+
+	MAX,
+};
 
 /*!
  *  @brief      フォールアウトのスキルID
  */
-enum class SKILL_ID_FALLGAME
+enum class SKILL_ID_FALLOUT
 {
 	SPEED_UP,
 	JUMP_UP,
@@ -31,6 +56,12 @@ enum class SKILL_ID_FALLGAME
 enum class SKILL_ID_DARUMA
 {
 	SPEED_UP,
+	INVISIBLE,
+	STUN,
+	MIMICRY,
+	SLOW,
+	OGRE_CONTOROL,
+	RESURRECT_DARUMA,
 
 	MAX,
 };

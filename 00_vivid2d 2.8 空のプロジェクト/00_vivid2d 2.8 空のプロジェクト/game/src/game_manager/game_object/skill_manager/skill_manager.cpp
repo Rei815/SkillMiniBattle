@@ -4,10 +4,17 @@
 #include "skill/skill_dash/skill_dash.h"
 #include "skill/skill_spawn_wall/skill_spawn_wall.h"
 #include "skill/skill_barrier/skill_barrier.h"
+#include "skill/skill_invisible/skill_invisible.h"
+#include "skill/skill_stun/skill_stun.h"
+#include "skill/skill_mimicry/skill_mimicry.h"
+#include "skill/skill_slow/skill_slow.h"
+#include "skill/skill_ogre_control/skill_ogre_control.h"
+#include "skill/skill_resurrect_daruma/skill_resurrect_daruma.h"
 #include "skill/skill_floating/floating.h"
 #include "skill/skill_stomp/stomp.h"
 #include "skill/skill_resurrect_fallout/resurrect_fallout.h"
 #include "skill/skill_strong_wind/skill_strong_wind.h"
+
 
 /*
  *  インスタンスの取得
@@ -103,80 +110,52 @@ Finalize(void)
 }
 
 /*!
- *  @brief      スキル生成（だるまさんがころんだ）
+ *  @brief      スキル生成
  */
 void
 CSkillManager::
-CreateSkill(SKILL_ID_DARUMA skill_id, UNIT_ID player_id)
+CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
 {
     CSkill* skill = nullptr;
 
     switch (skill_id)
     {
-    case SKILL_ID_DARUMA::SPEED_UP:
-        skill = new CSkillSpeedUp();     break;
+    case SKILL_ID::SPEED_UP:
+        skill = new CSkillSpeedUp();        break;
+    case SKILL_ID::JUMP_UP:
+        skill = new CSkillJumpUp();         break;
+    case SKILL_ID::FLOATING:
+        skill = new CFloating();            break;
+    case SKILL_ID::STOMP:
+        skill = new CStomp();               break;
+    case SKILL_ID::DASH:
+        skill = new CSkillDash();           break;
+    case SKILL_ID::SPAWN_WALL:
+        skill = new CSkillSpawnWall();      break;
+    case SKILL_ID::BARRIER:
+        skill = new CSkillBarrier();        break;
+    case SKILL_ID::INVISIBLE:
+        skill = new CSkillInvisible();      break;
+    case SKILL_ID::STUN:
+        skill = new CSkillStun();           break;
+    case SKILL_ID::MIMICRY:
+        skill = new CSkillMimicry();        break;
+    case SKILL_ID::SLOW:
+        skill = new CSkillSlow();           break;
+    case SKILL_ID::OGRE_CONTOROL:
+        skill = new CSkillOgreControl();    break;
+    case SKILL_ID::RESURRECT_DARUMA:
+        skill = new CSkillResurrectDaruma();    break;
+    case SKILL_ID::RESURRECT_FALLOUT:
+        skill = new CResurrectFallout();    break;
+
+    default:
+        break;
     }
 
     if (!skill) return;
 
-    m_SetSkill[(int)player_id] = skill;
-}
-
-/*!
- *  @brief      スキル生成（フォールゲーム）
- */
-void
-CSkillManager::
-CreateSkill(SKILL_ID_FALLGAME skill_id, UNIT_ID player_id)
-{
-    CSkill* skill = nullptr;
-
-    switch (skill_id)
-    {
-    case SKILL_ID_FALLGAME::SPEED_UP:
-        skill = new CSkillSpeedUp();     break;
-    case SKILL_ID_FALLGAME::JUMP_UP:
-        skill = new CSkillJumpUp();     break;
-    case SKILL_ID_FALLGAME::FLOATING:
-        skill = new CFloating();     break;
-    case SKILL_ID_FALLGAME::STOMP:
-        skill = new CStomp();     break;
-    case SKILL_ID_FALLGAME::RESURRECT:
-        skill = new CResurrectFallout();     break;
-    case SKILL_ID_FALLGAME::STRONG_WIND:
-        skill = new CSkillStrongWind();     break;
-    }
-
-    if (!skill) return;
-
-    m_SetSkill[(int)player_id] = skill;
-}
-
-/*!
- *  @brief      スキル生成（ドッジボール）
- */
-void
-CSkillManager::
-CreateSkill(SKILL_ID_DODGEBALL skill_id, UNIT_ID player_id)
-{
-    CSkill* skill = nullptr;
-
-    switch (skill_id)
-    {
-    case SKILL_ID_DODGEBALL::SPEED_UP:
-        skill = new CSkillSpeedUp();    break;
-    case SKILL_ID_DODGEBALL::JUMP_UP:
-        skill = new CSkillJumpUp();     break;
-    case SKILL_ID_DODGEBALL::DASH:
-        skill = new CSkillDash();       break;
-    case SKILL_ID_DODGEBALL::SPAWN_WALL:
-        skill = new CSkillSpawnWall();  break;
-    case SKILL_ID_DODGEBALL::BARRIER:
-        skill = new CSkillBarrier();  break;
-    }
-
-    if (!skill) return;
-
+    skill->Initialize(skill_id);
     m_SetSkill[(int)player_id] = skill;
 }
 
@@ -191,8 +170,7 @@ SetSkill(void)
     {
         if (m_SetSkill[i] != nullptr)
         {
-            m_SetSkill[i]->Initialize(CUnitManager::GetInstance().GetPlayer((UNIT_ID)i));
-            
+            m_SetSkill[i]->SetPlayer(CUnitManager::GetInstance().GetPlayer((UNIT_ID)i));
             m_SkillList.push_back(m_SetSkill[i]);
         }
     }

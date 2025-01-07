@@ -10,8 +10,9 @@ enum class UI_ID
     FALLOUT_TOPIC,      //!< フォールアウトのお題
     FALLOUT_TOPIC_BG,   //!< フォールアウトのお題の背景
     RANDOM_GAME,
-    SKILL_SELECT_ICON,
-    SKILL_SELECT_CURSOR,
+    SKILL_ICON,
+    SKILL_GAUGE,
+    SKILL_CURSOR,
     FINISH_GAME_BG,
     TITLE_LOGO,
     KEY,

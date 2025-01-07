@@ -7,7 +7,7 @@ const float		CFloating::m_cool_time = 3.0f;
 const CVector3	CFloating::m_scale = CVector3(4.0f, 1.0f, 4.0f);
 
 CFloating::CFloating(void)
-	:CSkill()
+	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_Effect(nullptr)
 
 {
@@ -24,9 +24,11 @@ CFloating::~CFloating(void)
  */
 void
 CFloating::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
+
+	m_State = SKILL_STATE::WAIT;
 }
 
 /*!
@@ -99,5 +101,4 @@ Action(UNIT_CATEGORY category)
 	effectPosition.y -= m_Player->GetHeight() / 2;
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::FLOATING, effectPosition, CVector3::UP, m_scale);
-
 }

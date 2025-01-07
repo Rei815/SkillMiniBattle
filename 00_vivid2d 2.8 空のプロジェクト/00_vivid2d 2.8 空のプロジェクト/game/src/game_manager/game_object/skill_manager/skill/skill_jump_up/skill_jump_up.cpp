@@ -19,11 +19,11 @@ CSkillJumpUp::~CSkillJumpUp(void)
  */
 void
 CSkillJumpUp::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
 
-	player->SetJumpPowerRate(m_jump_up_rate);
+	m_State = SKILL_STATE::WAIT;
 }
 
 /*!
@@ -62,6 +62,17 @@ Finalize(void)
 
 }
 
+/*!
+ *  @brief      プレイヤーのセット
+ */
+void
+CSkillJumpUp::
+SetPlayer(CPlayer* player)
+{
+	CSkill::SetPlayer(player);
+
+	player->SetJumpPowerRate(m_jump_up_rate);
+}
 
 /*!
  *  @brief      アクション呼び出し

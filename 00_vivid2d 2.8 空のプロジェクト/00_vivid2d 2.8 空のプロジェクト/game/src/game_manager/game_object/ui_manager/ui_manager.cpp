@@ -4,8 +4,9 @@
 #include "ui/fallout_topic_bg/fallout_topic_bg.h"
 #include "ui/random_game/random_game.h"
 #include "ui/finish_backGround/finish_backGround.h"
-#include "ui/skill_select_icon/skill_select_icon.h"
-#include "ui/skill_select_cursor/skill_select_cursor.h"
+#include "ui/skill_icon/skill_icon.h"
+#include "ui/skill_gauge/skill_gauge.h"
+#include "ui/skill_cursor/skill_cursor.h"
 #include "ui/key/key.h"
 #include "ui/title_logo/title_logo.h"
  /*
@@ -112,10 +113,12 @@ CUI* CUIManager::Create(UI_ID id)
         ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);     break;
-    case UI_ID::SKILL_SELECT_ICON:
-        ui = new CSkillSelectIcon(id);      break;
-    case UI_ID::SKILL_SELECT_CURSOR:
-        ui = new CSkillSelectCursor(id);    break;
+    case UI_ID::SKILL_ICON:
+        ui = new CSkillIcon(id);      break;
+    case UI_ID::SKILL_GAUGE:
+        ui = new CSkillGauge(id);   break;
+    case UI_ID::SKILL_CURSOR:
+        ui = new CSkillCursor(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
     case UI_ID::TITLE_LOGO:
@@ -144,11 +147,12 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
         ui = new CFalloutTopicBG(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);           break;
-    case UI_ID::SKILL_SELECT_ICON:
-        ui = new CSkillSelectIcon(id);      break;
-    case UI_ID::SKILL_SELECT_CURSOR:
-        ui = new CSkillSelectCursor(id);    break;
-        ui = new CRandomGame(id);     break;
+    case UI_ID::SKILL_ICON:
+        ui = new CSkillIcon(id);      break;
+    case UI_ID::SKILL_GAUGE:
+        ui = new CSkillGauge(id);   break;
+    case UI_ID::SKILL_CURSOR:
+        ui = new CSkillCursor(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
     case UI_ID::KEY:
@@ -176,11 +180,12 @@ CUI* CUIManager::Create(UI_ID id, const CVector3& position)
         ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);           break;
-    case UI_ID::SKILL_SELECT_ICON:
-        ui = new CSkillSelectIcon(id);      break;
-    case UI_ID::SKILL_SELECT_CURSOR:
-        ui = new CSkillSelectCursor(id);    break;
-        ui = new CRandomGame(id);     break;
+    case UI_ID::SKILL_ICON:
+        ui = new CSkillIcon(id);      break;
+    case UI_ID::SKILL_GAUGE:
+        ui = new CSkillGauge(id);   break;
+    case UI_ID::SKILL_CURSOR:
+        ui = new CSkillCursor(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
         break;
@@ -206,10 +211,12 @@ CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
         ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);     break;
-    case UI_ID::SKILL_SELECT_ICON:
-        ui = new CSkillSelectIcon(id);      break;
-    case UI_ID::SKILL_SELECT_CURSOR:
-        ui = new CSkillSelectCursor(id);    break;
+    case UI_ID::SKILL_ICON:
+        ui = new CSkillIcon(id);      break;
+    case UI_ID::SKILL_GAUGE:
+        ui = new CSkillGauge(id);   break;
+    case UI_ID::SKILL_CURSOR:
+        ui = new CSkillCursor(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
         break;

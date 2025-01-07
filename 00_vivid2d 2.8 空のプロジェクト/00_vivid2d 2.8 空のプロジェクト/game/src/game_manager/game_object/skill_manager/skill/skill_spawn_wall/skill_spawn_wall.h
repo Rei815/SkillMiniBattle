@@ -11,7 +11,7 @@ public:
     /*!
      *  @brief      èâä˙âª
      */
-    void        Initialize(CPlayer* player);
+    void        Initialize(SKILL_ID skill_id);
 
     /*!
      *  @brief      çXêV
@@ -35,18 +35,9 @@ public:
     void Action(void);
 
 protected:
-    enum class STATE
-    {
-        WAIT,
-        SPAWN,
-        IS_COOL_TIME,
-    };
-
     static const float  m_spawn_cool_time;
     static const float  m_wall_exist_time;
     static const float  m_wall_spawn_distance;
-
-    STATE m_NowState;
 
     CTimer              m_Timer;
 

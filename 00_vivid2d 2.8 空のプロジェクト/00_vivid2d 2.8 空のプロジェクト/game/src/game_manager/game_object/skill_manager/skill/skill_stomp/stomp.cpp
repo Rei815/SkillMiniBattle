@@ -6,7 +6,7 @@
 const float CStomp::m_floating_time = 3.0f;
 
 CStomp::CStomp(void)
-	:CSkill()
+	:CSkill(SKILL_CATEGORY::ACTIVE)
 {
 
 }
@@ -21,9 +21,11 @@ CStomp::~CStomp(void)
  */
 void
 CStomp::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
+	m_Category = SKILL_CATEGORY::ACTIVE;
+	m_State = SKILL_STATE::WAIT;
 }
 
 /*!
@@ -70,8 +72,9 @@ Finalize(void)
  */
 void
 CStomp::
-Action(UNIT_CATEGORY category)
+Action()
 {
+
 	CBulletManager::GetInstance().Create(m_Player->GetUnitCategory(), BULLET_ID::SHOCK_WAVE, m_Player->GetPosition(), CVector3::UP);
 	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, m_Player->GetPosition());
 }

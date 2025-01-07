@@ -8,8 +8,7 @@ const float CSkillSpawnWall::m_wall_exist_time = 5.0f;
 const float CSkillSpawnWall::m_wall_spawn_distance = 200.0f;
 
 CSkillSpawnWall::CSkillSpawnWall(void)
-	:CSkill()
-	, m_NowState(STATE::WAIT)
+	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_Timer()
 	, m_WallObj(nullptr)
 {
@@ -26,11 +25,11 @@ CSkillSpawnWall::~CSkillSpawnWall(void)
  */
 void
 CSkillSpawnWall::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
 
-	m_NowState = STATE::WAIT;
+	m_State = SKILL_STATE::WAIT;
 
 	m_Timer.SetUp(m_wall_exist_time);
 }
@@ -44,17 +43,20 @@ Update(void)
 {
 	CSkill::Update();
 
-	switch (m_NowState)
+	switch (m_State)
 	{
-	case CSkillSpawnWall::STATE::WAIT:
+	case SKILL_STATE::WAIT:
 		break;
 
-	case CSkillSpawnWall::STATE::SPAWN:
+	case SKILL_STATE::ACTIVE:
 		m_Timer.Update();
+
+		m_GaugePercent = (m_wall_exist_time - m_Timer.GetTimer()) / m_wall_exist_time * 100.0f;
+
 		if (m_Timer.Finished())
 		{
 			m_Timer.SetUp(m_spawn_cool_time);
-			m_NowState = STATE::WAIT;
+			m_State = SKILL_STATE::COOLDOWN;
 
 			if (m_WallObj != nullptr)
 				m_WallObj->SetActive(false);
@@ -68,12 +70,15 @@ Update(void)
 		}
 		break;
 
-	case CSkillSpawnWall::STATE::IS_COOL_TIME:
+	case SKILL_STATE::COOLDOWN:
 		m_Timer.Update();
+
+		m_GaugePercent = m_Timer.GetTimer() / m_spawn_cool_time * 100.0f;
+
 		if (m_Timer.Finished())
 		{
 			m_Timer.SetUp(m_wall_exist_time);
-			m_NowState = STATE::WAIT;
+			m_State = SKILL_STATE::WAIT;
 		}
 		break;
 	}
@@ -111,7 +116,7 @@ void
 CSkillSpawnWall::
 Action(void)
 {
-	if (m_NowState != STATE::WAIT)
+	if (m_State != SKILL_STATE::WAIT)
 		return;
 
 	CTransform SpawnTr;
@@ -128,5 +133,5 @@ Action(void)
 	
 	m_WallObj = CObjectManager::GetInstance().Create(OBJECT_ID::SKILL_WALL_OBJECT,SpawnTr);
 	m_Timer.SetUp(m_wall_exist_time);
-	m_NowState = STATE::SPAWN;
+	m_State = SKILL_STATE::ACTIVE;
 }

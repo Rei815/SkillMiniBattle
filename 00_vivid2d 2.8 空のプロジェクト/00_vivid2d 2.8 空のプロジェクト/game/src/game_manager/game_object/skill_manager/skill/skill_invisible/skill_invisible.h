@@ -10,7 +10,7 @@ public:
     /*!
      *  @brief      èâä˙âª
      */
-    void        Initialize(CPlayer* player);
+    void        Initialize(SKILL_ID skill_id);
 
     /*!
      *  @brief      çXêV
@@ -34,15 +34,9 @@ public:
 
 
 protected:
-    enum class STATE
-    {
-        WAIT,
-        INVISIBLE,
-        IS_COOL_TIME,
-    };
     static const float m_cool_time;
-    static const float m_invisible_time;
+    static const float m_active_time;
 
-    STATE              m_State;
-    CTimer             m_Timer;
+    SKILL_STATE         m_State;
+    CTimer              m_Timer;
 };
