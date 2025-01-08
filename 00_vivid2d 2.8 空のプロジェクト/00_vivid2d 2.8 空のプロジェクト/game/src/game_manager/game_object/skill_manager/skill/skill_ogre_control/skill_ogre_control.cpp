@@ -1,7 +1,7 @@
 #include "skill_ogre_control.h"
 #include "../../../object_manager/object_manager.h"
 
-const float CSkillOgreControl::m_cool_time = 0.0f;
+const float CSkillOgreControl::m_cool_time = 30.0f;
 const float CSkillOgreControl::m_active_time = 10.0f;
 
 CSkillOgreControl::CSkillOgreControl(void)
@@ -40,6 +40,7 @@ void CSkillOgreControl::Update(void)
 			m_State = SKILL_STATE::COOLDOWN;
 			m_Timer.SetUp(m_cool_time);
 		}
+		m_GaugePercent = (m_active_time - m_Timer.GetTimer()) / m_active_time * 100.0f;
 
 		//if (m_Timer.Finished())
 		//{
@@ -47,6 +48,7 @@ void CSkillOgreControl::Update(void)
 		//}
 		break;
 	case SKILL_STATE::COOLDOWN:
+		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;
 
 		if (m_Timer.Finished())
 		{

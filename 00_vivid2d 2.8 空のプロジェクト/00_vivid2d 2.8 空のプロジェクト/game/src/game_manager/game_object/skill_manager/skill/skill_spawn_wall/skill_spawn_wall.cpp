@@ -3,7 +3,7 @@
 #include "../../../object_manager/object_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
 
-const float CSkillSpawnWall::m_spawn_cool_time = 20.0f;
+const float CSkillSpawnWall::m_spawn_cool_time = 15.0f;
 const float CSkillSpawnWall::m_wall_exist_time = 5.0f;
 const float CSkillSpawnWall::m_wall_spawn_distance = 200.0f;
 

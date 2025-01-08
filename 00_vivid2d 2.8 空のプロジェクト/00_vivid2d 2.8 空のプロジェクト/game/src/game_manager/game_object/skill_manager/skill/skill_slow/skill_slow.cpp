@@ -1,7 +1,7 @@
 #include "skill_slow.h"
 
-const float CSkillSlow::m_cool_time = 2.0f;
-const float CSkillSlow::m_active_time = 5.0f;
+const float CSkillSlow::m_cool_time = 10.0f;
+const float CSkillSlow::m_active_time = 3.0f;
 
 CSkillSlow::CSkillSlow(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)

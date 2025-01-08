@@ -1,8 +1,8 @@
 #include "skill_stun.h"
 
 
-const float CSkillStun::m_cool_time = 2.0f;
-const float CSkillStun::m_active_time = 5.0f;
+const float CSkillStun::m_cool_time = 20.0f;
+const float CSkillStun::m_active_time = 3.0f;
 
 
 

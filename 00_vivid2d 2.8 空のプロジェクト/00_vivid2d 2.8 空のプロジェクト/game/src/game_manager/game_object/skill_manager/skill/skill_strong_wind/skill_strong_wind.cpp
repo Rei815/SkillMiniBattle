@@ -1,7 +1,7 @@
 #include "skill_strong_wind.h"
 #include "../../../unit_manager/unit_manager.h"
 
-const float CSkillStrongWind::m_wind_strength = 1.5f;
+const float CSkillStrongWind::m_wind_strength = 0.1f;
 const float CSkillStrongWind::m_cool_time = 5.0f;
 const float CSkillStrongWind::m_duration_time = 5.0f;
 
@@ -49,7 +49,7 @@ Update(void)
 
 			if (unit->GetUnitID() != m_Player->GetUnitID())
 			{
-				CVector3 velocity = m_Player->GetVelocity();
+				CVector3 velocity = unit->GetVelocity();
 				velocity.z -= m_wind_strength;
 				unit->SetVelocity(velocity);
 			}
