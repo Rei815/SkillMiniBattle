@@ -62,6 +62,18 @@ public:
      */
     SKILL_ID        GetSkillID();
 
+    /*!
+     *  @brief      スキルの状態を取得
+     *  @return     state   状態
+     */
+    SKILL_STATE    GetState(void);
+
+    /*!
+     *  @brief      スキルの状態を設定
+     *  @param[in]   state   状態
+     */
+    void    SetState(SKILL_STATE state);
+
 protected:
     static const vivid::Vector2     m_icon_positionList[];
     static const float              m_icon_scale;

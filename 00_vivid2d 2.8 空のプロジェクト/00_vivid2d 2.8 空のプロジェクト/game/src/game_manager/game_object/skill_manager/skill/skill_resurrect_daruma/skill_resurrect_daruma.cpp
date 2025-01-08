@@ -25,8 +25,11 @@ void CSkillResurrectDaruma::Update(void)
 {
 	CSkill::Update();
 	
-	if (m_State == SKILL_STATE::ACTIVE)
+	switch (m_State)
 	{
+	case SKILL_STATE::WAIT:
+		break;
+	case SKILL_STATE::ACTIVE:
 		m_Timer.Update();
 
 		if (m_Timer.Finished())
@@ -34,8 +37,11 @@ void CSkillResurrectDaruma::Update(void)
 			m_State = SKILL_STATE::COOLDOWN;
 			m_Player->SetActionFlag(true);
 		}
-	}
-}
+
+		break;
+	case SKILL_STATE::COOLDOWN:
+		break;
+	}}
 
 void CSkillResurrectDaruma::Draw(void)
 {
@@ -49,15 +55,4 @@ void CSkillResurrectDaruma::Finalize(void)
 
 void CSkillResurrectDaruma::Action()
 {
-	switch (m_State)
-	{
-	case SKILL_STATE::WAIT:
-		m_State = SKILL_STATE::ACTIVE;
-		break;
-	case SKILL_STATE::ACTIVE:
-		break;
-	case SKILL_STATE::COOLDOWN:
-		m_Player->SetPosition(CVector3(-1500, 100, 100));
-		break;
-	}
 }

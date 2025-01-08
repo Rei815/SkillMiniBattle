@@ -34,5 +34,8 @@ public:
     void Action(void);
 
 protected:
-    static const float m_wind_strength;
+    static const float  m_wind_strength;
+    static const float  m_cool_time;
+    static const float  m_duration_time;
+    CTimer              m_Timer;
 };

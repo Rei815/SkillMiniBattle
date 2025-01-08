@@ -46,15 +46,27 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
     IUnit::Initialize(id, position, file_name, controller);
     switch (id)
     {
-    case UNIT_ID::PLAYER1: m_Category = UNIT_CATEGORY::PLAYER1;
+    case UNIT_ID::PLAYER1: 
+        m_Category = UNIT_CATEGORY::PLAYER1;
+        m_Color = DxLib::COLOR_F({ 1.0f, 0.0f, 0.0f, 1.0f });
         break;
-    case UNIT_ID::PLAYER2: m_Category = UNIT_CATEGORY::PLAYER2;
+    case UNIT_ID::PLAYER2: 
+        m_Category = UNIT_CATEGORY::PLAYER2;
+        m_Color = DxLib::COLOR_F({ 0.0f, 0.0f, 1.0f, 1.0f });
+
         break;
-    case UNIT_ID::PLAYER3: m_Category = UNIT_CATEGORY::PLAYER3;
+    case UNIT_ID::PLAYER3: 
+        m_Category = UNIT_CATEGORY::PLAYER3;
+        m_Color = DxLib::COLOR_F({ 1.0f, 1.0f, 0.0f, 1.0f });
+
         break;
-    case UNIT_ID::PLAYER4: m_Category = UNIT_CATEGORY::PLAYER4;
+    case UNIT_ID::PLAYER4: 
+        m_Category = UNIT_CATEGORY::PLAYER4;
+        m_Color = DxLib::COLOR_F({ 0.0f, 1.0f, 0.0f, 1.0f });
+
         break;
     }
+
     m_Radius = m_radius;
     m_Height = m_height;
 

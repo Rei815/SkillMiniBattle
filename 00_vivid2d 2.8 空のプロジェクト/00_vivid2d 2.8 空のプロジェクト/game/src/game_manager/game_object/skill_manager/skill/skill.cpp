@@ -162,3 +162,14 @@ SKILL_ID CSkill::GetSkillID()
 {
 	return m_SkillID;
 }
+
+SKILL_STATE CSkill::GetState(void)
+{
+	return m_State;
+}
+
+void CSkill::SetState(SKILL_STATE state)
+{
+	if(m_State != SKILL_STATE::COOLDOWN)
+		m_State = state;
+}

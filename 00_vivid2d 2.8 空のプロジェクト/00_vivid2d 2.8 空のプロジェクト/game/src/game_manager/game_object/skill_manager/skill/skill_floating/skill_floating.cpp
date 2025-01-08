@@ -1,12 +1,12 @@
-#include "floating.h"
+#include "skill_floating.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 
-const float		CFloating::m_floating_time = 3.0f;
-const float		CFloating::m_cool_time = 3.0f;
-const CVector3	CFloating::m_scale = CVector3(4.0f, 1.0f, 4.0f);
+const float		CSkillFloating::m_floating_time = 3.0f;
+const float		CSkillFloating::m_cool_time = 3.0f;
+const CVector3	CSkillFloating::m_scale = CVector3(4.0f, 1.0f, 4.0f);
 
-CFloating::CFloating(void)
+CSkillFloating::CSkillFloating(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_Effect(nullptr)
 
@@ -14,7 +14,7 @@ CFloating::CFloating(void)
 
 }
 
-CFloating::~CFloating(void)
+CSkillFloating::~CSkillFloating(void)
 {
 
 }
@@ -23,7 +23,7 @@ CFloating::~CFloating(void)
  *  @brief      初期化
  */
 void
-CFloating::
+CSkillFloating::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
@@ -35,7 +35,7 @@ Initialize(SKILL_ID skill_id)
  *  @brief      更新
  */
 void
-CFloating::
+CSkillFloating::
 Update(void)
 {
 	CSkill::Update();
@@ -60,7 +60,7 @@ Update(void)
  *  @brief      描画
  */
 void
-CFloating::
+CSkillFloating::
 Draw(void)
 {
 	CSkill::Draw();
@@ -72,7 +72,7 @@ Draw(void)
  *  @brief      解放
  */
 void
-CFloating::
+CSkillFloating::
 Finalize(void)
 {
 	CSkill::Finalize();
@@ -85,7 +85,7 @@ Finalize(void)
  *  @brief      アクション呼び出し
  */
 void
-CFloating::
+CSkillFloating::
 Action()
 {
 	if (m_CoolTime.Finished() == false) return;

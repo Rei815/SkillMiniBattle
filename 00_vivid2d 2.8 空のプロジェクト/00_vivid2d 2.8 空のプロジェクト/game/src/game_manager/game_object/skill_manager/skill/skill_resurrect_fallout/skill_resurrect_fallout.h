@@ -1,11 +1,11 @@
 #pragma once
 #include "../skill.h"
 #include "..\..\..\effect_manager\effect\effect.h"
-class CFloating : public CSkill
+class CSkillResurrectFallout : public CSkill
 {
 public:
-    CFloating(void);
-    ~CFloating(void);
+    CSkillResurrectFallout(void);
+    ~CSkillResurrectFallout(void);
 
     /*!
      *  @brief      初期化
@@ -31,15 +31,10 @@ public:
     /*!
      *  @brief      アクション呼び出し
      */
-    void Action();
+    void        Action();
 
 protected:
-    static const float      m_floating_time;
-    static const float      m_cool_time;
-    static const CVector3   m_scale;
+    static const float      m_resurrect_height;
 
-    CTimer              m_SkillDuration;
-    CTimer              m_CoolTime;
-
-    IEffect*            m_Effect;
+    IEffect*                m_Effect;
 };

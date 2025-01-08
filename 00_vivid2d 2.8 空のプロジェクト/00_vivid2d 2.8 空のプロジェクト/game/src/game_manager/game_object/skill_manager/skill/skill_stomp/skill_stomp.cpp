@@ -1,17 +1,17 @@
-#include "stomp.h"
+#include "skill_stomp.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 
-const float CStomp::m_floating_time = 3.0f;
+const float CSkillStomp::m_cool_time = 5.0f;
 
-CStomp::CStomp(void)
+CSkillStomp::CSkillStomp(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
 {
 
 }
 
-CStomp::~CStomp(void)
+CSkillStomp::~CSkillStomp(void)
 {
 
 }
@@ -20,7 +20,7 @@ CStomp::~CStomp(void)
  *  @brief      初期化
  */
 void
-CStomp::
+CSkillStomp::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
@@ -32,13 +32,26 @@ Initialize(SKILL_ID skill_id)
  *  @brief      更新
  */
 void
-CStomp::
+CSkillStomp::
 Update(void)
 {
 	CSkill::Update();
-	if (m_Timer.Finished())
+	switch (m_State)
 	{
-		m_Timer.Reset();
+	case SKILL_STATE::WAIT:
+		break;
+	case SKILL_STATE::ACTIVE:
+		break;
+	case SKILL_STATE::COOLDOWN:
+		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;
+
+		m_Timer.Update();
+		if (m_Timer.Finished())
+		{
+			m_State = SKILL_STATE::WAIT;
+			m_Timer.Reset();
+		}
+		break;
 	}
 }
 
@@ -46,7 +59,7 @@ Update(void)
  *  @brief      描画
  */
 void
-CStomp::
+CSkillStomp::
 Draw(void)
 {
 	CSkill::Draw();
@@ -58,7 +71,7 @@ Draw(void)
  *  @brief      解放
  */
 void
-CStomp::
+CSkillStomp::
 Finalize(void)
 {
 	CSkill::Finalize();
@@ -71,10 +84,12 @@ Finalize(void)
  *  @brief      アクション呼び出し
  */
 void
-CStomp::
+CSkillStomp::
 Action()
 {
-
+	if (m_State == SKILL_STATE::COOLDOWN) return;
 	CBulletManager::GetInstance().Create(m_Player->GetUnitCategory(), BULLET_ID::SHOCK_WAVE, m_Player->GetPosition(), CVector3::UP);
 	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, m_Player->GetPosition());
+	m_Timer.SetUp(m_cool_time);
+	m_State = SKILL_STATE::COOLDOWN;
 }

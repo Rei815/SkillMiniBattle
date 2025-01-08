@@ -2,11 +2,11 @@
 #pragma once
 #include "../skill.h"
 
-class CStomp : public CSkill
+class CSkillStomp : public CSkill
 {
 public:
-    CStomp(void);
-    ~CStomp(void);
+    CSkillStomp(void);
+    ~CSkillStomp(void);
 
     /*!
      *  @brief      èâä˙âª
@@ -35,7 +35,7 @@ public:
     void Action();
 
 protected:
-    static const float  m_floating_time;
+    static const float  m_cool_time;
 
     CTimer              m_Timer;
     CShot*              m_Shot;

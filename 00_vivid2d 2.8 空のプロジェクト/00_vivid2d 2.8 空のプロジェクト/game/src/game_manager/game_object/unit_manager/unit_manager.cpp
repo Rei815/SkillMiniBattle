@@ -159,7 +159,7 @@ void CUnitManager::CheckHitObject(IObject* object)
         for (int i = 0; i < 9; ++i)
         {
             CVector3 unit_pos = unit->GetPosition();
-            CVector3 start = unit_pos + CVector3(-radius / 2.0f + (radius) * (i % 3), 0.0f, -radius / 2.0f + (radius) * (i / 3));
+            CVector3 start = unit_pos + CVector3(( -radius / 2.0f) + (radius) * (i % 3), 0.0f, ( -radius / 2.0f) + (radius) * (i / 3));
             CheckHitObjectVertical(object, (*it), start, CVector3(0.0f, -radius*2, 0.0f));
         }
         
