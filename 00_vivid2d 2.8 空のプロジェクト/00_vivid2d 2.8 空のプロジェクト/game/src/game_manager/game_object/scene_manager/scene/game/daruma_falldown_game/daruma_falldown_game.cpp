@@ -101,8 +101,8 @@ void CDaruma_FallDownGame::Update(void)
 			{
 				if (player->GetPlayerMoving())
 				{
-					if (m_PlayerPosition[i] != CVector3::ZERO)
-						m_PlayerPosition[i] = player->GetPosition();
+					//if (m_PlayerPosition[i] != CVector3::ZERO)
+						//m_PlayerPosition[i] = player->GetPosition();
 					
 					player->SetActionFlag(false);
 					player->SetVelocity(CVector3::ZERO);

@@ -126,8 +126,42 @@ CSkill* CPlayer::GetSkill()
 
 bool CPlayer::GetPlayerMoving()
 {
-    return     vivid::controller::GetAnalogStickLeft(m_Controller).x != 0.0f ||
-        vivid::controller::GetAnalogStickLeft(m_Controller).y != 0.0f    ;
+    bool Input = false;
+
+    int     joyPad = 0;
+    switch (m_Controller)
+    {
+    case vivid::controller::DEVICE_ID::PLAYER1: joyPad = DX_INPUT_PAD1; break;
+    case vivid::controller::DEVICE_ID::PLAYER2: joyPad = DX_INPUT_PAD2; break;
+    case vivid::controller::DEVICE_ID::PLAYER3: joyPad = DX_INPUT_PAD3; break;
+    case vivid::controller::DEVICE_ID::PLAYER4: joyPad = DX_INPUT_PAD4; break;
+    }
+
+    //ç∂à⁄ìÆ
+    if (GetJoypadInputState(joyPad) & PAD_INPUT_LEFT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+        Input = true;
+
+    //âEà⁄ìÆ
+    if (GetJoypadInputState(joyPad) & PAD_INPUT_RIGHT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+        Input = true;
+
+    //è„à⁄ìÆ
+    if (GetJoypadInputState(joyPad) & PAD_INPUT_UP || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+        Input = true;
+
+    //â∫à⁄ìÆ
+    if (GetJoypadInputState(joyPad) & PAD_INPUT_DOWN || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
+        Input = true;
+
+
+    //ÉWÉÉÉìÉv
+    if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
+        Input = true;
+
+    if (m_IsGround == false)
+        Input = true;
+
+    return Input;
 }
 
 CVector3 CPlayer::GetForwardVector()
