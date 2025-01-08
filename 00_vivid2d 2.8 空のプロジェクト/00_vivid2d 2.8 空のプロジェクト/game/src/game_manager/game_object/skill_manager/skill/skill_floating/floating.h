@@ -31,7 +31,7 @@ public:
     /*!
      *  @brief      アクション呼び出し
      */
-    void Action(UNIT_CATEGORY category);
+    void Action();
 
 protected:
     static const float      m_floating_time;

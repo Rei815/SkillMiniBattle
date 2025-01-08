@@ -15,6 +15,7 @@ void CCannonObject::Initialize(OBJECT_ID id, const CTransform& transform)
 {
 	m_FileName = m_model_file_name;
 	
+	m_ColliderActiveFlag = false;
 	IObject::Initialize(id, transform);
 
 	m_Model.Initialize(m_FileName, m_Transform);

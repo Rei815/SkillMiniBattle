@@ -36,6 +36,7 @@ CGame::~CGame(void)
 void
 CGame::Initialize(SCENE_ID scene_id)
 {
+
     IScene::Initialize(scene_id);
     m_EntryList.clear();
     m_ResultList.clear();

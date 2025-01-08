@@ -56,13 +56,6 @@ void CRandomGame::Initialize(const CTransform& transform)
 	CUI::Initialize(transform);
 	m_InitialPosition = m_Transform.position;
 	m_Handle = LoadGraph(m_file_name.c_str(), TRUE);
-	MATERIALPARAM Material;
-	Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
-	Material.Specular = GetColorF(0.0f, 1.0f, 0.0f, 0.0f);
-	Material.Ambient = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
-	Material.Emissive = GetColorF(1.0f, 1.0f, 1.0f, 1.0f);
-	Material.Power = 20.0f;
-	SetMaterialParam(Material);
 	m_Plane.SetUp(m_file_name);
 	m_Plane.SetScale(CVector3(m_width, m_height, 1.0f));
 	m_Plane.SetPosition(m_Transform.position);

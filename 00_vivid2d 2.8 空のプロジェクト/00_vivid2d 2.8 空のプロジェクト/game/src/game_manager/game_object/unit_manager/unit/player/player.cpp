@@ -9,7 +9,7 @@ const float             CPlayer::m_radius = 50.0f;
 const float             CPlayer::m_height = 100.0f;
 
 const float             CPlayer::m_move_speed = 0.25f;
-const float             CPlayer::m_jump_power = 30.0f;
+const float             CPlayer::m_jump_power = 20.0f;
 const float             CPlayer::m_move_friction = 0.975f;
 const float             CPlayer::m_fly_away_speed = 40.0f;
 
@@ -252,7 +252,9 @@ void CPlayer::Control(void)
 
     //‰EˆÚ“®
     if (GetJoypadInputState(joyPad) & PAD_INPUT_RIGHT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+    {
         m_Accelerator.x += m_move_speed * m_MoveSpeedRate;
+    }
     //ãˆÚ“®
     if (GetJoypadInputState(joyPad) & PAD_INPUT_UP || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
         m_Accelerator.z += m_move_speed * m_MoveSpeedRate;
@@ -276,10 +278,8 @@ void CPlayer::Control(void)
     
     //ƒXƒLƒ‹
     if(m_Skill != nullptr)
-        if (((GetJoypadInputState(joyPad) & PAD_INPUT_2) || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN)) && !m_StopFlag && m_Skill->GetSkillCategory() == SKILL_CATEGORY::ACTIVE)
-        {
+        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && !m_StopFlag)
             m_Skill->Action();
-        }
 
     //’âŽ~
     if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::LSHIFT))
@@ -318,13 +318,11 @@ void CPlayer::Move(void)
         m_Transform.position += m_Velocity;
 
     IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
-    if (floorObject)
-    {
+    if (!floorObject)
+        m_IsGround = false;
+    else
         if (floorObject->GetTag() == "Floor")
             m_IsGround = true;
-    }
-    else
-        m_IsGround = false;
 
     if (m_FrictionFlag)
     {

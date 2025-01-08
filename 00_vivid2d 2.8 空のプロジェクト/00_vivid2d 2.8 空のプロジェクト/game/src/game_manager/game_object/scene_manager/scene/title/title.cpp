@@ -13,6 +13,14 @@ CTitle::~CTitle(void)
 
 void CTitle::Initialize(SCENE_ID scene_id)
 {
+    MATERIALPARAM Material;
+    Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
+    Material.Specular = GetColorF(0.0f, 1.0f, 0.0f, 0.0f);
+    Material.Ambient = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
+    Material.Emissive = GetColorF(1.0f, 1.0f, 1.0f, 1.0f);
+    Material.Power = 20.0f;
+    SetMaterialParam(Material);
+
     IScene::Initialize(scene_id);
 
 	m_State = STATE::WAIT;
@@ -20,8 +28,8 @@ void CTitle::Initialize(SCENE_ID scene_id)
     CCamera::GetInstance().Initialize();
 
     CStage::GetInstance().Initialize();
-
-
+    CUIManager::GetInstance().Initialize();
+    CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
 }
 
 void CTitle::Update(void)
@@ -39,6 +47,7 @@ void CTitle::Update(void)
     }
     CStage::GetInstance().Update();
     CStage::GetInstance().Update();
+    CUIManager::GetInstance().Update();
 
 }
 
@@ -56,6 +65,7 @@ void CTitle::Draw(void)
     }
     break;
     }
+    CUIManager::GetInstance().Draw();
 
 }
 
@@ -64,5 +74,6 @@ void CTitle::Finalize(void)
     IScene::Finalize();
     CStage::GetInstance().Finalize();
     CStage::GetInstance().Finalize();
+    CUIManager::GetInstance().Finalize();
 
 }

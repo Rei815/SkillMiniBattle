@@ -747,7 +747,7 @@ DrawTexture(const std::string& file_name, const Vector2& position, unsigned int 
  */
 void
 vivid::
-DrawTexture(const std::string& file_name, const Vector2& position, unsigned int color, const Rect& rect, const Vector2& anchor, const Vector2& scale, float rotation, ALPHABLEND blend_mode)
+DrawTexture(const std::string& file_name, const Vector2& position, unsigned int color, const Rect& rect, const Vector2& anchor, const Vector2& scale, float rotation, ALPHABLEND blend_mode, ADDRESS_MODE address_mode)
 {
     // ロード済みのテクスチャを検索
     int texture = FindLoadedTexture(file_name);
@@ -766,6 +766,8 @@ DrawTexture(const std::string& file_name, const Vector2& position, unsigned int 
     // アルファブレンド設定
     SetDrawBlendMode(static_cast<int>(blend_mode), ((color & 0xff000000) >> 24));
 
+    SetTextureAddressMode(static_cast<int>(address_mode));
+
     // 輝度設定
     SetDrawBright(((color & 0x00ff0000) >> 16), ((color & 0x0000ff00) >> 8), (color & 0x000000ff));
 
@@ -777,6 +779,8 @@ DrawTexture(const std::string& file_name, const Vector2& position, unsigned int 
 
     // アルファブレンドモードをデフォルトに戻す
     SetDrawBlendMode(static_cast<int>(vivid::ALPHABLEND::ALPHA), 0xff);
+
+//    SetTextureAddressMode(static_cast<int>(ADDRESS_MODE::CLAMP));
 }
 
 /*

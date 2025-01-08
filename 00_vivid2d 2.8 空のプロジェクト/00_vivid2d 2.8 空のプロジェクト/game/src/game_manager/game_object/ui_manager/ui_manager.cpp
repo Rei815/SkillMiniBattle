@@ -1,12 +1,14 @@
 #include "ui_manager.h"
 #include "ui/pause/pause.h"
-#include "ui/fall_select/fall_select.h"
+#include "ui/fallout_topic/fallout_topic.h"
+#include "ui/fallout_topic_bg/fallout_topic_bg.h"
 #include "ui/random_game/random_game.h"
 #include "ui/finish_backGround/finish_backGround.h"
 #include "ui/skill_icon/skill_icon.h"
 #include "ui/skill_gauge/skill_gauge.h"
 #include "ui/skill_cursor/skill_cursor.h"
 #include "ui/key/key.h"
+#include "ui/title_logo/title_logo.h"
  /*
   *  インスタンスの取得
   */
@@ -107,13 +109,8 @@ CUI* CUIManager::Create(UI_ID id)
     {
     case UI_ID::PAUSE:
         ui = new CPause(id);          break;
-    case UI_ID::FALL_CIRCLE:
-    case UI_ID::FALL_CROSS:
-    case UI_ID::FALL_MOON:
-    case UI_ID::FALL_SQUARE:
-    case UI_ID::FALL_SUN:
-    case UI_ID::FALL_TRIANGLE:
-        ui = new CFallSelect(id);   break;
+    case UI_ID::FALLOUT_TOPIC:
+        ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);     break;
     case UI_ID::SKILL_ICON:
@@ -124,6 +121,8 @@ CUI* CUIManager::Create(UI_ID id)
         ui = new CSkillCursor(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
+    case UI_ID::TITLE_LOGO:
+        ui = new CTitleLogo(id);     break;
         break;
     }
     if (!ui) return nullptr;
@@ -142,13 +141,10 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
     {
     case UI_ID::PAUSE:
         ui = new CPause(id);                break;
-    case UI_ID::FALL_CIRCLE:
-    case UI_ID::FALL_CROSS:
-    case UI_ID::FALL_MOON:
-    case UI_ID::FALL_SQUARE:
-    case UI_ID::FALL_SUN:
-    case UI_ID::FALL_TRIANGLE:
-        ui = new CFallSelect(id);           break;
+    case UI_ID::FALLOUT_TOPIC:
+        ui = new CFallOutTopic(id);   break;
+    case UI_ID::FALLOUT_TOPIC_BG:
+        ui = new CFalloutTopicBG(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);           break;
     case UI_ID::SKILL_ICON:
@@ -180,13 +176,8 @@ CUI* CUIManager::Create(UI_ID id, const CVector3& position)
     {
     case UI_ID::PAUSE:
         ui = new CPause(id);                break;
-    case UI_ID::FALL_CIRCLE:
-    case UI_ID::FALL_CROSS:
-    case UI_ID::FALL_MOON:
-    case UI_ID::FALL_SQUARE:
-    case UI_ID::FALL_SUN:
-    case UI_ID::FALL_TRIANGLE:
-        ui = new CFallSelect(id);           break;
+    case UI_ID::FALLOUT_TOPIC:
+        ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);           break;
     case UI_ID::SKILL_ICON:
@@ -216,13 +207,8 @@ CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
     {
     case UI_ID::PAUSE:
         ui = new CPause(id);          break;
-    case UI_ID::FALL_CIRCLE:
-    case UI_ID::FALL_CROSS:
-    case UI_ID::FALL_MOON:
-    case UI_ID::FALL_SQUARE:
-    case UI_ID::FALL_SUN:
-    case UI_ID::FALL_TRIANGLE:
-        ui = new CFallSelect(id);   break;
+    case UI_ID::FALLOUT_TOPIC:
+        ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);     break;
     case UI_ID::SKILL_ICON:

@@ -8,16 +8,23 @@
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
 #include "../../../../bullet_manager/bullet_manager.h"
+#include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
 
 const CTransform CFallGame::m_object_transform_list[] = 
 {CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
 CTransform(CVector3(-450,-100,-300)), CTransform(CVector3(0,-100,-500)), CTransform(CVector3(450,-100,250)) };
 
+const vivid::Vector2    CFallGame::m_topic_positionList[] = { vivid::Vector2(0, 0),vivid::Vector2(250, 0),vivid::Vector2(500, 0),
+vivid::Vector2(750, 0),vivid::Vector2(1000, 0),vivid::Vector2(1250, 0) };
+
 const float		CFallGame::m_time_accelerator = 0.1f;
-const float		CFallGame::m_min_time = 1.0f;
-const float		CFallGame::m_initial_time = 1.0f;
+const float		CFallGame::m_min_time = 1.5f;
+const float		CFallGame::m_fall_time = 3.0f;
 const float		CFallGame::m_defeat_height = -500.0f;
 const float		CFallGame::m_object_delay_time = 1.0f;
+const float		CFallGame::m_add_topic_time = 10.0f;
+const float		CFallGame::m_reset_topic_time = 0.5f;
+const int		CFallGame::m_max_topic_num = 5;
 const CVector3	CFallGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallGame::m_camera_direction = CVector3(0.0f, -1.0f, 1.0f);
 CFallGame::CFallGame(void)
@@ -30,8 +37,14 @@ CFallGame::~CFallGame(void)
 
 void CFallGame::Initialize(SCENE_ID scene_id)
 {
-	m_FallTime = m_initial_time;
-	m_ChooseObjectTimer.SetUp(m_FallTime);
+	m_FallTime = m_fall_time;
+	for (int i = 0; i < m_max_topic_num; i++)
+	{
+		m_ChooseObjectTimer[i].SetUp(m_FallTime);
+		m_ChooseObjectTimer[i].SetActive(false);
+	}
+	m_AddTopicTimer.SetUp(m_add_topic_time);
+	m_ResetTopicTimer.SetUp(m_reset_topic_time);
 	CGame::Initialize(scene_id);
 	CStage::GetInstance().Initialize();
 	CCamera::GetInstance().Initialize();
@@ -72,6 +85,10 @@ void CFallGame::Initialize(SCENE_ID scene_id)
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
+	CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
+
+	m_TopicList.push_back((CFallOutTopic*)ui);
+	m_ChooseObjectTimer[m_TopicList.size() - 1].SetActive(true);
 }
 
 void CFallGame::Update(void)
@@ -92,8 +109,11 @@ void CFallGame::Draw(void)
 
 #ifdef VIVID_DEBUG
 
-	vivid::DrawText(30, std::to_string(m_ChooseObjectTimer.GetTimer()),
-		vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_ChooseObjectTimer.GetTimer())), 0));
+	for (int i = 0; i < m_max_topic_num; i++)
+	{
+		vivid::DrawText(30, std::to_string(m_ChooseObjectTimer[i].GetTimer()), vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_ChooseObjectTimer[i].GetTimer())), 10 * i));
+
+	}
 #endif // VIVID_DEBUG
 }
 
@@ -114,26 +134,131 @@ void CFallGame::Play(void)
 {
 	CGame::Play();
 
-	m_ChooseObjectTimer.Update();
-	if (m_ChooseObjectTimer.Finished())
+	for (int i = 0; i < m_max_topic_num; i++)
+		m_ChooseObjectTimer[i].Update();
+
+	m_AddTopicTimer.Update();
+
+	CFallOutTopic* topic = nullptr;
+
+	//出ているお題ごとに抽選する
+	for (int i = 0; i < m_max_topic_num; i++)
 	{
-		m_ChooseObjectTimer.Reset();
-
-		FALL_INFO fallInfo = ChooseObject();
-
-		if (fallInfo.object == nullptr) return;
-		if (fallInfo.object->GetObjectID() != OBJECT_ID::NONE)
+		//抽選する時間になったら
+		if (m_ChooseObjectTimer[i].Finished())
 		{
-			fallInfo.object->GetGimmick()->SetTimer(m_object_delay_time);
-			fallInfo.object->GetGimmick()->SetSwitch(true);
+			m_ChooseObjectTimer[i].Reset();
 
-			m_FallTime -= m_time_accelerator;
-			m_ChooseObjectTimer.SetUp(m_FallTime);
-			if (m_FallTime < m_min_time)
-				m_FallTime = m_min_time;
-			CUIManager::GetInstance().Create(fallInfo.uiID);
+			//タイマーの停止
+			m_ChooseObjectTimer[i].SetActive(false);
+			TOPIC_LIST::iterator it = m_TopicList.begin();
+
+
+			bool chooseFlag = false;
+			while (it != m_TopicList.end())
+			{
+				topic = (*it);
+
+				//取得に失敗したら早期リターン
+				if (!topic)
+				{
+					++it;
+					continue;
+				}
+
+				//切り替わっている時のみにお題の指定
+				if (topic->GetState() == CFallOutTopic::STATE::SWITCHING)
+				{
+					chooseFlag = true;
+					break;
+				}
+				++it;
+			}
+
+			if (!chooseFlag) return;
+			
+			//抽選する
+			FALL_INFO fallInfo = ChooseObject();
+
+			if (fallInfo.object == nullptr) return;
+
+			if (fallInfo.object->GetObjectID() != OBJECT_ID::NONE)
+			{
+				fallInfo.object->GetGimmick()->SetTimer(m_object_delay_time);
+				fallInfo.object->GetGimmick()->SetState(GIMMICK_STATE::PLAY);
+
+				//m_FallTime -= m_time_accelerator;
+				//if (m_FallTime < m_min_time)
+				//	m_FallTime = m_min_time;
+				//m_FallTime = m_fall_time;
+				//m_FallTime += i * 1.0f;
+				//m_ChooseObjectTimer[i].SetUp(m_FallTime);
+
+
+				topic->SetMarkID(fallInfo.markID);
+				topic->SetTimer(m_FallTime);
+				
+			}
 		}
 	}
+
+	//お題の追加
+	if (m_AddTopicTimer.Finished())
+	{
+		m_AddTopicTimer.Reset();
+		if (m_TopicList.size() >= m_max_topic_num) return;
+
+		CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
+
+		m_TopicList.push_back((CFallOutTopic*)ui);
+		m_ChooseObjectTimer[m_TopicList.size()].SetActive(true);
+		m_ChooseObjectTimer[m_TopicList.size()].SetUp(m_ChooseObjectTimer[m_TopicList.size() - 1].GetTimer() + 1.0f);
+	}
+
+
+	//現在出ている最後のお題が抽選され,オブジェクトがすべて待機中なら全てのお題を再抽選
+	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
+	CObjectManager::OBJECT_LIST::iterator it = objectList.begin();
+
+	while (it != objectList.end())
+	{
+		GIMMICK_STATE state = (*it)->GetGimmick()->GetState();
+
+		if (state == GIMMICK_STATE::PLAY || state == GIMMICK_STATE::FINISH)
+			break;
+
+		++it;
+	}
+
+	if (m_ChooseObjectTimer[m_TopicList.size() - 1].GetActive() == true || it != objectList.end()) return;
+
+	m_ResetTopicTimer.Update();
+
+	if (m_ResetTopicTimer.Finished())
+	{
+		m_ResetTopicTimer.Reset();
+		for (int i = 0; i < m_TopicList.size(); i++)
+		{
+			m_ChooseObjectTimer[i].SetActive(true);
+			m_ChooseObjectTimer[i].SetUp(m_ChooseObjectTimer[0].GetLimitTime() + i * 1.0f);
+
+		}
+		TOPIC_LIST::iterator it = m_TopicList.begin();
+
+		while (it != m_TopicList.end())
+		{
+			topic = (*it);
+
+			if (!topic)
+			{
+				++it;
+				continue;
+			}
+			topic->SetState(CFallOutTopic::STATE::SWITCHING);
+			++it;
+		}
+	}
+
 }
 
 void CFallGame::Finish(void)
@@ -152,6 +277,9 @@ void CFallGame::Finish(void)
 	CGame::Finish();
 }
 
+/*
+ 終了判定
+*/
 void CFallGame::CheckFinish()
 {
 	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
@@ -232,12 +360,12 @@ CFallGame::FALL_INFO CFallGame::ChooseObject(void)
 	fallInfo.object = (*it);
 	switch ((*it)->GetObjectID())
 	{
-	case OBJECT_ID::MOON_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_MOON;		break;
-	case OBJECT_ID::CIRCLE_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_CIRCLE;		break;
-	case OBJECT_ID::CROSS_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_CROSS;		break;
-	case OBJECT_ID::SQUARE_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_SQUARE;		break;
-	case OBJECT_ID::SUN_FALL_OBJECT:		fallInfo.uiID = UI_ID::FALL_SUN;		break;
-	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	fallInfo.uiID = UI_ID::FALL_TRIANGLE;	break;
+	case OBJECT_ID::MOON_FALL_OBJECT:		fallInfo.markID = MARK_ID::MOON;		break;
+	case OBJECT_ID::CIRCLE_FALL_OBJECT:		fallInfo.markID = MARK_ID::CIRCLE;		break;
+	case OBJECT_ID::CROSS_FALL_OBJECT:		fallInfo.markID = MARK_ID::CROSS;		break;
+	case OBJECT_ID::SQUARE_FALL_OBJECT:		fallInfo.markID = MARK_ID::SQUARE;		break;
+	case OBJECT_ID::SUN_FALL_OBJECT:		fallInfo.markID = MARK_ID::SUN;			break;
+	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	fallInfo.markID = MARK_ID::TRIANGLE;	break;
 	}
 	return fallInfo;
 }

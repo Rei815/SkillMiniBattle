@@ -4,15 +4,16 @@
 #include "skill/skill_dash/skill_dash.h"
 #include "skill/skill_spawn_wall/skill_spawn_wall.h"
 #include "skill/skill_barrier/skill_barrier.h"
-#include "skill/floating/floating.h"
-#include "skill/stomp/stomp.h"
-#include "skill/resurrect_fallout/resurrect_fallout.h"
 #include "skill/skill_invisible/skill_invisible.h"
 #include "skill/skill_stun/skill_stun.h"
 #include "skill/skill_mimicry/skill_mimicry.h"
 #include "skill/skill_slow/skill_slow.h"
 #include "skill/skill_ogre_control/skill_ogre_control.h"
 #include "skill/skill_resurrect_daruma/skill_resurrect_daruma.h"
+#include "skill/skill_floating/floating.h"
+#include "skill/skill_stomp/stomp.h"
+#include "skill/skill_resurrect_fallout/resurrect_fallout.h"
+#include "skill/skill_strong_wind/skill_strong_wind.h"
 #include "skill/skill_gravity_area/skill_gravity_area.h"
 
 
@@ -150,6 +151,8 @@ CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
         skill = new CSkillResurrectDaruma();    break;
     case SKILL_ID::RESURRECT_FALLOUT:
         skill = new CResurrectFallout();    break;
+    case SKILL_ID::STRONG_WIND:
+        skill = new CSkillStrongWind();    break;
 
     default:
         break;

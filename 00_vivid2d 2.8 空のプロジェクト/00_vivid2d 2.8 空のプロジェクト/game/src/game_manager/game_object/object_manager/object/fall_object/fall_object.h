@@ -57,13 +57,11 @@ public:
     MARK_ID         GetID(void);
 
 private:
-    static const float          m_start_height;
-    static const float          m_remove_height;
-    static const float          m_invisible_alpha;
+    enum class STATE
+    {
+        WAIT,
+        ACTIVE,
+    };
     static const std::string    m_file_name_list[];
-    float                       m_FallSpeed;
-    FALL_OBJECT_STATE           m_FallObjectState;
     MARK_ID                     m_MarkID;
-    CTimer                      m_Timer;
-
 };

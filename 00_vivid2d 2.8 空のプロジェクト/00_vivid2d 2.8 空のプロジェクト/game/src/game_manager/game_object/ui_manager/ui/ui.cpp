@@ -14,7 +14,6 @@ CUI(int width, int height, UI_ID id)
     , m_Transform()
 {
 }
-
 /*
  *  デストラクタ
  */
@@ -136,5 +135,10 @@ int CUI::GetHeight(void)
 UI_ID CUI::GetUI_ID(void)
 {
     return m_UI_ID;
+}
+
+void CUI::SetUI_ID(UI_ID uiID)
+{
+    m_UI_ID = uiID;
 }
 

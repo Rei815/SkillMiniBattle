@@ -6,18 +6,14 @@
 enum class UI_ID
 {
     NONE,
-    PAUSE,          //!< 一時停止
-    FALL_CIRCLE,    //!< フォールゲームの丸
-    FALL_MOON,      //!< フォールゲームの月
-    FALL_CROSS,     //!< フォールゲームのバツ
-    FALL_SUN,       //!< フォールゲームの太陽
-    FALL_SQUARE,    //!< フォールゲームの四角
-    FALL_TRIANGLE,  //!< フォールゲームの三角
+    PAUSE,              //!< 一時停止
+    FALLOUT_TOPIC,      //!< フォールアウトのお題
+    FALLOUT_TOPIC_BG,   //!< フォールアウトのお題の背景
     RANDOM_GAME,
     SKILL_ICON,
     SKILL_GAUGE,
     SKILL_CURSOR,
     FINISH_GAME_BG,
-    FALLOUT_SELECT_BG,
+    TITLE_LOGO,
     KEY,
 };

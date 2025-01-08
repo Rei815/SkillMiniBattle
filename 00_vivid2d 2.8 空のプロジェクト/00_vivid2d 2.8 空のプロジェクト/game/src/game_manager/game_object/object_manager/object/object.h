@@ -111,6 +111,28 @@ public:
      *  @return     モデル
      */
     std::string     GetTag();
+
+    /*!
+     *  @brief      アルファ値設定
+     *
+     *  @param[in]  alpha  アルファ値
+     */
+    void            SetAlpha(float alpha);
+
+    /*!
+     *  @brief      判定フラグ取得
+     *
+     *  @return     判定フラグ
+     */
+    bool            GetColliderActiveFlag();
+
+    /*!
+     *  @brief      判定フラグ設定
+     *
+     *  @param[in]  active  判定フラグ
+     */
+    void            SetColliderActiveFlag(bool active);
+
 protected:
     static const float  m_limit_alpha;
     OBJECT_ID           m_ObjectID;
@@ -122,4 +144,6 @@ protected:
     float               m_Alpha;
     CGimmick*           m_Gimmick;
     std::string         m_Tag;
+
+    bool                m_ColliderActiveFlag;
 };
