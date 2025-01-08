@@ -278,7 +278,7 @@ void CPlayer::Control(void)
     
     //ÉXÉLÉã
     if(m_Skill != nullptr)
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && !m_StopFlag)
+        if ((GetJoypadInputState(joyPad) & PAD_INPUT_2 || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN)) && !m_StopFlag)
             m_Skill->Action();
 
     //í‚é~
