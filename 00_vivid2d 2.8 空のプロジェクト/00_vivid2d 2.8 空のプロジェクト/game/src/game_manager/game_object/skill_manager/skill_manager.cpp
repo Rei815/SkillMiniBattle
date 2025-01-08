@@ -148,6 +148,8 @@ CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
         skill = new CSkillResurrectDaruma();    break;
     case SKILL_ID::RESURRECT_FALLOUT:
         skill = new CResurrectFallout();    break;
+    case SKILL_ID::STRONG_WIND:
+        skill = new CSkillStrongWind();    break;
 
     default:
         break;

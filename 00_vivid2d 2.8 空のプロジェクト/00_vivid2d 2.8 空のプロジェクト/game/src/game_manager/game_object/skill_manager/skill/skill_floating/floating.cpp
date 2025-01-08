@@ -86,7 +86,7 @@ Finalize(void)
  */
 void
 CFloating::
-Action(UNIT_CATEGORY category)
+Action()
 {
 	if (m_CoolTime.Finished() == false) return;
 

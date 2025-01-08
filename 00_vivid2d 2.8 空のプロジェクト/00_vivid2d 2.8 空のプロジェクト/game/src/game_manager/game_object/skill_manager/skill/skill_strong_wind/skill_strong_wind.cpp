@@ -19,9 +19,9 @@ CSkillStrongWind::~CSkillStrongWind(void)
  */
 void
 CSkillStrongWind::
-Initialize(CPlayer* player)
+Initialize(SKILL_ID skill_id)
 {
-	CSkill::Initialize(player);
+	CSkill::Initialize(skill_id);
 }
 
 /*!
@@ -32,7 +32,29 @@ CSkillStrongWind::
 Update(void)
 {
 	CSkill::Update();
+	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
+	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
+	switch (m_State)
+	{
+	case SKILL_STATE::WAIT:
+		break;
+	case SKILL_STATE::ACTIVE:
+		while (it != unitList.end())
+		{
+			IUnit* unit = (*it);
 
+			if (unit->GetUnitID() != m_Player->GetUnitID())
+			{
+				CVector3 velocity = m_Player->GetVelocity();
+				velocity.z -= m_wind_strength;
+				unit->SetVelocity(velocity);
+			}
+			++it;
+		}
+		break;
+	case SKILL_STATE::COOLDOWN:
+		break;
+	}
 
 }
 
@@ -68,8 +90,5 @@ void
 CSkillStrongWind::
 Action(void)
 {
-	CVector3 velocity = m_Player->GetVelocity();
-	velocity.z -= m_wind_strength;
-	m_Player->SetVelocity(velocity);
-
+	m_State = SKILL_STATE::ACTIVE;
 }
