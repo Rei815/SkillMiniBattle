@@ -13,6 +13,7 @@
 #include "skill/skill_slow/skill_slow.h"
 #include "skill/skill_ogre_control/skill_ogre_control.h"
 #include "skill/skill_resurrect_daruma/skill_resurrect_daruma.h"
+#include "skill/skill_gravity_area/skill_gravity_area.h"
 
 
 /*
@@ -133,6 +134,8 @@ CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
         skill = new CSkillSpawnWall();      break;
     case SKILL_ID::BARRIER:
         skill = new CSkillBarrier();        break;
+    case SKILL_ID::GRAVITY_AREA:
+        skill = new CSkillGravityArea();    break;
     case SKILL_ID::INVISIBLE:
         skill = new CSkillInvisible();      break;
     case SKILL_ID::STUN:

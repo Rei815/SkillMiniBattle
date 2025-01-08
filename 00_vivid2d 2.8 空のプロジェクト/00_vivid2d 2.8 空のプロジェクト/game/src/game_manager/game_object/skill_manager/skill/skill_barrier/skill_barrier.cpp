@@ -4,8 +4,7 @@
 #include "../../../bullet_manager/bullet_manager.h"
 
 const float CSkillBarrier::m_barrier_exist_time = 5.0f;
-const float CSkillBarrier::m_barrier_max_cool_time = 15.0f;
-const float CSkillBarrier::m_barrier_min_cool_time = 5.0f;
+const float CSkillBarrier::m_barrier_cool_time = 25.0f;
 const std::string CSkillBarrier::m_collider_model_file_name = "data\\Models\\skill_barrier_collider.mv1";
 
 CSkillBarrier::CSkillBarrier(void)
@@ -13,7 +12,6 @@ CSkillBarrier::CSkillBarrier(void)
 	, m_ColliderModel()
 	, m_Effect(nullptr)
 	, m_Timer(0)
-	, m_NowCoolTime(0)
 {
 
 }
@@ -32,14 +30,9 @@ Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
 
-	m_State = SKILL_STATE::COOLDOWN;
+	m_State = SKILL_STATE::WAIT;
 
-	if (m_barrier_max_cool_time - m_barrier_min_cool_time > 0)
-		m_NowCoolTime = m_barrier_min_cool_time + (float)(rand() % (int)((m_barrier_max_cool_time - m_barrier_min_cool_time) * 10)) / 10.0f;
-	else
-		m_NowCoolTime = m_barrier_min_cool_time;
-
-	m_Timer.SetUp(m_NowCoolTime);
+	m_Timer.SetUp(m_barrier_exist_time);
 }
 
 /*!
@@ -62,12 +55,7 @@ Update(void)
 		m_GaugePercent = (m_barrier_exist_time - m_Timer.GetTimer()) / m_barrier_exist_time * 100.0f;
 		if (m_Timer.Finished())
 		{
-			if (m_barrier_max_cool_time - m_barrier_min_cool_time > 0)
-				m_NowCoolTime = m_barrier_min_cool_time + (float)(rand() % (int)((m_barrier_max_cool_time - m_barrier_min_cool_time) * 10)) / 10.0f;
-			else
-				m_NowCoolTime = m_barrier_min_cool_time;
-
-			m_Timer.SetUp(m_NowCoolTime);
+			m_Timer.SetUp(m_barrier_cool_time);
 			
 			if (m_Effect != nullptr)
 			{
@@ -88,13 +76,10 @@ Update(void)
 
 	case SKILL_STATE::COOLDOWN:
 		m_Timer.Update();
-		m_GaugePercent =  m_Timer.GetTimer() / m_NowCoolTime * 100.0f;
+		m_GaugePercent =  m_Timer.GetTimer() / m_barrier_cool_time * 100.0f;
 		if (m_Timer.Finished())
 		{
-			m_Timer.SetUp(m_barrier_exist_time);
-			m_Player->StartInvincible(m_barrier_exist_time);
-			m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(),1.0f);
-			m_State = SKILL_STATE::ACTIVE;
+			m_State = SKILL_STATE::WAIT;
 		}
 		break;
 	}
@@ -141,5 +126,11 @@ void
 CSkillBarrier::
 Action(void)
 {
+	if (m_State != SKILL_STATE::WAIT)
+		return;
 
+	m_Player->StartInvincible(m_barrier_exist_time);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 1.0f);
+	m_Timer.SetUp(m_barrier_exist_time);
+	m_State = SKILL_STATE::ACTIVE;
 }
