@@ -31,6 +31,7 @@ void CSkillSlow::Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
+		m_GaugePercent = (m_active_time - m_Timer.GetTimer()) / m_active_time * 100.0f;
 
 		if (m_Timer.Finished())
 		{
@@ -42,6 +43,7 @@ void CSkillSlow::Update(void)
 		}
 		break;
 	case SKILL_STATE::COOLDOWN:
+		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;
 
 		if (m_Timer.Finished())
 		{

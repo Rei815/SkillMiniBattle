@@ -4,7 +4,6 @@ const float CSkillMimicry::m_cool_time = 2.0f;
 const float CSkillMimicry::m_active_time = 5.0f;
 CSkillMimicry::CSkillMimicry(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
-	, m_State(SKILL_STATE::WAIT)
 	, m_Timer()
 {
 }

@@ -91,6 +91,7 @@ void CDaruma_FallDownGimmick::Play()//U‚è•Ô‚é
 		m_Transform.rotation.y += m_TurnSpeed;
 
 		if (20 <= m_Transform.rotation.y)
+
 			m_Transform.rotation.y = 20;
 
 		m_Object->SetRotation(m_Transform.rotation);
@@ -175,8 +176,7 @@ void CDaruma_FallDownGimmick::Slow()//ŠÔ‚ğ‹ó‚¯‚ÄU‚èŒü‚­
 
 void CDaruma_FallDownGimmick::OgreControlTurn()
 {
-	m_ReadyTime = 0.0f;
-	m_WaitTime = 0.0f;
+	m_Timer.SetUp(0.0f);
+	m_TurnAngle = 180;
 	m_OgreState = OGRE_STATE::PLAY;
-
 }

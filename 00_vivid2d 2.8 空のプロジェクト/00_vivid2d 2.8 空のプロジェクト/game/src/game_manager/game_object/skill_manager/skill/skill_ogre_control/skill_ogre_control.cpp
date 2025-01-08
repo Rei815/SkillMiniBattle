@@ -1,4 +1,5 @@
 #include "skill_ogre_control.h"
+#include "../../../object_manager/object_manager.h"
 
 const float CSkillOgreControl::m_cool_time = 0.0f;
 const float CSkillOgreControl::m_active_time = 10.0f;
@@ -35,15 +36,15 @@ void CSkillOgreControl::Update(void)
 
 		if (!m_Player->GetPlayerMoving())
 		{
-			dg.OgreControlTurn();
+			m_Gimmick->OgreControlTurn();
+			m_State = SKILL_STATE::COOLDOWN;
+			m_Timer.SetUp(m_cool_time);
 		}
 
-		if (m_Timer.Finished())
-		{
-			m_Timer.Reset();
-			m_Timer.SetUp(m_cool_time);
-			m_State = SKILL_STATE::COOLDOWN;
-		}
+		//if (m_Timer.Finished())
+		//{
+		//	m_Timer.Reset();
+		//}
 		break;
 	case SKILL_STATE::COOLDOWN:
 
@@ -69,6 +70,8 @@ void CSkillOgreControl::Action()
 {
 	if (m_State == SKILL_STATE::WAIT)
 	{
+		m_Gimmick = (CDaruma_FallDownGimmick*)(*CObjectManager::GetInstance().GetList().begin())->GetGimmick();
+
 		m_Timer.SetUp(m_active_time);
 		m_State = SKILL_STATE::ACTIVE;
 	}

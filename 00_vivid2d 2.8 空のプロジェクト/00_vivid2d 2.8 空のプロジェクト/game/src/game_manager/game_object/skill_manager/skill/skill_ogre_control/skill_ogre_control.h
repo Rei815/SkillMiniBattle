@@ -47,5 +47,5 @@ protected:
     CDataManager&       dm = CDataManager::GetInstance();
     CUnitManager&       um = CUnitManager::GetInstance();
 
-    CDaruma_FallDownGimmick& dg = CDaruma_FallDownGimmick();
+    CDaruma_FallDownGimmick* m_Gimmick;
 };
