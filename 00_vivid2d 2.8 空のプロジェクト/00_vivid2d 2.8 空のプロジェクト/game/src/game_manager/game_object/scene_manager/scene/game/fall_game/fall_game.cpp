@@ -268,11 +268,13 @@ void CFallGame::Finish(void)
 	{
 		//生き残った一人を勝ちにする
 		CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
+		CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
 	}
 	else //一人の場合
 	{
 		//やられているためリザルトリストから勝ちにする
 		CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
+		CDataManager::GetInstance().AddLastGameRanking((*m_ResultList.begin())->GetUnitID());
 	}
 	CGame::Finish();
 }
@@ -306,6 +308,7 @@ void CFallGame::CheckFinish()
 			AddRanking(unit->GetUnitID());
 			unit->SetDefeatFlag(true);
 
+			CDataManager::GetInstance().AddLastGameRanking(player->GetUnitID());
 		}
 		++it;
 	}
