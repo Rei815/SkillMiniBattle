@@ -44,5 +44,6 @@ private:
     CVector3                        m_PlayerPosition[4];
     int                             m_RemainCount;
     int                             m_TempFirstNum;
+    int                             m_CountTime;
     float                           m_TempFirstDis;
 };

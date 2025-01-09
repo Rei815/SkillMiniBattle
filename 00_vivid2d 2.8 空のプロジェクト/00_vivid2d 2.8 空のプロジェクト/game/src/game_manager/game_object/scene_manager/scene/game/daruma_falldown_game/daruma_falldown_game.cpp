@@ -20,6 +20,7 @@ const float CDaruma_FallDownGame::m_move_speed = 0.3f;
 
 CDaruma_FallDownGame::CDaruma_FallDownGame(void)
 	: m_PlayerPosition{ (CVector3(-1500,0,100)) }
+	, m_Timer()
 {
 }
 
@@ -31,6 +32,8 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 {
 	CGame::Initialize(scene_id);
 	m_RemainCount = CDataManager::GetInstance().GetCurrentPlayer();
+	m_CountTime = 120;
+	m_Timer.SetUp(m_CountTime);
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
@@ -81,6 +84,8 @@ void CDaruma_FallDownGame::Update(void)
 	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
 	CObjectManager::OBJECT_LIST::iterator it;
 
+	m_Timer.Update();
+
 	for (it = objectList.begin(); it != objectList.end(); it++)
 	{
 		CGimmick* gimmick = (*it)->GetGimmick();
@@ -101,9 +106,6 @@ void CDaruma_FallDownGame::Update(void)
 			{
 				if (player->GetPlayerMoving())
 				{
-					//if (m_PlayerPosition[i] != CVector3::ZERO)
-						//m_PlayerPosition[i] = player->GetPosition();
-					
 					player->SetActionFlag(false);
 					player->SetVelocity(CVector3::ZERO);
 
@@ -122,7 +124,7 @@ void CDaruma_FallDownGame::Update(void)
 					player->SetActionFlag(true);
 				}
 
-				if ((player->GetPosition().x >= 1400))
+				if ((player->GetPosition().x >= 1300))
 				{
 					m_TempFirstNum = i;
 					Ranking();
@@ -130,6 +132,14 @@ void CDaruma_FallDownGame::Update(void)
 			}
 		}
 	}
+
+
+
+	if (m_Timer.Finished())
+	{
+		Ranking();
+	}
+
 }
 
 void CDaruma_FallDownGame::Draw(void)
@@ -138,6 +148,8 @@ void CDaruma_FallDownGame::Draw(void)
 	vivid::DrawText(30, std::to_string(vivid::controller::GetAnalogStickLeft(vivid::controller::DEVICE_ID::PLAYER1).x),vivid::Vector2(100.0f, 10.0f));
 	vivid::DrawText(30, std::to_string(vivid::controller::GetAnalogStickLeft
 	(vivid::controller::DEVICE_ID::PLAYER1).y),vivid::Vector2(100.0f, 40.0f));
+
+	vivid::DrawText(30, std::to_string(m_CountTime-(int)m_Timer.GetTimer()), vivid::Vector2(100.0f, 70.0f));
 }
 
 void CDaruma_FallDownGame::Finalize(void)

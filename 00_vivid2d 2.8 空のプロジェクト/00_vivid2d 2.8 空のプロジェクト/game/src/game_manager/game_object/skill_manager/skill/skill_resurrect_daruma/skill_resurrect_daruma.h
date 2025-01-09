@@ -37,6 +37,5 @@ protected:
     static const float m_active_time;
 
     CVector3            m_Resurrect_Position;
-    SKILL_STATE         m_State;
     CTimer              m_Timer;
 };

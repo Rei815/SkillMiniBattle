@@ -38,7 +38,6 @@ protected:
     static const float m_cool_time;
     static const float m_active_time;
 
-    SKILL_STATE         m_State;
     CTimer              m_Timer;
 
     CUnitManager& um = CUnitManager::GetInstance();

@@ -4,9 +4,6 @@
 const float CSkillStun::m_cool_time = 20.0f;
 const float CSkillStun::m_active_time = 3.0f;
 
-
-
-
 CSkillStun::CSkillStun(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_Timer()

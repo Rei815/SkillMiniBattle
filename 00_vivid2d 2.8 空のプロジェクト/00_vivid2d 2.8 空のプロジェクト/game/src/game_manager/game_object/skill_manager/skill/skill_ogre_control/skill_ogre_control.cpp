@@ -33,6 +33,7 @@ void CSkillOgreControl::Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
+		m_GaugePercent = (m_active_time - m_Timer.GetTimer()) / m_active_time * 100.0f;
 
 		if (!m_Player->GetPlayerMoving())
 		{
@@ -40,12 +41,7 @@ void CSkillOgreControl::Update(void)
 			m_State = SKILL_STATE::COOLDOWN;
 			m_Timer.SetUp(m_cool_time);
 		}
-		m_GaugePercent = (m_active_time - m_Timer.GetTimer()) / m_active_time * 100.0f;
 
-		//if (m_Timer.Finished())
-		//{
-		//	m_Timer.Reset();
-		//}
 		break;
 	case SKILL_STATE::COOLDOWN:
 		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;

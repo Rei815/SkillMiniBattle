@@ -1,6 +1,6 @@
 #include "skill_mimicry.h"
 
-const float CSkillMimicry::m_cool_time = 2.0f;
+const float CSkillMimicry::m_cool_time = 10.0f;
 const float CSkillMimicry::m_active_time = 5.0f;
 CSkillMimicry::CSkillMimicry(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
@@ -29,6 +29,7 @@ void CSkillMimicry::Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
+		m_GaugePercent = (m_active_time - m_Timer.GetTimer()) / m_active_time * 100.0f;
 
 		m_Player->DecAlpha(0.5f);
 		
@@ -42,6 +43,7 @@ void CSkillMimicry::Update(void)
 		}
 		break;
 	case SKILL_STATE::COOLDOWN:
+		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;
 
 		m_Player->RevertAlpha(1.0f);
 

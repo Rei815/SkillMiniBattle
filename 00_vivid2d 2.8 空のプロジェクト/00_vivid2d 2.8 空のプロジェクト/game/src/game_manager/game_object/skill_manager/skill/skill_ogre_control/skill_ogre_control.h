@@ -41,7 +41,6 @@ protected:
     static const float m_active_time;
 
     CPlayer*            m_Target;
-    SKILL_STATE         m_State;
     CTimer              m_Timer;
 
     CDataManager&       dm = CDataManager::GetInstance();

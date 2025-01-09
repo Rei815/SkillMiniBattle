@@ -24,13 +24,14 @@ void CSkillResurrectDaruma ::Initialize(SKILL_ID skill_id)
 void CSkillResurrectDaruma::Update(void)
 {
 	CSkill::Update();
+	m_Timer.Update();
 	
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
+		m_Timer.SetUp(m_active_time);
 		break;
 	case SKILL_STATE::ACTIVE:
-		m_Timer.Update();
 
 		if (m_Timer.Finished())
 		{
@@ -41,7 +42,8 @@ void CSkillResurrectDaruma::Update(void)
 		break;
 	case SKILL_STATE::COOLDOWN:
 		break;
-	}}
+	}
+}
 
 void CSkillResurrectDaruma::Draw(void)
 {
