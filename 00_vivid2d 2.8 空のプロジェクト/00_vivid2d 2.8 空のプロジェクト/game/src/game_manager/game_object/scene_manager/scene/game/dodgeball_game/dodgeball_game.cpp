@@ -166,6 +166,17 @@ void CDodgeBallGame::Play(void)
 
 void CDodgeBallGame::Finish(void)
 {
+	//一人生き残った場合(二人以上)
+	if (m_EntryList.size() == 1)
+	{
+		//生き残った一人を勝ちにする
+		CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
+	}
+	else //一人の場合
+	{
+		//やられているためリザルトリストから勝ちにする
+		CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
+	}
 	CGame::Finish();
 }
 
@@ -187,13 +198,21 @@ void CDodgeBallGame::CheckFinish(void)
 		{
 			AddRanking(unit->GetUnitID());
 			unit->SetDefeatFlag(true);
+
+			CDataManager::GetInstance().AddLastGameRanking(unit->GetUnitID());
 		}
 	}
 
 	if (CDataManager::GetInstance().GetCurrentPlayer() > 1)
 	{
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+		{
 			CGame::SetGameState(GAME_STATE::FINISH);
+
+			//念のため、同一フレームでやられた場合に処理をしないようにする
+			if(m_EntryList.size() != 0)
+				CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
+		}
 	}
 	else
 	{

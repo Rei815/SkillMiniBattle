@@ -3,6 +3,7 @@
 #include "vivid.h"
 #include <list>
 #include "../unit_manager/unit/player/player.h"
+#include "../unit_manager/unit/unit_id.h"
 #include "../scene_manager/scene/game/game_id.h"
 
 class CDataManager
@@ -45,6 +46,12 @@ public:
     int         GetMaxGameNum();
 
     void        SetMaxGameNum(int num);
+
+    void        ResetLastGameRanking();
+
+    void        AddLastGameRanking(UNIT_ID unit_id);
+
+    UNIT_ID     GetLastGameRanking(int num);
 private:
 
     /*!
@@ -79,9 +86,12 @@ private:
     using RANKING_LIST = std::vector<CPlayer*>;
     
     
-    RANKING_LIST        m_OverallRankingList[4];             //!< 全体のランキングリスト
+    RANKING_LIST        m_OverallRankingList[(int)UNIT_ID::NONE];             //!< 全体のランキングリスト
 
-    int                 m_PlayerWins[4];
+    UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];              //1つ前のゲームのランキング
+    int                 m_NowGameRankingNum;                            //1つ前のゲームのランキングをつけるため、次の順位を格納する変数
+
+    int                 m_PlayerWins[(int)UNIT_ID::NONE];
     int                 m_CurrentPlayerNum;
 
     GAME_ID             m_CurrentGameID;

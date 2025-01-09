@@ -12,10 +12,9 @@ const float CSkillGravityArea::m_gravity_area_radius = 500.0f;
 CSkillGravityArea::CSkillGravityArea(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
 	, m_Effect(nullptr)
+	, m_PlayerAffectedEffect{nullptr}
 	, m_Timer()
 {
-	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
-		m_PlayerAffectedEffect[i] = nullptr;
 }
 
 CSkillGravityArea::~CSkillGravityArea(void)
