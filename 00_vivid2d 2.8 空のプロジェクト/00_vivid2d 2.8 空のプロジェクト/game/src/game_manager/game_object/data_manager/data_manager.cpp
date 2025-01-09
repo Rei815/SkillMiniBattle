@@ -142,6 +142,7 @@ CDataManager(void)
     , m_LastGameRanking{UNIT_ID::NONE}
     , m_NowGameRankingNum(1)
 {
+    ResetLastGameRanking();
 }
 
 /*
