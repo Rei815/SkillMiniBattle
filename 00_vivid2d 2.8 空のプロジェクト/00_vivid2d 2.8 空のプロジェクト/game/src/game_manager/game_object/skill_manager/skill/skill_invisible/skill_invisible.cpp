@@ -1,8 +1,8 @@
 #include "skill_invisible.h"
 
 
-const float CSkillInvisible::m_cool_time = 2.0f;
-const float CSkillInvisible::m_active_time = 2.0f;
+const float CSkillInvisible::m_cool_time = 10.0f;
+const float CSkillInvisible::m_active_time = 3.0f;
 
 CSkillInvisible::CSkillInvisible(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
@@ -31,6 +31,8 @@ void CSkillInvisible::Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
+		m_GaugePercent = (m_active_time - m_Timer.GetTimer()) / m_active_time * 100.0f;
+
 		m_Player->DecAlpha(0.5f);
 		if (m_Timer.Finished())
 		{
@@ -40,6 +42,8 @@ void CSkillInvisible::Update(void)
 		}
 		break;
 	case SKILL_STATE::COOLDOWN:
+		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;
+
 		m_Player->RevertAlpha(1.0f);
 
 		if (m_Timer.Finished())

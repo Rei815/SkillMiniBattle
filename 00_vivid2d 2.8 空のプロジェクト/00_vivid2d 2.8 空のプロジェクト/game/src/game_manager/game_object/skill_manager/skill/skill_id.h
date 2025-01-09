@@ -56,6 +56,7 @@ enum class SKILL_ID_FALLOUT
  */
 enum class SKILL_ID_DARUMA
 {
+	DASH,
 	SPEED_UP,
 	INVISIBLE,
 	STUN,

@@ -339,6 +339,9 @@ SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_DARUMA skill_id)
 
     switch (skill_id)
     {
+    case SKILL_ID_DARUMA::DASH:
+        temp = SKILL_ID::DASH;
+        break;
     case SKILL_ID_DARUMA::SPEED_UP:
         temp = SKILL_ID::SPEED_UP;
         break;
