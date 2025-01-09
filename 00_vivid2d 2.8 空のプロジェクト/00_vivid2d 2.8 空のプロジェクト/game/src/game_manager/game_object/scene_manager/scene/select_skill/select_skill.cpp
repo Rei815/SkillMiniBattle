@@ -203,13 +203,13 @@ void CSelectSkill::CreateSkillIcon(void)
 
 void CSelectSkill::SetCursorID(void)
 {
+    int CurrentPlayer = CDataManager::GetInstance().GetCurrentPlayer();
+
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
-        if (i < CDataManager::GetInstance().GetCurrentPlayer())
+        if (i < CurrentPlayer)
         {
-            //テスト用に、1Pから順番に選択
-            // (実際には、順位が低い順に格納するようにする)
-            m_CursorID[i] = (UNIT_ID)i;
+            m_CursorID[i] = CDataManager::GetInstance().GetLastGameRanking((CurrentPlayer - 1) - i);
         }
         else
         {
@@ -218,6 +218,7 @@ void CSelectSkill::SetCursorID(void)
     }
 
     m_NowCursorID_Num = 0;
+    CDataManager::GetInstance().ResetLastGameRanking();
 }
 
 void CSelectSkill::CreateCursor(void)

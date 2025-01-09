@@ -74,6 +74,7 @@ CGame::Update(void)
 
         m_PauseFlag ^= true;
     }
+
     if(!m_PauseFlag)
     {
         CUnitManager::GetInstance().Update();
