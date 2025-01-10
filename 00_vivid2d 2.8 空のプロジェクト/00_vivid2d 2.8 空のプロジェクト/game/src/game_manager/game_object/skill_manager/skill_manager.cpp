@@ -15,6 +15,7 @@
 #include "skill/skill_resurrect_fallout/skill_resurrect_fallout.h"
 #include "skill/skill_strong_wind/skill_strong_wind.h"
 #include "skill/skill_gravity_area/skill_gravity_area.h"
+#include "skill/skill_hide_topic/skill_hide_topic.h"
 
 
 /*
@@ -153,6 +154,8 @@ CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
         skill = new CSkillResurrectFallout();    break;
     case SKILL_ID::STRONG_WIND:
         skill = new CSkillStrongWind();    break;
+    case SKILL_ID::HIDE_TOPIC:
+        skill = new CSkillHideTopic();    break;
 
     default:
         break;

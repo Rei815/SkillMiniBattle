@@ -4,7 +4,7 @@
 const float CSkillSpeedUp::m_speed_up_rate = 1.25f;
 
 CSkillSpeedUp::CSkillSpeedUp(void)
-	:CSkill()
+	:CSkill(SKILL_CATEGORY::PASSIVE)
 {
 
 }

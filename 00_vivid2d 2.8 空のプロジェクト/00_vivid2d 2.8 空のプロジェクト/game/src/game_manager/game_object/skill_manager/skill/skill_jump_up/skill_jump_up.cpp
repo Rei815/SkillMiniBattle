@@ -4,7 +4,7 @@
 const float CSkillJumpUp::m_jump_up_rate = 1.5f;
 
 CSkillJumpUp::CSkillJumpUp(void)
-	:CSkill()
+	:CSkill(SKILL_CATEGORY::PASSIVE)
 {
 
 }

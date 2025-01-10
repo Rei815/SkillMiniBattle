@@ -95,5 +95,4 @@ private:
     CVector3 center;
     CVector3 angle;
     CVector3 scaling;
-
 };

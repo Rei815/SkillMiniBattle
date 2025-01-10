@@ -74,6 +74,7 @@ CGame::Update(void)
 
         m_PauseFlag ^= true;
     }
+        CObjectManager::GetInstance().Update();
     if(!m_PauseFlag)
     {
         CUnitManager::GetInstance().Update();
@@ -86,7 +87,6 @@ CGame::Update(void)
     }
     CControllerManager::GetInstance().Update();
     CGimmickManager::GetInstance().Update();
-    CObjectManager::GetInstance().Update();
 }
 
 /*

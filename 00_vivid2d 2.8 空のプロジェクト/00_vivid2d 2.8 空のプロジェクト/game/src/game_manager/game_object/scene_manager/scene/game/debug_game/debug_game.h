@@ -21,4 +21,14 @@ public:
      */
     void Initialize(SCENE_ID scene_id);
 
+    /*!
+     *  @brief      çXêV
+     */
+    void        Update(void);
+
+    /*!
+     *  @brief      ï`âÊ
+     */
+    void        Draw(void);
+
 };

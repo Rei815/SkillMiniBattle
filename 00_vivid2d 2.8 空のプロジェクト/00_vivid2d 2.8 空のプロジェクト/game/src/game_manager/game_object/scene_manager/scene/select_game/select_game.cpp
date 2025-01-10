@@ -81,6 +81,12 @@ void CSelectGame::Update(void)
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
         //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
     }
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FOUR))
+    {
+        _gameID = GAME_ID::DEBUG_GAME;
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
+        //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
+    }
 #endif
         dm.SetGameID(_gameID);
 

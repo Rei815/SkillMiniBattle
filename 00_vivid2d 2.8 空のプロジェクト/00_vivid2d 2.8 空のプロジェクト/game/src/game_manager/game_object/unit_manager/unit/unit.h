@@ -5,6 +5,7 @@
 #include "..\..\..\..\mathematics\mathematics.h"
 #include "../../model_manager/model/model.h"
 #include "..\..\bullet_manager\bullet\bullet.h"
+#include "..\..\object_manager\object\object.h"
 #include "../../launcher/shot/shot.h"
 
 
@@ -255,10 +256,16 @@ public:
     /*!
      *  @brief      アルファ値を元に戻す
      */
-    void    RevertAlpha(float alpha);
+    void        RevertAlpha(float alpha);
 
-    void    SetAlpha(float alpha);
+    void        SetAlpha(float alpha);
 
+    /*!
+     *  @brief      親のオブジェクトを取得
+     *
+     *  @return     親のオブジェクト
+     */
+    IObject*    GetParent(void);
 protected:
 
 
@@ -337,6 +344,5 @@ protected:
     bool                    m_DefeatFlag;               //!< 敗北フラグ
     std::string             m_FileName;
     bool                    m_IsGround;                 //!< 地上にいるか
-
-
+    IObject*                m_Parent;                   //!< 親のオブジェクト
 };
