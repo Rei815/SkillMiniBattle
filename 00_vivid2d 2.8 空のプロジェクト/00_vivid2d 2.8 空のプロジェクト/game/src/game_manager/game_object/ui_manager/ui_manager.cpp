@@ -2,6 +2,7 @@
 #include "ui/pause/pause.h"
 #include "ui/fallout_topic/fallout_topic.h"
 #include "ui/fallout_topic_bg/fallout_topic_bg.h"
+#include "ui/topic_shutter/topic_shutter.h"
 #include "ui/random_game/random_game.h"
 #include "ui/finish_backGround/finish_backGround.h"
 #include "ui/skill_icon/skill_icon.h"
@@ -145,6 +146,8 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
         ui = new CFallOutTopic(id);   break;
     case UI_ID::FALLOUT_TOPIC_BG:
         ui = new CFalloutTopicBG(id);   break;
+    case UI_ID::TOPIC_SHUTTER:
+        ui = new CTopicShutter(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CRandomGame(id);           break;
     case UI_ID::SKILL_ICON:
@@ -306,6 +309,11 @@ int CUIManager::GetUIActive(UI_ID ui_id)
         ++it;
     }
     return -1;
+}
+
+CUIManager::UI_LIST CUIManager::GetList()
+{
+    return m_UIList;
 }
 
 /*

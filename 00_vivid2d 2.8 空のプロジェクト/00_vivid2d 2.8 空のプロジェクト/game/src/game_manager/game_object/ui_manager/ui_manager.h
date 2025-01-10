@@ -139,6 +139,18 @@ public:
      */
     int GetUIActive(UI_ID ui_id);
 
+    /*!
+     *  @brief      UIリスト型
+     */
+    using UI_LIST = std::list<CUI*>;
+
+    /*!
+     *  @brief      リスト取得
+     *
+     *  @return     オブジェクトリスト
+     */
+    UI_LIST GetList();
+
 private:
     /*!
      *  @brief      コンストラクタ
@@ -166,10 +178,6 @@ private:
      */
     CUIManager& operator=(const CUIManager& rhs);
 
-    /*!
-     *  @brief      UIリスト型
-     */
-    using UI_LIST = std::list<CUI*>;
 
     UI_LIST             m_UIList;             //!< UIリスト
 

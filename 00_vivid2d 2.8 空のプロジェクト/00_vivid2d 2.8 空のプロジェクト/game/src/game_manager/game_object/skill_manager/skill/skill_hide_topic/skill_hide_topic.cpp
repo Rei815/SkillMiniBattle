@@ -1,17 +1,17 @@
-#include "skill_strong_wind.h"
+#include "skill_hide_topic.h"
 #include "../../../unit_manager/unit_manager.h"
+#include "../../../ui_manager/ui_manager.h"
 
-const float CSkillStrongWind::m_wind_strength = 0.1f;
-const float CSkillStrongWind::m_cool_time = 5.0f;
-const float CSkillStrongWind::m_duration_time = 5.0f;
+const float CSkillHideTopic::m_cool_time = 5.0f;
+const float CSkillHideTopic::m_duration_time = 5.0f;
 
-CSkillStrongWind::CSkillStrongWind(void)
+CSkillHideTopic::CSkillHideTopic(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)
 {
 
 }
 
-CSkillStrongWind::~CSkillStrongWind(void)
+CSkillHideTopic::~CSkillHideTopic(void)
 {
 
 }
@@ -20,7 +20,7 @@ CSkillStrongWind::~CSkillStrongWind(void)
  *  @brief      初期化
  */
 void
-CSkillStrongWind::
+CSkillHideTopic::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
@@ -31,30 +31,17 @@ Initialize(SKILL_ID skill_id)
  *  @brief      更新
  */
 void
-CSkillStrongWind::
+CSkillHideTopic::
 Update(void)
 {
 	CSkill::Update();
-	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
-	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
+
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
 		m_Timer.Update();
-		while (it != unitList.end())
-		{
-			IUnit* unit = (*it);
-
-			if (unit->GetUnitID() != m_Player->GetUnitID())
-			{
-				CVector3 velocity = unit->GetVelocity();
-				velocity.z -= m_wind_strength;
-				unit->SetVelocity(velocity);
-			}
-			++it;
-		}
 		m_GaugePercent = (m_duration_time - m_Timer.GetTimer()) / m_duration_time * 100.0f;
 
 		if (m_Timer.Finished())
@@ -80,7 +67,7 @@ Update(void)
  *  @brief      描画
  */
 void
-CSkillStrongWind::
+CSkillHideTopic::
 Draw(void)
 {
 	CSkill::Draw();
@@ -92,7 +79,7 @@ Draw(void)
  *  @brief      解放
  */
 void
-CSkillStrongWind::
+CSkillHideTopic::
 Finalize(void)
 {
 	CSkill::Finalize();
@@ -105,10 +92,28 @@ Finalize(void)
  *  @brief      アクション呼び出し
  */
 void
-CSkillStrongWind::
+CSkillHideTopic::
 Action(void)
 {
 	if (m_State != SKILL_STATE::WAIT) return;
 	m_Timer.SetUp(m_duration_time);
+	CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
+	CUIManager::UI_LIST topicList;
+	CUIManager::UI_LIST::iterator it = uiList.begin();
+
+	while (it != uiList.end())
+	{
+		CUI* ui = (*it);
+		if (ui->GetUI_ID() == UI_ID::FALLOUT_TOPIC)
+		{
+			topicList.push_back(ui);
+		}
+		++it;
+	}
+	if (topicList.empty()) return;
+	it = topicList.begin();
+	int num = rand() % topicList.size();
+	std::advance(it, num);
+	CUIManager::GetInstance().Create(UI_ID::TOPIC_SHUTTER, (*it)->GetPosition());
 	m_State = SKILL_STATE::ACTIVE;
 }

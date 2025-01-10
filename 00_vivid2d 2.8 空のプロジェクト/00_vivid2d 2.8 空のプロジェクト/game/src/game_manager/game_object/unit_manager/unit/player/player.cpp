@@ -100,6 +100,7 @@ void CPlayer::Draw(void)
     //{
         IUnit::Draw();
         m_Model.Draw();
+        vivid::DrawText(30, std::to_string(m_IsGround), vivid::Vector2(1000, 500));
     //}
 }
 
@@ -314,6 +315,7 @@ void CPlayer::Control(void)
     if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
         if (m_IsGround == true)
         {
+            m_Parent = nullptr;
             m_IsGround = false;
 
             m_Accelerator.y = m_jump_power * m_JumpPowerRate;
@@ -358,17 +360,23 @@ void CPlayer::Move(void)
     //}
 
     if (!m_StopFlag)
+    {
         m_Velocity += m_Accelerator;
-
-    if (!m_StopFlag)
         m_Transform.position += m_Velocity;
+    }
 
     IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
     if (!floorObject)
+    {
         m_IsGround = false;
+
+    }
     else
         if (floorObject->GetTag() == "Floor")
+        {
+            m_Parent = floorObject;
             m_IsGround = true;
+        }
 
     if (m_FrictionFlag)
     {

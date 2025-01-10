@@ -427,6 +427,9 @@ SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_FALLOUT skill_id)
     case SKILL_ID_FALLOUT::STRONG_WIND:
         temp = SKILL_ID::STRONG_WIND;
         break;
+    case SKILL_ID_FALLOUT::HIDE_TOPIC:
+        temp = SKILL_ID::HIDE_TOPIC;
+        break;
     case SKILL_ID_FALLOUT::MAX:
         temp = SKILL_ID::MAX;
         break;

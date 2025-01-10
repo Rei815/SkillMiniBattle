@@ -62,7 +62,6 @@ private:
     static const float              m_change_time;      //!< Ø‚è‘Ö‚í‚éŽžŠÔ
     static const float              m_wait_time;        //!< ‘Ò‹@ŽžŠÔ
 
-    vivid::Vector2                  m_Position;         //!< ˆÊ’u
     float                           m_Time;
     std::string                     m_FileName;
     vivid::Rect                     m_Rect;

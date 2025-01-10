@@ -45,6 +45,7 @@ IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     , m_Alpha()
     , m_DefeatFlag(false)
     , m_Gravity()
+    , m_Parent(nullptr)
 {
 }
 
@@ -81,7 +82,33 @@ void
 IUnit::
 Update(void)
 {
-    m_Velocity += m_Gravity;
+    if (m_Parent != nullptr)
+    {
+
+        float offset = m_Radius - m_Radius / 3.0f;
+        const float line_length = 100.0f;
+        bool releaseFlag = false;
+        for (int i = 0; i < 9; i++)
+        {
+            CVector3 start = m_Transform.position + CVector3(-offset + (offset) * (i % 3), 0.0f, -offset + (offset) * (i / 3));
+            CVector3 end = start + CVector3(0, -line_length, 0);
+            CVector3 hitPos = m_Parent->GetModel().GetHitLinePosition(start, end);
+            if (hitPos != end)
+            {
+                m_Transform.position.y = hitPos.y + m_Radius;
+                releaseFlag = false;
+            }
+            else
+                releaseFlag = true;
+        }
+
+        if (releaseFlag)
+            m_Parent = nullptr;
+    }
+    else
+    {
+        m_Velocity += m_Gravity;
+    }
 
     switch (m_UnitState)
     {
@@ -376,6 +403,11 @@ void IUnit::SetAlpha(float alpha)
     m_Alpha = alpha;
     MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
 
+}
+
+IObject* IUnit::GetParent(void)
+{
+    return m_Parent;
 }
 
 void IUnit::DecAlpha(float alpha)

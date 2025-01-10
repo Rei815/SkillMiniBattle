@@ -178,6 +178,7 @@
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_floating\skill_floating.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_dash\skill_dash.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_gravity_area\skill_gravity_area.cpp" />
+    <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_hide_topic\skill_hide_topic.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_invisible\skill_invisible.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_jump_up\skill_jump_up.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_mimicry\skill_mimicry.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_icon\player_icon.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fallout_topic_bg\fallout_topic_bg.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\title_logo\titile_logo.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\topic_shutter\topic_shutter.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\ui.cpp" />
     <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
     <ClCompile Include="src\primitive\plane\plane.cpp" />
@@ -295,6 +297,7 @@
   <ItemGroup>
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_skill\select_skill.h" />
+    <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_hide_topic\skill_hide_topic.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_jump_up\skill_jump_up.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_punch_up\punch_up.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\skill_barrier_effect\skill_barrier_effect.h" />
@@ -321,6 +324,7 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_topic_bg\fallout_topic_bg.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\title_logo\title_logo.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_select_bg\fallout_select_bg.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\topic_shutter\topic_shutter.h" />
     <ClInclude Include="src\mathematics\matrix\matrix.h" />
     <ClInclude Include="src\primitive\plane\plane.h" />
     <ClInclude Include="src\collider\box_collider\box_collider.h" />

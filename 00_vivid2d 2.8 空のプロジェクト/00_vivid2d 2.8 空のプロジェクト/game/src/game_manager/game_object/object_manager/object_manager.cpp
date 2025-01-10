@@ -164,18 +164,22 @@ IObject* CObjectManager::CheckHitObject(CPlayer* player)
     {
 
         if ((*it)->GetModel().GetModelHandle() == VIVID_DX_ERROR || (*it)->GetColliderActiveFlag() == false)
-            return nullptr;
+        {
+            ++it;
+            continue;
+        }
 
         //‚’¼•ûŒü‚Ì”»’è-----------------------------------------------------
 
         float radius = player->GetRadius();
+        float offset = radius / 2.0f;
         const int check_point_count = 4;
         for (int i = 0; i < 9; ++i)
         {
             CVector3 unit_pos = player->GetPosition();
 
-            CVector3 start = unit_pos + CVector3(-radius + (radius) * (i % 3), 0.0, -radius + (radius) * (i / 3));
-            CVector3 end_position = start + CVector3(0, - radius * 2, 0);
+            CVector3 start = unit_pos + CVector3(-offset + (offset) * (i % 3), 0.0, -offset + (offset) * (i / 3));
+            CVector3 end_position = start + CVector3(0, -radius, 0);
 
             if ((*it)->GetModel().CheckHitLine(start, end_position) == true)
                 return (*it);

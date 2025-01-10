@@ -2,18 +2,18 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-class CKey : public CUI
+class CTopicShutter : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CKey(UI_ID id);
+    CTopicShutter(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CKey(void);
+    ~CTopicShutter(void);
 
     /*!
      *  @brief      初期化
@@ -39,8 +39,12 @@ private:
     static const std::string        m_file_name;
     static const int                m_height;           //!< 高さ
     static const int                m_width;            //!< 幅
+    static const int                m_speed;            //!< 上下するスピード
     static const vivid::Rect        m_rect;             //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;           //!< 基準点
     static const vivid::Vector2     m_scale;            //!< 拡縮
+    static const float              m_duration_time;    //!< 隠す時間
+    vivid::Rect                     m_Rect;             //!< 読み込み範囲
 
+    CTimer                          m_Timer;
 };

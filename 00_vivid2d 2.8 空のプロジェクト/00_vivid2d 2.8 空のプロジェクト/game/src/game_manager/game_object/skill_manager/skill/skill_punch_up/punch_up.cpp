@@ -4,7 +4,7 @@
 const float CPunchUp::speed_up_rate = 1.25f;
 
 CPunchUp::CPunchUp(void)
-	:CSkill()
+	:CSkill(SKILL_CATEGORY::PASSIVE)
 {
 
 }

@@ -28,6 +28,7 @@ const std::string CSkillIcon::m_SkillIconFileName[] =
 		"data\\Textures\\skill_icon_resurrect.png",
 		"data\\Textures\\skill_icon_resurrect.png",
 		"data\\Textures\\skill_icon_strong_wind.png",
+		"data\\Textures\\skill_icon_hide_topic.png",
 		"data\\Textures\\skill_icon_null_test.png"
 };
 
