@@ -89,7 +89,7 @@ private:
     RANKING_LIST        m_OverallRankingList[(int)UNIT_ID::NONE];             //!< 全体のランキングリスト
 
     UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];              //1つ前のゲームのランキング
-    int                 m_NowGameRankingNum;                            //1つ前のゲームのランキングをつけるため、次の順位を格納する変数
+    int                 m_NowGameRankingNum;                                //1つ前のゲームのランキングをつけるため、次の順位を格納する変数
 
     int                 m_PlayerWins[(int)UNIT_ID::NONE];
     int                 m_CurrentPlayerNum;

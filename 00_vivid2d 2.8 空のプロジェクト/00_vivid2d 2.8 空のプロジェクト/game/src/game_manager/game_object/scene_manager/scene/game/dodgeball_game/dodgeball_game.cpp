@@ -200,6 +200,10 @@ void CDodgeBallGame::CheckFinish(void)
 			unit->SetDefeatFlag(true);
 
 			CDataManager::GetInstance().AddLastGameRanking(unit->GetUnitID());
+
+			//念のため、同一フレームで全滅した場合に一人残すようにする
+			if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+				break;
 		}
 	}
 
@@ -209,9 +213,7 @@ void CDodgeBallGame::CheckFinish(void)
 		{
 			CGame::SetGameState(GAME_STATE::FINISH);
 
-			//念のため、同一フレームでやられた場合に処理をしないようにする
-			if(m_EntryList.size() != 0)
-				CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
+			CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
 		}
 	}
 	else
