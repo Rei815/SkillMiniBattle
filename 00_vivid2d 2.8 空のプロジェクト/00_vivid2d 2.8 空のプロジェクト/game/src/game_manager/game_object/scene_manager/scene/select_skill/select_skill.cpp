@@ -395,6 +395,12 @@ SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_DODGEBALL skill_id)
     case SKILL_ID_DODGEBALL::GRAVITY_AREA:
         temp = SKILL_ID::GRAVITY_AREA;
         break;
+    case SKILL_ID_DODGEBALL::FLOATING:
+        temp = SKILL_ID::FLOATING;
+        break;
+    case SKILL_ID_DODGEBALL::STRONG_WIND:
+        temp = SKILL_ID::STRONG_WIND;
+        break;
     case SKILL_ID_DODGEBALL::MAX:
         temp = SKILL_ID::MAX;
         break;
