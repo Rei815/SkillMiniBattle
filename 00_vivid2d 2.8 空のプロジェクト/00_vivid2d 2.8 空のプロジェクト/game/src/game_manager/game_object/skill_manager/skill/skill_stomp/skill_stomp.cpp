@@ -3,7 +3,7 @@
 #include "../../../bullet_manager/bullet_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 
-const float CSkillStomp::m_cool_time = 5.0f;
+const float CSkillStomp::m_cool_time = 10.0f;
 
 CSkillStomp::CSkillStomp(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE)

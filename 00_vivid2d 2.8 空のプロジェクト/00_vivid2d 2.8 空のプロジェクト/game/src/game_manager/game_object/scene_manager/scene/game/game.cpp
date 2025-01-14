@@ -85,6 +85,7 @@ CGame::Update(void)
 
         CEffectManager::GetInstance().Update();
     }
+    CObjectManager::GetInstance().Update();
     CControllerManager::GetInstance().Update();
     CGimmickManager::GetInstance().Update();
 }
