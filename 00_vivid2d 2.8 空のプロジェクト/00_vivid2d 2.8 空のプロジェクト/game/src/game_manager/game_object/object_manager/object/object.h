@@ -93,6 +93,20 @@ public:
      */
     void            SetVelocity(const CVector3& velocity);
 
+    /*!
+     *  @brief      スケール設定
+     *
+     *  @param[in]  scale  オブジェクトの大きさ
+     */
+    void            SetScale(float scale);
+
+    /*!
+     *  @brief      スケール設定
+     *
+     *  @param[in]  scale  オブジェクトの大きさ
+     */
+    void            SetScale(const CVector3& scale);
+
 
     /*!
      *  @brief      モデル取得

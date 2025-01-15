@@ -90,10 +90,14 @@ protected:
      */
     virtual void    CheckFinish(void);
 
+    static const float m_start_count_time;
+    static const float m_start_text_time;
+
     GAME_STATE      m_GameState;    //!< ゲームの状態
 
 
-    int             m_WaitTime;     //!< 待機時間
+    CTimer          m_WaitTimer;    //!< 待機時間のタイマー
+    bool            m_CountFlag;    //!< カウントダウンのフラグ
     bool            m_PauseFlag;    //!< ポーズフラグ
     std::string     m_DebugText;    //!< デバッグ用
     bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用

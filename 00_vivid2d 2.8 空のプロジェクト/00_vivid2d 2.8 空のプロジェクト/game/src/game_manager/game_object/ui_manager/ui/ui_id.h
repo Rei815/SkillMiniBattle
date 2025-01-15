@@ -16,5 +16,7 @@ enum class UI_ID
     SKILL_CURSOR,
     FINISH_GAME_BG,
     TITLE_LOGO,
+    START_COUNTDOWN,
+    START_TEXT,
     KEY,
 };

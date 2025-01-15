@@ -85,6 +85,8 @@ private:
 
     static const float      m_defeat_distance;
 
+    static const float      m_stage_shrink_time;
+
     static const CVector3   m_camera_position;
     static const CVector3   m_camera_direction;
 
@@ -92,5 +94,8 @@ private:
     CTimer              m_SpawnTimer;
     CTimer              m_ShotTimer;
     float               m_NowShotTime;
+    CTimer              m_StageShrinkTimer;
+    bool                m_StageShrinkFlg;
+    IObject*            m_StageObject;
     CANNON_DIRECTION    m_NextCannnonDir;
 };

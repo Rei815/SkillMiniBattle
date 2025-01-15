@@ -80,6 +80,16 @@ void IObject::SetVelocity(const CVector3& velocity)
 	m_Velocity = velocity;
 }
 
+void IObject::SetScale(float scale)
+{
+	m_Transform.scale = CVector3(scale, scale, scale);
+}
+
+void IObject::SetScale(const CVector3& scale)
+{
+	m_Transform.scale = scale;
+}
+
 CModel IObject::GetModel()
 {
 	return m_Model;

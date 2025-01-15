@@ -11,22 +11,22 @@
 
 #include "../../../../skill_manager/skill_manager.h"
 
-//上下左右の4方向 × 各方向に3つずつ ＝ 12こ
+//上下左右の4方向 × 各方向に5つずつ ＝ 20こ
 const CVector3		CDodgeBallGame::m_cannon_pos_list[] = 
 {
-	CVector3(    0,   0, 1800),CVector3(  900,   0, 1550),CVector3(- 900,   0, 1550),	//上
-	CVector3(    0,   0,-1800),CVector3(- 900,   0,-1550),CVector3(  900,   0,-1550),	//下
-	CVector3( 1800,   0,    0),CVector3( 1550,   0,- 900),CVector3( 1550,   0,  900),	//右
-	CVector3(-1800,   0,    0),CVector3(-1550,   0,  900),CVector3(-1550,   0,- 900)	//左
+	CVector3(    0,   0, 1800),CVector3(  556,   0, 1712),CVector3( 1058,   0, 1456),CVector3( 1456,   0, 1058),CVector3( 1712,   0,  556),	//上
+	CVector3( 1800,   0,    0),CVector3( 1712,   0,- 556),CVector3( 1456,   0,-1058),CVector3( 1058,   0,-1456),CVector3(  556,   0,-1712),	//右
+	CVector3(    0,   0,-1800),CVector3(- 556,   0,-1712),CVector3(-1058,   0,-1456),CVector3(-1456,   0,-1058),CVector3(-1712,   0,- 556),	//下
+	CVector3(-1800,   0,    0),CVector3(-1712,   0,  556),CVector3(-1456,   0, 1058),CVector3(-1058,   0, 1456),CVector3(- 556,   0, 1712)	//左
 };
 
 //上下左右の4方向
 const CVector3		CDodgeBallGame::m_cannon_rot_list[] = 
 {
-	CVector3(0, 180,0),CVector3(0, 210,0),CVector3(0, 150,0),	//上
-	CVector3(0,   0,0),CVector3(0,  30,0),CVector3(0, -30,0),	//下
-	CVector3(0, -90,0),CVector3(0, -60,0),CVector3(0,-120,0),	//右
-	CVector3(0,  90,0),CVector3(0, 120,0),CVector3(0,  60,0)	//左
+	CVector3(0,-180,0),CVector3(0,-162,0),CVector3(0,-144,0),CVector3(0,-126,0),CVector3(0,-108,0),	//上
+	CVector3(0, -90,0),CVector3(0, -72,0),CVector3(0, -54,0),CVector3(0,- 36,0),CVector3(0,- 18,0),	//右
+	CVector3(0,   0,0),CVector3(0,  18,0),CVector3(0,  36,0),CVector3(0,  54,0),CVector3(0,  72,0),	//下
+	CVector3(0,  90,0),CVector3(0, 108,0),CVector3(0, 126,0),CVector3(0, 144,0),CVector3(0, 162,0)	//左
 };
 
 const CVector3 CDodgeBallGame::m_player_spawnpos_list[] =
@@ -37,11 +37,12 @@ const CVector3 CDodgeBallGame::m_player_spawnpos_list[] =
 	CVector3( 100, 0, -100)		//Player4
 };
 
-const int			CDodgeBallGame::m_max_cannnon_count = 3;
+const int			CDodgeBallGame::m_max_cannnon_count = 5;
 const float			CDodgeBallGame::m_cannnon_spawn_time = 3.0f;
 const float			CDodgeBallGame::m_initial_shot_time = 2.0f;
 const float			CDodgeBallGame::m_min_shot_time = 0.1f;
 const float			CDodgeBallGame::m_shot_time_acceleration = 0.03f;
+const float			CDodgeBallGame::m_stage_shrink_time = 180.0f;
 const float			CDodgeBallGame::m_defeat_distance = 3000.0f;
 const CVector3		CDodgeBallGame::m_camera_position = CVector3(0, 2500.0f, -1800.0f);
 const CVector3		CDodgeBallGame::m_camera_direction = CVector3(0, -1.0f, 0.6f);
@@ -51,6 +52,9 @@ CDodgeBallGame::CDodgeBallGame(void)
 	,m_SpawnTimer()
 	,m_ShotTimer()
 	,m_NowShotTime(m_initial_shot_time)
+	,m_StageShrinkTimer()
+	,m_StageShrinkFlg(false)
+	,m_StageObject(nullptr)
 	,m_NextCannnonDir(CANNON_DIRECTION::UP)
 
 {
@@ -65,10 +69,13 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 {
 	m_SpawnTimer.SetUp(0);
 	m_ShotTimer.SetUp(m_initial_shot_time);
+	m_StageShrinkTimer.SetUp(m_stage_shrink_time);
 	CGame::Initialize(scene_id);
 
 	//CStage::GetInstance().Initialize();
-	CObjectManager::GetInstance().Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT,CTransform(CVector3(0.0f,-100.0f,0.0f)));
+
+	//ステージ生成
+	m_StageObject = CObjectManager::GetInstance().Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT,CTransform(CVector3(0.0f,-100.0f,0.0f)));
 
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
@@ -79,6 +86,9 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
 		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, m_player_spawnpos_list[i]);
+		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
+		if (Player != nullptr)
+			Player->SetActionFlag(false);
 		m_EntryList.push_back(unit);
 	}
 
@@ -92,9 +102,13 @@ void CDodgeBallGame::Update(void)
 {
 	//CStage::GetInstance().Update();
 	CGame::Update();
-	CCamera::GetInstance().Update();
-	CLauncher::GetInstance().Update();
-	CBulletManager::GetInstance().Update();
+
+	if (!m_PauseFlag)
+	{
+		CCamera::GetInstance().Update();
+		CLauncher::GetInstance().Update();
+		CBulletManager::GetInstance().Update();
+	}
 }
 
 void CDodgeBallGame::Draw(void)
@@ -121,6 +135,10 @@ void CDodgeBallGame::Start(void)
 void CDodgeBallGame::Play(void)
 {
 	CGame::Play();
+
+	//ポーズだったら処理をスキップ
+	if (m_PauseFlag)
+		return;
 	
 	if (m_CannonCount < m_max_cannnon_count)
 	{
@@ -161,6 +179,27 @@ void CDodgeBallGame::Play(void)
 		IObject* temp = ChooseCannon();
 		if(temp != nullptr)
 			temp->GetGimmick()->SetSwitch(true);
+	}
+
+	m_StageShrinkTimer.Update();
+	if (m_StageShrinkFlg)
+	{
+		if (m_StageShrinkTimer.Finished())
+		{
+			m_StageObject->SetScale(0.0f);
+		}
+		else
+		{
+			m_StageObject->SetScale((m_stage_shrink_time - m_StageShrinkTimer.GetTimer()) / m_stage_shrink_time);
+		}
+	}
+	else
+	{
+		if (m_StageShrinkTimer.Finished())
+		{
+			m_StageShrinkTimer.Reset();
+			m_StageShrinkFlg = true;
+		}
 	}
 }
 
@@ -229,8 +268,8 @@ void CDodgeBallGame::SpawnCannnon(void)
 
 	//大砲オブジェクトの生成座標および生成回転値のセット
 	CTransform Temp;
-	Temp.position = m_cannon_pos_list[(int)m_NextCannnonDir * 3 + m_CannonCount];
-	Temp.rotation = m_cannon_rot_list[(int)m_NextCannnonDir * 3 + m_CannonCount];
+	Temp.position = m_cannon_pos_list[(int)m_NextCannnonDir * m_max_cannnon_count + m_CannonCount];
+	Temp.rotation = m_cannon_rot_list[(int)m_NextCannnonDir * m_max_cannnon_count + m_CannonCount];
 
 	//大砲オブジェクトの生成
 	IObject* CannonObject = CObjectManager::GetInstance().Create(OBJECT_ID::CANNON_OBJECT, Temp);

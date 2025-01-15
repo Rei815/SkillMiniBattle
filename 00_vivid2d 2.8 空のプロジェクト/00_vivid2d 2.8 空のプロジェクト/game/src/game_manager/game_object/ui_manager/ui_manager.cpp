@@ -10,6 +10,8 @@
 #include "ui/skill_cursor/skill_cursor.h"
 #include "ui/key/key.h"
 #include "ui/title_logo/title_logo.h"
+#include "ui/start_game_count/start_game_count.h"
+#include "ui/start_game_text/start_game_text.h"
  /*
   *  インスタンスの取得
   */
@@ -124,7 +126,10 @@ CUI* CUIManager::Create(UI_ID id)
         ui = new CFinishGameBG(id);     break;
     case UI_ID::TITLE_LOGO:
         ui = new CTitleLogo(id);     break;
-        break;
+    case UI_ID::START_COUNTDOWN:
+        ui = new CStartGameCount(id);     break;
+    case UI_ID::START_TEXT:
+        ui = new CStartGameText(id);    break;
     }
     if (!ui) return nullptr;
 
@@ -160,7 +165,6 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
         ui = new CFinishGameBG(id);     break;
     case UI_ID::KEY:
         ui = new CKey(id);     break;
-        break;
     }
 
     if (!ui) return nullptr;
@@ -191,7 +195,6 @@ CUI* CUIManager::Create(UI_ID id, const CVector3& position)
         ui = new CSkillCursor(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
-        break;
     }
 
     if (!ui) return nullptr;
@@ -222,7 +225,6 @@ CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
         ui = new CSkillCursor(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
-        break;
     }
     if (!ui) return nullptr;
 
