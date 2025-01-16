@@ -1,6 +1,6 @@
 #include "skill_slow.h"
 
-const float CSkillSlow::m_cool_time = 10.0f;
+const float CSkillSlow::m_cool_time = 20.0f;
 const float CSkillSlow::m_active_time = 3.0f;
 
 CSkillSlow::CSkillSlow(void)
@@ -35,7 +35,11 @@ void CSkillSlow::Update(void)
 
 		if (m_Timer.Finished())
 		{
-			m_Target->DivMoveSpeedRate(0.5f);
+			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+			{
+				if (um.GetPlayer(UNIT_ID(i)) != m_Player)
+				um.GetPlayer(UNIT_ID(i))->DivMoveSpeedRate(0.5f);
+			}
 
 			m_Timer.Reset();
 			m_Timer.SetUp(m_cool_time);
@@ -91,7 +95,15 @@ void CSkillSlow::Action()
 		std::next(it,TargetPlayer);
 
 		m_Target = (*it);
-		m_Target->MulMoveSpeedRate(0.5f);
+
+
+		for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+		{
+			if (um.GetPlayer(UNIT_ID(i)) != m_Player)
+			{
+				um.GetPlayer(UNIT_ID(i))->MulMoveSpeedRate(0.5f);
+			}
+		}
 
 		m_Timer.SetUp(m_active_time);
 		m_State = SKILL_STATE::ACTIVE;

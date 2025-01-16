@@ -23,6 +23,12 @@ const char* CSoundManager::m_sound_file_names[] =
     "data\\Audios\\warning_short.wav",
     "data\\Audios\\gameover.wav",
     "data\\Audios\\gameclear.wav",
+    //«‚±‚±‚©‚ç’Ç‰Á•ª
+    "data\\Audios\\SE\\DecideButton_SE.mp3",
+
+    "data\\Audios\\BGM\\Main_BGM.mp3",
+
+
 };
 
 /*

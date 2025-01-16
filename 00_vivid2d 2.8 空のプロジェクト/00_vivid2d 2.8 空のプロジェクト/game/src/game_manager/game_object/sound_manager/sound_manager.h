@@ -27,7 +27,10 @@ enum class SOUND_ID
     WARNING,
     WARNING_SHORT,
     GAMEOVER,
-    GAMECLEAR,
+    GAMECLEAR,//”z—ñ9”Ô–Ú
+    //«‚±‚±‚©‚ç’Ç‰Á•ª
+    DECIDE_BUTTON,
+    MAIN_BGM,
 
     MAX
 };
