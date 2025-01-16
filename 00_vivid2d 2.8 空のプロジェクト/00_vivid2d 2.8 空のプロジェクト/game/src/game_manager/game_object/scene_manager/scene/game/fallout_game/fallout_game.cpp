@@ -128,7 +128,7 @@ void CFallOutGame::Finalize(void)
 
 void CFallOutGame::Start(void)
 {
-	if (m_WaitTime > 120)
+	if (m_WaitTimer.Finished())
 	{
 		CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
 
