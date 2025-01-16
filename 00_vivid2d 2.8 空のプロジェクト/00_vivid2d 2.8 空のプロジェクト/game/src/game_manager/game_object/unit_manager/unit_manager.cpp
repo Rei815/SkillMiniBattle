@@ -170,13 +170,14 @@ void CUnitManager::CheckHitObject(IObject* object)
         //…•½•ûŒü‚Ì”»’è-----------------------------------------------------
         if ((*it)->GetVelocity().x != 0 || (*it)->GetVelocity().z != 0)
         {
+            CVector3 startPos, endPos, tempVelocity, tempVelocity2;
+
             //ˆÚ“®•ûŒü‚Ì³–Ê
-            CVector3 startPos, endPos;
             startPos = (*it)->GetPosition();
             endPos = startPos;
-            CVector3 tempVelocity = (*it)->GetVelocity().Normalize();
-            if (tempVelocity.y < 0)
-                tempVelocity.y = 0;
+            tempVelocity = (*it)->GetVelocity();
+            tempVelocity.y = 0.0f;
+            tempVelocity.Normalize();
             endPos += tempVelocity * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
 
@@ -184,22 +185,16 @@ void CUnitManager::CheckHitObject(IObject* object)
             //ˆÚ“®•ûŒü‚Ì‰E‘¤45‹
             startPos = (*it)->GetPosition();
             endPos = startPos;
-            tempVelocity = (*it)->GetVelocity().RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f).Normalize();
-            if (tempVelocity.y < 0)
-                tempVelocity.y = 0;
-
-            endPos += tempVelocity * (*it)->GetRadius();
+            tempVelocity2 = tempVelocity.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f).Normalize();
+            endPos += tempVelocity2 * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
 
 
             //ˆÚ“®•ûŒü‚Ì¶‘¤45‹
             startPos = (*it)->GetPosition();
             endPos = startPos;
-            tempVelocity = (*it)->GetVelocity().RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, -45.0f).Normalize();
-            if (tempVelocity.y < 0)
-                tempVelocity.y = 0;
-
-            endPos += tempVelocity * (*it)->GetRadius();
+            tempVelocity2 = tempVelocity.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, -45.0f).Normalize();
+            endPos += tempVelocity2 * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
         }
 
