@@ -35,13 +35,17 @@ public:
      */
     void        Action(void);
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void    ActionEnd(void);
+
 
 protected:
     static const float m_cool_time;
-    static const float m_active_time;
+    static const float m_duration_time;
 
     CPlayer*            m_Target;
-    CTimer              m_Timer;
 
     CDataManager&       dm = CDataManager::GetInstance();
     CUnitManager&       um = CUnitManager::GetInstance();

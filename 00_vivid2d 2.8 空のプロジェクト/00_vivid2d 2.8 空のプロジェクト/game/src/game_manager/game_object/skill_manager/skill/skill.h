@@ -18,8 +18,8 @@ enum class SKILL_STATE
 class CSkill
 {
 public:
-    CSkill(void);
-    CSkill(SKILL_CATEGORY category);
+    CSkill(float duration_time = 0.0f, float cool_time = 0.0f);
+    CSkill(SKILL_CATEGORY category, float duration_time = 0.0f, float cool_time = 0.0f);
     ~CSkill(void);
 
     /*!
@@ -51,6 +51,11 @@ public:
      *  @brief      アクション呼び出し
      */
     virtual void    Action(void);
+    
+    /*!
+     *  @brief      アクション終了
+     */
+    virtual void    ActionEnd(void);
 
     /*!
      *  @brief      カテゴリー取得
@@ -88,6 +93,10 @@ protected:
     CSkillCursor*       m_UiSkillCursor;
 
     vivid::Vector2      m_IconPosition;
+
+    float               m_DurationTime;
+    float               m_CoolTime;
+    CTimer              m_Timer;
 
     float               m_GaugePercent;
     UNIT_ID             m_PlayerID;

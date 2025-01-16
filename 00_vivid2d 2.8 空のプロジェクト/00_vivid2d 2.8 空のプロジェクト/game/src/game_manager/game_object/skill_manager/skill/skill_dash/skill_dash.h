@@ -33,10 +33,13 @@ public:
      */
     void Action(void);
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void ActionEnd(void);
+
 protected:
     static const float  m_dash_speed_up_rate;
-    static const float  m_dash_time;
-    static const float  m_dash_cool_time;
-
-    CTimer              m_Timer;
+    static const float  m_duration_time;
+    static const float  m_cool_time;
 };

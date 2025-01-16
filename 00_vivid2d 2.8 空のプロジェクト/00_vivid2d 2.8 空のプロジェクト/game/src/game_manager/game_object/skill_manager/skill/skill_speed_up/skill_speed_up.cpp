@@ -84,3 +84,13 @@ Action(void)
 {
 
 }
+
+/*!
+ *  @brief      アクション終了
+ */
+void
+CSkillSpeedUp::
+ActionEnd(void)
+{
+
+}

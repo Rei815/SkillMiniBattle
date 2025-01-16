@@ -32,10 +32,14 @@ public:
      */
     void        Action(void);
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void    ActionEnd(void);
+
 
 protected:
-    static const float m_active_time;
+    static const float m_duration_time;
 
     CVector3            m_Resurrect_Position;
-    CTimer              m_Timer;
 };

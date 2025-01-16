@@ -6,7 +6,7 @@
 const float CSkillStomp::m_cool_time = 10.0f;
 
 CSkillStomp::CSkillStomp(void)
-	:CSkill(SKILL_CATEGORY::ACTIVE)
+	:CSkill(SKILL_CATEGORY::ACTIVE, 0.0f, m_cool_time)
 {
 
 }
@@ -24,8 +24,6 @@ CSkillStomp::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
-	m_Category = SKILL_CATEGORY::ACTIVE;
-	m_State = SKILL_STATE::WAIT;
 }
 
 /*!
@@ -43,14 +41,6 @@ Update(void)
 	case SKILL_STATE::ACTIVE:
 		break;
 	case SKILL_STATE::COOLDOWN:
-		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;
-
-		m_Timer.Update();
-		if (m_Timer.Finished())
-		{
-			m_State = SKILL_STATE::WAIT;
-			m_Timer.Reset();
-		}
 		break;
 	}
 }
@@ -90,6 +80,15 @@ Action()
 	if (m_State == SKILL_STATE::COOLDOWN) return;
 	CBulletManager::GetInstance().Create(m_Player->GetUnitCategory(), BULLET_ID::SHOCK_WAVE, m_Player->GetPosition(), CVector3::UP);
 	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, m_Player->GetPosition());
-	m_Timer.SetUp(m_cool_time);
 	m_State = SKILL_STATE::COOLDOWN;
+}
+
+/*!
+ *  @brief      アクション終了
+ */
+void
+CSkillStomp::
+ActionEnd(void)
+{
+
 }

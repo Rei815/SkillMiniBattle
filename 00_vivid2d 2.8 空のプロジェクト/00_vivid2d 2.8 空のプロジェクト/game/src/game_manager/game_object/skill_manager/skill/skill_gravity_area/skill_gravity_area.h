@@ -41,18 +41,20 @@ public:
      */
     void Action(void);
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void    ActionEnd(void);
+
 protected:
     static const float  m_gravity_speed_down_rate;
     static const float  m_gravity_jump_down_rate;
-    static const float  m_gravity_time;
-    static const float  m_gravity_cool_time;
+    static const float  m_duration_time;
+    static const float  m_cool_time;
     static const float  m_gravity_area_radius;
 
     GRAVITY_AFFECTED m_PlayerAffectedGravity[(int)UNIT_ID::NONE];
 
-
     IEffect* m_Effect;
     IEffect* m_PlayerAffectedEffect[(int)UNIT_ID::NONE];
-
-    CTimer              m_Timer;
 };

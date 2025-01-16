@@ -83,3 +83,13 @@ Action(void)
 {
 
 }
+
+/*!
+ *  @brief      アクション終了
+ */
+void
+CSkillJumpUp::
+ActionEnd(void)
+{
+
+}

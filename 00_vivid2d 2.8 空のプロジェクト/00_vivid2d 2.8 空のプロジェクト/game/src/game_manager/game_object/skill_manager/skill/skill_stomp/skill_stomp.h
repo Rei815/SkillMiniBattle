@@ -34,9 +34,13 @@ public:
      */
     void Action();
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void    ActionEnd(void);
+
 protected:
     static const float  m_cool_time;
 
-    CTimer              m_Timer;
     CShot*              m_Shot;
 };

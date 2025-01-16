@@ -33,10 +33,14 @@ public:
      */
     void Action(void);
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void    ActionEnd(void);
+
 protected:
     static const float  m_cool_time;
     static const float  m_duration_time;
-    CTimer              m_Timer;
     CUI*                m_Parent;
     CUI*                m_Shutter;
 };

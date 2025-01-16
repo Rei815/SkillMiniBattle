@@ -10,9 +10,12 @@ const vivid::Vector2	CSkill::m_icon_positionList[] =
 	vivid::Vector2(1024, 630)		//Player4
 };
 
-CSkill::CSkill(void)
+CSkill::CSkill(float duration_time, float cool_time)
 	: m_SkillID(SKILL_ID::MAX)
 	, m_State(SKILL_STATE::WAIT)
+	, m_DurationTime(duration_time)
+	, m_CoolTime(cool_time)
+	, m_Timer(duration_time)
 	, m_GaugePercent(0)
 	, m_PlayerID(UNIT_ID::NONE)
 	, m_IconPosition(vivid::Vector2::ZERO)
@@ -24,9 +27,12 @@ CSkill::CSkill(void)
 
 }
 
-CSkill::CSkill(SKILL_CATEGORY category)
+CSkill::CSkill(SKILL_CATEGORY category, float duration_time, float cool_time)
 	: m_SkillID(SKILL_ID::MAX)
 	, m_State(SKILL_STATE::WAIT)
+	, m_DurationTime(duration_time)
+	, m_CoolTime(cool_time)
+	, m_Timer(duration_time)
 	, m_GaugePercent(0)
 	, m_PlayerID(UNIT_ID::NONE)
 	, m_IconPosition(vivid::Vector2::ZERO)
@@ -48,10 +54,11 @@ CSkill::~CSkill(void)
 void CSkill::Initialize(SKILL_ID skill_id)
 {
 	m_SkillID = skill_id;
+	m_State = SKILL_STATE::WAIT;
+	m_Timer.SetUp(m_DurationTime);
+
 	CUIManager& uim = CUIManager::GetInstance();
-
 	CUI* temp;
-
 	temp = uim.Create(UI_ID::SKILL_ICON);
 	m_UiSkillIcon = dynamic_cast<CSkillIcon*>(temp);
 	if (m_UiSkillIcon == nullptr)
@@ -73,11 +80,46 @@ void CSkill::Initialize(SKILL_ID skill_id)
  */
 void CSkill::Update(void)
 {
+	//スキル更新
+	switch (m_State)
+	{
+	case SKILL_STATE::WAIT:
+		break;
+
+	case SKILL_STATE::ACTIVE:
+		if (m_DurationTime > 0)
+		{
+			m_Timer.Update();
+			m_GaugePercent = (m_DurationTime - m_Timer.GetTimer()) / m_DurationTime * 100.0f;
+			if (m_Timer.Finished())
+			{
+				m_Timer.SetUp(m_CoolTime);
+				ActionEnd();
+				m_State = SKILL_STATE::COOLDOWN;
+			}
+		}
+		break;
+
+	case SKILL_STATE::COOLDOWN:
+		if (m_CoolTime > 0)
+		{
+			m_Timer.Update();
+			m_GaugePercent = m_Timer.GetTimer() / m_CoolTime * 100.0f;
+			if (m_Timer.Finished())
+			{
+				m_Timer.SetUp(m_DurationTime);
+				m_State = SKILL_STATE::WAIT;
+			}
+		}
+		break;
+	}
+
+	//UI更新
 	if (m_Player != nullptr && !m_Player->GetDefeatFlag())
 	{
 		if (m_UiSkillIcon != nullptr)
 		{
-			//明るさ変更（未実装）
+			//明るさ変更
 			switch (m_State)
 			{
 			case SKILL_STATE::WAIT:
@@ -107,7 +149,6 @@ void CSkill::Update(void)
  */
 void CSkill::Draw(void)
 {
-
 }
 
 /*!
@@ -149,6 +190,14 @@ void CSkill::SetPlayer(CPlayer* player)
  *  @brief      アクション呼び出し
  */
 void CSkill::Action(void)
+{
+
+}
+
+/*!
+ *  @brief      アクション終了
+ */
+void CSkill::ActionEnd(void)
 {
 
 }

@@ -6,7 +6,7 @@ const float CSkillStrongWind::m_cool_time = 5.0f;
 const float CSkillStrongWind::m_duration_time = 5.0f;
 
 CSkillStrongWind::CSkillStrongWind(void)
-	:CSkill(SKILL_CATEGORY::ACTIVE)
+	:CSkill(SKILL_CATEGORY::ACTIVE ,m_duration_time, m_cool_time)
 {
 
 }
@@ -24,7 +24,6 @@ CSkillStrongWind::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
-	m_Timer.SetUp(m_duration_time);
 }
 
 /*!
@@ -41,8 +40,8 @@ Update(void)
 	{
 	case SKILL_STATE::WAIT:
 		break;
+
 	case SKILL_STATE::ACTIVE:
-		m_Timer.Update();
 		while (it != unitList.end())
 		{
 			IUnit* unit = (*it);
@@ -55,22 +54,9 @@ Update(void)
 			}
 			++it;
 		}
-		m_GaugePercent = (m_duration_time - m_Timer.GetTimer()) / m_duration_time * 100.0f;
-
-		if (m_Timer.Finished())
-		{
-			m_Timer.SetUp(m_cool_time);
-			m_State = SKILL_STATE::COOLDOWN;
-		}
 		break;
+
 	case SKILL_STATE::COOLDOWN:
-		m_Timer.Update();
-
-		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;
-
-		if (m_Timer.Finished())
-			m_State = SKILL_STATE::WAIT;
-
 		break;
 	}
 
@@ -109,6 +95,16 @@ CSkillStrongWind::
 Action(void)
 {
 	if (m_State != SKILL_STATE::WAIT) return;
-	m_Timer.SetUp(m_duration_time);
+
 	m_State = SKILL_STATE::ACTIVE;
+}
+
+/*!
+ *  @brief      アクション終了
+ */
+void
+CSkillStrongWind::
+ActionEnd(void)
+{
+
 }

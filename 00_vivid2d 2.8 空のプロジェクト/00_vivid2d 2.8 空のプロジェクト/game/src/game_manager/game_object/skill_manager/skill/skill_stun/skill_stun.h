@@ -34,11 +34,14 @@ public:
      */
     void        Action(void);
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void    ActionEnd(void);
+
 protected:
     static const float m_cool_time;
-    static const float m_active_time;
-
-    CTimer              m_Timer;
+    static const float m_duration_time;
 
     CUnitManager& um = CUnitManager::GetInstance();
     CDataManager& dm = CDataManager::GetInstance();

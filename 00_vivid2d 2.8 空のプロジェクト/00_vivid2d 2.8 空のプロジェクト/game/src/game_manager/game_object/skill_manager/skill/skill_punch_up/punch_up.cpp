@@ -1,8 +1,6 @@
 #include "punch_up.h"
 #include "../../../unit_manager/unit_manager.h"
 
-const float CPunchUp::speed_up_rate = 1.25f;
-
 CPunchUp::CPunchUp(void)
 	:CSkill(SKILL_CATEGORY::PASSIVE)
 {
@@ -22,10 +20,6 @@ CPunchUp::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
-
-	m_State = SKILL_STATE::WAIT;
-
-	//player->SetMoveSpeedRate(speed_up_rate);
 }
 
 /*!
@@ -71,6 +65,16 @@ Finalize(void)
 void
 CPunchUp::
 Action(void)
+{
+
+}
+
+/*!
+ *  @brief      アクション終了
+ */
+void
+CPunchUp::
+ActionEnd(void)
 {
 
 }

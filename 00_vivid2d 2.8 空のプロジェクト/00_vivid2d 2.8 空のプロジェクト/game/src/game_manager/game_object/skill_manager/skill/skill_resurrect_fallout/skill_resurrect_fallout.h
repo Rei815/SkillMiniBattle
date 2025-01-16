@@ -33,6 +33,11 @@ public:
      */
     void        Action();
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void    ActionEnd(void);
+
 protected:
     static const float      m_resurrect_height;
     static const CVector3   m_initial_position;

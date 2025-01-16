@@ -34,12 +34,15 @@ public:
      */
     void Action(void);
 
-protected:
-    static const float  m_spawn_cool_time;
-    static const float  m_wall_exist_time;
-    static const float  m_wall_spawn_distance;
+    /*!
+     *  @brief      アクション終了
+     */
+    void    ActionEnd(void);
 
-    CTimer              m_Timer;
+protected:
+    static const float  m_cool_time;
+    static const float  m_duration_time;
+    static const float  m_wall_spawn_distance;
 
     IObject*            m_WallObj;
 };

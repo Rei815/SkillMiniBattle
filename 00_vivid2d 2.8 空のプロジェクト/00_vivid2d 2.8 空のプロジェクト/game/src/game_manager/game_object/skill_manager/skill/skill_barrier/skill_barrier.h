@@ -39,12 +39,16 @@ public:
      */
     void Action(void);
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void ActionEnd(void);
+
 protected:
-    static const float m_barrier_exist_time;
-    static const float m_barrier_cool_time;
+    static const float m_duration_time;
+    static const float m_cool_time;
     static const std::string m_collider_model_file_name;
 
     CModel			    m_ColliderModel;
     IEffect*            m_Effect;
-    CTimer              m_Timer;
 };

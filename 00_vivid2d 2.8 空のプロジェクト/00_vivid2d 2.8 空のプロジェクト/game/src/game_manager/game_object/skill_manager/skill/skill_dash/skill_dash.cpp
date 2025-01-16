@@ -2,12 +2,11 @@
 #include "../../../unit_manager/unit_manager.h"
 
 const float CSkillDash::m_dash_speed_up_rate = 5.0f;
-const float CSkillDash:: m_dash_time = 0.35f;
-const float CSkillDash:: m_dash_cool_time = 5.0f;
+const float CSkillDash:: m_duration_time = 0.35f;
+const float CSkillDash:: m_cool_time = 5.0f;
 
 CSkillDash::CSkillDash(void)
-	:CSkill(SKILL_CATEGORY::ACTIVE)
-	, m_Timer()
+	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 {
 
 }
@@ -25,10 +24,6 @@ CSkillDash::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
-
-	m_State = SKILL_STATE::WAIT;
-
-	m_Timer.SetUp(m_dash_time);
 }
 
 /*!
@@ -46,24 +41,9 @@ Update(void)
 		break;
 
 	case SKILL_STATE::ACTIVE:
-		m_Timer.Update();
-		m_GaugePercent = (m_dash_time - m_Timer.GetTimer()) / m_dash_time * 100.0f;
-		if (m_Timer.Finished())
-		{
-			m_Player->DivMoveSpeedRate(m_dash_speed_up_rate);
-			m_Timer.SetUp(m_dash_cool_time);
-			m_State = SKILL_STATE::COOLDOWN;
-		}
 		break;
 
 	case SKILL_STATE::COOLDOWN:
-		m_Timer.Update();
-		m_GaugePercent = m_Timer.GetTimer() / m_dash_cool_time * 100.0f;
-		if (m_Timer.Finished())
-		{
-			m_Timer.SetUp(m_dash_time);
-			m_State = SKILL_STATE::WAIT;
-		}
 		break;
 	}
 }
@@ -104,6 +84,15 @@ Action(void)
 		return;
 
 	m_Player->MulMoveSpeedRate(m_dash_speed_up_rate);
-	m_Timer.SetUp(m_dash_time);
 	m_State = SKILL_STATE::ACTIVE;
+}
+
+/*!
+ *  @brief      アクション終了
+ */
+void
+CSkillDash::
+ActionEnd(void)
+{
+	m_Player->DivMoveSpeedRate(m_dash_speed_up_rate);
 }

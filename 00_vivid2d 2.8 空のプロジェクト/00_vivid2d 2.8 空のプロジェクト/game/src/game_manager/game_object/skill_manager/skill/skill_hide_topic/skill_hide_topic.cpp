@@ -6,7 +6,7 @@ const float CSkillHideTopic::m_cool_time = 5.0f;
 const float CSkillHideTopic::m_duration_time = 5.0f;
 
 CSkillHideTopic::CSkillHideTopic(void)
-	:CSkill(SKILL_CATEGORY::ACTIVE)
+	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 {
 
 }
@@ -24,7 +24,6 @@ CSkillHideTopic::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
-	m_Timer.SetUp(m_duration_time);
 }
 
 /*!
@@ -41,26 +40,12 @@ Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
-		m_Timer.Update();
-		m_GaugePercent = (m_duration_time - m_Timer.GetTimer()) / m_duration_time * 100.0f;
 		if (m_Parent)
 		{
 			m_Shutter->SetPosition(m_Parent->GetPosition());
 		}
-		if (m_Timer.Finished())
-		{
-			m_Timer.SetUp(m_cool_time);
-			m_State = SKILL_STATE::COOLDOWN;
-		}
 		break;
 	case SKILL_STATE::COOLDOWN:
-		m_Timer.Update();
-
-		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;
-
-		if (m_Timer.Finished())
-			m_State = SKILL_STATE::WAIT;
-
 		break;
 	}
 
@@ -99,7 +84,7 @@ CSkillHideTopic::
 Action(void)
 {
 	if (m_State != SKILL_STATE::WAIT) return;
-	m_Timer.SetUp(m_duration_time);
+
 	CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
 	CUIManager::UI_LIST topicList;
 	CUIManager::UI_LIST::iterator it = uiList.begin();
@@ -120,4 +105,14 @@ Action(void)
 	m_Parent = (*it);
 	m_Shutter = CUIManager::GetInstance().Create(UI_ID::TOPIC_SHUTTER, (*it)->GetPosition());
 	m_State = SKILL_STATE::ACTIVE;
+}
+
+/*!
+ *  @brief      アクション終了
+ */
+void
+CSkillHideTopic::
+ActionEnd(void)
+{
+
 }

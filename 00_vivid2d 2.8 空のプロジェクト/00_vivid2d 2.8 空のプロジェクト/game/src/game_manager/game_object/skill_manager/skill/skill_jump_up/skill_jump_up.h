@@ -37,6 +37,11 @@ public:
      */
     void Action(void);
 
+    /*!
+     *  @brief      アクション終了
+     */
+    void    ActionEnd(void);
+
 protected:
     static const float m_jump_up_rate;
 };

@@ -2,11 +2,10 @@
 
 
 const float CSkillStun::m_cool_time = 20.0f;
-const float CSkillStun::m_active_time = 3.0f;
+const float CSkillStun::m_duration_time = 3.0f;
 
 CSkillStun::CSkillStun(void)
-	:CSkill(SKILL_CATEGORY::ACTIVE)
-	, m_Timer()
+	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 {
 }
 
@@ -17,8 +16,6 @@ CSkillStun::~CSkillStun(void)
 void CSkillStun::Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
-	m_State = SKILL_STATE::WAIT;
-	m_Timer.SetUp(m_active_time);
 }
 
 void CSkillStun::Update(void)
@@ -30,27 +27,11 @@ void CSkillStun::Update(void)
 	{
 	case SKILL_STATE::WAIT:
 		break;
+
 	case SKILL_STATE::ACTIVE:
-		m_GaugePercent = (m_active_time - m_Timer.GetTimer()) / m_active_time * 100.0f;
-
-		if (m_Timer.Finished())
-		{
-			for (int i = 0; i < dm.GetCurrentPlayer(); i++)
-			{
-					um.GetPlayer(UNIT_ID(i))->SetActionFlag(true);
-			}
-			m_Timer.Reset();
-			m_Timer.SetUp(m_cool_time);
-			m_State = SKILL_STATE::COOLDOWN;
-		}
 		break;
-	case SKILL_STATE::COOLDOWN:
-		m_GaugePercent = m_Timer.GetTimer() / m_cool_time * 100.0f;
 
-		if (m_Timer.Finished())
-		{
-			m_State = SKILL_STATE::WAIT;
-		}
+	case SKILL_STATE::COOLDOWN:
 		break;
 	}
 }
@@ -76,7 +57,14 @@ void CSkillStun::Action()
 				um.GetPlayer(UNIT_ID(i))->SetActionFlag(false);
 			}
 		}
-		m_Timer.SetUp(m_active_time);
 		m_State = SKILL_STATE::ACTIVE;
+	}
+}
+
+void CSkillStun::ActionEnd()
+{
+	for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+	{
+		um.GetPlayer(UNIT_ID(i))->SetActionFlag(true);
 	}
 }
