@@ -13,24 +13,24 @@ CKeyScale::~CKeyScale()
 
 void CKeyScale::Initialize(void* key_pointer)
 {
-	m_key = (CUI*)key_pointer;
-	if (!m_key) return;
-	m_key->SetScale(m_max_scale);
+	m_Key = (CUI*)key_pointer;
+	if (!m_Key) return;
+	m_Key->SetScale(m_max_scale);
 }
 
 void CKeyScale::Update()
 {
-	if (!m_key) return;
+	if (!m_Key) return;
 
-	vivid::Vector2 scale = m_key->GetScale();
+	vivid::Vector2 scale = m_Key->GetScale();
 	scale.x -= m_speed;
 	scale.y -= m_speed;
 	if (scale.x <= m_min_scale.x || scale.y <= m_min_scale.y)
 		scale = m_min_scale;
-	m_key->SetScale(scale);
+	m_Key->SetScale(scale);
 }
 
 void CKeyScale::Finalize()
 {
-	m_key = nullptr;
+	m_Key = nullptr;
 }

@@ -157,3 +157,13 @@ void CUI::SetScale(const vivid::Vector2& scale)
     m_Scale = scale;
 }
 
+CTransform CUI::GetTransform(void)
+{
+    return m_Transform;
+}
+
+void CUI::SetTransform(const CTransform& transform)
+{
+    m_Transform = transform;
+}
+

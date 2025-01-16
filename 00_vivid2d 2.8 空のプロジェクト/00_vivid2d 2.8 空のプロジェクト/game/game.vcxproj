@@ -170,6 +170,7 @@
   <ItemGroup>
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation\animation.cpp" />
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation\key_scale\key_scale.cpp" />
+    <ClCompile Include="src\game_manager\game_object\animation_manager\animation\plane_up_down\plane_up_down.cpp" />
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\floating_effect\floating_effect.cpp" />
@@ -280,7 +281,7 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\finish_backGround\finish_backGround.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\key\key.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\pause\pause.cpp" />
-    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\random_game\random_game.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\plane_game_image\plane_game_image.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\player\player.cpp" />
     <ClCompile Include="src\game_manager\game_object\unit_manager\unit\unit.cpp" />
@@ -303,6 +304,7 @@
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\animation.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\animation_id.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\key_scale\key_scale.h" />
+    <ClInclude Include="src\game_manager\game_object\animation_manager\animation\plane_up_down\plane_up_down.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation_manager.h" />
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_skill\select_skill.h" />
@@ -421,7 +423,7 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\finish_backGround\finish_backGround.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\key\key.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\pause\pause.h" />
-    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\random_game\random_game.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\plane_game_image\plane_game_image.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\ui.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\ui_id.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui_manager.h" />

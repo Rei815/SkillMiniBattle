@@ -1,5 +1,6 @@
 #include "animation_manager.h"
 #include "animation/key_scale/key_scale.h"
+#include "animation/plane_up_down/plane_up_down.h"
 /*
  *  インスタンスの取得
  */
@@ -100,6 +101,8 @@ void CAnimationManager::Create(ANIMATION_ID id, void* object_pointer)
     {
     case ANIMATION_ID::KEY_SCALE:
         animation = new CKeyScale();
+    case ANIMATION_ID::PLANE_UP_DOWN:
+        animation = new CPlaneUpDown();
         break;
     }
     if (!animation) return;

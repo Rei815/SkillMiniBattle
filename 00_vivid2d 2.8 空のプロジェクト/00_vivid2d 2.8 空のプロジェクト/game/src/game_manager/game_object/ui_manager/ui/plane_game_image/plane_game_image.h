@@ -5,18 +5,18 @@
 #include "..\..\..\scene_manager\scene\game\game_id.h"
 #include "..\..\..\..\..\primitive\primitive.h"
 
-class CRandomGame : public CUI
+class CPlaneGameImage : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CRandomGame(UI_ID id);
+    CPlaneGameImage(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CRandomGame(void);
+    ~CPlaneGameImage(void);
 
     /*!
      *  @brief      初期化
@@ -43,17 +43,35 @@ public:
      */
     void        Finalize(void);
 
+    /*!
+     *  @brief      設定されているゲームのIDを取得
+     * 
+     *  @return     ゲームのID
+     */
+    GAME_ID     GetGameID(void);
 
+    /*!
+     *  @brief      設定されているゲームのIDを設定
+     * 
+     *  @param[in]  game_id     ゲームのID
+     */
     void        SetGameID(GAME_ID game_id);
+
+    /*!
+     *  @brief      トランスフォーム設定
+     *
+     *  @param[in]  transform  トランスフォーム
+     */
+    void            SetTransform(const CTransform& transform);
 private:
 
 
     static const std::string        m_file_names[];
-    static const int                m_height;       //!< 高さ
-    static const int                m_width;        //!< 幅
-    static const vivid::Rect        m_rect;         //!< 読み込み範囲
-    static const vivid::Vector2     m_anchor;       //!< 基準点
-    static const vivid::Vector2     m_scale;        //!< 拡縮
+    static const int                m_height;           //!< 高さ
+    static const int                m_width;            //!< 幅
+    static const vivid::Rect        m_rect;             //!< 読み込み範囲
+    static const vivid::Vector2     m_anchor;           //!< 基準点
+    static const vivid::Vector2     m_scale;            //!< 拡縮
     static const float              m_rotation_speed;
     static const float              m_speed;
 
@@ -64,5 +82,6 @@ private:
     float                           m_Angle;
     float                           m_PosAngle;
     CPlane                          m_Plane;
-    CVector3                        m_InitialPosition;     //!< 初期位置
+    CVector3                        m_InitialPosition;  //!< 初期位置
+    GAME_ID                         m_GameID;
 };
