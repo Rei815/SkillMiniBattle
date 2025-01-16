@@ -2,6 +2,7 @@
 
 #include "vivid.h"
 #include "..\ui.h"
+#include "..\..\..\scene_manager\scene\game\game_id.h"
 #include "..\..\..\..\..\primitive\primitive.h"
 
 class CRandomGame : public CUI
@@ -42,10 +43,12 @@ public:
      */
     void        Finalize(void);
 
+
+    void        SetGameID(GAME_ID game_id);
 private:
 
 
-    static const std::string             m_file_name;
+    static const std::string        m_file_names[];
     static const int                m_height;       //!< ‚‚³
     static const int                m_width;        //!< •
     static const vivid::Rect        m_rect;         //!< “Ç‚Ýž‚Ý”ÍˆÍ
@@ -53,6 +56,8 @@ private:
     static const vivid::Vector2     m_scale;        //!< Šgk
     static const float              m_rotation_speed;
     static const float              m_speed;
+
+    std::string                     m_FileName;
     int                             m_Width;
     int                             m_Height;
     int                             m_Handle;

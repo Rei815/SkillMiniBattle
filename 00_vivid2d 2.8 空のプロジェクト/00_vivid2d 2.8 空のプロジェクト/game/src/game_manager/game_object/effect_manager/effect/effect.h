@@ -123,7 +123,7 @@ public:
      *
      *  @return     à íu
      */
-    CVector3  GetPosition(void);
+    CVector3        GetPosition(void);
 
     /*!
      *  @brief      à íuê›íË

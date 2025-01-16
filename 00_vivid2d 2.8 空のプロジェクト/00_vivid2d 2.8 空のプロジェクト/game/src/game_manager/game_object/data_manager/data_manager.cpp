@@ -19,7 +19,10 @@ CDataManager::
 Initialize(void)
 {
     m_OverallRankingList->clear();
-
+    for (int i = 0; i < m_CurrentPlayerNum; i++)
+    {
+        m_PlayerWins[i] = 0;
+    }
     m_MaxGameNum = 3;
 }
 
@@ -36,6 +39,10 @@ CDataManager::Update(void)
  */
 void CDataManager::Finalize(void)
 {
+    for (int i = 0; i < m_CurrentPlayerNum; i++)
+    {
+        m_PlayerWins[i] = 0;
+    }
 }
 
 void CDataManager::PlayerWin(UNIT_ID unitID)
@@ -58,7 +65,7 @@ void CDataManager::SetCurrentPlayer(int num)
     ResetLastGameRanking();
 }
 
-GAME_ID CDataManager::GetGameID()
+GAME_ID CDataManager::GetSelectGameID()
 {
     return m_CurrentGameID;
 }

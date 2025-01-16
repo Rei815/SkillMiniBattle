@@ -39,7 +39,7 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     CUIManager::GetInstance().Initialize();
     CSkillManager::GetInstance().Initialize();
 
-    m_GameID = CDataManager::GetInstance().GetGameID();
+    m_GameID = CDataManager::GetInstance().GetSelectGameID();
 
     //アイコンの配列を初期化
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)

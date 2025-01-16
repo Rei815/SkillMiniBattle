@@ -3,9 +3,11 @@
 #include "..\..\..\game_object.h"
 #include "../../../ui_manager/ui_manager.h"
 #include "../../../data_manager/data_manager.h"
+#include "../../../animation_manager/animation_manager.h"
 
-const vivid::Vector2  CResultMiniGame::m_OriginKeyPos = vivid::Vector2(0, 0);
-const float  CResultMiniGame::m_KeyOffset = 100.0f;
+const vivid::Vector2  CResultMiniGame::m_OriginKeyPos = vivid::Vector2(20, 500);
+const float  CResultMiniGame::m_key_offset = 55.0f;
+const float  CResultMiniGame::m_players_key_offset = 6.0f;
 CResultMiniGame::CResultMiniGame(void)
 {
 
@@ -18,35 +20,53 @@ CResultMiniGame::~CResultMiniGame(void)
 void CResultMiniGame::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
+    CAnimationManager::GetInstance().Initialize();
     CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
-
-    //これまでの勝利数表示
-    for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+    CDataManager& dm = CDataManager::GetInstance();
+    vivid::Vector2 offsetPos;
+    int firstPlayerID = (int)dm.GetLastGameRanking(0);
+    for (int i = 0; i < dm.GetCurrentPlayer(); i++)
     {
-        for (int j = 0; j < CDataManager::GetInstance().GetMaxGameNum(); j++)
+        //背景表示
+        for (int j = 0; j < dm.GetMaxGameNum(); j++)
         {
-            CUIManager::GetInstance().Create(UI_ID::KEY_BG, m_OriginKeyPos + vivid::Vector2(m_KeyOffset * j, -m_KeyOffset * i));
+            offsetPos = vivid::Vector2(m_key_offset * j + m_key_offset * m_players_key_offset * i, 0);
+            CUIManager::GetInstance().Create(UI_ID::KEY_BG, m_OriginKeyPos + offsetPos);
         }
-        for (int j = 0; j < CDataManager::GetInstance().GetPlayerWin(i) - 1; j++)
+        //これまでの勝利数表示
+        //一位のプレイヤー以外は勝利数そのままで表示
+        int playerWin = dm.GetPlayerWin(i);
+        if (i == firstPlayerID)
+            playerWin--;
+        for (int j = 0; j < playerWin; j++)
         {
-            CUIManager::GetInstance().Create(UI_ID::KEY, m_OriginKeyPos + vivid::Vector2(m_KeyOffset * j, -m_KeyOffset * i));
+            offsetPos = vivid::Vector2(m_key_offset * j + m_key_offset * m_players_key_offset * i, 0);
+            CUIManager::GetInstance().Create(UI_ID::KEY, m_OriginKeyPos + offsetPos);
         }
+
     }
 
-    CUI* animationKey = CUIManager::GetInstance().Create(UI_ID::KEY);
+    //アニメーション付きのカギの表示(一位のみ)
+    offsetPos = vivid::Vector2(m_key_offset * (dm.GetPlayerWin(firstPlayerID) - 1) + m_key_offset * m_players_key_offset * firstPlayerID, 0);
 
+    CUI* animationKey = CUIManager::GetInstance().Create(UI_ID::KEY, m_OriginKeyPos + offsetPos);
+    CAnimationManager::GetInstance().Create(ANIMATION_ID::KEY_SCALE, animationKey);
 }
 
 void CResultMiniGame::Update(void)
 {
+    CAnimationManager::GetInstance().Update();
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::X))
     {
         CDataManager& dm = CDataManager::GetInstance();
-        SCENE_ID sceneID = SCENE_ID::RESULT_GAME;
+        SCENE_ID sceneID = SCENE_ID::SELECTGAME;
         for (int i = 0; i < dm.GetCurrentPlayer(); i++)
         {
-            if (dm.GetPlayerWin(i) != dm.GetMaxGameNum())
-                sceneID = SCENE_ID::SELECTGAME;
+            if (dm.GetPlayerWin(i) == dm.GetMaxGameNum())
+            {
+                sceneID = SCENE_ID::RESULT_GAME;
+                break;
+            }
         }
         CSceneManager::GetInstance().ChangeScene(sceneID);
     }
@@ -54,7 +74,6 @@ void CResultMiniGame::Update(void)
 
 void CResultMiniGame::Draw(void)
 {
-    
     vivid::DrawText(20, "ミニゲームリザルト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
     vivid::DrawText(20, "Xで次へ", vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, 0));
 
@@ -62,6 +81,7 @@ void CResultMiniGame::Draw(void)
 
 void CResultMiniGame::Finalize(void)
 {
+    CAnimationManager::GetInstance().Finalize();
     IScene::Finalize();
 
 

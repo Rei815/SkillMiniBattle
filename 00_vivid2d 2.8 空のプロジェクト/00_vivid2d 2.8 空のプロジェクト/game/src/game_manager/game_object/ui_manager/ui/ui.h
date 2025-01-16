@@ -93,7 +93,7 @@ public:
      *
      *  @return     à íu
      */
-    vivid::Vector2            GetPosition(void);
+    vivid::Vector2  GetPosition(void);
     /*!
      *  @brief      í∑Ç≥éÊìæ
      *
@@ -123,9 +123,9 @@ public:
     /*!
      *  @brief      IDê›íË
      *
-     *  @param[in]  uiID  UIÇÃID
+     *  @param[in]  id  UIÇÃID
      */
-    void            SetUI_ID(UI_ID uiID);
+    void            SetUI_ID(UI_ID id);
 
     /*!
      *  @brief      à íuê›íË

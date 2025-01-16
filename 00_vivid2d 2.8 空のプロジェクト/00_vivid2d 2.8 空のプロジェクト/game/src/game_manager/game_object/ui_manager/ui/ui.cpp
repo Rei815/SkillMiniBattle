@@ -142,9 +142,9 @@ vivid::Vector2 CUI::GetScale(void)
     return m_Scale;
 }
 
-void CUI::SetUI_ID(UI_ID uiID)
+void CUI::SetUI_ID(UI_ID id)
 {
-    m_UI_ID = uiID;
+    m_UI_ID = id;
 }
 
 void CUI::SetPosition(const vivid::Vector2& position)

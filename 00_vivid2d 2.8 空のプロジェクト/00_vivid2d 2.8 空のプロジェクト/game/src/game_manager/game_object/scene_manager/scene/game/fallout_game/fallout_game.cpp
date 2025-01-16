@@ -128,6 +128,7 @@ void CFallOutGame::Finalize(void)
 
 void CFallOutGame::Start(void)
 {
+	CGame::Start();
 	if (m_WaitTimer.Finished())
 	{
 		CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
@@ -136,7 +137,6 @@ void CFallOutGame::Start(void)
 		m_ChooseObjectTimer[m_TopicList.size() - 1].SetActive(true);
 
 	}
-	CGame::Start();
 
 }
 
@@ -387,6 +387,10 @@ void CFallOutGame::CheckFinish()
 			unit->SetDefeatFlag(true);
 
 			CDataManager::GetInstance().AddLastGameRanking(player->GetUnitID());
+			//念のため、同一フレームで全滅した場合に一人残すようにする
+			if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+				break;
+
 		}
 		++it;
 	}
@@ -396,7 +400,11 @@ void CFallOutGame::CheckFinish()
 	{
 		//一人が生き残った時に終了
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+		{
+			CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
+
 			CGame::SetGameState(GAME_STATE::FINISH);
+		}
 	}
 	else //一人の場合
 	{

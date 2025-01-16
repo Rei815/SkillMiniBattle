@@ -2,6 +2,7 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 #include "../../../data_manager/data_manager.h"
+#include "../../../ui_manager/ui/random_game/random_game.h"
 
 const int CSelectGame::m_games_num = 3;
 const float CSelectGame::m_circle_radius = 1000.0f;
@@ -22,6 +23,8 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -2500.0f));
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CUIManager::GetInstance().Initialize();
+
+    CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
     for (int i = 0; i < m_games_num; i++)
     {
         CTransform transform;
@@ -30,9 +33,11 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
         const float _z = m_circle_radius * cos(rad);
         transform.rotation.y = DEG_TO_RAD( i * (360.0f / (float)m_games_num));
         transform.position.y = 500.0f;
-        transform.position.x = 0.0f;// _x;
+        transform.position.x = 0.0f;//_x;
         transform.position.z = -m_circle_radius;//_z;
-        CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME, transform);
+        
+        CRandomGame* randomGame = dynamic_cast<CRandomGame*>(CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME, transform));
+        randomGame->SetGameID((GAME_ID)i);
     }
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
     ChangeLightTypeDir(VGet(1.0f, -1.0f, 1.0f));
@@ -49,16 +54,17 @@ void CSelectGame::Update(void)
     {
         int game_id = rand() % (int)GAME_ID::MAX;
         _gameID = (GAME_ID)game_id;
+        CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
 
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
-        /*
-        switch (game_id)
-        {
-        case (int)GAME_ID::FALL_OUT: CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME); break;
-        case (int)GAME_ID::DODGE_BALL_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME); break;
-        case (int)GAME_ID::DEBUG_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME); break;
-        }
-        */
+        
+        //switch (game_id)
+        //{
+        //case (int)GAME_ID::FALL_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME); break;
+        //case (int)GAME_ID::DODGE_BALL_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME); break;
+        //case (int)GAME_ID::DARUMA_FALL_DOWN_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN); break;
+        //}
+        
     }
 #if _DEBUG
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
