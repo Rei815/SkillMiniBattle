@@ -201,6 +201,8 @@
     <ClCompile Include="src\game_manager\game_object\object_manager\object\daruma_falldown_stage_object\daruma_falldown_stage_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_icon\player_icon.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fallout_topic_bg\fallout_topic_bg.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\start_game_count\start_game_count.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\start_game_text\start_game_text.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\title_logo\titile_logo.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\topic_shutter\topic_shutter.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\ui.cpp" />
@@ -329,6 +331,8 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_topic_bg\fallout_topic_bg.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\start_game_count\start_game_count.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\start_game_text\start_game_text.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\title_logo\title_logo.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_select_bg\fallout_select_bg.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\topic_shutter\topic_shutter.h" />

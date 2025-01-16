@@ -52,7 +52,9 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
-		CUnitManager::GetInstance().GetPlayer((UNIT_ID)i)->MulMoveSpeedRate(m_move_speed);
+		CPlayer* Player = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
+		Player->MulMoveSpeedRate(m_move_speed);
+		Player->SetActionFlag(false);
 	}
 
 	CCamera::GetInstance().Initialize();

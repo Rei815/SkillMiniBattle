@@ -61,6 +61,9 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	{
 		playerPos[i].y += 200.0f;
 		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
+		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
+		if (Player != nullptr)
+			Player->SetActionFlag(false);
 		m_EntryList.push_back(unit);
 
 	}

@@ -11,11 +11,17 @@
 #include "../../../data_manager/data_manager.h"
 #include "../../../unit_manager/unit/player/player.h"
 
+
+const float CGame::m_start_count_time = 3.0f;
+const float CGame::m_start_text_time = 1.0f;
+
 /*
  *  コンストラクタ
  */
 CGame::CGame(void)
     : m_DebugText()
+    , m_WaitTimer()
+    , m_CountFlag(true)
     , m_SetActionflag(false)
     , m_FinishFlag(false)
     , m_EntryList()
@@ -44,7 +50,10 @@ CGame::Initialize(SCENE_ID scene_id)
     CControllerManager::GetInstance().Initialize();
     CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();
-    m_WaitTime = 0;
+
+    m_WaitTimer.SetUp(m_start_count_time);
+    m_CountFlag = true;
+    CUIManager::GetInstance().Create(UI_ID::START_COUNTDOWN);
 
     m_GameState = GAME_STATE::START;
 
@@ -84,10 +93,11 @@ CGame::Update(void)
         CUIManager::GetInstance().Update();
 
         CEffectManager::GetInstance().Update();
+
+        CObjectManager::GetInstance().Update();
+        CGimmickManager::GetInstance().Update();
     }
-    CObjectManager::GetInstance().Update();
     CControllerManager::GetInstance().Update();
-    CGimmickManager::GetInstance().Update();
 }
 
 /*
@@ -189,15 +199,35 @@ CGame::Start(void)
         m_SetActionflag = true;
         CUnitManager::GetInstance().SetAllPlayerAction(false);
     }
-    if (m_WaitTime > 120)
+
+
+    if (!m_PauseFlag)
     {
-        m_WaitTime = 0;
+        m_WaitTimer.Update();
 
-        m_GameState = GAME_STATE::PLAY;
+        if (m_WaitTimer.Finished())
+        {
+            if (m_CountFlag)
+            {
+                m_CountFlag = false;
+                m_WaitTimer.SetUp(m_start_text_time);
+
+                CUIManager::GetInstance().Create(UI_ID::START_TEXT);
+            }
+            else
+            {
+                m_GameState = GAME_STATE::PLAY;
+
+                CPlayer* TempPlayer;
+
+                for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+                {
+                    TempPlayer = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
+                    TempPlayer->SetActionFlag(true);
+                }
+            }
+        }
     }
-
-    ++m_WaitTime;
-
 }
 
 /*
