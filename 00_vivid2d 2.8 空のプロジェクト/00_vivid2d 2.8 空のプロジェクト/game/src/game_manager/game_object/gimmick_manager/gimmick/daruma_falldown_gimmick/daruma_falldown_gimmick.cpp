@@ -68,7 +68,7 @@ void CDaruma_FallDownGimmick::Ready()//U‚è•Ô‚è•û‚Ìİ’è
 			Feint();
 			break;
 		case TURN_TYPE::SLOW:
-			m_Timer.SetUp(2 + (rand() % 3));
+			m_Timer.SetUp(1 + (rand() % 2));
 			Slow();
 			break;
 		case TURN_TYPE::FAST:

@@ -2,7 +2,7 @@
 
 
 const float CSkillStun::m_cool_time = 20.0f;
-const float CSkillStun::m_duration_time = 3.0f;
+const float CSkillStun::m_duration_time = 2.0f;
 
 CSkillStun::CSkillStun(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
@@ -21,7 +21,6 @@ void CSkillStun::Initialize(SKILL_ID skill_id)
 void CSkillStun::Update(void)
 {
 	CSkill::Update();
-	m_Timer.Update();
 
 	switch (m_State)
 	{

@@ -42,7 +42,7 @@ CGameManager::Initialize(void)
     sound.Load();
 
     // BGM再生
-    sound.Play(SOUND_ID::BGM, true);
+    //sound.Play(SOUND_ID::BGM, true);
 
     // シーンマネージャー初期化
     CSceneManager::GetInstance().Initialize();

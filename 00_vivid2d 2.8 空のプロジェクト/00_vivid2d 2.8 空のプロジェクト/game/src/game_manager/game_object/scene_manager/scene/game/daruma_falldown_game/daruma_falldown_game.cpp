@@ -8,6 +8,9 @@
 #include "../../../../unit_manager/unit/unit.h"
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
+#include "../../../../sound_manager/sound_manager.h"
+
+#include <EffekseerForDXLib.h>
 
 
 const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(200, 1200.0f, -1500.0f);
@@ -32,8 +35,11 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 {
 	CGame::Initialize(scene_id);
 	m_RemainCount = CDataManager::GetInstance().GetCurrentPlayer();
-	m_CountTime = 120;
+	m_CountTime = 180;
 	m_Timer.SetUp(m_CountTime);
+
+	CSoundManager& sm = CSoundManager::GetInstance();
+	sm.Play(SOUND_ID(11), true);
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
@@ -82,6 +88,7 @@ void CDaruma_FallDownGame::Update(void)
 
 	CUnitManager& um = CUnitManager::GetInstance();
 	CDataManager& dm = CDataManager::GetInstance();
+	
 
 	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
 	CObjectManager::OBJECT_LIST::iterator it;
@@ -152,6 +159,10 @@ void CDaruma_FallDownGame::Draw(void)
 	(vivid::controller::DEVICE_ID::PLAYER1).y),vivid::Vector2(100.0f, 40.0f));
 
 	vivid::DrawText(30, std::to_string(m_CountTime-(int)m_Timer.GetTimer()), vivid::Vector2(100.0f, 70.0f));
+
+	//
+	DrawEffekseer3D();
+	//
 }
 
 void CDaruma_FallDownGame::Finalize(void)
@@ -162,13 +173,37 @@ void CDaruma_FallDownGame::Finalize(void)
 void CDaruma_FallDownGame::Ranking(void)
 {
 	CUnitManager& um = CUnitManager::GetInstance();
+
+	std::list<CPlayer*>LosePlayerList;
+
 	//àÍà à»äOÇîsñkèÛë‘Ç…Ç∑ÇÈ
 	for (int j = 0; j < CDataManager::GetInstance().GetCurrentPlayer(); j++)
 	{
 		if (j != m_TempFirstNum)
 		{
 			um.GetPlayer((UNIT_ID)j)->SetDefeatFlag(true);
+			LosePlayerList.push_back(um.GetPlayer((UNIT_ID)j));
 		}
 	}
+
+	while (!LosePlayerList.empty())
+	{
+		std::list<CPlayer*>::iterator temp = LosePlayerList.begin();
+
+		for (std::list<CPlayer*>::iterator it = LosePlayerList.begin(); it != LosePlayerList.end(); it++)
+		{
+			if ((*temp)->GetPosition().x > (*it)->GetPosition().x)
+			{
+				temp = it;
+			}
+		}
+
+		CDataManager::GetInstance().AddLastGameRanking((*temp)->GetUnitID());
+
+		LosePlayerList.erase(temp);
+	}
+
+	CDataManager::GetInstance().AddLastGameRanking((UNIT_ID)m_TempFirstNum);
+
 	CGame::SetGameState(GAME_STATE::FINISH);
 }

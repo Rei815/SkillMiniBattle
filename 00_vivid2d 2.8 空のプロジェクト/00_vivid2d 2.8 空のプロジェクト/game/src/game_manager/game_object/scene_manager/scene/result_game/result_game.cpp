@@ -32,6 +32,7 @@ void CResultGame::Update(void)
     {
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
         {
+
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::TITLE);
         }
     }
