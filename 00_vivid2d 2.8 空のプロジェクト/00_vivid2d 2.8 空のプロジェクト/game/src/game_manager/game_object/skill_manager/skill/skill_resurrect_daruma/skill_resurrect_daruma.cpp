@@ -5,7 +5,7 @@
 const float CSkillResurrectDaruma::m_active_time = 2.0f;
 
 CSkillResurrectDaruma::CSkillResurrectDaruma(void)
-	:CSkill(SKILL_CATEGORY::RESURRECT)
+	:CSkill(SKILL_CATEGORY::PASSIVE)
 	, m_Timer()
 {
 }

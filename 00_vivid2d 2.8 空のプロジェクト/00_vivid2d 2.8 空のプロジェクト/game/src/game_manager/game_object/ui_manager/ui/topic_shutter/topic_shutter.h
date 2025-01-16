@@ -43,6 +43,7 @@ private:
     static const vivid::Rect        m_rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
     static const vivid::Vector2     m_anchor;           //!< Šî€“_
     static const vivid::Vector2     m_scale;            //!< Šgk
+    static const vivid::Vector2     m_adjust_value;     //!< ’²®’l
     static const float              m_duration_time;    //!< ‰B‚·ŽžŠÔ
     vivid::Rect                     m_Rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
 

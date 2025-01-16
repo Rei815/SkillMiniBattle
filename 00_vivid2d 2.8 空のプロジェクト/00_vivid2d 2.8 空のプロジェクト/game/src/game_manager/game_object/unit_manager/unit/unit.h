@@ -266,6 +266,14 @@ public:
      *  @return     親のオブジェクト
      */
     IObject*    GetParent(void);
+
+    /*!
+     *  @brief      親のオブジェクトを設定
+     *
+     *  @param[in]  parent    親のオブジェクト
+     */
+    void        SetParent(IObject* parent);
+
 protected:
 
 

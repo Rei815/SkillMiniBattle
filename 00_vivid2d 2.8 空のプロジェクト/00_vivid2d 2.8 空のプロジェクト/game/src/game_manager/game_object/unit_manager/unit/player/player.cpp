@@ -8,9 +8,9 @@
 const float             CPlayer::m_radius = 50.0f;
 const float             CPlayer::m_height = 100.0f;
 
-const float             CPlayer::m_move_speed = 0.25f;
+const float             CPlayer::m_move_speed = 0.6f;
 const float             CPlayer::m_jump_power = 20.0f;
-const float             CPlayer::m_move_friction = 0.975f;
+const CVector3          CPlayer::m_move_friction = CVector3(0.9f,0.975f,0.9f);
 const float             CPlayer::m_fly_away_speed = 40.0f;
 
 const float             CPlayer::m_max_life = 3.0f;
@@ -380,9 +380,9 @@ void CPlayer::Move(void)
 
     if (m_FrictionFlag)
     {
-        m_Velocity.x *= m_move_friction;
-        m_Velocity.y *= m_move_friction;
-        m_Velocity.z *= m_move_friction;
+        m_Velocity.x *= m_move_friction.x;
+        m_Velocity.y *= m_move_friction.y;
+        m_Velocity.z *= m_move_friction.z;
     }
 
     if (m_IsGround)

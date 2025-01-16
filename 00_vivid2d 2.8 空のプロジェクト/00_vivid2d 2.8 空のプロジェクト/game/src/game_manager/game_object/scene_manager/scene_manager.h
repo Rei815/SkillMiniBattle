@@ -86,12 +86,12 @@ public:
 
 
 
-    /*!
-     *  @brief      現在のシーンを取得
-     *
-     *  @return     現在のシーン
-     */
-    //IScene* GetScene(void);
+    ///*!
+    // *  @brief      現在のシーンを取得
+    // *
+    // *  @return     現在のシーン
+    // */
+    //IScene* GetScene(SCENE_ID scene_id);
 
 private:
     /*!

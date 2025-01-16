@@ -5,5 +5,5 @@
  */
 enum class ANIMATION_ID
 {
-
+	KEY_SCALE,
 };

@@ -43,7 +43,10 @@ Update(void)
 	case SKILL_STATE::ACTIVE:
 		m_Timer.Update();
 		m_GaugePercent = (m_duration_time - m_Timer.GetTimer()) / m_duration_time * 100.0f;
-
+		if (m_Parent)
+		{
+			m_Shutter->SetPosition(m_Parent->GetPosition());
+		}
 		if (m_Timer.Finished())
 		{
 			m_Timer.SetUp(m_cool_time);
@@ -104,7 +107,7 @@ Action(void)
 	while (it != uiList.end())
 	{
 		CUI* ui = (*it);
-		if (ui->GetUI_ID() == UI_ID::FALLOUT_TOPIC)
+		if (ui->GetUI_ID() == UI_ID::FALLOUT_TOPIC_BG)
 		{
 			topicList.push_back(ui);
 		}
@@ -114,6 +117,7 @@ Action(void)
 	it = topicList.begin();
 	int num = rand() % topicList.size();
 	std::advance(it, num);
-	CUIManager::GetInstance().Create(UI_ID::TOPIC_SHUTTER, (*it)->GetPosition());
+	m_Parent = (*it);
+	m_Shutter = CUIManager::GetInstance().Create(UI_ID::TOPIC_SHUTTER, (*it)->GetPosition());
 	m_State = SKILL_STATE::ACTIVE;
 }

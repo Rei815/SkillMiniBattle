@@ -156,7 +156,7 @@ protected:
     static const float              m_height;                       //!< 高さ
     static const float              m_move_speed;                   //!< 移動速度
     static const float              m_jump_power;                   //!< ジャンプ力
-    static const float              m_move_friction;                //!< 移動用減速率
+    static const CVector3           m_move_friction;                //!< 移動用減速率
     static const float              m_fly_away_speed;               //!< 被弾時の吹っ飛び速度
     static const float              m_max_life;                     //!< 最大ライフ
     static const float              m_max_invincible_time;          //!< 無敵時間

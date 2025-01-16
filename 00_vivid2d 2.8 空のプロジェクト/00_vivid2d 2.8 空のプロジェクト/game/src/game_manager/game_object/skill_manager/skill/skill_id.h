@@ -8,7 +8,6 @@ enum class SKILL_CATEGORY
 	UNKNOWN,        //!< 所属不明
 	ACTIVE,         //!< アクティブ
 	PASSIVE,        //!< パッシブ
-	RESURRECT,      //!< 復活
 };
 
 /*!

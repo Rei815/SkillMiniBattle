@@ -14,7 +14,7 @@ CDarumaFallDownStageObject::~CDarumaFallDownStageObject()
 void CDarumaFallDownStageObject::Initialize(OBJECT_ID id, const CTransform& transform)
 {
 	m_FileName = m_model_file_name;
-
+	m_Tag = "Floor";
 	IObject::Initialize(id, transform);
 
 	m_Model.Initialize(m_FileName, m_Transform);

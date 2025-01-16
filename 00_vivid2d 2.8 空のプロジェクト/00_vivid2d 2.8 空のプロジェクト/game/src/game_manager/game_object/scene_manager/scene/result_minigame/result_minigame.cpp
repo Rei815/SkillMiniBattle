@@ -18,17 +18,23 @@ CResultMiniGame::~CResultMiniGame(void)
 void CResultMiniGame::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
-
     CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
 
     //これまでの勝利数表示
     for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
     {
+        for (int j = 0; j < CDataManager::GetInstance().GetMaxGameNum(); j++)
+        {
+            CUIManager::GetInstance().Create(UI_ID::KEY_BG, m_OriginKeyPos + vivid::Vector2(m_KeyOffset * j, -m_KeyOffset * i));
+        }
         for (int j = 0; j < CDataManager::GetInstance().GetPlayerWin(i) - 1; j++)
         {
-            CUIManager::GetInstance().Create(UI_ID::KEY, m_OriginKeyPos + vivid::Vector2(m_KeyOffset * j, m_KeyOffset * i));
+            CUIManager::GetInstance().Create(UI_ID::KEY, m_OriginKeyPos + vivid::Vector2(m_KeyOffset * j, -m_KeyOffset * i));
         }
     }
+
+    CUI* animationKey = CUIManager::GetInstance().Create(UI_ID::KEY);
+
 }
 
 void CResultMiniGame::Update(void)
@@ -48,7 +54,7 @@ void CResultMiniGame::Update(void)
 
 void CResultMiniGame::Draw(void)
 {
-
+    
     vivid::DrawText(20, "ミニゲームリザルト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
     vivid::DrawText(20, "Xで次へ", vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, 0));
 

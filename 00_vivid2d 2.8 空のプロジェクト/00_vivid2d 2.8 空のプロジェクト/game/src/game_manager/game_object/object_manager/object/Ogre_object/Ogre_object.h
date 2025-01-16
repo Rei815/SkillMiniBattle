@@ -56,7 +56,7 @@ public:
 
 private:
     static const float                     m_start_height;
-    static const float                     m_remove_height;
+    static const float                     m_return_height;
     static const float                     m_invisible_alpha;
     static const std::string               m_file_name;
     float                                  m_FallSpeed;

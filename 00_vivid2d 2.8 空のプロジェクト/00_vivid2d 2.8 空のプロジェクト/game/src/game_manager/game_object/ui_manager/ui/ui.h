@@ -111,22 +111,44 @@ public:
      *
      *  @return     UIのID
      */
-    UI_ID            GetUI_ID(void);
+    UI_ID           GetUI_ID(void);
+
+    /*!
+     *  @brief      拡大率取得
+     *
+     *  @return     拡大率
+     */
+    vivid::Vector2  GetScale(void);
 
     /*!
      *  @brief      ID設定
      *
      *  @param[in]  uiID  UIのID
      */
-    void             SetUI_ID(UI_ID uiID);
+    void            SetUI_ID(UI_ID uiID);
 
+    /*!
+     *  @brief      位置設定
+     *
+     *  @param[in]  position  位置
+     */
+    void            SetPosition(const vivid::Vector2& position);
+
+    /*!
+     *  @brief      拡大率設定
+     *
+     *  @param[in]  scale  拡大率
+     */
+    void            SetScale(const vivid::Vector2& scale);
 protected:
 
-    CTransform                      m_Transform;
+    CTransform                      m_Transform;        //!< トランスフォーム
     vivid::Vector2                  m_Position;         //!< 位置
-    int                             m_Height;       //!< 高さ
-    int                             m_Width;        //!< 幅
-    bool                            m_ActiveFlag;   //!< アクティブフラグ
-    std::vector<UI_ATTRIBUTE>       m_Attributes;    //!< 属性
-    UI_ID                           m_UI_ID;
+    int                             m_Height;           //!< 高さ
+    int                             m_Width;            //!< 幅
+    bool                            m_ActiveFlag;       //!< アクティブフラグ
+    std::vector<UI_ATTRIBUTE>       m_Attributes;       //!< 属性
+    UI_ID                           m_UI_ID;            //!< ID
+
+    vivid::Vector2                  m_Scale;            //!< 拡大率
 };

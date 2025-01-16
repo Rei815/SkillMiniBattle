@@ -8,9 +8,10 @@ class CFallOutTopic : public CUI
 public:
     enum class STATE
     {
-        WAIT,   //!< ‰½‚à‚µ‚È‚¢
-        SWITCHING, //!< ŠG‚ªØ‚è‘Ö‚í‚è‘±‚¯‚Ä‚¢‚éó‘Ô
-        PICK_UP  //!< ŠG‚ªŒˆ‚Ü‚Á‚½ó‘Ô
+        APPEAR,     //!< oŒ»
+        WAIT,       //!< ‰½‚à‚µ‚È‚¢
+        SWITCHING,  //!< ŠG‚ªØ‚è‘Ö‚í‚è‘±‚¯‚Ä‚¢‚éó‘Ô
+        PICK_UP     //!< ŠG‚ªŒˆ‚Ü‚Á‚½ó‘Ô
     };
 
     /*!
@@ -57,19 +58,25 @@ private:
     static const vivid::Rect        m_rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
     static const vivid::Vector2     m_anchor;           //!< Šî€“_
     static const vivid::Vector2     m_scale;            //!< Šgk
-    static const vivid::Vector2     m_adjustPosition;   //!< ”wŒi‚Æ‚Ì’²®’l
+    static const vivid::Vector2     m_adjust_position;   //!< ”wŒi‚Æ‚Ì’²®’l
     static const float              m_speed;            //!< “®‚«‚Ì‘¬“x
     static const float              m_change_time;      //!< Ø‚è‘Ö‚í‚éŽžŠÔ
     static const float              m_wait_time;        //!< ‘Ò‹@ŽžŠÔ
-
+    static const float              m_end_y;            //!< oŒ»Žž‚Ì’âŽ~‚·‚é‚‚³
+    static const float              m_end_time;         //!< I—¹ŽžŠÔ
+    float                           m_StartTime;        //!< ŠJŽnŽžŠÔ
+    float                           m_StartValue;       //!< ŠJŽn’l
+    float                           m_FinishValue;      //!< I—¹’l
     float                           m_Time;
     std::string                     m_FileName;
     vivid::Rect                     m_Rect;
     CTimer                          m_Timer;
     CTimer                          m_SelectTimer;      //!< ‚¨‘è‚ªŒˆ‚Ü‚é‚Ü‚Å‚ÌŽžŠÔ
     CTimer                          m_StopTimer;
-    MARK_ID                         m_PreviousID;       //!< ‘O‰ñ‚ÌID
+    CEasing                         m_Easing;           //!< ƒC[ƒWƒ“ƒO
     MARK_ID                         m_CurrentID;        //!< ¡‰ñ‚ÌID
 
     STATE                           m_State;
+    CUI*                            m_BackGround;
+
 };

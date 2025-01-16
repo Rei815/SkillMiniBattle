@@ -175,6 +175,8 @@ void CUnitManager::CheckHitObject(IObject* object)
             startPos = (*it)->GetPosition();
             endPos = startPos;
             CVector3 tempVelocity = (*it)->GetVelocity().Normalize();
+            if (tempVelocity.y < 0)
+                tempVelocity.y = 0;
             endPos += tempVelocity * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
 
@@ -183,6 +185,9 @@ void CUnitManager::CheckHitObject(IObject* object)
             startPos = (*it)->GetPosition();
             endPos = startPos;
             tempVelocity = (*it)->GetVelocity().RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f).Normalize();
+            if (tempVelocity.y < 0)
+                tempVelocity.y = 0;
+
             endPos += tempVelocity * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
 
@@ -191,6 +196,9 @@ void CUnitManager::CheckHitObject(IObject* object)
             startPos = (*it)->GetPosition();
             endPos = startPos;
             tempVelocity = (*it)->GetVelocity().RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, -45.0f).Normalize();
+            if (tempVelocity.y < 0)
+                tempVelocity.y = 0;
+
             endPos += tempVelocity * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
         }

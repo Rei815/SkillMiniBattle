@@ -34,12 +34,11 @@ public:
     void Action();
 
 protected:
-    static const float      m_floating_time;
+    static const float      m_duration_time;
     static const float      m_cool_time;
     static const CVector3   m_scale;
 
-    CTimer              m_SkillDuration;
-    CTimer              m_CoolTime;
+    CTimer              m_Timer;
 
     IEffect*            m_Effect;
 };

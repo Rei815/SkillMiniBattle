@@ -33,6 +33,4 @@ private:
     static const vivid::Vector2     m_anchor;           //!< Šî€“_
     static const vivid::Vector2     m_scale;            //!< Šgk
 
-    vivid::Vector2                  m_Position;   //!< ˆÊ’u
-
 };

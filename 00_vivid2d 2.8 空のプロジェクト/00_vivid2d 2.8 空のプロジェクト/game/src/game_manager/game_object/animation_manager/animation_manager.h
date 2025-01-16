@@ -3,6 +3,7 @@
 #include "vivid.h"
 #include <list>
 #include "animation/animation_id.h"
+#include "animation/animation.h"
 class CAnimationManager
 {
 public:
@@ -23,10 +24,10 @@ public:
      */
     void        Update(void);
 
-    /*!
-     *  @brief      描画
-     */
-    void        Draw(void);
+    ///*!
+    // *  @brief      描画
+    // */
+    //void        Draw(void);
 
     /*!
      *  @brief      解放
@@ -38,21 +39,19 @@ public:
     // *
     // *  @param[in]  id                  ギミックID
     // */
-    void        Create(ANIMATION_ID id);
-
-    ///*!
-    // *  @brief      ギミック生成
-    // *
-    // *  @param[in]  id                  ギミックID
-    // *  @param[in]  object              オブジェクトのポインタ
-    // *  @param[in]  time                遅延時間
-    // */
-    //void        Create(GIMMICK_ID id, IObject* object, float time);
+    void        Create(ANIMATION_ID id, void* object_pointer);
 
     /*!
      *  @brief      ギミックリスト型
      */
-    //using ANIMATION_LIST = std::list<IAnim*>;
+    using ANIMATION_LIST = std::list<IAnimation*>;
+
+    /*!
+     *  @brief      リスト取得
+     *
+     *  @return     アニメーションリスト
+     */
+    ANIMATION_LIST GetList();
 
 private:
     /*!
@@ -81,5 +80,5 @@ private:
      */
     CAnimationManager& operator=(const CAnimationManager& rhs);
 
-    //ANIMATION_LIST             m_AnimationList;             //!< アニメーションリスト
+    ANIMATION_LIST             m_AnimationList;             //!< アニメーションリスト
 };

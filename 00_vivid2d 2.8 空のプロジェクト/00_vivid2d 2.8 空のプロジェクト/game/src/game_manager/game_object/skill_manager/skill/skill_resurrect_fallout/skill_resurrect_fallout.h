@@ -35,6 +35,7 @@ public:
 
 protected:
     static const float      m_resurrect_height;
+    static const CVector3   m_initial_position;
 
     IEffect*                m_Effect;
 };

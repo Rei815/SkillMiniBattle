@@ -9,6 +9,7 @@
 #include "ui/skill_gauge/skill_gauge.h"
 #include "ui/skill_cursor/skill_cursor.h"
 #include "ui/key/key.h"
+#include "ui/key_bg/key_bg.h"
 #include "ui/title_logo/title_logo.h"
  /*
   *  インスタンスの取得
@@ -160,6 +161,8 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
         ui = new CFinishGameBG(id);     break;
     case UI_ID::KEY:
         ui = new CKey(id);     break;
+    case UI_ID::KEY_BG:
+        ui = new CKeyBG(id);     break;
         break;
     }
 

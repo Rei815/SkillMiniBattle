@@ -19,6 +19,9 @@ public:
 	bool Finished();
 
 	float		GetTimer();
+
+	void		SetLimitTime(float time);
+
 	float		GetLimitTime();
 
 	bool		GetActive();

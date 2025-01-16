@@ -10,8 +10,10 @@ const float             CFallOutTopic::m_change_time = 0.1f;
 const vivid::Rect       CFallOutTopic::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
 const vivid::Vector2    CFallOutTopic::m_scale = vivid::Vector2(1.0f, 1.0f);
 const vivid::Vector2    CFallOutTopic::m_anchor = vivid::Vector2((m_width * m_scale.x) / 2, (m_height * m_scale.y) / 2);
-const vivid::Vector2    CFallOutTopic::m_adjustPosition = vivid::Vector2(60.0f, 40.0f);
+const vivid::Vector2    CFallOutTopic::m_adjust_position = vivid::Vector2(60.0f, 40.0f);
 const float				CFallOutTopic::m_speed = 300;
+const float				CFallOutTopic::m_end_y = 0.0f;
+const float				CFallOutTopic::m_end_time = 2.0f;
 
 /*
  *  コンストラクタ
@@ -20,8 +22,11 @@ CFallOutTopic::
 CFallOutTopic(UI_ID id)
     : CUI(m_width, m_height, id)
 	, m_CurrentID(MARK_ID::NONE)				   
-	, m_PreviousID(MARK_ID::NONE)
-	, m_State(STATE::SWITCHING)
+	, m_State(STATE::APPEAR)
+	, m_Easing(CEasing())
+	, m_StartTime(0.0f)
+	, m_FinishValue(0.0f)
+	, m_BackGround(nullptr)
 {
 }
 
@@ -40,12 +45,15 @@ void
 CFallOutTopic::
 Initialize(const vivid::Vector2& position)
 {
-
+	CUI::Initialize(position);
+	m_StartValue = m_Position.y;
+	m_StartTime = 0.0f;
+	m_FinishValue = m_end_y;
+	m_Easing.easingState = CEasing::EASING_STATE::EASE_OUT;
 	m_Position = position;
-	CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, m_Position);
+	m_BackGround = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, m_Position);
 	m_Rect = m_rect;
 	m_Timer.SetUp(m_change_time);
-	
 }
 
 /*
@@ -56,14 +64,27 @@ CFallOutTopic::
 Update(void)
 {
 	m_Timer.Update();
+	if (m_BackGround)
+		m_BackGround->SetPosition(m_Position);
 	switch (m_State)
 	{
+	case CFallOutTopic::STATE::APPEAR:
+		if (m_Position.y != m_end_y)
+		{
+			float current_y = m_Easing.OutQuart(m_StartTime, m_end_time, m_StartValue, -m_FinishValue);
+
+			m_Position.y = current_y;
+
+			m_StartTime += vivid::GetDeltaTime();
+		}
+		else
+		{
+			m_Position.y = m_end_y;
+			m_State = CFallOutTopic::STATE::SWITCHING;
+		}
+		break;
 	case CFallOutTopic::STATE::WAIT:
-		//if (m_Timer.Finished())
-		//{
-		//	m_State = STATE::SWITCHING;
-		//	m_Timer.SetUp(m_change_time);
-		//}
+
 		break;
 	case CFallOutTopic::STATE::SWITCHING:
 		if (m_Timer.Finished())
@@ -76,12 +97,6 @@ Update(void)
 		{
 			m_Rect = m_rect;
 		}
-		//if (m_CurrentID == m_PreviousID) return;
-		//m_SelectTimer.Update();
-		//if (m_SelectTimer.Finished())
-		//{
-		//	m_State = STATE::PICK_UP;
-		//}
 		break;
 	case CFallOutTopic::STATE::PICK_UP:
 
@@ -94,7 +109,6 @@ Update(void)
 
 			
 		m_State = STATE::WAIT;
-		//m_Timer.SetUp(m_wait_time);
 		break;
 	}
 }
@@ -106,7 +120,7 @@ void
 CFallOutTopic::
 Draw(void)
 {
-    vivid::DrawTexture(m_file_name, m_Position + m_adjustPosition, 0xffffffff, m_Rect, m_anchor, m_scale, 0.0f, vivid::ALPHABLEND::NOBELEND, vivid::ADDRESS_MODE::MIRROR);
+    vivid::DrawTexture(m_file_name, m_Position + m_adjust_position, 0xffffffff, m_Rect, m_anchor, m_scale, 0.0f, vivid::ALPHABLEND::NOBELEND, vivid::ADDRESS_MODE::MIRROR);
 }
 
 /*
@@ -120,7 +134,6 @@ Finalize(void)
 
 void CFallOutTopic::SetMarkID(MARK_ID markID)
 {
-	m_PreviousID = m_CurrentID;
 	m_CurrentID = markID;
 }
 

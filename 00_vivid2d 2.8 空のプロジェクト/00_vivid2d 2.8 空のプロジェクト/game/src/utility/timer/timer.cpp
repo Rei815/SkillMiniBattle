@@ -55,6 +55,11 @@ float CTimer::GetTimer()
 	return m_Timer;
 }
 
+void CTimer::SetLimitTime(float time)
+{
+	m_LimitTime = time;
+}
+
 float CTimer::GetLimitTime()
 {
 	return m_LimitTime;

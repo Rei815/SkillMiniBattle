@@ -102,7 +102,7 @@ Update(void)
                 releaseFlag = true;
         }
 
-        if (releaseFlag)
+        if (releaseFlag || m_Parent->GetColliderActiveFlag() == false)
             m_Parent = nullptr;
     }
     else
@@ -408,6 +408,11 @@ void IUnit::SetAlpha(float alpha)
 IObject* IUnit::GetParent(void)
 {
     return m_Parent;
+}
+
+void IUnit::SetParent(IObject* parent)
+{
+    m_Parent = parent;
 }
 
 void IUnit::DecAlpha(float alpha)

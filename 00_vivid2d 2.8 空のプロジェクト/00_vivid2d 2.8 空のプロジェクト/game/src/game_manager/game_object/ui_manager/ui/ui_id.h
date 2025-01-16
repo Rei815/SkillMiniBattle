@@ -17,4 +17,5 @@ enum class UI_ID
     FINISH_GAME_BG,
     TITLE_LOGO,
     KEY,
+    KEY_BG,
 };

@@ -1,6 +1,6 @@
 #include "ogre_object.h"
 
-const	float			COgreObject::m_remove_height = -500.0f;
+const	float			COgreObject::m_return_height = -500.0f;
 const	float			COgreObject::m_start_height = -100.0f;
 const	float			COgreObject::m_invisible_alpha = 0.0f;
 const	std::string		COgreObject::m_file_name = "data\\Models\\ogre.mv1";

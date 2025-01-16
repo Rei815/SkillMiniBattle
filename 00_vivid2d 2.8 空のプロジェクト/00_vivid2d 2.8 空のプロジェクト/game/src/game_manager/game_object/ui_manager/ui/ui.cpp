@@ -137,8 +137,23 @@ UI_ID CUI::GetUI_ID(void)
     return m_UI_ID;
 }
 
+vivid::Vector2 CUI::GetScale(void)
+{
+    return m_Scale;
+}
+
 void CUI::SetUI_ID(UI_ID uiID)
 {
     m_UI_ID = uiID;
+}
+
+void CUI::SetPosition(const vivid::Vector2& position)
+{
+    m_Position = position;
+}
+
+void CUI::SetScale(const vivid::Vector2& scale)
+{
+    m_Scale = scale;
 }
 

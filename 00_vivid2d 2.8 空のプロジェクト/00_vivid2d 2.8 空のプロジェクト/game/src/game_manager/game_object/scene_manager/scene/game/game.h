@@ -108,4 +108,6 @@ protected:
 
     ENTRY_LIST          m_EntryList;
     RESULT_LIST         m_ResultList;             //!< リザルトリスト
+
+    CTimer              m_PlayTimer;            //!< プレイ中のタイマー
 };

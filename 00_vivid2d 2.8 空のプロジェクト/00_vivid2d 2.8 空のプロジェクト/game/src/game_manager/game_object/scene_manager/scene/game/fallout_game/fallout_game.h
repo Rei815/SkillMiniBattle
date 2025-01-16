@@ -3,19 +3,19 @@
 #include "..\game.h"
 #include "..\..\..\..\ui_manager\ui\ui_id.h"
 #include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
-class CFallGame : public CGame
+class CFallOutGame : public CGame
 {
 public:
 
     /*!
      *  @brief      コンストラクタ
      */
-    CFallGame(void);
+    CFallOutGame(void);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CFallGame(void);
+    ~CFallOutGame(void);
 
     /*!
      *  @brief      初期化
@@ -57,14 +57,19 @@ private:
     void    Play(void);
 
     /*!
-     *  @brief      終了
+     *  @brief      お題の選択
      */
-    void    Finish(void);
+    void    ChooseTopic(void);
 
     /*!
-     *  @brief      終了判定
+     *  @brief      お題のリセット
      */
-    void    CheckFinish(void) override;
+    void    ResetTopic(void);
+
+    /*!
+     *  @brief      お題の追加
+     */
+    void    AddTopic(void);
 
     /*!
      *  @brief      落ちるオブジェクトの選択
@@ -73,14 +78,24 @@ private:
      */
     FALL_INFO    ChooseObject(void);
 
+    /*!
+     *  @brief      終了
+     */
+    void    Finish(void);
+
+    /*!
+     *  @brief      終了判定
+     */
+    void    CheckFinish(void) override;
     static const CTransform         m_object_transform_list[];  //!< 落ちるオブジェクトのトランスフォーム
     static const float              m_time_accelerator;         //!< 落ちるまでの速度を増やす
     static const float              m_min_time;                 //!< 落ちるまでの最小時間
-    static const float              m_fall_time;             //!< 落ちるまでの初期時間
+    static const float              m_fall_time;                //!< 落ちるまでの初期時間
     static const float              m_object_delay_time;        //!< 再抽選までの時間
     static const float              m_add_topic_time;           //!< お題が増えるまでの時間
-    static const float              m_reset_topic_time;           //!< リセットまでの待機時間
+    static const float              m_reset_topic_time;         //!< リセットまでの待機時間
     static const float              m_defeat_height;            //!< 負ける高さ
+    static const float              m_extend_return_time;       //!< 床の復活が延びるまでの時間
     static const CVector3           m_camera_position;          //!< カメラの位置
     static const CVector3           m_camera_direction;         //!< カメラの方向
     static const vivid::Vector2     m_topic_positionList[];     //!< お題位置
@@ -90,6 +105,7 @@ private:
     CTimer                          m_AddTopicTimer;            //!< お題が増えるタイマー
     CTimer                          m_ResetTopicTimer;          //!< お題リセットタイマー
     IObject*                        m_Object;                   //!< オブジェクト
+    CTimer                          m_ExtendTimer;              //!< 床の復活が延びるまでのタイマー
 
     using TOPIC_LIST = std::list<CFallOutTopic*>;
 

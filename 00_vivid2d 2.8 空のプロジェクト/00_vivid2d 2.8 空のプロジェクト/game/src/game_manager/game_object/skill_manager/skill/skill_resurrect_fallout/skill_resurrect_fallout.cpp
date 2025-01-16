@@ -4,9 +4,10 @@
 #include "../../../object_manager/object_manager.h"
 
 const float		CSkillResurrectFallout::m_resurrect_height = 200.0f;
+const CVector3	CSkillResurrectFallout::m_initial_position = CVector3();
 
 CSkillResurrectFallout::CSkillResurrectFallout(void)
-	:CSkill(SKILL_CATEGORY::RESURRECT)
+	:CSkill(SKILL_CATEGORY::PASSIVE)
 	, m_Effect(nullptr)
 
 {
@@ -57,7 +58,15 @@ Update(void)
 				m_State = SKILL_STATE::COOLDOWN;
 				break;
 			}
+
 			++it;
+		}
+
+		if (it == objectList.end())
+		{
+			m_Player->SetPosition(m_initial_position);
+			m_State = SKILL_STATE::COOLDOWN;
+
 		}
 
 		break;

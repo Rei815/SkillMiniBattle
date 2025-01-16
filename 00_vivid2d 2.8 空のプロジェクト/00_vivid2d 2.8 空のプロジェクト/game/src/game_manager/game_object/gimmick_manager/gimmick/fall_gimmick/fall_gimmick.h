@@ -40,10 +40,19 @@ public:
      */
     void    Finalize(void);
 
+    /*!
+     *  @brief      Œ³‚É–ß‚é‚Ü‚Å‚ÌŠÔ‚Ìİ’è
+     *  @param[in]  float       ŠÔ
+     */
+    void   AddReturnTime(float time);
 private:
     static const float  m_fall_speed;       //!< —‚¿‚é‘¬“x
-    static const float  m_remove_height;    //!< Œ³‚É–ß‚é‚‚³
-    static const float  m_remove_time;      //!< Œ³‚É–ß‚é‚Ü‚Å‚ÌŠÔ
+    static const float  m_return_height;    //!< Œ³‚É–ß‚é‚‚³
+    static const float  m_return_time;      //!< Œ³‚É–ß‚é‚Ü‚Å‚ÌŠÔ
+
     float               m_StartHeight;      //!< ‰Šú‚Ì‚‚³
 
+    float               m_ReturnTime;       //!< Œ³‚É–ß‚é‚Ü‚Å‚ÌŠÔ
+
+    CTimer              m_ReturnTimer;
 };
