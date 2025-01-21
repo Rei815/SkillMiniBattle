@@ -7,20 +7,24 @@
 #include "..\..\..\ui_manager\ui\ui.h"
 #include "..\..\..\ui_manager\ui\skill_icon\skill_icon.h"
 
-const float CSelectSkill::m_cursor_move_time = 0.2f;
-const float CSelectSkill::m_icon_scale = 0.4f;
+const float             CSelectSkill::m_cursor_move_time = 0.2f;
+const float             CSelectSkill::m_icon_scale = 0.4f;
 const vivid::Vector2    CSelectSkill::m_icon_positionList[] =
 {
-    vivid::Vector2( 256, 360),		//Player1
-    vivid::Vector2( 512, 360),		//Player2
-    vivid::Vector2( 768, 360),		//Player3
-    vivid::Vector2( 1024, 360)		//Player4
+    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 1.0f, vivid::WINDOW_HEIGHT / 3.0f),		//Player1
+    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 2.0f, vivid::WINDOW_HEIGHT / 3.0f),		//Player2
+    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 3.0f, vivid::WINDOW_HEIGHT / 3.0f),		//Player3
+    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 4.0f, vivid::WINDOW_HEIGHT / 3.0f) 		//Player4
 };
+const float             CSelectSkill::m_info_scale = 0.75f;
+const vivid::Vector2    CSelectSkill::m_info_position = vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, vivid::WINDOW_HEIGHT / 4.0f * 3.0f);
 
 CSelectSkill::CSelectSkill(void)
     :m_CursorMoveTimer()
     ,m_NowCursorID_Num(0)
+    , m_SkillSelectIcon{nullptr}
     , m_SkillSelectCursor(nullptr)
+    , m_SkillInfomation(nullptr)
     ,m_GameID(GAME_ID::MAX)
 {
 
@@ -70,6 +74,17 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     SetCursorID();
     m_SkillSelectCursor = nullptr;
     CreateCursor();
+
+    //ÉXÉLÉãê‡ñæÇÃê∂ê¨
+    CUI* SkillInfo = CUIManager::GetInstance().Create(UI_ID::SKILL_INFO);
+    m_SkillInfomation = dynamic_cast<CSkillInfomation*>(SkillInfo);
+    if (m_SkillInfomation == nullptr)
+        SkillInfo->SetActive(false);
+    else
+    {
+        m_SkillInfomation->SetPosition(m_info_position);
+        m_SkillInfomation->SetScale(m_info_scale);
+    }
 }
 
 void CSelectSkill::Update(void)
@@ -101,7 +116,7 @@ void CSelectSkill::Finalize(void)
         }
     }
 
-    if (m_SkillCursorList.size() != 0)
+    if (!m_SkillCursorList.empty())
     {
         std::list<CSkillCursor*>::iterator it = m_SkillCursorList.begin();
         while (it != m_SkillCursorList.end())
@@ -115,6 +130,12 @@ void CSelectSkill::Finalize(void)
     {
         m_SkillSelectCursor->SetActive(false);
         m_SkillSelectCursor = nullptr;
+    }
+
+    if (m_SkillInfomation != nullptr)
+    {
+        m_SkillInfomation->SetActive(false);
+        m_SkillInfomation = nullptr;
     }
 }
 
@@ -330,6 +351,11 @@ void CSelectSkill::MoveCursor(void)
                 break;
             }
         }
+    }
+
+    if (m_SkillInfomation != nullptr && !m_CursorPosNumList.empty() && m_NowCursorID_Num < (int)UNIT_ID::NONE && m_CursorID[m_NowCursorID_Num] != UNIT_ID::NONE)
+    {
+        m_SkillInfomation->SetSkillInfo(m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))]);
     }
 }
 

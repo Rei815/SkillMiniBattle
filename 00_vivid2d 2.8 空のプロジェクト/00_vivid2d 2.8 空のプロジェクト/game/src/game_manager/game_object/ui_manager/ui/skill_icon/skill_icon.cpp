@@ -10,7 +10,7 @@ const vivid::Vector2    CSkillIcon::m_anchor = vivid::Vector2(m_width / 2, m_hei
 const unsigned int CSkillIcon::m_brightness_color = 0xffffffff;
 const unsigned int CSkillIcon::m_dark_color = 0xff888888;
 
-const std::string CSkillIcon::m_SkillIconFileName[] =
+const std::string CSkillIcon::m_skill_icon_file_name[] =
 {
 		"data\\Textures\\skill_icon_speedup.png",
 		"data\\Textures\\skill_icon_jumpup.png",
@@ -63,6 +63,18 @@ Initialize(void)
 	CUI::Initialize();
 
 	m_Brightness = ICON_BRIGHTNESS::BRIGHT;
+}
+
+
+/*!
+ *  @brief      èâä˙âª
+ */
+void
+CSkillIcon::
+Initialize(vivid::Vector2 position)
+{
+	Initialize();
+	SetPosition(position);
 }
 
 /*
@@ -132,7 +144,7 @@ void
 CSkillIcon::
 SetSkill(SKILL_ID skill_id)
 {
-	m_FileName = m_SkillIconFileName[(int)skill_id];
+	m_FileName = m_skill_icon_file_name[(int)skill_id];
 }
 
 void
