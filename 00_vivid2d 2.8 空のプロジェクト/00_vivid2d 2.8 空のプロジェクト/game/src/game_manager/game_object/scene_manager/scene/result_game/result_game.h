@@ -4,6 +4,7 @@
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
 #include "../../../stage/stage.h"
+#include "../../../sound_manager/sound_manager.h"
 
 class CResultGame : public IScene
 {
@@ -48,4 +49,5 @@ private:
     };
 
     STATE           m_State;                //!< ó‘ÔID
+    SOUND_ID        m_Sound;                //
 };

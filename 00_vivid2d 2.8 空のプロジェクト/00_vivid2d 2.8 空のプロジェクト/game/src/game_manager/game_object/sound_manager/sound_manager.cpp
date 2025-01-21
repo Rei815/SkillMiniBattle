@@ -27,6 +27,7 @@ const char* CSoundManager::m_sound_file_names[] =
     "data\\Audios\\SE\\DecideButton_SE.mp3",
 
     "data\\Audios\\BGM\\Main_BGM.mp3",
+    "data\\Audios\\BGM\\Result_BGM.mp3",
 
 
 };
@@ -60,6 +61,16 @@ CSoundManager::Play(SOUND_ID id, bool loop)
 {
     vivid::PlaySound(m_sound_file_names[(int)id], loop);
 }
+
+/*
+停止
+*/
+void
+CSoundManager::Stop(SOUND_ID id)
+{
+    vivid::StopSound(m_sound_file_names[(int)id]);
+}
+
 
 /*
  *  コンストラクタ

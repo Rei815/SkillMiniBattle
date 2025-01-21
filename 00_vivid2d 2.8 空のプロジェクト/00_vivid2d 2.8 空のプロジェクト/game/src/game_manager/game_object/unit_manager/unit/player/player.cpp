@@ -159,8 +159,8 @@ bool CPlayer::GetPlayerMoving()
     if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
         Input = true;
 
-    if (m_IsGround == false)
-        Input = true;
+    //if (m_IsGround == false)
+        //Input = true;
 
     return Input;
 }

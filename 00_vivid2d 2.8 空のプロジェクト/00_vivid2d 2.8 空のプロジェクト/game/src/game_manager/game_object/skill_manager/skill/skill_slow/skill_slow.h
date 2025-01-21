@@ -44,7 +44,7 @@ protected:
     static const float m_cool_time;
     static const float m_duration_time;
 
-    CPlayer*            m_Target;
+    
 
     CDataManager&       dm = CDataManager::GetInstance();
     CUnitManager&       um = CUnitManager::GetInstance();
