@@ -144,6 +144,7 @@ void CDaruma_FallDownGame::Ranking(void)
 	}
 
 	CDataManager::GetInstance().AddLastGameRanking((UNIT_ID)m_TempFirstNum);
+	CDataManager::GetInstance().PlayerWin((UNIT_ID)m_TempFirstNum);
 
 	CGame::SetGameState(GAME_STATE::FINISH);
 }
@@ -218,6 +219,17 @@ void CDaruma_FallDownGame::Play(void)
 
 	if (m_Timer.Finished())
 	{
+		float FirstPosX = -1500;
+		for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+		{
+			float TempPosX = um.GetPlayer((UNIT_ID)i)->GetPosition().x;
+			if (TempPosX >= FirstPosX)
+			{
+				m_TempFirstNum = i;
+				FirstPosX = TempPosX;
+			}
+		}
+
 		Ranking();
 	}
 }

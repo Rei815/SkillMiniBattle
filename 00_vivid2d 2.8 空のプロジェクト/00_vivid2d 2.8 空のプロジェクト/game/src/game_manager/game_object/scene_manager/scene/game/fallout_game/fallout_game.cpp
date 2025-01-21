@@ -341,19 +341,6 @@ CFallOutGame::FALL_INFO CFallOutGame::ChooseObject(void)
 }
 void CFallOutGame::Finish(void)
 {
-	//一人生き残った場合(二人以上)
-	if (m_EntryList.size() == 1)
-	{
-		//生き残った一人を勝ちにする
-		CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
-		CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
-	}
-	else //一人の場合
-	{
-		//やられているためリザルトリストから勝ちにする
-		CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
-		CDataManager::GetInstance().AddLastGameRanking((*m_ResultList.begin())->GetUnitID());
-	}
 	CGame::Finish();
 }
 
@@ -401,6 +388,9 @@ void CFallOutGame::CheckFinish()
 		//一人が生き残った時に終了
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
 		{
+			//生き残った一人を勝ちにする
+			CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
+
 			CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
 
 			CGame::SetGameState(GAME_STATE::FINISH);
@@ -410,6 +400,11 @@ void CFallOutGame::CheckFinish()
 	{
 		//やられたら終了
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
+		{
+			//やられているためリザルトリストから勝ちにする
+			CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
+
 			CGame::SetGameState(GAME_STATE::FINISH);
+		}
 	}
 }
