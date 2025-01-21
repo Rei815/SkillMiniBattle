@@ -101,6 +101,7 @@ void CAnimationManager::Create(ANIMATION_ID id, void* object_pointer)
     {
     case ANIMATION_ID::KEY_SCALE:
         animation = new CKeyScale();
+        break;
     case ANIMATION_ID::PLANE_UP_DOWN:
         animation = new CPlaneUpDown();
         break;

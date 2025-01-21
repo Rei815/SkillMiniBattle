@@ -21,7 +21,6 @@ void CResultMiniGame::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
     CAnimationManager::GetInstance().Initialize();
-    CUIManager::GetInstance().Create(UI_ID::FINISH_GAME_BG);
     CDataManager& dm = CDataManager::GetInstance();
     vivid::Vector2 offsetPos;
     int firstPlayerID = (int)dm.GetLastGameRanking(0);

@@ -29,7 +29,6 @@ void CTitle::Initialize(SCENE_ID scene_id)
 
     CUIManager::GetInstance().Initialize();
     CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
-    CUIManager::GetInstance().Create(UI_ID::FADE);
 }
 
 void CTitle::Update(void)
