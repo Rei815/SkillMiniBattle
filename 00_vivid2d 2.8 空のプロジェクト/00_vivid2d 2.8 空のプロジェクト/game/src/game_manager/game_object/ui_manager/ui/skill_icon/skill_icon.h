@@ -21,6 +21,11 @@ public:
      *  @brief      ‰Šú‰»
      */
     void        Initialize(void);
+
+    /*!
+     *  @brief      ‰Šú‰»
+     */
+    void        Initialize(vivid::Vector2 position);
     
     /*!
      *  @brief      XV
@@ -65,7 +70,7 @@ private:
     static const unsigned int       m_dark_color;
 
 
-    static const std::string        m_SkillIconFileName[];
+    static const std::string        m_skill_icon_file_name[];
     std::string                     m_FileName;
 
     vivid::Vector2      m_Scale;

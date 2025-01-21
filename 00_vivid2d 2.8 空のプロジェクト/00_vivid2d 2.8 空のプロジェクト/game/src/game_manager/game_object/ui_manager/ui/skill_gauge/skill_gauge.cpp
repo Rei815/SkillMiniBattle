@@ -46,6 +46,17 @@ Initialize(void)
 	m_Percent = 0;
 }
 
+/*!
+ *  @brief      ‰Šú‰»
+ */
+void
+CSkillGauge::
+Initialize(vivid::Vector2 position)
+{
+	Initialize();
+	SetPosition(position);
+}
+
 /*
 {
  *  XV

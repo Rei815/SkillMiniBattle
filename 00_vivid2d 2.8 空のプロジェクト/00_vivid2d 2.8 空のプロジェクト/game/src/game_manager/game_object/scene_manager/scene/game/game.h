@@ -92,6 +92,7 @@ protected:
 
     static const float m_start_count_time;
     static const float m_start_text_time;
+    static const float m_finish_text_time;
 
     GAME_STATE      m_GameState;    //!< ゲームの状態
 
@@ -102,6 +103,10 @@ protected:
     std::string     m_DebugText;    //!< デバッグ用
     bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用
     bool            m_FinishFlag;
+    bool            m_ResultFlag;
+
+   
+
     /*!
      *  @brief      プレイヤーリスト型
      */

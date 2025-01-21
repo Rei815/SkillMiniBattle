@@ -5,7 +5,7 @@ const float CSkillOgreControl::m_cool_time = 30.0f;
 const float CSkillOgreControl::m_duration_time = 10.0f;
 
 CSkillOgreControl::CSkillOgreControl(void)
-	:CSkill(SKILL_CATEGORY::ACTIVE)
+	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 {
 }
 
@@ -57,7 +57,7 @@ void CSkillOgreControl::Action()
 {
 	if (m_State == SKILL_STATE::WAIT)
 	{
-		m_Gimmick = (CDaruma_FallDownGimmick*)(*CObjectManager::GetInstance().GetList().begin())->GetGimmick();
+		m_Gimmick = dynamic_cast<CDaruma_FallDownGimmick*>((*CObjectManager::GetInstance().GetList().begin())->GetGimmick());
 		m_State = SKILL_STATE::ACTIVE;
 	}
 }
