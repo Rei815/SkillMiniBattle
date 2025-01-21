@@ -33,7 +33,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
         const float rad = i / (float)m_games_num * DX_TWO_PI;
         const float _x = m_circle_radius * sin(rad);
         const float _z = m_circle_radius * cos(rad);
-        transform.rotation.y = DEG_TO_RAD( i * (360.0f / (float)m_games_num));
+        transform.rotation.y = i * (360.0f / (float)m_games_num);
         transform.position.y = 500.0f;
         transform.position.x = 0.0f;//_x;
         transform.position.z = -m_circle_radius;//_z;
@@ -70,14 +70,6 @@ void CSelectGame::Update(void)
             }
             ++it;
         }
-        //CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
-        
-        //switch (game_id)
-        //{
-        //case (int)GAME_ID::FALL_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME); break;
-        //case (int)GAME_ID::DODGE_BALL_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME); break;
-        //case (int)GAME_ID::DARUMA_FALL_DOWN_GAME: CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN); break;
-        //}
         
     }
 #if _DEBUG

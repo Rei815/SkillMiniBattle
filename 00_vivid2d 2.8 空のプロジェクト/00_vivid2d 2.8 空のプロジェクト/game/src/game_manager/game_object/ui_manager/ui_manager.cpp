@@ -13,6 +13,7 @@
 #include "ui/title_logo/title_logo.h"
 #include "ui/start_game_count/start_game_count.h"
 #include "ui/start_game_text/start_game_text.h"
+#include "ui/fade/fade.h"
  /*
   *  インスタンスの取得
   */
@@ -131,6 +132,8 @@ CUI* CUIManager::Create(UI_ID id)
         ui = new CStartGameCount(id);     break;
     case UI_ID::START_TEXT:
         ui = new CStartGameText(id);    break;
+    case UI_ID::FADE:
+        ui = new CFade(id);    break;
     }
     if (!ui) return nullptr;
 

@@ -63,6 +63,20 @@ public:
      *  @param[in]  transform  トランスフォーム
      */
     void            SetTransform(const CTransform& transform);
+
+    /*!
+     *  @brief      中心位置からの角度設定
+     *
+     *  @param[in]  angle  中心位置からの角度
+     */
+    void            SetPosAngle(float angle);
+
+    /*!
+     *  @brief      移動速度設定
+     *
+     *  @param[in]  speed  移動速度
+     */
+    void            SetSpeed(float speed);
 private:
 
 
@@ -75,6 +89,7 @@ private:
     static const float              m_rotation_speed;
     static const float              m_speed;
 
+    float                           m_Speed;
     std::string                     m_FileName;
     int                             m_Width;
     int                             m_Height;
@@ -84,4 +99,5 @@ private:
     CPlane                          m_Plane;
     CVector3                        m_InitialPosition;  //!< 初期位置
     GAME_ID                         m_GameID;
+    CMatrix                         m_Matrix;
 };

@@ -1404,7 +1404,36 @@ namespace vivid
          *  @return     エラー:-1   正常終了:それ以外
          */
         int LoadModel(const std::string& file_name);
+    }
 
+    namespace alpha
+    {
+        /*!
+         *  @brief      アルファ値を取得
+         *
+         *  @param[in]  color   カラー
+         *
+         *  @return     アルファ値
+         */
+        unsigned int    GetAlpha(unsigned int color);
 
+        /*!
+         *  @brief      アルファ値を設定
+         *
+         *  @param[in]  color   カラー
+         *  @param[in]  alpha   アルファ値
+         *
+         */
+        unsigned int    SetAlpha(unsigned int color, unsigned int alpha);
+
+        /*!
+         *  @brief      アルファ値を増減
+         *
+         *  @param[in]  color   カラー
+         *  @param[in]  delta   変化量
+         *
+         *  @return     アルファ値
+         */
+        unsigned int    AdjustAlpha(unsigned int color, int delta);
     }
 }

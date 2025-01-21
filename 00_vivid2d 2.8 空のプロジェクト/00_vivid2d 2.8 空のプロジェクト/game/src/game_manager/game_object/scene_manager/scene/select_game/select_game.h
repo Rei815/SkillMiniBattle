@@ -41,5 +41,4 @@ public:
 private:
     static const int    m_games_num;
     static const float  m_circle_radius;
-
 };

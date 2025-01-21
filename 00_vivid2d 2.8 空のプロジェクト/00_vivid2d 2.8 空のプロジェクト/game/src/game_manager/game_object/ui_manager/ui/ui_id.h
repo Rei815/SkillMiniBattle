@@ -20,4 +20,5 @@ enum class UI_ID
     START_TEXT,
     KEY,
     KEY_BG,
+    FADE,
 };

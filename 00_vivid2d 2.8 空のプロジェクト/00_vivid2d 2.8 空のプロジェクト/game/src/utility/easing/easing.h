@@ -13,18 +13,8 @@
 
 #include "..\..\mathematics\mathematics.h"
 
-class CEasing
+namespace Easing
 {
-public:
-    enum class EASING_STATE
-    {
-        EASE_OUT,
-        EASE_IN
-    };
-
-    EASING_STATE easingState;
-    CEasing();
-    ~CEasing();
 
     /*!
         *  @brief  線形補間
@@ -74,7 +64,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InCubic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InCubic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -84,7 +74,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float OutCubic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float OutCubic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -94,7 +84,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InOutCubic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InOutCubic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -104,7 +94,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InQuart(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InQuart(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -124,7 +114,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InOutQuart(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InOutQuart(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -134,7 +124,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InQuintic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InQuintic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -144,7 +134,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float OutQuintic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float OutQuintic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -154,7 +144,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InOutQuintic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InOutQuintic(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -174,7 +164,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float OutSine(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float OutSine(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -184,7 +174,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InOutSine(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InOutSine(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -194,7 +184,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InExp(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InExp(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -204,7 +194,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float OutExp(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float OutExp(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -214,7 +204,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InOutExp(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InOutExp(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -224,7 +214,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InCirc(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InCirc(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -234,7 +224,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float OutCirc(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float OutCirc(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -244,7 +234,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InOutCirc(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InOutCirc(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -254,7 +244,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float OutBounce(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float OutBounce(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -264,7 +254,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InBounce(float time, float finish_time, float min = 0.0f, float max = 1.0f);
+    static float InBounce(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -274,18 +264,7 @@ public:
         *  @param[in]  min         最小値
         *  @param[in]  max         最大値
         */
-    float InOutBounce(float time, float finish_time, float min = 0.0f, float max = 1.0f);
-
-    /*!
-        *  @brief
-        *
-        *  @param[in]  time        経過時間
-        *  @param[in]  finish_time 終了時間
-        *  @param[in]  min         最小値
-        *  @param[in]  max         最大値
-        *  @param[in]  s           係数
-        */
-    float OutBack(float time, float finish_time, float min = 0.0f, float max = 1.0f, float s = 1.0f);
+    static float InOutBounce(float time, float finish_time, float min = 0.0f, float max = 1.0f);
 
     /*!
         *  @brief
@@ -296,7 +275,7 @@ public:
         *  @param[in]  max         最大値
         *  @param[in]  s           係数
         */
-    float InBack(float time, float finish_time, float min = 0.0f, float max = 1.0f, float s = 1.0f);
+    static float OutBack(float time, float finish_time, float min = 0.0f, float max = 1.0f, float s = 1.0f);
 
     /*!
         *  @brief
@@ -307,8 +286,17 @@ public:
         *  @param[in]  max         最大値
         *  @param[in]  s           係数
         */
-    float InOutBack(float time, float finish_time, float min = 0.0f, float max = 1.0f, float s = 1.0f);
+    static float InBack(float time, float finish_time, float min = 0.0f, float max = 1.0f, float s = 1.0f);
 
-private:
+    /*!
+        *  @brief
+        *
+        *  @param[in]  time        経過時間
+        *  @param[in]  finish_time 終了時間
+        *  @param[in]  min         最小値
+        *  @param[in]  max         最大値
+        *  @param[in]  s           係数
+        */
+    static float InOutBack(float time, float finish_time, float min = 0.0f, float max = 1.0f, float s = 1.0f);
 
 };

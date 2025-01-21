@@ -99,6 +99,16 @@ CMatrix CTransform::GetRotateAroundMatrix(const CVector3& point, const CVector3&
 	return finalTransform;
 }
 
+/*
+ *  親のトランスフォームを設定
+ */
+void CTransform::SetParent(CTransform* transform)
+{
+	if (transform == nullptr) return;
+
+	m_Parent = transform;
+}
+
 CVector3 CTransform::GetRotateVector(CVector3 vector)
 {
 	VECTOR TempVector = VGet(vector.x, vector.y, vector.z);

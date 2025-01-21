@@ -23,8 +23,7 @@ CFallOutTopic(UI_ID id)
     : CUI(m_width, m_height, id)
 	, m_CurrentID(MARK_ID::NONE)				   
 	, m_State(STATE::APPEAR)
-	, m_Easing(CEasing())
-	, m_StartTime(0.0f)
+	, m_EaseTimer(0.0f)
 	, m_FinishValue(0.0f)
 	, m_BackGround(nullptr)
 {
@@ -47,9 +46,8 @@ Initialize(const vivid::Vector2& position)
 {
 	CUI::Initialize(position);
 	m_StartValue = m_Position.y;
-	m_StartTime = 0.0f;
+	m_EaseTimer = 0.0f;
 	m_FinishValue = m_end_y;
-	m_Easing.easingState = CEasing::EASING_STATE::EASE_OUT;
 	m_Position = position;
 	m_BackGround = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, m_Position);
 	m_Rect = m_rect;
@@ -71,11 +69,11 @@ Update(void)
 	case CFallOutTopic::STATE::APPEAR:
 		if (m_Position.y != m_end_y)
 		{
-			float current_y = m_Easing.OutQuart(m_StartTime, m_end_time, m_StartValue, -m_FinishValue);
+			float current_y = Easing::OutQuart(m_EaseTimer, m_end_time, m_StartValue, -m_FinishValue);
 
 			m_Position.y = current_y;
 
-			m_StartTime += vivid::GetDeltaTime();
+			m_EaseTimer += vivid::GetDeltaTime();
 		}
 		else
 		{

@@ -20,6 +20,8 @@ CPlaneGameImage(UI_ID id)
 	, m_PosAngle()
 	, m_InitialPosition()
 	, m_FileName(m_file_names[0])
+	, m_Matrix()
+	, m_Speed(m_speed)
 {
 }
 
@@ -65,7 +67,8 @@ void CPlaneGameImage::Initialize(const CTransform& transform)
 	m_Plane.SetPosition(m_Transform.position);
 	m_Plane.SetRotation(m_Transform.rotation);
 
-	m_Angle = m_Transform.rotation.y;
+	m_PosAngle = m_Transform.rotation.y;
+	m_Transform.rotation.y = m_Angle;
 }
 
 /*
@@ -75,20 +78,33 @@ void
 CPlaneGameImage::
 Update(void)
 {
-	m_PosAngle += m_speed;
+	m_PosAngle += m_Speed;
 	if (m_PosAngle > 360)
 		m_PosAngle = 0;
+	if (m_Angle > 360)
+		m_Angle = 0;
 
 	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::D))
 	{
 		m_Transform.position.y += 10.0f;
-		m_Plane.SetPosition(m_Transform.position);
 
 	}
-	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A))
-		m_Angle -= 10.0f;
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+		m_Transform.rotation.y -= 1.0f;
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::Q))
+		m_PosAngle -= 1.0f;
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::F))
+		m_Transform.rotation.y += 1.0f;
 
+	m_Plane.SetPosition(m_Transform.position);
+	//m_Angle = m_Transform.rotation.y;
 	m_Plane.Update();
+
+	float rad = DEG_TO_RAD(m_PosAngle);
+	float _rad = DEG_TO_RAD(m_Angle);
+	//float _rad = DEG_TO_RAD(m_Transform.rotation.y);
+	m_Matrix = CMatrix::Rotate(CVector3(0.0f, _rad, 0.0f)) * CMatrix::Translate(m_Transform.position) * CMatrix::Rotate(CVector3(0.0f, rad, 0.0f));
+
 }
 
 /*
@@ -98,11 +114,9 @@ void
 CPlaneGameImage::
 Draw(void)
 {
-	float rad = DEG_TO_RAD(m_PosAngle) + m_Angle;
-	CMatrix m = CMatrix::Translate(m_Transform.position) * CMatrix::Rotate(CVector3(0.0f, rad, 0.0f));
 
-
-	m_Plane.Draw(m);
+	
+	m_Plane.Draw(m_Matrix);
 }
 /*
  *  ‰ð•ú
@@ -132,4 +146,14 @@ void CPlaneGameImage::SetTransform(const CTransform& transform)
 {
 	m_Transform = transform;
 	m_Plane.SetTransform(transform);
+}
+
+void CPlaneGameImage::SetPosAngle(float angle)
+{
+	m_PosAngle = angle;
+}
+
+void CPlaneGameImage::SetSpeed(float speed)
+{
+	m_Speed = speed;
 }
