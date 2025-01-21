@@ -16,6 +16,9 @@ void CResultGame::Initialize(SCENE_ID scene_id)
     IScene::Initialize(scene_id);
 
     m_State = STATE::WAIT;
+    m_Sound = SOUND_ID::RESULT_BGM;
+
+    CSoundManager::GetInstance().Play(m_Sound, true);
 
     CCamera::GetInstance().Initialize();
 
@@ -62,5 +65,5 @@ void CResultGame::Finalize(void)
     IScene::Finalize();
     CStage::GetInstance().Finalize();
     CStage::GetInstance().Finalize();
-
+    CSoundManager::GetInstance().Stop(m_Sound);
 }

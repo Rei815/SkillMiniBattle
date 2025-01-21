@@ -30,7 +30,10 @@ enum class SOUND_ID
     GAMECLEAR,//配列9番目
     //↓ここから追加分
     DECIDE_BUTTON,
+
+
     MAIN_BGM,
+    RESULT_BGM,
 
     MAX
 };
@@ -68,6 +71,7 @@ public:
      *  @param[in]  loop    ループフラグ
      */
     void        Play(SOUND_ID id, bool loop = false);
+    void        Stop(SOUND_ID id);
 
 private:
     /*!

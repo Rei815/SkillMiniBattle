@@ -79,31 +79,28 @@ public:
     */
     virtual void    Feint(void);
 
-    /*!
-    *  @brief      振り向き早い
-    */
-    virtual void    Fast(void);
-
-    /*!
-    *  @brief      振り向き遅い
-    */
-    virtual void    Slow(void);
-
     virtual void    OgreControlTurn(void);
 
 private:
 
-    OGRE_STATE m_OgreState;
-    TURN_TYPE  m_TurnType;
+    static const float    m_default_ready_time;   //デフォルトの鬼の準備時間
+    static const float    m_default_wait_time;    //                待機時間
+    static const float    m_default_turn_angle;   //                振り向き角度
 
-    bool m_GameEnd;              //ゲーム終了条件を満たしたか
+    static const float    m_feint_ready_time;     //フェイントの鬼の準備時間
+    static const float    m_feint_wait_time;      //                待機時間
+    static const float    m_feint_turn_angle;     //                振り向き角度
+    
+    static const float m_turn_speed;            //鬼の振り向く速度
 
-    float m_ReadyTime;           //鬼が振り向くまでの時間
-    float m_WaitTime;            //鬼の待機時間
-    float m_TurnSpeed;           //鬼の振り向く速度
-    float m_TurnAngle;           //振り向く角度
-    int   m_RestPlayer;          //残りのプレイヤー数
+    bool m_GameEnd;                             //ゲーム終了条件を満たしたか
+    float m_ReadyTime;                          //鬼が振り向くまでの時間
+    float m_WaitTime;                           //鬼の待機時間
+    float m_TurnAngle;                          //振り向く角度
+    int   m_RestPlayer;                         //残りのプレイヤー数
 
-    CTransform m_Transform;      //鬼のトランスフォーム
-    CTimer  m_Timer;
+    OGRE_STATE m_OgreState;                     //鬼の状態
+    TURN_TYPE  m_TurnType;                      //振り向きの種類
+    CTransform m_Transform;                     //鬼のトランスフォーム
+    CTimer     m_Timer;                         //タイマー
 };
