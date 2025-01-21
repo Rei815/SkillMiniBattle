@@ -25,7 +25,8 @@ public:
 	 */
 	void Finalize();
 private:
-	CUI*	m_key;	//!< 鍵のポインタ
 	static const vivid::Vector2 m_min_scale;	//!< 拡大率の最小値
-	static const float	m_speed;
+	static const vivid::Vector2 m_max_scale;	//!< 拡大率の最大値
+	static const float			m_speed;
+	CUI*						m_Key;	//!< 鍵のポインタ
 };

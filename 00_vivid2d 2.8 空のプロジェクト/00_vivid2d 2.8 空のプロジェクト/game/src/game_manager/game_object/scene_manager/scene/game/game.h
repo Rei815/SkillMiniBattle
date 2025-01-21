@@ -34,41 +34,46 @@ public:
     /*!
      *  @brief      初期化
      */
-    virtual void        Initialize(SCENE_ID scene_id);
+    virtual void    Initialize(SCENE_ID scene_id);
 
     /*!
      *  @brief      更新
      */
-    virtual void        Update(void);
+    virtual void    Update(void);
 
     /*!
      *  @brief      描画
      */
-    virtual void        Draw(void);
+    virtual void    Draw(void);
 
     /*!
      *  @brief      解放
      */
-    virtual void        Finalize(void);
+    virtual void    Finalize(void);
 
     /*!
      *  @brief      ゲームの状態取得
      *
      *  @return     ゲームの状態ID
      */
-    GAME_STATE  GetGameState(void);
+    GAME_STATE      GetGameState(void);
 
     /*!
      *  @brief      ゲームの状態設定
      *
      *  @param[in]  state   ゲーム状態ID
      */
-    void        SetGameState(GAME_STATE state);
+    void            SetGameState(GAME_STATE state);
 
 
 protected:
 
-    void AddRanking(UNIT_ID unitID);
+    /*!
+     *  @brief      ランキングに追加
+     *
+     *  @param[in]  unit   追加するunitのID
+     */
+    void            AddRanking(UNIT_ID unitID);
 
     /*!
      *  @brief      スタート

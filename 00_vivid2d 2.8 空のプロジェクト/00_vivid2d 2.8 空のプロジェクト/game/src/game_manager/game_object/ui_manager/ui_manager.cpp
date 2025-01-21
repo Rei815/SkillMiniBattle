@@ -3,7 +3,7 @@
 #include "ui/fallout_topic/fallout_topic.h"
 #include "ui/fallout_topic_bg/fallout_topic_bg.h"
 #include "ui/topic_shutter/topic_shutter.h"
-#include "ui/random_game/random_game.h"
+#include "ui/plane_game_image/plane_game_image.h"
 #include "ui/finish_backGround/finish_backGround.h"
 #include "ui/skill_icon/skill_icon.h"
 #include "ui/skill_gauge/skill_gauge.h"
@@ -13,6 +13,7 @@
 #include "ui/title_logo/title_logo.h"
 #include "ui/start_game_count/start_game_count.h"
 #include "ui/start_game_text/start_game_text.h"
+#include "ui/fade/fade.h"
  /*
   *  インスタンスの取得
   */
@@ -116,7 +117,7 @@ CUI* CUIManager::Create(UI_ID id)
     case UI_ID::FALLOUT_TOPIC:
         ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
-        ui = new CRandomGame(id);     break;
+        ui = new CPlaneGameImage(id);     break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);      break;
     case UI_ID::SKILL_GAUGE:
@@ -131,6 +132,8 @@ CUI* CUIManager::Create(UI_ID id)
         ui = new CStartGameCount(id);     break;
     case UI_ID::START_TEXT:
         ui = new CStartGameText(id);    break;
+    case UI_ID::FADE:
+        ui = new CFade(id);    break;
     }
     if (!ui) return nullptr;
 
@@ -155,7 +158,7 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
     case UI_ID::TOPIC_SHUTTER:
         ui = new CTopicShutter(id);   break;
     case UI_ID::RANDOM_GAME:
-        ui = new CRandomGame(id);           break;
+        ui = new CPlaneGameImage(id);           break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);      break;
     case UI_ID::SKILL_GAUGE:
@@ -190,7 +193,7 @@ CUI* CUIManager::Create(UI_ID id, const CVector3& position)
     case UI_ID::FALLOUT_TOPIC:
         ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
-        ui = new CRandomGame(id);           break;
+        ui = new CPlaneGameImage(id);           break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);      break;
     case UI_ID::SKILL_GAUGE:
@@ -220,7 +223,7 @@ CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
     case UI_ID::FALLOUT_TOPIC:
         ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
-        ui = new CRandomGame(id);     break;
+        ui = new CPlaneGameImage(id);     break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);      break;
     case UI_ID::SKILL_GAUGE:

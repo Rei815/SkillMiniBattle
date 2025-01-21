@@ -42,14 +42,6 @@ void CPlane::Update()
 {
 	
 	SetUp();
-	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RIGHT))
-		m_Transform.position.x += 1000.0f;
-	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::LEFT))
-		m_Transform.position.x -= 1000.0f;
-	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::UP))
-		m_Transform.position.z -= 1000.0f;
-	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::DOWN))
-		m_Transform.position.z += 1000.0f;
 	SetVertices();
 }
 

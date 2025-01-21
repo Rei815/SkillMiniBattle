@@ -15,18 +15,11 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-CEasing::CEasing()
-    : easingState(EASING_STATE::EASE_IN)
-{
-}
-CEasing::~CEasing()
-{
-}
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 Linear(float time, float finish_time, float min, float max)
 {
     return (max - min) * time / finish_time + min;
@@ -35,8 +28,8 @@ Linear(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InQuad(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -49,8 +42,8 @@ InQuad(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 OutQuad(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -63,8 +56,8 @@ OutQuad(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InOutQuad(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -82,8 +75,8 @@ InOutQuad(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InCubic(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -96,8 +89,8 @@ InCubic(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 OutCubic(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -110,8 +103,8 @@ OutCubic(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InOutCubic(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -130,8 +123,8 @@ InOutCubic(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InQuart(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -145,7 +138,7 @@ InQuart(float time, float finish_time, float min, float max)
  *
  */
 float
-CEasing::
+Easing::
 OutQuart(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -158,8 +151,8 @@ OutQuart(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InOutQuart(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -177,8 +170,8 @@ InOutQuart(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InQuintic(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -191,8 +184,8 @@ InQuintic(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 OutQuintic(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -205,8 +198,8 @@ OutQuintic(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InOutQuintic(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -225,7 +218,7 @@ InOutQuintic(float time, float finish_time, float min, float max)
  *
  */
 float
-CEasing::
+Easing::
 InSine(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -236,8 +229,8 @@ InSine(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 OutSine(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -248,8 +241,8 @@ OutSine(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InOutSine(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -260,8 +253,8 @@ InOutSine(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InExp(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -272,8 +265,8 @@ InExp(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 OutExp(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -284,8 +277,8 @@ OutExp(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InOutExp(float time, float finish_time, float min, float max)
 {
     if (time == 0.0f) return min;
@@ -307,8 +300,8 @@ InOutExp(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InCirc(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -321,8 +314,8 @@ InCirc(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 OutCirc(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -335,8 +328,8 @@ OutCirc(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InOutCirc(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -354,8 +347,8 @@ InOutCirc(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 OutBounce(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -389,8 +382,8 @@ OutBounce(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InBounce(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -405,8 +398,8 @@ InBounce(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InOutBounce(float time, float finish_time, float min, float max)
 {
     max -= min;
@@ -427,8 +420,8 @@ InOutBounce(float time, float finish_time, float min, float max)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 OutBack(float time, float finish_time, float min, float max, float s)
 {
     max -= min;
@@ -441,8 +434,8 @@ OutBack(float time, float finish_time, float min, float max, float s)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InBack(float time, float finish_time, float min, float max, float s)
 {
     max -= min;
@@ -455,8 +448,8 @@ InBack(float time, float finish_time, float min, float max, float s)
 /*
  *
  */
-float
-CEasing::
+static float
+Easing::
 InOutBack(float time, float finish_time, float min, float max, float s)
 {
     max -= min;

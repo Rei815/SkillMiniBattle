@@ -17,9 +17,6 @@ void CSelectMode::Initialize(SCENE_ID scene_id)
 
     CCamera::GetInstance().Initialize();
 
-    CStage::GetInstance().Initialize();
-
-
 }
 
 void CSelectMode::Update(void)

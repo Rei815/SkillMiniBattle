@@ -21,7 +21,8 @@
 #include <list>
 #include <iomanip>
 #include <sstream>
-
+#include <algorithm>
+#include <cstdint>
 #pragma warning(disable: 4100)      // effekseer.h‚ÌŒx‰ñ”ğ s.kosugi
 #include <EffekseerForDXLib.h>      // effekseerƒ‰ƒCƒuƒ‰ƒŠ‚Ì“Ç‚İ‚İ s.kosugi
 
@@ -1757,4 +1758,29 @@ int vivid::effekseer::StopEffect(int handle)
 int vivid::model::LoadModel(const std::string& file_name)
 {
     return 0;
+}
+template <typename T>
+T clamp(T value, T min, T max)
+{
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+}
+unsigned int vivid::alpha::GetAlpha(unsigned int color)
+{
+    return (color >> 24) & 0xff;
+}
+
+unsigned int vivid::alpha::SetAlpha(unsigned int color, unsigned int alpha)
+{
+    alpha = clamp(alpha, 0u, 255u);
+    return (color & 0x00ffffff) | (alpha << 24);
+}
+
+unsigned int vivid::alpha::AdjustAlpha(unsigned int color, int delta)
+{
+    unsigned int alpha = GetAlpha(color);
+    alpha = clamp(static_cast<int>(alpha) + delta, 0, 255);
+    return SetAlpha(color, alpha);
+
 }

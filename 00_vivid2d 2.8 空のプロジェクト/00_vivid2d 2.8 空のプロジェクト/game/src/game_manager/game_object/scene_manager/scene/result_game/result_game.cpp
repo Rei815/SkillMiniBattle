@@ -1,5 +1,6 @@
 #include "result_game.h"
 #include "..\..\scene_manager.h"
+#include "..\..\..\data_manager\data_manager.h"
 #include "..\..\..\game_object.h"
 
 CResultGame::CResultGame(void)
@@ -60,7 +61,7 @@ void CResultGame::Draw(void)
 void CResultGame::Finalize(void)
 {
     IScene::Finalize();
-    CStage::GetInstance().Finalize();
+    CDataManager::GetInstance().Finalize();
     CStage::GetInstance().Finalize();
 
 }

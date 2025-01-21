@@ -41,6 +41,6 @@ public:
 
 private:
     static const vivid::Vector2 m_OriginKeyPos;
-    static const float          m_KeyOffset;
-
+    static const float          m_key_offset;        //Œ®‚ÆŒ®‚Ì‹——£
+    static const float          m_players_key_offset;  //ƒvƒŒƒCƒ„[ŠÔ‚ÌŒ®‚Ì‹——£
 };

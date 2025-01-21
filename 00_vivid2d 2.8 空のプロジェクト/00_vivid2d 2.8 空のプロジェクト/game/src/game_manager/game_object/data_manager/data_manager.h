@@ -19,39 +19,74 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize(void);
+    void            Initialize(void);
 
     /*!
      *  @brief      更新
      */
-    void        Update(void);
+    void            Update(void);
 
     /*!
      *  @brief      解放
      */
-    void        Finalize(void);
+    void            Finalize(void);
 
-    void        PlayerWin(UNIT_ID unitID);
+    /*!
+     *  @brief      プレイヤーを勝たせる
+     *
+     *  @param[in]  unitID     ユニットID
+     */
+    void            PlayerWin(UNIT_ID unitID);
 
-    int         GetCurrentPlayer();
+    /*!
+     *  @brief      参加しているプレイヤーの数を取得
+     *
+     *  @return     プレイヤーの数
+     */
+    int             GetCurrentPlayer();
 
-    void        SetCurrentPlayer(int num);
+    /*!
+     *  @brief      参加しているプレイヤーの数を設定
+     *
+     *  @param[in]  num     プレイヤーの数
+     */
+    void            SetCurrentPlayer(int num);
 
-    GAME_ID     GetGameID();
+    /*!
+     *  @brief      ゲームのIDを取得
+     *
+     *  @return     ゲームのID
+     */
+    GAME_ID         GetSelectGameID();
 
-    void        SetGameID(GAME_ID gameID);
+    /*!
+     *  @brief      ゲームのIDを設定
+     *
+     *  @param[in]  gameID     ゲームのID
+     */
+    void            SetGameID(GAME_ID gameID);
 
-    int         GetPlayerWin(int unitID);
+    /*!
+     *  @brief      プレイヤーの勝利を取得
+     *
+     *  @return     プレイヤーの勝利数
+     */
+    int             GetPlayerWin(int unitID);
 
-    int         GetMaxGameNum();
 
-    void        SetMaxGameNum(int num);
+    int             GetMaxGameNum();
 
-    void        ResetLastGameRanking();
 
-    void        AddLastGameRanking(UNIT_ID unit_id);
+    void            SetMaxGameNum(int num);
 
-    UNIT_ID     GetLastGameRanking(int num);
+
+    void            ResetLastGameRanking();
+
+
+    void            AddLastGameRanking(UNIT_ID unit_id);
+
+
+    UNIT_ID         GetLastGameRanking(int num);
 private:
 
     /*!

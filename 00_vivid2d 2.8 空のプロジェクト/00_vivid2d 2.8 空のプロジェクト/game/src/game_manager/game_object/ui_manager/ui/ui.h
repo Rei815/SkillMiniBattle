@@ -93,19 +93,19 @@ public:
      *
      *  @return     位置
      */
-    vivid::Vector2            GetPosition(void);
+    vivid::Vector2  GetPosition(void);
     /*!
      *  @brief      長さ取得
      *
      *  @return     長さ
      */
-    int            GetWidth(void);
+    int             GetWidth(void);
     /*!
      *  @brief      高さ取得
      *
      *  @return     高さ
      */
-    int            GetHeight(void);
+    int             GetHeight(void);
     /*!
      *  @brief      ID取得
      *
@@ -123,9 +123,9 @@ public:
     /*!
      *  @brief      ID設定
      *
-     *  @param[in]  uiID  UIのID
+     *  @param[in]  id  UIのID
      */
-    void            SetUI_ID(UI_ID uiID);
+    void            SetUI_ID(UI_ID id);
 
     /*!
      *  @brief      位置設定
@@ -140,6 +140,21 @@ public:
      *  @param[in]  scale  拡大率
      */
     void            SetScale(const vivid::Vector2& scale);
+
+    /*!
+     *  @brief      トランスフォーム取得
+     *
+     *  @return     トランスフォーム
+     */
+    CTransform      GetTransform(void);
+
+    /*!
+     *  @brief      トランスフォーム設定
+     *
+     *  @param[in]  transform  トランスフォーム
+     */
+    void            SetTransform(const CTransform& transform);
+
 protected:
 
     CTransform                      m_Transform;        //!< トランスフォーム
