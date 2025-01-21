@@ -14,6 +14,7 @@
 
 const float CGame::m_start_count_time = 3.0f;
 const float CGame::m_start_text_time = 1.0f;
+const float CGame::m_finish_text_time = 1.2f;
 
 /*
  *  コンストラクタ
@@ -24,6 +25,7 @@ CGame::CGame(void)
     , m_CountFlag(true)
     , m_SetActionflag(false)
     , m_FinishFlag(false)
+    , m_ResultFlag(false)
     , m_EntryList()
     , m_ResultList()
 {
@@ -74,29 +76,21 @@ CGame::Update(void)
     case GAME_STATE::FINISH:    Finish();       break;
     }
 
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB))
-    {
-        if (m_PauseFlag)
-            CUIManager::GetInstance().Delete(UI_ID::PAUSE);
-        else
-            CUIManager::GetInstance().Create(UI_ID::PAUSE);
-
-        m_PauseFlag ^= true;
-    }
-
     if(!m_PauseFlag)
     {
         CUnitManager::GetInstance().Update();
 
         CSkillManager::GetInstance().Update();
 
-        CUIManager::GetInstance().Update();
-
         CEffectManager::GetInstance().Update();
 
         CObjectManager::GetInstance().Update();
+
         CGimmickManager::GetInstance().Update();
     }
+
+    CUIManager::GetInstance().Update();
+
     CControllerManager::GetInstance().Update();
 }
 
@@ -111,8 +105,8 @@ CGame::Draw(void)
     CSkillManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
-    CUIManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
+    CUIManager::GetInstance().Draw();
 
 #ifdef VIVID_DEBUG
     switch (m_GameState)
@@ -241,6 +235,16 @@ void CGame::Play(void)
         CUnitManager::GetInstance().SetAllPlayerAction(true);
     }
 
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB))
+    {
+        if (m_PauseFlag)
+            CUIManager::GetInstance().Delete(UI_ID::PAUSE);
+        else
+            CUIManager::GetInstance().Create(UI_ID::PAUSE);
+
+        m_PauseFlag ^= true;
+    }
+
 #ifdef VIVID_DEBUG
 
     if(vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
@@ -261,10 +265,26 @@ Finish(void)
 #ifdef VIVID_DEBUG
 
 #endif
+
     if (!m_FinishFlag)
     {
-        Push(SCENE_ID::RESULT_MINIGAME);
+        m_WaitTimer.SetUp(m_finish_text_time);
+        CUIManager::GetInstance().Create(UI_ID::FINISH_TEXT);
         m_FinishFlag = true;
+        m_PauseFlag = true;
+    }
+
+    if (m_WaitTimer.Finished())
+    {
+        if (!m_ResultFlag)
+        {
+            Push(SCENE_ID::RESULT_MINIGAME);
+            m_ResultFlag = true;
+        }
+    }
+    else
+    {
+        m_WaitTimer.Update();
     }
 }
 

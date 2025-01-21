@@ -8,8 +8,10 @@
 #include "../../../../ui_manager/ui_manager.h"
 #include "../../../../bullet_manager/bullet_manager.h"
 #include "../../../../launcher/launcher.h"
-
 #include "../../../../skill_manager/skill_manager.h"
+
+
+#include "../../../../gimmick_manager/gimmick/fall_gimmick/fall_gimmick.h"
 
 //ã‰º¶‰E‚Ì4•ûŒü ~ Še•ûŒü‚É5‚Â‚¸‚Â  20‚±
 const CVector3		CDodgeBallGame::m_cannon_pos_list[] = 
@@ -114,8 +116,8 @@ void CDodgeBallGame::Update(void)
 void CDodgeBallGame::Draw(void)
 {
 	//CStage::GetInstance().Draw();
-	CGame::Draw();
 	CBulletManager::GetInstance().Draw();
+	CGame::Draw();
 }
 
 void CDodgeBallGame::Finalize(void)

@@ -9,6 +9,7 @@ COgreObject::COgreObject()
 	: IObject()
 	, m_FallSpeed()
 	, m_Daruma_FallDownObjectState()
+	
 {
 }
 
@@ -38,7 +39,9 @@ void COgreObject::Draw(void)
 	IObject::Draw();
 
 	m_Model.Draw();
-	vivid::DrawText(30, std::to_string((int)m_Gimmick->GetState()), vivid::Vector2(500,500));
+
+	if(m_Gimmick != nullptr)
+		vivid::DrawText(30, std::to_string((int)m_Gimmick->GetState()), vivid::Vector2(500,500));
 }
 
 void COgreObject::Finalize(void)

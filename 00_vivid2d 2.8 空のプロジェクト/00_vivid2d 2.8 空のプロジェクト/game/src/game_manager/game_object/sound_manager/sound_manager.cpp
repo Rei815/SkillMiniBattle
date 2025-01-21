@@ -24,9 +24,35 @@ const char* CSoundManager::m_sound_file_names[] =
     "data\\Audios\\gameover.wav",
     "data\\Audios\\gameclear.wav",
     //↓ここから追加分
+    "data\\Audios\\SE\\Barrier_SE.mp3",
+    "data\\Audios\\SE\\CancelButton_SE.mp3",
+    "data\\Audios\\SE\\CannonShot_SE.mp3",
+    "data\\Audios\\SE\\Dash_SE.mp3",
     "data\\Audios\\SE\\DecideButton_SE.mp3",
+    "data\\Audios\\SE\\FallOutDecide_SE.mp3",
+    "data\\Audios\\SE\\FallOutRaffle_SE.mp3",
+    "data\\Audios\\SE\\Floating_SE.mp3",
+    "data\\Audios\\SE\\GameDecide_SE.mp3",
+    "data\\Audios\\SE\\GameFinish_SE.mp3",
+    "data\\Audios\\SE\\GameRaffle_SE.mp3",
+    "data\\Audios\\SE\\GameStart_SE.mp3",
+    "data\\Audios\\SE\\GravityArea_SE.mp3",
+    "data\\Audios\\SE\\HideTopic_SE.mp3",
+    "data\\Audios\\SE\\Invisible_SE.mp3",
+    "data\\Audios\\SE\\KeyGet_SE.mp3",
+    "data\\Audios\\SE\\Mimicry_SE.mp3",
+    "data\\Audios\\SE\\Resurect_SE.mp3",
+    "data\\Audios\\SE\\SceneMove_SE.mp3",
+    "data\\Audios\\SE\\Select_SE.mp3",
+    "data\\Audios\\SE\\Skill_SE.mp3",
+    "data\\Audios\\SE\\Slow_SE.mp3",
+    "data\\Audios\\SE\\SpawnWall_SE.mp3",
+    "data\\Audios\\SE\\Stomp_SE.mp3",
+    "data\\Audios\\SE\\StrongWindow_SE.mp3",
+    "data\\Audios\\SE\\Stun_SE.mp3",
 
     "data\\Audios\\BGM\\Main_BGM.mp3",
+    "data\\Audios\\BGM\\Result_BGM.mp3",
 
 
 };
@@ -60,6 +86,16 @@ CSoundManager::Play(SOUND_ID id, bool loop)
 {
     vivid::PlaySound(m_sound_file_names[(int)id], loop);
 }
+
+/*
+停止
+*/
+void
+CSoundManager::Stop(SOUND_ID id)
+{
+    vivid::StopSound(m_sound_file_names[(int)id]);
+}
+
 
 /*
  *  コンストラクタ

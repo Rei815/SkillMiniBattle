@@ -44,6 +44,17 @@ Initialize(void)
 	CUI::Initialize();
 }
 
+/*!
+ *  @brief      ‰Šú‰»
+ */
+void
+CSkillCursor::
+Initialize(vivid::Vector2 position)
+{
+	Initialize();
+	SetPosition(position);
+}
+
 /*
  *  XV
  */

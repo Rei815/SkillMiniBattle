@@ -29,8 +29,35 @@ enum class SOUND_ID
     GAMEOVER,
     GAMECLEAR,//配列9番目
     //↓ここから追加分
+    BARRIER,
+    CANCEL_BUTTON,
+    CANNON_SHOT,
+    DASH,
     DECIDE_BUTTON,
+    FALLOUT_DECIDE,
+    FALLOUT_RAFFLE,
+    FLOATING,
+    GAME_DECIDE,
+    GAME_FINISH,
+    GAME_RAFFLE,
+    GAME_START,
+    GRAVITYAREA,
+    HIDETOPIC,
+    INVISIBLE,
+    KEYGET,
+    MIMICRY,
+    RESURECT,
+    SCENE_MOVE,
+    SELECT,
+    SKILL,
+    SLOW,
+    SPAWN_WALL,
+    STOMP,
+    STRONG_WINDOW,
+    STUN,
+
     MAIN_BGM,
+    RESULT_BGM,
 
     MAX
 };
@@ -68,6 +95,7 @@ public:
      *  @param[in]  loop    ループフラグ
      */
     void        Play(SOUND_ID id, bool loop = false);
+    void        Stop(SOUND_ID id);
 
 private:
     /*!

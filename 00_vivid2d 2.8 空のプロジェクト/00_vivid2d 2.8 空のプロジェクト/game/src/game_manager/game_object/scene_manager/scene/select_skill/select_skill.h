@@ -8,6 +8,7 @@
 #include "../../../unit_manager/unit/unit_id.h"
 #include "../../../ui_manager/ui/skill_icon/skill_icon.h"
 #include "../../../ui_manager/ui/skill_cursor/skill_cursor.h"
+#include "../../../ui_manager/ui/skill_infomation/skill_infomation.h"
 
 class CSelectSkill
     : public IScene
@@ -59,20 +60,25 @@ private:
 
     static const float m_cursor_move_time;
     static const float m_icon_scale;
+    static const float m_info_scale;
     static const vivid::Vector2     m_icon_positionList[];
+    static const vivid::Vector2     m_info_position;
 
     SKILL_ID            m_ChooseSkillID[(int)UNIT_ID::NONE];
-    CSkillIcon*   m_SkillSelectIcon[(int)UNIT_ID::NONE];
+    CSkillIcon*         m_SkillSelectIcon[(int)UNIT_ID::NONE];
+
     std::list<CSkillCursor*> m_SkillCursorList;
 
-    std::list<int> m_CursorPosNumList;
-    int m_NowCursorPosNum;
+    std::list<int>  m_CursorPosNumList;
+    int             m_NowCursorPosNum;
 
-    UNIT_ID m_CursorID[(int)UNIT_ID::NONE];
-    int m_NowCursorID_Num;
+    UNIT_ID         m_CursorID[(int)UNIT_ID::NONE];
+    int             m_NowCursorID_Num;
 
-    CSkillCursor* m_SkillSelectCursor;
-    CTimer m_CursorMoveTimer;
+    CSkillCursor*   m_SkillSelectCursor;
+    CTimer          m_CursorMoveTimer;
 
-    GAME_ID m_GameID;
+    CSkillInfomation* m_SkillInfomation;
+
+    GAME_ID         m_GameID;
 };

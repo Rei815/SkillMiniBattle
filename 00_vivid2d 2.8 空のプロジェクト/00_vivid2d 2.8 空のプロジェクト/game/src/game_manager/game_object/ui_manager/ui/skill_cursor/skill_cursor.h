@@ -24,6 +24,11 @@ public:
     void        Initialize(void);
 
     /*!
+     *  @brief      ‰Šú‰»
+     */
+    void        Initialize(vivid::Vector2 position);
+
+    /*!
      *  @brief      XV
      */
     void        Update(void);
