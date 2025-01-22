@@ -8,16 +8,19 @@
 #include "..\..\..\ui_manager\ui\skill_icon\skill_icon.h"
 
 const float             CSelectSkill::m_cursor_move_time = 0.2f;
-const float             CSelectSkill::m_icon_scale = 0.4f;
+const float             CSelectSkill::m_icon_scale = 0.3f;
 const vivid::Vector2    CSelectSkill::m_icon_positionList[] =
 {
-    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 1.0f, vivid::WINDOW_HEIGHT / 3.0f),		//Player1
-    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 2.0f, vivid::WINDOW_HEIGHT / 3.0f),		//Player2
-    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 3.0f, vivid::WINDOW_HEIGHT / 3.0f),		//Player3
-    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 4.0f, vivid::WINDOW_HEIGHT / 3.0f) 		//Player4
+    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 1.0f, vivid::WINDOW_HEIGHT / 7.0f * 3.0f),		//Player1
+    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 2.0f, vivid::WINDOW_HEIGHT / 7.0f * 3.0f),		//Player2
+    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 3.0f, vivid::WINDOW_HEIGHT / 7.0f * 3.0f),		//Player3
+    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 4.0f, vivid::WINDOW_HEIGHT / 7.0f * 3.0f) 		//Player4
 };
-const float             CSelectSkill::m_info_scale = 0.75f;
-const vivid::Vector2    CSelectSkill::m_info_position = vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, vivid::WINDOW_HEIGHT / 4.0f * 3.0f);
+
+const float             CSelectSkill::m_info_scale = 0.6f;
+const vivid::Vector2    CSelectSkill::m_info_position = vivid::Vector2(vivid::WINDOW_WIDTH / 3.0f * 2.0f, vivid::WINDOW_HEIGHT / 4.0f * 3.0f);
+
+const vivid::Vector2    CSelectSkill::m_bg_position = vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, vivid::WINDOW_HEIGHT / 2.0f);
 
 CSelectSkill::CSelectSkill(void)
     :m_CursorMoveTimer()
@@ -64,6 +67,10 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
 
     //カーソル移動タイマーのリセット
     m_CursorMoveTimer.SetUp(m_cursor_move_time);
+
+    //バックグラウンド表示
+    CUI* MenuBG = CUIManager::GetInstance().Create(UI_ID::MENU_BG, m_bg_position);
+    //temp->SetPosition(m_bg_position);
 
     //スキル抽選
     ChooseSkill();
@@ -260,7 +267,6 @@ void CSelectSkill::CreateCursor(void)
 
     m_NowCursorPosNum = 0;
 
-    
     m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))], m_icon_scale);
 }
 

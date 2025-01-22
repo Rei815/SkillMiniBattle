@@ -16,6 +16,7 @@
 #include "ui/start_game_text/start_game_text.h"
 #include "ui/fade/fade.h"
 #include "ui/finish_game_text/finish_game_text.h"
+#include "ui/menu_bg/menu_bg.h"
  /*
   *  インスタンスの取得
   */
@@ -120,6 +121,8 @@ CUI* CUIManager::Create(UI_ID id)
         ui = new CFallOutTopic(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CPlaneGameImage(id);     break;
+    case UI_ID::MENU_BG:
+        ui = new CMenuBG(id);     break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);      break;
     case UI_ID::SKILL_GAUGE:
@@ -165,6 +168,8 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
         ui = new CTopicShutter(id);   break;
     case UI_ID::RANDOM_GAME:
         ui = new CPlaneGameImage(id);           break;
+    case UI_ID::MENU_BG:
+        ui = new CMenuBG(id);     break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);      break;
     case UI_ID::SKILL_GAUGE:
