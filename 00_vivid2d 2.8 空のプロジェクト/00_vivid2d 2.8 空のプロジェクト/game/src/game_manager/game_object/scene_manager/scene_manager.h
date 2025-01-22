@@ -14,6 +14,7 @@
 #include "vivid.h"
 #include"scene\scene_id.h"
 #include <list>
+#include "..\..\..\utility\utility.h"
 class IScene;
 
 /*!
@@ -158,17 +159,15 @@ private:
      */
     enum class STATE
     {
-        FADEIN          //!< フェードイン
-        , SCENE_UPDATE    //!< シーン更新
-        , FADEOUT         //!< フェードアウト
-        , SCENE_CHANGE    //!< シーン変更
+        FADEIN,          //!< フェードイン
+        SCENE_UPDATE,    //!< シーン更新
+        FADEOUT,         //!< フェードアウト
+        SCENE_CHANGE    //!< シーン変更
     };
 
     static const int            m_fade_speed;       //!< フェード速度
-    static const vivid::Vector2 m_fade_position;    //!< フェード表示位置
-    static const unsigned int   m_fade_color;       //!< フェード色
-    static const int            m_min_fade_alpha;   //!< フェード用アルファの最小値
-    static const int            m_max_fade_alpha;   //!< フェード用アルファの最大値
+    static const float          m_wait_time;    //!< アルファ値が最大になった時の待機時間
+
     SCENE_ID                    m_CurrentSceneID;   //!< 現在のシーンID
     SCENE_ID                    m_NextSceneID;      //!< 次のシーンID
 
@@ -177,4 +176,8 @@ private:
     STATE                       m_State;            //!< 状態
     bool                        m_ChangeScene;      //!< シーン変更フラグ
     int                         m_FadeAlpha;        //!< フェード時のアルファ値
+    unsigned int                m_FadeColor;
+    int                         m_FadeSpeed;
+    CTimer                      m_Timer;
+
 };

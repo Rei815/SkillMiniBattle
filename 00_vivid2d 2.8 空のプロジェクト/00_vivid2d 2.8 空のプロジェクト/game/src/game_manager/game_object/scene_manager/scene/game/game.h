@@ -6,6 +6,7 @@
 #include "game_id.h"
 #include "../../../object_manager/object/object.h"
 #include "../../../unit_manager/unit/unit.h"
+#include "../../../ui_manager/ui/game_bg/game_bg.h"
 /*!
 *  @brief  ゲームの状態
 */
@@ -124,4 +125,5 @@ protected:
     RESULT_LIST         m_ResultList;             //!< リザルトリスト
 
     CTimer              m_PlayTimer;            //!< プレイ中のタイマー
+    CGameBG             m_BackGround;
 };

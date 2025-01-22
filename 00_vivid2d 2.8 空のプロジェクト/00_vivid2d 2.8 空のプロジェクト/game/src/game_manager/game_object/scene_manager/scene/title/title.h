@@ -48,5 +48,8 @@ private:
         WAIT,
     };
 
-    STATE           m_State;                //!< ó‘ÔID
+    STATE               m_State;                //!< ó‘ÔID
+    unsigned int        m_Color;
+    static const int    m_fade_speed;
+    int                 m_FadeSpeed;
 };

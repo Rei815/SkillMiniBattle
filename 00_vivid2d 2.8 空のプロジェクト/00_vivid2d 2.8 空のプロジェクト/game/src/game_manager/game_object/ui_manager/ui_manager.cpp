@@ -16,6 +16,7 @@
 #include "ui/start_game_text/start_game_text.h"
 #include "ui/fade/fade.h"
 #include "ui/finish_game_text/finish_game_text.h"
+#include "ui/game_bg/game_bg.h"
 #include "ui/menu_bg/menu_bg.h"
  /*
   *  インスタンスの取得
@@ -143,6 +144,8 @@ CUI* CUIManager::Create(UI_ID id)
         ui = new CFade(id);    break;
     case UI_ID::FINISH_TEXT:
         ui = new CFinishGameText(id);    break;
+    case UI_ID::GAME_BG:
+        ui = new CGameBG(id);    break;
     }
     if (!ui) return nullptr;
 

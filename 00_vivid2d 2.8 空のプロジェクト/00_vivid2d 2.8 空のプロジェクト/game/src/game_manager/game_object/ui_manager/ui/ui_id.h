@@ -24,4 +24,5 @@ enum class UI_ID
     KEY,
     KEY_BG,
     FADE,
+    GAME_BG,
 };

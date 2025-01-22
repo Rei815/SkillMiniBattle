@@ -2,7 +2,10 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 
+const int CTitle::m_fade_speed = 2;
 CTitle::CTitle(void)
+    : m_Color(0xff000000)
+    , m_FadeSpeed(m_fade_speed)
 {
 
 }
@@ -33,35 +36,33 @@ void CTitle::Initialize(SCENE_ID scene_id)
 
 void CTitle::Update(void)
 {
+    unsigned int alpha = vivid::alpha::GetAlpha(m_Color);
+    if (alpha == 255u || alpha == 0u)
+        m_FadeSpeed *= -1;
+
     switch (m_State)
     {
     case STATE::WAIT:
     {
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
         {
+            m_Color = 0xff000000;
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTPLAYER);
         }
     }
     break;
     }
     CUIManager::GetInstance().Update();
+    m_Color = vivid::alpha::AdjustAlpha(m_Color, m_FadeSpeed);
 
 }
 
 void CTitle::Draw(void)
 {
-    switch (m_State)
-    {
-    case STATE::WAIT:
-    {
-        vivid::DrawText(50, "スキルミニバトル", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "スキルミニバトル") / 2, vivid::WINDOW_HEIGHT / 2));
-        //vivid::DrawTexture("data\\Textures\\title.png", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - 400, vivid::WINDOW_HEIGHT / 2 - 300));
-
-        vivid::DrawText(20, "ENTERキーで開始,WASDキーで移動,スペースキーでジャンプ,Tabキーで一時停止", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
-    }
-    break;
-    }
     CUIManager::GetInstance().Draw();
+    vivid::Vector2 position = vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "ボタンを押してね！") / 2, vivid::WINDOW_HEIGHT / 2 + 100);
+    vivid::DrawText(50, "ボタンを押してね！", position, m_Color);
+    //vivid::DrawText(20, "ENTERキーで開始,WASDキーで移動,スペースキーでジャンプ,Tabキーで一時停止", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
 
 }
 

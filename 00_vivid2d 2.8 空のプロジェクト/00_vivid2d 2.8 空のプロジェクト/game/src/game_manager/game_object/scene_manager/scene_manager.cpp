@@ -23,10 +23,7 @@
 #include "scene\result_minigame\result_minigame.h"
 #include "scene\result_game\result_game.h"
 const int               CSceneManager::m_fade_speed = 5;
-const vivid::Vector2    CSceneManager::m_fade_position = { 0.0f, 0.0f };
-const unsigned int      CSceneManager::m_fade_color = 0xff000000;
-const int               CSceneManager::m_min_fade_alpha = 0;
-const int               CSceneManager::m_max_fade_alpha = 255;
+const float             CSceneManager::m_wait_time = 1.0f;
 
 /*
  *  インスタンスの取得
@@ -50,6 +47,10 @@ CSceneManager::Initialize(void)
 
     // シーン変更
     m_State = STATE::SCENE_CHANGE;
+
+    m_Timer.SetUp(m_wait_time);
+    m_FadeSpeed = m_fade_speed;
+    m_FadeColor = 0x00ffffff;
 }
 
 /*
@@ -58,6 +59,17 @@ CSceneManager::Initialize(void)
 void
 CSceneManager::Update(void)
 {
+    unsigned int alpha = vivid::alpha::GetAlpha(m_FadeColor);
+    if (alpha == 255u)
+    {
+        m_Timer.Update();
+        if (m_Timer.Finished())
+        {
+            m_Timer.SetActive(false);
+            m_FadeSpeed *= -1;
+        }
+    }
+
     switch (m_State)
     {
     case STATE::FADEIN:          FadeIn();      break;
@@ -65,6 +77,7 @@ CSceneManager::Update(void)
     case STATE::FADEOUT:         FadeOut();     break;
     case STATE::SCENE_CHANGE:    SceneChange(); break;
     }
+
 }
 
 /*
@@ -92,6 +105,8 @@ CSceneManager::Draw(void)
 void
 CSceneManager::DrawSceneEffect(void)
 {
+    vivid::DrawTexture("data\\Textures\\white.png", vivid::Vector2(), m_FadeColor);
+
 }
 
 /*
@@ -171,7 +186,6 @@ CSceneManager::CSceneManager(void)
     , m_CurrentSceneID(SCENE_ID::WAIT)
     , m_NextSceneID(SCENE_ID::WAIT)
     , m_ChangeScene(false)
-    , m_FadeAlpha(m_max_fade_alpha)
 {
 }
 
@@ -235,15 +249,16 @@ CSceneManager::CreateScene(SCENE_ID id)
 void
 CSceneManager::FadeIn(void)
 {
-    m_FadeAlpha -= m_fade_speed;
-
-    if (m_FadeAlpha < m_min_fade_alpha)
+    unsigned int alpha = vivid::alpha::GetAlpha(m_FadeColor);
+    if (alpha == 0u)
     {
-        m_FadeAlpha = m_min_fade_alpha;
+        m_FadeSpeed = m_fade_speed;
 
         // シーン更新
         m_State = STATE::SCENE_UPDATE;
     }
+    m_FadeColor = vivid::alpha::AdjustAlpha(m_FadeColor, m_FadeSpeed);
+
 }
 
 /*
@@ -281,7 +296,7 @@ CSceneManager::SceneUpdate(void)
     if (m_CurrentSceneID != m_NextSceneID || m_ChangeScene)
     {
         // フェードアウト
-        m_State = STATE::SCENE_CHANGE;
+        m_State = STATE::FADEOUT;
 
         m_ChangeScene = false;
     }
@@ -293,15 +308,20 @@ CSceneManager::SceneUpdate(void)
 void
 CSceneManager::FadeOut(void)
 {
-    m_FadeAlpha += m_fade_speed;
-
-    if (m_FadeAlpha > m_max_fade_alpha)
+    unsigned int alpha = vivid::alpha::GetAlpha(m_FadeColor);
+    if (alpha == 255u)
     {
-        m_FadeAlpha = m_max_fade_alpha;
-
-        // シーン変更
-        m_State = STATE::SCENE_CHANGE;
+        m_Timer.Update();
+        if (m_Timer.Finished())
+        {
+            m_Timer.Reset();
+            // シーン変更
+            m_State = STATE::SCENE_CHANGE;
+            m_FadeSpeed *= -1;
+        }
     }
+
+    m_FadeColor = vivid::alpha::AdjustAlpha(m_FadeColor, m_FadeSpeed);
 }
 
 /*
@@ -336,8 +356,7 @@ CSceneManager::SceneChange()
     m_CurrentSceneID = m_NextSceneID;
 
     // フェードイン
-    //m_State = STATE::SCENE_CHANGE;
-    m_State = STATE::SCENE_UPDATE;
+    m_State = STATE::FADEIN;
 }
 
 IScene* CSceneManager::GetScene(SCENE_ID scene_id)
