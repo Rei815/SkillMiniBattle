@@ -177,4 +177,5 @@ private:
     STATE                       m_State;            //!< 状態
     bool                        m_ChangeScene;      //!< シーン変更フラグ
     int                         m_FadeAlpha;        //!< フェード時のアルファ値
+    //CFade
 };

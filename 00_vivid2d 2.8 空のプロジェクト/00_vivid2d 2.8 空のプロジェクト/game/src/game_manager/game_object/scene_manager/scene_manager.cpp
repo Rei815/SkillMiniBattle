@@ -92,6 +92,8 @@ CSceneManager::Draw(void)
 void
 CSceneManager::DrawSceneEffect(void)
 {
+    //vivid::DrawTexture(m_file_name, m_position, m_Color);
+
 }
 
 /*

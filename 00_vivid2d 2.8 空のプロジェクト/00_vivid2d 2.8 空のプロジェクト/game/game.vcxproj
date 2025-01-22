@@ -196,6 +196,7 @@
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_stomp\skill_stomp.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_strong_wind\skill_strong_wind.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\finish_game_text\finish_game_text.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\game_bg\game_bg.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\key_bg\key_bg.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_mark\player_mark.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_gauge\skill_gauge.cpp" />
@@ -327,6 +328,7 @@
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_slow\skill_slow.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_spawn_wall\skill_spawn_wall.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\finish_game_text\finish_game_text.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\game_bg\game_bg.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\key_bg\key_bg.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_mark\player_mark.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_gauge\skill_gauge.h" />

@@ -28,6 +28,7 @@ CGame::CGame(void)
     , m_ResultFlag(false)
     , m_EntryList()
     , m_ResultList()
+    , m_BackGround(UI_ID::GAME_BG)
 {
 }
 
@@ -61,6 +62,7 @@ CGame::Initialize(SCENE_ID scene_id)
 
     m_PauseFlag = false;
     m_DebugText = "親ゲームシーン";
+    m_BackGround.Initialize();
 }
 
 /*
@@ -69,6 +71,8 @@ CGame::Initialize(SCENE_ID scene_id)
 void
 CGame::Update(void)
 {
+    m_BackGround.Update();
+
     switch (m_GameState)
     {
     case GAME_STATE::START:     Start();        break;
@@ -100,6 +104,8 @@ CGame::Update(void)
 void
 CGame::Draw(void)
 {
+    m_BackGround.Draw();
+
     CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
     CSkillManager::GetInstance().Draw();
@@ -133,6 +139,8 @@ CGame::Draw(void)
 void
 CGame::Finalize(void)
 {
+    m_BackGround.Finalize();
+
     IScene::Finalize();
 
     CUnitManager::GetInstance().Finalize();
