@@ -67,6 +67,7 @@ CGameManager::Draw(void)
 {
     // シーンマネージャー描画
     CSceneManager::GetInstance().Draw();
+    CSceneManager::GetInstance().DrawSceneEffect();
 }
 
 /*
