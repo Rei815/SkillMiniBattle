@@ -207,17 +207,6 @@ void CDodgeBallGame::Play(void)
 
 void CDodgeBallGame::Finish(void)
 {
-	//一人生き残った場合(二人以上)
-	if (m_EntryList.size() == 1)
-	{
-		//生き残った一人を勝ちにする
-		CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
-	}
-	else //一人の場合
-	{
-		//やられているためリザルトリストから勝ちにする
-		CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
-	}
 	CGame::Finish();
 }
 
@@ -252,15 +241,23 @@ void CDodgeBallGame::CheckFinish(void)
 	{
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
 		{
-			CGame::SetGameState(GAME_STATE::FINISH);
+			//生き残った一人を勝ちにする
+			CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
 
 			CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
+
+			CGame::SetGameState(GAME_STATE::FINISH);
 		}
 	}
 	else
 	{
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
+		{
+			//やられているためリザルトリストから勝ちにする
+			CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
+
 			CGame::SetGameState(GAME_STATE::FINISH);
+		}
 	}
 
 }
