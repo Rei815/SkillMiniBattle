@@ -126,32 +126,32 @@ private:
      *
      *  @param[in]  id  シーンID
      */
-    IScene*    CreateScene(SCENE_ID id);
+    IScene*     CreateScene(SCENE_ID id);
 
     /*!
      *  @brief      フェードイン
      */
-    void    FadeIn(void);
+    void        FadeIn(void);
 
     /*!
      *  @brief      シーン更新
      */
-    void    SceneUpdate(void);
+    void        SceneUpdate(void);
 
     /*!
      *  @brief      フェードアウト
      */
-    void    FadeOut(void);
+    void        FadeOut(void);
 
     /*!
      *  @brief      シーン変更
      */
-    void    SceneChange();
+    void        SceneChange();
 
     /*!
      *  @brief      シーン変更
      */
-    IScene* GetScene(SCENE_ID scene_id);
+    IScene*     GetScene(SCENE_ID scene_id);
 
 
     /*!

@@ -16,6 +16,10 @@ void CSelectMode::Initialize(SCENE_ID scene_id)
     IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
+    CUIManager::GetInstance().Initialize();
+
+    CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
+
 
 }
 
@@ -25,13 +29,11 @@ void CSelectMode::Update(void)
     {
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
     }
-    CStage::GetInstance().Update();
 
 }
 
 void CSelectMode::Draw(void)
 {
-    CStage::GetInstance().Draw();
 
     vivid::DrawText(50, "カジュアルモード", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "カジュアルモード") / 2, vivid::WINDOW_HEIGHT / 2 ));
 
@@ -42,7 +44,4 @@ void CSelectMode::Draw(void)
 void CSelectMode::Finalize(void)
 {
     IScene::Finalize();
-
-    CStage::GetInstance().Finalize();
-
 }

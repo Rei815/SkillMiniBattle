@@ -21,21 +21,31 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
     CStage::GetInstance().Initialize();
 
     CDataManager::GetInstance().Initialize();
+    CUIManager::GetInstance().Initialize();
+
+    CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
+
 }
 
 void CSelectPlayer::Update(void)
 {
     CDataManager& dm = CDataManager::GetInstance();
+    int currentPlayer = dm.GetCurrentPlayer();
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A))
-        dm.SetCurrentPlayer(dm.GetCurrentPlayer() - 1);
+    {
+        currentPlayer--;
+        dm.SetCurrentPlayer(currentPlayer);
+    }
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::D))
-        dm.SetCurrentPlayer(dm.GetCurrentPlayer() + 1);
+    {
+        currentPlayer++;
+        dm.SetCurrentPlayer(currentPlayer);
+    }
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
     {
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTMODE);
     }
-    CStage::GetInstance().Update();
 
 }
 
@@ -51,7 +61,5 @@ void CSelectPlayer::Draw(void)
 void CSelectPlayer::Finalize(void)
 {
     IScene::Finalize();
-
-    CStage::GetInstance().Finalize();
 
 }

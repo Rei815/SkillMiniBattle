@@ -18,7 +18,7 @@
 /*
  *
  */
-static float
+float
 Easing::
 Linear(float time, float finish_time, float min, float max)
 {
@@ -28,7 +28,7 @@ Linear(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InQuad(float time, float finish_time, float min, float max)
 {
@@ -42,7 +42,7 @@ InQuad(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 OutQuad(float time, float finish_time, float min, float max)
 {
@@ -56,7 +56,7 @@ OutQuad(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InOutQuad(float time, float finish_time, float min, float max)
 {
@@ -75,7 +75,7 @@ InOutQuad(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InCubic(float time, float finish_time, float min, float max)
 {
@@ -89,7 +89,7 @@ InCubic(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 OutCubic(float time, float finish_time, float min, float max)
 {
@@ -103,7 +103,7 @@ OutCubic(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InOutCubic(float time, float finish_time, float min, float max)
 {
@@ -123,7 +123,7 @@ InOutCubic(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InQuart(float time, float finish_time, float min, float max)
 {
@@ -151,7 +151,7 @@ OutQuart(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InOutQuart(float time, float finish_time, float min, float max)
 {
@@ -170,7 +170,7 @@ InOutQuart(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InQuintic(float time, float finish_time, float min, float max)
 {
@@ -184,7 +184,7 @@ InQuintic(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 OutQuintic(float time, float finish_time, float min, float max)
 {
@@ -198,7 +198,7 @@ OutQuintic(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InOutQuintic(float time, float finish_time, float min, float max)
 {
@@ -229,7 +229,7 @@ InSine(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 OutSine(float time, float finish_time, float min, float max)
 {
@@ -241,7 +241,7 @@ OutSine(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InOutSine(float time, float finish_time, float min, float max)
 {
@@ -253,7 +253,7 @@ InOutSine(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InExp(float time, float finish_time, float min, float max)
 {
@@ -265,7 +265,7 @@ InExp(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 OutExp(float time, float finish_time, float min, float max)
 {
@@ -277,7 +277,7 @@ OutExp(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InOutExp(float time, float finish_time, float min, float max)
 {
@@ -300,7 +300,7 @@ InOutExp(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InCirc(float time, float finish_time, float min, float max)
 {
@@ -314,7 +314,7 @@ InCirc(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 OutCirc(float time, float finish_time, float min, float max)
 {
@@ -328,7 +328,7 @@ OutCirc(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InOutCirc(float time, float finish_time, float min, float max)
 {
@@ -347,7 +347,7 @@ InOutCirc(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 OutBounce(float time, float finish_time, float min, float max)
 {
@@ -382,7 +382,7 @@ OutBounce(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InBounce(float time, float finish_time, float min, float max)
 {
@@ -398,7 +398,7 @@ InBounce(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 InOutBounce(float time, float finish_time, float min, float max)
 {
@@ -420,7 +420,7 @@ InOutBounce(float time, float finish_time, float min, float max)
 /*
  *
  */
-static float
+float
 Easing::
 OutBack(float time, float finish_time, float min, float max, float s)
 {
@@ -434,7 +434,7 @@ OutBack(float time, float finish_time, float min, float max, float s)
 /*
  *
  */
-static float
+float
 Easing::
 InBack(float time, float finish_time, float min, float max, float s)
 {
@@ -448,7 +448,7 @@ InBack(float time, float finish_time, float min, float max, float s)
 /*
  *
  */
-static float
+float
 Easing::
 InOutBack(float time, float finish_time, float min, float max, float s)
 {

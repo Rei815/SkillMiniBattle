@@ -7,7 +7,7 @@
 #include "../../../animation_manager/animation_manager.h"
 
 const int CSelectGame::m_games_num = 3;
-const float CSelectGame::m_circle_radius = 1000.0f;
+const float CSelectGame::m_circle_radius = 500.0f;
 CSelectGame::CSelectGame(void)
 {
 
@@ -22,7 +22,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
-    CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -2500.0f));
+    CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -1000.0f));
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CUIManager::GetInstance().Initialize();
     CAnimationManager::GetInstance().Initialize();
@@ -38,7 +38,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
         transform.position.x = 0.0f;//_x;
         transform.position.z = -m_circle_radius;//_z;
         
-        CPlaneGameImage* planeGameImage = dynamic_cast<CPlaneGameImage*>(CUIManager::GetInstance().Create(UI_ID::RANDOM_GAME, transform));
+        CPlaneGameImage* planeGameImage = dynamic_cast<CPlaneGameImage*>(CUIManager::GetInstance().Create(UI_ID::PLANE_GAME_IMAGE, transform));
         planeGameImage->SetGameID((GAME_ID)i);
     }
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
@@ -53,6 +53,7 @@ void CSelectGame::Update(void)
     CAnimationManager::GetInstance().Update();
 
     CDataManager& dm = CDataManager::GetInstance();
+    CAnimationManager& am = CAnimationManager::GetInstance();
     GAME_ID _gameID = GAME_ID::MAX;
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
     {
@@ -64,14 +65,18 @@ void CSelectGame::Update(void)
         {
             CPlaneGameImage* planeGameImage = (CPlaneGameImage*)(*it);
 
+            ++it;
+            if (planeGameImage->GetUI_ID() == UI_ID::TITLE_LOGO) continue;
+
             if (planeGameImage->GetGameID() == (GAME_ID)_gameID)
             {
-                CAnimationManager::GetInstance().Create(ANIMATION_ID::PLANE_UP_DOWN, planeGameImage);
+                am.Create(ANIMATION_ID::PLANE_UP, planeGameImage);
             }
-            ++it;
+            else
+                am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);
         }
-        
     }
+
 #if _DEBUG
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
     {

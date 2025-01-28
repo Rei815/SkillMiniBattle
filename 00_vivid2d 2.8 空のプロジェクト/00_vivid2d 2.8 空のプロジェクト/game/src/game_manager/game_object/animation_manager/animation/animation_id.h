@@ -6,5 +6,6 @@
 enum class ANIMATION_ID
 {
 	KEY_SCALE,
-	PLANE_UP_DOWN,
+	PLANE_UP,
+	PLANE_SCALE,
 };

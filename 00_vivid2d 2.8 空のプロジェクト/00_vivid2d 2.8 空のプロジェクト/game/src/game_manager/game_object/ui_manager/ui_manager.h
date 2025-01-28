@@ -66,9 +66,35 @@ public:
      *  @brief      UI生成
      *
      *  @param[in]  id          UIのID
+     *  @param[in]  layerNum    UIの描画順
+     */
+    CUI*        Create(UI_ID id, int layerNum);
+
+    /*!
+     *  @brief      UI生成
+     *
+     *  @param[in]  id          UIのID
      *  @param[in]  position    UIの位置
      */
     CUI*        Create(UI_ID id, const vivid::Vector2& position);
+
+    /*!
+     *  @brief      UI生成
+     *
+     *  @param[in]  id          UIのID
+     *  @param[in]  position    UIの位置
+     *  @param[in]  layerNum    UIの描画順
+     */
+    CUI*        Create(UI_ID id, const vivid::Vector2& position, int layerNum);
+
+    /*!
+     *  @brief      UI生成
+     *
+     *  @param[in]  id          UIのID
+     *  @param[in]  position    UIの位置
+     *  @param[in]  parent      親のUI
+     */
+    CUI*        Create(UI_ID id, const vivid::Vector2& position, CUI* parent);
 
     /*!
      *  @brief      UI生成
@@ -87,6 +113,16 @@ public:
     CUI*        Create(UI_ID id, const CTransform& transform);
 
     /*!
+     *  @brief      UI生成
+     *
+     *  @param[in]  id          UIのID
+     *  @param[in]  transform    UIのトランスフォーム
+     *  @param[in]  layerNum    UIの描画順
+
+     */
+    CUI*        Create(UI_ID id, const CTransform& transform, int layerNum);
+
+    /*!
      *  @brief      UI削除
      *
      *  @param[in]  id          UIのID
@@ -94,40 +130,11 @@ public:
     void        Delete(UI_ID id);
 
     /*!
-     *  @brief      指定の属性のUIがあるか確認
+     *  @brief      UI削除
      *
-     *  @return     true:UIがある
+     *  @param[in]  ui          UIのポインタ
      */
-    bool        CheckUIAttribute(CUI::UI_ATTRIBUTE ui_attribute);
-
-
-    /*!
-     *  @brief      報酬を受け取ったかを取得
-     *
-     *  @return     報酬を受け取ったかどうか
-     * 
-     */
-    bool GetReceivedReward(void);
-
-    /*!
-     *  @brief      報酬を受け取ったかを設定
-     *
-     */
-    void SetReceivedReward(bool active);
-
-    /*!
-     *  @brief      WaveClearUIのアクティブを取得
-     *
-     *  @return     WaveClearUIのアクティブ
-     * 
-     */
-    bool GetWaveClearUIActive(void);
-
-    /*!
-     *  @brief      WaveClearUIのアクティブを設定
-     *
-     */
-    void SetWaveClearUIActive(bool active);
+    void        Delete(const CUI* ui_pointer);
 
     /*!
      *  @brief      指定のUIのアクティブを取得
@@ -151,7 +158,20 @@ public:
      */
     UI_LIST GetList();
 
+    /*!
+     *  @brief      レイヤー内の番号をもとに並び替え
+     */
+    void            SortList(void);
+
 private:
+    /*!
+     *  @brief      UIのクラスを作成
+     *
+     *  @param[in]  id     UIのID
+     */
+    CUI*            CreateClass(UI_ID id);
+
+
     /*!
      *  @brief      コンストラクタ
      */
@@ -169,6 +189,7 @@ private:
      */
     ~CUIManager(void);
 
+
     /*!
      *  @brief      代入演算子
      *
@@ -178,9 +199,5 @@ private:
      */
     CUIManager& operator=(const CUIManager& rhs);
 
-
     UI_LIST             m_UIList;             //!< UIリスト
-
-    bool                m_ReceivedReward;
-    bool                m_WaveClearUIActiveFlag;
 };

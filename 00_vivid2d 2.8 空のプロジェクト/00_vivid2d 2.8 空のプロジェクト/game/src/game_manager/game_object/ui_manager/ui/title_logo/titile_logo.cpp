@@ -8,8 +8,7 @@ const int    CTitleLogo::m_height = 780;
 /*
  *  コンストラクタ
  */
-CTitleLogo::
-CTitleLogo(UI_ID id)
+CTitleLogo::CTitleLogo(UI_ID id)
     : CUI(m_width, m_height, id)
 {
 }
@@ -17,8 +16,7 @@ CTitleLogo(UI_ID id)
 /*
  *  デストラクタ
  */
-CTitleLogo::
-~CTitleLogo(void)
+CTitleLogo::~CTitleLogo(void)
 {
 }
 
@@ -26,8 +24,7 @@ CTitleLogo::
  *  初期化
  */
 void
-CTitleLogo::
-Initialize(void)
+CTitleLogo::Initialize(void)
 {
 }
 
@@ -35,8 +32,7 @@ Initialize(void)
  *  更新
  */
 void
-CTitleLogo::
-Update(void)
+CTitleLogo::Update(void)
 {
 
 }
@@ -45,8 +41,7 @@ Update(void)
  *  描画
  */
 void
-CTitleLogo::
-Draw(void)
+CTitleLogo::Draw(void)
 {
     vivid::DrawTexture("data\\Textures\\title_logo.png", m_position, 0xffffffff);
 
@@ -57,7 +52,6 @@ Draw(void)
  *  解放
  */
 void
-CTitleLogo::
-Finalize(void)
+CTitleLogo::Finalize(void)
 {
 }

@@ -3,6 +3,7 @@
 #include "vivid.h"
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
+#include "..\..\..\animation_manager\animation\animation.h"
 
 class CSelectGame
     : public IScene
@@ -41,4 +42,5 @@ public:
 private:
     static const int    m_games_num;
     static const float  m_circle_radius;
+    IAnimation*         m_PlaneUp;
 };

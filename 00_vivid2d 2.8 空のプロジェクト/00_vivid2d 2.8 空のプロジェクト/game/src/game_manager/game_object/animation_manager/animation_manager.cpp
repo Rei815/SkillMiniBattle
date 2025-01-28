@@ -1,6 +1,7 @@
 #include "animation_manager.h"
 #include "animation/key_scale/key_scale.h"
-#include "animation/plane_up_down/plane_up_down.h"
+#include "animation/plane_up/plane_up.h"
+#include "animation/plane_scale/plane_scale.h"
 /*
  *  インスタンスの取得
  */
@@ -93,7 +94,7 @@ void CAnimationManager::Finalize(void)
     m_AnimationList.clear();
 }
 
-void CAnimationManager::Create(ANIMATION_ID id, void* object_pointer)
+IAnimation* CAnimationManager::Create(ANIMATION_ID id, void* object_pointer)
 {
     IAnimation* animation = nullptr;
 
@@ -102,14 +103,18 @@ void CAnimationManager::Create(ANIMATION_ID id, void* object_pointer)
     case ANIMATION_ID::KEY_SCALE:
         animation = new CKeyScale();
         break;
-    case ANIMATION_ID::PLANE_UP_DOWN:
-        animation = new CPlaneUpDown();
+    case ANIMATION_ID::PLANE_UP:
+        animation = new CPlaneUp();
+        break;
+    case ANIMATION_ID::PLANE_SCALE:
+        animation = new CPlaneScale();
         break;
     }
-    if (!animation) return;
+    if (!animation) return nullptr;
 
     animation->Initialize(object_pointer);
     m_AnimationList.push_back(animation);
+    return animation;
 
 }
 

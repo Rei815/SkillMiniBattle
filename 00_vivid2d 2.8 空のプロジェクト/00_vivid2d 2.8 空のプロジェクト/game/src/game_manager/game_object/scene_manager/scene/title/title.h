@@ -40,15 +40,7 @@ public:
     void Finalize(void);
 
 private:
-    /*!
-     *  @brief  èÛë‘ID
-     */
-    enum class STATE
-    {
-        WAIT,
-    };
 
-    STATE               m_State;                //!< èÛë‘ID
     unsigned int        m_Color;
     static const int    m_fade_speed;
     int                 m_FadeSpeed;

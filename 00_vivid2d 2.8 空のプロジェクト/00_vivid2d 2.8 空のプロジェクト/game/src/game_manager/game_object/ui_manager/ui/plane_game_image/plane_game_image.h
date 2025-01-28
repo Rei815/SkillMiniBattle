@@ -85,7 +85,7 @@ private:
     static const int                m_width;            //!< •
     static const vivid::Rect        m_rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
     static const vivid::Vector2     m_anchor;           //!< Šî€“_
-    static const vivid::Vector2     m_scale;            //!< Šgk
+    static const CVector3           m_scale;            //!< Šgk
     static const float              m_rotation_speed;
     static const float              m_speed;
 

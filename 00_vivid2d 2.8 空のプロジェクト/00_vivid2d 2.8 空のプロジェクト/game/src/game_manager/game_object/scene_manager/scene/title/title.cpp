@@ -26,8 +26,6 @@ void CTitle::Initialize(SCENE_ID scene_id)
 
     IScene::Initialize(scene_id);
 
-	m_State = STATE::WAIT;
-
     CCamera::GetInstance().Initialize();
 
     CUIManager::GetInstance().Initialize();
@@ -38,19 +36,13 @@ void CTitle::Update(void)
 {
     unsigned int alpha = vivid::alpha::GetAlpha(m_Color);
     if (alpha == 255u || alpha == 0u)
-        m_FadeSpeed *= -1;
+        m_FadeSpeed = -m_FadeSpeed;
 
-    switch (m_State)
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
     {
-    case STATE::WAIT:
-    {
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
-        {
-            m_Color = 0xff000000;
-            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTPLAYER);
-        }
-    }
-    break;
+        m_Color = 0xff000000;
+
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTPLAYER);
     }
     CUIManager::GetInstance().Update();
     m_Color = vivid::alpha::AdjustAlpha(m_Color, m_FadeSpeed);

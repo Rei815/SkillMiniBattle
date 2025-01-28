@@ -18,6 +18,7 @@
 #include "ui/finish_game_text/finish_game_text.h"
 #include "ui/game_bg/game_bg.h"
 #include "ui/menu_bg/menu_bg.h"
+#include "ui/scene_ui_parent/scene_ui_parent.h"
  /*
   *  インスタンスの取得
   */
@@ -69,7 +70,6 @@ CUIManager::Update(void)
 
         ++it;
     }
-
 }
 
 /*
@@ -83,6 +83,7 @@ void CUIManager::Draw(void)
 
     while (it != m_UIList.end())
     {
+
         (*it)->Draw();
 
         ++it;
@@ -112,83 +113,58 @@ void CUIManager::Finalize(void)
 
 CUI* CUIManager::Create(UI_ID id)
 {
-    CUI* ui = nullptr;
-
-    switch (id)
-    {
-    case UI_ID::PAUSE:
-        ui = new CPause(id);          break;
-    case UI_ID::FALLOUT_TOPIC:
-        ui = new CFallOutTopic(id);   break;
-    case UI_ID::RANDOM_GAME:
-        ui = new CPlaneGameImage(id);     break;
-    case UI_ID::MENU_BG:
-        ui = new CMenuBG(id);     break;
-    case UI_ID::SKILL_ICON:
-        ui = new CSkillIcon(id);      break;
-    case UI_ID::SKILL_GAUGE:
-        ui = new CSkillGauge(id);   break;
-    case UI_ID::SKILL_CURSOR:
-        ui = new CSkillCursor(id);    break;
-    case UI_ID::SKILL_INFO:
-        ui = new CSkillInfomation(id);    break;
-    case UI_ID::FINISH_GAME_BG:
-        ui = new CFinishGameBG(id);     break;
-    case UI_ID::TITLE_LOGO:
-        ui = new CTitleLogo(id);     break;
-    case UI_ID::START_COUNTDOWN:
-        ui = new CStartGameCount(id);     break;
-    case UI_ID::START_TEXT:
-        ui = new CStartGameText(id);    break;
-    case UI_ID::FADE:
-        ui = new CFade(id);    break;
-    case UI_ID::FINISH_TEXT:
-        ui = new CFinishGameText(id);    break;
-    case UI_ID::GAME_BG:
-        ui = new CGameBG(id);    break;
-    }
+    CUI* ui = CreateClass(id);
     if (!ui) return nullptr;
 
     ui->Initialize();
     m_UIList.push_back(ui);
+    SortList();
+
+    return ui;
+}
+
+CUI* CUIManager::Create(UI_ID id, int layerNum)
+{
+    CUI* ui = CreateClass(id);
+    if (!ui) return nullptr;
+
+    ui->Initialize();
+    ui->SetOrderInLayer(layerNum);
+    m_UIList.push_back(ui);
+    SortList();
 
     return ui;
 }
 
 CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
 {
-    CUI* ui = nullptr;
+    CUI* ui = CreateClass(id);
 
-    switch (id)
-    {
-    case UI_ID::PAUSE:
-        ui = new CPause(id);                break;
-    case UI_ID::FALLOUT_TOPIC:
-        ui = new CFallOutTopic(id);   break;
-    case UI_ID::FALLOUT_TOPIC_BG:
-        ui = new CFalloutTopicBG(id);   break;
-    case UI_ID::TOPIC_SHUTTER:
-        ui = new CTopicShutter(id);   break;
-    case UI_ID::RANDOM_GAME:
-        ui = new CPlaneGameImage(id);           break;
-    case UI_ID::MENU_BG:
-        ui = new CMenuBG(id);     break;
-    case UI_ID::SKILL_ICON:
-        ui = new CSkillIcon(id);      break;
-    case UI_ID::SKILL_GAUGE:
-        ui = new CSkillGauge(id);   break;
-    case UI_ID::SKILL_CURSOR:
-        ui = new CSkillCursor(id);    break;
-    case UI_ID::SKILL_INFO:
-        ui = new CSkillInfomation(id);    break;
-    case UI_ID::FINISH_GAME_BG:
-        ui = new CFinishGameBG(id);     break;
-    case UI_ID::KEY:
-        ui = new CKey(id);     break;
-    case UI_ID::KEY_BG:
-        ui = new CKeyBG(id);     break;
-        break;
-    }
+    if (!ui) return nullptr;
+
+    ui->Initialize(position);
+    m_UIList.push_back(ui);
+
+    return ui;
+}
+
+CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position, int layerNum)
+{
+    CUI* ui = CreateClass(id);
+
+    if (!ui) return nullptr;
+
+    ui->Initialize(position);
+    ui->SetOrderInLayer(layerNum);
+    m_UIList.push_back(ui);
+    SortList();
+
+    return nullptr;
+}
+
+CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position, CUI* parent)
+{
+    CUI* ui = CreateClass(id);
 
     if (!ui) return nullptr;
 
@@ -200,19 +176,7 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
 
 CUI* CUIManager::Create(UI_ID id, const CVector3& position)
 {
-    CUI* ui = nullptr;
-
-    switch (id)
-    {
-    case UI_ID::PAUSE:
-        ui = new CPause(id);                break;
-    case UI_ID::FALLOUT_TOPIC:
-        ui = new CFallOutTopic(id);   break;
-    case UI_ID::RANDOM_GAME:
-        ui = new CPlaneGameImage(id);           break;
-    case UI_ID::FINISH_GAME_BG:
-        ui = new CFinishGameBG(id);     break;
-    }
+    CUI* ui = CreateClass(id);
 
     if (!ui) return nullptr;
 
@@ -224,23 +188,26 @@ CUI* CUIManager::Create(UI_ID id, const CVector3& position)
 
 CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
 {
-    CUI* ui = nullptr;
+    CUI* ui = CreateClass(id);
 
-    switch (id)
-    {
-    case UI_ID::PAUSE:
-        ui = new CPause(id);          break;
-    case UI_ID::FALLOUT_TOPIC:
-        ui = new CFallOutTopic(id);   break;
-    case UI_ID::RANDOM_GAME:
-        ui = new CPlaneGameImage(id);     break;
-    case UI_ID::FINISH_GAME_BG:
-        ui = new CFinishGameBG(id);     break;
-    }
     if (!ui) return nullptr;
 
     ui->Initialize(transform);
     m_UIList.push_back(ui);
+
+    return ui;
+}
+
+CUI* CUIManager::Create(UI_ID id, const CTransform& transform, int layerNum)
+{
+    CUI* ui = CreateClass(id);
+
+    if (!ui) return nullptr;
+
+    ui->Initialize(transform);
+    ui->SetOrderInLayer(layerNum);
+    m_UIList.push_back(ui);
+    SortList();
 
     return ui;
 }
@@ -265,9 +232,9 @@ void CUIManager::Delete(UI_ID id)
     }
 }
 
-bool CUIManager::CheckUIAttribute(CUI::UI_ATTRIBUTE ui_attribute)
+void CUIManager::Delete(const CUI* ui_pointer)
 {
-    if (m_UIList.empty()) return false;
+    if (m_UIList.empty()) return;
 
     UI_LIST::iterator it = m_UIList.begin();
 
@@ -275,32 +242,15 @@ bool CUIManager::CheckUIAttribute(CUI::UI_ATTRIBUTE ui_attribute)
     {
         CUI* ui = (CUI*)(*it);
 
-        if (ui->CheckAttribute(ui_attribute) == true)
-            return true;
+
+        if (ui == ui_pointer)
+        {
+            (*it)->SetActive(false);
+        }
 
         ++it;
     }
-    return false;
-}
 
-bool CUIManager::GetReceivedReward(void)
-{
-    return m_ReceivedReward;
-}
-
-void CUIManager::SetReceivedReward(bool active)
-{
-    m_ReceivedReward = active;
-}
-
-bool CUIManager::GetWaveClearUIActive(void)
-{
-    return m_WaveClearUIActiveFlag;
-}
-
-void CUIManager::SetWaveClearUIActive(bool active)
-{
-    m_WaveClearUIActiveFlag = active;
 }
 
 int CUIManager::GetUIActive(UI_ID ui_id)
@@ -329,6 +279,55 @@ CUIManager::UI_LIST CUIManager::GetList()
     return m_UIList;
 }
 
+void CUIManager::SortList(void)
+{
+    m_UIList.sort([](const CUI* p, const CUI* q) {return *p < *q; });
+}
+
+CUI* CUIManager::CreateClass(UI_ID id)
+{
+    CUI* ui = nullptr;
+    switch (id)
+    {
+    case UI_ID::PAUSE:
+        ui = new CPause(id);                break;
+    case UI_ID::FALLOUT_TOPIC:
+        ui = new CFallOutTopic(id);         break;
+    case UI_ID::FALLOUT_TOPIC_BG:
+        ui = new CFalloutTopicBG(id);       break;
+    case UI_ID::TOPIC_SHUTTER:
+        ui = new CTopicShutter(id);         break;
+    case UI_ID::PLANE_GAME_IMAGE:
+        ui = new CPlaneGameImage(id);       break;
+    case UI_ID::MENU_BG:
+        ui = new CMenuBG(id);               break;
+    case UI_ID::SKILL_ICON:
+        ui = new CSkillIcon(id);            break;
+    case UI_ID::SKILL_GAUGE:
+        ui = new CSkillGauge(id);           break;
+    case UI_ID::SKILL_CURSOR:
+        ui = new CSkillCursor(id);          break;
+    case UI_ID::SKILL_INFO:
+        ui = new CSkillInfomation(id);      break;
+    case UI_ID::FINISH_GAME_BG:
+        ui = new CFinishGameBG(id);         break;
+    case UI_ID::KEY:
+        ui = new CKey(id);                  break;
+    case UI_ID::KEY_BG:
+        ui = new CKeyBG(id);                break;
+    case UI_ID::FADE:
+        ui = new CFade(id);                 break;
+    case UI_ID::GAME_BG:
+        ui = new CGameBG(id);               break;
+    case UI_ID::TITLE_LOGO:
+        ui = new CTitleLogo(id);            break;
+    case UI_ID::SCENE_UI_PARENT:
+        ui = new CSceneUIParent(id);        break;
+    }
+
+    return ui;
+}
+
 /*
  *  コンストラクタ
  */
@@ -353,6 +352,7 @@ CUIManager::
 ~CUIManager(void)
 {
 }
+
 
 /*
  *  代入演算子

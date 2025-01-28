@@ -34,32 +34,33 @@ public:
     /*!
      *  @brief      èâä˙âª
      */
-    virtual void        Initialize(SCENE_ID scene_id);
+    virtual void    Initialize(SCENE_ID scene_id);
 
     /*!
      *  @brief      çXêV
      */
-    virtual void        Update(void);
+    virtual void    Update(void);
 
     /*!
      *  @brief      ï`âÊ
      */
-    virtual void        Draw(void);
+    virtual void    Draw(void);
 
     /*!
      *  @brief      âï˙
      */
-    virtual void        Finalize(void);
+    virtual void    Finalize(void);
 
 
-    bool        GetActive();
+    bool            GetActive();
 
-    void        SetActive(bool active);
+    void            SetActive(bool active);
 
-    SCENE_ID    GetSceneID();
+    SCENE_ID        GetSceneID();
 
-    SCENE_STATE GetSceneState();
-    void        SetSceneState(SCENE_STATE state);
+    SCENE_STATE     GetSceneState();
+
+    void            SetSceneState(SCENE_STATE state);
 protected:
 
     /*!

@@ -46,6 +46,7 @@ Initialize(const vivid::Vector2& position)
 {
 	Initialize();
 	SetPosition(position);
+	m_Position = m_CenterPosition - m_anchor;
 }
 
 /*
@@ -57,7 +58,6 @@ Update(void)
 {
 	CUI::Update();
 
-	m_Position = m_CenterPosition - m_anchor;
 }
 
 /*

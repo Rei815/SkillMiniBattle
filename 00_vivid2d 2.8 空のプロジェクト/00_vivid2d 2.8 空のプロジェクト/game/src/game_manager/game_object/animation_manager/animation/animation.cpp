@@ -32,3 +32,17 @@ void IAnimation::SetActive(bool active)
 {
 	m_ActiveFlag = active;
 }
+
+bool IAnimation::GetFinishFlag(void)
+{
+	return m_FinishFlag;
+}
+
+void IAnimation::SetFinishFlag(bool finish)
+{
+	m_FinishFlag = true;
+}
+
+void IAnimation::SetEndPosition(bool active)
+{
+}

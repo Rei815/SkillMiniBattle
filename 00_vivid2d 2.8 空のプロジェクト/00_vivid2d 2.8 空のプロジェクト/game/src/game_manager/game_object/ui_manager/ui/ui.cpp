@@ -1,17 +1,27 @@
 #include "ui.h"
 #include "..\..\unit_manager\unit_manager.h"
 
+CUI::CUI(UI_ID id)
+    : m_ActiveFlag(true)
+    , m_UI_ID(id)
+    , m_Transform()
+    , m_Parent(nullptr)
+    , m_OrderInLayer(0)
+{
+}
+
 /*
  *  コンストラクタ
  */
 CUI::
 CUI(int width, int height, UI_ID id)
-    : m_ActiveFlag(true)
-    , m_Attributes{ CUI::UI_ATTRIBUTE::NONE }
-    , m_Width(width)
+    : m_Width(width)
     , m_Height(height)
+    , m_ActiveFlag(true)
     , m_UI_ID(id)
     , m_Transform()
+    , m_Parent(nullptr)
+    , m_OrderInLayer(0)
 {
 }
 /*
@@ -53,7 +63,13 @@ void
 CUI::
 Update(void)
 {
-
+    if (m_Parent)
+    {
+        CVector3 velocity = m_Parent->GetVelocity();
+        m_Position.x += velocity.x;
+        m_Position.y += velocity.y;
+        m_Transform.position -= velocity;
+    }
 }
 
 /*
@@ -93,16 +109,6 @@ CUI::
 SetActive(bool active)
 {
     m_ActiveFlag = active;
-}
-
-bool CUI::CheckAttribute(UI_ATTRIBUTE attribute)
-{
-    for (int i = 0; i < m_Attributes.size(); i++)
-    {
-        if (m_Attributes[i] == attribute)
-            return true;
-    }
-    return false;
 }
 
 bool CUI::OnMouseClick(const vivid::Vector2& position, int width, int height)
@@ -165,5 +171,26 @@ CTransform CUI::GetTransform(void)
 void CUI::SetTransform(const CTransform& transform)
 {
     m_Transform = transform;
+}
+
+void CUI::SetParent(CUI* parent)
+{
+    m_Parent = parent;
+}
+
+int CUI::GetOrderInLayer(void)
+{
+    return m_OrderInLayer;
+}
+
+void CUI::SetOrderInLayer(int num)
+{
+    m_OrderInLayer = num;
+    CUIManager::GetInstance().SortList();
+}
+
+CVector3 CUI::GetVelocity()
+{
+    return m_Velocity;
 }
 

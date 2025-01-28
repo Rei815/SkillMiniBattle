@@ -37,9 +37,10 @@ public:
     ///*!
     // *  @brief        アニメーション生成
     // *
-    // *  @param[in]  id                  ギミックID
+    // *  @param[in]    id                  ギミックID
+    // *  @return       アニメーション
     // */
-    void        Create(ANIMATION_ID id, void* object_pointer);
+    IAnimation*        Create(ANIMATION_ID id, void* object_pointer);
 
     /*!
      *  @brief      ギミックリスト型

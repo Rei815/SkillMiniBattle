@@ -22,8 +22,8 @@
 #include "scene\game\debug_game\debug_game.h"
 #include "scene\result_minigame\result_minigame.h"
 #include "scene\result_game\result_game.h"
-const int               CSceneManager::m_fade_speed = 5;
-const float             CSceneManager::m_wait_time = 1.0f;
+const int               CSceneManager::m_fade_speed = 10;
+const float             CSceneManager::m_wait_time = 0.0f;
 
 /*
  *  インスタンスの取得
@@ -59,17 +59,6 @@ CSceneManager::Initialize(void)
 void
 CSceneManager::Update(void)
 {
-    unsigned int alpha = vivid::alpha::GetAlpha(m_FadeColor);
-    if (alpha == 255u)
-    {
-        m_Timer.Update();
-        if (m_Timer.Finished())
-        {
-            m_Timer.SetActive(false);
-            m_FadeSpeed *= -1;
-        }
-    }
-
     switch (m_State)
     {
     case STATE::FADEIN:          FadeIn();      break;
@@ -317,7 +306,7 @@ CSceneManager::FadeOut(void)
             m_Timer.Reset();
             // シーン変更
             m_State = STATE::SCENE_CHANGE;
-            m_FadeSpeed *= -1;
+            m_FadeSpeed = -m_fade_speed;
         }
     }
 

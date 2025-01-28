@@ -30,7 +30,6 @@ CPause::
 Initialize(void)
 {
     m_UI_ID = UI_ID::PAUSE;
-    m_Attributes.push_back(UI_ATTRIBUTE::BUTTON);
     m_Position = m_position;
 }
 
