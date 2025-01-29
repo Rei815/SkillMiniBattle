@@ -1,6 +1,7 @@
 #include "title.h"
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
+#include "../../../sound_manager/sound_manager.h"
 
 CTitle::CTitle(void)
 {
@@ -39,6 +40,7 @@ void CTitle::Update(void)
     {
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
         {
+            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTPLAYER);
         }
     }

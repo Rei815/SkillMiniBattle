@@ -1,5 +1,5 @@
 #include "skill_stun.h"
-
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillStun::m_cool_time = 20.0f;
 const float CSkillStun::m_duration_time = 2.0f;
@@ -52,6 +52,7 @@ void CSkillStun::Action()
 	if (m_State != SKILL_STATE::WAIT)
 		return;
 
+	CSoundManager::GetInstance().Play_SE(SE_ID::STUN, false);
 	std::list<CPlayer*>TopPlayerList;
 
 	TopPlayerList.push_back(um.GetPlayer(UNIT_ID(0)));

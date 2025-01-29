@@ -1,4 +1,5 @@
 #include "skill_mimicry.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillMimicry::m_cool_time = 10.0f;
 const float CSkillMimicry::m_duration_time = 5.0f;
@@ -50,12 +51,13 @@ void CSkillMimicry::Finalize(void)
 
 void CSkillMimicry::Action()
 {
-	if (m_State == SKILL_STATE::WAIT)
-	{
-		m_Player->MulMoveSpeedRate(m_mimicry_speed_rate);
-		m_Player->StartInvincible(m_duration_time);
-		m_State = SKILL_STATE::ACTIVE;
-	}
+	if (m_State != SKILL_STATE::WAIT)	return;
+
+	CSoundManager::GetInstance().Play_SE(SE_ID::MIMICRY, false);
+	m_Player->MulMoveSpeedRate(m_mimicry_speed_rate);
+	m_Player->StartInvincible(m_duration_time);
+	m_State = SKILL_STATE::ACTIVE;
+	
 }
 
 /*!

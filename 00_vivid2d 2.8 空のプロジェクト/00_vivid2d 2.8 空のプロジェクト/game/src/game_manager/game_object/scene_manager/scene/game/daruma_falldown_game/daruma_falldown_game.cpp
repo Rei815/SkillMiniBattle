@@ -8,6 +8,7 @@
 #include "../../../../unit_manager/unit/unit.h"
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
+#include "../../../../sound_manager/sound_manager.h"
 
 #include <EffekseerForDXLib.h>
 
@@ -39,8 +40,7 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 	m_CountTime = 180;
 	m_Timer.SetUp(m_CountTime);
 
-	m_Sound = SOUND_ID::MAIN_BGM;
-	CSoundManager::GetInstance().Play(m_Sound, true);
+	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
@@ -107,7 +107,7 @@ void CDaruma_FallDownGame::Draw(void)
 
 void CDaruma_FallDownGame::Finalize(void)
 {
-	CSoundManager::GetInstance().Stop(m_Sound);
+	CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
 }
 
 void CDaruma_FallDownGame::Ranking(void)

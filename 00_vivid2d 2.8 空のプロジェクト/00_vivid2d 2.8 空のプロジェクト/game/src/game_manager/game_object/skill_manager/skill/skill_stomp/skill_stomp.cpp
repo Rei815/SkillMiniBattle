@@ -2,6 +2,7 @@
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
 #include "../../../effect_manager/effect_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillStomp::m_cool_time = 10.0f;
 
@@ -77,7 +78,10 @@ void
 CSkillStomp::
 Action()
 {
+	
 	if (m_State == SKILL_STATE::COOLDOWN) return;
+
+	CSoundManager::GetInstance().Play_SE(SE_ID::STOMP, false);
 	CBulletManager::GetInstance().Create(m_Player->GetUnitCategory(), BULLET_ID::SHOCK_WAVE, m_Player->GetPosition(), CVector3::UP);
 	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, m_Player->GetPosition());
 	m_State = SKILL_STATE::COOLDOWN;

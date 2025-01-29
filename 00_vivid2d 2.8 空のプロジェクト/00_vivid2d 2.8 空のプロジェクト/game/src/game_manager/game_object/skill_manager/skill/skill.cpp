@@ -23,6 +23,7 @@ CSkill::CSkill(float duration_time, float cool_time)
 	, m_UiSkillIcon(nullptr)
 	, m_UiSkillGauge(nullptr)
 	, m_UiSkillCursor(nullptr)
+	,m_Sound(SE_ID::SKILL)
 {
 
 }
@@ -56,6 +57,7 @@ void CSkill::Initialize(SKILL_ID skill_id)
 	m_SkillID = skill_id;
 	m_State = SKILL_STATE::WAIT;
 	m_Timer.SetUp(m_DurationTime);
+	m_Sound = SE_ID::SKILL;
 
 	CUIManager& uim = CUIManager::GetInstance();
 	CUI* temp;
@@ -89,6 +91,7 @@ void CSkill::Update(void)
 	case SKILL_STATE::ACTIVE:
 		if (m_DurationTime > 0)
 		{
+
 			m_Timer.Update();
 			m_GaugePercent = (m_DurationTime - m_Timer.GetTimer()) / m_DurationTime * 100.0f;
 			if (m_Timer.Finished())
@@ -101,6 +104,8 @@ void CSkill::Update(void)
 		break;
 
 	case SKILL_STATE::COOLDOWN:
+
+
 		if (m_CoolTime > 0)
 		{
 			m_Timer.Update();

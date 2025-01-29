@@ -17,5 +17,6 @@ enum class EFFECT_ID
     ENEMY_BULLET,           //!< エネミー弾エフェクト
     FORECAST_LINE,          //!< 大砲の砲撃予測線
     SKILL_BARRIER,          //!< スキルによるバリアエフェクト
-    FLOATING,        //!< 浮遊エフェクト
+    FLOATING,               //!< 浮遊エフェクト
+    GRAVITY_AREA,           //!< 重力エリアエフェクト
 };

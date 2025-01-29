@@ -1,5 +1,5 @@
 #include "skill_invisible.h"
-
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillInvisible::m_cool_time = 10.0f;
 const float CSkillInvisible::m_duration_time = 3.0f;
@@ -51,11 +51,12 @@ void CSkillInvisible::Finalize(void)
 
 void CSkillInvisible::Action(void)
 {
-	if (m_State == SKILL_STATE::WAIT)
-	{
-		m_Player->StartInvincible(m_duration_time);
-		m_State = SKILL_STATE::ACTIVE;
-	}
+	if (m_State != SKILL_STATE::WAIT) return;
+
+	CSoundManager::GetInstance().Play_SE(SE_ID::INVISIBLE, false);
+	m_Player->StartInvincible(m_duration_time);
+	m_State = SKILL_STATE::ACTIVE;
+	
 }
 
 /*!

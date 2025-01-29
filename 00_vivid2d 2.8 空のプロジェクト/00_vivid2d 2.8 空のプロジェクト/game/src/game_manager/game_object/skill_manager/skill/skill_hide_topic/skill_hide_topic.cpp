@@ -1,6 +1,7 @@
 #include "skill_hide_topic.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillHideTopic::m_cool_time = 5.0f;
 const float CSkillHideTopic::m_duration_time = 5.0f;
@@ -85,6 +86,7 @@ Action(void)
 {
 	if (m_State != SKILL_STATE::WAIT) return;
 
+	CSoundManager::GetInstance().Play_SE(SE_ID::HIDETOPIC, false);
 	CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
 	CUIManager::UI_LIST topicList;
 	CUIManager::UI_LIST::iterator it = uiList.begin();

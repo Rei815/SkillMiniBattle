@@ -39,7 +39,8 @@ CGameManager::Initialize(void)
     CSoundManager& sound = CSoundManager::GetInstance();
 
     // ƒTƒEƒ“ƒh“Ç‚İ‚İ
-    sound.Load();
+    sound.Load_SE();
+    sound.Load_BGM();
 
     // BGMÄ¶
     //sound.Play(SOUND_ID::BGM, true);

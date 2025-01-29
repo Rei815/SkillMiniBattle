@@ -2,6 +2,8 @@
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
+#include "../../../sound_manager/sound_manager.h"
+
 
 const float CSkillBarrier::m_duration_time = 5.0f;
 const float CSkillBarrier::m_cool_time = 25.0f;
@@ -101,6 +103,8 @@ Action(void)
 {
 	if (m_State != SKILL_STATE::WAIT)
 		return;
+
+	CSoundManager::GetInstance().Play_SE(SE_ID::BARRIER, false);
 
 	m_Player->StartInvincible(m_duration_time);
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 1.0f);

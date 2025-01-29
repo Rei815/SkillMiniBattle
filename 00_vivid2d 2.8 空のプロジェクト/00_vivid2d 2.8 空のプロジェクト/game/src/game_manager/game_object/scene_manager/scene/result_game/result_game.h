@@ -49,5 +49,5 @@ private:
     };
 
     STATE           m_State;                //!< ó‘ÔID
-    SOUND_ID        m_Sound;                //
+    BGM_ID          m_Sound;                //
 };

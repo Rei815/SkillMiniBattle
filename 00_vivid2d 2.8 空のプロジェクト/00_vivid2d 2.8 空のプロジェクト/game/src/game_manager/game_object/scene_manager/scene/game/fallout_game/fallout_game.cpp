@@ -10,6 +10,8 @@
 #include "../../../../bullet_manager/bullet_manager.h"
 #include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
 #include "../../../../gimmick_manager/gimmick/fall_gimmick/fall_gimmick.h"
+#include "../../../../sound_manager/sound_manager.h"
+
 
 const CTransform CFallOutGame::m_object_transform_list[] = 
 {CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
@@ -53,6 +55,11 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
+
+	//BGM再生
+	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
+	//
+
 	m_DebugText = "フォールゲーム";
 	CVector3 playerPos[] = { m_object_transform_list[(int)MARK_ID::CIRCLE].position, m_object_transform_list[(int)MARK_ID::CROSS].position,
 	m_object_transform_list[(int)MARK_ID::MOON].position,m_object_transform_list[(int)MARK_ID::SQUARE].position };
@@ -124,6 +131,10 @@ void CFallOutGame::Finalize(void)
 	CStage::GetInstance().Finalize();
 
 	CCamera::GetInstance().Finalize();
+
+	//BGM停止
+	CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
+	//
 }
 
 void CFallOutGame::Start(void)
