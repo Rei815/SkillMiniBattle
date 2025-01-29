@@ -9,6 +9,7 @@
 #include "../../../../bullet_manager/bullet_manager.h"
 #include "../../../../launcher/launcher.h"
 #include "../../../../skill_manager/skill_manager.h"
+#include "../../../../sound_manager/sound_manager.h"
 
 
 #include "../../../../gimmick_manager/gimmick/fall_gimmick/fall_gimmick.h"
@@ -82,6 +83,10 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
+
+	//BGM再生
+	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
+	//
 	m_DebugText = "ドッジボールゲーム";
 
 	//プレイヤーのスポーン
@@ -127,6 +132,10 @@ void CDodgeBallGame::Finalize(void)
 	CCamera::GetInstance().Finalize();
 	CLauncher::GetInstance().Finalize();
 	CBulletManager::GetInstance().Finalize();
+
+	//BGM停止
+	CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
+	//
 }
 
 void CDodgeBallGame::Start(void)

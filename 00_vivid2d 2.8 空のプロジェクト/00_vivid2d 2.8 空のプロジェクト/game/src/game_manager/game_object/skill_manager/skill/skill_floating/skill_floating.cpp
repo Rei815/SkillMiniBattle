@@ -1,6 +1,7 @@
 #include "skill_floating.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float		CSkillFloating::m_duration_time = 5.0f;
 const float		CSkillFloating::m_cool_time = 10.0f;
@@ -90,6 +91,7 @@ Action()
 {
 	if (m_State != SKILL_STATE::WAIT) return;
 
+	CSoundManager::GetInstance().Play_SE(SE_ID::FLOATING, false);
 	CVector3 velocity = m_Player->GetVelocity();
 
 	m_Player->SetGravity(CVector3::ZERO);

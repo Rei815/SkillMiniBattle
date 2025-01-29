@@ -11,6 +11,7 @@
 #include "effect/forecast_line_effect/forecast_line_effect.h"
 #include "effect/skill_barrier_effect/skill_barrier_effect.h"
 #include "effect/floating_effect/floating_effect.h"
+#include "effect/gravity_area_effect/gravity_area_effect.h"
  /*
   *  インスタンスの取得
   */

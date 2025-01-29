@@ -16,19 +16,18 @@
  /*!
   *  @brief      サウンドID
   */
-enum class SOUND_ID
+
+
+enum class BGM_ID
 {
-    BGM,
-    SHOT,
-    HOMING_SHOT,
-    DESTORY,
-    BOSS_DESTORY,
-    PLAYER_HIT,
-    WARNING,
-    WARNING_SHORT,
-    GAMEOVER,
-    GAMECLEAR,//配列9番目
-    //↓ここから追加分
+    MAIN_BGM,
+    RESULT_BGM,
+
+    MAX
+};
+
+enum class SE_ID
+{
     BARRIER,
     CANCEL_BUTTON,
     CANNON_SHOT,
@@ -53,11 +52,8 @@ enum class SOUND_ID
     SLOW,
     SPAWN_WALL,
     STOMP,
-    STRONG_WINDOW,
+    STRONG_WIND,
     STUN,
-
-    MAIN_BGM,
-    RESULT_BGM,
 
     MAX
 };
@@ -86,7 +82,8 @@ public:
     /*!
      *  @brief      サウンドの読み込み
      */
-    void        Load(void);
+    void        Load_BGM(void);
+    void        Load_SE(void);
 
     /*!
      *  @brief      再生
@@ -94,8 +91,15 @@ public:
      *  @param[in]  id      サウンドID
      *  @param[in]  loop    ループフラグ
      */
-    void        Play(SOUND_ID id, bool loop = false);
-    void        Stop(SOUND_ID id);
+
+    void        Play_BGM(BGM_ID id, bool loop = false);
+    void        Stop_BGM(BGM_ID id);
+    void        SetBGMVolume(BGM_ID id, int volume = 1);
+
+
+    void        Play_SE(SE_ID id, bool loop = false);
+    void        Stop_SE(SE_ID id);
+    void        SetSEVolume(SE_ID id, int volume = 1);
 
 private:
     /*!
@@ -124,5 +128,7 @@ private:
      */
     CSoundManager& operator=(const CSoundManager& rhs);
 
-    static const char* m_sound_file_names[(int)SOUND_ID::MAX];    //!< サウンドのファイル名
+
+    static const char* m_se_file_names[(int)SE_ID::MAX];      //!< SEのファイル名
+    static const char* m_bgm_file_names[(int)BGM_ID::MAX];    //!< BGMのファイル名
 };

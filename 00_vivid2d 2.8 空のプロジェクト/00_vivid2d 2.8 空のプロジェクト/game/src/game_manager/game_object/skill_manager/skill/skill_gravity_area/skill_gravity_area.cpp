@@ -2,6 +2,7 @@
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../data_manager/data_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillGravityArea::m_gravity_speed_down_rate = 0.5f;
 const float CSkillGravityArea::m_gravity_jump_down_rate = 0.5f;
@@ -75,7 +76,7 @@ Update(void)
 
 					//エフェクトの生成（仮置き、エフェクトが完成したらセットする）
 					if (false)
-						m_PlayerAffectedEffect[i] = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 1.0f);
+						m_PlayerAffectedEffect[i] = CEffectManager::GetInstance().Create(EFFECT_ID::GRAVITY_AREA, m_Player->GetPosition(), 1.0f);
 				}
 				break;
 
@@ -147,9 +148,15 @@ Action(void)
 	if (m_State != SKILL_STATE::WAIT)
 		return;
 
+	const int se_volume = 11500;
+	CSoundManager::GetInstance().Play_SE(SE_ID::GRAVITYAREA, false);
+	CSoundManager::GetInstance().SetSEVolume(SE_ID::GRAVITYAREA, se_volume);
 	//エフェクトの生成（仮置き、エフェクトが完成したらセットする）
-	if (false)
-		m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 1.0f);
+
+	CVector3 effectPosition = m_Player->GetPosition();
+	effectPosition.y -= m_Player->GetHeight() / 2;
+
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::GRAVITY_AREA, effectPosition,CVector3(),3.0f);
 
 	m_State = SKILL_STATE::ACTIVE;
 }
@@ -187,4 +194,5 @@ ActionEnd(void)
 			m_PlayerAffectedEffect[i] = nullptr;
 		}
 	}
+	CSoundManager::GetInstance().Stop_SE(SE_ID::GRAVITYAREA);
 }

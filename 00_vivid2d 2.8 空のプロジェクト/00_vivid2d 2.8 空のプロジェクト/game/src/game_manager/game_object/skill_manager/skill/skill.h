@@ -5,6 +5,7 @@
 #include "../../ui_manager/ui/skill_gauge/skill_gauge.h"
 #include "../../ui_manager/ui/skill_icon/skill_icon.h"
 #include "skill_id.h"
+#include "../../sound_manager/sound_manager.h"
 
 class CPlayer;
 
@@ -79,6 +80,11 @@ public:
      */
     void    SetState(SKILL_STATE state);
 
+    /*
+                ÉTÉEÉìÉhçƒê∂
+    */
+    void SoundPlay();
+
 protected:
     static const vivid::Vector2     m_icon_positionList[];
     static const float              m_icon_scale;
@@ -101,4 +107,5 @@ protected:
     float               m_GaugePercent;
     UNIT_ID             m_PlayerID;
     SKILL_STATE         m_State;
+    SE_ID               m_Sound;
 };

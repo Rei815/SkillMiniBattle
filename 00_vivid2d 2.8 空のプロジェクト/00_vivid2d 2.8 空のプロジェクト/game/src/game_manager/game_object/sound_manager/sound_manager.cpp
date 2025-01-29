@@ -11,19 +11,16 @@
 
 #include "sound_manager.h"
 
-const char* CSoundManager::m_sound_file_names[] =
+
+
+const char* CSoundManager::m_bgm_file_names[] =
 {
-    "data\\Audios\\bgm.wav",
-    "data\\Audios\\shot.wav",
-    "data\\Audios\\homing_shot.wav",
-    "data\\Audios\\destory.wav",
-    "data\\Audios\\boss_destory.wav",
-    "data\\Audios\\player_hit.wav",
-    "data\\Audios\\warning.wav",
-    "data\\Audios\\warning_short.wav",
-    "data\\Audios\\gameover.wav",
-    "data\\Audios\\gameclear.wav",
-    //↓ここから追加分
+    "data\\Audios\\BGM\\Main_BGM.mp3",
+    "data\\Audios\\BGM\\Result_BGM.mp3",
+};
+
+const char* CSoundManager::m_se_file_names[] =
+{
     "data\\Audios\\SE\\Barrier_SE.mp3",
     "data\\Audios\\SE\\CancelButton_SE.mp3",
     "data\\Audios\\SE\\CannonShot_SE.mp3",
@@ -50,11 +47,6 @@ const char* CSoundManager::m_sound_file_names[] =
     "data\\Audios\\SE\\Stomp_SE.mp3",
     "data\\Audios\\SE\\StrongWindow_SE.mp3",
     "data\\Audios\\SE\\Stun_SE.mp3",
-
-    "data\\Audios\\BGM\\Main_BGM.mp3",
-    "data\\Audios\\BGM\\Result_BGM.mp3",
-
-
 };
 
 /*
@@ -71,31 +63,67 @@ CSoundManager::GetInstance(void)
 /*
  *  読み込み
  */
+
+
+
 void
-CSoundManager::Load(void)
+CSoundManager::Load_BGM(void)
 {
-    for (int i = 0; i < (int)SOUND_ID::MAX; ++i)
-        vivid::LoadSound(m_sound_file_names[i]);
+    for (int i = 0; i < (int)BGM_ID::MAX; ++i)
+        vivid::LoadSound(m_bgm_file_names[i]);
+}
+
+void
+CSoundManager::Load_SE(void)
+{
+    for (int i = 0; i < (int)SE_ID::MAX; ++i)
+        vivid::LoadSound(m_se_file_names[i]);
 }
 
 /*
  *  再生
  */
 void
-CSoundManager::Play(SOUND_ID id, bool loop)
+CSoundManager::Play_BGM(BGM_ID id, bool loop)
 {
-    vivid::PlaySound(m_sound_file_names[(int)id], loop);
+    vivid::PlaySound(m_bgm_file_names[(int)id], loop);
+}
+
+void
+CSoundManager::Play_SE(SE_ID id,bool loop)
+{
+    vivid::PlaySound(m_se_file_names[(int)id],false);
 }
 
 /*
-停止
-*/
+ *停止
+ */
 void
-CSoundManager::Stop(SOUND_ID id)
+CSoundManager::Stop_BGM(BGM_ID id)
 {
-    vivid::StopSound(m_sound_file_names[(int)id]);
+    vivid::StopSound(m_bgm_file_names[(int)id]);
 }
 
+
+void
+CSoundManager::Stop_SE(SE_ID id)
+{
+    vivid::StopSound(m_se_file_names[(int)id]);
+}
+
+/*
+ *  音量
+ */
+void CSoundManager::SetBGMVolume(BGM_ID id, int volume)
+{
+    vivid::SetSoundVolume(m_bgm_file_names[(int)id], volume);
+}
+
+void CSoundManager::SetSEVolume(SE_ID id, int volume)
+{
+    vivid::SetSoundVolume(m_se_file_names[(int)id], volume);
+
+}
 
 /*
  *  コンストラクタ

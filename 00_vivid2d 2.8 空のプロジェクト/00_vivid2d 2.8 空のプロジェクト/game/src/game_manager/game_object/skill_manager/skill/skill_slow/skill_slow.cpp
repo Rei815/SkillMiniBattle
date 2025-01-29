@@ -1,4 +1,5 @@
 #include "skill_slow.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillSlow::m_cool_time = 20.0f;
 const float CSkillSlow::m_duration_time = 3.0f;
@@ -47,18 +48,19 @@ void CSkillSlow::Finalize(void)
 
 void CSkillSlow::Action()
 {
-	if (m_State == SKILL_STATE::WAIT)
+	if (m_State != SKILL_STATE::WAIT)	return;
+
+	CSoundManager::GetInstance().Play_SE(SE_ID::SLOW, false);
+
+	for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 	{
-		for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+		if (um.GetPlayer(UNIT_ID(i)) != m_Player)
 		{
-			if (um.GetPlayer(UNIT_ID(i)) != m_Player)
-			{
-				um.GetPlayer(UNIT_ID(i))->MulMoveSpeedRate(0.5f);
-			}
+			um.GetPlayer(UNIT_ID(i))->MulMoveSpeedRate(0.5f);
 		}
+	}
 
 		m_State = SKILL_STATE::ACTIVE;
-	}
 }
 
 void CSkillSlow::ActionEnd(void)

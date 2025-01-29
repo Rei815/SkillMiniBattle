@@ -2,6 +2,7 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 #include "../../../data_manager/data_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 CSelectPlayer::CSelectPlayer(void)
 {
@@ -43,6 +44,8 @@ void CSelectPlayer::Update(void)
     {
         currentPlayer++;
         dm.SetCurrentPlayer(currentPlayer);
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTMODE);
     }
 
     //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))

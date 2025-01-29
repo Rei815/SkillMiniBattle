@@ -6,6 +6,8 @@
 #include "..\..\..\data_manager\data_manager.h"
 #include "..\..\..\ui_manager\ui\ui.h"
 #include "..\..\..\ui_manager\ui\skill_icon\skill_icon.h"
+#include "../../../sound_manager/sound_manager.h"
+
 
 const float             CSelectSkill::m_cursor_move_time = 0.2f;
 const float             CSelectSkill::m_icon_scale = 0.3f;
@@ -344,15 +346,19 @@ void CSelectSkill::MoveCursor(void)
             switch (m_GameID)
             {
             case GAME_ID::FALL_GAME:
+                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                 CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
                 break;
             case GAME_ID::DODGE_BALL_GAME:
+                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                 CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
                 break;
             case GAME_ID::DARUMA_FALL_DOWN_GAME:
+                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                 CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
                 break;
             case GAME_ID::DEBUG_GAME:
+                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                 CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME);
                 break;
             }

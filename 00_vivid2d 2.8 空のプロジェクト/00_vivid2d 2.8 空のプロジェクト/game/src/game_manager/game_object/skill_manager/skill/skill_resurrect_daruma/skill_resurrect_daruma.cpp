@@ -1,6 +1,7 @@
 #include "skill_resurrect_daruma.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../data_manager/data_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillResurrectDaruma::m_duration_time = 2.0f;
 
@@ -29,6 +30,7 @@ void CSkillResurrectDaruma::Update(void)
 	case SKILL_STATE::ACTIVE:
 		break;
 	case SKILL_STATE::COOLDOWN:
+		CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
 		break;
 	}
 }

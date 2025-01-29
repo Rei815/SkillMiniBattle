@@ -1,5 +1,6 @@
 #include "skill_strong_wind.h"
 #include "../../../unit_manager/unit_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillStrongWind::m_wind_strength = 0.1f;
 const float CSkillStrongWind::m_cool_time = 5.0f;
@@ -96,6 +97,9 @@ Action(void)
 {
 	if (m_State != SKILL_STATE::WAIT) return;
 
+	CSoundManager::GetInstance().Play_SE(SE_ID::STRONG_WIND, false);
+	CSoundManager::GetInstance().SetSEVolume(SE_ID::STRONG_WIND, 10000);
+
 	m_State = SKILL_STATE::ACTIVE;
 }
 
@@ -106,5 +110,8 @@ void
 CSkillStrongWind::
 ActionEnd(void)
 {
-
+	for (int i = 10000; i > 0; i--)
+	{
+		CSoundManager::GetInstance().SetSEVolume(SE_ID::STRONG_WIND, i);
+	}
 }

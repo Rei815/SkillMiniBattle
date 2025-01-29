@@ -5,6 +5,7 @@
 #include "../../../ui_manager/ui/plane_game_image/plane_game_image.h"
 #include "../../../animation_manager/animation/animation.h"
 #include "../../../animation_manager/animation_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const int CSelectGame::m_games_num = 3;
 const float CSelectGame::m_circle_radius = 500.0f;
@@ -81,6 +82,7 @@ void CSelectGame::Update(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
     {
         _gameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
         //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
     }
@@ -88,6 +90,7 @@ void CSelectGame::Update(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
     {
         _gameID = GAME_ID::FALL_GAME;
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
         //CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
     }
@@ -95,12 +98,14 @@ void CSelectGame::Update(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::THREE))
     {
         _gameID = GAME_ID::DODGE_BALL_GAME;
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
         //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
     }
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FOUR))
     {
         _gameID = GAME_ID::DEBUG_GAME;
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
         //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
     }

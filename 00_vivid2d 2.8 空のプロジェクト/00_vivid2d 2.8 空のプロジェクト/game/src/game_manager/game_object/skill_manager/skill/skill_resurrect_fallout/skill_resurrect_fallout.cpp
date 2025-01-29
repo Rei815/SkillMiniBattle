@@ -2,6 +2,7 @@
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../object_manager/object_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float		CSkillResurrectFallout::m_resurrect_height = 200.0f;
 const CVector3	CSkillResurrectFallout::m_initial_position = CVector3();
@@ -50,6 +51,7 @@ Update(void)
 		{
 			if ((*it)->GetGimmick()->GetState() == GIMMICK_STATE::WAIT)
 			{
+				CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
 				CVector3 resurrectPos = (*it)->GetPosition();
 				resurrectPos.y += m_resurrect_height;
 				m_Player->SetPosition(resurrectPos);

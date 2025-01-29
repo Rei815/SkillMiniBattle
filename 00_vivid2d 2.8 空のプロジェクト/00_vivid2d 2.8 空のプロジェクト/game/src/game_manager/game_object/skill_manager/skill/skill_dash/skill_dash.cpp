@@ -83,6 +83,8 @@ Action(void)
 	if (m_State != SKILL_STATE::WAIT)
 		return;
 
+	CSoundManager::GetInstance().Play_SE(SE_ID::DASH, false);
+
 	m_Player->MulMoveSpeedRate(m_dash_speed_up_rate);
 	m_State = SKILL_STATE::ACTIVE;
 }

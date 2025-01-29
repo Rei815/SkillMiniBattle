@@ -1,7 +1,6 @@
 #pragma once
 
 #include "..\game.h"
-#include "../../../../sound_manager/sound_manager.h"
 
 class CDaruma_FallDownGame : public CGame
 {
@@ -64,5 +63,4 @@ private:
     int                             m_CountTime;
     float                           m_TempFirstDis;
     bool                            m_GimmickOn;
-    SOUND_ID                        m_Sound;
 };

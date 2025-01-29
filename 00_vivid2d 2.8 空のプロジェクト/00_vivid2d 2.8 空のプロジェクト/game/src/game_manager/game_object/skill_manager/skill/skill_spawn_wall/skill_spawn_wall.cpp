@@ -2,6 +2,7 @@
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../object_manager/object_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
+#include "../../../sound_manager/sound_manager.h"
 
 const float CSkillSpawnWall::m_cool_time = 15.0f;
 const float CSkillSpawnWall::m_duration_time = 5.0f;
@@ -87,6 +88,8 @@ Action(void)
 {
 	if (m_State != SKILL_STATE::WAIT)
 		return;
+
+	CSoundManager::GetInstance().Play_SE(SE_ID::SPAWN_WALL, false);
 
 	CTransform SpawnTr;
 	
