@@ -8,6 +8,7 @@
 #include "ui/skill_icon/skill_icon.h"
 #include "ui/skill_gauge/skill_gauge.h"
 #include "ui/skill_cursor/skill_cursor.h"
+#include "ui/skill_name/skill_name.h"
 #include "ui/skill_infomation/skill_infomation.h"
 #include "ui/key/key.h"
 #include "ui/key_bg/key_bg.h"
@@ -17,6 +18,10 @@
 #include "ui/fade/fade.h"
 #include "ui/finish_game_text/finish_game_text.h"
 #include "ui/menu_bg/menu_bg.h"
+#include "ui/menu_poster/menu_poster.h"
+#include "ui/player_num_select/player_num_select.h"
+#include "ui/scene_title/scene_title.h"
+#include "ui/skill_video/skill_video.h"
  /*
   *  インスタンスの取得
   */
@@ -123,14 +128,24 @@ CUI* CUIManager::Create(UI_ID id)
         ui = new CPlaneGameImage(id);     break;
     case UI_ID::MENU_BG:
         ui = new CMenuBG(id);     break;
+    case UI_ID::MENU_POSTER:
+        ui = new CMenuPoster(id);     break;
+    case UI_ID::SCENE_TITLE:
+        ui = new CSceneTitle(id);     break;
+    case UI_ID::PLAYER_NUM_SELECT:
+        ui = new CPlayerNumSelect(id);     break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);      break;
     case UI_ID::SKILL_GAUGE:
         ui = new CSkillGauge(id);   break;
     case UI_ID::SKILL_CURSOR:
         ui = new CSkillCursor(id);    break;
+    case UI_ID::SKILL_NAME:
+        ui = new CSkillName(id);    break;
     case UI_ID::SKILL_INFO:
         ui = new CSkillInfomation(id);    break;
+    case UI_ID::SKILL_VIDEO:
+        ui = new CSkillVideo(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
     case UI_ID::TITLE_LOGO:
@@ -170,14 +185,24 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
         ui = new CPlaneGameImage(id);           break;
     case UI_ID::MENU_BG:
         ui = new CMenuBG(id);     break;
+    case UI_ID::MENU_POSTER:
+        ui = new CMenuPoster(id);     break;
+    case UI_ID::SCENE_TITLE:
+        ui = new CSceneTitle(id);     break;
+    case UI_ID::PLAYER_NUM_SELECT:
+        ui = new CPlayerNumSelect(id);     break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);      break;
     case UI_ID::SKILL_GAUGE:
         ui = new CSkillGauge(id);   break;
     case UI_ID::SKILL_CURSOR:
         ui = new CSkillCursor(id);    break;
+    case UI_ID::SKILL_NAME:
+        ui = new CSkillName(id);    break;
     case UI_ID::SKILL_INFO:
         ui = new CSkillInfomation(id);    break;
+    case UI_ID::SKILL_VIDEO:
+        ui = new CSkillVideo(id);    break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);     break;
     case UI_ID::KEY:

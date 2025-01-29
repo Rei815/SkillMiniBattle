@@ -9,6 +9,7 @@
 #include "../../../ui_manager/ui/skill_icon/skill_icon.h"
 #include "../../../ui_manager/ui/skill_cursor/skill_cursor.h"
 #include "../../../ui_manager/ui/skill_infomation/skill_infomation.h"
+#include "../../../ui_manager/ui/skill_video/skill_video.h"
 
 class CSelectSkill
     : public IScene
@@ -59,11 +60,26 @@ private:
     void MoveCursor(void);
 
     static const float m_cursor_move_time;
+
+    static const vivid::Vector2 m_title_poster_scale;
+    static const vivid::Vector2 m_title_poster_position;
+
     static const float m_icon_scale;
+    static const vivid::Vector2 m_icon_positionList[];
+
+    static const vivid::Vector2 m_icon_poster_scale;
+    static const vivid::Vector2 m_icon_poster_position;
+
+    static const float m_icon_name_scale;
+    static const float m_icon_name_position_up;
+
     static const float m_info_scale;
-    static const vivid::Vector2     m_icon_positionList[];
-    static const vivid::Vector2     m_bg_position;
-    static const vivid::Vector2     m_info_position;
+    static const vivid::Vector2 m_info_position;
+
+    static const float m_video_scale;
+    static const vivid::Vector2 m_video_position;
+
+    static const vivid::Vector2 m_video_poster_scale;
 
     SKILL_ID            m_ChooseSkillID[(int)UNIT_ID::NONE];
     CSkillIcon*         m_SkillSelectIcon[(int)UNIT_ID::NONE];
@@ -80,6 +96,8 @@ private:
     CTimer          m_CursorMoveTimer;
 
     CSkillInfomation* m_SkillInfomation;
+
+    CSkillVideo* m_SkillVideo;
 
     GAME_ID         m_GameID;
 };

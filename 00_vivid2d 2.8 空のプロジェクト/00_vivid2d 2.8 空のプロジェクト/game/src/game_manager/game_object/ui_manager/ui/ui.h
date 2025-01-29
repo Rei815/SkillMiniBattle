@@ -139,6 +139,13 @@ public:
      *
      *  @param[in]  scale  Šg‘å—¦
      */
+    void            SetScale(float scale);
+
+    /*!
+     *  @brief      Šg‘å—¦İ’è
+     *
+     *  @param[in]  scale  Šg‘å—¦
+     */
     void            SetScale(const vivid::Vector2& scale);
 
     /*!

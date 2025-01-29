@@ -60,7 +60,6 @@ private:
     static const float              m_fadeout_time;
 
 
-    vivid::Vector2                  m_Scale;
     START_TEXT_MOVE                 m_MoveState;
     CTimer                          m_Timer;
     unsigned int                    m_Color;

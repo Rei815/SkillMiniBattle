@@ -4,18 +4,18 @@
 #include "..\ui.h"
 #include "../../../skill_manager/skill/skill_id.h"
 
-class CSkillInfomation : public CUI
+class CSkillName : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CSkillInfomation(UI_ID id);
+    CSkillName(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CSkillInfomation(void);
+    ~CSkillName(void);
 
     /*!
      *  @brief      初期化

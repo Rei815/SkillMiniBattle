@@ -3,6 +3,7 @@
 #include "vivid.h"
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
+#include "..\..\..\ui_manager\ui\player_num_select\player_num_select.h"
 
 class CSelectPlayer
     : public IScene
@@ -39,4 +40,8 @@ public:
     void Finalize(void);
 
 private:
+    static const vivid::Vector2 m_player_num_ui_pos[(int)UNIT_ID::NONE];
+    static const float          m_player_num_ui_scale;
+
+    CPlayerNumSelect* m_PlayerNumUI[(int)UNIT_ID::NONE];
 };

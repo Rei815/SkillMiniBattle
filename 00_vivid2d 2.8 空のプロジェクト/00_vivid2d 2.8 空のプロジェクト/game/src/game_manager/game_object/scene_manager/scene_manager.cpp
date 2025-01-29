@@ -163,6 +163,19 @@ void CSceneManager::PopScene(SCENE_ID id)
 //    return m_Scene;
 //}
 
+SCENE_ID CSceneManager::GetLastSceneID(void)
+{
+    if (!m_SceneList.empty())
+    {
+        SCENE_LIST::iterator it = m_SceneList.end();
+        --it;
+
+        return (*it)->GetSceneID();
+    }
+    else
+        return SCENE_ID::WAIT;
+}
+
 /*
  *  コンストラクタ
  */
@@ -181,6 +194,7 @@ CSceneManager::CSceneManager(void)
 CSceneManager::CSceneManager(const CSceneManager& rhs)
 {
     (void)rhs;
+
 }
 
 /*

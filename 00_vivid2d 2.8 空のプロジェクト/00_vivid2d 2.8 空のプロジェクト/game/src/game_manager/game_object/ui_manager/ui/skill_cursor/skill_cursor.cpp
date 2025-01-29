@@ -21,9 +21,8 @@ CSkillCursor::
 CSkillCursor(UI_ID id)
 	: CUI(m_width, m_height, id)
 	, m_FileName("")
-	, m_Scale(m_default_scale)
-	, m_CenterPosition(vivid::Vector2::ZERO)
 {
+	SetScale(m_default_scale);
 }
 
 /*
@@ -63,8 +62,6 @@ CSkillCursor::
 Update(void)
 {
 	CUI::Update();
-
-	m_Position = m_CenterPosition - m_anchor;
 }
 
 /*
@@ -120,21 +117,7 @@ SetPlayer(UNIT_ID player_id)
 
 void
 CSkillCursor::
-SetPosition(vivid::Vector2 position)
+SetPosition(const vivid::Vector2& position)
 {
-	m_CenterPosition = position;
-}
-
-void
-CSkillCursor::
-SetScale(float scale)
-{
-	SetScale(vivid::Vector2(scale, scale));
-}
-
-void
-CSkillCursor::
-SetScale(vivid::Vector2 scale)
-{
-	m_Scale = scale;
+	CUI::SetPosition(position - m_anchor);
 }

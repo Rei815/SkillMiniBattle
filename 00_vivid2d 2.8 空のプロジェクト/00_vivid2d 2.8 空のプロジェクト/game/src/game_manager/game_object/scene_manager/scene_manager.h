@@ -93,6 +93,14 @@ public:
     // */
     //IScene* GetScene(SCENE_ID scene_id);
 
+
+    ///*!
+    // *  @brief      最新のシーンのIDを取得
+    // *
+    // *  @return     最新のシーンのID
+    // */
+    SCENE_ID GetLastSceneID(void);
+
 private:
     /*!
      *  @brief      コンストラクタ

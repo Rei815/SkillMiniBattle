@@ -18,12 +18,11 @@ const float				CStartGameText::m_fadeout_time = 0.3f;
 
 CStartGameText::CStartGameText(UI_ID id)
 	: CUI(m_width, m_height, id)
-	, m_Scale(m_default_scale)
 	, m_MoveState(START_TEXT_MOVE::ZOOM_IN)
 	, m_Timer()
 	, m_Color(m_default_color)
 {
-
+	SetScale(m_default_scale);
 }
 
 CStartGameText::~CStartGameText(void)

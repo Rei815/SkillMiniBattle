@@ -2,20 +2,20 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-#include "../../../skill_manager/skill/skill_id.h"
+#include "../../../scene_manager/scene/scene_id.h"
 
-class CSkillInfomation : public CUI
+class CSceneTitle : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CSkillInfomation(UI_ID id);
+    CSceneTitle(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CSkillInfomation(void);
+    ~CSceneTitle(void);
 
     /*!
      *  @brief      初期化
@@ -42,10 +42,10 @@ public:
      */
     void        Finalize(void);
 
-    void        SetData(SKILL_ID skill_id, vivid::Vector2 position, float scale);
-    void        SetData(SKILL_ID skill_id, vivid::Vector2 position, vivid::Vector2 scale);
+    void        SetData(SCENE_ID scene_id, vivid::Vector2 position, float scale);
+    void        SetData(SCENE_ID scene_id, vivid::Vector2 position, vivid::Vector2 scale);
 
-    void        SetSkillInfo(SKILL_ID skill_id);
+    void        SetSceneInfo(SCENE_ID scene_id);
 
     void        SetPosition(const vivid::Vector2& position);
 
@@ -55,8 +55,9 @@ private:
     static const vivid::Rect        m_rect;             //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;           //!< 基準点
     static const vivid::Vector2     m_default_scale;    //!< 拡縮
+    static const vivid::Vector2     m_default_position;
 
 
-    static const std::string        m_skill_info_file_name[];
+    static const std::string        m_scene_title_file_name[(int)SCENE_ID::MAX];
     std::string                     m_FileName;
 };

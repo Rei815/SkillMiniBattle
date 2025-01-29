@@ -1,12 +1,12 @@
-#include "skill_infomation.h"
+#include "skill_name.h"
 
-const int               CSkillInfomation::m_height = 400;
-const int               CSkillInfomation::m_width = 800;
-const vivid::Rect       CSkillInfomation::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
-const vivid::Vector2    CSkillInfomation::m_default_scale = vivid::Vector2(1.0f, 1.0f);
-const vivid::Vector2    CSkillInfomation::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
+const int               CSkillName::m_height = 400;
+const int               CSkillName::m_width = 800;
+const vivid::Rect       CSkillName::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
+const vivid::Vector2    CSkillName::m_default_scale = vivid::Vector2(1.0f, 1.0f);
+const vivid::Vector2    CSkillName::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
 
-const std::string CSkillInfomation::m_skill_info_file_name[] =
+const std::string CSkillName::m_skill_info_file_name[] =
 {
 		"data\\Textures\\skill_info_speedup_test.png",
 		"data\\Textures\\skill_info_jumpup_test.png",
@@ -31,8 +31,8 @@ const std::string CSkillInfomation::m_skill_info_file_name[] =
 /*
  *  コンストラクタ
  */
-CSkillInfomation::
-CSkillInfomation(UI_ID id)
+CSkillName::
+CSkillName(UI_ID id)
 	: CUI(m_width, m_height, id)
 	, m_FileName("")
 {
@@ -43,8 +43,8 @@ CSkillInfomation(UI_ID id)
 /*
  *  デストラクタ
  */
-CSkillInfomation::
-~CSkillInfomation(void)
+CSkillName::
+~CSkillName(void)
 {
 }
 
@@ -52,7 +52,7 @@ CSkillInfomation::
  *  初期化
  */
 void
-CSkillInfomation::
+CSkillName::
 Initialize(void)
 {
 	CUI::Initialize();
@@ -63,7 +63,7 @@ Initialize(void)
  *  @brief      初期化
  */
 void
-CSkillInfomation::
+CSkillName::
 Initialize(vivid::Vector2 position)
 {
 	Initialize();
@@ -74,7 +74,7 @@ Initialize(vivid::Vector2 position)
  *  更新
  */
 void
-CSkillInfomation::
+CSkillName::
 Update(void)
 {
 	CUI::Update();
@@ -84,7 +84,7 @@ Update(void)
  *  描画
  */
 void
-CSkillInfomation::
+CSkillName::
 Draw(void)
 {
 	CUI::Draw();
@@ -99,14 +99,14 @@ Draw(void)
  *  解放
  */
 void
-CSkillInfomation::
+CSkillName::
 Finalize(void)
 {
 	CUI::Finalize();
 }
 
 void
-CSkillInfomation::
+CSkillName::
 SetData(SKILL_ID skill_id, vivid::Vector2 position, float scale)
 {
 	SetSkillInfo(skill_id);
@@ -115,7 +115,7 @@ SetData(SKILL_ID skill_id, vivid::Vector2 position, float scale)
 }
 
 void
-CSkillInfomation::
+CSkillName::
 SetData(SKILL_ID skill_id, vivid::Vector2 position, vivid::Vector2 scale)
 {
 	SetSkillInfo(skill_id);
@@ -124,7 +124,7 @@ SetData(SKILL_ID skill_id, vivid::Vector2 position, vivid::Vector2 scale)
 }
 
 void
-CSkillInfomation::
+CSkillName::
 SetSkillInfo(SKILL_ID skill_id)
 {
 	if((int)skill_id < m_skill_info_file_name->length())
@@ -132,7 +132,7 @@ SetSkillInfo(SKILL_ID skill_id)
 }
 
 void
-CSkillInfomation::
+CSkillName::
 SetPosition(const vivid::Vector2& position)
 {
 	CUI::SetPosition(position - m_anchor);

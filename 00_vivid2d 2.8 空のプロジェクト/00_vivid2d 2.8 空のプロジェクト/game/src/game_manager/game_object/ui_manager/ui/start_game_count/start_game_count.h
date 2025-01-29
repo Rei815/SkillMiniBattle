@@ -61,8 +61,7 @@ private:
     static const float              m_stop_position_y;      //!< ’âŽ~‚·‚éŽž‚ÌyÀ•W
     static const float              m_moveout_position_y;   //!< Á–ÅŽž‚ÌyÀ•W
 
-    vivid::Vector2                  m_Scale;
-    START_COUNT_MOVE                   m_MoveState;
+    START_COUNT_MOVE                m_MoveState;
     CTimer                          m_Timer;
     int                             m_CountDown;
 };
