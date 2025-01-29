@@ -115,23 +115,7 @@ IEffect*
 CEffectManager::
 Create(EFFECT_ID id, const CVector3& pos)
 {
-    IEffect* effect = nullptr;
-
-    switch (id)
-    {
-    case EFFECT_ID::DESTROY:                effect = new CDestroyEffect();          break;
-    case EFFECT_ID::HIT:                    effect = new CHitEffect();              break;
-    case EFFECT_ID::HIT_INVINCBLE:          effect = new CHitInvincibleEffect();    break;
-    case EFFECT_ID::JUMP:                   effect = new CJumpEffect();             break;
-    case EFFECT_ID::DUST_CLOUD:             effect = new CDustCloudEffect();        break;
-    case EFFECT_ID::SHOCK_WAVE:             effect = new CShockWaveEffect();        break;
-    case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
-    case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
-    case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
-    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
-    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
-
-    }
+    IEffect* effect = CreateClass(id);
 
     if (!effect) return nullptr;
 
@@ -145,21 +129,6 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const float s
 {
     IEffect* effect = nullptr;
 
-    switch (id)
-    {
-    case EFFECT_ID::DESTROY:                effect = new CDestroyEffect();          break;
-    case EFFECT_ID::HIT:                    effect = new CHitEffect();              break;
-    case EFFECT_ID::HIT_INVINCBLE:          effect = new CHitInvincibleEffect();    break;
-    case EFFECT_ID::JUMP:                   effect = new CJumpEffect();             break;
-    case EFFECT_ID::DUST_CLOUD:             effect = new CDustCloudEffect();        break;
-    case EFFECT_ID::SHOCK_WAVE:             effect = new CShockWaveEffect();        break;
-    case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
-    case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
-    case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
-    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
-    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
-
-    }
 
     if (!effect) return nullptr;
 
@@ -172,23 +141,7 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const float s
 
 IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot)
 {
-    IEffect* effect = nullptr;
-
-    switch (id)
-    {
-    case EFFECT_ID::DESTROY:                effect = new CDestroyEffect();          break;
-    case EFFECT_ID::HIT:                    effect = new CHitEffect();              break;
-    case EFFECT_ID::HIT_INVINCBLE:          effect = new CHitInvincibleEffect();    break;
-    case EFFECT_ID::JUMP:                   effect = new CJumpEffect();             break;
-    case EFFECT_ID::DUST_CLOUD:             effect = new CDustCloudEffect();        break;
-    case EFFECT_ID::SHOCK_WAVE:             effect = new CShockWaveEffect();        break;
-    case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
-    case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
-    case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
-    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
-    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
-
-    }
+    IEffect* effect = CreateClass(id);
 
     if (!effect) return nullptr;
 
@@ -201,23 +154,7 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector
 
 IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const float scale)
 {
-    IEffect* effect = nullptr;
-
-    switch (id)
-    {
-    case EFFECT_ID::DESTROY:                effect = new CDestroyEffect();          break;
-    case EFFECT_ID::HIT:                    effect = new CHitEffect();              break;
-    case EFFECT_ID::HIT_INVINCBLE:          effect = new CHitInvincibleEffect();    break;
-    case EFFECT_ID::JUMP:                   effect = new CJumpEffect();             break;
-    case EFFECT_ID::DUST_CLOUD:             effect = new CDustCloudEffect();        break;
-    case EFFECT_ID::SHOCK_WAVE:             effect = new CShockWaveEffect();        break;
-    case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
-    case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
-    case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
-    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
-    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
-
-    }
+    IEffect* effect = CreateClass(id);
 
     if (!effect) return nullptr;
 
@@ -230,23 +167,7 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector
 
 IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const CVector3& scale)
 {
-    IEffect* effect = nullptr;
-
-    switch (id)
-    {
-    case EFFECT_ID::DESTROY:                effect = new CDestroyEffect();          break;
-    case EFFECT_ID::HIT:                    effect = new CHitEffect();              break;
-    case EFFECT_ID::HIT_INVINCBLE:          effect = new CHitInvincibleEffect();    break;
-    case EFFECT_ID::JUMP:                   effect = new CJumpEffect();             break;
-    case EFFECT_ID::DUST_CLOUD:             effect = new CDustCloudEffect();        break;
-    case EFFECT_ID::SHOCK_WAVE:             effect = new CShockWaveEffect();        break;
-    case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
-    case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
-    case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
-    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
-    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
-
-    }
+    IEffect* effect = CreateClass(id);
 
     if (!effect) return nullptr;
 
@@ -300,6 +221,28 @@ void CEffectManager::SetParentPosition(EFFECT_ID effectID, CVector3& parentPos)
         ++it;
     }
 
+}
+
+IEffect* CEffectManager::CreateClass(EFFECT_ID id)
+{
+    IEffect* effect = nullptr;
+
+    switch (id)
+    {
+    case EFFECT_ID::DESTROY:                effect = new CDestroyEffect();          break;
+    case EFFECT_ID::HIT:                    effect = new CHitEffect();              break;
+    case EFFECT_ID::HIT_INVINCBLE:          effect = new CHitInvincibleEffect();    break;
+    case EFFECT_ID::JUMP:                   effect = new CJumpEffect();             break;
+    case EFFECT_ID::DUST_CLOUD:             effect = new CDustCloudEffect();        break;
+    case EFFECT_ID::SHOCK_WAVE:             effect = new CShockWaveEffect();        break;
+    case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
+    case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
+    case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
+    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
+    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
+
+    }
+    return effect;
 }
 
 /*

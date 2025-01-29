@@ -6,6 +6,13 @@
 class  CSceneUIParent : public CUI
 {
 public:
+    enum class STATE
+    {
+        WAIT,
+        SCENE_IN,
+        SCENE_OUT,
+        BACK,
+    };
     /*!
      *  @brief      コンストラクタ
      */
@@ -36,7 +43,9 @@ public:
      */
     void        Finalize(void);
 
+    void        SetState(STATE state);
 private:
+
 
     static const vivid::Vector2             m_position;             //!< 位置
     static const int            m_speed;                //!< 移動速度
@@ -46,5 +55,6 @@ private:
     float                       m_EaseTimer;            //!< 経過時間
     float                       m_StartValue;           //!< 開始値
     float                       m_FinishValue;          //!< 終了値
+    STATE                       m_State;
 
 };

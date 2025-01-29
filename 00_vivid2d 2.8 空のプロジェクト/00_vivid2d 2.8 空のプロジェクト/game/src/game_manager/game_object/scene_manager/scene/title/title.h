@@ -4,6 +4,7 @@
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
 #include "../../../stage/stage.h"
+#include "../../../ui_manager/ui/scene_ui_parent/scene_ui_parent.h"
 
 class CTitle
     : public IScene
@@ -44,4 +45,5 @@ private:
     unsigned int        m_Color;
     static const int    m_fade_speed;
     int                 m_FadeSpeed;
+    CSceneUIParent*     m_SceneUIParent;
 };

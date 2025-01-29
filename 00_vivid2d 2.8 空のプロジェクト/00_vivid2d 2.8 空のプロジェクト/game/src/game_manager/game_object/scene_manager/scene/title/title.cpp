@@ -30,6 +30,9 @@ void CTitle::Initialize(SCENE_ID scene_id)
 
     CUIManager::GetInstance().Initialize();
     CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
+    CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG);
+    m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT);
+    m_SceneUIParent->SetState(CSceneUIParent::STATE::SCENE_IN);
 }
 
 void CTitle::Update(void)
@@ -42,11 +45,15 @@ void CTitle::Update(void)
     {
         m_Color = 0xff000000;
 
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTPLAYER);
+        CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTPLAYER);
     }
     CUIManager::GetInstance().Update();
     m_Color = vivid::alpha::AdjustAlpha(m_Color, m_FadeSpeed);
 
+    if (!m_SceneUIParent) return;
+
+    if (m_SceneUIParent->GetPosition().y == vivid::GetWindowHeight() / 2)
+        CSceneManager::GetInstance().PopScene(SCENE_ID::TITLE);
 }
 
 void CTitle::Draw(void)

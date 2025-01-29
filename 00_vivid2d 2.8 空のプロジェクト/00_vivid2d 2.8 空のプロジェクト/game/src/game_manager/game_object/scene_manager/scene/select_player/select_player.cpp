@@ -21,14 +21,17 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
     CStage::GetInstance().Initialize();
 
     CDataManager::GetInstance().Initialize();
-    CUIManager::GetInstance().Initialize();
+    //CUIManager::GetInstance().Initialize();
 
     CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
+    CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG);
+    CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT);
 
 }
 
 void CSelectPlayer::Update(void)
 {
+    CUIManager::GetInstance().Update();
     CDataManager& dm = CDataManager::GetInstance();
     int currentPlayer = dm.GetCurrentPlayer();
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A))
@@ -42,15 +45,16 @@ void CSelectPlayer::Update(void)
         dm.SetCurrentPlayer(currentPlayer);
     }
 
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
-    {
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTMODE);
-    }
+    //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+    //{
+    //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTMODE);
+    //}
 
 }
 
 void CSelectPlayer::Draw(void)
 {
+    CUIManager::GetInstance().Draw();
     vivid::DrawText(50, "スキルミニバトル", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "スキルミニバトル") / 2, vivid::WINDOW_HEIGHT / 2));
 
     vivid::DrawText(20, "ADキーで人数の増減, ENTERキーで決定", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));

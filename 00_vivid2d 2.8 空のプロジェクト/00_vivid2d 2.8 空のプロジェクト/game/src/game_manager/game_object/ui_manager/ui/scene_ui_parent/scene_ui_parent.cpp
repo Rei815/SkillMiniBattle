@@ -51,13 +51,29 @@ void CSceneUIParent::Initialize()
  */
 void CSceneUIParent::Update(void)
 {
+
+    switch (m_State)
+    {
+    case CSceneUIParent::STATE::WAIT:
+        m_Velocity = CVector3::ZERO;
+        break;
+    case CSceneUIParent::STATE::SCENE_IN:
+        if (m_Position.y >= vivid::GetWindowHeight() / 2)
+        {
+            m_Position.y = vivid::GetWindowHeight() / 2;
+            m_Velocity.y = 0;
+        }
+        break;
+    case CSceneUIParent::STATE::SCENE_OUT:
+        break;
+    case CSceneUIParent::STATE::BACK:
+        break;
+    default:
+        break;
+    }
     m_Position.y += m_Velocity.y;
     m_Transform.position -= m_Velocity;
 
-    if (m_Position.y >= vivid::GetWindowHeight() / 2)
-    {
-        m_Velocity.y = 0;
-    }
 }
 
 /*
@@ -73,4 +89,9 @@ void CSceneUIParent::Draw(void)
 void
 CSceneUIParent::Finalize(void)
 {
+}
+
+void CSceneUIParent::SetState(STATE state)
+{
+    m_State = state;
 }

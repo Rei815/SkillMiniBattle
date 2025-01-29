@@ -23,6 +23,7 @@ void CFalloutTopicBG::Initialize(const vivid::Vector2& position)
 
 void CFalloutTopicBG::Update(void)
 {
+	CUI::Update();
 }
 
 void CFalloutTopicBG::Draw(void)
