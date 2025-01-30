@@ -43,27 +43,24 @@ void CTitle::Update(void)
         m_FadeSpeed = -m_FadeSpeed;
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
-    {
         m_Color = 0xff000000;
 
         CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTPLAYER);
-    switch (m_State)
-    {
-    case STATE::WAIT:
-    {
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
-        {
-            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTPLAYER);
-        }
-    }
-    CUIManager::GetInstance().Update();
-    m_Color = vivid::alpha::AdjustAlpha(m_Color, m_FadeSpeed);
 
-    if (!m_SceneUIParent) return;
+            if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN)&&m_State == SCENE_STATE::WAIT)
+            {
+                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+                CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTPLAYER);
+            }
 
-    if (m_SceneUIParent->GetPosition().y == vivid::GetWindowHeight() / 2)
-        CSceneManager::GetInstance().PopScene(SCENE_ID::TITLE);
+        CUIManager::GetInstance().Update();
+        m_Color = vivid::alpha::AdjustAlpha(m_Color, m_FadeSpeed);
+        
+
+        if (!m_SceneUIParent) return;
+
+        if (m_SceneUIParent->GetPosition().y == vivid::GetWindowHeight() / 2)
+            CSceneManager::GetInstance().PopScene(SCENE_ID::TITLE);
 }
 
 void CTitle::Draw(void)

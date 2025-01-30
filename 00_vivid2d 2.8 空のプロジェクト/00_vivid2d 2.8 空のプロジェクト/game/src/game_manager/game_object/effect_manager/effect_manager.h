@@ -50,6 +50,9 @@ public:
      */
     void        Finalize(void);
 
+
+    IEffect* Create(EFFECT_ID id);
+
     /*!
      *  @brief      エフェクト生成
      *
@@ -118,6 +121,8 @@ public:
     void        SetParentPosition(EFFECT_ID effectID,CVector3& parentPos);
 
 private:
+    IEffect* CreateClass(EFFECT_ID id);
+
     /*!
      *  @brief      コンストラクタ
      */
