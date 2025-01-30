@@ -28,11 +28,12 @@ void CTitle::Initialize(SCENE_ID scene_id)
 
     CCamera::GetInstance().Initialize();
 
-    CUIManager::GetInstance().Initialize();
-    CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
-    CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG);
-    m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT);
-    m_SceneUIParent->SetState(CSceneUIParent::STATE::SCENE_IN);
+    CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
+    if (uiList.size() == 0)
+    {
+        CUIManager::GetInstance().Initialize();
+        CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
+    }
 }
 
 void CTitle::Update(void)
@@ -41,19 +42,18 @@ void CTitle::Update(void)
     if (alpha == 255u || alpha == 0u)
         m_FadeSpeed = -m_FadeSpeed;
 
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+    CSceneManager& sm = CSceneManager::GetInstance();
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && sm.GetList().size() == 1)
     {
         m_Color = 0xff000000;
 
         CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTPLAYER);
+        CSceneManager::GetInstance().PopScene(SCENE_ID::TITLE);
+
     }
     CUIManager::GetInstance().Update();
     m_Color = vivid::alpha::AdjustAlpha(m_Color, m_FadeSpeed);
 
-    if (!m_SceneUIParent) return;
-
-    if (m_SceneUIParent->GetPosition().y == vivid::GetWindowHeight() / 2)
-        CSceneManager::GetInstance().PopScene(SCENE_ID::TITLE);
 }
 
 void CTitle::Draw(void)
@@ -68,6 +68,5 @@ void CTitle::Draw(void)
 void CTitle::Finalize(void)
 {
     IScene::Finalize();
-    CUIManager::GetInstance().Finalize();
-
+    CUIManager::GetInstance().Delete(m_SceneUIParent);
 }

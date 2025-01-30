@@ -53,6 +53,7 @@ CGame::Initialize(SCENE_ID scene_id)
     CControllerManager::GetInstance().Initialize();
     CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();
+    CUIManager::GetInstance().Initialize();
 
     m_WaitTimer.SetUp(m_start_count_time);
     m_CountFlag = true;

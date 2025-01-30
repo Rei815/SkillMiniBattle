@@ -4,6 +4,7 @@
 #include "..\ui.h"
 #include "..\..\..\scene_manager\scene\game\game_id.h"
 #include "..\..\..\..\..\primitive\primitive.h"
+#include "../../../animation_manager/animation/animation.h"
 
 class CPlaneGameImage : public CUI
 {
@@ -77,6 +78,21 @@ public:
      *  @param[in]  speed  移動速度
      */
     void            SetSpeed(float speed);
+
+    /*!
+     *  @brief      アニメーション取得
+     *
+     *  @return     アニメーション
+     */
+    IAnimation*     GetAnimation(void);
+
+    /*!
+     *  @brief      アニメーション設定
+     *
+     *  @param[in]  animation  アニメーション
+     */
+    void            SetAnimation(IAnimation* animation);
+
 private:
 
 
@@ -100,4 +116,5 @@ private:
     CVector3                        m_InitialPosition;  //!< 初期位置
     GAME_ID                         m_GameID;
     CMatrix                         m_Matrix;
+    IAnimation*                     m_Animation;
 };

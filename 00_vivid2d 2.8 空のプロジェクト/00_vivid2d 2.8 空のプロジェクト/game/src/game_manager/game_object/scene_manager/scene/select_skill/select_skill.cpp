@@ -92,6 +92,14 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
         m_SkillInfomation->SetPosition(m_info_position);
         m_SkillInfomation->SetScale(m_info_scale);
     }
+    CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, vivid::Vector2(0, vivid::GetWindowHeight() - 300));
+    IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
+    if (scene->GetSceneID() == SCENE_ID::TITLE)
+    {
+        m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
+        m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+    }
+
 }
 
 void CSelectSkill::Update(void)

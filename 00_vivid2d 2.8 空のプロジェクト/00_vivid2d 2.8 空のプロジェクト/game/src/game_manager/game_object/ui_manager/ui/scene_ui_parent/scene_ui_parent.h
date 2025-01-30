@@ -2,16 +2,16 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-
+#include <list>
+#include <memory>
 class  CSceneUIParent : public CUI
 {
 public:
     enum class STATE
     {
         WAIT,
-        SCENE_IN,
-        SCENE_OUT,
-        BACK,
+        MOVE_ONE,
+        BACK_ONE,
     };
     /*!
      *  @brief      コンストラクタ
@@ -26,7 +26,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize();
+    void        Initialize(const vivid::Vector2& position);
 
     /*!
      *  @brief      更新
@@ -43,7 +43,19 @@ public:
      */
     void        Finalize(void);
 
-    void        SetState(STATE state);
+    /*!
+     *  @brief      状態取得
+     *
+     *  @return     状態
+     */
+    STATE            GetState(void);
+
+    /*!
+     *  @brief      状態設定
+     *
+     *  @param[in]  state  状態
+     */
+    void            SetState(STATE state);
 private:
 
 
@@ -56,5 +68,7 @@ private:
     float                       m_StartValue;           //!< 開始値
     float                       m_FinishValue;          //!< 終了値
     STATE                       m_State;
-
+    float                       m_FinishPosition;
+    using CHILDRENLIST = std::list<CUI*>;
+    CHILDRENLIST               m_ChildrenList;
 };

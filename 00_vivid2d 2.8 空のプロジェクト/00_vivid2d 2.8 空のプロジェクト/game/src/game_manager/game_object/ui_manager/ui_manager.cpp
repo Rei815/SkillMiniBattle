@@ -62,7 +62,6 @@ CUIManager::Update(void)
             ui->Finalize();
 
             delete ui;
-
             it = m_UIList.erase(it);
 
             continue;
@@ -104,7 +103,6 @@ void CUIManager::Finalize(void)
         (*it)->Finalize();
 
         delete (*it);
-
         ++it;
     }
 
@@ -286,7 +284,7 @@ void CUIManager::SortList(void)
 
 CUI* CUIManager::CreateClass(UI_ID id)
 {
-    CUI* ui = nullptr;
+   CUI* ui = nullptr;
     switch (id)
     {
     case UI_ID::PAUSE:

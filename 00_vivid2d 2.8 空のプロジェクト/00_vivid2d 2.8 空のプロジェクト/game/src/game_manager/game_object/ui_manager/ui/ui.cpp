@@ -69,6 +69,7 @@ Update(void)
         m_Position.x += velocity.x;
         m_Position.y += velocity.y;
         m_Transform.position -= velocity;
+
     }
 }
 
@@ -173,6 +174,11 @@ void CUI::SetTransform(const CTransform& transform)
     m_Transform = transform;
 }
 
+CUI* CUI::GetParent(void)
+{
+    return m_Parent;
+}
+
 void CUI::SetParent(CUI* parent)
 {
     m_Parent = parent;
@@ -187,6 +193,16 @@ void CUI::SetOrderInLayer(int num)
 {
     m_OrderInLayer = num;
     CUIManager::GetInstance().SortList();
+}
+
+CUI::ATTRIBUTE CUI::GetAttribute(void)
+{
+    return m_Attribute;
+}
+
+void CUI::SetAttribute(ATTRIBUTE attribute)
+{
+    m_Attribute = attribute;
 }
 
 CVector3 CUI::GetVelocity()
