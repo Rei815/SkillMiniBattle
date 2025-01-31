@@ -46,14 +46,10 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
     ChangeLightTypeDir(VGet(1.0f, -1.0f, 1.0f));
 
-    //ひとつ前のシーン
     IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
 
-    if (scene->GetSceneID() == SCENE_ID::SELECTMODE)
-    {
-        m_FirstSceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
-        m_FirstSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
-    }
+    m_FirstSceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
+    m_FirstSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
     int game_id = rand() % (int)GAME_ID::MAX;
     m_SelectedGameID = (GAME_ID)game_id;
@@ -97,7 +93,7 @@ void CSelectGame::Update(void)
                 CUI* ui = (CUI*)(*it);
 
                 ++it;
-                if (ui->GetUI_ID() == UI_ID::TITLE_LOGO) continue;
+                if (ui->GetUI_ID() != UI_ID::PLANE_GAME_IMAGE) continue;
                 CPlaneGameImage* plameGameImage = (CPlaneGameImage*)ui;
                 plameGameImage->SetParent(nullptr);
             }
@@ -125,7 +121,7 @@ void CSelectGame::Update(void)
                 m_SelectedGameFlag = true;
             }
             else
-                am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);
+                am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);   // 選ばれていないものは小さくなる
 
         }
     }
@@ -173,19 +169,23 @@ void CSelectGame::Update(void)
     //    //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
     //}
 #endif
-    if (m_SecondSceneUIParent == nullptr) return;
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
+
+    if (m_SecondSceneUIParent)
     {
-        CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTSKILL);
-        m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
+        {
+            CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTSKILL);
+            m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
+        }
+
+        if (m_SecondSceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
+
+        const float min_height = -vivid::GetWindowHeight() / 2;
+        const float max_height = vivid::GetWindowHeight() * 1.5;
+        if (m_SecondSceneUIParent->GetPosition().y <= min_height || max_height <= m_SecondSceneUIParent->GetPosition().y)
+            CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTGAME);
     }
-    if (m_SecondSceneUIParent->GetState() != CSceneUIParent::STATE::WAIT) return;
-
-    const float min_height = -vivid::GetWindowHeight() / 2;
-    const float max_height = vivid::GetWindowHeight() * 1.5;
-    if (m_SecondSceneUIParent->GetPosition().y <= min_height || max_height <= m_SecondSceneUIParent->GetPosition().y)
-        CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTMODE);
 
 }
 

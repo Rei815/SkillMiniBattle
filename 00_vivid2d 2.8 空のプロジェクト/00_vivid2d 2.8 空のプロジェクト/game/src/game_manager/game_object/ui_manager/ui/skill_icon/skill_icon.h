@@ -48,6 +48,7 @@ public:
     void        SetSkill(SKILL_ID skill_id);
 
     void        SetPosition(vivid::Vector2 position);
+    void        SetCenterPosition(vivid::Vector2 position);
 
     void        SetScale(float scale);
     void        SetScale(vivid::Vector2 scale);

@@ -62,6 +62,9 @@ private:
     static const float m_cursor_move_time;
     static const float m_icon_scale;
     static const float m_info_scale;
+    static const float m_icon_offset;
+    static const vivid::Vector2     m_icon_origin_position;
+    static const vivid::Vector2     m_cursor_origin_position;
     static const vivid::Vector2     m_icon_positionList[];
     static const vivid::Vector2     m_bg_position;
     static const vivid::Vector2     m_info_position;

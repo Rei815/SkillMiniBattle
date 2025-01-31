@@ -21,6 +21,8 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
     CDataManager::GetInstance().Initialize();
     CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, vivid::Vector2(0,vivid::GetWindowHeight() - 300));
     IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
+
+    //このシーンが作られた際にタイトルからなのかセレクトモードシーンから作られたかで動きを変える
     if (scene->GetSceneID() == SCENE_ID::TITLE)
     {
         m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
@@ -61,13 +63,15 @@ void CSelectPlayer::Update(void)
         m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
     }
 
-    if (!m_SceneUIParent || m_SceneUIParent->GetState() != CSceneUIParent::STATE::WAIT) return;
+    if (m_SceneUIParent)
+    {
+        if (m_SceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
 
-    const float min_height = -vivid::GetWindowHeight() / 2;
-    const float max_height = vivid::GetWindowHeight() * 1.5;
-    if (m_SceneUIParent->GetPosition().y <= min_height || max_height <= m_SceneUIParent->GetPosition().y)
-        CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTPLAYER);
-
+        const float min_height = -vivid::GetWindowHeight() / 2;
+        const float max_height = vivid::GetWindowHeight() * 1.5;
+        if (m_SceneUIParent->GetPosition().y <= min_height || max_height <= m_SceneUIParent->GetPosition().y)
+            CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTPLAYER);
+    }
 
 }
 

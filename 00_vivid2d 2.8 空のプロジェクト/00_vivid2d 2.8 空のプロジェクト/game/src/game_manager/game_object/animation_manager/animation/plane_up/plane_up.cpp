@@ -3,7 +3,7 @@
 const float		CPlaneUp::m_speed = 100.0f;
 const float		CPlaneUp::m_up_time = 2.0f;
 const float		CPlaneUp::m_up_final_height = 2000.0f;
-const CVector3	CPlaneUp::m_down_initial_position = CVector3(-200.0f, 1000.0f, -500.0f);
+const CVector3	CPlaneUp::m_down_initial_position = CVector3(-200.0f, 500.0f, -500.0f);
 const float		CPlaneUp::m_end_time = 1.5f;
 CPlaneUp::CPlaneUp()
 {

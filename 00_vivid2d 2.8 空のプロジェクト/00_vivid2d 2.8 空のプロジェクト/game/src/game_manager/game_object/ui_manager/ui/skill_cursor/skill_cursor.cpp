@@ -63,8 +63,8 @@ CSkillCursor::
 Update(void)
 {
 	CUI::Update();
+	//m_Position = m_CenterPosition - m_anchor;
 
-	m_Position = m_CenterPosition - m_anchor;
 }
 
 /*
@@ -122,7 +122,13 @@ void
 CSkillCursor::
 SetPosition(vivid::Vector2 position)
 {
+	m_Position = position;
+}
+
+void CSkillCursor::SetCenterPosition(vivid::Vector2 position)
+{
 	m_CenterPosition = position;
+
 }
 
 void

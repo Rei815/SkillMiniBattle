@@ -56,7 +56,7 @@ CUIManager::Update(void)
         CUI* ui = (CUI*)(*it);
 
         ui->Update();
-
+        SortList();
         if (!ui->GetActive())
         {
             ui->Finalize();
@@ -116,7 +116,6 @@ CUI* CUIManager::Create(UI_ID id)
 
     ui->Initialize();
     m_UIList.push_back(ui);
-    SortList();
 
     return ui;
 }
@@ -129,7 +128,6 @@ CUI* CUIManager::Create(UI_ID id, int layerNum)
     ui->Initialize();
     ui->SetOrderInLayer(layerNum);
     m_UIList.push_back(ui);
-    SortList();
 
     return ui;
 }
@@ -155,9 +153,8 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position, int layerNum)
     ui->Initialize(position);
     ui->SetOrderInLayer(layerNum);
     m_UIList.push_back(ui);
-    SortList();
 
-    return nullptr;
+    return ui;
 }
 
 CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position, CUI* parent)
@@ -205,7 +202,6 @@ CUI* CUIManager::Create(UI_ID id, const CTransform& transform, int layerNum)
     ui->Initialize(transform);
     ui->SetOrderInLayer(layerNum);
     m_UIList.push_back(ui);
-    SortList();
 
     return ui;
 }
@@ -319,6 +315,12 @@ CUI* CUIManager::CreateClass(UI_ID id)
         ui = new CGameBG(id);               break;
     case UI_ID::TITLE_LOGO:
         ui = new CTitleLogo(id);            break;
+    case UI_ID::START_COUNTDOWN:
+        ui = new CStartGameCount(id);       break;
+    case UI_ID::START_TEXT:
+        ui = new CStartGameText(id);        break;
+    case UI_ID::FINISH_TEXT:
+        ui = new CFinishGameText(id);       break;
     case UI_ID::SCENE_UI_PARENT:
         ui = new CSceneUIParent(id);        break;
     }

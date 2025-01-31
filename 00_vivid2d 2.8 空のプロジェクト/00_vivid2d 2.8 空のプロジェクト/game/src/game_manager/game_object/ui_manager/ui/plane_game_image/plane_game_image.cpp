@@ -83,7 +83,32 @@ Update(void)
 		m_PosAngle = 0;
 	if (m_Angle > 360)
 		m_Angle = 0;
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+	{
+		m_Transform.position.z += 10.0f;
 
+	}
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+	{
+		m_Transform.position.x -= 10.0f;
+
+	}
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
+	{
+		m_Transform.position.z -= 10.0f;
+
+	}
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+	{
+		m_Transform.position.x += 10.0f;
+
+	}
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::G))
+		m_Transform.rotation.y -= 1.0f;
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::Q))
+		m_PosAngle -= 1.0f;
+	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::F))
+		m_Transform.rotation.y += 1.0f;
 	m_Plane.SetPosition(m_Transform.position);
 	m_Plane.Update();
 

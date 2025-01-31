@@ -3,13 +3,17 @@
 
 const vivid::Vector2      CSceneUIParent::m_position = vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2);
 const int           CSceneUIParent::m_speed = 5;
+const float            CSceneUIParent::m_max_height = vivid::GetWindowHeight() * 1.5;
+const float           CSceneUIParent::m_min_height =  - vivid::GetWindowHeight() / 2;
+const float           CSceneUIParent::m_wait_height = vivid::GetWindowHeight() / 2;
 
 /*
  *  コンストラクタ
  */
 CSceneUIParent::CSceneUIParent(UI_ID id)
     : CUI(id)
-    , m_State(STATE::WAIT)
+    , m_State(STATE::NONE)
+    , m_WaitFlag(false)
 {
 }
 
@@ -77,25 +81,32 @@ void CSceneUIParent::Update(void)
         m_Velocity = CVector3::ZERO;
         break;
     case CSceneUIParent::STATE::MOVE_ONE:
-        if (m_Position.y >= m_FinishPosition)
+        if (m_Position.y >= m_wait_height && m_WaitFlag == false)
         {
-            m_Position.y = m_FinishPosition;
+            m_WaitFlag = true;
+            m_Position.y = m_wait_height;
             m_Velocity.y = 0;
             m_State = STATE::WAIT;
         }
         break;
     case CSceneUIParent::STATE::BACK_ONE:
-        if (m_Position.y <= m_FinishPosition)
+        if (m_Position.y <= m_wait_height && m_WaitFlag == false)
         {
-            m_Position.y = m_FinishPosition;
+            m_WaitFlag = true;
+            m_Position.y = m_wait_height;
             m_Velocity.y = 0;
             m_State = STATE::WAIT;
         }
-
         break;
-    default:
-        break;
+    case CSceneUIParent::STATE::FINISH:
+        m_Velocity = CVector3::ZERO;
     }
+    if ((m_Position.y <= m_min_height || m_max_height <= m_Position.y) && m_WaitFlag == true)
+    {
+        m_Velocity.y = 0;
+        m_State = STATE::FINISH;
+    }
+
     m_Position.y += m_Velocity.y;
     m_Transform.position -= m_Velocity;
 
@@ -136,11 +147,21 @@ void CSceneUIParent::SetState(STATE state)
         break;
     case CSceneUIParent::STATE::MOVE_ONE:
         m_Velocity.y = m_speed;
-        m_FinishPosition = m_Position.y + vivid::GetWindowHeight();
         break;
     case CSceneUIParent::STATE::BACK_ONE:
         m_Velocity.y = -m_speed;
-        m_FinishPosition = m_Position.y - vivid::GetWindowHeight();
         break;
     }
+}
+
+void CSceneUIParent::ReleaseChildren()
+{
+    CHILDRENLIST::iterator it = m_ChildrenList.begin();
+    while (it != m_ChildrenList.end())
+    {
+        CUI* ui = (CUI*)(*it);
+        ui->SetParent(nullptr);
+        ++it;
+    }
+
 }

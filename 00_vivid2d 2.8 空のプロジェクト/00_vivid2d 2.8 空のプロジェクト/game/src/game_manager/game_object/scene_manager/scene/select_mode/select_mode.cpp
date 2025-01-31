@@ -48,12 +48,15 @@ void CSelectMode::Update(void)
         CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTPLAYER);
     }
 
-    if (!m_SceneUIParent || m_SceneUIParent->GetState() != CSceneUIParent::STATE::WAIT) return;
+    if (m_SceneUIParent)
+    {
+        if (m_SceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
 
-    const float min_height = -vivid::GetWindowHeight() / 2;
-    const float max_height = vivid::GetWindowHeight() * 1.5;
-    if (m_SceneUIParent->GetPosition().y <= min_height || max_height <= m_SceneUIParent->GetPosition().y)
-        CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTMODE);
+        const float min_height = -vivid::GetWindowHeight() / 2;
+        const float max_height = vivid::GetWindowHeight() * 1.5;
+        if (m_SceneUIParent->GetPosition().y <= min_height || max_height <= m_SceneUIParent->GetPosition().y)
+            CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTMODE);
+    }
 
 }
 
