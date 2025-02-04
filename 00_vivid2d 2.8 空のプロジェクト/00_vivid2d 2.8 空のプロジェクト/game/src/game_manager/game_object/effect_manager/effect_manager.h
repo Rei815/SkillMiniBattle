@@ -121,8 +121,8 @@ public:
     void        SetParentPosition(EFFECT_ID effectID,CVector3& parentPos);
 
 private:
-    IEffect* CreateClass(EFFECT_ID id);
 
+    IEffect* CreateClass(EFFECT_ID id);
     /*!
      *  @brief      コンストラクタ
      */

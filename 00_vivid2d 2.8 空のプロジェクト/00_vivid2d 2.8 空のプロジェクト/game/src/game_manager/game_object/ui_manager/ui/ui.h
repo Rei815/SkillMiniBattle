@@ -7,7 +7,11 @@
 class CUI
 {
 public:
-
+    enum class ATTRIBUTE
+    {
+        NONE,
+        INDESTRUCTIBLE_ON_LOAD, //!< シーンを切り替えても破棄されない
+    };
     /*!
      *  @brief      コンストラクタ
      */
@@ -141,6 +145,13 @@ public:
     void                SetTransform(const CTransform& transform);
 
     /*!
+     *  @brief      親のオブジェクト取得
+     *
+     *  @return     親のオブジェクト
+     */
+    CUI*                GetParent(void);
+
+    /*!
      *  @brief      親のトランスフォーム設定
      *
      *  @param[in]  parent  親のトランスフォーム
@@ -166,6 +177,19 @@ public:
         return m_OrderInLayer < r.m_OrderInLayer;
     }
 
+    /*!
+     *  @brief      属性取得
+     *
+     *  @return     属性
+     */
+    ATTRIBUTE           GetAttribute(void);
+
+    /*!
+     *  @brief      属性設定
+     *
+     *  @param[in]  attribute  属性
+     */
+    void                SetAttribute(ATTRIBUTE attribute);
 
 protected:
 
@@ -181,5 +205,5 @@ protected:
     CUI*                            m_Parent;
     int                             m_OrderInLayer;     //!< 描画順
     CVector3                        m_Velocity;         //!< 移動ベクトル
-
+    ATTRIBUTE                       m_Attribute;
 };

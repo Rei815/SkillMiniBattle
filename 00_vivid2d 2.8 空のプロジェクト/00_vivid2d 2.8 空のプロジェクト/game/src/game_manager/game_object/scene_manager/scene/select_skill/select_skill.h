@@ -9,6 +9,7 @@
 #include "../../../ui_manager/ui/skill_icon/skill_icon.h"
 #include "../../../ui_manager/ui/skill_cursor/skill_cursor.h"
 #include "../../../ui_manager/ui/skill_infomation/skill_infomation.h"
+#include "../../../ui_manager/ui/scene_ui_parent/scene_ui_parent.h"
 
 class CSelectSkill
     : public IScene
@@ -61,6 +62,9 @@ private:
     static const float m_cursor_move_time;
     static const float m_icon_scale;
     static const float m_info_scale;
+    static const float m_icon_offset;
+    static const vivid::Vector2     m_icon_origin_position;
+    static const vivid::Vector2     m_cursor_origin_position;
     static const vivid::Vector2     m_icon_positionList[];
     static const vivid::Vector2     m_bg_position;
     static const vivid::Vector2     m_info_position;
@@ -82,4 +86,6 @@ private:
     CSkillInfomation* m_SkillInfomation;
 
     GAME_ID         m_GameID;
+    CSceneUIParent* m_SceneUIParent;
+
 };

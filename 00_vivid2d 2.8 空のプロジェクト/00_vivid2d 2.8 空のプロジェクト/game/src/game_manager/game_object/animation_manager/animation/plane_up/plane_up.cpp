@@ -3,7 +3,7 @@
 const float		CPlaneUp::m_speed = 100.0f;
 const float		CPlaneUp::m_up_time = 2.0f;
 const float		CPlaneUp::m_up_final_height = 2000.0f;
-const CVector3	CPlaneUp::m_down_initial_position = CVector3(-200.0f, 1400.0f, -500.0f);
+const CVector3	CPlaneUp::m_down_initial_position = CVector3(-200.0f, 500.0f, -500.0f);
 const float		CPlaneUp::m_end_time = 1.5f;
 CPlaneUp::CPlaneUp()
 {
@@ -44,10 +44,7 @@ void CPlaneUp::Update()
 
 		m_Plane->SetPosAngle(0.0f);
 		m_Plane->SetOrderInLayer(1);
-		vivid::Vector2 bgPos = vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() / 2);
-		CUIManager::GetInstance().Create(UI_ID::MENU_BG, bgPos);
-		CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT);
-
+		m_Plane->SetAnimation(nullptr);
 		m_ActiveFlag = false;
 	}
 	m_Plane->SetTransform(transform);

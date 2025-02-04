@@ -11,12 +11,15 @@
 
 const float             CSelectSkill::m_cursor_move_time = 0.2f;
 const float             CSelectSkill::m_icon_scale = 0.3f;
+const float             CSelectSkill::m_icon_offset = 200.0f;
+const vivid::Vector2    CSelectSkill::m_icon_origin_position = vivid::Vector2(0, 0);
+const vivid::Vector2    CSelectSkill::m_cursor_origin_position = vivid::Vector2(0, 5);
 const vivid::Vector2    CSelectSkill::m_icon_positionList[] =
 {
-    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 1.0f, vivid::WINDOW_HEIGHT / 7.0f * 3.0f),		//Player1
-    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 2.0f, vivid::WINDOW_HEIGHT / 7.0f * 3.0f),		//Player2
-    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 3.0f, vivid::WINDOW_HEIGHT / 7.0f * 3.0f),		//Player3
-    vivid::Vector2( vivid::WINDOW_WIDTH / 5.0f * 4.0f, vivid::WINDOW_HEIGHT / 7.0f * 3.0f) 		//Player4
+    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 1.0f, 0),		//Player1
+    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 4.0f, 0),		//Player2
+    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 6.0f, 0),		//Player3
+    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 8.0f, 0) 		//Player4
 };
 
 const float             CSelectSkill::m_info_scale = 0.6f;
@@ -27,6 +30,7 @@ const vivid::Vector2    CSelectSkill::m_bg_position = vivid::Vector2(vivid::WIND
 CSelectSkill::CSelectSkill(void)
     :m_CursorMoveTimer()
     ,m_NowCursorID_Num(0)
+    ,m_NowCursorPosNum(0)
     , m_SkillSelectIcon{nullptr}
     , m_SkillSelectCursor(nullptr)
     , m_SkillInfomation(nullptr)
@@ -42,10 +46,6 @@ CSelectSkill::~CSelectSkill(void)
 void CSelectSkill::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
-    CCamera::GetInstance().Initialize();
-    CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -5000.0f));
-    CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
-    CUIManager::GetInstance().Initialize();
     CSkillManager::GetInstance().Initialize();
 
     m_GameID = CDataManager::GetInstance().GetSelectGameID();
@@ -82,7 +82,6 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     //カーソルの初期化
     SetCursorID();
     m_SkillSelectCursor = nullptr;
-    CreateCursor();
 
     //スキル説明の生成
     CUI* SkillInfo = CUIManager::GetInstance().Create(UI_ID::SKILL_INFO);
@@ -94,14 +93,27 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
         m_SkillInfomation->SetPosition(m_info_position);
         m_SkillInfomation->SetScale(m_info_scale);
     }
+    IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
+    m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
+    m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 }
 
 void CSelectSkill::Update(void)
 {
-    CCamera::GetInstance().Update();
     CUIManager::GetInstance().Update();
 
     MoveCursor();
+
+    if (m_SceneUIParent)
+    {
+        if (m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
+        {
+            m_SceneUIParent->ReleaseChildren();
+            CUIManager::GetInstance().Delete(m_SceneUIParent);
+            m_SceneUIParent = nullptr;
+            CreateCursor();
+        }
+    }
 }
 
 void CSelectSkill::Draw(void)
@@ -216,7 +228,12 @@ void CSelectSkill::CreateSkillIcon(void)
 
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
+        //CUI* ui = uim.Create(UI_ID::SKILL_ICON, m_icon_positionList[i]);
+
+        vivid::Vector2 iconPos = vivid::Vector2(m_icon_origin_position);
+        iconPos.x += m_icon_offset * i;
         CUI* ui = uim.Create(UI_ID::SKILL_ICON);
+
         SkillIconUI = dynamic_cast<CSkillIcon*>(ui);
         
         if (SkillIconUI == nullptr) //ダウンキャストのチェック
@@ -225,7 +242,8 @@ void CSelectSkill::CreateSkillIcon(void)
             continue;
         }
 
-        SkillIconUI->SetIcon(m_ChooseSkillID[i], m_icon_positionList[i],m_icon_scale);
+        //SkillIconUI->SetIcon(m_ChooseSkillID[i], m_icon_positionList[i],m_icon_scale);
+        SkillIconUI->SetIcon(m_ChooseSkillID[i], iconPos,m_icon_scale);
 
         m_SkillSelectIcon[i] = SkillIconUI;
     }
@@ -267,13 +285,18 @@ void CSelectSkill::CreateCursor(void)
         return;
     }
 
-    m_NowCursorPosNum = 0;
+    //m_NowCursorPosNum = 0;
 
-    m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))], m_icon_scale);
+    //m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))], m_icon_scale);
+    vivid::Vector2 cursorPos = m_icon_origin_position;
+    cursorPos.x += m_icon_offset * m_NowCursorPosNum;
+    m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], cursorPos, m_icon_scale);
 }
 
 void CSelectSkill::MoveCursor(void)
 {
+    if (m_SceneUIParent != nullptr) return;
+
     m_CursorMoveTimer.Update();
 
     int     joyPad = 0;
@@ -317,7 +340,11 @@ void CSelectSkill::MoveCursor(void)
         if (m_NowCursorPosNum != TempPosNum)
         {
             m_CursorMoveTimer.Reset();
-            m_SkillSelectCursor->SetPosition(m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))]);
+            //m_SkillSelectCursor->SetPosition(m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))]);
+
+            vivid::Vector2 cursorPos = m_icon_origin_position;
+            cursorPos.x += m_icon_offset * *(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum));
+            m_SkillSelectCursor->SetPosition(cursorPos);
         }
     }
 
@@ -341,7 +368,7 @@ void CSelectSkill::MoveCursor(void)
             CreateCursor();
         }
         //全員が選択を終了している場合、シーンの移行を行う
-        else
+        else if(m_SceneUIParent == nullptr)
         {
             switch (m_GameID)
             {

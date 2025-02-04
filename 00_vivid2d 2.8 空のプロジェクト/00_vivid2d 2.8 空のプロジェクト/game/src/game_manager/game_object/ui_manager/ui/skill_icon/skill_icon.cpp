@@ -63,6 +63,8 @@ Initialize(void)
 	CUI::Initialize();
 
 	m_Brightness = ICON_BRIGHTNESS::BRIGHT;
+	//m_Position = m_CenterPosition - m_anchor;
+
 }
 
 
@@ -86,7 +88,6 @@ Update(void)
 {
 	CUI::Update();
 
-	m_Position = m_CenterPosition - m_anchor;
 }
 
 /*
@@ -151,7 +152,13 @@ void
 CSkillIcon::
 SetPosition(vivid::Vector2 position)
 {
+	m_Position = position;
+}
+
+void CSkillIcon::SetCenterPosition(vivid::Vector2 position)
+{
 	m_CenterPosition = position;
+
 }
 
 void
