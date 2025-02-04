@@ -104,7 +104,7 @@ void CSelectGame::Update(void)
         }
 
     }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_FirstSceneUIParent== nullptr && m_SelectedGameFlag == false)
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
     {
 
         while (it != uiList.end())
@@ -141,71 +141,41 @@ void CSelectGame::Update(void)
 
         }
 #if _DEBUG
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
-    {
-        _gameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
-        //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
-    }
-
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
-    {
-        _gameID = GAME_ID::FALL_GAME;
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
-        //CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
-    }
-#if _DEBUG
-    //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
-    //{
-    //    _gameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
-    //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
-    //    //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
-    //}
-
-    //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
-    //{
-    //    _gameID = GAME_ID::FALL_GAME;
-    //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
-    //    //CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
-    //}
-
-    //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::THREE))
-    //{
-    //    _gameID = GAME_ID::DODGE_BALL_GAME;
-    //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
-    //    //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
-    //}
-    //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FOUR))
-    //{
-    //    _gameID = GAME_ID::DEBUG_GAME;
-    //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
-    //    //CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
-    //}
-#endif
-
-    if (m_SecondSceneUIParent)
-    {
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
+        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
         {
-            CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTSKILL);
+            m_SelectedGameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
             CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-
-            m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
-
+            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
         }
 
-        if (m_SecondSceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
+        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
+        {
+            m_SelectedGameID = GAME_ID::FALL_GAME;
+            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
+        }
+#endif
 
-        const float min_height = -vivid::GetWindowHeight() / 2;
-        const float max_height = vivid::GetWindowHeight() * 1.5;
-        if (m_SecondSceneUIParent->GetPosition().y <= min_height || max_height <= m_SecondSceneUIParent->GetPosition().y)
-            CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTGAME);
+        if (m_SecondSceneUIParent)
+        {
+            if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
+            {
+                CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTSKILL);
+                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+
+                m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+
+            }
+
+            if (m_SecondSceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
+
+            const float min_height = -vivid::GetWindowHeight() / 2;
+            const float max_height = vivid::GetWindowHeight() * 1.5;
+            if (m_SecondSceneUIParent->GetPosition().y <= min_height || max_height <= m_SecondSceneUIParent->GetPosition().y)
+                CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTGAME);
+        }
     }
-
 }
-
 void CSelectGame::Draw(void)
 {
     CUIManager::GetInstance().Draw();
@@ -226,6 +196,4 @@ void CSelectGame::Finalize(void)
 
     CUIManager::GetInstance().Delete(m_FirstSceneUIParent);
     CUIManager::GetInstance().Delete(m_SecondSceneUIParent);
-
-
 }
