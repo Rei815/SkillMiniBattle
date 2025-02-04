@@ -51,6 +51,7 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
 
         m_PlayerNumUI[i]->SetData(m_player_num_ui_pos[i], i + 1, m_player_num_ui_scale);
     }
+
     CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, vivid::Vector2(0,vivid::GetWindowHeight() - 300));
     IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
 
@@ -67,8 +68,6 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
     }
 }
 
-}
-
 void CSelectPlayer::Update(void)
 {
     CUIManager::GetInstance().Update();
@@ -83,19 +82,20 @@ void CSelectPlayer::Update(void)
     {
         currentPlayer++;
         dm.SetCurrentPlayer(currentPlayer);
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTMODE);
     }
+
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::BACK) && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
     {
         m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);
         CSceneManager::GetInstance().PushScene(SCENE_ID::TITLE);
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
     {
         CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTMODE);
         m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
 
     if (m_SceneUIParent)

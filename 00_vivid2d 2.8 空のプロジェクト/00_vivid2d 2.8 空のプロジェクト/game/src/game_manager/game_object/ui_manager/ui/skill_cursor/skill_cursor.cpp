@@ -21,7 +21,6 @@ CSkillCursor::
 CSkillCursor(UI_ID id)
 	: CUI(m_width, m_height, id)
 	, m_FileName("")
-	, m_CenterPosition(vivid::Vector2::ZERO)
 {
 	SetScale(m_default_scale);
 }

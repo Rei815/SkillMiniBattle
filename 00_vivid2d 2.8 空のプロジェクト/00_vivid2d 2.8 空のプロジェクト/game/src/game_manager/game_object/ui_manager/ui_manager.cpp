@@ -300,16 +300,34 @@ CUI* CUIManager::CreateClass(UI_ID id)
         ui = new CPlaneGameImage(id);       break;
     case UI_ID::MENU_BG:
         ui = new CMenuBG(id);               break;
+    case UI_ID::MENU_POSTER:
+        ui = new CMenuPoster(id);               break;
+    case UI_ID::SCENE_TITLE:
+        ui = new CSceneTitle(id);               break;
+    case UI_ID::PLAYER_NUM_SELECT:
+        ui = new CPlayerNumSelect(id);               break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);            break;
     case UI_ID::SKILL_GAUGE:
         ui = new CSkillGauge(id);           break;
     case UI_ID::SKILL_CURSOR:
         ui = new CSkillCursor(id);          break;
+    case UI_ID::SKILL_NAME:
+        ui = new CSkillName(id);          break;
     case UI_ID::SKILL_INFO:
         ui = new CSkillInfomation(id);      break;
+    case UI_ID::SKILL_VIDEO:
+        ui = new CSkillVideo(id);      break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);         break;
+    case UI_ID::TITLE_LOGO:
+        ui = new CTitleLogo(id);         break;
+    case UI_ID::START_COUNTDOWN:
+        ui = new CStartGameCount(id);         break;
+    case UI_ID::START_TEXT:
+        ui = new CStartGameText(id);         break;
+    case UI_ID::FINISH_TEXT:
+        ui = new CFinishGameText(id);         break;
     case UI_ID::KEY:
         ui = new CKey(id);                  break;
     case UI_ID::KEY_BG:
@@ -318,14 +336,6 @@ CUI* CUIManager::CreateClass(UI_ID id)
         ui = new CFade(id);                 break;
     case UI_ID::GAME_BG:
         ui = new CGameBG(id);               break;
-    case UI_ID::TITLE_LOGO:
-        ui = new CTitleLogo(id);            break;
-    case UI_ID::START_COUNTDOWN:
-        ui = new CStartGameCount(id);       break;
-    case UI_ID::START_TEXT:
-        ui = new CStartGameText(id);        break;
-    case UI_ID::FINISH_TEXT:
-        ui = new CFinishGameText(id);       break;
     case UI_ID::SCENE_UI_PARENT:
         ui = new CSceneUIParent(id);        break;
     }

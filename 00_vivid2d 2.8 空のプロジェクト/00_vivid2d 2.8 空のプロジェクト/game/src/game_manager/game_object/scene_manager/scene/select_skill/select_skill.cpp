@@ -140,8 +140,6 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 }
 
-}
-
 void CSelectSkill::Update(void)
 {
     CUIManager::GetInstance().Update();
@@ -208,6 +206,7 @@ void CSelectSkill::Finalize(void)
         m_SkillVideo->SetActive(false);
         m_SkillVideo = nullptr;
     }
+}
 
 void CSelectSkill::ChooseSkill(void)
 {
@@ -292,7 +291,7 @@ void CSelectSkill::CreateSkillIcon(void)
 
         vivid::Vector2 iconPos = vivid::Vector2(m_icon_origin_position);
         iconPos.x += m_icon_offset * i;
-        CUI* ui = uim.Create(UI_ID::SKILL_ICON);
+        ui = uim.Create(UI_ID::SKILL_ICON);
 
         SkillIconUI = dynamic_cast<CSkillIcon*>(ui);
         
