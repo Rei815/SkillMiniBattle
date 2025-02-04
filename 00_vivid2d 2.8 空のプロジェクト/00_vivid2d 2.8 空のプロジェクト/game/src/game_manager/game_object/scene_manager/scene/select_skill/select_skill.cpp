@@ -15,21 +15,18 @@ const float             CSelectSkill::m_cursor_move_time = 0.2f;
 const vivid::Vector2    CSelectSkill::m_title_poster_scale = vivid::Vector2(2.0f, 0.2f);
 const vivid::Vector2    CSelectSkill::m_title_poster_position = vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, vivid::WINDOW_HEIGHT / 6.0f);
 
-const float             CSelectSkill::m_icon_scale = 0.3f;
-const float             CSelectSkill::m_icon_offset = 200.0f;
-const vivid::Vector2    CSelectSkill::m_icon_origin_position = vivid::Vector2(0, 0);
-const vivid::Vector2    CSelectSkill::m_cursor_origin_position = vivid::Vector2(0, 5);
 const vivid::Vector2    CSelectSkill::m_icon_positionList[] =
 {
-    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 1.0f, 0),		//Player1
-    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 4.0f, 0),		//Player2
-    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 6.0f, 0),		//Player3
-    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 8.0f, 0) 		//Player4
+    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 1.0f, vivid::WINDOW_HEIGHT / 7.0f * 3),		//Player1
+    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 3.0f, vivid::WINDOW_HEIGHT / 7.0f * 3),		//Player2
+    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 5.0f, vivid::WINDOW_HEIGHT / 7.0f * 3),		//Player3
+    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 7.0f, vivid::WINDOW_HEIGHT / 7.0f * 3) 		//Player4
 };
 
 const vivid::Vector2    CSelectSkill::m_icon_poster_scale = vivid::Vector2(4.0f, 0.8f);
 const vivid::Vector2    CSelectSkill::m_icon_poster_position = vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, vivid::WINDOW_HEIGHT / 5.0f * 2.0f);
 
+const float             CSelectSkill::m_icon_scale = 0.3f;
 const float             CSelectSkill::m_icon_name_scale = 0.1f;
 const float             CSelectSkill::m_icon_name_position_up = 110.0f;
 
@@ -100,6 +97,7 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
 
     //カーソルの初期化
     SetCursorID();
+    CreateCursor();
     m_SkillSelectCursor = nullptr;
 
     //スキル説明の生成
@@ -268,6 +266,9 @@ void CSelectSkill::ResetChooseSkill(void)
     }
 }
 
+/*
+* スキルアイコンの生成
+*/
 void CSelectSkill::CreateSkillIcon(void)
 {
     CUIManager& uim = CUIManager::GetInstance();
@@ -287,10 +288,6 @@ void CSelectSkill::CreateSkillIcon(void)
             SkillNameUI->SetData(m_ChooseSkillID[i], m_icon_positionList[i] - vivid::Vector2(0.0f, m_icon_name_position_up), m_icon_name_scale);
         }
 
-        //CUI* ui = uim.Create(UI_ID::SKILL_ICON, m_icon_positionList[i]);
-
-        vivid::Vector2 iconPos = vivid::Vector2(m_icon_origin_position);
-        iconPos.x += m_icon_offset * i;
         ui = uim.Create(UI_ID::SKILL_ICON);
 
         SkillIconUI = dynamic_cast<CSkillIcon*>(ui);
@@ -301,8 +298,7 @@ void CSelectSkill::CreateSkillIcon(void)
             continue;
         }
 
-        //SkillIconUI->SetIcon(m_ChooseSkillID[i], m_icon_positionList[i],m_icon_scale);
-        SkillIconUI->SetIcon(m_ChooseSkillID[i], iconPos,m_icon_scale);
+        SkillIconUI->SetIcon(m_ChooseSkillID[i], m_icon_positionList[i],m_icon_scale);
 
         m_SkillSelectIcon[i] = SkillIconUI;
     }
@@ -344,12 +340,9 @@ void CSelectSkill::CreateCursor(void)
         return;
     }
 
-    //m_NowCursorPosNum = 0;
+    m_NowCursorPosNum = 0;
 
-    //m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))], m_icon_scale);
-    vivid::Vector2 cursorPos = m_icon_origin_position;
-    cursorPos.x += m_icon_offset * m_NowCursorPosNum;
-    m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], cursorPos, m_icon_scale);
+    m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))], m_icon_scale);
 }
 
 void CSelectSkill::MoveCursor(void)
@@ -399,11 +392,8 @@ void CSelectSkill::MoveCursor(void)
         if (m_NowCursorPosNum != TempPosNum)
         {
             m_CursorMoveTimer.Reset();
-            //m_SkillSelectCursor->SetPosition(m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))]);
 
-            vivid::Vector2 cursorPos = m_icon_origin_position;
-            cursorPos.x += m_icon_offset * *(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum));
-            m_SkillSelectCursor->SetPosition(cursorPos);
+            m_SkillSelectCursor->SetPosition(m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))]);
 
             m_SkillVideo->SetSkillNum(*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));
         }
