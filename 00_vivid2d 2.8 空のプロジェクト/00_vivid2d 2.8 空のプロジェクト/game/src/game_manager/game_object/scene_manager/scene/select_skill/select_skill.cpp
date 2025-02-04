@@ -97,7 +97,6 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
 
     //カーソルの初期化
     SetCursorID();
-    CreateCursor();
     m_SkillSelectCursor = nullptr;
 
     //スキル説明の生成
