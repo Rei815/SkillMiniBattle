@@ -208,7 +208,6 @@ void CSelectSkill::Finalize(void)
     }
 }
 
-}
 void CSelectSkill::ChooseSkill(void)
 {
     ResetChooseSkill();
