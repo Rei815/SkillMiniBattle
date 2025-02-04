@@ -2,7 +2,7 @@
 #include "../../../unit_manager/unit_manager.h"
 
 const vivid::Vector2      CSceneUIParent::m_position = vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2);
-const int           CSceneUIParent::m_speed = 5;
+const int           CSceneUIParent::m_speed = 99;
 const float            CSceneUIParent::m_max_height = vivid::GetWindowHeight() * 1.5;
 const float           CSceneUIParent::m_min_height =  - vivid::GetWindowHeight() / 2;
 const float           CSceneUIParent::m_wait_height = vivid::GetWindowHeight() / 2;
@@ -75,12 +75,24 @@ void CSceneUIParent::Update(void)
         ++it;
     }
 
+    m_Position.y += m_Velocity.y;
+    m_Transform.position -= m_Velocity;
+
+    if ((m_Position.y <= m_min_height || m_max_height <= m_Position.y) && m_WaitFlag == true)
+    {
+        m_Velocity.y = 0;
+        m_State = STATE::FINISH;
+    }
     switch (m_State)
     {
     case CSceneUIParent::STATE::WAIT:
         m_Velocity = CVector3::ZERO;
         break;
     case CSceneUIParent::STATE::MOVE_ONE:
+        if (m_Position.y + m_speed >= m_wait_height && m_WaitFlag == false)
+        {
+            m_Velocity.y = m_wait_height - m_Position.y;
+        }
         if (m_Position.y >= m_wait_height && m_WaitFlag == false)
         {
             m_WaitFlag = true;
@@ -90,6 +102,10 @@ void CSceneUIParent::Update(void)
         }
         break;
     case CSceneUIParent::STATE::BACK_ONE:
+        if (m_Position.y + m_speed <= m_wait_height && m_WaitFlag == false)
+        {
+            m_Velocity.y = m_Position.y - m_wait_height;
+        }
         if (m_Position.y <= m_wait_height && m_WaitFlag == false)
         {
             m_WaitFlag = true;
@@ -101,14 +117,7 @@ void CSceneUIParent::Update(void)
     case CSceneUIParent::STATE::FINISH:
         m_Velocity = CVector3::ZERO;
     }
-    if ((m_Position.y <= m_min_height || m_max_height <= m_Position.y) && m_WaitFlag == true)
-    {
-        m_Velocity.y = 0;
-        m_State = STATE::FINISH;
-    }
 
-    m_Position.y += m_Velocity.y;
-    m_Transform.position -= m_Velocity;
 
 }
 
@@ -144,6 +153,7 @@ void CSceneUIParent::SetState(STATE state)
     switch (state)
     {
     case CSceneUIParent::STATE::WAIT:
+        m_Velocity = CVector3::ZERO;
         break;
     case CSceneUIParent::STATE::MOVE_ONE:
         m_Velocity.y = m_speed;
