@@ -1,6 +1,6 @@
 #include "cannon_object.h"
 
-const std::string CCannonObject::m_model_file_name = "data\\Models\\cannon_test.mv1";
+const std::string CCannonObject::m_model_file_name = "data\\Models\\cannon.mv1";
 
 CCannonObject::CCannonObject()
 	: IObject()

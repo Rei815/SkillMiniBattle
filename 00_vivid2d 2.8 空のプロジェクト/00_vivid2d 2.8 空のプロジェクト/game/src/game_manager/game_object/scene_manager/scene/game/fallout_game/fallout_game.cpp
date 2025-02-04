@@ -27,6 +27,7 @@ const float		CFallOutGame::m_add_topic_time = 10.0f;
 const float		CFallOutGame::m_reset_topic_time = 0.5f;
 const float		CFallOutGame::m_extend_return_time = 180.0f;
 const int		CFallOutGame::m_max_topic_num = 5;
+const CVector3  CFallOutGame::m_player_default_forward = CVector3(0.0f,0.0f,-1.0f);
 const CVector3	CFallOutGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallOutGame::m_camera_direction = CVector3(0.0f, -1.0f, 1.0f);
 CFallOutGame::CFallOutGame(void)
@@ -63,7 +64,10 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
 		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
 		if (Player != nullptr)
+		{
 			Player->SetActionFlag(false);
+			Player->SetForwardVector(m_player_default_forward);
+		}
 		m_EntryList.push_back(unit);
 
 	}

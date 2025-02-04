@@ -6,7 +6,8 @@
 
 
 const float             CPlayer::m_radius = 50.0f;
-const float             CPlayer::m_height = 100.0f;
+const float             CPlayer::m_height = 70.0f;
+const float             CPlayer::m_model_scale = 0.33f;
 
 const float             CPlayer::m_move_speed = 0.6f;
 const float             CPlayer::m_jump_power = 20.0f;
@@ -30,7 +31,6 @@ CPlayer::CPlayer()
     , m_FrictionFlag(true)
     , m_ActionFlag(true)
     , m_Controller()
-    , m_Color({1,1,1,1})
     , m_ForwardVector(CVector3::FORWARD)
 {
 }
@@ -44,37 +44,33 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
     (void)position;
 
     IUnit::Initialize(id, position, file_name, controller);
+
     switch (id)
     {
     case UNIT_ID::PLAYER1: 
         m_Category = UNIT_CATEGORY::PLAYER1;
-        m_Color = DxLib::COLOR_F({ 1.0f, 0.0f, 0.0f, 1.0f });
         break;
     case UNIT_ID::PLAYER2: 
         m_Category = UNIT_CATEGORY::PLAYER2;
-        m_Color = DxLib::COLOR_F({ 0.0f, 0.0f, 1.0f, 1.0f });
 
         break;
     case UNIT_ID::PLAYER3: 
         m_Category = UNIT_CATEGORY::PLAYER3;
-        m_Color = DxLib::COLOR_F({ 1.0f, 1.0f, 0.0f, 1.0f });
 
         break;
     case UNIT_ID::PLAYER4: 
         m_Category = UNIT_CATEGORY::PLAYER4;
-        m_Color = DxLib::COLOR_F({ 0.0f, 1.0f, 0.0f, 1.0f });
 
         break;
     }
 
     m_Radius = m_radius;
     m_Height = m_height;
+    m_Transform.scale = CVector3(m_model_scale, m_model_scale, m_model_scale);
 
     m_InitialPosition = position;
 
-    m_Model.Initialize(file_name, position);
-
-    MV1SetMaterialDifColor(m_Model.GetModelHandle(), 0, m_Color);
+    m_Model.Initialize(file_name, position, m_model_scale);
 
     m_Accelerator = CVector3(0,0,0);
 
@@ -88,10 +84,26 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
 void CPlayer::Update(void)
 {
     IUnit::Update();
-    m_Model.Update(m_Transform);
 
-    if (m_Velocity != CVector3::ZERO)
-        m_ForwardVector = CVector3(m_Velocity.x, 0, m_Velocity.z).Normalize();
+    CVector3 TempForwardVector;
+
+    //移動中なら、正面方向を移動方向でセット
+    if (abs(m_Velocity.x) > 0.0f || abs(m_Velocity.z) > 0.0f)
+        TempForwardVector = CVector3(m_Velocity.x, 0, m_Velocity.z).Normalize();
+    else
+        TempForwardVector = m_ForwardVector;
+
+    //エラーチェック（移動速度のベクトルが小さすぎるとき、ゼロベクトルとして判定されてしまい、計算結果が変わることがあるため）
+    if (TempForwardVector.x != -1.0f || TempForwardVector.z != -1.0f)
+    {
+        m_ForwardVector = TempForwardVector;
+
+        //エラーでなければ、回転をセット
+        float RotY = CVector3().GetVectorRotateXYZ(m_ForwardVector).y;
+        m_Transform.rotation.y = RotY;
+    }
+
+    m_Model.Update(m_Transform);
 }
 
 void CPlayer::Draw(void)
@@ -163,6 +175,14 @@ bool CPlayer::GetPlayerMoving()
         //Input = true;
 
     return Input;
+}
+
+void CPlayer::SetForwardVector(const CVector3& forward_vector)
+{
+    if (forward_vector != CVector3().ZERO)
+    {
+        m_ForwardVector = forward_vector;
+    }
 }
 
 CVector3 CPlayer::GetForwardVector()

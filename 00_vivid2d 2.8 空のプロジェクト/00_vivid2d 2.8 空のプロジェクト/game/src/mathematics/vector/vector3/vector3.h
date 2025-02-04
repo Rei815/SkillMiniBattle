@@ -271,6 +271,17 @@ public:
 		*/
 	friend CVector3     operator*(float scalar, const CVector3& v);
 
+
+	/*!
+		*  @brief				ベクトルの方向を回転値（XYZオイラー角）に変換して返す
+		*
+		*  @param[in]  vector	回転値に変換するベクトル
+		*
+		*  @return				回転値（XYZオイラー角）
+		*/
+	CVector3 GetVectorRotateXYZ(void);
+	CVector3 GetVectorRotateXYZ(const CVector3& vector);
+
 	/*!
 		*  @brief      ベクトルを座標軸周りで回転させる
 		*

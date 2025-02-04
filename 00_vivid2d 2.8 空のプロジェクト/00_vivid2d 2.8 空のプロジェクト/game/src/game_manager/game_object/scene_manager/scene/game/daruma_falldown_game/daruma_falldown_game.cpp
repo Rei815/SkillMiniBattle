@@ -20,6 +20,8 @@ const CVector3	CDaruma_FallDownGame::m_ogre_rotation = CVector3(0, 0, 0);
 
 const float CDaruma_FallDownGame::m_move_speed = 0.3f;
 
+const CVector3 CDaruma_FallDownGame::m_player_default_forward = CVector3(1.0f, 0.0f, 0.0f);
+
 CDaruma_FallDownGame::CDaruma_FallDownGame(void)
 	: m_PlayerPosition{ (CVector3(-1500,0,100)) }
 	, m_Timer()
@@ -55,7 +57,10 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 100, 100 * i));
 		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
 		if (Player != nullptr)
+		{
 			Player->SetActionFlag(false);
+			Player->SetForwardVector(m_player_default_forward);
+		}
 	}
 
 	CSkillManager::GetInstance().SetSkill();

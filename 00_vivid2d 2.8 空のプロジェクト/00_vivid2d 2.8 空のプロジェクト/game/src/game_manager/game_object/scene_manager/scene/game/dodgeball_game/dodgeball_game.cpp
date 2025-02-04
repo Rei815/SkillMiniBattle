@@ -13,7 +13,8 @@
 
 #include "../../../../gimmick_manager/gimmick/fall_gimmick/fall_gimmick.h"
 
-//上下左右の4方向 × 各方向に5つずつ ＝ 20こ
+// 大砲の位置
+// 上下左右の4方向 × 各方向に5つずつ ＝ 20こ
 const CVector3		CDodgeBallGame::m_cannon_pos_list[] = 
 {
 	CVector3(    0,   0, 1800),CVector3(  556,   0, 1712),CVector3( 1058,   0, 1456),CVector3( 1456,   0, 1058),CVector3( 1712,   0,  556),	//上
@@ -22,7 +23,7 @@ const CVector3		CDodgeBallGame::m_cannon_pos_list[] =
 	CVector3(-1800,   0,    0),CVector3(-1712,   0,  556),CVector3(-1456,   0, 1058),CVector3(-1058,   0, 1456),CVector3(- 556,   0, 1712)	//左
 };
 
-//上下左右の4方向
+// 大砲のデフォルトの向き
 const CVector3		CDodgeBallGame::m_cannon_rot_list[] = 
 {
 	CVector3(0,-180,0),CVector3(0,-162,0),CVector3(0,-144,0),CVector3(0,-126,0),CVector3(0,-108,0),	//上
@@ -38,6 +39,8 @@ const CVector3 CDodgeBallGame::m_player_spawnpos_list[] =
 	CVector3(-100, 0, -100),	//Player3
 	CVector3( 100, 0, -100)		//Player4
 };
+
+const CVector3 CDodgeBallGame::m_player_default_forward = CVector3(0.0f,0.0f,-1.0f);
 
 const int			CDodgeBallGame::m_max_cannnon_count = 5;
 const float			CDodgeBallGame::m_cannnon_spawn_time = 3.0f;
@@ -90,7 +93,10 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, m_player_spawnpos_list[i]);
 		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
 		if (Player != nullptr)
+		{
 			Player->SetActionFlag(false);
+			Player->SetForwardVector(m_player_default_forward);
+		}
 		m_EntryList.push_back(unit);
 	}
 

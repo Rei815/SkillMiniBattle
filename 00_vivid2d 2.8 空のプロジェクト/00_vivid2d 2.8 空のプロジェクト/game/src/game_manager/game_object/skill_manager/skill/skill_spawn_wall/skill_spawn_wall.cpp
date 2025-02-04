@@ -4,7 +4,7 @@
 #include "../../../bullet_manager/bullet_manager.h"
 
 const float CSkillSpawnWall::m_cool_time = 15.0f;
-const float CSkillSpawnWall::m_duration_time = 5.0f;
+const float CSkillSpawnWall::m_duration_time = 500000.0f;
 const float CSkillSpawnWall::m_wall_spawn_distance = 200.0f;
 
 CSkillSpawnWall::CSkillSpawnWall(void)

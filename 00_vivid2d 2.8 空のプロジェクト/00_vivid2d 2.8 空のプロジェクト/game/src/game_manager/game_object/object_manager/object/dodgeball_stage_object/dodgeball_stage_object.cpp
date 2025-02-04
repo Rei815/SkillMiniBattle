@@ -1,6 +1,6 @@
 #include "dodgeball_stage_object.h"
 
-const std::string CDogeballStageObject::m_model_file_name = "data\\Models\\dodgeball_stage_test2.mv1";
+const std::string CDogeballStageObject::m_model_file_name = "data\\Models\\dodgeball_stage.mv1";
 
 CDogeballStageObject::CDogeballStageObject()
 	: IObject()
