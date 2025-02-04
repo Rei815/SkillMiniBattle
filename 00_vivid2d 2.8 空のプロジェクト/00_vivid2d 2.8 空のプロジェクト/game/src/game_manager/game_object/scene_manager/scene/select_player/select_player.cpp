@@ -84,6 +84,14 @@ void CSelectPlayer::Update(void)
         dm.SetCurrentPlayer(currentPlayer);
     }
 
+    for (int i = 1; i < (int)UNIT_ID::NONE; i++)
+    {
+        if (i + 1 == dm.GetCurrentPlayer())
+            m_PlayerNumUI[i]->SetSelected(true);
+        else
+            m_PlayerNumUI[i]->SetSelected(false);
+    }
+
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::BACK) && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
     {
         m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);
@@ -106,15 +114,6 @@ void CSelectPlayer::Update(void)
         const float max_height = vivid::GetWindowHeight() * 1.5;
         if (m_SceneUIParent->GetPosition().y <= min_height || max_height <= m_SceneUIParent->GetPosition().y)
             CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTPLAYER);
-    }
-
-    for (int i = 1; i < (int)UNIT_ID::NONE; i++)
-    {
-
-        if (i + 1 == dm.GetCurrentPlayer())
-            m_PlayerNumUI[i]->SetSelected(true);
-        else
-            m_PlayerNumUI[i]->SetSelected(false);
     }
 
     CUIManager::GetInstance().Update();
