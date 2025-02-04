@@ -95,6 +95,15 @@ private:
 	 */
 	CCamera& operator=(const CCamera& rhs);
 
+	static const float	m_lerp_speed;						//!< ƒJƒƒ‰‚Ì“®‚«‚Ì‘¬‚³
+	static const float	m_near;									//!< NearƒNƒŠƒbƒv
+	static const float	m_far;										//!< FarƒNƒŠƒbƒv
+	static const int	m_shake_max_num;				//!< —h‚ê‚é‰ñ”
+	static const int	m_shake_interval;					//!< —h‚ê‚ÌŠÔŠu
+	static const float	m_shake_value;						//!< —h‚ê‚Ì‘å‚«‚³
+	static const CVector3 m_initial_position;		//!< ‰ŠúˆÊ’u
+	static const CVector3 m_initial_direction;		//!< ‰ŠúŠp“x
+
 	CVector3			m_Position;			//!< ˆÊ’u(Ž‹“_)
 	CVector3			m_Direction;		//!< Œü‚«
 	float				m_Fov;				//!< Ž‹–ìŠp
@@ -103,12 +112,6 @@ private:
 	bool				m_ShakeFlag;		//!< —h‚êƒtƒ‰ƒO
 	int					m_ShakeCount;		//!< —h‚ê‚½‰ñ”
 	float				m_ShakeTimer;		//!< —h‚êƒ^ƒCƒ}[
-	static const int	m_shake_max_num;	//!< —h‚ê‚é‰ñ”
-	static const int	m_shake_interval;	//!< —h‚ê‚ÌŠÔŠu
-	static const float	m_shake_value;		//!< —h‚ê‚Ì‘å‚«‚³
 	CVector3			m_PreviousPosition;	//!< —h‚ê‘O‚ÌˆÊ’u
-	static const float	m_lerp_speed;		//!< ƒJƒƒ‰‚Ì“®‚«‚Ì‘¬‚³
-	static const float	m_near;				//!< NearƒNƒŠƒbƒv
-	static const float	m_far;				//!< FarƒNƒŠƒbƒv
 
 };
