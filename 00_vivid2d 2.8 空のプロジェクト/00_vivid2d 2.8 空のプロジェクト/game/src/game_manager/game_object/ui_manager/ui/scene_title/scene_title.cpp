@@ -2,8 +2,8 @@
 #include "../../../scene_manager/scene_manager.h"
 
 
-const int               CSceneTitle::m_height = 100;
-const int               CSceneTitle::m_width = 600;
+const int               CSceneTitle::m_height = 105;
+const int               CSceneTitle::m_width = 800;
 const vivid::Rect       CSceneTitle::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
 const vivid::Vector2    CSceneTitle::m_default_scale = vivid::Vector2(1.0f, 1.0f);
 const vivid::Vector2    CSceneTitle::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);

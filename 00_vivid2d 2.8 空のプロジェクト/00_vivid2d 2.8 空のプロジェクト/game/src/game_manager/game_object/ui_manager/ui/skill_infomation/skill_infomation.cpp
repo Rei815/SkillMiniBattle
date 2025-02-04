@@ -8,7 +8,7 @@ const vivid::Vector2    CSkillInfomation::m_anchor = vivid::Vector2(m_width / 2,
 
 const std::string CSkillInfomation::m_skill_info_file_name[] =
 {
-		"data\\Textures\\skill_info_speedup_test.png",
+		"data\\Textures\\skill_info_speedup.png",
 		"data\\Textures\\skill_info_jumpup_test.png",
 		"data\\Textures\\skill_info_floating_test.png",
 		"data\\Textures\\skill_info_stomp_test.png",
