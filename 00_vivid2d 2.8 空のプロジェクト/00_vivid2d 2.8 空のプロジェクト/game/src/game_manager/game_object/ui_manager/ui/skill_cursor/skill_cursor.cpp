@@ -21,7 +21,6 @@ CSkillCursor::
 CSkillCursor(UI_ID id)
 	: CUI(m_width, m_height, id)
 	, m_FileName("")
-	, m_Scale(m_default_scale)
 	, m_CenterPosition(vivid::Vector2::ZERO)
 {
 }
@@ -42,6 +41,8 @@ CSkillCursor::
 Initialize(void)
 {
 	CUI::Initialize();
+	m_Scale = m_default_scale;
+
 }
 
 /*!
@@ -63,7 +64,7 @@ CSkillCursor::
 Update(void)
 {
 	CUI::Update();
-	//m_Position = m_CenterPosition - m_anchor;
+	m_Position = m_CenterPosition - m_anchor;
 
 }
 
@@ -80,6 +81,7 @@ Draw(void)
 		return;
 
 	vivid::DrawTexture(m_FileName, m_Position, 0xffffffff, m_rect, m_anchor, m_Scale);
+	vivid::DrawTexture(m_FileName, vivid::Vector2(), 0xffffffff, m_rect, m_anchor, m_Scale);
 }
 
 /*

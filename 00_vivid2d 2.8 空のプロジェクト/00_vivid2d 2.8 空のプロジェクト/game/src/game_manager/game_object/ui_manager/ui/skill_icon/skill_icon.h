@@ -74,7 +74,6 @@ private:
     static const std::string        m_skill_icon_file_name[];
     std::string                     m_FileName;
 
-    vivid::Vector2      m_Scale;
     vivid::Vector2      m_CenterPosition;
 
     ICON_BRIGHTNESS     m_Brightness;

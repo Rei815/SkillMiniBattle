@@ -59,22 +59,6 @@ void CSkill::Initialize(SKILL_ID skill_id)
 	m_Timer.SetUp(m_DurationTime);
 	m_Sound = SE_ID::SKILL;
 
-	CUIManager& uim = CUIManager::GetInstance();
-	CUI* temp;
-	temp = uim.Create(UI_ID::SKILL_ICON);
-	m_UiSkillIcon = dynamic_cast<CSkillIcon*>(temp);
-	if (m_UiSkillIcon == nullptr)
-		temp->SetActive(false);
-
-	temp = uim.Create(UI_ID::SKILL_CURSOR);
-	m_UiSkillCursor = dynamic_cast<CSkillCursor*>(temp);
-	if (m_UiSkillCursor == nullptr)
-		temp->SetActive(false);
-
-	temp = uim.Create(UI_ID::SKILL_GAUGE);
-	m_UiSkillGauge = dynamic_cast<CSkillGauge*>(temp);
-	if (m_UiSkillGauge == nullptr)
-		temp->SetActive(false);
 }
 
 /*!
@@ -169,6 +153,23 @@ void CSkill::Finalize(void)
  */
 void CSkill::SetPlayer(CPlayer* player)
 {
+	CUIManager& uim = CUIManager::GetInstance();
+	CUI* temp;
+	temp = uim.Create(UI_ID::SKILL_ICON);
+	m_UiSkillIcon = dynamic_cast<CSkillIcon*>(temp);
+	if (m_UiSkillIcon == nullptr)
+		temp->SetActive(false);
+
+	temp = uim.Create(UI_ID::SKILL_CURSOR);
+	m_UiSkillCursor = dynamic_cast<CSkillCursor*>(temp);
+	if (m_UiSkillCursor == nullptr)
+		temp->SetActive(false);
+
+	temp = uim.Create(UI_ID::SKILL_GAUGE);
+	m_UiSkillGauge = dynamic_cast<CSkillGauge*>(temp);
+	if (m_UiSkillGauge == nullptr)
+		temp->SetActive(false);
+
 	m_Player = player;
 	m_Player->SetSkill(this);
 
