@@ -144,6 +144,7 @@ void CSelectGame::Update(void)
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
         {
             m_SelectedGameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
+            CDataManager::GetInstance().SetGameID(m_SelectedGameID);
             CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
         }
@@ -151,6 +152,9 @@ void CSelectGame::Update(void)
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
         {
             m_SelectedGameID = GAME_ID::FALL_GAME;
+            CDataManager::GetInstance().SetGameID(m_SelectedGameID);
+
+
             CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
         }
