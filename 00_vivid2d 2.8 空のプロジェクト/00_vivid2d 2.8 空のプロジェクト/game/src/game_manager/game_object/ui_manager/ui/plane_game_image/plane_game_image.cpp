@@ -8,7 +8,11 @@ const vivid::Rect       CPlaneGameImage::m_rect = vivid::Rect{ 0, 0, m_width, m_
 const CVector3			CPlaneGameImage::m_scale = CVector3(0.3f, 0.3f, 0.3f);
 const vivid::Vector2    CPlaneGameImage::m_anchor = vivid::Vector2((m_width * m_scale.x) / 2, (m_height * m_scale.y) / 2);
 const std::string       CPlaneGameImage::m_file_names[] =
-{ "data\\Textures\\plane_ui_fall_out.png", "data\\Textures\\plane_ui_dodge_ball.png" , "data\\Textures\\plane_ui_daruma.png", "data\\Textures\\plane_ui_daruma.png", };
+{
+	"data\\Textures\\plane_ui_daruma.png",
+	"data\\Textures\\plane_ui_fall_out.png",
+	"data\\Textures\\plane_ui_dodge_ball.png",
+	"data\\Textures\\plane_ui_daruma.png", };
 
 /*
  *  コンストラクタ

@@ -52,16 +52,15 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
         m_PlayerNumUI[i]->SetData(m_player_num_ui_pos[i], i + 1, m_player_num_ui_scale);
     }
 
-    CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, vivid::Vector2(0,vivid::GetWindowHeight() - 300));
-    IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
+    IScene* previousScene = (*CSceneManager::GetInstance().GetList().begin());
 
     //このシーンが作られた際にタイトルからなのかセレクトモードシーンから作られたかで動きを変える
-    if (scene->GetSceneID() == SCENE_ID::TITLE)
+    if (previousScene->GetSceneID() == SCENE_ID::TITLE)
     {
         m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
         m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
     }
-    else if(scene->GetSceneID() == SCENE_ID::SELECTMODE)
+    else if(previousScene->GetSceneID() == SCENE_ID::SELECTMODE)
     {
         m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() * 1.5));
         m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);

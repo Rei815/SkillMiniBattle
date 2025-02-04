@@ -30,6 +30,13 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -1000.0f));
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CAnimationManager::GetInstance().Initialize();
+    CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
+    if (uiList.size() == 0)
+    {
+        CUIManager::GetInstance().Initialize();
+        CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
+    }
+
     for (int i = 0; i < m_games_num; i++)
     {
         CTransform transform;
@@ -56,18 +63,18 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     m_SelectedGameID = (GAME_ID)game_id;
     CDataManager::GetInstance().SetGameID(m_SelectedGameID);
 
-    CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
+    uiList = CUIManager::GetInstance().GetList();
     CUIManager::UI_LIST::iterator it = uiList.begin();
     while (it != uiList.end())
     {
         CUI* ui = (CUI*)(*it);
 
         ++it;
-        if (ui->GetUI_ID() == UI_ID::TITLE_LOGO) continue;
+        if (ui->GetUI_ID() != UI_ID::PLANE_GAME_IMAGE) continue;
         CPlaneGameImage* plameGameImage = (CPlaneGameImage*)ui;
         if (plameGameImage->GetGameID() == m_SelectedGameID)
         {
-            m_planeGameImage = (CPlaneGameImage*)ui;
+            m_planeGameImage = plameGameImage;
         }
     }
 
@@ -140,44 +147,70 @@ void CSelectGame::Update(void)
             m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
         }
+    }
 #if _DEBUG
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
+    {
+        m_SelectedGameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
+        dm.SetGameID(m_SelectedGameID);
+
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+    }
+
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
+    {
+        m_SelectedGameID = GAME_ID::FALL_GAME;
+        dm.SetGameID(m_SelectedGameID);
+
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+    }
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::THREE))
+    {
+        m_SelectedGameID = GAME_ID::DODGE_BALL_GAME;
+        dm.SetGameID(m_SelectedGameID);
+
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+    }
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FOUR))
+    {
+        m_SelectedGameID = GAME_ID::DEBUG_GAME;
+        dm.SetGameID(m_SelectedGameID);
+
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+    }
+    it = uiList.begin();
+    while (it != uiList.end())
+    {
+        CUI* ui = (CUI*)(*it);
+
+        ++it;
+        if (ui->GetUI_ID() != UI_ID::PLANE_GAME_IMAGE) continue;
+        CPlaneGameImage* plameGameImage = (CPlaneGameImage*)ui;
+        if (plameGameImage->GetGameID() == m_SelectedGameID)
         {
-            m_SelectedGameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
-            CDataManager::GetInstance().SetGameID(m_SelectedGameID);
-            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
+            m_planeGameImage = plameGameImage;
         }
+    }
 
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
-        {
-            m_SelectedGameID = GAME_ID::FALL_GAME;
-            CDataManager::GetInstance().SetGameID(m_SelectedGameID);
-
-
-            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTSKILL);
-        }
 #endif
 
-        if (m_SecondSceneUIParent)
+    if (m_SecondSceneUIParent)
+    {
+        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
         {
-            if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
-            {
-                CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTSKILL);
-                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+            CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTSKILL);
+            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
 
-                m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+            m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
-            }
-
-            if (m_SecondSceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
-
-            const float min_height = -vivid::GetWindowHeight() / 2;
-            const float max_height = vivid::GetWindowHeight() * 1.5;
-            if (m_SecondSceneUIParent->GetPosition().y <= min_height || max_height <= m_SecondSceneUIParent->GetPosition().y)
-                CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTGAME);
         }
+
+        if (m_SecondSceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
+
+        const float min_height = -vivid::GetWindowHeight() / 2;
+        const float max_height = vivid::GetWindowHeight() * 1.5;
+        if (m_SecondSceneUIParent->GetPosition().y <= min_height || max_height <= m_SecondSceneUIParent->GetPosition().y)
+            CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTGAME);
     }
 }
 void CSelectGame::Draw(void)
@@ -189,6 +222,7 @@ void CSelectGame::Draw(void)
     vivid::DrawText(20, "1キーでだるまさんがころんだゲーム", vivid::Vector2(0, 0));
     vivid::DrawText(20, "2キーでフォールアウトゲーム", vivid::Vector2(0, 30));
     vivid::DrawText(20, "3キーでドッジボールゲーム", vivid::Vector2(0, 60));
+    vivid::DrawText(20, std::to_string((int)m_SelectedGameID + 1), vivid::Vector2(0, 80));
 
 }
 
