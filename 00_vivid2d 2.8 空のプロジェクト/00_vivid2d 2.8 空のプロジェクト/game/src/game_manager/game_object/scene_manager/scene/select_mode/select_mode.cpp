@@ -18,14 +18,13 @@ void CSelectMode::Initialize(SCENE_ID scene_id)
 
     CCamera::GetInstance().Initialize();
 
-    CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG);
-    IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
-    if (scene->GetSceneID() == SCENE_ID::SELECTPLAYER)
+    IScene* previousScene = (*CSceneManager::GetInstance().GetList().begin());
+    if (previousScene->GetSceneID() == SCENE_ID::SELECTPLAYER)
     {
         m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
         m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
     }
-    else if (scene->GetSceneID() == SCENE_ID::SELECTGAME)
+    else if (previousScene->GetSceneID() == SCENE_ID::SELECTGAME)
     {
         m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() * 1.5));
         m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);
