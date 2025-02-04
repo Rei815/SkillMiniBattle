@@ -3,7 +3,9 @@
 #include "vivid.h"
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
-#include "..\..\..\animation_manager\animation\animation.h"
+#include "../../../ui_manager/ui/scene_ui_parent/scene_ui_parent.h"
+#include "../../../ui_manager/ui/plane_game_image/plane_game_image.h"
+
 
 class CSelectGame
     : public IScene
@@ -42,5 +44,10 @@ public:
 private:
     static const int    m_games_num;
     static const float  m_circle_radius;
-    IAnimation*         m_PlaneUp;
+    CSceneUIParent*     m_FirstSceneUIParent;
+    CSceneUIParent*     m_SecondSceneUIParent;
+    CPlaneGameImage*    m_planeGameImage;
+    bool                m_SelectedGameFlag;
+    bool                m_GameInfomationFlag;
+    GAME_ID             m_SelectedGameID;
 };

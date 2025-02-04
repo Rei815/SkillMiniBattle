@@ -158,6 +158,11 @@ void CSceneManager::PopScene(SCENE_ID id)
     }
 }
 
+CSceneManager::SCENE_LIST CSceneManager::GetList()
+{
+    return m_SceneList;
+}
+
 /*
  *  Œ»İ‚ÌƒV[ƒ“‚ğæ“¾
  */

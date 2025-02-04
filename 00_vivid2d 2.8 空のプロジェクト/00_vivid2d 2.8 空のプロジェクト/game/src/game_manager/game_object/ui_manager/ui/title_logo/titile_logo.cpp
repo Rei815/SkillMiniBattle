@@ -54,4 +54,5 @@ CTitleLogo::Draw(void)
 void
 CTitleLogo::Finalize(void)
 {
+
 }

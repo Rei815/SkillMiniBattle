@@ -3,7 +3,7 @@
 #include "vivid.h"
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
-#include "../../../stage/stage.h"
+#include "../../../ui_manager/ui/scene_ui_parent/scene_ui_parent.h"
 
 class CSelectMode
     : public IScene
@@ -40,4 +40,6 @@ public:
     void Finalize(void);
 
 private:
+    CSceneUIParent* m_SceneUIParent;
+
 };

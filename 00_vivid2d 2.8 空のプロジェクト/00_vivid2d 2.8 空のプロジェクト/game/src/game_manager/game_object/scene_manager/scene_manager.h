@@ -85,7 +85,10 @@ public:
      */
     void        PopScene(SCENE_ID id);
 
+    using SCENE_LIST = std::list<IScene*>;
+    SCENE_LIST                  m_SceneList;            //!< シーンクラス
 
+    SCENE_LIST  GetList();
 
     ///*!
     // *  @brief      現在のシーンを取得
@@ -171,8 +174,6 @@ private:
     SCENE_ID                    m_CurrentSceneID;   //!< 現在のシーンID
     SCENE_ID                    m_NextSceneID;      //!< 次のシーンID
 
-    using SCENE_LIST = std::list<IScene*>;
-    SCENE_LIST                  m_SceneList;            //!< シーンクラス
     STATE                       m_State;            //!< 状態
     bool                        m_ChangeScene;      //!< シーン変更フラグ
     int                         m_FadeAlpha;        //!< フェード時のアルファ値

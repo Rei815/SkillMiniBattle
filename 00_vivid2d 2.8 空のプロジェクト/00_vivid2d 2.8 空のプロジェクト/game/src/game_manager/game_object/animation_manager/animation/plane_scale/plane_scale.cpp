@@ -15,6 +15,7 @@ void CPlaneScale::Initialize(void* plane_pointer)
 	m_Plane = (CPlaneGameImage*)plane_pointer;
 	if (!m_Plane) return;
 	m_Plane->SetSpeed(0.0f);
+	m_Plane->SetParent(nullptr);
 
 }
 
