@@ -67,6 +67,5 @@ private:
 
     std::string                     m_FileName;
 
-    vivid::Vector2      m_Scale;
     vivid::Vector2      m_CenterPosition;
 };

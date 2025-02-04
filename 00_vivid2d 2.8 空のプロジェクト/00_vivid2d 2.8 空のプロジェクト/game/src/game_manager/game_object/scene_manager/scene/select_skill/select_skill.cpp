@@ -127,7 +127,7 @@ void CSelectSkill::Draw(void)
 void CSelectSkill::Finalize(void)
 {
     CCamera::GetInstance().Finalize();
-
+    CUIManager::GetInstance().Finalize();
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
         if (m_SkillSelectIcon[i] != nullptr)

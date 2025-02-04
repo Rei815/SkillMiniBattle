@@ -48,7 +48,7 @@ void
 CGameBG::
 Draw(void)
 {
-    vivid::DrawTexture("data\\Textures\\sea.jpg", m_position, 0xffffffff);
+    //vivid::DrawTexture("data\\Textures\\sea.jpg", m_position, 0xffffffff);
 
 
 }

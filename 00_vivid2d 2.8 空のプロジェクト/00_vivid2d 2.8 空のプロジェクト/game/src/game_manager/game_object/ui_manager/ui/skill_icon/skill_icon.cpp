@@ -39,7 +39,6 @@ CSkillIcon::
 CSkillIcon(UI_ID id)
 	: CUI(m_width, m_height, id)
 	, m_FileName("")
-	, m_Scale(m_default_scale)
 	, m_CenterPosition(vivid::Vector2::ZERO)
 	, m_Brightness(ICON_BRIGHTNESS::BRIGHT)
 {
@@ -63,6 +62,7 @@ Initialize(void)
 	CUI::Initialize();
 
 	m_Brightness = ICON_BRIGHTNESS::BRIGHT;
+	m_Scale = m_default_scale;
 	//m_Position = m_CenterPosition - m_anchor;
 
 }
