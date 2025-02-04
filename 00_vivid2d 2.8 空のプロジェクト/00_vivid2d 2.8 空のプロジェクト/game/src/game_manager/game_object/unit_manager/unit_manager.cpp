@@ -7,7 +7,7 @@
 #include "..\..\..\utility\utility.h"
 #include "../ui_manager/ui_manager.h"
 
-const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1", "data\\Models\\player.mv1" };
+const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player_rabbit_1.mv1", "data\\Models\\player_rabbit_2.mv1", "data\\Models\\player_rabbit_3.mv1", "data\\Models\\player_rabbit_4.mv1" };
 const vivid::controller::DEVICE_ID           CUnitManager::m_controller_list[] = { vivid::controller::DEVICE_ID::PLAYER1 , vivid::controller::DEVICE_ID::PLAYER2,vivid::controller::DEVICE_ID::PLAYER3,vivid::controller::DEVICE_ID::PLAYER4 };
 /*
  *  インスタンスの取得

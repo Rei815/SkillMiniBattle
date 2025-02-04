@@ -47,10 +47,7 @@ public:
 
     void        SetSkillInfo(SKILL_ID skill_id);
 
-    void        SetPosition(vivid::Vector2 position);
-
-    void        SetScale(float scale);
-    void        SetScale(vivid::Vector2 scale);
+    void        SetPosition(const vivid::Vector2& position);
 
 private:
     static const int                m_height;           //!< ‚‚³
@@ -62,7 +59,4 @@ private:
 
     static const std::string        m_skill_info_file_name[];
     std::string                     m_FileName;
-
-    vivid::Vector2      m_Scale;
-    vivid::Vector2      m_CenterPosition;
 };

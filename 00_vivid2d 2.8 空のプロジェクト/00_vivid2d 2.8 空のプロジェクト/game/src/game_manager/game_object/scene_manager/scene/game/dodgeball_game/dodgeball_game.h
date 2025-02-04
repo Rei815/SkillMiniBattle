@@ -76,6 +76,7 @@ private:
     static const CVector3 m_cannon_pos_list[];
     static const CVector3 m_cannon_rot_list[];
     static const CVector3 m_player_spawnpos_list[];
+    static const CVector3 m_player_default_forward; //!< プレイヤーのスポーン時の正面方向
 
     static const int        m_max_cannnon_count;
     static const float      m_cannnon_spawn_time;

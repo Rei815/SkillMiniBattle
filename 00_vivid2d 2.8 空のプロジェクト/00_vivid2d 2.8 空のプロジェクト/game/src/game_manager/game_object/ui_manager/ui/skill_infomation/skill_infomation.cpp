@@ -8,7 +8,7 @@ const vivid::Vector2    CSkillInfomation::m_anchor = vivid::Vector2(m_width / 2,
 
 const std::string CSkillInfomation::m_skill_info_file_name[] =
 {
-		"data\\Textures\\skill_info_speedup_test.png",
+		"data\\Textures\\skill_info_speedup.png",
 		"data\\Textures\\skill_info_jumpup_test.png",
 		"data\\Textures\\skill_info_floating_test.png",
 		"data\\Textures\\skill_info_stomp_test.png",
@@ -35,9 +35,9 @@ CSkillInfomation::
 CSkillInfomation(UI_ID id)
 	: CUI(m_width, m_height, id)
 	, m_FileName("")
-	, m_Scale(m_default_scale)
-	, m_CenterPosition(vivid::Vector2::ZERO)
 {
+
+	SetScale(m_default_scale);
 }
 
 /*
@@ -78,8 +78,6 @@ CSkillInfomation::
 Update(void)
 {
 	CUI::Update();
-
-	m_Position = m_CenterPosition - m_anchor;
 }
 
 /*
@@ -135,21 +133,7 @@ SetSkillInfo(SKILL_ID skill_id)
 
 void
 CSkillInfomation::
-SetPosition(vivid::Vector2 position)
+SetPosition(const vivid::Vector2& position)
 {
-	m_CenterPosition = position;
-}
-
-void
-CSkillInfomation::
-SetScale(float scale)
-{
-	SetScale(vivid::Vector2(scale, scale));
-}
-
-void
-CSkillInfomation::
-SetScale(vivid::Vector2 scale)
-{
-	m_Scale = scale;
+	CUI::SetPosition(position - m_anchor);
 }

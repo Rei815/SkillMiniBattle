@@ -8,6 +8,7 @@
 #include "ui/skill_icon/skill_icon.h"
 #include "ui/skill_gauge/skill_gauge.h"
 #include "ui/skill_cursor/skill_cursor.h"
+#include "ui/skill_name/skill_name.h"
 #include "ui/skill_infomation/skill_infomation.h"
 #include "ui/key/key.h"
 #include "ui/key_bg/key_bg.h"
@@ -18,6 +19,10 @@
 #include "ui/finish_game_text/finish_game_text.h"
 #include "ui/game_bg/game_bg.h"
 #include "ui/menu_bg/menu_bg.h"
+#include "ui/menu_poster/menu_poster.h"
+#include "ui/player_num_select/player_num_select.h"
+#include "ui/scene_title/scene_title.h"
+#include "ui/skill_video/skill_video.h"
 #include "ui/scene_ui_parent/scene_ui_parent.h"
  /*
   *  インスタンスの取得

@@ -159,6 +159,11 @@ void CUI::SetPosition(const vivid::Vector2& position)
     m_Position = position;
 }
 
+void CUI::SetScale(float scale)
+{
+    SetScale(vivid::Vector2(scale, scale));
+}
+
 void CUI::SetScale(const vivid::Vector2& scale)
 {
     m_Scale = scale;

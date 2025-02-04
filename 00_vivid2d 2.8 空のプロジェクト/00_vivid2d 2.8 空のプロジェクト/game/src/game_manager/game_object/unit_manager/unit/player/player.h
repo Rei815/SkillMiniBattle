@@ -110,6 +110,7 @@ public:
 
     bool        GetPlayerMoving();
 
+    void    SetForwardVector(const CVector3& forward_vector);
     CVector3    GetForwardVector();
 protected:
     /*!
@@ -154,6 +155,7 @@ protected:
 
     static const float              m_radius;                       //!< 半径
     static const float              m_height;                       //!< 高さ
+    static const float              m_model_scale;
     static const float              m_move_speed;                   //!< 移動速度
     static const float              m_jump_power;                   //!< ジャンプ力
     static const CVector3           m_move_friction;                //!< 移動用減速率
@@ -162,6 +164,7 @@ protected:
     static const float              m_max_invincible_time;          //!< 無敵時間
     static const int                m_invincible_visible_interval;  //!< 無敵時間中の点滅間隔
     static const float              m_fall_accelerator;             //!< 落下加速度
+
 
     float                           m_MoveSpeedRate;                //!< 移動速度の倍率
     float                           m_JumpPowerRate;                //!< ジャンプ力の倍率
@@ -175,7 +178,6 @@ protected:
     bool                            m_FrictionFlag;                 //!< 減速フラグ
     CTimer                          m_InvincibleTimer;              //!< 無敵時間タイマー
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
-    DxLib::COLOR_F                  m_Color;
     vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
     CVector3                        m_ForwardVector;                //!< 正面方向のベクトル
 };

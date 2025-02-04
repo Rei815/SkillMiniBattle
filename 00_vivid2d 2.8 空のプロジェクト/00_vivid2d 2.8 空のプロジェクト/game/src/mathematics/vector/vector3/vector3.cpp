@@ -259,6 +259,52 @@ CVector3 operator*(float scalar, const CVector3& v)
 	return CVector3(v.x * scalar, v.y * scalar, v.z * scalar);
 }
 
+CVector3 CVector3::GetVectorRotateXYZ(void)
+{
+	return GetVectorRotateXYZ(*this);
+}
+
+CVector3 CVector3::GetVectorRotateXYZ(const CVector3& vector)
+{
+	const float math_pi = 3.1415926535897931;
+
+	CVector3 Rotate;
+
+	float cos;
+	float rot;
+	CVector3 TempVector;
+
+	//YŽ²‰ñ“]
+	TempVector = CVector3(vector.x, 0, vector.z).Normalize();
+	cos = Dot(CVector3().FORWARD, TempVector);
+	rot = acos(cos) * 180.0f / math_pi;
+	if (Cross(CVector3().FORWARD, TempVector).y > 0)
+	{
+		rot = abs(rot);
+	}
+	else
+	{
+		rot = -(abs(rot));
+	}
+	Rotate.y = rot;
+
+	//XŽ²‰ñ“]
+	TempVector = CVector3(0, vector.y, vector.z).Normalize();
+	cos = Dot(CVector3().FORWARD, TempVector);
+	rot = acos(cos) * 180.0f / math_pi;
+	if (Cross(CVector3().FORWARD, TempVector).x < 0)
+	{
+		rot = abs(rot);
+	}
+	else
+	{
+		rot = -(abs(rot));
+	}
+	Rotate.x = rot;
+
+	return Rotate;
+}
+
 CVector3 CVector3::RotateAroundCoordinatesAxis(COORDINATES_AXIS axis, float degree_angle)
 {
 	const float math_pi = 3.1415926535897931;

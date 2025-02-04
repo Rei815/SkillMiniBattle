@@ -203,6 +203,9 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\key_bg\key_bg.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_mark\player_mark.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\menu_bg\menu_bg.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\menu_poster\menu_poster.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_num_select\player_num_select.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\scene_title\scene_title.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_gauge\skill_gauge.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_cursor\skill_cursor.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_icon\skill_icon.cpp" />
@@ -210,6 +213,8 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_icon\player_icon.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fallout_topic_bg\fallout_topic_bg.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_infomation\skill_infomation.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_name\skill_name.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_video\skill_video.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\start_game_count\start_game_count.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\start_game_text\start_game_text.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\title_logo\titile_logo.cpp" />
@@ -341,6 +346,9 @@
     <ClInclude Include="src\game_manager\game_object\layer_id.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_mark\player_mark.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\menu_bg\menu_bg.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\menu_poster\menu_poster.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_num_select\player_num_select.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\scene_title\scene_title.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_gauge\skill_gauge.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_cursor\skill_cursor.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_icon\skill_icon.h" />
@@ -348,9 +356,11 @@
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_stomp\skill_stomp.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_strong_wind\skill_strong_wind.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_infomation\skill_infomation.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_name\skill_name.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_topic_bg\fallout_topic_bg.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_video\skill_video.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\start_game_count\start_game_count.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\start_game_text\start_game_text.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\title_logo\title_logo.h" />

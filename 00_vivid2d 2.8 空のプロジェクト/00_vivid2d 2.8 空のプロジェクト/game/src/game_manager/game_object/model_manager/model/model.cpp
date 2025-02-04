@@ -21,28 +21,36 @@ CModel::~CModel()
 /*
 * 初期化
 */
-void CModel::Initialize(const std::string& file_name, const CVector3& position)
+void CModel::Initialize(const std::string& file_name, const CVector3& position, float scale)
 {
-	m_Transform.position = position;
-
-	Load(file_name);
-
-	//位置情報の更新
-	MV1SetPosition(m_Handle, m_Transform.position);
-
+	Initialize(file_name, position, CVector3(scale, scale, scale));
 }
 
-void CModel::Initialize(const std::string& file_name, const CTransform& transform)
+void CModel::Initialize(const std::string& file_name, const CVector3& position, const CVector3& scale)
+{
+	CTransform TempTr = m_Transform;
+	TempTr.position = position;
+	Initialize(file_name, TempTr, scale);
+}
+
+void CModel::Initialize(const std::string& file_name, const CTransform& transform, float scale)
+{
+	Initialize(file_name, transform, CVector3(scale, scale, scale));
+}
+
+void CModel::Initialize(const std::string& file_name, const CTransform& transform, const CVector3& scale)
 {
 	m_Transform = transform;
+	m_Transform.scale = scale;
 
 	Load(file_name);
 
 	//位置情報の更新
 	MV1SetPosition(m_Handle, m_Transform.position);
+	MV1SetScale(m_Handle, m_Transform.scale);
 	MV1SetRotationXYZ(m_Handle, m_Transform.GetRadianRotation());
-
 }
+
 
 void CModel::Load(const std::string& file_name)
 {
@@ -63,6 +71,11 @@ void CModel::Unload(void)
 /*
 * 更新
 */
+void CModel::Update(void)
+{
+	Update(m_Transform);
+}
+
 void CModel::Update(const CTransform& transform)
 {
 	//エラー
@@ -110,6 +123,16 @@ int CModel::GetModelHandle() const
 void CModel::SetPosition(const CVector3& position)
 {
 	m_Transform.position = position;
+}
+
+void CModel::SetScale(float scale)
+{
+	SetScale(CVector3(scale, scale, scale));
+}
+
+void CModel::SetScale(const CVector3& scale)
+{
+	m_Transform.scale = scale;
 }
 
 bool CModel::CheckHitLine(const CVector3& startPos, const CVector3& endPos)

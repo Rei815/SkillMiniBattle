@@ -43,10 +43,7 @@ public:
      */
     void        Finalize(void);
 
-    void        SetPosition(vivid::Vector2 position);
-
-    void        SetScale(float scale);
-    void        SetScale(vivid::Vector2 scale);
+    void        SetPosition(const vivid::Vector2& position);
 
 private:
     static const int                m_height;           //!< ‚‚³
@@ -54,9 +51,7 @@ private:
     static const vivid::Rect        m_rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
     static const vivid::Vector2     m_anchor;           //!< Šî€“_
     static const vivid::Vector2     m_default_scale;            //!< Šgk
+    static const vivid::Vector2     CMenuBG::m_default_position;
 
     static const std::string        m_file_name;
-
-    vivid::Vector2      m_Scale;
-    vivid::Vector2      m_CenterPosition;
 };

@@ -39,9 +39,9 @@ CSkillIcon::
 CSkillIcon(UI_ID id)
 	: CUI(m_width, m_height, id)
 	, m_FileName("")
-	, m_CenterPosition(vivid::Vector2::ZERO)
 	, m_Brightness(ICON_BRIGHTNESS::BRIGHT)
 {
+	SetScale(m_default_scale);
 }
 
 /*
@@ -87,7 +87,6 @@ CSkillIcon::
 Update(void)
 {
 	CUI::Update();
-
 }
 
 /*
@@ -150,31 +149,10 @@ SetSkill(SKILL_ID skill_id)
 
 void
 CSkillIcon::
-SetPosition(vivid::Vector2 position)
+SetPosition(const vivid::Vector2& position)
 {
-	m_Position = position;
+	CUI::SetPosition(position - m_anchor);
 }
-
-void CSkillIcon::SetCenterPosition(vivid::Vector2 position)
-{
-	m_CenterPosition = position;
-
-}
-
-void
-CSkillIcon::
-SetScale(float scale)
-{
-	SetScale(vivid::Vector2(scale, scale));
-}
-
-void
-CSkillIcon::
-SetScale(vivid::Vector2 scale)
-{
-	m_Scale = scale;
-}
-
 
 void
 CSkillIcon::

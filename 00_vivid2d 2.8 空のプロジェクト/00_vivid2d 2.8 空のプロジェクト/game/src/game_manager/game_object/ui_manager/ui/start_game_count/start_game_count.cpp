@@ -24,12 +24,11 @@ const float				CStartGameCount::m_moveout_position_y = vivid::WINDOW_HEIGHT + m_
 
 CStartGameCount::CStartGameCount(UI_ID id)
 	: CUI(m_width, m_height, id)
-	, m_Scale(m_default_scale)
 	, m_MoveState(START_COUNT_MOVE::MOVE_IN)
 	, m_Timer()
 	, m_CountDown(0)
 {
-
+	SetScale(m_default_scale);
 }
 
 CStartGameCount::~CStartGameCount(void)

@@ -100,6 +100,7 @@ private:
     static const CVector3           m_camera_direction;         //!< カメラの方向
     static const vivid::Vector2     m_topic_positionList[];     //!< お題位置
     static const int                m_max_topic_num;            //!< お題数
+    static const CVector3           m_player_default_forward;   //!< プレイヤーのスポーン時の正面方向
     float                           m_FallTime;                 //!< 落ちるまでの時間
     CTimer                          m_ChooseObjectTimer[5];     //!< 抽選タイマー
     CTimer                          m_AddTopicTimer;            //!< お題が増えるタイマー

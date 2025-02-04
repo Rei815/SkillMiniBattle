@@ -23,6 +23,7 @@ CSkillCursor(UI_ID id)
 	, m_FileName("")
 	, m_CenterPosition(vivid::Vector2::ZERO)
 {
+	SetScale(m_default_scale);
 }
 
 /*
@@ -64,8 +65,6 @@ CSkillCursor::
 Update(void)
 {
 	CUI::Update();
-	m_Position = m_CenterPosition - m_anchor;
-
 }
 
 /*
@@ -81,7 +80,6 @@ Draw(void)
 		return;
 
 	vivid::DrawTexture(m_FileName, m_Position, 0xffffffff, m_rect, m_anchor, m_Scale);
-	vivid::DrawTexture(m_FileName, vivid::Vector2(), 0xffffffff, m_rect, m_anchor, m_Scale);
 }
 
 /*
@@ -122,27 +120,7 @@ SetPlayer(UNIT_ID player_id)
 
 void
 CSkillCursor::
-SetPosition(vivid::Vector2 position)
+SetPosition(const vivid::Vector2& position)
 {
-	m_Position = position;
-}
-
-void CSkillCursor::SetCenterPosition(vivid::Vector2 position)
-{
-	m_CenterPosition = position;
-
-}
-
-void
-CSkillCursor::
-SetScale(float scale)
-{
-	SetScale(vivid::Vector2(scale, scale));
-}
-
-void
-CSkillCursor::
-SetScale(vivid::Vector2 scale)
-{
-	m_Scale = scale;
+	CUI::SetPosition(position - m_anchor);
 }

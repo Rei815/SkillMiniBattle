@@ -48,11 +48,7 @@ public:
 
     void        SetPlayer(UNIT_ID player_id);
 
-    void        SetPosition(vivid::Vector2 position);
-    void        SetCenterPosition(vivid::Vector2 position);
-
-    void        SetScale(float scale);
-    void        SetScale(vivid::Vector2 scale);
+    void        SetPosition(const vivid::Vector2& position);
 
 private:
     static const int                m_height;           //!< ‚‚³
@@ -66,6 +62,4 @@ private:
     bool                            m_Selected;
 
     std::string                     m_FileName;
-
-    vivid::Vector2      m_CenterPosition;
 };

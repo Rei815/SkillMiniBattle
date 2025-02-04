@@ -128,7 +128,14 @@ public:
      *
      *  @param[in]  scale  拡大率
      */
-    void                SetScale(const vivid::Vector2& scale);
+    void            SetScale(float scale);
+
+    /*!
+     *  @brief      拡大率設定
+     *
+     *  @param[in]  scale  拡大率
+     */
+    void            SetScale(const vivid::Vector2& scale);
 
     /*!
      *  @brief      トランスフォーム取得

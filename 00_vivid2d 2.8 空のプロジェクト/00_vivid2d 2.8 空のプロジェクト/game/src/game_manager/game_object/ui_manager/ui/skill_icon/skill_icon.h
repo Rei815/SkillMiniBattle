@@ -47,11 +47,7 @@ public:
 
     void        SetSkill(SKILL_ID skill_id);
 
-    void        SetPosition(vivid::Vector2 position);
-    void        SetCenterPosition(vivid::Vector2 position);
-
-    void        SetScale(float scale);
-    void        SetScale(vivid::Vector2 scale);
+    void        SetPosition(const vivid::Vector2& position);
 
     enum class ICON_BRIGHTNESS
     {
@@ -73,8 +69,6 @@ private:
 
     static const std::string        m_skill_icon_file_name[];
     std::string                     m_FileName;
-
-    vivid::Vector2      m_CenterPosition;
 
     ICON_BRIGHTNESS     m_Brightness;
 };

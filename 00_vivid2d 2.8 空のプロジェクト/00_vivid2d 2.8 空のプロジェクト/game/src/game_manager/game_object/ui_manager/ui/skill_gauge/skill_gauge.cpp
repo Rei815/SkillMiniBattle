@@ -4,7 +4,7 @@
 const int               CSkillGauge::m_height = 600;
 const int               CSkillGauge::m_width = 600;
 const vivid::Rect       CSkillGauge::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
-const vivid::Vector2    CSkillGauge::m_default_scale = vivid::Vector2(0.5f, 0.5f);
+const float				CSkillGauge::m_default_scale = 1.0f;
 const vivid::Vector2    CSkillGauge::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
 const unsigned int      CSkillGauge::m_background_color = 0xff888888;
 
@@ -17,7 +17,7 @@ const double            CSkillGauge::m_start_percent = 0.0;
 CSkillGauge::
 CSkillGauge(UI_ID id)
 	: CUI(m_width, m_height, id)
-	, m_Scale(1.0)
+	, m_Scale(m_default_scale)
 	, m_CenterPosition(vivid::Vector2::ZERO)
 	, m_ImageHandle(0)
 	, m_Percent(0)
@@ -109,7 +109,7 @@ SetGauge(vivid::Vector2 position, float scale)
 
 void
 CSkillGauge::
-SetPosition(vivid::Vector2 position)
+SetPosition(const vivid::Vector2& position)
 {
 	m_CenterPosition = position;
 }
