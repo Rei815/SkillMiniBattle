@@ -30,7 +30,7 @@ const float             CSelectSkill::m_icon_scale = 0.3f;
 const float             CSelectSkill::m_icon_name_scale = 0.1f;
 const float             CSelectSkill::m_icon_name_position_up = 110.0f;
 
-const float             CSelectSkill::m_info_scale = 0.5f;
+const float             CSelectSkill::m_info_scale = 1.0f;
 const vivid::Vector2    CSelectSkill::m_info_position = vivid::Vector2(vivid::WINDOW_WIDTH / 4.0f * 3.0f, vivid::WINDOW_HEIGHT / 4.0f * 3.0f);
 
 const float             CSelectSkill::m_video_scale = 0.5f;

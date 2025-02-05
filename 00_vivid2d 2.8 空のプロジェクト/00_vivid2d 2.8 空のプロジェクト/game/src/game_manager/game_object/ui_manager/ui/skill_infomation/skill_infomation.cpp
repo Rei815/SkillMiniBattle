@@ -1,7 +1,7 @@
 #include "skill_infomation.h"
 
-const int               CSkillInfomation::m_height = 400;
-const int               CSkillInfomation::m_width = 800;
+const int               CSkillInfomation::m_height = 200;
+const int               CSkillInfomation::m_width = 450;
 const vivid::Rect       CSkillInfomation::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
 const vivid::Vector2    CSkillInfomation::m_default_scale = vivid::Vector2(1.0f, 1.0f);
 const vivid::Vector2    CSkillInfomation::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
@@ -9,23 +9,23 @@ const vivid::Vector2    CSkillInfomation::m_anchor = vivid::Vector2(m_width / 2,
 const std::string CSkillInfomation::m_skill_info_file_name[] =
 {
 		"data\\Textures\\skill_info_speedup.png",
-		"data\\Textures\\skill_info_jumpup_test.png",
-		"data\\Textures\\skill_info_floating_test.png",
-		"data\\Textures\\skill_info_stomp_test.png",
-		"data\\Textures\\skill_info_dash_test.png",
-		"data\\Textures\\skill_info_spawnwall_test.png",
-		"data\\Textures\\skill_info_barrier_test.png",
-		"data\\Textures\\skill_info_gravityarea_test.png",
-		"data\\Textures\\skill_info_invisible_test.png",
-		"data\\Textures\\skill_info_stun_test.png",
-		"data\\Textures\\skill_info_mimicry_test.png",
-		"data\\Textures\\skill_info_slow_test.png",
-		"data\\Textures\\skill_info_ogrecontrol_test.png",
-		"data\\Textures\\skill_info_resurrectdaruma_test.png",
-		"data\\Textures\\skill_info_resurrectfallout_test.png",
-		"data\\Textures\\skill_info_strongwind_test.png",
-		"data\\Textures\\skill_info_hidetopic_test.png",
-		"data\\Textures\\skill_info_test.png"
+		"data\\Textures\\skill_info_jumpup.png",
+		"data\\Textures\\skill_info_floating.png",
+		"data\\Textures\\skill_info_stomp.png",
+		"data\\Textures\\skill_info_dash.png",
+		"data\\Textures\\skill_info_spawnwall.png",
+		"data\\Textures\\skill_info_barrier.png",
+		"data\\Textures\\skill_info_gravityarea.png",
+		"data\\Textures\\skill_info_invisible.png",
+		"data\\Textures\\skill_info_stun.png",
+		"data\\Textures\\skill_info_mimicry.png",
+		"data\\Textures\\skill_info_slow.png_test",		//‚Ü‚¾ƒeƒXƒg
+		"data\\Textures\\skill_info_ogrecontrol.png",
+		"data\\Textures\\skill_info_resurrect.png",
+		"data\\Textures\\skill_info_resurrect.png",
+		"data\\Textures\\skill_info_strongwind.png",
+		"data\\Textures\\skill_info_hidetopic.png",
+		"data\\Textures\\skill_info.png"
 };
 
 /*
