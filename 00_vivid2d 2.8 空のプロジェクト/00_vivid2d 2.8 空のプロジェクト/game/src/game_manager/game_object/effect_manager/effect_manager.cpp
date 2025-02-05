@@ -241,7 +241,7 @@ IEffect* CEffectManager::CreateClass(EFFECT_ID id)
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
     case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
     case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
-
+    case EFFECT_ID::GRAVITY_AREA:               effect = new CGravityAreaEffect();     break;
     }
     return effect;
 }
