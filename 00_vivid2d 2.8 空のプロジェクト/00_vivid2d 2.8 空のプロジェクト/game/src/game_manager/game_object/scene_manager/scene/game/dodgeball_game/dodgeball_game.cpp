@@ -78,8 +78,6 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 	m_StageShrinkTimer.SetUp(m_stage_shrink_time);
 	CGame::Initialize(scene_id);
 
-	//CStage::GetInstance().Initialize();
-
 	//ステージ生成
 	m_StageObject = CObjectManager::GetInstance().Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT,CTransform(CVector3(0.0f,-100.0f,0.0f)));
 
@@ -113,7 +111,6 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 
 void CDodgeBallGame::Update(void)
 {
-	//CStage::GetInstance().Update();
 	CGame::Update();
 
 	if (!m_PauseFlag)
@@ -134,7 +131,6 @@ void CDodgeBallGame::Draw(void)
 void CDodgeBallGame::Finalize(void)
 {
 	CGame::Finalize();
-	//CStage::GetInstance().Finalize();
 	CCamera::GetInstance().Finalize();
 	CLauncher::GetInstance().Finalize();
 	CBulletManager::GetInstance().Finalize();

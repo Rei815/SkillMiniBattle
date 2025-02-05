@@ -31,6 +31,8 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CAnimationManager::GetInstance().Initialize();
     CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
+
+    //ミニゲームから戻ってきた場合の処理
     if (uiList.size() == 0)
     {
         CUIManager::GetInstance().Initialize();
@@ -84,7 +86,6 @@ void CSelectGame::Update(void)
 {
     CCamera::GetInstance().Update();
     CUIManager& um = CUIManager::GetInstance();
-    CUIManager::GetInstance().Update();
     CAnimationManager::GetInstance().Update();
 
     CDataManager& dm = CDataManager::GetInstance();
@@ -215,14 +216,14 @@ void CSelectGame::Update(void)
 }
 void CSelectGame::Draw(void)
 {
-    CUIManager::GetInstance().Draw();
-
-
-    vivid::DrawText(20, "ゲーム選択中", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
+#if _DEBUG
     vivid::DrawText(20, "1キーでだるまさんがころんだゲーム", vivid::Vector2(0, 0));
     vivid::DrawText(20, "2キーでフォールアウトゲーム", vivid::Vector2(0, 30));
     vivid::DrawText(20, "3キーでドッジボールゲーム", vivid::Vector2(0, 60));
     vivid::DrawText(20, std::to_string((int)m_SelectedGameID + 1), vivid::Vector2(0, 80));
+
+#endif // _DEBUG
+
 
 }
 

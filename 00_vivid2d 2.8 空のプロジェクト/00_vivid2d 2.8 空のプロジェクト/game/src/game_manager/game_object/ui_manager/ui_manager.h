@@ -59,6 +59,7 @@ public:
      *  @brief      UI生成
      *
      *  @param[in]  id          UIのID
+     *  @param[in]  layerNum    UIの描画順
      */
     CUI*        Create(UI_ID id);
 
@@ -66,35 +67,10 @@ public:
      *  @brief      UI生成
      *
      *  @param[in]  id          UIのID
-     *  @param[in]  layerNum    UIの描画順
-     */
-    CUI*        Create(UI_ID id, int layerNum);
-
-    /*!
-     *  @brief      UI生成
-     *
-     *  @param[in]  id          UIのID
      *  @param[in]  position    UIの位置
+     *  @param[in]  layerNum    UIの描画順
      */
     CUI*        Create(UI_ID id, const vivid::Vector2& position);
-
-    /*!
-     *  @brief      UI生成
-     *
-     *  @param[in]  id          UIのID
-     *  @param[in]  position    UIの位置
-     *  @param[in]  layerNum    UIの描画順
-     */
-    CUI*        Create(UI_ID id, const vivid::Vector2& position, int layerNum);
-
-    /*!
-     *  @brief      UI生成
-     *
-     *  @param[in]  id          UIのID
-     *  @param[in]  position    UIの位置
-     *  @param[in]  parent      親のUI
-     */
-    CUI*        Create(UI_ID id, const vivid::Vector2& position, CUI* parent);
 
     /*!
      *  @brief      UI生成
@@ -109,18 +85,10 @@ public:
      *
      *  @param[in]  id          UIのID
      *  @param[in]  transform    UIのトランスフォーム
-     */
-    CUI*        Create(UI_ID id, const CTransform& transform);
-
-    /*!
-     *  @brief      UI生成
-     *
-     *  @param[in]  id          UIのID
-     *  @param[in]  transform    UIのトランスフォーム
      *  @param[in]  layerNum    UIの描画順
 
      */
-    CUI*        Create(UI_ID id, const CTransform& transform, int layerNum);
+    CUI*        Create(UI_ID id, const CTransform& transform);
 
     /*!
      *  @brief      UI削除

@@ -23,8 +23,6 @@ void CResultGame::Initialize(SCENE_ID scene_id)
 
     CCamera::GetInstance().Initialize();
 
-    CStage::GetInstance().Initialize();
-
 
 }
 
@@ -42,14 +40,10 @@ void CResultGame::Update(void)
     }
     break;
     }
-    CStage::GetInstance().Update();
-    CStage::GetInstance().Update();
-
 }
 
 void CResultGame::Draw(void)
 {
-    CStage::GetInstance().Draw();
     switch (m_State)
     {
     case STATE::WAIT:
@@ -65,6 +59,5 @@ void CResultGame::Finalize(void)
 {
     IScene::Finalize();
     CDataManager::GetInstance().Finalize();
-    CStage::GetInstance().Finalize();
     CSoundManager::GetInstance().Stop_BGM(m_Sound);
 }

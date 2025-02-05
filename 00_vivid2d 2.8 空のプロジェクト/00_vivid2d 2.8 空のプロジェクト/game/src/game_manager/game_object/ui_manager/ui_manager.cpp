@@ -122,17 +122,7 @@ CUI* CUIManager::Create(UI_ID id)
     ui->Initialize();
     m_UIList.push_back(ui);
 
-    return ui;
-}
-
-CUI* CUIManager::Create(UI_ID id, int layerNum)
-{
-    CUI* ui = CreateClass(id);
-    if (!ui) return nullptr;
-
-    ui->Initialize();
-    ui->SetOrderInLayer(layerNum);
-    m_UIList.push_back(ui);
+    SortList();
 
     return ui;
 }
@@ -145,32 +135,6 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
 
     ui->Initialize(position);
     m_UIList.push_back(ui);
-
-    return ui;
-}
-
-CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position, int layerNum)
-{
-    CUI* ui = CreateClass(id);
-
-    if (!ui) return nullptr;
-
-    ui->Initialize(position);
-    ui->SetOrderInLayer(layerNum);
-    m_UIList.push_back(ui);
-
-    return ui;
-}
-
-CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position, CUI* parent)
-{
-    CUI* ui = CreateClass(id);
-
-    if (!ui) return nullptr;
-
-    ui->Initialize(position);
-    m_UIList.push_back(ui);
-
     return ui;
 }
 
@@ -193,19 +157,6 @@ CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
     if (!ui) return nullptr;
 
     ui->Initialize(transform);
-    m_UIList.push_back(ui);
-
-    return ui;
-}
-
-CUI* CUIManager::Create(UI_ID id, const CTransform& transform, int layerNum)
-{
-    CUI* ui = CreateClass(id);
-
-    if (!ui) return nullptr;
-
-    ui->Initialize(transform);
-    ui->SetOrderInLayer(layerNum);
     m_UIList.push_back(ui);
 
     return ui;

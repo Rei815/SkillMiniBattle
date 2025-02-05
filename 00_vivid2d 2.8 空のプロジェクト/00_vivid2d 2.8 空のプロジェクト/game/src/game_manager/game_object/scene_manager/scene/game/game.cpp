@@ -63,7 +63,6 @@ CGame::Initialize(SCENE_ID scene_id)
 
     m_PauseFlag = false;
     m_DebugText = "親ゲームシーン";
-    m_BackGround.Initialize();
 }
 
 /*
@@ -72,8 +71,6 @@ CGame::Initialize(SCENE_ID scene_id)
 void
 CGame::Update(void)
 {
-    m_BackGround.Update();
-
     switch (m_GameState)
     {
     case GAME_STATE::START:     Start();        break;
@@ -94,8 +91,6 @@ CGame::Update(void)
         CGimmickManager::GetInstance().Update();
     }
 
-    CUIManager::GetInstance().Update();
-
     CControllerManager::GetInstance().Update();
 }
 
@@ -105,16 +100,12 @@ CGame::Update(void)
 void
 CGame::Draw(void)
 {
-    m_BackGround.Draw();
-
     CEffectManager::GetInstance().Draw();
     CUnitManager::GetInstance().Draw();
     CSkillManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
     CGimmickManager::GetInstance().Draw();
-    CUIManager::GetInstance().Draw();
-
 #ifdef VIVID_DEBUG
     switch (m_GameState)
     {
@@ -140,8 +131,6 @@ CGame::Draw(void)
 void
 CGame::Finalize(void)
 {
-    m_BackGround.Finalize();
-
     IScene::Finalize();
 
     CUnitManager::GetInstance().Finalize();

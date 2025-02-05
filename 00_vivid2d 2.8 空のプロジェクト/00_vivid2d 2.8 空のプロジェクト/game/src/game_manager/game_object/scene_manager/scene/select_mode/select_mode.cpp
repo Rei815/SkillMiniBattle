@@ -18,6 +18,8 @@ void CSelectMode::Initialize(SCENE_ID scene_id)
 
     CCamera::GetInstance().Initialize();
 
+    CUIManager::GetInstance().Create(UI_ID::MENU_BG);
+
     IScene* previousScene = (*CSceneManager::GetInstance().GetList().begin());
     if (previousScene->GetSceneID() == SCENE_ID::SELECTPLAYER)
     {
@@ -34,8 +36,6 @@ void CSelectMode::Initialize(SCENE_ID scene_id)
 
 void CSelectMode::Update(void)
 {
-    CUIManager::GetInstance().Update();
-
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
     {
         CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTGAME);
@@ -64,11 +64,6 @@ void CSelectMode::Update(void)
 
 void CSelectMode::Draw(void)
 {
-    CUIManager::GetInstance().Draw();
-    vivid::DrawText(50, "カジュアルモード", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "カジュアルモード") / 2, vivid::WINDOW_HEIGHT / 2 ));
-
-    vivid::DrawText(20, "ゲームモードセレクト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
-
 }
 
 void CSelectMode::Finalize(void)

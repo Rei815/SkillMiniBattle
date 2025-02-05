@@ -14,14 +14,14 @@ CUI::CUI(UI_ID id)
  *  コンストラクタ
  */
 CUI::
-CUI(int width, int height, UI_ID id)
+CUI(int width, int height, UI_ID id, int layer)
     : m_Width(width)
     , m_Height(height)
     , m_ActiveFlag(true)
     , m_UI_ID(id)
     , m_Transform()
     , m_Parent(nullptr)
-    , m_OrderInLayer(0)
+    , m_OrderInLayer(layer)
 {
 }
 /*
@@ -198,16 +198,6 @@ void CUI::SetOrderInLayer(int num)
 {
     m_OrderInLayer = num;
     CUIManager::GetInstance().SortList();
-}
-
-CUI::ATTRIBUTE CUI::GetAttribute(void)
-{
-    return m_Attribute;
-}
-
-void CUI::SetAttribute(ATTRIBUTE attribute)
-{
-    m_Attribute = attribute;
 }
 
 CVector3 CUI::GetVelocity()
