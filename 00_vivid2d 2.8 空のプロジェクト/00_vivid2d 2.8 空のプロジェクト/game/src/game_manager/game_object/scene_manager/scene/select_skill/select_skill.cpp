@@ -139,8 +139,6 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
 
 void CSelectSkill::Update(void)
 {
-    CUIManager::GetInstance().Update();
-
     MoveCursor();
 
     if (m_SceneUIParent)
@@ -157,10 +155,6 @@ void CSelectSkill::Update(void)
 
 void CSelectSkill::Draw(void)
 {
-    CUIManager::GetInstance().Draw();
-
-
-    vivid::DrawText(20, "スキル選択中, ENTERキーで決定", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
 }
 
 void CSelectSkill::Finalize(void)

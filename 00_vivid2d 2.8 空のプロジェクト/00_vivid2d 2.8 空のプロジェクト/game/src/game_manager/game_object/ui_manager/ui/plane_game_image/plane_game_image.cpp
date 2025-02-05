@@ -19,7 +19,7 @@ const std::string       CPlaneGameImage::m_file_names[] =
  */
 CPlaneGameImage::
 CPlaneGameImage(UI_ID id)
-    : CUI(m_width, m_height, id)
+    : CUI(m_width, m_height, id, 1)
 	, m_Angle()
 	, m_PosAngle()
 	, m_InitialPosition()
@@ -27,6 +27,7 @@ CPlaneGameImage(UI_ID id)
 	, m_Matrix()
 	, m_Speed(m_speed)
 	, m_Animation(nullptr)
+
 {
 }
 

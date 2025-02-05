@@ -53,17 +53,15 @@ void CTitle::Update(void)
         CSceneManager::GetInstance().PopScene(SCENE_ID::TITLE);
 
     }
-    CUIManager::GetInstance().Update();
+
     m_Color = vivid::alpha::AdjustAlpha(m_Color, m_FadeSpeed);
 
 }
 
 void CTitle::Draw(void)
 {
-    CUIManager::GetInstance().Draw();
     vivid::Vector2 position = vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "ボタンを押してね！") / 2, vivid::WINDOW_HEIGHT / 2 + 100);
     vivid::DrawText(50, "ボタンを押してね！", position, m_Color);
-    //vivid::DrawText(20, "ENTERキーで開始,WASDキーで移動,スペースキーでジャンプ,Tabキーで一時停止", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
 
 }
 

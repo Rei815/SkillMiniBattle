@@ -87,11 +87,17 @@ void CCamera::Follow(const CVector3& position,const CVector3& offset)
 void CCamera::SetPosition(const CVector3& position)
 {
     m_Position = position;
+    // カメラの位置と注視点をセット、注視点は向いている向き
+    SetCameraPositionAndTarget_UpVecY(m_Position + m_ShakeVector, m_Position + m_Direction + m_ShakeVector);
+
 }
 
 void CCamera::SetDirection(const CVector3& direction)
 {
     m_Direction = direction;
+    // カメラの位置と注視点をセット、注視点は向いている向き
+    SetCameraPositionAndTarget_UpVecY(m_Position + m_ShakeVector, m_Position + m_Direction + m_ShakeVector);
+
 }
 
 CVector3 CCamera::GetPosition()

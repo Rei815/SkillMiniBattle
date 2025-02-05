@@ -69,7 +69,6 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
 
 void CSelectPlayer::Update(void)
 {
-    CUIManager::GetInstance().Update();
     CDataManager& dm = CDataManager::GetInstance();
     int currentPlayer = dm.GetCurrentPlayer();
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A))
@@ -114,18 +113,10 @@ void CSelectPlayer::Update(void)
         if (m_SceneUIParent->GetPosition().y <= min_height || max_height <= m_SceneUIParent->GetPosition().y)
             CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTPLAYER);
     }
-
-    CUIManager::GetInstance().Update();
 }
 
 void CSelectPlayer::Draw(void)
 {
-    CUIManager::GetInstance().Draw();
-    vivid::DrawText(50, "スキルミニバトル", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "スキルミニバトル") / 2, vivid::WINDOW_HEIGHT / 2));
-
-    vivid::DrawText(20, "ADキーで人数の増減, ENTERキーで決定", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
-    vivid::DrawText(20, "現在" + std::to_string(CDataManager::GetInstance().GetCurrentPlayer()) + "人", vivid::Vector2(500, vivid::WINDOW_HEIGHT - 20));
-
 }
 
 void CSelectPlayer::Finalize(void)

@@ -42,6 +42,7 @@ CFallOutGame::~CFallOutGame(void)
 
 void CFallOutGame::Initialize(SCENE_ID scene_id)
 {
+	CGame::Initialize(scene_id);
 	m_FallTime = m_fall_time;
 	for (int i = 0; i < m_max_topic_num; i++)
 	{
@@ -106,8 +107,6 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 
 void CFallOutGame::Update(void)
 {
-	CBulletManager::GetInstance().Update();
-
 	CStage::GetInstance().Update();
 	CGame::Update();
 
@@ -117,8 +116,6 @@ void CFallOutGame::Update(void)
 void CFallOutGame::Draw(void)
 {
 	CGame::Draw();
-	CBulletManager::GetInstance().Draw();
-
 #ifdef VIVID_DEBUG
 
 	for (int i = 0; i < m_max_topic_num; i++)

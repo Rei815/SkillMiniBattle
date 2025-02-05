@@ -2,7 +2,7 @@
 #include "../../../unit_manager/unit_manager.h"
 
 const vivid::Vector2      CSceneUIParent::m_position = vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2);
-const int           CSceneUIParent::m_speed = 99;
+const int           CSceneUIParent::m_speed = 10;
 const float            CSceneUIParent::m_max_height = vivid::GetWindowHeight() * 1.5;
 const float           CSceneUIParent::m_min_height =  - vivid::GetWindowHeight() / 2;
 const float           CSceneUIParent::m_wait_height = vivid::GetWindowHeight() / 2;

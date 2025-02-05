@@ -7,11 +7,6 @@
 class CUI
 {
 public:
-    enum class ATTRIBUTE
-    {
-        NONE,
-        INDESTRUCTIBLE_ON_LOAD, //!< シーンを切り替えても破棄されない
-    };
     /*!
      *  @brief      コンストラクタ
      */
@@ -19,7 +14,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    CUI(int width, int height, UI_ID id);
+    CUI(int width, int height, UI_ID id, int layer = 0);
 
     /*!
      *  @brief      デストラクタ
@@ -184,19 +179,6 @@ public:
         return m_OrderInLayer < r.m_OrderInLayer;
     }
 
-    /*!
-     *  @brief      属性取得
-     *
-     *  @return     属性
-     */
-    ATTRIBUTE           GetAttribute(void);
-
-    /*!
-     *  @brief      属性設定
-     *
-     *  @param[in]  attribute  属性
-     */
-    void                SetAttribute(ATTRIBUTE attribute);
 
 protected:
 
@@ -212,5 +194,4 @@ protected:
     CUI*                            m_Parent;
     int                             m_OrderInLayer;     //!< 描画順
     CVector3                        m_Velocity;         //!< 移動ベクトル
-    ATTRIBUTE                       m_Attribute;
 };

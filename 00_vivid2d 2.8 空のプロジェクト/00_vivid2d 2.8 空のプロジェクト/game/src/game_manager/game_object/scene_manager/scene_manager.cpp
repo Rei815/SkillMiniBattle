@@ -22,6 +22,7 @@
 #include "scene\game\debug_game\debug_game.h"
 #include "scene\result_minigame\result_minigame.h"
 #include "scene\result_game\result_game.h"
+#include "../ui_manager/ui_manager.h"
 const int               CSceneManager::m_fade_speed = 10;
 const float             CSceneManager::m_wait_time = 0.0f;
 
@@ -66,6 +67,7 @@ CSceneManager::Update(void)
     case STATE::FADEOUT:         FadeOut();     break;
     case STATE::SCENE_CHANGE:    SceneChange(); break;
     }
+    CUIManager::GetInstance().Update();
 
 }
 
@@ -86,6 +88,8 @@ CSceneManager::Draw(void)
 
         ++it;
     }
+    CUIManager::GetInstance().Draw();
+
 }
 
 /*
