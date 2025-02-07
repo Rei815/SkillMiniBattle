@@ -24,6 +24,9 @@
 #include "ui/scene_title/scene_title.h"
 #include "ui/skill_video/skill_video.h"
 #include "ui/scene_ui_parent/scene_ui_parent.h"
+#include "ui/title_button/title_button.h"
+#include "ui/game_video/game_video.h"
+#include "ui/minigame_title/minigame_title.h"
  /*
   *  インスタンスの取得
   */
@@ -67,6 +70,7 @@ CUIManager::Update(void)
             ui->Finalize();
 
             delete ui;
+            ui = nullptr;
             it = m_UIList.erase(it);
 
             continue;
@@ -289,6 +293,12 @@ CUI* CUIManager::CreateClass(UI_ID id)
         ui = new CGameBG(id);               break;
     case UI_ID::SCENE_UI_PARENT:
         ui = new CSceneUIParent(id);        break;
+    case UI_ID::TITLE_BUTTON:
+        ui = new CTitleButton(id);        break;
+    case UI_ID::GAME_VIDEO:
+        ui = new CGameVideo(id);        break;
+    case UI_ID::MINIGAME_TITLE:
+        ui = new CMiniGameTitle(id);        break;
     }
 
     return ui;

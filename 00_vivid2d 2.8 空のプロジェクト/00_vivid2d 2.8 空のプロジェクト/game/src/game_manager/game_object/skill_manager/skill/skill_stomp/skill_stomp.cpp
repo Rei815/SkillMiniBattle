@@ -35,15 +35,6 @@ CSkillStomp::
 Update(void)
 {
 	CSkill::Update();
-	switch (m_State)
-	{
-	case SKILL_STATE::WAIT:
-		break;
-	case SKILL_STATE::ACTIVE:
-		break;
-	case SKILL_STATE::COOLDOWN:
-		break;
-	}
 }
 
 /*!
@@ -84,6 +75,7 @@ Action()
 	CSoundManager::GetInstance().Play_SE(SE_ID::STOMP, false);
 	CBulletManager::GetInstance().Create(m_Player->GetUnitCategory(), BULLET_ID::SHOCK_WAVE, m_Player->GetPosition(), CVector3::UP);
 	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, m_Player->GetPosition());
+	m_Timer.SetUp(m_cool_time);
 	m_State = SKILL_STATE::COOLDOWN;
 }
 

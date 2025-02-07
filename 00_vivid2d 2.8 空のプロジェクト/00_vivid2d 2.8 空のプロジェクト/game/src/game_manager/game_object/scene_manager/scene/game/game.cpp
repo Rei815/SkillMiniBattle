@@ -71,15 +71,16 @@ CGame::Initialize(SCENE_ID scene_id)
 void
 CGame::Update(void)
 {
-    switch (m_GameState)
-    {
-    case GAME_STATE::START:     Start();        break;
-    case GAME_STATE::PLAY:      Play();         break;
-    case GAME_STATE::FINISH:    Finish();       break;
-    }
 
     if(!m_PauseFlag)
     {
+        switch (m_GameState)
+        {
+        case GAME_STATE::START:     Start();        break;
+        case GAME_STATE::PLAY:      Play();         break;
+        case GAME_STATE::FINISH:    Finish();       break;
+        }
+
         CUnitManager::GetInstance().Update();
 
         CSkillManager::GetInstance().Update();
@@ -92,6 +93,17 @@ CGame::Update(void)
     }
 
     CControllerManager::GetInstance().Update();
+
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB))
+    {
+        if (m_PauseFlag)
+            CUIManager::GetInstance().Delete(UI_ID::PAUSE);
+        else
+            CUIManager::GetInstance().Create(UI_ID::PAUSE);
+
+        m_PauseFlag ^= true;
+    }
+
 }
 
 /*
@@ -159,6 +171,11 @@ CGame::
 SetGameState(GAME_STATE state)
 {
     m_GameState = state;
+}
+
+bool CGame::GetPauseFlag(void)
+{
+    return m_PauseFlag;
 }
 
 void CGame::AddRanking(UNIT_ID unitID)
@@ -233,16 +250,6 @@ void CGame::Play(void)
         CUnitManager::GetInstance().SetAllPlayerAction(true);
     }
 
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB))
-    {
-        if (m_PauseFlag)
-            CUIManager::GetInstance().Delete(UI_ID::PAUSE);
-        else
-            CUIManager::GetInstance().Create(UI_ID::PAUSE);
-
-        m_PauseFlag ^= true;
-    }
-
 #ifdef VIVID_DEBUG
 
     if(vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::Z))
@@ -260,16 +267,11 @@ void
 CGame::
 Finish(void)
 {
-#ifdef VIVID_DEBUG
-
-#endif
-
     if (!m_FinishFlag)
     {
         m_WaitTimer.SetUp(m_finish_text_time);
         CUIManager::GetInstance().Create(UI_ID::FINISH_TEXT);
         m_FinishFlag = true;
-        m_PauseFlag = true;
     }
 
     if (m_WaitTimer.Finished())

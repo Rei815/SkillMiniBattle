@@ -3,6 +3,7 @@
 #include "..\game.h"
 #include "..\..\..\..\ui_manager\ui\ui_id.h"
 #include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
+
 class CFallOutGame : public CGame
 {
 public:
@@ -87,11 +88,18 @@ private:
      *  @brief      終了判定
      */
     void    CheckFinish(void) override;
+
+    /*!
+     *  @brief      お題の終了処理
+     */
+    void    FinishTopic(void);
+
     static const CTransform         m_object_transform_list[];  //!< 落ちるオブジェクトのトランスフォーム
     static const float              m_time_accelerator;         //!< 落ちるまでの速度を増やす
     static const float              m_min_time;                 //!< 落ちるまでの最小時間
     static const float              m_fall_time;                //!< 落ちるまでの初期時間
     static const float              m_object_delay_time;        //!< 再抽選までの時間
+    static const float              m_topic_interval_time;      //!< 抽選の感覚
     static const float              m_add_topic_time;           //!< お題が増えるまでの時間
     static const float              m_reset_topic_time;         //!< リセットまでの待機時間
     static const float              m_defeat_height;            //!< 負ける高さ
@@ -105,10 +113,10 @@ private:
     CTimer                          m_ChooseObjectTimer[5];     //!< 抽選タイマー
     CTimer                          m_AddTopicTimer;            //!< お題が増えるタイマー
     CTimer                          m_ResetTopicTimer;          //!< お題リセットタイマー
-    IObject*                        m_Object;                   //!< オブジェクト
     CTimer                          m_ExtendTimer;              //!< 床の復活が延びるまでのタイマー
 
     using TOPIC_LIST = std::list<CFallOutTopic*>;
 
     TOPIC_LIST                      m_TopicList;                //!< お題のリスト
+
 };

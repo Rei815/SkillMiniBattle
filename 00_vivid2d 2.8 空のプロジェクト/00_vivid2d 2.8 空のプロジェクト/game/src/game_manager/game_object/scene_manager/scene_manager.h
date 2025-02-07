@@ -15,6 +15,8 @@
 #include"scene\scene_id.h"
 #include <list>
 #include "..\..\..\utility\utility.h"
+#include"scene\game\game.h"
+
 class IScene;
 
 /*!
@@ -96,6 +98,13 @@ public:
     // *  @return     現在のシーン
     // */
     //IScene* GetScene(SCENE_ID scene_id);
+
+    /*!
+     *  @brief      現在アクティブのゲームシーンを取得
+     *
+     *  @return     現在アクティブのゲームシーン
+     */
+    CGame*          GetGameScene();
 
 
     ///*!

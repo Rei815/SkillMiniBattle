@@ -38,13 +38,7 @@ void CPlaneUp::Update()
 		m_EaseTimer += vivid::GetDeltaTime();
 	}
 	else
-	{
-		transform.position = m_down_initial_position;
-		transform.rotation.y = 0.0f;
-
-		m_Plane->SetPosAngle(0.0f);
-		m_Plane->SetOrderInLayer(1);
-		m_Plane->SetAnimation(nullptr);
+	{	
 		m_ActiveFlag = false;
 	}
 	m_Plane->SetTransform(transform);
@@ -52,5 +46,5 @@ void CPlaneUp::Update()
 
 void CPlaneUp::Finalize()
 {
-	m_Plane = nullptr;
+	m_Plane->SetAnimation(nullptr);
 }

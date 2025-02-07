@@ -41,8 +41,12 @@ void CSceneUIParent::Initialize(const vivid::Vector2& position)
         CUI* ui = (CUI*)(*it);
         ++it;
         if (ui->GetUI_ID() == UI_ID::TITLE_LOGO || ui->GetUI_ID() == UI_ID::SCENE_UI_PARENT || ui->GetParent() != nullptr) continue;
-        const int offsetHeight = vivid::GetWindowHeight() * -((position.y > 0) - (position.y < 0));
-
+        int offsetHeight = vivid::GetWindowHeight() * -((position.y > 0) - (position.y < 0));
+        if(m_Position.y == vivid::GetWindowHeight() / 2)
+        {
+            offsetHeight = 0;
+            m_WaitFlag = true;
+        }
         //3D”Å
         CTransform transform = ui->GetTransform();
         transform.position.y += offsetHeight;

@@ -15,6 +15,7 @@ enum class SCENE_ID
 	RESULT_MINIGAME,//!< ミニゲームリザルトシーン
 	RESULT_GAME,	//!< ミニゲームリザルトシーン
 	DARUMAFALLDOWN,	//!< ダルマさんが転んだシーン
+	MAZE_GAME,	//!< ダルマさんが転んだシーン
 
 
 	MAX			//!< シーンID数

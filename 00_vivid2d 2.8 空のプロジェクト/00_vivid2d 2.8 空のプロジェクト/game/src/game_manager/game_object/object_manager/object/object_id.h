@@ -17,5 +17,6 @@ enum class OBJECT_ID
     DODGEBALL_STAGE_OBJECT, //!< ドッジボールシーンのステージオブジェクト
     DARUMA_FALLDOWN_STAGE_OBJECT, //!< ドッジボールシーンのステージオブジェクト
     SKILL_WALL_OBJECT,      //!< スキルでスポーンできる壁オブジェクト
+    MAZE_STAGE,      //!< スキルでスポーンできる壁オブジェクト
     MAX,
 };

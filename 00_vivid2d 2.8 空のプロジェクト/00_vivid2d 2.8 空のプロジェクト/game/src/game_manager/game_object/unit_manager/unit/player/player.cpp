@@ -84,7 +84,6 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
 void CPlayer::Update(void)
 {
     IUnit::Update();
-
     CVector3 TempForwardVector;
 
     //移動中なら、正面方向を移動方向でセット
@@ -108,12 +107,13 @@ void CPlayer::Update(void)
 
 void CPlayer::Draw(void)
 {
-    //if (((int)(m_InvincibleTimer.GetTimer() * 60) / m_invincible_visible_interval) % 2 == 1)
-    //{
-        IUnit::Draw();
-        m_Model.Draw();
-        vivid::DrawText(30, std::to_string(m_IsGround), vivid::Vector2(1000, 500));
-    //}
+    IUnit::Draw();
+    m_Model.Draw();
+#if _DEBUG
+
+    vivid::DrawText(30, std::to_string(m_IsGround), vivid::Vector2(1000, 500));
+#endif // _DEBUG
+
 }
 
 void CPlayer::Finalize(void)
@@ -386,17 +386,18 @@ void CPlayer::Move(void)
     }
 
     IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
-    if (!floorObject)
+    if (floorObject)
     {
-        m_IsGround = false;
-
-    }
-    else
         if (floorObject->GetTag() == "Floor")
         {
             m_Parent = floorObject;
             m_IsGround = true;
         }
+    }
+    else if(m_Parent == nullptr)
+    {
+        m_IsGround = false;
+    }
 
     if (m_FrictionFlag)
     {

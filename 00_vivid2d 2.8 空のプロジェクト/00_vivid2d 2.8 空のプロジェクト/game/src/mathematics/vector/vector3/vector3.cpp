@@ -9,6 +9,7 @@ const CVector3 CVector3::FORWARD = CVector3(0.0f, 0.0f, 1.0f);
 const CVector3 CVector3::BACK = CVector3(0.0f, 0.0f, -1.0f);
 const CVector3 CVector3::RIGHT = CVector3(1.0f, 0.0f, 0.0f);
 const CVector3 CVector3::LEFT = CVector3(-1.0f, 0.0f, 0.0f);
+const CVector3 CVector3::DOWN = CVector3(0.0f, -1.0f, 0.0f);
 
 /*
 * コンストラクタ
@@ -58,7 +59,6 @@ CVector3 CVector3::Normalize(void)
  */
 CVector3 CVector3::Normalize(const CVector3& v)
 {
-#if 0
 	CVector3 t = v;
 
 	float inv = 1.0f / t.Length();
@@ -68,9 +68,7 @@ CVector3 CVector3::Normalize(const CVector3& v)
 	t.z *= inv;
 
 	return t;
-#else
-	return VNorm(v);
-#endif
+	//return VNorm(v);
 }
 
 /*

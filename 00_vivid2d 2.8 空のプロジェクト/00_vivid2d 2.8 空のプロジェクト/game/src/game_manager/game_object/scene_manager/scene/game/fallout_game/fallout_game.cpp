@@ -7,7 +7,6 @@
 #include "../../../../object_manager/object/fall_object/mark_id.h"
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
-#include "../../../../bullet_manager/bullet_manager.h"
 #include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
 #include "../../../../gimmick_manager/gimmick/fall_gimmick/fall_gimmick.h"
 #include "../../../../sound_manager/sound_manager.h"
@@ -28,6 +27,7 @@ const float		CFallOutGame::m_object_delay_time = 1.0f;
 const float		CFallOutGame::m_add_topic_time = 10.0f;
 const float		CFallOutGame::m_reset_topic_time = 0.5f;
 const float		CFallOutGame::m_extend_return_time = 180.0f;
+const float		CFallOutGame::m_topic_interval_time = 1.0f;
 const int		CFallOutGame::m_max_topic_num = 5;
 const CVector3  CFallOutGame::m_player_default_forward = CVector3(0.0f,0.0f,-1.0f);
 const CVector3	CFallOutGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
@@ -60,7 +60,6 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 
 	//BGM再生
 	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
-	//
 
 	m_DebugText = "フォールゲーム";
 	CVector3 playerPos[] = { m_object_transform_list[(int)MARK_ID::CIRCLE].position, m_object_transform_list[(int)MARK_ID::CROSS].position,
@@ -237,13 +236,6 @@ void CFallOutGame::ChooseTopic(void)
 
 			gimmick->AddReturnTime(extend_time);
 		}
-		//m_FallTime -= m_time_accelerator;
-		//if (m_FallTime < m_min_time)
-		//	m_FallTime = m_min_time;
-		//m_FallTime = m_fall_time;
-		//m_FallTime += i * 1.0f;
-		//m_ChooseObjectTimer[i].SetUp(m_FallTime);
-
 
 		topic->SetMarkID(fallInfo.markID);
 		topic->SetTimer(m_FallTime);
@@ -302,7 +294,7 @@ void CFallOutGame::AddTopic(void)
 
 	m_TopicList.push_back((CFallOutTopic*)ui);
 	m_ChooseObjectTimer[m_TopicList.size()].SetActive(true);
-	m_ChooseObjectTimer[m_TopicList.size()].SetUp(m_ChooseObjectTimer[m_TopicList.size() - 1].GetTimer() + 1.0f);
+	m_ChooseObjectTimer[m_TopicList.size()].SetUp(m_ChooseObjectTimer[m_TopicList.size() - 1].GetTimer() + m_topic_interval_time);
 
 }
 
@@ -353,6 +345,7 @@ CFallOutGame::FALL_INFO CFallOutGame::ChooseObject(void)
 }
 void CFallOutGame::Finish(void)
 {
+
 	CGame::Finish();
 }
 
@@ -404,7 +397,7 @@ void CFallOutGame::CheckFinish()
 			CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
 
 			CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
-
+			FinishTopic();
 			CGame::SetGameState(GAME_STATE::FINISH);
 		}
 	}
@@ -415,8 +408,16 @@ void CFallOutGame::CheckFinish()
 		{
 			//やられているためリザルトリストから勝ちにする
 			CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
-
+			FinishTopic();
 			CGame::SetGameState(GAME_STATE::FINISH);
 		}
+	}
+}
+
+void CFallOutGame::FinishTopic(void)
+{
+	for (TOPIC_LIST::iterator it = m_TopicList.begin(); it != m_TopicList.end(); it++)
+	{
+		(*it)->SetState(CFallOutTopic::STATE::FINISH);
 	}
 }

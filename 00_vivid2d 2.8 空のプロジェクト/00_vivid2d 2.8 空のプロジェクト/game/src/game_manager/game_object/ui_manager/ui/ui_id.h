@@ -30,5 +30,8 @@ enum class UI_ID
     KEY_BG,
     FADE,
     GAME_BG,
-    SCENE_UI_PARENT
+    SCENE_UI_PARENT,
+    TITLE_BUTTON,
+    GAME_VIDEO,
+    MINIGAME_TITLE,
 };

@@ -90,6 +90,7 @@ void
 CUI::
 Finalize(void)
 {
+    m_ActiveFlag = false;
 }
 
 /*

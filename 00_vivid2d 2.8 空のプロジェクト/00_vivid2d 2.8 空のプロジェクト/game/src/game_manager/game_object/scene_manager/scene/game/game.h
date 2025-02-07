@@ -66,6 +66,12 @@ public:
      */
     void            SetGameState(GAME_STATE state);
 
+    /*!
+     *  @brief      ポーズフラグ取得
+     *
+     *  @return     ポーズフラグ
+     */
+    bool            GetPauseFlag(void);
 
 protected:
 

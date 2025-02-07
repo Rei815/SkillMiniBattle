@@ -35,6 +35,22 @@ void CTitle::Initialize(SCENE_ID scene_id)
         CUIManager::GetInstance().Initialize();
         CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
     }
+    CUIManager::GetInstance().Create(UI_ID::TITLE_BUTTON);
+
+    IScene* previousScene = (*CSceneManager::GetInstance().GetList().begin());
+
+    //このシーンが作られた際にタイトルからなのかセレクトモードシーンから作られたかで動きを変える
+    if (previousScene->GetSceneID() == SCENE_ID::SELECTPLAYER)
+    {
+        m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() * 1.5));
+        m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);
+    }
+    else if (previousScene->GetSceneID() == SCENE_ID::TITLE)
+    {
+        m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() / 2));
+        m_SceneUIParent->SetState(CSceneUIParent::STATE::WAIT);
+    }
+
 }
 
 void CTitle::Update(void)
@@ -50,11 +66,20 @@ void CTitle::Update(void)
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
 
         CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTPLAYER);
-        CSceneManager::GetInstance().PopScene(SCENE_ID::TITLE);
+        m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
     }
 
     m_Color = vivid::alpha::AdjustAlpha(m_Color, m_FadeSpeed);
+    if (m_SceneUIParent)
+    {
+        if (m_SceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
+
+        const float min_height = -vivid::GetWindowHeight() / 2;
+        const float max_height = vivid::GetWindowHeight() * 1.5;
+        if (m_SceneUIParent->GetPosition().y <= min_height || max_height <= m_SceneUIParent->GetPosition().y)
+            CSceneManager::GetInstance().PopScene(SCENE_ID::TITLE);
+    }
 
 }
 

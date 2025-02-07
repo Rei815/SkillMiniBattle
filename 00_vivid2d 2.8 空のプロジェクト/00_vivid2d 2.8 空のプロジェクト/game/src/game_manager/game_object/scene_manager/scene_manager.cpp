@@ -22,6 +22,7 @@
 #include "scene\game\debug_game\debug_game.h"
 #include "scene\result_minigame\result_minigame.h"
 #include "scene\result_game\result_game.h"
+#include "scene\game\maze_game\maze_game.h"
 #include "../ui_manager/ui_manager.h"
 const int               CSceneManager::m_fade_speed = 10;
 const float             CSceneManager::m_wait_time = 0.0f;
@@ -67,7 +68,18 @@ CSceneManager::Update(void)
     case STATE::FADEOUT:         FadeOut();     break;
     case STATE::SCENE_CHANGE:    SceneChange(); break;
     }
-    CUIManager::GetInstance().Update();
+
+
+    CGame* gameScene = GetGameScene();
+    if (gameScene)
+    {
+        if(!gameScene->GetPauseFlag())
+            CUIManager::GetInstance().Update();
+    }
+    else
+    {
+        CUIManager::GetInstance().Update();
+    }
 
 }
 
@@ -249,6 +261,7 @@ CSceneManager::CreateScene(SCENE_ID id)
     case SCENE_ID::DODGEBALLGAME:       scene = new CDodgeBallGame();           break;
     case SCENE_ID::RESULT_MINIGAME:     scene = new CResultMiniGame();          break;
     case SCENE_ID::RESULT_GAME:         scene = new CResultGame();              break;
+    case SCENE_ID::MAZE_GAME:           scene = new CMazeGame();                break;
     }
     m_SceneList.push_back(scene);
     scene->Initialize(id);
@@ -385,6 +398,26 @@ IScene* CSceneManager::GetScene(SCENE_ID scene_id)
             return scene;
 
         ++it;
+    }
+    return nullptr;
+}
+
+CGame* CSceneManager::GetGameScene()
+{
+    if (m_SceneList.empty()) return nullptr;
+
+    SCENE_LIST::iterator it = m_SceneList.begin();
+
+    while (it != m_SceneList.end())
+    {
+        CGame* gameScene = dynamic_cast<CGame*>(*it);
+
+        ++it;
+        if (gameScene == nullptr) continue;
+
+        if (gameScene->GetActive())
+            return gameScene;
+
     }
     return nullptr;
 }

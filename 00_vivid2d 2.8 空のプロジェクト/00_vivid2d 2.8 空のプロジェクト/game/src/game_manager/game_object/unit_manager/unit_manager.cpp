@@ -177,7 +177,7 @@ void CUnitManager::CheckHitObject(IObject* object)
             endPos = startPos;
             tempVelocity = (*it)->GetVelocity();
             tempVelocity.y = 0.0f;
-            tempVelocity.Normalize();
+            tempVelocity = CVector3().Normalize(tempVelocity);
             endPos += tempVelocity * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
 
@@ -331,9 +331,7 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
 
 
 #endif // VIVID_DEBUG
-    if (object->GetModel().CheckHitLine
-    
-    (startPos, end_position) == true)
+    if (object->GetModel().CheckHitLine(startPos, end_position) == true)
     {
 
         hitPos = object->GetModel().GetHitLinePosition(startPos, end_position);

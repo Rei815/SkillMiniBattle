@@ -208,7 +208,7 @@ void CSelectSkill::ChooseSkill(void)
     //åÛï‚ÇÃéÊÇËèoÇµ
     switch (m_GameID)
     {
-    case GAME_ID::FALL_GAME:
+    case GAME_ID::FALLOUT_GAME:
         for (int i = 0; i < (int)SKILL_ID_FALLOUT::MAX; i++)
             TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_FALLOUT)i));
         break;
@@ -417,7 +417,7 @@ void CSelectSkill::MoveCursor(void)
         {
             switch (m_GameID)
             {
-            case GAME_ID::FALL_GAME:
+            case GAME_ID::FALLOUT_GAME:
                 CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                 CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
                 break;
@@ -432,6 +432,10 @@ void CSelectSkill::MoveCursor(void)
             case GAME_ID::DEBUG_GAME:
                 CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                 CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME);
+                break;
+            case GAME_ID::MAZE_GAME:
+                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+                CSceneManager::GetInstance().ChangeScene(SCENE_ID::MAZE_GAME);
                 break;
             }
         }

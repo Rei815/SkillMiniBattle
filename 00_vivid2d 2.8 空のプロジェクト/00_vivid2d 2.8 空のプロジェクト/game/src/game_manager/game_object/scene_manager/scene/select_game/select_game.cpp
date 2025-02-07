@@ -5,8 +5,9 @@
 #include "../../../animation_manager/animation/animation.h"
 #include "../../../animation_manager/animation_manager.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../ui_manager/ui/game_video/game_video.h"
 
-const int CSelectGame::m_games_num = 3;
+const int CSelectGame::m_games_num = 5;
 const float CSelectGame::m_circle_radius = 500.0f;
 CSelectGame::CSelectGame(void)
     : m_SelectedGameFlag(false)
@@ -39,6 +40,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
         CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
     }
 
+    //ゲームの画像を円状かつ均等に配置
     for (int i = 0; i < m_games_num; i++)
     {
         CTransform transform;
@@ -139,10 +141,15 @@ void CSelectGame::Update(void)
         //上昇アニメーションが終了している
         if (m_planeGameImage->GetAnimation() == nullptr && m_GameInfomationFlag == false)
         {
+            m_planeGameImage->SetActive(false);
             m_GameInfomationFlag = true;
-            m_planeGameImage->SetParent(nullptr);
             vivid::Vector2 bgPos = vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() / 2);
             um.Create(UI_ID::MENU_BG, bgPos);
+
+            CGameVideo* gameVideo = (CGameVideo*)um.Create(UI_ID::GAME_VIDEO);
+            gameVideo->SetGameVideo(m_SelectedGameID);
+            um.Create(UI_ID::MINIGAME_TITLE);
+
             um.Delete(m_FirstSceneUIParent);
             m_SecondSceneUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
             m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
@@ -160,7 +167,7 @@ void CSelectGame::Update(void)
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
     {
-        m_SelectedGameID = GAME_ID::FALL_GAME;
+        m_SelectedGameID = GAME_ID::FALLOUT_GAME;
         dm.SetGameID(m_SelectedGameID);
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
@@ -175,6 +182,13 @@ void CSelectGame::Update(void)
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FOUR))
     {
         m_SelectedGameID = GAME_ID::DEBUG_GAME;
+        dm.SetGameID(m_SelectedGameID);
+
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+    }
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FIVE))
+    {
+        m_SelectedGameID = GAME_ID::MAZE_GAME;
         dm.SetGameID(m_SelectedGameID);
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);

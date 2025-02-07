@@ -6,6 +6,7 @@
 #include "object/dodgeball_stage_object/dodgeball_stage_object.h"
 #include "object/daruma_falldown_stage_object/daruma_falldown_stage_object.h"
 #include "object/skill_wall_object/skill_wall_object.h"
+#include "object/maze_stage/maze_stage.h"
 #include "..\gimmick_manager\gimmick_manager.h"
 #include "..\unit_manager\unit_manager.h"
 
@@ -122,6 +123,8 @@ Create(OBJECT_ID id, const CTransform& transform)
         object = new CDarumaFallDownStageObject(); break;
     case OBJECT_ID::SKILL_WALL_OBJECT:
         object = new CSkillWallObject(); break;
+    case OBJECT_ID::MAZE_STAGE:
+        object = new CMazeStage(); break;
     }
 
     if (!object) return nullptr;

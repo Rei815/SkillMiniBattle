@@ -50,6 +50,7 @@ Initialize(const vivid::Vector2& position)
 	m_FinishValue = m_end_y;
 	m_Position = position;
 	m_BackGround = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, m_Position);
+	m_BackGround->SetParent(this);
 	m_Rect = m_rect;
 	m_Timer.SetUp(m_change_time);
 }
@@ -63,7 +64,9 @@ Update(void)
 {
 	m_Timer.Update();
 	if (m_BackGround)
+	{
 		m_BackGround->SetPosition(m_Position);
+	}
 	switch (m_State)
 	{
 	case CFallOutTopic::STATE::APPEAR:
@@ -107,6 +110,18 @@ Update(void)
 
 			
 		m_State = STATE::WAIT;
+		break;
+	case CFallOutTopic::STATE::FINISH:
+
+		////初期値に戻す
+		//m_Rect = m_rect;
+
+		////決定されているマークの位置にする
+		//m_Rect.top = m_rect.top + (5 - static_cast<int>(m_CurrentID)) * m_height;
+		//m_Rect.bottom = m_rect.bottom + (5 - static_cast<int>(m_CurrentID)) * m_height;
+
+		//	
+		//m_ActiveFlag = false;
 		break;
 	}
 }
