@@ -173,6 +173,20 @@ public:
     void            SetVelocity(const CVector3& velocity);
 
     /*!
+     *  @brief      『外部からの影響による移動速度』のセット
+     *
+     *  @param[in]  velocity    セットする速度
+     */
+    void SetAffectedVelocity(CVector3 velocity);
+
+    /*!
+     *  @brief      『外部からの影響による移動速度』の加算
+     *
+     *  @param[in]  velocity    加算する速度
+     */
+    void AddAffectedVelocity(CVector3 velocity);
+
+    /*!
      *  @brief      半径取得
      *
      *  @return     半径
@@ -228,11 +242,18 @@ public:
     CModel      GetModel(void);
 
     /*!
-         *  @brief      地面の可不可を設定
+         *  @brief      地上にいるかどうかを設定
          *
-         *  @param[in]  flag    地面フラグ
+         *  @param[in]  flag    接地フラグ
      */
     void        SetIsGround(bool flag);
+
+    /*!
+         *  @brief      地上にいるかどうかを取得
+         *
+         *  @return     接地フラグ
+     */
+    bool        GetIsGround();
 
     /*!
      *  @brief      重力を設定
@@ -273,7 +294,6 @@ public:
      *  @param[in]  parent    親のオブジェクト
      */
     void        SetParent(IObject* parent);
-
 protected:
 
 
@@ -338,6 +358,7 @@ protected:
     CTransform	            m_Transform;		    //!< トランスフォーム
     CVector3	            m_Max_Vertex;		    //!< 最大頂点座標
     CVector3                m_Velocity;             //!< 速度
+    CVector3                m_AffectedVelocity;     //!< 外部からの影響による速度
     CVector3                m_Gravity;              //!< 重力
     UNIT_CATEGORY           m_Category;             //!< ユニット識別子
     UNIT_ID                 m_UnitID;               //!< ユニットID

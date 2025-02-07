@@ -1,12 +1,13 @@
 #include "object_manager.h"
 #include "..\..\..\utility\utility.h"
-#include "object/fall_object/fall_object.h"
-#include "object/cannon_object/cannon_object.h"
-#include "object/ogre_object/ogre_object.h"
-#include "object/dodgeball_stage_object/dodgeball_stage_object.h"
-#include "object/daruma_falldown_stage_object/daruma_falldown_stage_object.h"
-#include "object/skill_wall_object/skill_wall_object.h"
-#include "object/maze_stage/maze_stage.h"
+#include "object\fall_object\fall_object.h"
+#include "object\cannon_object\cannon_object.h"
+#include "object\ogre_object\ogre_object.h"
+#include "object\dodgeball_stage_object\dodgeball_stage_object.h"
+#include "object\daruma_falldown_stage_object\daruma_falldown_stage_object.h"
+#include "object\belt_conveyor_object\belt_conveyor_object.h"
+#include "object\skill_wall_object\skill_wall_object.h"
+#include "object\maze_stage\maze_stage.h"
 #include "..\gimmick_manager\gimmick_manager.h"
 #include "..\unit_manager\unit_manager.h"
 
@@ -121,6 +122,8 @@ Create(OBJECT_ID id, const CTransform& transform)
         object = new CDogeballStageObject(); break;
     case OBJECT_ID::DARUMA_FALLDOWN_STAGE_OBJECT:
         object = new CDarumaFallDownStageObject(); break;
+    case OBJECT_ID::BELT_CONVEYOR_STAGE_OBJECT:
+        object = new CBeltConveyorObject(); break;
     case OBJECT_ID::SKILL_WALL_OBJECT:
         object = new CSkillWallObject(); break;
     case OBJECT_ID::MAZE_STAGE:

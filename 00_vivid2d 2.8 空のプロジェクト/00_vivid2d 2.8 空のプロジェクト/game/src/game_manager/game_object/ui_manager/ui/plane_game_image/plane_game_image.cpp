@@ -15,6 +15,7 @@ const std::string       CPlaneGameImage::m_file_names[] =
 	"data\\Textures\\plane_ui_daruma.png", 
 	"data\\Textures\\plane_ui_daruma.png", 
 	"data\\Textures\\plane_ui_daruma.png", 
+	"data\\Textures\\plane_ui_daruma.png"
 };
 
 /*

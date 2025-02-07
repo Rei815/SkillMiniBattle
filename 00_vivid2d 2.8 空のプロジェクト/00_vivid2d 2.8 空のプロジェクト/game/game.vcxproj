@@ -177,6 +177,9 @@
     <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\floating_effect\floating_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\gravity_area_effect\gravity_area_effect.cpp" />
+    <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\belt_conveyor_gimmick\belt_conveyor_gimmick.cpp" />
+    <ClCompile Include="src\game_manager\game_object\object_manager\object\belt_conveyor_object\belt_conveyor_object.cpp" />
+    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\belt_conveyor_game\belt_conveyor_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\light\light.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\maze_stage\maze_stage.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\maze_game\maze_game.cpp" />
@@ -330,6 +333,9 @@
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation_manager.h" />
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\gravity_area_effect\gravity_area_effect.h" />
+    <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\belt_conveyor_gimmick\belt_conveyor_gimmick.h" />
+    <ClInclude Include="src\game_manager\game_object\object_manager\object\belt_conveyor_object\belt_conveyor_object.h" />
+    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\belt_conveyor_game\belt_conveyor_game.h" />
     <ClInclude Include="src\game_manager\game_object\light\light.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object\maze_stage\maze_stage.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\maze_game\maze_game.h" />
