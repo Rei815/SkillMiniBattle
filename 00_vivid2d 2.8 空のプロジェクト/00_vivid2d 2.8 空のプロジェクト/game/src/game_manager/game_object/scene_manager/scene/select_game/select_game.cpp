@@ -6,7 +6,7 @@
 #include "../../../animation_manager/animation_manager.h"
 #include "../../../sound_manager/sound_manager.h"
 
-const int CSelectGame::m_games_num = 3;
+const int CSelectGame::m_games_num = 6;
 const float CSelectGame::m_circle_radius = 500.0f;
 CSelectGame::CSelectGame(void)
     : m_SelectedGameFlag(false)
@@ -145,7 +145,6 @@ void CSelectGame::Update(void)
             um.Delete(m_FirstSceneUIParent);
             m_SecondSceneUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
             m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
-
         }
     }
 #if _DEBUG
@@ -173,7 +172,7 @@ void CSelectGame::Update(void)
     }
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FOUR))
     {
-        m_SelectedGameID = GAME_ID::DEBUG_GAME;
+        m_SelectedGameID = GAME_ID::BELT_CONVEYOR_GAME;
         dm.SetGameID(m_SelectedGameID);
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);

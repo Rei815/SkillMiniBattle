@@ -128,7 +128,7 @@ Create(EFFECT_ID id, const CVector3& pos)
 
 IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const float scale)
 {
-    IEffect* effect = nullptr;
+    IEffect* effect = CreateClass(id);
 
 
     if (!effect) return nullptr;

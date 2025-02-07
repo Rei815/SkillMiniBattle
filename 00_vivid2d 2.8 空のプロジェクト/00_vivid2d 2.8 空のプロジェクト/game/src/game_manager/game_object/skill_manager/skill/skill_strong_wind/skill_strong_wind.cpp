@@ -48,11 +48,8 @@ Update(void)
 			IUnit* unit = (*it);
 
 			if (unit->GetUnitID() != m_Player->GetUnitID())
-			{
-				CVector3 velocity = unit->GetVelocity();
-				velocity.z -= m_wind_strength;
-				unit->SetVelocity(velocity);
-			}
+				unit->AddAffectedVelocity(CVector3(0.0f, 0.0f, -m_wind_strength));
+
 			++it;
 		}
 		break;

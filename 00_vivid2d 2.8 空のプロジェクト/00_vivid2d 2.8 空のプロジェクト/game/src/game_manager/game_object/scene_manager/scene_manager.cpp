@@ -19,6 +19,7 @@
 #include "scene\game\fallout_game\fallout_game.h"
 #include "scene\game\daruma_falldown_game\daruma_falldown_game.h"
 #include "scene\game\dodgeball_game\dodgeball_game.h"
+#include "scene\game\belt_conveyor_game\belt_conveyor_game.h"
 #include "scene\game\debug_game\debug_game.h"
 #include "scene\result_minigame\result_minigame.h"
 #include "scene\result_game\result_game.h"
@@ -241,8 +242,9 @@ CSceneManager::CreateScene(SCENE_ID id)
     case SCENE_ID::SELECTGAME:          scene = new CSelectGame();              break;
     case SCENE_ID::FALLGAME:            scene = new CFallOutGame();             break;
     case SCENE_ID::DARUMAFALLDOWN:      scene = new CDaruma_FallDownGame();     break;
-    case SCENE_ID::DEBUGGAME:           scene = new CDebugGame();               break;
     case SCENE_ID::DODGEBALLGAME:       scene = new CDodgeBallGame();           break;
+    case SCENE_ID::BELTCONVEYORGAME:    scene = new CBeltConveyorGame();        break;
+    case SCENE_ID::DEBUGGAME:           scene = new CDebugGame();               break;
     case SCENE_ID::RESULT_MINIGAME:     scene = new CResultMiniGame();          break;
     case SCENE_ID::RESULT_GAME:         scene = new CResultGame();              break;
     }

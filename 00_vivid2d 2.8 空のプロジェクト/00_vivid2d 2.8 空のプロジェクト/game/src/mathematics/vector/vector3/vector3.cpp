@@ -266,8 +266,6 @@ CVector3 CVector3::GetVectorRotateXYZ(void)
 
 CVector3 CVector3::GetVectorRotateXYZ(const CVector3& vector)
 {
-	const float math_pi = 3.1415926535897931;
-
 	CVector3 Rotate;
 
 	float cos;
@@ -277,7 +275,7 @@ CVector3 CVector3::GetVectorRotateXYZ(const CVector3& vector)
 	//Y軸回転
 	TempVector = CVector3(vector.x, 0, vector.z).Normalize();
 	cos = Dot(CVector3().FORWARD, TempVector);
-	rot = acos(cos) * 180.0f / math_pi;
+	rot = acos(cos) * 180.0f / DX_PI_F;
 	if (Cross(CVector3().FORWARD, TempVector).y > 0)
 	{
 		rot = abs(rot);
@@ -291,7 +289,7 @@ CVector3 CVector3::GetVectorRotateXYZ(const CVector3& vector)
 	//X軸回転
 	TempVector = CVector3(0, vector.y, vector.z).Normalize();
 	cos = Dot(CVector3().FORWARD, TempVector);
-	rot = acos(cos) * 180.0f / math_pi;
+	rot = acos(cos) * 180.0f / DX_PI_F;
 	if (Cross(CVector3().FORWARD, TempVector).x < 0)
 	{
 		rot = abs(rot);
@@ -307,8 +305,6 @@ CVector3 CVector3::GetVectorRotateXYZ(const CVector3& vector)
 
 CVector3 CVector3::RotateAroundCoordinatesAxis(COORDINATES_AXIS axis, float degree_angle)
 {
-	const float math_pi = 3.1415926535897931;
-
 	//degree_angle（度数法の角度）が『-180度 <= degree_angle <= 180度』になるように修正する
 	while (degree_angle > 180.0f)
 		degree_angle -= 360.0f;
@@ -316,7 +312,7 @@ CVector3 CVector3::RotateAroundCoordinatesAxis(COORDINATES_AXIS axis, float degr
 		degree_angle += 360.0f;
 
 	//degree_angle（度数法の角度）から、弧度法の角度を求めてradianにセットする
-	float radian = -degree_angle / 180.0f * math_pi;
+	float radian = -degree_angle / 180.0f * DX_PI_F;
 
 	//回転させるために、各要素のベクトルに分解する
 	CVector3 TempVectorX = CVector3(x,0,0);
