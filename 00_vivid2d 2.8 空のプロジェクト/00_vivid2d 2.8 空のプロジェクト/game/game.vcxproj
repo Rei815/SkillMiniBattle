@@ -177,16 +177,13 @@
     <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\floating_effect\floating_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\gravity_area_effect\gravity_area_effect.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\belt_conveyor_gimmick\belt_conveyor_gimmick.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\belt_conveyor_object\belt_conveyor_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\belt_conveyor_game\belt_conveyor_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\light\light.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\maze_stage\maze_stage.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\maze_game\maze_game.cpp" />
-=======
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\strong_wind_effect\strong_wind_effect.cpp" />
->>>>>>> takahashi
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\result_game\result_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\skill_barrier_effect\skill_barrier_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\skill_wall_object\skill_wall_object.cpp" />
@@ -337,16 +334,13 @@
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation_manager.h" />
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\gravity_area_effect\gravity_area_effect.h" />
-<<<<<<< HEAD
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\belt_conveyor_gimmick\belt_conveyor_gimmick.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object\belt_conveyor_object\belt_conveyor_object.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\belt_conveyor_game\belt_conveyor_game.h" />
     <ClInclude Include="src\game_manager\game_object\light\light.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object\maze_stage\maze_stage.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\maze_game\maze_game.h" />
-=======
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\strong_wind_effect\strong_wind_effect.h" />
->>>>>>> takahashi
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_skill\select_skill.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_hide_topic\skill_hide_topic.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_jump_up\skill_jump_up.h" />
