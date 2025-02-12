@@ -1,6 +1,8 @@
 #include "skill_strong_wind.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../effect_manager/effect_manager.h"
+
 
 const float CSkillStrongWind::m_wind_strength = 0.1f;
 const float CSkillStrongWind::m_cool_time = 5.0f;
@@ -8,6 +10,7 @@ const float CSkillStrongWind::m_duration_time = 5.0f;
 
 CSkillStrongWind::CSkillStrongWind(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE ,m_duration_time, m_cool_time)
+	,m_Effect(nullptr)
 {
 
 }
@@ -60,7 +63,6 @@ Update(void)
 	case SKILL_STATE::COOLDOWN:
 		break;
 	}
-
 }
 
 /*!
@@ -87,7 +89,6 @@ Finalize(void)
 
 }
 
-
 /*!
  *  @brief      アクション呼び出し
  */
@@ -100,6 +101,10 @@ Action(void)
 	CSoundManager::GetInstance().Play_SE(SE_ID::STRONG_WIND, false);
 	CSoundManager::GetInstance().SetSEVolume(SE_ID::STRONG_WIND, 10000);
 
+	CVector3 effectPosition = CVector3().ZERO;
+
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::STRONG_WIND, effectPosition, CVector3(), 5.0f);
+
 	m_State = SKILL_STATE::ACTIVE;
 }
 
@@ -110,6 +115,13 @@ void
 CSkillStrongWind::
 ActionEnd(void)
 {
+	//エフェクトを消す
+	if (m_Effect != nullptr)
+	{
+		m_Effect->SetActive(false);
+		m_Effect = nullptr;
+	}
+
 	for (int i = 10000; i > 0; i--)
 	{
 		CSoundManager::GetInstance().SetSEVolume(SE_ID::STRONG_WIND, i);

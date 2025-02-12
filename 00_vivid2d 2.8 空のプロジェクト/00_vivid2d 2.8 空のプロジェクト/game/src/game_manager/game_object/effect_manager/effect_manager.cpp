@@ -12,6 +12,8 @@
 #include "effect/skill_barrier_effect/skill_barrier_effect.h"
 #include "effect/floating_effect/floating_effect.h"
 #include "effect/gravity_area_effect/gravity_area_effect.h"
+#include "effect/strong_wind_effect/strong_wind_effect.h"
+#include "effect/collide_effect/collide_effect.h"
  /*
   *  インスタンスの取得
   */
@@ -241,7 +243,12 @@ IEffect* CEffectManager::CreateClass(EFFECT_ID id)
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
     case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
     case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
-    case EFFECT_ID::GRAVITY_AREA:               effect = new CGravityAreaEffect();     break;
+    case EFFECT_ID::GRAVITY_AREA:           effect = new CGravityAreaEffect();
+      break;
+    case EFFECT_ID::STRONG_WIND:            effect = new CStrongWindEffect();
+      break;
+    case EFFECT_ID::COLLIDE:                effect = new CCollideEffect();
+      break;
     }
     return effect;
 }

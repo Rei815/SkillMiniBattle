@@ -177,6 +177,7 @@
     <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\floating_effect\floating_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\gravity_area_effect\gravity_area_effect.cpp" />
+    <ClCompile Include="src\game_manager\game_object\effect_manager\effect\strong_wind_effect\strong_wind_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\result_game\result_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\skill_barrier_effect\skill_barrier_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\skill_wall_object\skill_wall_object.cpp" />
@@ -324,6 +325,7 @@
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation_manager.h" />
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\gravity_area_effect\gravity_area_effect.h" />
+    <ClInclude Include="src\game_manager\game_object\effect_manager\effect\strong_wind_effect\strong_wind_effect.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_skill\select_skill.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_hide_topic\skill_hide_topic.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_jump_up\skill_jump_up.h" />

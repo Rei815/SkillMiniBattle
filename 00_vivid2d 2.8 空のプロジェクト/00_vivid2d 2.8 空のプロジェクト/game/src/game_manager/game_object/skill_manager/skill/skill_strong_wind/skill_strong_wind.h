@@ -1,5 +1,7 @@
 #pragma once
 #include "../skill.h"
+#include "../../../effect_manager/effect/effect.h"
+
 
 class CSkillStrongWind : public CSkill
 {
@@ -42,4 +44,6 @@ protected:
     static const float  m_wind_strength;
     static const float  m_cool_time;
     static const float  m_duration_time;
+
+    IEffect*            m_Effect;
 };
