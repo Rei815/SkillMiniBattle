@@ -1,5 +1,6 @@
 #pragma once
 #include "../skill.h"
+#include "../../../effect_manager/effect_manager.h"
 
 class CSkillDash : public CSkill
 {
@@ -42,4 +43,7 @@ protected:
     static const float  m_dash_speed_up_rate;
     static const float  m_duration_time;
     static const float  m_cool_time;
+
+    IEffect* m_SkillEffect;
+
 };

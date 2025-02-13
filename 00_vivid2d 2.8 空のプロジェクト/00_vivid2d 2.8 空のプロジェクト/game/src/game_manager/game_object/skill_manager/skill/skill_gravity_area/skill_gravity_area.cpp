@@ -13,6 +13,7 @@ const float CSkillGravityArea::m_gravity_area_radius = 500.0f;
 CSkillGravityArea::CSkillGravityArea(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 	, m_Effect(nullptr)
+	, m_SkillEffect(nullptr)
 	, m_PlayerAffectedEffect{nullptr}
 {
 }
@@ -154,9 +155,10 @@ Action(void)
 	//エフェクトの生成（仮置き、エフェクトが完成したらセットする）
 
 	CVector3 effectPosition = m_Player->GetPosition();
-	effectPosition.y -= m_Player->GetHeight() / 2;
+	effectPosition.y -= m_Player->GetHeight()/2;
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::GRAVITY_AREA, effectPosition,CVector3(),3.0f);
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effectPosition, CVector3(), 3.0f);
 
 	m_State = SKILL_STATE::ACTIVE;
 }
@@ -173,6 +175,12 @@ ActionEnd(void)
 	{
 		m_Effect->SetActive(false);
 		m_Effect = nullptr;
+	}
+
+	if (m_SkillEffect != nullptr)
+	{
+		m_SkillEffect->SetActive(false);
+		m_SkillEffect = nullptr;
 	}
 
 	CPlayer* TempPlayer;
