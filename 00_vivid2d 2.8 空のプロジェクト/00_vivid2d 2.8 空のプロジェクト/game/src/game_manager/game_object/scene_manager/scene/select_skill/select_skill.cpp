@@ -17,13 +17,13 @@ const vivid::Vector2    CSelectSkill::m_title_poster_position = vivid::Vector2(v
 
 const vivid::Vector2    CSelectSkill::m_icon_positionList[] =
 {
-    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 1.0f, vivid::WINDOW_HEIGHT / 7.0f * 3),		//Player1
-    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 3.0f, vivid::WINDOW_HEIGHT / 7.0f * 3),		//Player2
-    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 5.0f, vivid::WINDOW_HEIGHT / 7.0f * 3),		//Player3
-    vivid::Vector2( vivid::WINDOW_WIDTH / 8.0f * 7.0f, vivid::WINDOW_HEIGHT / 7.0f * 3) 		//Player4
+    vivid::Vector2( vivid::WINDOW_WIDTH / 12.0f * 3.0f, vivid::WINDOW_HEIGHT / 7.0f * 3),		//Player1
+    vivid::Vector2( vivid::WINDOW_WIDTH / 12.0f * 5.0f, vivid::WINDOW_HEIGHT / 7.0f * 3),		//Player2
+    vivid::Vector2( vivid::WINDOW_WIDTH / 12.0f * 7.0f, vivid::WINDOW_HEIGHT / 7.0f * 3),		//Player3
+    vivid::Vector2( vivid::WINDOW_WIDTH / 12.0f * 9.0f, vivid::WINDOW_HEIGHT / 7.0f * 3) 		//Player4
 };
 
-const vivid::Vector2    CSelectSkill::m_icon_poster_scale = vivid::Vector2(4.0f, 0.8f);
+const vivid::Vector2    CSelectSkill::m_icon_poster_scale = vivid::Vector2(1.25f, 0.85f);
 const vivid::Vector2    CSelectSkill::m_icon_poster_position = vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, vivid::WINDOW_HEIGHT / 5.0f * 2.0f);
 
 const float             CSelectSkill::m_icon_scale = 0.3f;
@@ -31,12 +31,12 @@ const float             CSelectSkill::m_icon_name_scale = 0.1f;
 const float             CSelectSkill::m_icon_name_position_up = 110.0f;
 
 const float             CSelectSkill::m_info_scale = 1.0f;
-const vivid::Vector2    CSelectSkill::m_info_position = vivid::Vector2(vivid::WINDOW_WIDTH / 4.0f * 3.0f, vivid::WINDOW_HEIGHT / 4.0f * 3.0f);
+const vivid::Vector2    CSelectSkill::m_info_position = vivid::Vector2(vivid::WINDOW_WIDTH / 3.0f * 2.0f, vivid::WINDOW_HEIGHT / 4.0f * 3.0f);
 
-const float             CSelectSkill::m_video_scale = 0.5f;
-const vivid::Vector2    CSelectSkill::m_video_position = vivid::Vector2(vivid::WINDOW_WIDTH / 4.0f * 1.0f, vivid::WINDOW_HEIGHT / 4.0f * 3.0f);
+const float             CSelectSkill::m_video_scale = 0.4f;
+const vivid::Vector2    CSelectSkill::m_video_position = vivid::Vector2(vivid::WINDOW_WIDTH / 7.0f * 2.0f, vivid::WINDOW_HEIGHT / 4.0f * 3.0f);
 
-const vivid::Vector2    CSelectSkill::m_video_poster_scale = vivid::Vector2(1.5f, 0.8f);
+const vivid::Vector2    CSelectSkill::m_video_poster_scale = vivid::Vector2(0.5f, 0.65f);
 
 CSelectSkill::CSelectSkill(void)
     :m_CursorMoveTimer()

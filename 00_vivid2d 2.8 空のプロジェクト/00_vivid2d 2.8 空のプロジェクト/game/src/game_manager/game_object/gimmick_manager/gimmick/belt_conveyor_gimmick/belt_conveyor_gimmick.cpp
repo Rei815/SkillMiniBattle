@@ -5,9 +5,9 @@
 
 const float			CBeltConveyorGimmick::m_mid_belt_speed_time = 180.0f;
 
-const float			CBeltConveyorGimmick::m_min_belt_speed_rate = 0.90f;
-const float			CBeltConveyorGimmick::m_mid_belt_speed_rate = 5.0f;
-const float			CBeltConveyorGimmick::m_max_belt_speed_rate = 10.0f;
+const float			CBeltConveyorGimmick::m_min_belt_speed_rate =  5.0f;
+const float			CBeltConveyorGimmick::m_mid_belt_speed_rate = 10.0f;
+const float			CBeltConveyorGimmick::m_max_belt_speed_rate = 20.0f;
 
 CBeltConveyorGimmick::CBeltConveyorGimmick()
 	: CGimmick()

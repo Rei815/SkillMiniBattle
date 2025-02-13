@@ -1,12 +1,12 @@
 #include "menu_poster.h"
 
-const int               CMenuPoster::m_height = 298;
-const int               CMenuPoster::m_width = 295;
+const int               CMenuPoster::m_height = 338;
+const int               CMenuPoster::m_width = 833;
 const vivid::Rect       CMenuPoster::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
 const vivid::Vector2    CMenuPoster::m_default_scale = vivid::Vector2(1.0f, 1.0f);
 const vivid::Vector2    CMenuPoster::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
 
-const std::string CMenuPoster::m_file_name = "data\\Textures\\reward.png";
+const std::string CMenuPoster::m_file_name = "data\\Textures\\notice_wide.png";
 
 /*
  *  コンストラクタ

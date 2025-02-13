@@ -1,12 +1,12 @@
 #include "skill_infomation.h"
 
-const int               CSkillInfomation::m_height = 200;
-const int               CSkillInfomation::m_width = 450;
-const vivid::Rect       CSkillInfomation::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
-const vivid::Vector2    CSkillInfomation::m_default_scale = vivid::Vector2(1.0f, 1.0f);
-const vivid::Vector2    CSkillInfomation::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
+const int				CSkillInfomation::m_height	= 200;
+const int				CSkillInfomation::m_width	= 450;
+const vivid::Rect		CSkillInfomation::m_rect	= vivid::Rect{ 0, 0, m_width, m_height };
+const vivid::Vector2	CSkillInfomation::m_anchor	= vivid::Vector2(m_width / 2, m_height / 2);
+const vivid::Vector2	CSkillInfomation::m_default_scale = vivid::Vector2(1.0f, 1.0f);
 
-const std::string CSkillInfomation::m_skill_info_file_name[] =
+const std::string		CSkillInfomation::m_skill_info_file_name[] =
 {
 		"data\\Textures\\skill_info_speedup.png",
 		"data\\Textures\\skill_info_jumpup.png",
@@ -27,6 +27,14 @@ const std::string CSkillInfomation::m_skill_info_file_name[] =
 		"data\\Textures\\skill_info_hidetopic.png",
 		"data\\Textures\\skill_info.png"
 };
+
+const std::string		CSkillInfomation::m_skill_info_bg_file_name = "data\\Textures\\skill_info_bg.png";
+
+const int				CSkillInfomation::m_bg_height = 279;
+const int				CSkillInfomation::m_bg_width = 568;
+const vivid::Rect		CSkillInfomation::m_bg_rect = vivid::Rect{ 0, 0, m_bg_width, m_bg_height };
+const vivid::Vector2	CSkillInfomation::m_bg_anchor = vivid::Vector2(m_bg_width / 2, m_bg_height / 2);
+const vivid::Vector2    CSkillInfomation::m_bg_shift_pos = m_anchor - m_bg_anchor + vivid::Vector2(0.0f, -25.0f);
 
 /*
  *  コンストラクタ
@@ -88,6 +96,8 @@ CSkillInfomation::
 Draw(void)
 {
 	CUI::Draw();
+
+	vivid::DrawTexture(m_skill_info_bg_file_name, m_Position + m_bg_shift_pos, 0xffffffff, m_bg_rect, m_bg_anchor, m_Scale);
 
 	if (m_FileName == "")
 		return;

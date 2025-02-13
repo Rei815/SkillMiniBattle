@@ -67,6 +67,7 @@ private:
 
     static const CVector3   m_belt_conveyor_position;
     static const float      m_belt_conveyor_rotate_y;
+    static const float      m_belt_conveyor_scale;
 
     IObject*    m_StageObject;
 };
