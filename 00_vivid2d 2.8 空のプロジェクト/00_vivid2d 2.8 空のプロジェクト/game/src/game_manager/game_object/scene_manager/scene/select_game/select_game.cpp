@@ -6,6 +6,7 @@
 #include "../../../animation_manager/animation_manager.h"
 #include "../../../sound_manager/sound_manager.h"
 #include "../../../ui_manager/ui/game_video/game_video.h"
+#include "../../../ui_manager/ui/player_ready/player_ready.h"
 
 const int CSelectGame::m_games_num = 5;
 const float CSelectGame::m_circle_radius = 500.0f;
@@ -145,6 +146,7 @@ void CSelectGame::Update(void)
             m_GameInfomationFlag = true;
             vivid::Vector2 bgPos = vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() / 2);
             um.Create(UI_ID::MENU_BG, bgPos);
+            um.Create(UI_ID::PLAYER_READY);
 
             CGameVideo* gameVideo = (CGameVideo*)um.Create(UI_ID::GAME_VIDEO);
             gameVideo->SetGameVideo(m_SelectedGameID);
@@ -210,7 +212,10 @@ void CSelectGame::Update(void)
 
     if (m_SecondSceneUIParent)
     {
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
+        CPlayerReady* playerReady = (CPlayerReady*)CUIManager::GetInstance().GetUI(UI_ID::PLAYER_READY);
+        if (playerReady == nullptr) return;
+        //ミニゲーム情報が中心にある状態
+        if (playerReady->GetReadyFlag() == true && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
         {
             CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTSKILL);
             CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
@@ -218,7 +223,6 @@ void CSelectGame::Update(void)
             m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
         }
-
         if (m_SecondSceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
 
         const float min_height = -vivid::GetWindowHeight() / 2;

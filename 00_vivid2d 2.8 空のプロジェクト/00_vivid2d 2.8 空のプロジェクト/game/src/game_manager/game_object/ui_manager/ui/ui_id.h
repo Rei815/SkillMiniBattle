@@ -34,4 +34,5 @@ enum class UI_ID
     TITLE_BUTTON,
     GAME_VIDEO,
     MINIGAME_TITLE,
+    PLAYER_READY,
 };

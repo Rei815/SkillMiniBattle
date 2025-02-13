@@ -27,8 +27,9 @@ CGameBG::
  */
 void
 CGameBG::
-Initialize(void)
+Initialize(const std::string file_name)
 {
+    m_FileName = file_name;
 }
 
 /*
@@ -48,7 +49,7 @@ void
 CGameBG::
 Draw(void)
 {
-    vivid::DrawTexture("data\\Textures\\sea.jpg", m_position, 0xffffffff);
+    vivid::DrawTexture(m_FileName, m_position, 0xffffffff);
 
 
 }

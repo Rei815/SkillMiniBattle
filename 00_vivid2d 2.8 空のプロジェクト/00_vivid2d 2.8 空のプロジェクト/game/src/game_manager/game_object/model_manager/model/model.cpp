@@ -167,3 +167,22 @@ CVector3 CModel::GetHitTrianglePosition(const CVector3& posA, const CVector3& po
 	return CVector3();
 }
 
+unsigned int CModel::GetMaterialDif(int material_index)
+{
+	COLOR_F difColor = MV1GetMaterialDifColor(m_Handle, material_index);
+
+	unsigned int color = int(difColor.a * 255.0f) << 24 | int(difColor.r * 255.0f) << 16 | int(difColor.g * 255.0f) << 8 | int(difColor.b * 255.0f);
+
+	return color;
+}
+
+void CModel::SetMaterialDif(int material_index, unsigned int color)
+{
+	COLOR_F difColor;
+	difColor.a = ((color >> 24) & 0xff) / 255.0f;
+	difColor.r = ((color >> 16) & 0xff) / 255.0f;
+	difColor.g = ((color >> 8) & 0xff) / 255.0f;
+	difColor.b = ((color) & 0xff) / 255.0f;
+	MV1SetMaterialDifColor(m_Handle, material_index, difColor);
+}
+

@@ -212,7 +212,7 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\game_video\game_video.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\key_bg\key_bg.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\minigame_title\minigame_title.cpp" />
-    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_mark\player_mark.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_ready\player_ready.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\menu_bg\menu_bg.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\menu_poster\menu_poster.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_num_select\player_num_select.cpp" />
@@ -367,7 +367,7 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\key_bg\key_bg.h" />
     <ClInclude Include="src\game_manager\game_object\layer_id.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\minigame_title\minigame_title.h" />
-    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_mark\player_mark.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_ready\player_ready.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\menu_bg\menu_bg.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\menu_poster\menu_poster.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_num_select\player_num_select.h" />

@@ -18,7 +18,7 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
-    void        Initialize(void);
+    void        Initialize(const std::string file_name);
 
     /*!
      *  @brief      XV
@@ -42,4 +42,6 @@ private:
     static const vivid::Rect        m_rect;         //!< “Ç‚İ‚İ”ÍˆÍ
     static const vivid::Vector2     m_anchor;       //!< Šî€“_
     static const vivid::Vector2     m_scale;        //!< Šgk
+
+    std::string                     m_FileName;
 };

@@ -52,7 +52,7 @@ void CMazeGame::Initialize(SCENE_ID scene_id)
 	SetLightEnable(false);
 	CTransform transform;
 	transform.position = m_player_position[0];
-	m_Light.Initialize(transform, CVector3::DOWN, GetColorF(1.0f, 1.0f, 1.0f, 1.0f), 0.0f, CLight::LIGHT_TYPE::SPOT);
+	m_Light.Initialize(transform, CVector3::RIGHT, GetColorF(1.0f, 1.0f, 1.0f, 1.0f), 0.0f, CLight::LIGHT_TYPE::SPOT);
 
 }
 

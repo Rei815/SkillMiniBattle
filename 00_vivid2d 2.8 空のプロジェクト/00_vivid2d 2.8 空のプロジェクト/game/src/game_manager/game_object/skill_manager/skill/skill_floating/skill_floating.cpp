@@ -95,7 +95,7 @@ Action()
 	CVector3 velocity = m_Player->GetVelocity();
 
 	m_Player->SetGravity(CVector3::ZERO);
-	m_Player->SetVelocity(CVector3(velocity.x, 0.0f, velocity.z));
+	m_Player->SetVelocity(CVector3(velocity.x, 0.1f, velocity.z));
 	m_Player->SetParent(nullptr);
 	m_Player->SetIsGround(false);
 	CVector3 effectPosition = m_Player->GetPosition();

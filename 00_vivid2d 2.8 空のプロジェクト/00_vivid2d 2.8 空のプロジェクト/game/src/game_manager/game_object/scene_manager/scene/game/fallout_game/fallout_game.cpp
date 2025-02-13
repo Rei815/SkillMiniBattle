@@ -43,6 +43,7 @@ CFallOutGame::~CFallOutGame(void)
 void CFallOutGame::Initialize(SCENE_ID scene_id)
 {
 	CGame::Initialize(scene_id);
+	m_BackGround.Initialize("data\\Textures\\fall_out_bg.png");
 	m_FallTime = m_fall_time;
 	for (int i = 0; i < m_max_topic_num; i++)
 	{
@@ -106,6 +107,7 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 
 void CFallOutGame::Update(void)
 {
+	m_BackGround.Update();
 	CStage::GetInstance().Update();
 	CGame::Update();
 
@@ -114,6 +116,7 @@ void CFallOutGame::Update(void)
 
 void CFallOutGame::Draw(void)
 {
+	m_BackGround.Draw();
 	CGame::Draw();
 #ifdef VIVID_DEBUG
 

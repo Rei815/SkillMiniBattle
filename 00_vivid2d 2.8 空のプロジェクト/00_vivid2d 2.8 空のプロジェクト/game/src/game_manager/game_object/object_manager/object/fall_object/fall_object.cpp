@@ -1,7 +1,13 @@
 #include "fall_object.h"
 #include "..\..\..\ui_manager\ui_manager.h"
-const	std::string		CFallObject::m_file_name_list[] = {"data\\fallout_floor_circle.mv1","data\\fallout_floor_cross.mv1" ,"data\\fallout_floor_moon.mv1" ,
-"data\\fallout_floor_square.mv1" ,"data\\fallout_floor_sun.mv1" ,"data\\fallout_floor_triangle.mv1" };
+const	std::string		CFallObject::m_file_name_list[] = {
+	"data\\Textures\\fall_out_circle.png",
+	"data\\Textures\\fall_out_cross.png",
+	"data\\Textures\\fall_out_moon.png",
+	"data\\Textures\\fall_out_square.png",
+	"data\\Textures\\fall_out_sun.png",
+	"data\\Textures\\fall_out_triangle.png",
+};
 
 
 CFallObject::CFallObject()
@@ -29,9 +35,14 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	case OBJECT_ID::TRIANGLE_FALL_OBJECT:	m_MarkID = MARK_ID::TRIANGLE;	m_Transform.rotation.y = -30;	break;
 	}
 	m_FileName = m_file_name_list[static_cast<int>(m_MarkID)];
-	m_Model.Initialize(m_FileName, m_Transform);
+	m_Model.Initialize("data\\fallout_floor.mv1", m_Transform);
+	vivid::LoadTexture(m_FileName);
+	int grHandle = vivid::core::FindLoadedTexture(m_FileName);
+	MV1SetTextureGraphHandle(m_Model.GetModelHandle(), 0, grHandle, true);
+	unsigned int color = m_Model.GetMaterialDif(0);
+	color = (color & 0x00ffffff) | (100 & 0xff) << 24;
+	m_Model.SetMaterialDif(0, color);
 	m_Tag = "Floor";
-	MV1SetMeshBackCulling(m_Model.GetModelHandle(), 0, TRUE);
 
 }
 

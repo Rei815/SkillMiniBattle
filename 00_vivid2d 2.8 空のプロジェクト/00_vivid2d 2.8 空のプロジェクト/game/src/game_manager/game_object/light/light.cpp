@@ -8,8 +8,8 @@ CLight::CLight()
 	, m_Intensity()
 	, m_LightType(LIGHT_TYPE::DIRECTIONAL)
 	, m_Handle(VIVID_DX_ERROR)
-	, m_OutAngle(DEG_TO_RAD(180))
-	, m_InAngle(DEG_TO_RAD(90))
+	, m_OutAngle(DEG_TO_RAD(45))
+	, m_InAngle(DEG_TO_RAD(30))
 	, m_Range(200.0f)
 	, m_Atten0(0.0f)
 	, m_Atten1(0.002f)
@@ -162,4 +162,14 @@ void CLight::Draw()
 
 void CLight::Finalize()
 {
+}
+
+void CLight::SetDirection(const CVector3& direction)
+{
+	m_Direction = direction;
+}
+
+void CLight::SetRange(float range)
+{
+	m_Range = range;
 }

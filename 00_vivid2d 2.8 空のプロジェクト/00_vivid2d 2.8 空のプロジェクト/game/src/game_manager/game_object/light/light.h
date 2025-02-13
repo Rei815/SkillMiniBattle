@@ -33,6 +33,19 @@ public:
 	*/
 	void Finalize();
 
+	/*!
+	 *  @brief      ライトの向きを設定
+	 *
+	 *  @param[in]  direction     ライトの向き
+	 */
+	void        SetDirection(const CVector3& direction);
+
+	/*!
+	 *  @brief      ライトの範囲を設定
+	 *
+	 *  @param[in]  range     ライトの範囲
+	 */
+	void        SetRange(float range);
 
 private:
 	
