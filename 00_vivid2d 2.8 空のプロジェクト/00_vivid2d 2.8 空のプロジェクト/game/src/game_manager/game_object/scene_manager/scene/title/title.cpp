@@ -28,14 +28,14 @@ void CTitle::Initialize(SCENE_ID scene_id)
     IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
-
-    CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
+    CUIManager& um = CUIManager::GetInstance();
+    CUIManager::UI_LIST uiList = um.GetList();
     if (uiList.size() == 0)
     {
-        CUIManager::GetInstance().Initialize();
-        CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
+        um.Initialize();
+        um.Create(UI_ID::TITLE_LOGO);
     }
-    CUIManager::GetInstance().Create(UI_ID::TITLE_BUTTON);
+    um.Create(UI_ID::TITLE_BUTTON);
 
     IScene* previousScene = (*CSceneManager::GetInstance().GetList().begin());
 

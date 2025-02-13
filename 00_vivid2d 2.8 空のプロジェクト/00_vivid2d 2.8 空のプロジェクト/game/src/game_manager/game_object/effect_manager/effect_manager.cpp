@@ -32,7 +32,7 @@ CEffectManager::
 Initialize(void)
 {
     m_EffectList.clear();
-    vivid::effekseer::SetUseEffectListFlag(true);
+    vivid::effekseer::SetUseEffectListFlag(false);
 }
 
 /*

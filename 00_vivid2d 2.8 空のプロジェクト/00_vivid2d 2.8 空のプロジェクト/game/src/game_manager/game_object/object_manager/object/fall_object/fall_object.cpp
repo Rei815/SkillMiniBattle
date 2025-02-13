@@ -30,6 +30,8 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	}
 	m_FileName = m_file_name_list[static_cast<int>(m_MarkID)];
 	m_Model.Initialize(m_FileName, m_Transform);
+	//int grHandle = LoadGraph(m_FileName.c_str());
+	//MV1SetTextureGraphHandle(m_Model.GetModelHandle(), 0, grHandle, false);
 	m_Tag = "Floor";
 	MV1SetMeshBackCulling(m_Model.GetModelHandle(), 0, TRUE);
 

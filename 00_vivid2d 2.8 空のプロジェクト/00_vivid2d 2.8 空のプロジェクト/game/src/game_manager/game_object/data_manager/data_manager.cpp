@@ -139,6 +139,11 @@ UNIT_ID CDataManager::GetLastGameRanking(int num)
         return m_LastGameRanking[num];
 }
 
+int CDataManager::GetConnectControllerNum()
+{
+    return vivid::controller::GetConnectCount();
+}
+
 /*
  *  コンストラクタ
  */

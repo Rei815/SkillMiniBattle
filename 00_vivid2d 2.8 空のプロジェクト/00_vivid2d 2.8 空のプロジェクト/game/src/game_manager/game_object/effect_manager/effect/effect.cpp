@@ -146,7 +146,7 @@ void IEffect::Load(const std::string& file_name)
 
 void IEffect::Start()
 {
-        m_PlayHandle = vivid::effekseer::StartEffect(m_FileName, m_Transform.position, m_Scale, m_Speed);
+    m_PlayHandle = vivid::effekseer::StartEffect(m_FileName, m_Transform.position, m_Scale, m_Speed);
 }
 
 /*

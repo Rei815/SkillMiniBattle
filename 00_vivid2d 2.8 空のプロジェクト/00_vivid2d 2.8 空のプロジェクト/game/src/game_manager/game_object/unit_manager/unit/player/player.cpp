@@ -243,7 +243,6 @@ void CPlayer::StartInvincible(float invincible_time)
     m_InvincibleTimer.SetUp(invincible_time);
 }
 
-
 /*
  *  UŒ‚
  */

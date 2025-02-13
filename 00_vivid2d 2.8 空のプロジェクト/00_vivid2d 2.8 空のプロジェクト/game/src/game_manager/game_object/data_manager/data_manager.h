@@ -87,6 +87,13 @@ public:
 
 
     UNIT_ID         GetLastGameRanking(int num);
+
+    /*!
+     *  @brief      コントローラーの接続数を取得
+     *
+     *  @return     コントローラーの接続数
+     */
+    int             GetConnectControllerNum();
 private:
 
     /*!

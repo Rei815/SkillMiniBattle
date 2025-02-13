@@ -14,5 +14,6 @@ public:
 
 private:
 	static const std::string m_file_name;
+	static const float m_offset;
 
 };

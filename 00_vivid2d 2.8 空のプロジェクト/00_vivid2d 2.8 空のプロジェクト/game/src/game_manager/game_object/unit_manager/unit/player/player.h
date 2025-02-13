@@ -21,29 +21,29 @@ public:
      *
      *  @param[in]  position    初期位置
      */
-    virtual void        Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller);
+    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller);
 
     /*!
      *  @brief      更新
      */
-    virtual void        Update(void);
+    virtual void    Update(void);
 
     /*!
      *  @brief      描画
      */
-    virtual void        Draw(void);
+    virtual void    Draw(void);
 
     /*!
      *  @brief      解放
      */
-    virtual void        Finalize(void);
+    virtual void    Finalize(void);
 
 /*!
-     *  @brief      行動の可不可を設定
+     *  @brief          行動の可不可を設定
      *
-     *  @param[in]  flag    行動フラグ
+     *  @param[in]      flag    行動フラグ
  */
-    void        SetActionFlag(bool flag);
+    void                SetActionFlag(bool flag);
 
     vivid::controller::DEVICE_ID GetController(void);
     
@@ -59,59 +59,61 @@ public:
      *
      *  @param[in]  skill    スキルのポインタ
      */
-    void        SetSkill(CSkill* skill);
+    void            SetSkill(CSkill* skill);
 
     /*!
      *  @brief      スキル等によるスピード倍率のセット
      *
      *  @param[in]  rate    倍率
      */
-    void        SetMoveSpeedRate(float rate = 1.0f);
+    void            SetMoveSpeedRate(float rate = 1.0f);
 
     /*!
      *  @brief      スキル等によるスピード倍率の乗算
      *  @param[in]  rate    倍率
      */
-    void        MulMoveSpeedRate(float rate = 1.0f);
+    void            MulMoveSpeedRate(float rate = 1.0f);
 
     /*!
      *  @brief      スキル等によるスピード倍率の除算
      *  @param[in]  rate    倍率
      */
-    void        DivMoveSpeedRate(float rate = 1.0f);
+    void            DivMoveSpeedRate(float rate = 1.0f);
 
     /*!
      *  @brief      スキル等によるジャンプ倍率のセット
      *
      *  @param[in]  rate    倍率
      */
-    void        SetJumpPowerRate(float rate = 1.0f);
+    void            SetJumpPowerRate(float rate = 1.0f);
 
     /*!
      *  @brief      スキル等によるジャンプ倍率の乗算
      *
      *  @param[in]  rate    倍率
      */
-    void        MulJumpPowerRate(float rate = 1.0f);
+    void            MulJumpPowerRate(float rate = 1.0f);
 
     /*!
      *  @brief      スキル等によるジャンプ倍率の除算
      *
      *  @param[in]  rate    倍率
      */
-    void        DivJumpPowerRate(float rate = 1.0f);
+    void            DivJumpPowerRate(float rate = 1.0f);
 
     /*!
      *  @brief      無敵効果の付与
      *
      *  @param[in]  invincible_time    無敵時間
      */
-    void        StartInvincible(float invincible_time);
+    void            StartInvincible(float invincible_time);
 
-    bool        GetPlayerMoving();
+    bool            GetPlayerMoving();
 
-    void    SetForwardVector(const CVector3& forward_vector);
-    CVector3    GetForwardVector();
+    void            SetForwardVector(const CVector3& forward_vector);
+
+    CVector3        GetForwardVector();
+
 protected:
     /*!
      *  @brief      攻撃

@@ -112,7 +112,7 @@ public:
      *  @return     -1 存在しない
      *
      */
-    int GetUIActive(UI_ID ui_id);
+    int             GetUIActive(UI_ID ui_id);
 
     /*!
      *  @brief      UIリスト型
@@ -124,12 +124,20 @@ public:
      *
      *  @return     オブジェクトリスト
      */
-    UI_LIST GetList();
+    UI_LIST         GetList();
 
     /*!
      *  @brief      レイヤー内の番号をもとに並び替え
      */
     void            SortList(void);
+
+    /*
+    *  @brief       UI取得
+    *               複数ある場合最初に作られたものが返ってくる
+     * @param[in]   ui_id          UIのID
+    *  @return      オブジェクトリスト
+    */
+    CUI*            GetUI(UI_ID ui_id);
 
 private:
     /*!

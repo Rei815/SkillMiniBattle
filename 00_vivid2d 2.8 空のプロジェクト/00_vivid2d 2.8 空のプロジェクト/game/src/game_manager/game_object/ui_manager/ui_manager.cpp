@@ -27,6 +27,7 @@
 #include "ui/title_button/title_button.h"
 #include "ui/game_video/game_video.h"
 #include "ui/minigame_title/minigame_title.h"
+#include "ui/player_ready/player_ready.h"
  /*
   *  インスタンスの取得
   */
@@ -238,6 +239,29 @@ void CUIManager::SortList(void)
     m_UIList.sort([](const CUI* p, const CUI* q) {return *p < *q; });
 }
 
+/*
+ *  指定のUIを返す
+ */
+CUI* CUIManager::GetUI(UI_ID ui_id)
+{
+    if (m_UIList.empty()) return nullptr;
+
+    UI_LIST::iterator it = m_UIList.begin();
+
+    while (it != m_UIList.end())
+    {
+        CUI* ui = (CUI*)(*it);
+
+
+        if (ui->GetUI_ID() == ui_id)
+        {
+            return ui;
+        }
+
+        ++it;
+    }
+}
+
 CUI* CUIManager::CreateClass(UI_ID id)
 {
    CUI* ui = nullptr;
@@ -299,6 +323,8 @@ CUI* CUIManager::CreateClass(UI_ID id)
         ui = new CGameVideo(id);        break;
     case UI_ID::MINIGAME_TITLE:
         ui = new CMiniGameTitle(id);        break;
+    case UI_ID::PLAYER_READY:
+        ui = new CPlayerReady(id);        break;
     }
 
     return ui;
