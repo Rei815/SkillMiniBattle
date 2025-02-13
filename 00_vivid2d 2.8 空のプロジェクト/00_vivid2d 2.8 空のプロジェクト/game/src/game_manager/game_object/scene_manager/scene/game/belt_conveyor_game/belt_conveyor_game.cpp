@@ -8,21 +8,22 @@
 #include "..\..\..\..\gimmick_manager\gimmick_manager.h"
 
 const float		CBeltConveyorGame::m_defeat_height			= -500.0f;
-const CVector3	CBeltConveyorGame::m_camera_position		= CVector3(0.0f, 2500.0f, -1800.0f);
-const CVector3	CBeltConveyorGame::m_camera_direction		= CVector3(0.0f, -1.0f, 0.6f);
+const CVector3	CBeltConveyorGame::m_camera_position		= CVector3(0.0f, 900.0f, -1350.0f);
+const CVector3	CBeltConveyorGame::m_camera_direction		= CVector3(0.0f, -0.6f, 0.6f);
 
 const CVector3	CBeltConveyorGame::m_belt_conveyor_position	= CVector3(0.0f, -100.0f, 0.0f);
-const float		CBeltConveyorGame::m_belt_conveyor_rotate_y	= -120.0f;
+const float		CBeltConveyorGame::m_belt_conveyor_rotate_y	= -135.0f;
+const float     CBeltConveyorGame::m_belt_conveyor_scale = 0.6f;
 
 const CVector3 CBeltConveyorGame::m_player_spawnpos_list[] =
 {
-	CVector3(-150, 0, 0),	//Player1
-	CVector3( -50, 0, 0),	//Player2
-	CVector3(  50, 0, 0),	//Player3
-	CVector3( 150, 0, 0)	//Player4
+	CVector3(-150, 0,  75),	//Player1
+	CVector3( -50, 0,  25),	//Player2
+	CVector3(  50, 0, -25),	//Player3
+	CVector3( 150, 0, -75)	//Player4
 };
 
-const CVector3 CBeltConveyorGame::m_player_default_forward = CVector3(0.0f, 0.0f, 1.0f);
+const CVector3 CBeltConveyorGame::m_player_default_forward = CVector3(1.0f, 0.0f, 1.0f);
 
 
 CBeltConveyorGame::CBeltConveyorGame(void)
@@ -43,8 +44,8 @@ void CBeltConveyorGame::Initialize(SCENE_ID scene_id)
 
 	//ステージ生成
 	m_StageObject = CObjectManager::GetInstance().Create(OBJECT_ID::BELT_CONVEYOR_STAGE_OBJECT, CTransform(m_belt_conveyor_position, CVector3(0.0f, m_belt_conveyor_rotate_y, 0.0f)));
-	CGimmickManager::GetInstance().Create(GIMMICK_ID::BELT_CONVEYOR_GIMMICK, m_StageObject);
-
+	m_StageObject->SetScale(m_belt_conveyor_scale);
+	
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
@@ -101,6 +102,9 @@ void CBeltConveyorGame::Start(void)
 {
 	CGame::Start();
 
+	//プレイになるタイミングで、ギミックを付与する
+	if(m_GameState == GAME_STATE::PLAY)
+		CGimmickManager::GetInstance().Create(GIMMICK_ID::BELT_CONVEYOR_GIMMICK, m_StageObject);
 }
 
 void CBeltConveyorGame::Play(void)
