@@ -115,10 +115,6 @@ public:
 
     CVector3        GetForwardVector();
 
-    void    SetForwardVector(const CVector3& forward_vector);
-
-    CVector3    GetForwardVector();
-
     static const float              m_move_speed;                   //!< ˆÚ“®‘¬“x
     static const float              m_jump_power;                   //!< ƒWƒƒƒ“ƒv—Í
 protected:
