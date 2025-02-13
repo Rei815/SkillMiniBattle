@@ -32,6 +32,7 @@ CPlayer::CPlayer()
     , m_ActionFlag(true)
     , m_Controller()
     , m_ForwardVector(CVector3::FORWARD)
+    , m_Effect(nullptr)
 {
 }
 
@@ -285,6 +286,10 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
 */
 void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, float power)
 {
+    CVector3 m_EffectPosition = this->GetPosition();
+
+   // m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
+
     //当たった向きを取得
     CVector3 TempVelocity = (m_Transform.position - hit_position);
     //垂直方向の速度は最後に計算するので、一度ゼロにする

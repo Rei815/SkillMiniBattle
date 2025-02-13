@@ -14,6 +14,7 @@
 #include "effect/gravity_area_effect/gravity_area_effect.h"
 #include "effect/strong_wind_effect/strong_wind_effect.h"
 #include "effect/collide_effect/collide_effect.h"
+#include "effect/skill_star_effect/skill_star_effect.h"
  /*
   *  インスタンスの取得
   */
@@ -248,6 +249,8 @@ IEffect* CEffectManager::CreateClass(EFFECT_ID id)
     case EFFECT_ID::STRONG_WIND:            effect = new CStrongWindEffect();
       break;
     case EFFECT_ID::COLLIDE:                effect = new CCollideEffect();
+      break;
+    case EFFECT_ID::SKILL_STAR:             effect = new CSkillStarEffect();
       break;
     }
     return effect;

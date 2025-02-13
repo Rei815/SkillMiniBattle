@@ -5,6 +5,7 @@
 #include "../../../model_manager/model/model.h"
 #include "../../../bullet_manager/bullet/bullet.h"
 #include "../../../skill_manager/skill/skill.h"
+#include "../../../effect_manager/effect_manager.h"
 
 class CSkill;
 
@@ -182,4 +183,6 @@ protected:
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
     CVector3                        m_ForwardVector;                //!< 正面方向のベクトル
+    IEffect*                        m_Effect;
+
 };
