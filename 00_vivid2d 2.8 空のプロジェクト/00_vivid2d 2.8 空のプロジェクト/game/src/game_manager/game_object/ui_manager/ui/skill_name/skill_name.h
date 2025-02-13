@@ -57,6 +57,6 @@ private:
     static const vivid::Vector2     m_default_scale;    //!< Šgk
 
 
-    static const std::string        m_skill_info_file_name[];
+    static const std::string        m_skill_name_file_name[];
     std::string                     m_FileName;
 };

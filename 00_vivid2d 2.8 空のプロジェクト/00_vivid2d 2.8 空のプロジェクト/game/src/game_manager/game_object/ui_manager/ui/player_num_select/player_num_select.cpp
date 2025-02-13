@@ -1,7 +1,7 @@
 #include "player_num_select.h"
 
-const int               CPlayerNumSelect::m_height = 200;
-const int               CPlayerNumSelect::m_width = 200;
+const int               CPlayerNumSelect::m_height = 563;
+const int               CPlayerNumSelect::m_width = 1000;
 const vivid::Rect       CPlayerNumSelect::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
 const vivid::Vector2    CPlayerNumSelect::m_default_scale = vivid::Vector2(1.0f, 1.0f);
 const float             CPlayerNumSelect::m_selected_scale_magnification = 1.2f;

@@ -27,7 +27,7 @@ const vivid::Vector2    CSelectSkill::m_icon_poster_scale = vivid::Vector2(1.25f
 const vivid::Vector2    CSelectSkill::m_icon_poster_position = vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, vivid::WINDOW_HEIGHT / 5.0f * 2.0f);
 
 const float             CSelectSkill::m_icon_scale = 0.3f;
-const float             CSelectSkill::m_icon_name_scale = 0.1f;
+const float             CSelectSkill::m_icon_name_scale = 1.0f;
 const float             CSelectSkill::m_icon_name_position_up = 110.0f;
 
 const float             CSelectSkill::m_info_scale = 1.0f;

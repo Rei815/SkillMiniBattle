@@ -19,7 +19,7 @@ const std::string		CSkillInfomation::m_skill_info_file_name[] =
 		"data\\Textures\\skill_info_invisible.png",
 		"data\\Textures\\skill_info_stun.png",
 		"data\\Textures\\skill_info_mimicry.png",
-		"data\\Textures\\skill_info_slow.png_test",		//まだテスト
+		"data\\Textures\\skill_info_slow_test.png",		//まだテスト
 		"data\\Textures\\skill_info_ogrecontrol.png",
 		"data\\Textures\\skill_info_resurrect.png",
 		"data\\Textures\\skill_info_resurrect.png",
@@ -28,7 +28,7 @@ const std::string		CSkillInfomation::m_skill_info_file_name[] =
 		"data\\Textures\\skill_info.png"
 };
 
-const std::string		CSkillInfomation::m_skill_info_bg_file_name = "data\\Textures\\skill_info_bg.png";
+const std::string		CSkillInfomation::m_skill_info_bg_file_name = "data\\Textures\\skill_info.png";
 
 const int				CSkillInfomation::m_bg_height = 279;
 const int				CSkillInfomation::m_bg_width = 568;

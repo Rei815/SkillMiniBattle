@@ -1,17 +1,17 @@
 #include "start_game_count.h"
 
-const int				CStartGameCount::m_height = 200;
-const int				CStartGameCount::m_width = 200;
+const int				CStartGameCount::m_height = 500;
+const int				CStartGameCount::m_width = 500;
 const vivid::Rect		CStartGameCount::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
-const vivid::Vector2	CStartGameCount::m_default_scale = vivid::Vector2(1.0f, 1.0f);
-const vivid::Vector2	CStartGameCount::m_max_scale = vivid::Vector2(1.5f,1.5f);
+const vivid::Vector2	CStartGameCount::m_default_scale = vivid::Vector2(0.5f, 0.5f);
+const vivid::Vector2	CStartGameCount::m_max_scale = vivid::Vector2(0.8f,0.8f);
 const vivid::Vector2	CStartGameCount::m_anchor = vivid::Vector2(m_width / 2, m_height / 2);
 
 const std::string		CStartGameCount::m_file_name[] = 
 {
-	"data\\Textures\\number_1.png",
-	"data\\Textures\\number_2.png",
-	"data\\Textures\\number_3.png"
+	"data\\Textures\\countdown_1.png",
+	"data\\Textures\\countdown_2.png",
+	"data\\Textures\\countdown_3.png"
 };
 
 const float				CStartGameCount::m_movein_time = 0.3f;

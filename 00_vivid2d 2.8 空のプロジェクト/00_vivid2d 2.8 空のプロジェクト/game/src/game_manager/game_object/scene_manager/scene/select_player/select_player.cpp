@@ -11,7 +11,7 @@ const vivid::Vector2    CSelectPlayer::m_player_num_ui_pos[(int)UNIT_ID::NONE] =
     vivid::Vector2(vivid::WINDOW_WIDTH / 4.0f * 2.0f, vivid::WINDOW_HEIGHT / 3.0f * 2.0f),
     vivid::Vector2(vivid::WINDOW_WIDTH / 4.0f * 3.0f, vivid::WINDOW_HEIGHT / 3.0f * 2.0f)
 };
-const float             CSelectPlayer::m_player_num_ui_scale = 1.0f;
+const float             CSelectPlayer::m_player_num_ui_scale = 0.4f;
 
 
 CSelectPlayer::CSelectPlayer(void)
