@@ -2,6 +2,8 @@
 #include "gimmick/fall_gimmick/fall_gimmick.h"
 #include "gimmick/dodgeball_gimmick/dodgeball_gimmick.h"
 #include "gimmick/daruma_falldown_gimmick/daruma_falldown_gimmick.h"
+#include "gimmick/belt_conveyor_gimmick/belt_conveyor_gimmick.h"
+
 /*
  *  インスタンスの取得
  */
@@ -99,9 +101,10 @@ void CGimmickManager::Create(GIMMICK_ID id, IObject* object)
     CGimmick* gimmick = nullptr;
     switch (id)
     {
-    case GIMMICK_ID::FALL_GIMMICK: gimmick = new CFallGimmick(); break;
-    case GIMMICK_ID::DODGEBALL_GIMMICK: gimmick = new CDodgeBallGimmick(); break;
-    case GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK: gimmick = new CDaruma_FallDownGimmick(); break;
+    case GIMMICK_ID::FALL_GIMMICK:              gimmick = new CFallGimmick();               break;
+    case GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK:   gimmick = new CDaruma_FallDownGimmick();    break;
+    case GIMMICK_ID::DODGEBALL_GIMMICK:         gimmick = new CDodgeBallGimmick();          break;
+    case GIMMICK_ID::BELT_CONVEYOR_GIMMICK:     gimmick = new CBeltConveyorGimmick();       break;
     }
 
     if (!gimmick) return;
@@ -116,9 +119,10 @@ void CGimmickManager::Create(GIMMICK_ID id, IObject* object, float time)
     CGimmick* gimmick = nullptr;
     switch (id)
     {
-    case GIMMICK_ID::FALL_GIMMICK: gimmick = new CFallGimmick(); break;
-    case GIMMICK_ID::DODGEBALL_GIMMICK: gimmick = new CDodgeBallGimmick(); break;
-    case GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK: gimmick = new CDaruma_FallDownGimmick(); break;
+    case GIMMICK_ID::FALL_GIMMICK:              gimmick = new CFallGimmick();               break;
+    case GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK:   gimmick = new CDaruma_FallDownGimmick();    break;
+    case GIMMICK_ID::DODGEBALL_GIMMICK:         gimmick = new CDodgeBallGimmick();          break;
+    case GIMMICK_ID::BELT_CONVEYOR_GIMMICK:     gimmick = new CBeltConveyorGimmick();       break;
     }
 
     if (!gimmick) return;

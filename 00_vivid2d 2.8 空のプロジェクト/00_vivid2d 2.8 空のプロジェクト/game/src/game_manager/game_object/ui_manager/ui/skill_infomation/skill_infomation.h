@@ -59,4 +59,11 @@ private:
 
     static const std::string        m_skill_info_file_name[];
     std::string                     m_FileName;
+
+    static const int                m_bg_height;           //!< ”wŒi‚‚³
+    static const int                m_bg_width;            //!< ”wŒi•
+    static const vivid::Rect        m_bg_rect;             //!< ”wŒi“Ç‚Ýž‚Ý”ÍˆÍ
+    static const vivid::Vector2     m_bg_anchor;           //!< ”wŒiŠî€“_
+    static const vivid::Vector2     m_bg_shift_pos;        //!< ”wŒiÀ•W‚Ì‚¸‚ê
+    static const std::string        m_skill_info_bg_file_name;
 };

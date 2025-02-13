@@ -32,7 +32,8 @@ IUnit::IUnit()
 IUnit::
 IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     : m_Transform(CTransform())
-    , m_Velocity(CVector3())
+    , m_Velocity(CVector3::ZERO)
+    , m_AffectedVelocity(CVector3::ZERO)
     , m_ActiveFlag(true)
     , m_Category(category)
     , m_UnitID(unit_id)
@@ -324,6 +325,17 @@ void IUnit::SetVelocity(const CVector3& velocity)
     m_Velocity = velocity;
 }
 
+
+void IUnit::AddAffectedVelocity(CVector3 velocity)
+{
+    m_AffectedVelocity += velocity;
+}
+
+void IUnit::SetAffectedVelocity(CVector3 velocity)
+{
+    m_AffectedVelocity = velocity;
+}
+
 float IUnit::GetRadius(void)
 {
     return m_Radius;
@@ -372,6 +384,11 @@ CModel IUnit::GetModel(void)
 void IUnit::SetIsGround(bool flag)
 {
     m_IsGround = flag;
+}
+
+bool IUnit::GetIsGround()
+{
+    return m_IsGround;
 }
 
 void IUnit::SetGravity(const CVector3& gravity)
@@ -489,7 +506,6 @@ void IUnit::Fire(CShot* shot, bool aim, CVector3& position, const CVector3& dire
 
     }
     shot->Shot(m_Category, position, dir);
-
 }
 
 void IUnit::HitBullet(IBullet* bullet, CVector3 hit_position)

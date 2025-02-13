@@ -26,12 +26,13 @@ CPlayer::CPlayer()
     , m_Skill(nullptr)
     , m_Accelerator(CVector3::ZERO)
     , m_InvincibleTimer(m_max_invincible_time)
-    , m_FallSpeed(0)
+//    , m_FallSpeed(0)
     , m_StopFlag(false)
     , m_FrictionFlag(true)
     , m_ActionFlag(true)
     , m_Controller()
     , m_ForwardVector(CVector3::FORWARD)
+    , m_Effect(nullptr)
 {
 }
 
@@ -92,7 +93,7 @@ void CPlayer::Update(void)
     else
         TempForwardVector = m_ForwardVector;
 
-    //エラーチェック（移動速度のベクトルが小さすぎるとき、ゼロベクトルとして判定されてしまい、計算結果が変わることがあるため）
+    //エラーチェック（移動速度のベクトルが小さすぎるとき、ゼロベクトルとして判定されてしまい、エラーとして返された数値によって計算結果が変わることがあるため）
     if (TempForwardVector.x != -1.0f || TempForwardVector.z != -1.0f)
     {
         m_ForwardVector = TempForwardVector;
@@ -179,7 +180,7 @@ bool CPlayer::GetPlayerMoving()
 
 void CPlayer::SetForwardVector(const CVector3& forward_vector)
 {
-    if (forward_vector != CVector3().ZERO)
+    if (forward_vector != CVector3::ZERO)
     {
         m_ForwardVector = forward_vector;
     }
@@ -284,6 +285,10 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
 */
 void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, float power)
 {
+    CVector3 m_EffectPosition = this->GetPosition();
+
+   // m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
+
     //当たった向きを取得
     CVector3 TempVelocity = (m_Transform.position - hit_position);
     //垂直方向の速度は最後に計算するので、一度ゼロにする
@@ -298,9 +303,9 @@ void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, fl
     TempVelocity = TempVelocity.Normalize();
     //垂直方向のベクトルを追加
     TempVelocity.y = 0.2f;
-    //速度をベクトルとその倍率でセットする
-    m_Velocity = TempVelocity * m_fly_away_speed * power;
-
+    //自身の移動速度をゼロにし、外部からの影響による移動速度をベクトルとその倍率でセットする
+    m_Velocity = CVector3::ZERO;
+    SetAffectedVelocity(TempVelocity * m_fly_away_speed * power);
 }
 void CPlayer::Control(void)
 {
@@ -381,7 +386,7 @@ void CPlayer::Move(void)
     if (!m_StopFlag)
     {
         m_Velocity += m_Accelerator;
-        m_Transform.position += m_Velocity;
+        m_Transform.position += m_Velocity + m_AffectedVelocity;
     }
 
     IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
@@ -403,13 +408,21 @@ void CPlayer::Move(void)
         m_Velocity.x *= m_move_friction.x;
         m_Velocity.y *= m_move_friction.y;
         m_Velocity.z *= m_move_friction.z;
+
+        m_AffectedVelocity.x *= m_move_friction.x;
+        m_AffectedVelocity.y *= m_move_friction.y;
+        m_AffectedVelocity.z *= m_move_friction.z;
     }
 
     if (m_IsGround)
     {
-        m_Velocity.y = 0.0f;
-        m_Accelerator.y = 0;
-        m_FallSpeed = 0.0f;
+        if(m_Velocity.y > 0.0f)
+            m_Velocity.y = 0.0f;
+
+        if(m_AffectedVelocity.y > 0.0f)
+            m_AffectedVelocity.y = 0.0f;
+
+//        m_FallSpeed = 0.0f;
     }
 
     m_Accelerator = CVector3::ZERO;

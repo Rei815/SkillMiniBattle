@@ -25,6 +25,7 @@ void CDogeballStageObject::Initialize(OBJECT_ID id, const CTransform& transform)
 void CDogeballStageObject::Update(void)
 {
 	IObject::Update();
+
 	m_Model.Update(m_Transform);
 }
 
@@ -44,10 +45,10 @@ void CDogeballStageObject::Finalize(void)
 
 bool CDogeballStageObject::GetActive(void)
 {
-	return m_ActiveFlag;
+	return IObject::GetActive();
 }
 
 void CDogeballStageObject::SetActive(bool active)
 {
-	m_ActiveFlag = active;
+	IObject::SetActive(active);
 }

@@ -5,6 +5,7 @@
 #include "../../../model_manager/model/model.h"
 #include "../../../bullet_manager/bullet/bullet.h"
 #include "../../../skill_manager/skill/skill.h"
+#include "../../../effect_manager/effect_manager.h"
 
 class CSkill;
 
@@ -114,6 +115,12 @@ public:
 
     CVector3        GetForwardVector();
 
+    void    SetForwardVector(const CVector3& forward_vector);
+
+    CVector3    GetForwardVector();
+
+    static const float              m_move_speed;                   //!< 移動速度
+    static const float              m_jump_power;                   //!< ジャンプ力
 protected:
     /*!
      *  @brief      攻撃
@@ -158,8 +165,6 @@ protected:
     static const float              m_radius;                       //!< 半径
     static const float              m_height;                       //!< 高さ
     static const float              m_model_scale;
-    static const float              m_move_speed;                   //!< 移動速度
-    static const float              m_jump_power;                   //!< ジャンプ力
     static const CVector3           m_move_friction;                //!< 移動用減速率
     static const float              m_fly_away_speed;               //!< 被弾時の吹っ飛び速度
     static const float              m_max_life;                     //!< 最大ライフ
@@ -173,8 +178,8 @@ protected:
 
     CSkill*                         m_Skill;                        //!< スキル
 
-    float                           m_FallSpeed;                    //!< 落下速度
-    CVector3                        m_Accelerator;                  //!< 加速度
+    //float                           m_FallSpeed;                    //!< 落下速度
+    CVector3                        m_Accelerator;                  //!< 加速度影響による移動速度
     CVector3                        m_InitialPosition;              //!< 初期位置
     bool                            m_StopFlag;                     //!< 停止フラグ
     bool                            m_FrictionFlag;                 //!< 減速フラグ
@@ -182,4 +187,6 @@ protected:
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
     CVector3                        m_ForwardVector;                //!< 正面方向のベクトル
+    IEffect*                        m_Effect;
+
 };

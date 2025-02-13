@@ -75,7 +75,6 @@ private:
     CTimer              m_ShotTimer;
     IEffect*            m_Effect;
 
-    static const std::string    m_file_name;
     static const CVector3       m_spawn_pos;
     static const float          m_spawn_time;
     static const float          m_max_rotate_angle;
