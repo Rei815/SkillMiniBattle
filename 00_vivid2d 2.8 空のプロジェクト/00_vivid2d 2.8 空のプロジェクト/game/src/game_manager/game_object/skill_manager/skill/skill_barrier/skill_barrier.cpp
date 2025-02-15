@@ -107,7 +107,7 @@ Action(void)
 	CSoundManager::GetInstance().Play_SE(SE_ID::BARRIER, false);
 
 	m_Player->StartInvincible(m_duration_time);
-	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 1.0f);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 0.04f);
 	m_State = SKILL_STATE::ACTIVE;
 }
 

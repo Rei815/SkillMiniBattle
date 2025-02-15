@@ -9,7 +9,7 @@ const int    CTitleLogo::m_height = 780;
  *  コンストラクタ
  */
 CTitleLogo::CTitleLogo(UI_ID id)
-    : CUI(m_width, m_height, id)
+    : CUI(m_width, m_height, id, -2)
 {
 }
 

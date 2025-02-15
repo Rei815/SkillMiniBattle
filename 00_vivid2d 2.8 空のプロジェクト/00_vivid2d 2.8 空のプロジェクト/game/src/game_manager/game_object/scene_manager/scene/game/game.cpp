@@ -53,11 +53,12 @@ CGame::Initialize(SCENE_ID scene_id)
     CControllerManager::GetInstance().Initialize();
     CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();
-    CUIManager::GetInstance().Initialize();
+    CUIManager& um = CUIManager::GetInstance();
+    um.Initialize();
 
     m_WaitTimer.SetUp(m_start_count_time);
     m_CountFlag = true;
-    CUIManager::GetInstance().Create(UI_ID::START_COUNTDOWN);
+    um.Create(UI_ID::START_COUNTDOWN);
 
     m_GameState = GAME_STATE::START;
 
@@ -71,7 +72,7 @@ CGame::Initialize(SCENE_ID scene_id)
 void
 CGame::Update(void)
 {
-
+    CEffectManager& em = CEffectManager::GetInstance();
     if(!m_PauseFlag)
     {
         switch (m_GameState)
@@ -85,7 +86,7 @@ CGame::Update(void)
 
         CSkillManager::GetInstance().Update();
 
-        CEffectManager::GetInstance().Update();
+        em.Update();
 
         CObjectManager::GetInstance().Update();
 
@@ -96,12 +97,18 @@ CGame::Update(void)
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB))
     {
+        if (m_PauseFlag == false)
+            em.PauseAllEffect();
+        else
+            em.ResumeAllEffect();
+
+
         if (m_PauseFlag)
             CUIManager::GetInstance().Delete(UI_ID::PAUSE);
         else
             CUIManager::GetInstance().Create(UI_ID::PAUSE);
-
         m_PauseFlag ^= true;
+
     }
 
 }

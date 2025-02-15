@@ -2,8 +2,9 @@
 
 #include "vivid.h"
 #include "..\ui.h"
+#include "../../../unit_manager/unit/unit_id.h"
 
-class  CPlayerIcon : CUI
+class  CPlayerIcon :  public CUI
 {
 public:
     /*!
@@ -36,6 +37,12 @@ public:
      */
     void        Finalize(void);
 
+    /*!
+     *  @brief  プレイヤーのIDを設定
+     *          IDで画像を差し替える
+     */
+    void        SetPlayerID(UNIT_ID unit_id);
+
 private:
 
     static const vivid::Vector2     m_position;     //!< 位置
@@ -45,5 +52,7 @@ private:
     static const vivid::Vector2     m_anchor;       //!< 基準点
     static const vivid::Vector2     m_scale;        //!< 拡縮
 
+    static const std::string        m_file_name[];
     std::string                     m_FileName;
+    int                             m_PlayerID;
 };

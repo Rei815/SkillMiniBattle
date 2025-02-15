@@ -25,8 +25,8 @@ public:
 	 */
 	void Finalize();
 private:
-	static const vivid::Vector2 m_min_scale;	//!< Šg‘å—¦‚ÌÅ¬’l
 	static const vivid::Vector2 m_max_scale;	//!< Šg‘å—¦‚ÌÅ‘å’l
 	static const float			m_speed;
+	vivid::Vector2				m_MinScale;	//!< Šg‘å—¦‚ÌÅ¬’l
 	CUI*						m_Key;	//!< Œ®‚Ìƒ|ƒCƒ“ƒ^
 };

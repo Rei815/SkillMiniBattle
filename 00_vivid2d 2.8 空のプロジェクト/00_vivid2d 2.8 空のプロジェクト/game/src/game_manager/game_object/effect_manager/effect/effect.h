@@ -12,15 +12,11 @@ public:
      *  @brief      コンストラクタ
      */
     IEffect();
-    /*!
-     *  @brief      コンストラクタ
-     */
-    IEffect(const std::string& file_name, EFFECT_ID effectID);
 
     /*!
      *  @brief      コンストラクタ
      */
-    IEffect(const std::string& file_name, EFFECT_ID effectID, float speed);
+    IEffect(const std::string& file_name, EFFECT_ID effectID = EFFECT_ID::DESTROY, float speed = 1.0f);
 
     /*!
      *  @brief      コンストラクタ
@@ -48,36 +44,10 @@ public:
      *  @brief      初期化
      *
      *  @param[in]  position    位置
-     */
-    virtual void    Initialize(const CVector3& position);
-
-    /*!
-     *  @brief      初期化
-     *
-     *  @param[in]  position    位置
      *  @param[in]  scale       拡大率
      */
 
-    virtual void    Initialize(const CVector3& position, float scale);
-
-    /*!
-     *  @brief      初期化
-     *
-     *  @param[in]  position    位置
-     *  @param[in]  rotation    回転
-     */
-
-    virtual void    Initialize(const CVector3& position, const CVector3& rotation);
-
-    /*!
-     *  @brief      初期化
-     *
-     *  @param[in]  position    位置
-     *  @param[in]  rotation    回転
-     *  @param[in]  scale       拡大率
-     */
-
-    virtual void    Initialize(const CVector3& position, const CVector3& rotation, float scale);
+    virtual void    Initialize(const CVector3& position = CVector3::ZERO, float scale = 1.0f);
 
     /*!
      *  @brief      初期化
@@ -98,11 +68,31 @@ public:
      *  @param[in]  speed       再生速度
      */
 
-    virtual void    Initialize(const CVector3& position, const CVector3& rotation, float scale, float speed);
+    virtual void    Initialize(const CVector3& position, const CVector3& rotation = CVector3::ZERO, float scale = 1.0f, float speed = 1.0f);
 
-    void	Load(const std::string& file_name);
+    /*!
+     *  @brief      エフェクトの読み込み
+     *
+     *  @param[in]  file_name    ファイル名
+     */
+    void	        Load(const std::string& file_name);
 
-    void    Start();
+    /*!
+     *  @brief      再生
+     */
+    void            Start();
+
+    /*!
+     *  @brief      一時停止
+     */
+    void            Pause();
+
+    /*!
+     *  @brief      再開
+     */
+    void            Resume();
+
+
     /*!
      *  @brief      更新
      */
@@ -198,4 +188,5 @@ protected:
     CVector3*               m_ParentPos;    //!< 親の位置
     EFFECT_ID               m_EffectID;     //!< エフェクトID
     float                   m_Speed;        //!< 再生速度
+    bool                    m_StopFlag;     //!< 再生停止フラグ
 };

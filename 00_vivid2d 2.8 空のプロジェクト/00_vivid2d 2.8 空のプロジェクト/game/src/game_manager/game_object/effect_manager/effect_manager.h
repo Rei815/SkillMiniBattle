@@ -50,18 +50,6 @@ public:
      */
     void        Finalize(void);
 
-
-    IEffect* Create(EFFECT_ID id);
-
-    /*!
-     *  @brief      エフェクト生成
-     *
-     *  @param[in]  id          エフェクトID
-     *  @param[in]  pos         位置
-     */
-    IEffect*        Create(EFFECT_ID id, const CVector3& pos);
-
-
     /*!
      *  @brief      エフェクト生成
      *
@@ -69,7 +57,7 @@ public:
      *  @param[in]  pos         位置
      *  @param[in]  scale       拡大率
      */
-    IEffect*        Create(EFFECT_ID id, const CVector3& pos, float scale);
+    IEffect*        Create(EFFECT_ID id, const CVector3& pos = CVector3::ZERO, float scale = 1.0f);
 
     /*!
      *  @brief      エフェクト生成
@@ -118,7 +106,17 @@ public:
      *  @param[in]  effectID        エフェクトid
      *  @param[in]  parentPos       親の位置
      */
-    void        SetParentPosition(EFFECT_ID effectID,CVector3& parentPos);
+    void            SetParentPosition(EFFECT_ID effectID,CVector3& parentPos);
+
+    /*!
+     *  @brief      すべてのエフェクトを一時停止
+     */
+    void            PauseAllEffect();
+
+    /*!
+     *  @brief      すべてのエフェクトを再開
+     */
+    void            ResumeAllEffect();
 
 private:
 

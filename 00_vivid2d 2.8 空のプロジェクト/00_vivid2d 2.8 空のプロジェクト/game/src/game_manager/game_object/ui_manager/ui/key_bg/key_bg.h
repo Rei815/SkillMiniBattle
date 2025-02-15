@@ -21,11 +21,6 @@ public:
     void        Initialize(const vivid::Vector2& position);
 
     /*!
-     *  @brief      çXêV
-     */
-    void        Update(void);
-
-    /*!
      *  @brief      ï`âÊ
      */
     void        Draw(void);

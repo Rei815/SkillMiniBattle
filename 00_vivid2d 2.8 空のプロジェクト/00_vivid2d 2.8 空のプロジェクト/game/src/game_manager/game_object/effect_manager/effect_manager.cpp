@@ -112,23 +112,6 @@ Finalize(void)
     m_EffectList.clear();
 }
 
-/*
- *  エフェクト生成
- */
-IEffect*
-CEffectManager::
-Create(EFFECT_ID id, const CVector3& pos)
-{
-    IEffect* effect = CreateClass(id);
-
-    if (!effect) return nullptr;
-
-    effect->Initialize(pos);
-
-     m_EffectList.push_back(effect);
-    return effect;
-}
-
 IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const float scale)
 {
     IEffect* effect = CreateClass(id);
@@ -224,6 +207,41 @@ void CEffectManager::SetParentPosition(EFFECT_ID effectID, CVector3& parentPos)
 
         ++it;
     }
+
+}
+
+void CEffectManager::PauseAllEffect()
+{
+    if (m_EffectList.empty()) return;
+
+    EFFECT_LIST::iterator it = m_EffectList.begin();
+
+    while (it != m_EffectList.end())
+    {
+        IEffect* effect = (IEffect*)(*it);
+
+        effect->Pause();
+
+        ++it;
+    }
+
+}
+
+void CEffectManager::ResumeAllEffect()
+{
+    if (m_EffectList.empty()) return;
+
+    EFFECT_LIST::iterator it = m_EffectList.begin();
+
+    while (it != m_EffectList.end())
+    {
+        IEffect* effect = (IEffect*)(*it);
+
+        effect->Resume();
+
+        ++it;
+    }
+
 
 }
 

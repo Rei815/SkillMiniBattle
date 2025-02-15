@@ -8,23 +8,10 @@ IEffect::IEffect()
     , m_PlayHandle(VIVID_DX_ERROR)
     , m_ParentPos(nullptr)
     , m_Speed(1.0f)
+    , m_StopFlag(false)
 {
 }
 
-/*
-  *  コンストラクタ
-  */
-IEffect::
-IEffect(const std::string& file_name, EFFECT_ID effectID)
-    : m_Scale(CVector3(25.0f, 25.0f, 25.0f))
-    , m_ActiveFlag(true)
-    , m_FileName(file_name)
-    , m_PlayHandle(VIVID_DX_ERROR)
-    , m_ParentPos(nullptr)
-    , m_EffectID(effectID)
-    , m_Speed(1.0f)
-{
-}
 IEffect::IEffect(const std::string& file_name, EFFECT_ID effectID, float speed)
     : m_Scale(CVector3(25.0f, 25.0f, 25.0f))
     , m_ActiveFlag(true)
@@ -33,6 +20,8 @@ IEffect::IEffect(const std::string& file_name, EFFECT_ID effectID, float speed)
     , m_ParentPos(nullptr)
     , m_EffectID(effectID)
     , m_Speed(speed)
+    , m_StopFlag(false)
+
 {
 }
 /*
@@ -52,6 +41,8 @@ IEffect(int width, int height)
     , m_ParentPos(nullptr)
     , m_EffectID()
     , m_Speed(1.0f)
+    , m_StopFlag(false)
+
 {
 }
 
@@ -76,40 +67,9 @@ Initialize(const vivid::Vector2& position, unsigned int color, float rotation)
     m_ActiveFlag = true;
 }
 
-/*
- *  初期化
- */
-void
-IEffect::
-Initialize(const CVector3& position)
-{
-    m_Transform.position = position;
-    m_ActiveFlag = true;
-    m_Scale = 25.0f;
-    Load(m_FileName);
-
-}
-
 void IEffect::Initialize(const CVector3& position, const float scale)
 {
     m_Transform.position = position;
-    m_ActiveFlag = true;
-    m_Scale = scale;
-    Load(m_FileName);
-}
-
-void IEffect::Initialize(const CVector3& position, const CVector3& rotation)
-{
-    m_Transform.position = position;
-    m_Transform.rotation = rotation;
-    m_ActiveFlag = true;
-    Load(m_FileName);
-}
-
-void IEffect::Initialize(const CVector3& position, const CVector3& rotation, const float scale)
-{
-    m_Transform.position = position;
-    m_Transform.rotation = rotation;
     m_ActiveFlag = true;
     m_Scale *= scale;
     Load(m_FileName);
@@ -129,7 +89,7 @@ void IEffect::Initialize(const CVector3& position, const CVector3& rotation, con
     m_Transform.position = position;
     m_Transform.rotation = rotation;
     m_ActiveFlag = true;
-    m_Scale = scale;
+    m_Scale *= scale;
     m_Speed = speed;
     Load(m_FileName);
 }
@@ -146,7 +106,24 @@ void IEffect::Load(const std::string& file_name)
 
 void IEffect::Start()
 {
+    m_StopFlag = false;
+    m_Speed = 1.0f;
     m_PlayHandle = vivid::effekseer::StartEffect(m_FileName, m_Transform.position, m_Scale, m_Speed);
+}
+
+void IEffect::Pause()
+{
+    m_StopFlag = true;
+    m_Speed = 0.0f;
+    SetSpeedPlayingEffekseer3DEffect(m_PlayHandle, m_Speed);
+}
+
+void IEffect::Resume()
+{
+    m_StopFlag = false;
+    m_Speed = 1.0f;
+    SetSpeedPlayingEffekseer3DEffect(m_PlayHandle, m_Speed);
+
 }
 
 /*
@@ -156,7 +133,7 @@ void
 IEffect::
 Update(void)
 {
-    if (!vivid::effekseer::IsEffectPlaying(m_PlayHandle))
+    if (!vivid::effekseer::IsEffectPlaying(m_PlayHandle) && m_StopFlag == false)
         m_ActiveFlag = false;
 }
 

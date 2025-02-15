@@ -132,4 +132,5 @@ protected:
 
     CTimer              m_PlayTimer;            //!< プレイ中のタイマー
     CGameBG             m_BackGround;
+
 };

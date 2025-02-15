@@ -8,7 +8,7 @@
 #include "../../../ui_manager/ui/game_video/game_video.h"
 #include "../../../ui_manager/ui/player_ready/player_ready.h"
 
-const int CSelectGame::m_games_num = 5;
+const int CSelectGame::m_games_num = 4;
 const float CSelectGame::m_circle_radius = 500.0f;
 CSelectGame::CSelectGame(void)
     : m_SelectedGameFlag(false)
@@ -64,17 +64,21 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     m_FirstSceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
     m_FirstSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
+    //ミニゲームの決定
     int game_id = rand() % (int)GAME_ID::MAX;
     m_SelectedGameID = (GAME_ID)game_id;
     CDataManager::GetInstance().SetGameID(m_SelectedGameID);
 
     uiList = CUIManager::GetInstance().GetList();
     CUIManager::UI_LIST::iterator it = uiList.begin();
+
+    //上昇させるゲーム画像をキープ
     while (it != uiList.end())
     {
         CUI* ui = (CUI*)(*it);
 
         ++it;
+
         if (ui->GetUI_ID() != UI_ID::PLANE_GAME_IMAGE) continue;
         CPlaneGameImage* plameGameImage = (CPlaneGameImage*)ui;
         if (plameGameImage->GetGameID() == m_SelectedGameID)
@@ -144,8 +148,9 @@ void CSelectGame::Update(void)
         {
             m_planeGameImage->SetActive(false);
             m_GameInfomationFlag = true;
-            vivid::Vector2 bgPos = vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() / 2);
-            um.Create(UI_ID::MENU_BG, bgPos);
+            um.Create(UI_ID::MENU_BG);
+            um.Create(UI_ID::MINIGAME_OVERVIEW);
+            um.Create(UI_ID::MINIGAME_MANUAL);
             um.Create(UI_ID::PLAYER_READY);
 
             CGameVideo* gameVideo = (CGameVideo*)um.Create(UI_ID::GAME_VIDEO);

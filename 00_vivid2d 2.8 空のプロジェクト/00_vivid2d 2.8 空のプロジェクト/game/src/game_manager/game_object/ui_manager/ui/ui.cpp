@@ -1,5 +1,6 @@
 #include "ui.h"
-#include "..\..\unit_manager\unit_manager.h"
+#include "..\..\scene_manager\scene_manager.h"
+#include "../ui_manager.h"
 
 CUI::CUI(UI_ID id)
     : m_ActiveFlag(true)
@@ -7,6 +8,7 @@ CUI::CUI(UI_ID id)
     , m_Transform()
     , m_Parent(nullptr)
     , m_OrderInLayer(0)
+    , m_SceneID(SCENE_ID::MAX)
 {
 }
 
@@ -22,6 +24,7 @@ CUI(int width, int height, UI_ID id, int layer)
     , m_Transform()
     , m_Parent(nullptr)
     , m_OrderInLayer(layer)
+    , m_SceneID(SCENE_ID::MAX)
 {
 }
 /*
@@ -39,20 +42,27 @@ void
 CUI::
 Initialize(void)
 {
+    m_SceneID = CSceneManager::GetInstance().GetLastSceneID();
 }
 
 void CUI::Initialize(const CVector3& position)
 {
+    m_SceneID = CSceneManager::GetInstance().GetLastSceneID();
+
     m_Transform.position = position;
 }
 
 void CUI::Initialize(const vivid::Vector2& position)
 {
+    m_SceneID = CSceneManager::GetInstance().GetLastSceneID();
+
     m_Position = position;
 }
 
 void CUI::Initialize(const CTransform& transform)
 {
+    m_SceneID = CSceneManager::GetInstance().GetLastSceneID();
+
     m_Transform = transform;
 }
 
@@ -199,6 +209,16 @@ void CUI::SetOrderInLayer(int num)
 {
     m_OrderInLayer = num;
     CUIManager::GetInstance().SortList();
+}
+
+bool CUI::operator<(const CUI& r) const
+{
+    return m_OrderInLayer < r.m_OrderInLayer;
+}
+
+SCENE_ID CUI::GetSceneID(void)
+{
+    return m_SceneID;
 }
 
 CVector3 CUI::GetVelocity()

@@ -2,10 +2,10 @@
 #include "..\..\..\data_manager\data_manager.h"
 #include "..\..\..\unit_manager\unit_manager.h"
 const std::string		CPlayerReady::m_file_names[] = {
-	"data\\Textures\\player_mark_1.png",
-	"data\\Textures\\player_mark_2.png",
-	"data\\Textures\\player_mark_3.png",
-	"data\\Textures\\player_mark_4.png"
+	"data\\Textures\\player_icon_1.png",
+	"data\\Textures\\player_icon_2.png",
+	"data\\Textures\\player_icon_3.png",
+	"data\\Textures\\player_icon_4.png"
 };
 const int               CPlayerReady::m_width = 164;
 const int               CPlayerReady::m_height = 69;
@@ -26,7 +26,7 @@ CPlayerReady::~CPlayerReady()
 
 void CPlayerReady::Initialize()
 {
-	m_Position = m_position;
+	CUI::Initialize(m_position);
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
 		m_Color[i] = m_color[i];

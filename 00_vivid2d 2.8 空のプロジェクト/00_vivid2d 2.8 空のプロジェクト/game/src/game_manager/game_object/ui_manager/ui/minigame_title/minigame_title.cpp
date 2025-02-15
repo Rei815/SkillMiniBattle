@@ -41,7 +41,7 @@ CMiniGameTitle::
 Initialize(void)
 {
 	CUI::Initialize(m_position);
-	m_File_name = m_file_name[(int)CDataManager::GetInstance().GetSelectGameID()];
+	m_FileName = m_file_name[(int)CDataManager::GetInstance().GetSelectGameID()];
 }
 
 /*
@@ -61,7 +61,7 @@ void
 CMiniGameTitle::
 Draw(void)
 {
-    vivid::DrawTexture(m_File_name, m_Position, 0xffffffff);
+    vivid::DrawTexture(m_FileName, m_Position, 0xffffffff);
 
 
 }

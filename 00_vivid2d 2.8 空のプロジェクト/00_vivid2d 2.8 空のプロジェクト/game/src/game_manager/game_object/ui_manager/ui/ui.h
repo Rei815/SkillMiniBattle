@@ -4,6 +4,7 @@
 #include<vector>
 #include "ui_id.h"
 #include "../../../../utility/utility.h"
+#include "../../scene_manager/scene/scene_id.h"
 class CUI
 {
 public:
@@ -24,99 +25,99 @@ public:
     /*!
      *  @brief      初期化
      */
-    virtual void        Initialize(void);
+    virtual void    Initialize(void);
 
     /*!
      *  @brief      初期化
      */
-    virtual void        Initialize(const CVector3& position);
+    virtual void    Initialize(const CVector3& position);
 
     /*!
      *  @brief      初期化
      */
-    virtual void        Initialize(const vivid::Vector2& position);
+    virtual void    Initialize(const vivid::Vector2& position);
 
     /*!
      *  @brief      初期化
      */
-    virtual void        Initialize(const CTransform& transform);
+    virtual void    Initialize(const CTransform& transform);
 
     /*!
      *  @brief      更新
      */
-    virtual void        Update(void);
+    virtual void    Update(void);
 
     /*!
      *  @brief      描画
      */
-    virtual void        Draw(void);
+    virtual void    Draw(void);
 
     /*!
      *  @brief      解放
      */
-    virtual void        Finalize(void);
+    virtual void    Finalize(void);
 
     /*!
      *  @brief      アクティブフラグ取得
      *
      *  @return     アクティブフラグ
      */
-    bool                GetActive(void);
+    bool            GetActive(void);
 
     /*!
      *  @brief      アクティブフラグ設定
      *
      *  @param[in]  active  アクティブフラグ
      */
-    void                SetActive(bool active);
+    void            SetActive(bool active);
 
-    bool                OnMouseClick(const vivid::Vector2& position, int width, int height);
+    bool            OnMouseClick(const vivid::Vector2& position, int width, int height);
 
     /*!
      *  @brief      位置取得
      *
      *  @return     位置
      */
-    vivid::Vector2      GetPosition(void);
+    vivid::Vector2  GetPosition(void);
     /*!
      *  @brief      長さ取得
      *
      *  @return     長さ
      */
-    int                 GetWidth(void);
+    int             GetWidth(void);
     /*!
      *  @brief      高さ取得
      *
      *  @return     高さ
      */
-    int                 GetHeight(void);
+    int             GetHeight(void);
     /*!
      *  @brief      ID取得
      *
      *  @return     UIのID
      */
-    UI_ID               GetUI_ID(void);
+    UI_ID           GetUI_ID(void);
 
     /*!
      *  @brief      拡大率取得
      *
      *  @return     拡大率
      */
-    vivid::Vector2      GetScale(void);
+    vivid::Vector2  GetScale(void);
 
     /*!
      *  @brief      ID設定
      *
      *  @param[in]  id  UIのID
      */
-    void                SetUI_ID(UI_ID id);
+    void            SetUI_ID(UI_ID id);
 
     /*!
      *  @brief      位置設定
      *
      *  @param[in]  position  位置
      */
-    void                SetPosition(const vivid::Vector2& position);
+    void            SetPosition(const vivid::Vector2& position);
 
     /*!
      *  @brief      拡大率設定
@@ -137,48 +138,54 @@ public:
      *
      *  @return     トランスフォーム
      */
-    CTransform          GetTransform(void);
+    CTransform      GetTransform(void);
 
     /*!
      *  @brief      トランスフォーム設定
      *
      *  @param[in]  transform  トランスフォーム
      */
-    void                SetTransform(const CTransform& transform);
+    void            SetTransform(const CTransform& transform);
 
     /*!
      *  @brief      親のオブジェクト取得
      *
      *  @return     親のオブジェクト
      */
-    CUI*                GetParent(void);
+    CUI*            GetParent(void);
 
     /*!
      *  @brief      親のトランスフォーム設定
      *
      *  @param[in]  parent  親のトランスフォーム
      */
-    void                SetParent(CUI* parent);
+    void            SetParent(CUI* parent);
 
     /*!
      *  @brief      レイヤー内番号取得
      *
      *  @return     レイヤー
      */
-    int                 GetOrderInLayer(void);
+    int             GetOrderInLayer(void);
 
     /*!
      *  @brief      レイヤー内番号設定
      *
      *  @param[in]  num  レイヤー内番号
      */
-    void                SetOrderInLayer(int num);
+    void            SetOrderInLayer(int num);
 
-    bool operator<(const CUI& r) const
-    {
-        return m_OrderInLayer < r.m_OrderInLayer;
-    }
+    /*!
+     *  @brief      レイヤー内番号の比較
+     */
+    bool operator<(const CUI& r) const;
 
+    /*!
+     *  @brief      設定されているシーンのIDを取得
+     *
+     *  @return     シーンID
+     */
+    SCENE_ID        GetSceneID(void);
 
 protected:
 
@@ -194,4 +201,5 @@ protected:
     CUI*                            m_Parent;
     int                             m_OrderInLayer;     //!< 描画順
     CVector3                        m_Velocity;         //!< 移動ベクトル
+    SCENE_ID                        m_SceneID;          //!< シーンID
 };
