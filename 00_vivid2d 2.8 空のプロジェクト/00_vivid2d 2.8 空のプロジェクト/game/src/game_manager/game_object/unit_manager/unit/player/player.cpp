@@ -306,7 +306,7 @@ void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, fl
 {
     CVector3 m_EffectPosition = this->GetPosition();
 
-   // m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
+    m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
 
     //“–‚½‚Á‚½Œü‚«‚ðŽæ“¾
     CVector3 TempVelocity = (m_Transform.position - hit_position);

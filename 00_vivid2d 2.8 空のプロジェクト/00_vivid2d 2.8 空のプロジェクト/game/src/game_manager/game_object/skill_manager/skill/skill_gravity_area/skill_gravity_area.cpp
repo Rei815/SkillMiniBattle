@@ -9,6 +9,7 @@ const float CSkillGravityArea::m_gravity_jump_down_rate = 0.5f;
 const float CSkillGravityArea::m_duration_time = 10.0f;
 const float CSkillGravityArea::m_cool_time = 15.0f;
 const float CSkillGravityArea::m_gravity_area_radius = 500.0f;
+const float CSkillGravityArea::m_effect_scale = 2.0f;
 
 CSkillGravityArea::CSkillGravityArea(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
@@ -76,8 +77,8 @@ Update(void)
 					TempPlayer->MulJumpPowerRate(m_gravity_jump_down_rate);
 
 					//エフェクトの生成（仮置き、エフェクトが完成したらセットする）
-					if (false)
-						m_PlayerAffectedEffect[i] = CEffectManager::GetInstance().Create(EFFECT_ID::GRAVITY_AREA, m_Player->GetPosition(), 1.0f);
+					//if (false)
+						m_PlayerAffectedEffect[i] = CEffectManager::GetInstance().Create(EFFECT_ID::DEBUFF, TempPlayer->GetPosition(),CVector3(), 3.0f);
 				}
 				break;
 
@@ -157,8 +158,9 @@ Action(void)
 	CVector3 effectPosition = m_Player->GetPosition();
 	effectPosition.y -= m_Player->GetHeight()/2;
 
-	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::GRAVITY_AREA, effectPosition,CVector3(),3.0f);
-	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effectPosition, CVector3(), 3.0f);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::GRAVITY_AREA, effectPosition,CVector3(),m_effect_scale);
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effectPosition, CVector3(), m_effect_scale);
+	m_SkillEffect->SetParent(m_Player);
 
 	m_State = SKILL_STATE::ACTIVE;
 }

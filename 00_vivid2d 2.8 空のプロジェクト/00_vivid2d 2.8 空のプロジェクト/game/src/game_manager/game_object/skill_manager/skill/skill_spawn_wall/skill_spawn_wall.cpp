@@ -7,10 +7,12 @@
 const float CSkillSpawnWall::m_cool_time = 15.0f;
 const float CSkillSpawnWall::m_duration_time = 5.0f;
 const float CSkillSpawnWall::m_wall_spawn_distance = 200.0f;
+const float CSkillSpawnWall::m_effect_scale = 2.0f;
 
 CSkillSpawnWall::CSkillSpawnWall(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 	, m_WallObj(nullptr)
+	,m_SkillEffect(nullptr)
 {
 
 }
@@ -105,6 +107,9 @@ Action(void)
 	
 	m_WallObj = CObjectManager::GetInstance().Create(OBJECT_ID::SKILL_WALL_OBJECT,SpawnTr);
 	m_State = SKILL_STATE::ACTIVE;
+
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+	m_SkillEffect->SetParent(m_Player);
 }
 
 /*!
@@ -114,6 +119,12 @@ void
 CSkillSpawnWall::
 ActionEnd(void)
 {
+	if (m_SkillEffect != nullptr)
+	{
+		m_SkillEffect->SetActive(false);
+		m_SkillEffect = nullptr;
+	}
+
 	if (m_WallObj != nullptr)
 	{
 		m_WallObj->SetActive(false);

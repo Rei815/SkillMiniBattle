@@ -15,6 +15,8 @@
 #include "effect/strong_wind_effect/strong_wind_effect.h"
 #include "effect/collide_effect/collide_effect.h"
 #include "effect/skill_star_effect/skill_star_effect.h"
+#include "effect/ogre_control_effect/ogre_control_effect.h"
+#include "effect/debuff_effect/debuff_effect.h"
  /*
   *  インスタンスの取得
   */
@@ -204,28 +206,7 @@ Create(EFFECT_ID id, const vivid::Vector2& pos, unsigned int color, float rotati
     return effect;
 }
 
-void CEffectManager::SetParentPosition(EFFECT_ID effectID, CVector3& parentPos)
-{
-    if (m_EffectList.empty()) return;
 
-    EFFECT_LIST::iterator it = m_EffectList.begin();
-
-    while (it != m_EffectList.end())
-    {
-        IEffect* effect = (IEffect*)(*it);
-
-
-        if (effect->GetEffectID() == effectID)
-        {
-            effect->SetParentPosition(parentPos);
-
-            return;
-        }
-
-        ++it;
-    }
-
-}
 
 IEffect* CEffectManager::CreateClass(EFFECT_ID id)
 {
@@ -252,6 +233,10 @@ IEffect* CEffectManager::CreateClass(EFFECT_ID id)
       break;
     case EFFECT_ID::SKILL_STAR:             effect = new CSkillStarEffect();
       break;
+    case EFFECT_ID::OGRE_CONTROL:           effect = new COgreControlEffect();
+        break;
+    case EFFECT_ID::DEBUFF:                 effect = new CDebuffEffect();
+        break;
     }
     return effect;
 }

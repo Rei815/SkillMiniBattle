@@ -118,7 +118,6 @@ public:
      *  @param[in]  effectID        エフェクトid
      *  @param[in]  parentPos       親の位置
      */
-    void        SetParentPosition(EFFECT_ID effectID,CVector3& parentPos);
 
 private:
 

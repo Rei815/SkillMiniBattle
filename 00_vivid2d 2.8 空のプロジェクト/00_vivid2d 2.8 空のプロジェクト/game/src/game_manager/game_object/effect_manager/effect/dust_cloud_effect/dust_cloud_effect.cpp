@@ -9,4 +9,5 @@ CDustCloudEffect::CDustCloudEffect()
 
 CDustCloudEffect::~CDustCloudEffect()
 {
+	//IEffect::Update();
 }

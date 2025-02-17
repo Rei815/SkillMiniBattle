@@ -2,6 +2,8 @@
 
 #include "..\game.h"
 #include "..\..\..\..\ui_manager\ui\ui_id.h"
+#include "../../../../sound_manager/sound_manager.h"
+
 
 enum class CANNON_DIRECTION
 {
@@ -99,4 +101,5 @@ private:
     bool                m_StageShrinkFlg;
     IObject*            m_StageObject;
     CANNON_DIRECTION    m_NextCannnonDir;
+    CSoundManager*      m_bgm;
 };
