@@ -40,13 +40,3 @@ void CCannonObject::Finalize(void)
 
 	m_Model.Finalize();
 }
-
-bool CCannonObject::GetActive(void)
-{
-	return m_ActiveFlag;
-}
-
-void CCannonObject::SetActive(bool active)
-{
-	m_ActiveFlag = active;
-}

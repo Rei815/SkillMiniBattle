@@ -15,8 +15,9 @@ enum class OBJECT_ID
     OGRE_OBJECT,            //!< だるまさんが転んだの鬼
     CANNON_OBJECT,          //!< 大砲オブジェクト
     DODGEBALL_STAGE_OBJECT, //!< ドッジボールシーンのステージオブジェクト
-    DARUMA_FALLDOWN_STAGE_OBJECT, //!< ドッジボールシーンのステージオブジェクト
-    BELT_CONVEYOR_STAGE_OBJECT,   //!< ベルトコンベアのステージオブジェクト
+    DARUMA_FALLDOWN_STAGE_OBJECT,       //!< ドッジボールシーンのステージオブジェクト
+    BELT_CONVEYOR_STAGE_OBJECT,         //!< ベルトコンベアのステージオブジェクト
+    BELT_CONVEYOR_OBSTRUCTION_OBJECT,   //!< ベルトコンベアの障害物オブジェクト
     SKILL_WALL_OBJECT,      //!< スキルでスポーンできる壁オブジェクト
     MAZE_STAGE,      //!< スキルでスポーンできる壁オブジェクト
     MAX,

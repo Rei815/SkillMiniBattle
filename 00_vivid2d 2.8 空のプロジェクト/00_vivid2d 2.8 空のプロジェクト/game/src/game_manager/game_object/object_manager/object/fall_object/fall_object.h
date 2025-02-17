@@ -36,20 +36,6 @@ public:
     void    Finalize(void);
 
     /*!
-     *  @brief      アクティブフラグ取得
-     *
-     *  @return     アクティブフラグ
-     */
-    bool            GetActive(void);
-
-    /*!
-     *  @brief      アクティブフラグ設定
-     *
-     *  @param[in]  active  アクティブフラグ
-     */
-    void            SetActive(bool active);
-
-    /*!
      *  @brief      ID取得
      *
      *  @return     マークID

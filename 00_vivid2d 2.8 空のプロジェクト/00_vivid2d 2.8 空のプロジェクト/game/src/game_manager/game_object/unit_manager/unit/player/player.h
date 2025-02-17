@@ -115,8 +115,6 @@ public:
 
     CVector3        GetForwardVector();
 
-    static const float              m_move_speed;                   //!< ˆÚ“®‘¬“x
-    static const float              m_jump_power;                   //!< ƒWƒƒƒ“ƒv—Í
 protected:
     /*!
      *  @brief      UŒ‚
@@ -161,6 +159,8 @@ protected:
     static const float              m_radius;                       //!< ”¼Œa
     static const float              m_height;                       //!< ‚‚³
     static const float              m_model_scale;
+    static const float              m_move_speed;                   //!< ˆÚ“®‘¬“x
+    static const float              m_jump_power;                   //!< ƒWƒƒƒ“ƒv—Í
     static const CVector3           m_move_friction;                //!< ˆÚ“®—pŒ¸‘¬—¦
     static const float              m_fly_away_speed;               //!< ”í’eŽž‚Ì‚Á”ò‚Ñ‘¬“x
     static const float              m_max_life;                     //!< Å‘åƒ‰ƒCƒt
@@ -168,6 +168,8 @@ protected:
     static const int                m_invincible_visible_interval;  //!< –³“GŽžŠÔ’†‚Ì“_–ÅŠÔŠu
     static const float              m_fall_accelerator;             //!< —Ž‰º‰Á‘¬“x
 
+    static const unsigned int       m_player_body_color[(int)UNIT_ID::NONE];
+    static const unsigned int       m_player_eye_color[(int)UNIT_ID::NONE];
 
     float                           m_MoveSpeedRate;                //!< ˆÚ“®‘¬“x‚Ì”{—¦
     float                           m_JumpPowerRate;                //!< ƒWƒƒƒ“ƒv—Í‚Ì”{—¦

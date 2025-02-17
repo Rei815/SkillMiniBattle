@@ -68,16 +68,6 @@ void CFallObject::Finalize(void)
 	m_Model.Finalize();
 }
 
-bool CFallObject::GetActive(void)
-{
-	return m_ActiveFlag;
-}
-
-void CFallObject::SetActive(bool active)
-{
-	m_ActiveFlag = active;
-}
-
 MARK_ID CFallObject::GetID(void)
 {
 	return m_MarkID;

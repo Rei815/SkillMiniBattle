@@ -73,10 +73,13 @@ CDodgeBallGame::~CDodgeBallGame(void)
 
 void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 {
+	CGame::Initialize(scene_id);
+
+	m_BackGround.Initialize("data\\Textures\\dodge_ball_bg.jpg");
+
 	m_SpawnTimer.SetUp(0);
 	m_ShotTimer.SetUp(m_initial_shot_time);
 	m_StageShrinkTimer.SetUp(m_stage_shrink_time);
-	CGame::Initialize(scene_id);
 
 	//ステージ生成
 	m_StageObject = CObjectManager::GetInstance().Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT,CTransform(CVector3(0.0f,-100.0f,0.0f)));
@@ -123,6 +126,7 @@ void CDodgeBallGame::Update(void)
 
 void CDodgeBallGame::Draw(void)
 {
+	m_BackGround.Draw();
 	//CStage::GetInstance().Draw();
 	CBulletManager::GetInstance().Draw();
 	CGame::Draw();

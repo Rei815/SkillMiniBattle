@@ -42,13 +42,3 @@ void CDogeballStageObject::Finalize(void)
 
 	m_Model.Finalize();
 }
-
-bool CDogeballStageObject::GetActive(void)
-{
-	return IObject::GetActive();
-}
-
-void CDogeballStageObject::SetActive(bool active)
-{
-	IObject::SetActive(active);
-}

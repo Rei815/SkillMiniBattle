@@ -39,13 +39,3 @@ void CDarumaFallDownStageObject::Finalize(void)
 
 	m_Model.Finalize();
 }
-
-bool CDarumaFallDownStageObject::GetActive(void)
-{
-	return m_ActiveFlag;
-}
-
-void CDarumaFallDownStageObject::SetActive(bool active)
-{
-	m_ActiveFlag = active;
-}

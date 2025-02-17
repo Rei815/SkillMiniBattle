@@ -41,13 +41,3 @@ void CMazeStage::Finalize(void)
 
 	m_Model.Finalize();
 }
-
-bool CMazeStage::GetActive(void)
-{
-	return m_ActiveFlag;
-}
-
-void CMazeStage::SetActive(bool active)
-{
-	m_ActiveFlag = active;
-}
