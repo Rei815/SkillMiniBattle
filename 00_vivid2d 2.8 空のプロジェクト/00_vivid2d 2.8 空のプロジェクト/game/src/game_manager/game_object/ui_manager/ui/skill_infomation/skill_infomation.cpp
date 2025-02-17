@@ -19,7 +19,7 @@ const std::string		CSkillInfomation::m_skill_info_file_name[] =
 		"data\\Textures\\skill_info_invisible.png",
 		"data\\Textures\\skill_info_stun.png",
 		"data\\Textures\\skill_info_mimicry.png",
-		"data\\Textures\\skill_info_slow_test.png",		//‚Ü‚¾ƒeƒXƒg
+		"data\\Textures\\skill_info_slow.png",
 		"data\\Textures\\skill_info_ogrecontrol.png",
 		"data\\Textures\\skill_info_resurrect.png",
 		"data\\Textures\\skill_info_resurrect.png",
