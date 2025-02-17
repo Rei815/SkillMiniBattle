@@ -108,6 +108,8 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
 	CreateFloor(CVector3(1800.0f, -1000.0f, 1500.0f));
+
+	CreateFloor(CVector3(-1800.0f, -2000.0f, 3000.0f));
 }
 
 void CFallOutGame::Update(void)

@@ -1,6 +1,7 @@
 #include "player_ready.h"
 #include "..\..\..\data_manager\data_manager.h"
 #include "..\..\..\unit_manager\unit_manager.h"
+#include "..\..\..\controller_manager\controller_manager.h"
 const std::string		CPlayerReady::m_file_names[] = {
 	"data\\Textures\\player_icon_1.png",
 	"data\\Textures\\player_icon_2.png",
@@ -37,23 +38,14 @@ void CPlayerReady::Update(void)
 {
 	CUI::Update();
 	if (m_ReadyFlag == true) return;
-	int ControllerNum = CDataManager::GetInstance().GetConnectControllerNum();
-	int joyPad = 0;
-	for (int i = 0; i < ControllerNum; i++)
+	CControllerManager& cm = CControllerManager::GetInstance();
+	CController* controller = cm.GetController(CONTROLLER_ID::ONE);
+	int playerNum = (int)controller->GetID();
+	if (controller->GetButtonDown(BUTTON_ID::B) & PAD_INPUT_B)
 	{
-		switch (i)
-		{
-		case 0: joyPad = DX_INPUT_PAD1; break;
-		case 1: joyPad = DX_INPUT_PAD2; break;
-		case 2: joyPad = DX_INPUT_PAD3; break;
-		case 3: joyPad = DX_INPUT_PAD4; break;
-		}
+		m_Color[playerNum] = 0x007f7f7f;
 	}
-	if (GetJoypadInputState(joyPad) & PAD_INPUT_B)
-	{
-		m_Color[joyPad] = 0x007f7f7f;
-	}
-#if _DEBUG
+//#if _DEBUG
 	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
 	{
 		m_Color[0] ^= 0x007f7f7f;
@@ -71,7 +63,7 @@ void CPlayerReady::Update(void)
 		m_Color[3] ^= 0x007f7f7f;
 	}
 
-#endif // _DEBUG
+//#endif // _DEBUG
 	bool flag = false;
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
