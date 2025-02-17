@@ -32,7 +32,7 @@ void
 CTitleButton::
 Initialize(void)
 {
-    m_Position = m_position;
+    CUI::Initialize(m_position);
 }
 
 /*

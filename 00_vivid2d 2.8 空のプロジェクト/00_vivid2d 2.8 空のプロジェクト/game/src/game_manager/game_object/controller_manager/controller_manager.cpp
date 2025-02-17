@@ -17,6 +17,7 @@ void
 CControllerManager::Initialize(void)
 {
     m_ControllerNum = vivid::controller::GetConnectCount();
+    m_ControllerList.clear();
 }
 
 /*
@@ -25,11 +26,30 @@ CControllerManager::Initialize(void)
 void
 CControllerManager::Update(void)
 {
-    m_ControllerNum = vivid::controller::GetConnectCount();
+    if (m_ControllerList.empty()) return;
 
-    //vivid::DrawText(30,std::to_string(m_ControllerNum), vivid::Vector2(0, 0));
+    CONTROLLER_LIST::iterator it = m_ControllerList.begin();
 
-    //m_ControllerIDList.
+    while (it != m_ControllerList.end())
+    {
+        CController* controller = (CController*)(*it);
+
+        controller->Update();
+
+        if (!controller->GetActive())
+        {
+            controller->Finalize();
+
+            delete controller;
+
+            it = m_ControllerList.erase(it);
+
+            continue;
+        }
+
+        ++it;
+    }
+
 }
 
 
@@ -47,9 +67,42 @@ void CControllerManager::SetControllerNum(int num)
     m_ControllerNum = num;
 }
 
-bool CControllerManager::GetControllerNum()
+int CControllerManager::GetControllerNum()
 {
     return m_ControllerNum;
+}
+
+CController* CControllerManager::Create(CONTROLLER_ID id)
+{
+    CController* controller = nullptr;
+
+    controller = new CController();
+
+
+    if (!controller) return nullptr;
+
+    controller->Initialize(id);
+
+    m_ControllerList.push_back(controller);
+
+    return controller;
+}
+
+CController* CControllerManager::GetController(CONTROLLER_ID controller_id)
+{
+    if (m_ControllerList.empty()) return nullptr;
+
+    CONTROLLER_LIST::iterator it = m_ControllerList.begin();
+
+    while (it != m_ControllerList.end())
+    {
+        if ((*it)->GetID() == controller_id)
+            return (*it);
+
+        ++it;
+    }
+
+    return nullptr;
 }
 
 

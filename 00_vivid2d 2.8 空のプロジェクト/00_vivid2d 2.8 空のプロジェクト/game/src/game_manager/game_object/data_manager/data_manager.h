@@ -127,7 +127,7 @@ private:
      */
     using RANKING_LIST = std::vector<CPlayer*>;
     
-    
+    static const int    m_max_game_num;
     RANKING_LIST        m_OverallRankingList[(int)UNIT_ID::NONE];             //!< 全体のランキングリスト
 
     UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];              //1つ前のゲームのランキング

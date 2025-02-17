@@ -94,6 +94,13 @@ private:
      */
     void    FinishTopic(void);
 
+    /*!
+     *  @brief      床をすべて生成
+     * 
+     * 　@param[in] position     中心位置
+     */
+    void    CreateFloor(const CVector3& position);
+
     static const CTransform         m_object_transform_list[];  //!< 落ちるオブジェクトのトランスフォーム
     static const float              m_time_accelerator;         //!< 落ちるまでの速度を増やす
     static const float              m_min_time;                 //!< 落ちるまでの最小時間
@@ -109,6 +116,7 @@ private:
     static const vivid::Vector2     m_topic_positionList[];     //!< お題位置
     static const int                m_max_topic_num;            //!< お題数
     static const CVector3           m_player_default_forward;   //!< プレイヤーのスポーン時の正面方向
+    static const CVector3           m_floor_offset;             //!< プレイヤーのスポーン時の正面方向
     float                           m_FallTime;                 //!< 落ちるまでの時間
     CTimer                          m_ChooseObjectTimer[5];     //!< 抽選タイマー
     CTimer                          m_AddTopicTimer;            //!< お題が増えるタイマー

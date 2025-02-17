@@ -2,6 +2,7 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../controller_manager/controller_manager.h"
 
 const int CTitle::m_fade_speed = 2;
 CTitle::CTitle(void)
@@ -50,17 +51,26 @@ void CTitle::Initialize(SCENE_ID scene_id)
         m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() / 2));
         m_SceneUIParent->SetState(CSceneUIParent::STATE::WAIT);
     }
-
+    CControllerManager& cm = CControllerManager::GetInstance();
+    cm.Initialize();
+    cm.Create(CONTROLLER_ID::ONE);
+    cm.Create(CONTROLLER_ID::TWO);
+    cm.Create(CONTROLLER_ID::THREE);
+    cm.Create(CONTROLLER_ID::FOUR);
 }
 
 void CTitle::Update(void)
 {
+    CControllerManager& cm = CControllerManager::GetInstance();
+    CController* controller_1 = cm.GetController(CONTROLLER_ID::ONE);
+    CControllerManager::GetInstance().Update();
+
     unsigned int alpha = vivid::alpha::GetAlpha(m_Color);
     if (alpha == 255u || alpha == 0u)
         m_FadeSpeed = -m_FadeSpeed;
 
     CSceneManager& sm = CSceneManager::GetInstance();
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && sm.GetList().size() == 1)
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(BUTTON_ID::ALL) && sm.GetList().size() == 1)
     {
         m_Color = 0xff000000;
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);

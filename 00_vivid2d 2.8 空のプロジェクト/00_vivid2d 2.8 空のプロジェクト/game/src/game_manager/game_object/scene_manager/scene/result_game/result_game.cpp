@@ -22,41 +22,29 @@ void CResultGame::Initialize(SCENE_ID scene_id)
     CSoundManager::GetInstance().Play_BGM(m_Sound, true);
 
     CCamera::GetInstance().Initialize();
-
-
+    CUIManager& um = CUIManager::GetInstance();
+    um.Create(UI_ID::CONCENTRATION_LINE);
+    um.Create(UI_ID::RESULT_WINNER);
+    um.Create(UI_ID::TITLE_BUTTON);
 }
 
 void CResultGame::Update(void)
 {
-    switch (m_State)
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
     {
-    case STATE::WAIT:
-    {
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
-        {
-            CSceneManager::GetInstance().ChangeScene(SCENE_ID::TITLE);
-        }
-    }
-    break;
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::TITLE);
     }
 }
 
 void CResultGame::Draw(void)
 {
-    switch (m_State)
-    {
-    case STATE::WAIT:
-    {
-        vivid::DrawText(50, "リザルト", vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "リザルト") / 2, vivid::WINDOW_HEIGHT / 2));
-    }
-    break;
-    }
 
 }
 
 void CResultGame::Finalize(void)
 {
     IScene::Finalize();
+    CUIManager::GetInstance().Finalize();
     CDataManager::GetInstance().Finalize();
     CSoundManager::GetInstance().Stop_BGM(m_Sound);
 }

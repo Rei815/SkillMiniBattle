@@ -4,6 +4,7 @@
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
 #include "../../../stage/stage.h"
+#include "../../../ui_manager/ui/scene_ui_parent/scene_ui_parent.h"
 
 class CResultMiniGame
     : public IScene
@@ -40,7 +41,14 @@ public:
     void Finalize(void);
 
 private:
-    static const vivid::Vector2 m_OriginKeyPos;
-    static const float          m_key_offset;        //鍵と鍵の距離
-    static const float          m_players_key_offset;  //プレイヤー間の鍵の距離
+    static const vivid::Vector2 m_origin_key_pos;
+    static const vivid::Vector2 m_origin_icon_pos;
+    static const vivid::Vector2 m_origin_notice_pos;
+    static const float          m_key_offset;           //鍵同士の距離
+    static const float          m_icon_offset;          //アイコン同士の距離
+    static const float          m_notice_offset;        //張り紙同士の距離
+    static const float          m_players_key_offset;   //プレイヤー間の鍵の距離
+    static const vivid::Vector2 m_notice_scale;         //張り紙の大きさ
+    CSceneUIParent*             m_SceneUIParent;
+
 };

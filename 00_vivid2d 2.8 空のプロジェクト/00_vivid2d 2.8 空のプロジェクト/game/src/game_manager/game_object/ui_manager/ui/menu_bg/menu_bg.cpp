@@ -13,7 +13,7 @@ const std::string CMenuBG::m_file_name = "data\\Textures\\menu_bg.png";
  */
 CMenuBG::
 CMenuBG(UI_ID id)
-	: CUI(m_width, m_height, id)
+	: CUI(m_width, m_height, id, -1)
 {
 	SetScale(m_default_scale);
 	SetPosition(m_default_position);

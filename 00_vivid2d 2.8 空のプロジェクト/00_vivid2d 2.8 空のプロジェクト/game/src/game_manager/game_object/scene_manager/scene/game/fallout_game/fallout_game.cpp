@@ -13,8 +13,11 @@
 
 
 const CTransform CFallOutGame::m_object_transform_list[] = 
-{CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
-CTransform(CVector3(-450,-100,-300)), CTransform(CVector3(0,-100,-500)), CTransform(CVector3(450,-100,250)) };
+{CTransform(CVector3(475,-100,-275)),CTransform(CVector3(-475,-100,275)), CTransform(CVector3(0,-100,475)),
+CTransform(CVector3(-475,-100,-275)), CTransform(CVector3(0,-100,-475)), CTransform(CVector3(475,-100,275)) };
+//const CTransform CFallOutGame::m_object_transform_list[] = 
+//{CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
+//CTransform(CVector3(-450,-100,-300)), CTransform(CVector3(0,-100,-500)), CTransform(CVector3(450,-100,250)) };
 
 const vivid::Vector2    CFallOutGame::m_topic_positionList[] = { vivid::Vector2(0, -200),vivid::Vector2(250, -200),vivid::Vector2(500, -200),
 vivid::Vector2(750, -200),vivid::Vector2(1000, -200),vivid::Vector2(1250, -200) };
@@ -30,6 +33,7 @@ const float		CFallOutGame::m_extend_return_time = 180.0f;
 const float		CFallOutGame::m_topic_interval_time = 1.0f;
 const int		CFallOutGame::m_max_topic_num = 5;
 const CVector3  CFallOutGame::m_player_default_forward = CVector3(0.0f,0.0f,-1.0f);
+const CVector3  CFallOutGame::m_floor_offset = CVector3(475.0f, -100.0f, 275.0f);
 const CVector3	CFallOutGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallOutGame::m_camera_direction = CVector3(0.0f, -1.0f, 1.0f);
 CFallOutGame::CFallOutGame(void)
@@ -103,6 +107,9 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
+	CreateFloor(CVector3(1800.0f, -1000.0f, 1500.0f));
+
+	CreateFloor(CVector3(-1800.0f, -2000.0f, 3000.0f));
 }
 
 void CFallOutGame::Update(void)
@@ -317,7 +324,9 @@ CFallOutGame::FALL_INFO CFallOutGame::ChooseObject(void)
 	//待機中のオブジェクトがあるか調査
 	for (it = objectList.begin(); it != objectList.end(); it++)
 	{
-		if ((*it)->GetGimmick()->GetState() == GIMMICK_STATE::WAIT)
+		CGimmick* gimmick = (*it)->GetGimmick();
+		if (gimmick == nullptr) continue;
+		if (gimmick->GetState() == GIMMICK_STATE::WAIT)
 		{
 			waitObjectList.push_back((*it));
 		}
@@ -423,4 +432,39 @@ void CFallOutGame::FinishTopic(void)
 	{
 		(*it)->SetState(CFallOutTopic::STATE::FINISH);
 	}
+}
+
+void CFallOutGame::CreateFloor(const CVector3& position)
+{
+	CObjectManager& om = CObjectManager::GetInstance();
+
+	CTransform transform = m_object_transform_list[(int)MARK_ID::CIRCLE];
+	transform.position += position;
+	om.Create(OBJECT_ID::CIRCLE_FALL_OBJECT, transform);
+
+	transform = m_object_transform_list[(int)MARK_ID::CROSS];
+	transform.position += position;
+
+	om.Create(OBJECT_ID::CROSS_FALL_OBJECT, transform);
+
+	transform = m_object_transform_list[(int)MARK_ID::MOON];
+	transform.position += position;
+
+	om.Create(OBJECT_ID::MOON_FALL_OBJECT, transform);
+
+	transform = m_object_transform_list[(int)MARK_ID::SQUARE];
+	transform.position += position;
+
+	om.Create(OBJECT_ID::SQUARE_FALL_OBJECT, transform);
+
+	transform = m_object_transform_list[(int)MARK_ID::SUN];
+	transform.position += position;
+
+	om.Create(OBJECT_ID::SUN_FALL_OBJECT, transform);
+
+	transform = m_object_transform_list[(int)MARK_ID::TRIANGLE];
+	transform.position += position;
+
+	om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT, transform);
+
 }

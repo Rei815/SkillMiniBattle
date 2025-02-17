@@ -72,6 +72,7 @@ CSceneManager::Update(void)
 
 
     CGame* gameScene = GetGameScene();
+    //ƒQ[ƒ€’†‚Íƒ|[ƒY’†‚ÉUI‚Ì“®‚«‚ðŽ~‚ß‚é
     if (gameScene)
     {
         if(!gameScene->GetPauseFlag())

@@ -1,4 +1,6 @@
 #include "data_manager.h"
+
+const int CDataManager::m_max_game_num = 1;
 /*
  *  インスタンスの取得
  */
@@ -23,7 +25,7 @@ Initialize(void)
     {
         m_PlayerWins[i] = 0;
     }
-    m_MaxGameNum = 3;
+    m_MaxGameNum = m_max_game_num;
 }
 
 /*

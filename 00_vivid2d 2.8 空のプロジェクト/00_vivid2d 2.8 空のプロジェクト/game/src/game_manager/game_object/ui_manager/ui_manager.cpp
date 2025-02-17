@@ -27,7 +27,16 @@
 #include "ui/title_button/title_button.h"
 #include "ui/game_video/game_video.h"
 #include "ui/minigame_title/minigame_title.h"
+#include "ui/minigame_manual/minigame_manual.h"
+#include "ui/minigame_overview/minigame_overview.h"
 #include "ui/player_ready/player_ready.h"
+#include "ui/notice/notice.h"
+#include "ui/notice_wide/notice_wide.h"
+#include "ui/player_icon/player_icon.h"
+#include "ui/text_overview/text_overview.h"
+#include "ui/text_manual/text_manual.h"
+#include "ui/concentration_line/concentration_line.h"
+#include "ui/result_winner/result_winner.h"
  /*
   *  インスタンスの取得
   */
@@ -63,7 +72,6 @@ CUIManager::Update(void)
     while (it != m_UIList.end())
     {
         CUI* ui = (CUI*)(*it);
-
         ui->Update();
         SortList();
         if (!ui->GetActive())
@@ -71,12 +79,10 @@ CUIManager::Update(void)
             ui->Finalize();
 
             delete ui;
-            ui = nullptr;
             it = m_UIList.erase(it);
 
             continue;
         }
-
         ++it;
     }
 }
@@ -280,11 +286,11 @@ CUI* CUIManager::CreateClass(UI_ID id)
     case UI_ID::MENU_BG:
         ui = new CMenuBG(id);               break;
     case UI_ID::MENU_POSTER:
-        ui = new CMenuPoster(id);               break;
+        ui = new CMenuPoster(id);           break;
     case UI_ID::SCENE_TITLE:
-        ui = new CSceneTitle(id);               break;
+        ui = new CSceneTitle(id);           break;
     case UI_ID::PLAYER_NUM_SELECT:
-        ui = new CPlayerNumSelect(id);               break;
+        ui = new CPlayerNumSelect(id);      break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);            break;
     case UI_ID::SKILL_GAUGE:
@@ -292,21 +298,21 @@ CUI* CUIManager::CreateClass(UI_ID id)
     case UI_ID::SKILL_CURSOR:
         ui = new CSkillCursor(id);          break;
     case UI_ID::SKILL_NAME:
-        ui = new CSkillName(id);          break;
+        ui = new CSkillName(id);            break;
     case UI_ID::SKILL_INFO:
         ui = new CSkillInfomation(id);      break;
     case UI_ID::SKILL_VIDEO:
-        ui = new CSkillVideo(id);      break;
+        ui = new CSkillVideo(id);           break;
     case UI_ID::FINISH_GAME_BG:
         ui = new CFinishGameBG(id);         break;
     case UI_ID::TITLE_LOGO:
-        ui = new CTitleLogo(id);         break;
+        ui = new CTitleLogo(id);            break;
     case UI_ID::START_COUNTDOWN:
-        ui = new CStartGameCount(id);         break;
+        ui = new CStartGameCount(id);       break;
     case UI_ID::START_TEXT:
-        ui = new CStartGameText(id);         break;
+        ui = new CStartGameText(id);        break;
     case UI_ID::FINISH_TEXT:
-        ui = new CFinishGameText(id);         break;
+        ui = new CFinishGameText(id);       break;
     case UI_ID::KEY:
         ui = new CKey(id);                  break;
     case UI_ID::KEY_BG:
@@ -318,13 +324,31 @@ CUI* CUIManager::CreateClass(UI_ID id)
     case UI_ID::SCENE_UI_PARENT:
         ui = new CSceneUIParent(id);        break;
     case UI_ID::TITLE_BUTTON:
-        ui = new CTitleButton(id);        break;
+        ui = new CTitleButton(id);          break;
     case UI_ID::GAME_VIDEO:
-        ui = new CGameVideo(id);        break;
+        ui = new CGameVideo(id);            break;
     case UI_ID::MINIGAME_TITLE:
         ui = new CMiniGameTitle(id);        break;
+    case UI_ID::MINIGAME_MANUAL:
+        ui = new CMiniGameManual(id);       break;
+    case UI_ID::MINIGAME_OVERVIEW:
+        ui = new CMiniGameOverView(id);     break;
     case UI_ID::PLAYER_READY:
-        ui = new CPlayerReady(id);        break;
+        ui = new CPlayerReady(id);          break;
+    case UI_ID::NOTICE:
+        ui = new CNotice(id);               break;
+    case UI_ID::NOTICE_WIDE:
+        ui = new CNoticeWide(id);           break;
+    case UI_ID::TEXT_MANUAL:
+        ui = new CTextManual(id);           break;
+    case UI_ID::TEXT_OVERVIEW:
+        ui = new CTextOverview(id);           break;
+    case UI_ID::PLAYER_ICON:
+        ui = new CPlayerIcon(id);           break;
+    case UI_ID::CONCENTRATION_LINE:
+        ui = new CConcentrationLine(id);           break;
+    case UI_ID::RESULT_WINNER:
+        ui = new CResultWinner(id);           break;
     }
 
     return ui;

@@ -3,6 +3,7 @@
 #include "vivid.h"
 #include "..\..\..\utility\utility.h"
 #include <list>
+#include "controller/controller.h"
 
 class CControllerManager
 {
@@ -41,7 +42,19 @@ public:
      *  @brief      コントローラーの数を取得
      *  @return     コントローラーの数
      */
-    bool GetControllerNum();
+    int GetControllerNum();
+
+    /*!
+     *  @brief      コントローラー生成
+     *
+     *  @param[in]  id          コントローラーID
+     */
+    CController* Create(CONTROLLER_ID id);
+
+    /*!
+     *  @brief      コントローラーを取得
+     */
+    CController* GetController(CONTROLLER_ID controller_id);
 
 private:
 
@@ -72,5 +85,9 @@ private:
     CControllerManager& operator=(const CControllerManager& rhs);
 
     int             m_ControllerNum;
+
     std::list<vivid::controller::DEVICE_ID>         m_ControllerIDList;
+    using CONTROLLER_LIST = std::list<CController*>;
+
+    CONTROLLER_LIST                                 m_ControllerList;
 };

@@ -1,5 +1,6 @@
 #include "scene_ui_parent.h"
-#include "../../../unit_manager/unit_manager.h"
+#include "../../../scene_manager/scene_manager.h"
+#include "../../ui_manager.h"
 
 const vivid::Vector2      CSceneUIParent::m_position = vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2);
 const int           CSceneUIParent::m_speed = 10;
@@ -40,7 +41,14 @@ void CSceneUIParent::Initialize(const vivid::Vector2& position)
     {
         CUI* ui = (CUI*)(*it);
         ++it;
-        if (ui->GetUI_ID() == UI_ID::TITLE_LOGO || ui->GetUI_ID() == UI_ID::SCENE_UI_PARENT || ui->GetParent() != nullptr) continue;
+        if (ui->GetUI_ID() == UI_ID::TITLE_LOGO)        continue;
+
+        if (ui->GetUI_ID() == UI_ID::SCENE_UI_PARENT)   continue;
+
+        if (ui->GetParent() != nullptr)                 continue;
+
+        if (ui->GetSceneID() != CSceneManager::GetInstance().GetLastSceneID()) continue;
+
         int offsetHeight = vivid::GetWindowHeight() * -((position.y > 0) - (position.y < 0));
         if(m_Position.y == vivid::GetWindowHeight() / 2)
         {

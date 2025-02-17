@@ -338,7 +338,7 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
         float footPos = unit->GetPosition().y - unit->GetHeight() / 2.0f;
         end_position.y = footPos;
         // ü•ª‚Ì•`‰æ
-        DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
+        //DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
         if (hitPos.y < footPos) return;
 
         float diffHeight = hitPos.y - footPos;
@@ -360,7 +360,7 @@ CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos,
     CVector3 hitPos;
 
     // ü•ª‚Ì•`‰æ
-    DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
+    //DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
 
     if (object->GetModel().CheckHitLine(startPos, endPos) == true)
     {

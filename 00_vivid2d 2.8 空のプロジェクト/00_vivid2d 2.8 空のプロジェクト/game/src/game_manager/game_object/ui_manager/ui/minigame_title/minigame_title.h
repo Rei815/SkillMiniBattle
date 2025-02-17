@@ -41,5 +41,5 @@ private:
     static const int                m_width;        //!< •
 
     static const std::string        m_file_name[];   //!< ƒtƒ@ƒCƒ‹–¼
-    std::string                     m_File_name;
+    std::string                     m_FileName;
 };
