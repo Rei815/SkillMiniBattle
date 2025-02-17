@@ -1,5 +1,6 @@
 #pragma once
 #include "../skill.h"
+#include "../../../effect_manager/effect_manager.h"
 
 class CSkillInvisible : public CSkill
 {
@@ -41,6 +42,8 @@ public:
 protected:
     static const float m_cool_time;
     static const float m_duration_time;
+    static const float m_effect_scale;
 
     bool m_Active;
+    IEffect* m_SkillEffect;
 };

@@ -7,10 +7,12 @@
 const float CSkillStrongWind::m_wind_strength = 0.1f;
 const float CSkillStrongWind::m_cool_time = 5.0f;
 const float CSkillStrongWind::m_duration_time = 5.0f;
+const float CSkillStrongWind::m_effect_scale = 2.0f;
 
 CSkillStrongWind::CSkillStrongWind(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE ,m_duration_time, m_cool_time)
 	,m_Effect(nullptr)
+	,m_SkillEffect(nullptr)
 {
 
 }
@@ -101,6 +103,8 @@ Action(void)
 	CVector3 effectPosition = CVector3().ZERO;
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::STRONG_WIND, effectPosition, CVector3(), 5.0f);
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+	m_SkillEffect->SetParent(m_Player);
 
 	m_State = SKILL_STATE::ACTIVE;
 }
@@ -117,6 +121,11 @@ ActionEnd(void)
 	{
 		m_Effect->SetActive(false);
 		m_Effect = nullptr;
+	}
+	if (m_SkillEffect != nullptr)
+	{
+		m_SkillEffect->SetActive(false);
+		m_SkillEffect = nullptr;
 	}
 
 	for (int i = 10000; i > 0; i--)

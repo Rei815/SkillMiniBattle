@@ -43,9 +43,11 @@ public:
 protected:
     static const float m_cool_time;
     static const float m_duration_time;
+    static const float m_effect_scale;
 
     
-
+    IEffect* m_SkillEffect;
+    IEffect* m_DebuffEffect;
     CDataManager&       dm = CDataManager::GetInstance();
     CUnitManager&       um = CUnitManager::GetInstance();
 };

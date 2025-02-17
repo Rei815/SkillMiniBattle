@@ -1,12 +1,11 @@
 #pragma once
 #include <string>
 #include "..\effect.h"
-class CFloatingEffect : public IEffect
+class CDebuffEffect : public IEffect
 {
 public:
-	CFloatingEffect();
-	~CFloatingEffect();
-
+	CDebuffEffect();
+	~CDebuffEffect();
 
 private:
 	static const std::string m_file_name;

@@ -10,9 +10,3 @@ CFloatingEffect::CFloatingEffect()
 CFloatingEffect::~CFloatingEffect()
 {
 }
-
-void CFloatingEffect::Update(void)
-{
-	if (m_ParentPos)
-		m_Transform.position = *m_ParentPos;
-}

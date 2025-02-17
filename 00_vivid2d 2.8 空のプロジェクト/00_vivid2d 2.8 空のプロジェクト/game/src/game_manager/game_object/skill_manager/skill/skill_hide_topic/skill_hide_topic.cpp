@@ -5,6 +5,7 @@
 
 const float CSkillHideTopic::m_cool_time = 5.0f;
 const float CSkillHideTopic::m_duration_time = 5.0f;
+const float CSkillHideTopic::m_effect_scale = 3.0f;
 
 CSkillHideTopic::CSkillHideTopic(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
@@ -107,6 +108,11 @@ Action(void)
 	m_Parent = (*it);
 	m_Shutter = CUIManager::GetInstance().Create(UI_ID::TOPIC_SHUTTER, (*it)->GetPosition());
 	m_State = SKILL_STATE::ACTIVE;
+
+	CVector3 effect_position = m_Player->GetPosition();
+
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effect_position, CVector3(), m_effect_scale);
+	m_SkillEffect->SetParent(m_Player);
 }
 
 /*!
@@ -116,5 +122,9 @@ void
 CSkillHideTopic::
 ActionEnd(void)
 {
-
+	if (m_SkillEffect != nullptr)
+	{
+		m_SkillEffect->SetActive(false);
+		m_SkillEffect = nullptr;
+	}
 }

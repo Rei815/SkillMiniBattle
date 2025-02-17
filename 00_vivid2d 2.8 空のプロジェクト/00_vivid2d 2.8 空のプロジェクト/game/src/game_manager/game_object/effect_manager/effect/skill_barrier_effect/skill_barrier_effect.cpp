@@ -9,5 +9,6 @@ CSkillBarrierEffect::CSkillBarrierEffect()
 
 CSkillBarrierEffect::~CSkillBarrierEffect()
 {
+	IEffect::Update();
 }
 

@@ -62,7 +62,7 @@ CDodgeBallGame::CDodgeBallGame(void)
 	,m_StageShrinkFlg(false)
 	,m_StageObject(nullptr)
 	,m_NextCannnonDir(CANNON_DIRECTION::UP)
-
+	,m_bgm(nullptr)
 {
 }
 
@@ -86,7 +86,10 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 
 	//BGM再生
-	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
+	if (m_bgm == nullptr)
+		m_bgm->CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
+
+	 //CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
 	//
 	m_DebugText = "ドッジボールゲーム";
 
@@ -136,7 +139,12 @@ void CDodgeBallGame::Finalize(void)
 	CBulletManager::GetInstance().Finalize();
 
 	//BGM停止
-	CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
+	if (m_bgm != nullptr)
+	{
+		m_bgm->Stop_BGM(BGM_ID::MAIN_BGM);
+		m_bgm = nullptr;
+	}
+	//CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
 	//
 }
 

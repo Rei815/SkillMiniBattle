@@ -21,5 +21,7 @@ enum class EFFECT_ID
     GRAVITY_AREA,           //!< 重力エリアエフェクト
     STRONG_WIND,            //!< 強風エフェクト
     COLLIDE,                //!< ぶつかった時のエフェクト
-    SKILL_STAR              //!< スキル発動時の共通エフェクト
+    SKILL_STAR,             //!< スキル発動時の共通エフェクト
+    OGRE_CONTROL,           //!< 鬼操作のエフェクト
+    DEBUFF,                 //!< デバフエフェクト
 };

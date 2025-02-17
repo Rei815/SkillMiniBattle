@@ -4,6 +4,7 @@
 #include "effect_id.h"
 #include "../../../../mathematics/mathematics.h"
 #include "../../../../utility/utility.h"
+#include "../../unit_manager/unit/unit.h"
 
 class IEffect
 {
@@ -161,11 +162,11 @@ public:
     void            SetActive(bool active);
 
     /*!
-     *  @brief      親の位置設定
+     *  @brief      親
      *
-     *  @param[in]  parentPos  親の位置
+     *  @param[in]  parent  親
      */
-    void            SetParentPosition(CVector3& parentPos);
+    void            SetParent(IUnit* unit);
 
     /*!
      *  @brief      エフェクトID取得
@@ -195,7 +196,7 @@ protected:
     vivid::Rect             m_Rect;         //!< 読み込み範囲
     vivid::Vector2          m_Scale2D;      //!< 2Dの拡大率
     float                   m_Rotation;     //!< 回転値
-    CVector3*               m_ParentPos;    //!< 親の位置
+    IUnit*                  m_Parent;       //!< 親
     EFFECT_ID               m_EffectID;     //!< エフェクトID
     float                   m_Speed;        //!< 再生速度
 };

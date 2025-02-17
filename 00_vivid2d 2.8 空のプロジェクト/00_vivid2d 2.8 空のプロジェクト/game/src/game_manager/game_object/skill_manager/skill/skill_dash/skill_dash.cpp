@@ -89,10 +89,11 @@ Action(void)
 	CSoundManager::GetInstance().Play_SE(SE_ID::DASH, false);
 
 	CVector3 effectPosition = m_Player->GetPosition();
-	//effectPosition.y -= m_Player->GetHeight() / 2;
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, 
-		effectPosition, CVector3(), 3.0f);
+		CVector3().ZERO, CVector3(), 3.0f);
+	m_SkillEffect->SetParent(m_Player);
+
 
 	m_Player->MulMoveSpeedRate(m_dash_speed_up_rate);
 	m_State = SKILL_STATE::ACTIVE;

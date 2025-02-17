@@ -3,10 +3,13 @@
 
 const float CSkillStun::m_cool_time = 20.0f;
 const float CSkillStun::m_duration_time = 2.0f;
+const float CSkillStun::m_effect_scale = 2.0f;
 
 CSkillStun::CSkillStun(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 	,m_Target(nullptr)
+	,m_SkillEffect(nullptr)
+	,m_Effect(nullptr)
 {
 }
 
@@ -33,6 +36,7 @@ void CSkillStun::Update(void)
 		break;
 
 	case SKILL_STATE::COOLDOWN:
+		
 		break;
 	}
 }
@@ -82,6 +86,9 @@ void CSkillStun::Action()
 
 	m_Target->SetActionFlag(false);
 
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::OGRE_CONTROL, m_Target->GetPosition(), CVector3(), 2.0f);
+
 	m_State = SKILL_STATE::ACTIVE;
 }
 
@@ -91,5 +98,17 @@ void CSkillStun::ActionEnd()
 	{
 		m_Target->SetActionFlag(true);
 		m_Target = nullptr;
+	}
+
+	if (m_SkillEffect != nullptr)
+	{
+		m_SkillEffect->SetActive(false);
+		m_SkillEffect = nullptr;
+	}
+
+	if (m_Effect != nullptr)
+	{
+		m_Effect->SetActive(false);
+		m_Effect = nullptr;
 	}
 }

@@ -13,10 +13,10 @@
 #include <EffekseerForDXLib.h>
 
 
-const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(200, 1200.0f, -1500.0f);
+const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(100, 1000.0f, -1500.0f);
 const CVector3	CDaruma_FallDownGame::m_camera_direction = CVector3(0, -100, 100);
 
-const CVector3	CDaruma_FallDownGame::m_ogre_position = CVector3(1500, 100, 0);
+const CVector3	CDaruma_FallDownGame::m_ogre_position = CVector3(1500, 0, 0);
 const CVector3	CDaruma_FallDownGame::m_ogre_rotation = CVector3(0, 0, 0);
 
 const float CDaruma_FallDownGame::m_move_speed = 0.3f;
@@ -84,7 +84,7 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 	
 
 	CUnitManager::GetInstance();
-	CObjectManager::GetInstance().Create(OBJECT_ID::DARUMA_FALLDOWN_STAGE_OBJECT, CTransform(CVector3(0,-2500, -100)));
+	CObjectManager::GetInstance().Create(OBJECT_ID::DARUMA_FALLDOWN_STAGE_OBJECT, CTransform(CVector3(0,-1000, -100)));
 
 	m_TempFirstDis = FLT_MAX;
 	m_TempFirstNum = -1;

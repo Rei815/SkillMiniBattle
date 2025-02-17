@@ -6,11 +6,12 @@
 const float		CSkillFloating::m_duration_time = 5.0f;
 const float		CSkillFloating::m_cool_time = 10.0f;
 const CVector3	CSkillFloating::m_scale = CVector3(4.0f, 1.0f, 4.0f);
+const float		CSkillFloating::m_effect_scale = 2.0;
 
 CSkillFloating::CSkillFloating(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 	, m_Effect(nullptr)
-
+	, m_SkillEffect(nullptr)
 {
 
 }
@@ -55,6 +56,7 @@ Update(void)
 		effectPosition.y -= m_Player->GetHeight() / 2;
 		m_Effect->SetPosition(effectPosition);
 	}
+
 }
 
 /*!
@@ -103,6 +105,10 @@ Action()
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::FLOATING, effectPosition, CVector3::UP, m_scale);
 	m_State = SKILL_STATE::ACTIVE;
+
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effectPosition, CVector3(), m_effect_scale);
+	m_SkillEffect->SetParent(m_Player);
+
 }
 
 /*!
@@ -113,6 +119,16 @@ CSkillFloating::
 ActionEnd(void)
 {
 	m_Player->SetGravity(m_Player->GetDefaultGravity());
-	if (m_Effect != nullptr)
+	if (m_Effect != nullptr )
+	{
 		m_Effect->SetActive(false);
+		m_Effect = nullptr;
+	}
+	if (m_SkillEffect != nullptr)
+	{
+		m_SkillEffect->SetActive(false);
+		m_SkillEffect = nullptr;
+	}
+
 }
+		

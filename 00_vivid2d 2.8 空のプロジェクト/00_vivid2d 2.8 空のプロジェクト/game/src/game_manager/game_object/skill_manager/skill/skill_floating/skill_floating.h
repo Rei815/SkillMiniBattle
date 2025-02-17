@@ -42,6 +42,8 @@ protected:
     static const float      m_duration_time;
     static const float      m_cool_time;
     static const CVector3   m_scale;
+    static const float      m_effect_scale;
 
     IEffect*            m_Effect;
+    IEffect*            m_SkillEffect;
 };

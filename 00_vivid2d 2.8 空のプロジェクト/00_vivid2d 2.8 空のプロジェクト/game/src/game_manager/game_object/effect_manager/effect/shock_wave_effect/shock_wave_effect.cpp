@@ -10,4 +10,5 @@ const float CShockWaveEffect::m_speed = 0.5f;
 
  CShockWaveEffect::~ CShockWaveEffect()
 {
+	 IEffect::Update();
 }

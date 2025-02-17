@@ -44,6 +44,8 @@ protected:
     static const float  m_wind_strength;
     static const float  m_cool_time;
     static const float  m_duration_time;
+    static const float  m_effect_scale;
 
+    IEffect*            m_SkillEffect;
     IEffect*            m_Effect;
 };
