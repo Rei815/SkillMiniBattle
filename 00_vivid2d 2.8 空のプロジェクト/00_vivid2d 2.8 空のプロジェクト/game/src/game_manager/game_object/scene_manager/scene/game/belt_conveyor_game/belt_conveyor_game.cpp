@@ -102,7 +102,7 @@ void CBeltConveyorGame::Start(void)
 {
 	CGame::Start();
 
-	//プレイになるタイミングで、ギミックを付与する
+	//プレイになるタイミングで 、ギミックを付与する
 	if(m_GameState == GAME_STATE::PLAY)
 		CGimmickManager::GetInstance().Create(GIMMICK_ID::BELT_CONVEYOR_GIMMICK, m_StageObject);
 }

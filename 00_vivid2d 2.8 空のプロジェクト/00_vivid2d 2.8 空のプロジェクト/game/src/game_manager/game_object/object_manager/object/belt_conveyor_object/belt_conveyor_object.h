@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../model_manager/model/model.h"
+#include "..\..\..\model_manager\model\model.h"
 #include "..\object.h"
 #include "..\..\..\..\..\utility\utility.h"
 
@@ -30,20 +30,6 @@ public:
      *  @brief      解放
      */
     void    Finalize(void);
-
-    /*!
-     *  @brief      アクティブフラグ取得
-     *
-     *  @return     アクティブフラグ
-     */
-    bool            GetActive(void);
-
-    /*!
-     *  @brief      アクティブフラグ設定
-     *
-     *  @param[in]  active  アクティブフラグ
-     */
-    void            SetActive(bool active);
 
 private:
 

@@ -41,6 +41,8 @@ public:
 
 protected:
     static const float  m_cool_time;
+    static const float  m_effect_scale;
 
+    IEffect*            m_SkillEffect;
     CShot*              m_Shot;
 };

@@ -3,10 +3,12 @@
 
 const float CSkillInvisible::m_cool_time = 10.0f;
 const float CSkillInvisible::m_duration_time = 3.0f;
+const float CSkillInvisible::m_effect_scale = 3.0f;
 
 CSkillInvisible::CSkillInvisible(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 	, m_Active(false)
+	, m_SkillEffect(nullptr)
 {
 }
 
@@ -56,7 +58,11 @@ void CSkillInvisible::Action(void)
 	CSoundManager::GetInstance().Play_SE(SE_ID::INVISIBLE, false);
 	m_Player->StartInvincible(m_duration_time);
 	m_State = SKILL_STATE::ACTIVE;
-	
+
+	CVector3 effect_position = m_Player->GetPosition();
+
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effect_position, CVector3(), m_effect_scale);
+	m_SkillEffect->SetParent(m_Player);
 }
 
 /*!
@@ -64,5 +70,9 @@ void CSkillInvisible::Action(void)
  */
 void CSkillInvisible::ActionEnd(void)
 {
-
+	if (m_SkillEffect != nullptr)
+	{
+		m_SkillEffect->SetActive(false);
+		m_SkillEffect = nullptr;
+	}
 }

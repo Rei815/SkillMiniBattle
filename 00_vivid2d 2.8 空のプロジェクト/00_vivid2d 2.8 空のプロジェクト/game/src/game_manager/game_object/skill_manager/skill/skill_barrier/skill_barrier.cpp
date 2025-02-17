@@ -8,11 +8,14 @@
 const float CSkillBarrier::m_duration_time = 5.0f;
 const float CSkillBarrier::m_cool_time = 25.0f;
 const std::string CSkillBarrier::m_collider_model_file_name = "data\\Models\\skill_barrier_collider.mv1";
+const float CSkillBarrier::m_effect_scale = 3.0f;
+
 
 CSkillBarrier::CSkillBarrier(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 	, m_ColliderModel()
 	, m_Effect(nullptr)
+	, m_SkillEffect(nullptr)
 {
 
 }
@@ -107,7 +110,10 @@ Action(void)
 	CSoundManager::GetInstance().Play_SE(SE_ID::BARRIER, false);
 
 	m_Player->StartInvincible(m_duration_time);
-	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 0.04f);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 1.0f);
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO,CVector3(), m_effect_scale);
+	m_SkillEffect->SetParent(m_Player);
+
 	m_State = SKILL_STATE::ACTIVE;
 }
 
@@ -124,5 +130,11 @@ ActionEnd(void)
 	{
 		m_Effect->SetActive(false);
 		m_Effect = nullptr;
+	}
+
+	if (m_SkillEffect != nullptr)
+	{
+		m_SkillEffect->SetActive(false);
+		m_SkillEffect = nullptr;
 	}
 }

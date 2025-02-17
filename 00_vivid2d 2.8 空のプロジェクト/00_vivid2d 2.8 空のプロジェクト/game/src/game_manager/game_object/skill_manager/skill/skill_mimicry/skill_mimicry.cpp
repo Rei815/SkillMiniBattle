@@ -4,9 +4,11 @@
 const float CSkillMimicry::m_cool_time = 10.0f;
 const float CSkillMimicry::m_duration_time = 5.0f;
 const float CSkillMimicry::m_mimicry_speed_rate = 0.5f;
+const float CSkillMimicry::m_effect_scale = 3.0f;
 
 CSkillMimicry::CSkillMimicry(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
+	,m_SkillEffect(nullptr)
 {
 }
 
@@ -57,7 +59,11 @@ void CSkillMimicry::Action()
 	m_Player->MulMoveSpeedRate(m_mimicry_speed_rate);
 	m_Player->StartInvincible(m_duration_time);
 	m_State = SKILL_STATE::ACTIVE;
-	
+	CVector3 effect_position = m_Player->GetPosition();
+
+
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effect_position, CVector3(), m_effect_scale);
+	m_SkillEffect->SetParent(m_Player);
 }
 
 /*!

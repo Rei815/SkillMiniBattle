@@ -5,15 +5,22 @@
 
 const float			CBeltConveyorGimmick::m_mid_belt_speed_time = 180.0f;
 
-const float			CBeltConveyorGimmick::m_min_belt_speed_rate =  5.0f;
-const float			CBeltConveyorGimmick::m_mid_belt_speed_rate = 10.0f;
-const float			CBeltConveyorGimmick::m_max_belt_speed_rate = 20.0f;
+const float			CBeltConveyorGimmick::m_default_belt_move_speed = 5.0f;
+const float			CBeltConveyorGimmick::m_min_belt_speed_rate = 1.0f;
+const float			CBeltConveyorGimmick::m_mid_belt_speed_rate = 2.0f;
+const float			CBeltConveyorGimmick::m_max_belt_speed_rate = 3.0f;
+
+const float			CBeltConveyorGimmick::m_default_obstruction_spawn_time = 2.0f;
+const float			CBeltConveyorGimmick::m_obstruction_object_scale = 0.5f;
+const CVector3		CBeltConveyorGimmick::m_obstruction_spawn_relative_pos = CVector3(0.0f, 50.0f, -1000.0f);
+
+const float			CBeltConveyorGimmick::m_obstruction_object_fall_speed = 10.0f;
 
 CBeltConveyorGimmick::CBeltConveyorGimmick()
 	: CGimmick()
-	, m_PlayerMoveSpeed(CPlayer::m_move_speed)
 	, m_NowBeltSpeedRate(0.0f)
 	, m_BeltConveyorForward(CVector3::FORWARD)
+	, m_ObstructionObjectList()
 {
 }
 
@@ -33,9 +40,9 @@ void CBeltConveyorGimmick::Initialize(IObject* object, float time)
 	m_Object->SetGimmick(this);
 	m_BeltConveyorForward = m_Object->GetTransform().GetForwardVector();
 
-	m_PlayerMoveSpeed = CPlayer::m_move_speed;
 	m_NowBeltSpeedRate = m_min_belt_speed_rate;
 	m_Timer.SetUp(m_mid_belt_speed_time);
+	m_ObstructionSpawnTimer.SetUp(m_default_obstruction_spawn_time);
 }
 
 void CBeltConveyorGimmick::Update(void)
@@ -47,10 +54,54 @@ void CBeltConveyorGimmick::Update(void)
 	if (m_NowBeltSpeedRate > m_max_belt_speed_rate)
 		m_NowBeltSpeedRate = m_max_belt_speed_rate;
 
+	//障害物のスポーン
+	m_ObstructionSpawnTimer.Update();
+	if (m_ObstructionSpawnTimer.Finished())
+	{
+		m_ObstructionSpawnTimer.Reset();
+
+		CTransform SpawnTr;
+		CVector3 SpawnRelativePos = m_obstruction_spawn_relative_pos;
+		SpawnTr.position = m_Object->GetPosition() + SpawnRelativePos.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, m_Object->GetRotation().y);
+		SpawnTr.rotation = m_Object->GetRotation();
+		SpawnTr.scale = CVector3(m_obstruction_object_scale, m_obstruction_object_scale, m_obstruction_object_scale);
+
+		IObject* SpawnObj = CObjectManager::GetInstance().Create(OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_OBJECT, SpawnTr);
+	
+		m_ObstructionObjectList.push_back(SpawnObj);
+	}
+	
+	//障害物の移動
+	if (!m_ObstructionObjectList.empty())
+	{
+		std::list<IObject*>::iterator it = m_ObstructionObjectList.begin();
+
+		while (it != m_ObstructionObjectList.end())
+		{
+			CVector3 ObjPos = (*it)->GetPosition();
+
+			//if(ObjPos.y < )
+
+			CVector3 CheckLineEndPos = ObjPos + CVector3(0.0f, 50.0f, 0.0f);
+
+			//ベルトコンベアの上にいるかどうか
+			if (m_Object->GetModel().CheckHitLine( ObjPos, CheckLineEndPos))
+			{
+				(*it)->SetPosition(ObjPos + m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate));
+			}
+			else
+			{
+				(*it)->SetPosition(ObjPos + CVector3::DOWN * m_obstruction_object_fall_speed);
+			}
+
+			it++;
+		}
+	}
+
+
 	//プレイヤーの移動（ベルトコンベアの影響）
 	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
-	
 	while (it != unitList.end())
 	{
 		IUnit* unit = (*it);
@@ -64,7 +115,7 @@ void CBeltConveyorGimmick::Update(void)
 		if (!unit->GetIsGround())
 			continue;
 
-		unit->SetPosition(unit->GetPosition() + m_BeltConveyorForward * (m_PlayerMoveSpeed * m_NowBeltSpeedRate));
+		unit->SetPosition(unit->GetPosition() + m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate));
 	}
 }
 

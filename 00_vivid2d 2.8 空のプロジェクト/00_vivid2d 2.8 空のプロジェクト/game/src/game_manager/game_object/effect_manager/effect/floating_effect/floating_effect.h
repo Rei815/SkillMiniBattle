@@ -7,10 +7,6 @@ public:
 	CFloatingEffect();
 	~CFloatingEffect();
 
-	/*!
-	 *  @brief      XV
-	 */
-	void Update(void);
 
 private:
 	static const std::string m_file_name;

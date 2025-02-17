@@ -6,7 +6,7 @@ IEffect::IEffect()
     : m_Scale(CVector3(25.0f, 25.0f, 25.0f))
     , m_ActiveFlag(true)
     , m_PlayHandle(VIVID_DX_ERROR)
-    , m_ParentPos(nullptr)
+    , m_Parent(nullptr)
     , m_Speed(1.0f)
     , m_StopFlag(false)
 {
@@ -17,7 +17,7 @@ IEffect::IEffect(const std::string& file_name, EFFECT_ID effectID, float speed)
     , m_ActiveFlag(true)
     , m_FileName(file_name)
     , m_PlayHandle(VIVID_DX_ERROR)
-    , m_ParentPos(nullptr)
+    , m_Parent(nullptr)
     , m_EffectID(effectID)
     , m_Speed(speed)
     , m_StopFlag(false)
@@ -38,7 +38,7 @@ IEffect(int width, int height)
     , m_Scale2D(vivid::Vector2(1.0f, 1.0f))
     , m_Rotation(0.0f)
     , m_ActiveFlag(true)
-    , m_ParentPos(nullptr)
+    , m_Parent(nullptr)
     , m_EffectID()
     , m_Speed(1.0f)
     , m_StopFlag(false)
@@ -133,7 +133,10 @@ void
 IEffect::
 Update(void)
 {
-    if (!vivid::effekseer::IsEffectPlaying(m_PlayHandle) && m_StopFlag == false)
+    if (m_Parent)
+        m_Transform.position = m_Parent->GetPosition();
+
+    if (!vivid::effekseer::IsEffectPlaying(m_PlayHandle))
         m_ActiveFlag = false;
 }
 
@@ -217,9 +220,10 @@ SetActive(bool active)
     m_ActiveFlag = active;
 }
 
-void IEffect::SetParentPosition(CVector3& parentPos)
+
+void IEffect::SetParent(IUnit* parent)
 {
-    m_ParentPos = &parentPos;
+    m_Parent = parent;
 }
 
 EFFECT_ID IEffect::GetEffectID(void)

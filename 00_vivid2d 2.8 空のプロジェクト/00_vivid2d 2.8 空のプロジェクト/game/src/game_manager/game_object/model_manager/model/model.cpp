@@ -54,6 +54,9 @@ void CModel::Initialize(const std::string& file_name, const CTransform& transfor
 
 void CModel::Load(const std::string& file_name)
 {
+	//念のため、アンロードしてからロードする
+	Unload();
+
 	m_Handle = DxLib::MV1LoadModel(file_name.c_str());
 
 	MV1SetupCollInfo(m_Handle, -1, 8, 8, 8);

@@ -46,13 +46,3 @@ void CBeltConveyorObject::Finalize(void)
 
 	m_Model.Finalize();
 }
-
-bool CBeltConveyorObject::GetActive(void)
-{
-	return IObject::GetActive();
-}
-
-void CBeltConveyorObject::SetActive(bool active)
-{
-	IObject::SetActive(active);
-}

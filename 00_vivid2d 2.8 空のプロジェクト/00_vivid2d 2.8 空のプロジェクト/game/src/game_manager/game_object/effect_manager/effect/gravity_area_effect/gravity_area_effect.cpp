@@ -13,6 +13,5 @@ CGravityAreaEffect::~CGravityAreaEffect()
 
 void CGravityAreaEffect::Update(void)
 {
-	if (m_ParentPos)
-		m_Transform.position = *m_ParentPos;
+	IEffect::Update();
 }

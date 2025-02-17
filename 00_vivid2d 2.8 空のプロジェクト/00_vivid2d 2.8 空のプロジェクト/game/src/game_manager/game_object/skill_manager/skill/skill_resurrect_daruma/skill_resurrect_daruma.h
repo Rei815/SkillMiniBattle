@@ -40,6 +40,8 @@ public:
 
 protected:
     static const float m_duration_time;
+    static const float m_effect_scale;
 
+    IEffect*            m_SkillEffect;
     CVector3            m_Resurrect_Position;
 };

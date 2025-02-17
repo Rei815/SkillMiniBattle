@@ -52,6 +52,7 @@ protected:
     static const float  m_duration_time;
     static const float  m_cool_time;
     static const float  m_gravity_area_radius;
+    static const float  m_effect_scale;
 
     GRAVITY_AFFECTED m_PlayerAffectedGravity[(int)UNIT_ID::NONE];
 

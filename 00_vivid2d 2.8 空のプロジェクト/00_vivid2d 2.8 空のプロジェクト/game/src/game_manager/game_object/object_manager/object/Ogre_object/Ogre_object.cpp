@@ -50,13 +50,3 @@ void COgreObject::Finalize(void)
 
 	m_Model.Finalize();
 }
-
-bool COgreObject::GetActive(void)
-{
-	return m_ActiveFlag;
-}
-
-void COgreObject::SetActive(bool active)
-{
-	m_ActiveFlag = active;
-}

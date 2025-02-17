@@ -5,9 +5,11 @@
 #include "../../../sound_manager/sound_manager.h"
 
 const float CSkillStomp::m_cool_time = 10.0f;
+const float CSkillStomp::m_effect_scale = 2.0f;
 
 CSkillStomp::CSkillStomp(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, 0.0f, m_cool_time)
+	,m_SkillEffect(nullptr)
 {
 
 }
@@ -77,6 +79,9 @@ Action()
 	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, m_Player->GetPosition());
 	m_Timer.SetUp(m_cool_time);
 	m_State = SKILL_STATE::COOLDOWN;
+
+	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+	m_SkillEffect->SetParent(m_Player);
 }
 
 /*!
@@ -86,5 +91,9 @@ void
 CSkillStomp::
 ActionEnd(void)
 {
-
+	if (m_SkillEffect != nullptr)
+	{
+		m_SkillEffect->SetActive(false);
+		m_SkillEffect = nullptr;
+	}
 }

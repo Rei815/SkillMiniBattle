@@ -19,6 +19,22 @@ const float             CPlayer::m_max_invincible_time = 1.0f;
 const int               CPlayer::m_invincible_visible_interval = 4;
 const float             CPlayer::m_fall_accelerator = 0.025f;
 
+const unsigned int      CPlayer::m_player_body_color[] =
+{
+    0xffffaaaa,     //Player1
+    0xffaaaaff,     //Player2
+    0xffffffaa,     //Player3
+    0xffaaffaa      //Player4
+};
+
+const unsigned int      CPlayer::m_player_eye_color[] =
+{
+    0xff660000,     //Player1
+    0xff000066,     //Player2
+    0xff666600,     //Player3
+    0xff006600      //Player4
+};
+
 CPlayer::CPlayer()
     : IUnit(UNIT_CATEGORY::PLAYER)
     , m_MoveSpeedRate(1.0f)
@@ -72,6 +88,9 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
     m_InitialPosition = position;
 
     m_Model.Initialize(file_name, position, m_model_scale);
+
+    m_Model.SetMaterialDif(0, m_player_body_color[(int)id]);
+    m_Model.SetMaterialDif(1, m_player_eye_color[(int)id]);
 
     m_Accelerator = CVector3(0,0,0);
 
@@ -287,7 +306,7 @@ void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, fl
 {
     CVector3 m_EffectPosition = this->GetPosition();
 
-   // m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
+    m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
 
     //“–‚½‚Á‚½Œü‚«‚ðŽæ“¾
     CVector3 TempVelocity = (m_Transform.position - hit_position);

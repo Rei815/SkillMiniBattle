@@ -30,22 +30,9 @@ public:
      */
     void    Finalize(void);
 
-    /*!
-     *  @brief      アクティブフラグ取得
-     *
-     *  @return     アクティブフラグ
-     */
-    bool            GetActive(void);
-
-    /*!
-     *  @brief      アクティブフラグ設定
-     *
-     *  @param[in]  active  アクティブフラグ
-     */
-    void            SetActive(bool active);
-
 private:
 
-    static const std::string m_model_file_name;
+    static const std::string  m_model_file_name;
+    static const unsigned int m_model_color;
 
 };
