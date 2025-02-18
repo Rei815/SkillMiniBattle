@@ -5,6 +5,7 @@
 #include "../../../../collider/sphere_collider/sphere_collider.h"
 #include "../../launcher/launcher.h"
 #include "collider_id.h"
+#include "bullet_id.h"
 class IBullet
 {
 public:
@@ -148,6 +149,8 @@ public:
     CModel          GetModel(void);
 
     float           GetPower();
+
+    BULLET_ID       GetID();
 protected:
 
 
@@ -173,7 +176,7 @@ protected:
     float				        m_Speed;            //!< 速さ
     float				        m_Accleration;		//!< 加速力
     CVector3			        m_Direction;
-
+    BULLET_ID                   m_BulletID;
     COLLIDER_ID                 m_ColliderID;       //!< 判定ID
     CVector3                    m_CapsulePosA;      //!< カプセルを形成する二点中の一点
     CVector3                    m_CapsulePosB;      //!< カプセルを形成する二点中の一点

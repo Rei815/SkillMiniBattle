@@ -91,7 +91,7 @@ void CModel::Update(const CTransform& transform)
 	MV1SetPosition(m_Handle, m_Transform.position);
 	MV1SetScale(m_Handle, m_Transform.scale);
 	MV1SetRotationXYZ(m_Handle, m_Transform.GetRadianRotation());
-	MV1RefreshCollInfo(m_Handle, -1);
+	MV1RefreshCollInfo(m_Handle);
 }
 
 /*

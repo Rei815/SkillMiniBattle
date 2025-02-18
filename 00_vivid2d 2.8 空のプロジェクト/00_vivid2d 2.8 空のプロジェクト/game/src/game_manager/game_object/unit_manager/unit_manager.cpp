@@ -166,7 +166,7 @@ void CUnitManager::CheckHitObject(IObject* object)
             endPos = startPos;
             tempVelocity = (*it)->GetVelocity();
             tempVelocity.y = 0.0f;
-            tempVelocity = CVector3().Normalize(tempVelocity);
+            tempVelocity = tempVelocity.Normalize(tempVelocity);
             endPos += tempVelocity * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
 
@@ -327,6 +327,8 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
     CVector3 end_position = startPos + (down_dir * length);
 #ifdef VIVID_DEBUG
 
+        // ü•ª‚Ì•`‰æ
+        DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
 
 #endif // VIVID_DEBUG
 
@@ -338,8 +340,6 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
         float footPos = unit->GetPosition().y - unit->GetHeight() / 2.0f;
         end_position.y = footPos;
 
-        // ü•ª‚Ì•`‰æ
-        //DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
 
         if (hitPos.y < footPos) return;
 
@@ -382,7 +382,7 @@ CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos,
     CVector3 hitPos;
 
     // ü•ª‚Ì•`‰æ
-    //DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
+    DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
 
     if (object->GetModel().CheckHitLine(startPos, endPos) == true)
     {

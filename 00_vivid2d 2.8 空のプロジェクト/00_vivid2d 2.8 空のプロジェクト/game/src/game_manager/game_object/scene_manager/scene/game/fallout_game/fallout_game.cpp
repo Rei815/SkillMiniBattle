@@ -108,17 +108,19 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	CreateFloor(CVector3(1800.0f, -1000.0f, 1500.0f));
+	//CreateFloor(CVector3(1800.0f, -1000.0f, 1500.0f));
 
-	CreateFloor(CVector3(-1800.0f, -2000.0f, 3000.0f));
+	//CreateFloor(CVector3(-1800.0f, -2000.0f, 3000.0f));
 }
 
 void CFallOutGame::Update(void)
 {
 	m_BackGround.Update();
-	CBulletManager::GetInstance().Update();
-	CStage::GetInstance().Update();
 	CGame::Update();
+#ifdef VIVID_DEBUG
+	CBulletManager::GetInstance().Update();
+#endif
+	CStage::GetInstance().Update();
 
 	CCamera::GetInstance().Update();
 }
@@ -126,7 +128,6 @@ void CFallOutGame::Update(void)
 void CFallOutGame::Draw(void)
 {
 	m_BackGround.Draw();
-	//CBulletManager::GetInstance().Draw();
 
 	CGame::Draw();
 #ifdef VIVID_DEBUG

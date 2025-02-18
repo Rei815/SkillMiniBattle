@@ -68,16 +68,7 @@ void CTitle::Update(void)
         m_FadeSpeed = -m_FadeSpeed;
 
     CSceneManager& sm = CSceneManager::GetInstance();
-    //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && sm.GetList().size() == 1)
-    //{
-    //    m_Color = 0xff000000;
-    //    CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-
-    //    CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTPLAYER);
-    //    m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
-
-    //}
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(BUTTON_ID::ALL) && sm.GetList().size() == 1)
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && sm.GetList().size() == 1)
     {
         m_Color = 0xff000000;
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
@@ -86,6 +77,15 @@ void CTitle::Update(void)
         m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
     }
+    //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(BUTTON_ID::ALL) && sm.GetList().size() == 1)
+    //{
+    //    m_Color = 0xff000000;
+    //    CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+
+    //    CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTPLAYER);
+    //    m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+
+    //}
 
     m_Color = vivid::alpha::AdjustAlpha(m_Color, m_FadeSpeed);
     if (m_SceneUIParent)

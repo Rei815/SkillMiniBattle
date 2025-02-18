@@ -21,6 +21,7 @@ CShockWaveBullet::CShockWaveBullet()
 
 void CShockWaveBullet::Initialize(UNIT_CATEGORY category, const CVector3& position, const CVector3& direction)
 {
+    m_BulletID = BULLET_ID::SHOCK_WAVE;
     CVector3 _position = position;
     _position.y -= m_height / 2.0f;
     IBullet::Initialize(category, position, direction);
@@ -41,8 +42,6 @@ void CShockWaveBullet::Update()
     m_Transform.scale.x += vivid::GetDeltaTime() * m_Speed;
     m_Transform.scale.z += vivid::GetDeltaTime() * m_Speed;
     IBullet::Update();
-    m_Model.Update(m_Transform);
-
 }
 
 void CShockWaveBullet::Draw()

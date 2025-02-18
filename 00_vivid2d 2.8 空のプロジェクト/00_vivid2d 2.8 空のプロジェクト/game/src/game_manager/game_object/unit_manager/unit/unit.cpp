@@ -207,8 +207,12 @@ bool IUnit::CheckHitBulletModel(IBullet* bullet)
 
         if (m_InvincibleFlag)
             return hit_flag;
-
-        Impact(hitPosition, bullet->GetVelocity().Normalize(), bullet->GetPower());
+        CVector3 direction = bullet->GetVelocity().Normalize();
+        if (bullet->GetID() == BULLET_ID::SHOCK_WAVE)
+        {
+            direction = hit_poly_dim.Dim->Normal;
+        }
+        Impact(hitPosition, direction, bullet->GetPower());
     }
     // “–‚½‚è”»’èî•ñ‚ÌŒãn––
     MV1CollResultPolyDimTerminate(hit_poly_dim);

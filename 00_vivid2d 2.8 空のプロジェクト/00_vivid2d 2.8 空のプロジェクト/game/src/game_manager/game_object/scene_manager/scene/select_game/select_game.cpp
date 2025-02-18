@@ -9,7 +9,7 @@
 #include "../../../ui_manager/ui/player_ready/player_ready.h"
 #include "../../../controller_manager/controller_manager.h"
 
-const int CSelectGame::m_games_num = 4;
+const int CSelectGame::m_games_num = 5;
 const float CSelectGame::m_circle_radius = 500.0f;
 CSelectGame::CSelectGame(void)
     : m_SelectedGameFlag(false)
@@ -169,7 +169,7 @@ void CSelectGame::Update(void)
             m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
         }
     }
-//#if _DEBUG
+#ifdef _DEBUG
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
     {
         m_SelectedGameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
@@ -220,7 +220,7 @@ void CSelectGame::Update(void)
         }
     }
 
-//#endif
+#endif
 
     if (m_SecondSceneUIParent)
     {
