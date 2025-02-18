@@ -38,14 +38,25 @@ void CPlayerReady::Update(void)
 {
 	CUI::Update();
 	if (m_ReadyFlag == true) return;
-	//CControllerManager& cm = CControllerManager::GetInstance();
-	//CController* controller = cm.GetController(CONTROLLER_ID::ONE);
-	//int playerNum = (int)controller->GetID();
-	//if (controller->GetButtonDown(BUTTON_ID::B) & PAD_INPUT_B)
-	//{
-	//	m_Color[playerNum] = 0x007f7f7f;
-	//}
-//#if _DEBUG
+	CControllerManager& cm = CControllerManager::GetInstance();
+	CController* controller1 = cm.GetController(CONTROLLER_ID::ONE);
+	CController* controller2 = cm.GetController(CONTROLLER_ID::TWO);
+	CController* controller3 = cm.GetController(CONTROLLER_ID::THREE);
+	CController* controller4 = cm.GetController(CONTROLLER_ID::FOUR);
+	int playerNum = (int)controller1->GetID();
+	if (controller1)
+		if (controller1->GetButtonDown(BUTTON_ID::B))
+			m_Color[0] ^= 0x007f7f7f;
+	if (controller2)
+		if (controller2->GetButtonDown(BUTTON_ID::B))
+			m_Color[1] ^= 0x007f7f7f;
+	if (controller3)
+		if (controller3->GetButtonDown(BUTTON_ID::B))
+			m_Color[2] ^= 0x007f7f7f;
+	if (controller4)
+		if (controller4->GetButtonDown(BUTTON_ID::B))
+			m_Color[3] ^= 0x007f7f7f;
+	//#if _DEBUG
 	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
 	{
 		m_Color[0] ^= 0x007f7f7f;

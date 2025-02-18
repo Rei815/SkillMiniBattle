@@ -1,6 +1,6 @@
 #include "maze_stage.h"
 
-const std::string CMazeStage::m_file_name = "data\\_maze_stage.mv1";
+const std::string CMazeStage::m_file_name = "data\\Floor.mv1";
 
 CMazeStage::CMazeStage()
 	: IObject()

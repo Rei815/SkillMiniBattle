@@ -10,6 +10,7 @@
 #include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
 #include "../../../../gimmick_manager/gimmick/fall_gimmick/fall_gimmick.h"
 #include "../../../../sound_manager/sound_manager.h"
+#include "../../../../bullet_manager/bullet_manager.h"
 
 
 const CTransform CFallOutGame::m_object_transform_list[] = 
@@ -83,7 +84,7 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 		m_EntryList.push_back(unit);
 
 	}
-
+	CBulletManager::GetInstance().Initialize();
 	CSkillManager::GetInstance().SetSkill();
 	CObjectManager& om = CObjectManager::GetInstance();
 	CGimmickManager& gm = CGimmickManager::GetInstance();
@@ -115,6 +116,7 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 void CFallOutGame::Update(void)
 {
 	m_BackGround.Update();
+	CBulletManager::GetInstance().Update();
 	CStage::GetInstance().Update();
 	CGame::Update();
 
@@ -124,6 +126,8 @@ void CFallOutGame::Update(void)
 void CFallOutGame::Draw(void)
 {
 	m_BackGround.Draw();
+	//CBulletManager::GetInstance().Draw();
+
 	CGame::Draw();
 #ifdef VIVID_DEBUG
 
@@ -139,6 +143,7 @@ void CFallOutGame::Finalize(void)
 {
 	CGame::Finalize();
 	CStage::GetInstance().Finalize();
+	CBulletManager::GetInstance().Finalize();
 
 	CCamera::GetInstance().Finalize();
 
