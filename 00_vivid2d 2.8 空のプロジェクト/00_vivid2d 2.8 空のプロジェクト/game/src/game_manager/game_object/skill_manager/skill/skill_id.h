@@ -30,6 +30,7 @@ enum class SKILL_ID
 	OGRE_CONTOROL,
 	RESURRECT_DARUMA,
 	RESURRECT_FALLOUT,
+	RESURRECT_BELT,
 	STRONG_WIND,
 	HIDE_TOPIC,
 	MAX,
@@ -80,9 +81,31 @@ enum class SKILL_ID_DODGEBALL
 	GRAVITY_AREA,
 	FLOATING,
 	STRONG_WIND,
+
 	MAX,
 
-};/*!
+};
+
+/*!
+ *  @brief      ベルトコンベアのスキルID
+ */
+enum class SKILL_ID_BELTCONVEYOR
+{
+	SPEED_UP,
+	JUMP_UP,
+	DASH,
+	GRAVITY_AREA,
+	SLOW,
+	FLOATING,
+	STRONG_WIND,
+	RESURRECT_BELT,
+
+	MAX,
+
+};
+
+
+/*!
  *  @brief      迷路のスキルID
  */
 enum class SKILL_ID_MAZE
@@ -104,6 +127,7 @@ enum class SKILL_ID_MAZE
 	RESURRECT_FALLOUT,
 	STRONG_WIND,
 	HIDE_TOPIC,
+
 	MAX,
 
 };

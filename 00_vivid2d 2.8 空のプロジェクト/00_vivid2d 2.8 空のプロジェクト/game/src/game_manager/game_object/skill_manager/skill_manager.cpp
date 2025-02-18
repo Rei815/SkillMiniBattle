@@ -16,6 +16,7 @@
 #include "skill/skill_strong_wind/skill_strong_wind.h"
 #include "skill/skill_gravity_area/skill_gravity_area.h"
 #include "skill/skill_hide_topic/skill_hide_topic.h"
+#include "skill/skill_resurrect_belt/skill_resurrect_belt.h"
 
 
 /*
@@ -152,6 +153,8 @@ CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
         skill = new CSkillResurrectDaruma();    break;
     case SKILL_ID::RESURRECT_FALLOUT:
         skill = new CSkillResurrectFallout();    break;
+    case SKILL_ID::RESURRECT_BELT:
+        skill = new CSkillResurrectBelt();    break;
     case SKILL_ID::STRONG_WIND:
         skill = new CSkillStrongWind();    break;
     case SKILL_ID::HIDE_TOPIC:

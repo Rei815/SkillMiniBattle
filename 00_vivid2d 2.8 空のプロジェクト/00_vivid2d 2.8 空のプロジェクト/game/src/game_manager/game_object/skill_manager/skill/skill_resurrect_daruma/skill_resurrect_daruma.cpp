@@ -36,7 +36,6 @@ void CSkillResurrectDaruma::Update(void)
 			m_EffectFlag = true;
 			m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
 			m_SkillEffect->SetParent(m_Player);
-
 		}
 
 		break;

@@ -4,7 +4,7 @@
 #include "../../../object_manager/object_manager.h"
 #include "../../../sound_manager/sound_manager.h"
 
-const CVector3	CSkillResurrectBelt::m_resurrect_position = CVector3(0.0f,0.0f,0.0f);
+const CVector3	CSkillResurrectBelt::m_resurrect_position = CVector3(0.0f,500.0f,0.0f);
 const float		CSkillResurrectBelt::m_effect_scale = 2.0f;
 
 CSkillResurrectBelt::CSkillResurrectBelt(void)
@@ -50,6 +50,11 @@ Update(void)
 	case SKILL_STATE::ACTIVE:
 		CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
 		m_Player->SetPosition(m_resurrect_position);
+		if (m_SkillEffect == nullptr)
+		{
+			m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+			m_SkillEffect->SetParent(m_Player);
+		}
 		m_State = SKILL_STATE::COOLDOWN;
 		break;
 
