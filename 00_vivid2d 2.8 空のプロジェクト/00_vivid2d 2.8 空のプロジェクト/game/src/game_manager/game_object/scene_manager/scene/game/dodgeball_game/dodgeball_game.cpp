@@ -231,7 +231,11 @@ void CDodgeBallGame::Play(void)
 void CDodgeBallGame::Finish(void)
 {
 	CGame::Finish();
+
 	CSoundManager::GetInstance().Finalize();
+
+	if(m_bgm != nullptr)
+	m_bgm->CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
 
 }
 

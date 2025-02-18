@@ -160,6 +160,7 @@ void CSelectSkill::Draw(void)
 void CSelectSkill::Finalize(void)
 {
     CCamera::GetInstance().Finalize();
+    CSoundManager::GetInstance().Stop_BGM(BGM_ID::READY_BGM);
     CUIManager::GetInstance().Finalize();
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {

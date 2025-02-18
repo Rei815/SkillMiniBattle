@@ -10,7 +10,7 @@ const float CSkillGravityArea::m_duration_time = 10.0f;
 const float CSkillGravityArea::m_cool_time = 15.0f;
 const float CSkillGravityArea::m_gravity_area_radius = 500.0f;
 const float CSkillGravityArea::m_effect_scale = 2.0f;
-const int   CSkillGravityArea::m_se_volume = 9000;
+const int   CSkillGravityArea::m_se_volume = 11000;
 
 CSkillGravityArea::CSkillGravityArea(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
