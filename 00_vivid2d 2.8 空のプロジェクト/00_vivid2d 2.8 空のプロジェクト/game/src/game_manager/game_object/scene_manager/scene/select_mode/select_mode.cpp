@@ -70,5 +70,4 @@ void CSelectMode::Finalize(void)
 {
     IScene::Finalize();
     CUIManager::GetInstance().Delete(m_SceneUIParent);
-
 }

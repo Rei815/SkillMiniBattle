@@ -261,6 +261,7 @@ void CSelectGame::Finalize(void)
     IScene::Finalize();
 
     CCamera::GetInstance().Finalize();
+    CSoundManager::GetInstance().Stop_BGM(BGM_ID::READY_BGM);
 
     CUIManager::GetInstance().Delete(m_FirstSceneUIParent);
     CUIManager::GetInstance().Delete(m_SecondSceneUIParent);

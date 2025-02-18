@@ -31,6 +31,8 @@ void CTitle::Initialize(SCENE_ID scene_id)
     CCamera::GetInstance().Initialize();
     CUIManager& um = CUIManager::GetInstance();
     CUIManager::UI_LIST uiList = um.GetList();
+    CSoundManager::GetInstance().Play_BGM(BGM_ID::READY_BGM, true);
+
     if (uiList.size() == 0)
     {
         um.Initialize();

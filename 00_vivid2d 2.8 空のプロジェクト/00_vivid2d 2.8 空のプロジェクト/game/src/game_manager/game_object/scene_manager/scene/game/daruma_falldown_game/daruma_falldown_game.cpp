@@ -107,6 +107,9 @@ void CDaruma_FallDownGame::Draw(void)
 
 void CDaruma_FallDownGame::Finalize(void)
 {
+	CGame::Finalize();
+	CStage::GetInstance().Finalize();
+	CCamera::GetInstance().Finalize();
 	CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
 }
 
@@ -206,7 +209,7 @@ void CDaruma_FallDownGame::Play(void)
 					player->SetActionFlag(true);
 				}
 
-				if ((player->GetPosition().x >= m_goal_position.x)&& (player->GetPosition().z <= m_goal_position.z + 10)&& (player->GetPosition().z >= m_goal_position.z - 10))
+				if ((player->GetPosition().x >= m_goal_position.x)&& (player->GetPosition().z <= m_goal_position.z + 100)&& (player->GetPosition().z >= m_goal_position.z - 100))
 				{
 					m_TempFirstNum = i;
 					Ranking();
@@ -236,4 +239,5 @@ void CDaruma_FallDownGame::Play(void)
 void CDaruma_FallDownGame::Finish(void)
 {
 	CGame::Finish();
+	CSoundManager::GetInstance().Finalize();
 }

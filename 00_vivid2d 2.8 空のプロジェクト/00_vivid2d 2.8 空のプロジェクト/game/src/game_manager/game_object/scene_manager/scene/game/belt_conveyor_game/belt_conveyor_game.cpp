@@ -91,6 +91,7 @@ void CBeltConveyorGame::Draw(void)
 void CBeltConveyorGame::Finalize(void)
 {
 	CGame::Finalize();
+	CSoundManager::GetInstance().Finalize();
 
 	CCamera::GetInstance().Finalize();
 

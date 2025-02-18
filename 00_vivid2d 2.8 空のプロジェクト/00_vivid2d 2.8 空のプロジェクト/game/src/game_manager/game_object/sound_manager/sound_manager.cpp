@@ -17,6 +17,7 @@ const char* CSoundManager::m_bgm_file_names[] =
 {
     "data\\Audios\\BGM\\Main_BGM.mp3",
     "data\\Audios\\BGM\\Result_BGM.mp3",
+    "data\\Audios\\BGM\\Ready_BGM.mp3",
 };
 
 const char* CSoundManager::m_se_file_names[] =
@@ -47,6 +48,7 @@ const char* CSoundManager::m_se_file_names[] =
     "data\\Audios\\SE\\Stomp_SE.mp3",
     "data\\Audios\\SE\\StrongWindow_SE.mp3",
     "data\\Audios\\SE\\Stun_SE.mp3",
+    "data\\Audios\\SE\\Reflection_SE.mp3",
 };
 
 /*
@@ -123,6 +125,15 @@ void CSoundManager::SetSEVolume(SE_ID id, int volume)
 {
     vivid::SetSoundVolume(m_se_file_names[(int)id], volume);
 
+}
+
+
+void CSoundManager::Finalize(void)
+{
+    for (int i = 0; i < (int)SE_ID::MAX; i++)
+    {
+        vivid::StopSound(m_se_file_names[i]);
+    }
 }
 
 /*

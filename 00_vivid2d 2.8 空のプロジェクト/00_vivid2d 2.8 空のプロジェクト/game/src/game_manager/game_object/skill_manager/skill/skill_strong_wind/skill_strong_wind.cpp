@@ -8,6 +8,7 @@ const float CSkillStrongWind::m_wind_strength = 0.1f;
 const float CSkillStrongWind::m_cool_time = 5.0f;
 const float CSkillStrongWind::m_duration_time = 5.0f;
 const float CSkillStrongWind::m_effect_scale = 2.0f;
+const int   CSkillStrongWind::m_se_volume = 10000;
 
 CSkillStrongWind::CSkillStrongWind(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE ,m_duration_time, m_cool_time)
@@ -98,7 +99,7 @@ Action(void)
 	if (m_State != SKILL_STATE::WAIT) return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::STRONG_WIND, false);
-	CSoundManager::GetInstance().SetSEVolume(SE_ID::STRONG_WIND, 10000);
+	CSoundManager::GetInstance().SetSEVolume(SE_ID::STRONG_WIND, m_se_volume);
 
 	CVector3 effectPosition = CVector3().ZERO;
 

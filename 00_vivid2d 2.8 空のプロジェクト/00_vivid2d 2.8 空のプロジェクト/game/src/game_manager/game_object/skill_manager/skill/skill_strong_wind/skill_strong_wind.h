@@ -45,6 +45,7 @@ protected:
     static const float  m_cool_time;
     static const float  m_duration_time;
     static const float  m_effect_scale;
+    static const int    m_se_volume;
 
     IEffect*            m_SkillEffect;
     IEffect*            m_Effect;
