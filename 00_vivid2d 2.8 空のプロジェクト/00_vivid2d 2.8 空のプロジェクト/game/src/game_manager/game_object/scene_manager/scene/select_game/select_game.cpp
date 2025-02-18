@@ -40,6 +40,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     {
         CUIManager::GetInstance().Initialize();
         CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
+        CSoundManager::GetInstance().Play_BGM(BGM_ID::READY_BGM, true);
     }
 
     //ƒQ[ƒ€‚Ì‰æ‘œ‚ğ‰~ó‚©‚Â‹Ï“™‚É”z’u
