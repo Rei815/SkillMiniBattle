@@ -149,7 +149,6 @@ void CUnitManager::CheckHitObject(IObject* object)
 
     while (it != m_UnitList.end())
     {
-
         if (object->GetModel().GetModelHandle() == VIVID_DX_ERROR || object->GetColliderActiveFlag() == false)
         {
             ++it;
@@ -171,14 +170,12 @@ void CUnitManager::CheckHitObject(IObject* object)
             endPos += tempVelocity * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
 
-            
             //ˆÚ“®•ûŒü‚Ì‰E‘¤45‹
             startPos = (*it)->GetPosition();
             endPos = startPos;
             tempVelocity2 = tempVelocity.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f).Normalize();
             endPos += tempVelocity2 * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
-
 
             //ˆÚ“®•ûŒü‚Ì¶‘¤45‹
             startPos = (*it)->GetPosition();
@@ -191,7 +188,7 @@ void CUnitManager::CheckHitObject(IObject* object)
         //‚’¼•ûŒü‚Ì”»’è-----------------------------------------------------
         float radius = unit->GetRadius();
         float offset = radius / 2.0f;
-        const int check_point_count = 4;
+        //const int check_point_count = 4;
         for (int i = 0; i < 9; ++i)
         {
             CVector3 unit_pos = unit->GetPosition();

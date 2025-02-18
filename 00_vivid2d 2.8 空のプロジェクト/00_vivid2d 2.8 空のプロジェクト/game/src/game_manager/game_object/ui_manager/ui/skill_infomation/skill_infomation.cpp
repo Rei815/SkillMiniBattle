@@ -23,6 +23,7 @@ const std::string		CSkillInfomation::m_skill_info_file_name[] =
 		"data\\Textures\\skill_info_ogrecontrol.png",
 		"data\\Textures\\skill_info_resurrect.png",
 		"data\\Textures\\skill_info_resurrect.png",
+		"data\\Textures\\skill_info_resurrect.png",
 		"data\\Textures\\skill_info_strongwind.png",
 		"data\\Textures\\skill_info_hidetopic.png",
 		"data\\Textures\\skill_info.png"
