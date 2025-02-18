@@ -7,6 +7,7 @@
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
 #include "../../../../sound_manager/sound_manager.h"
+#include "../../../../bullet_manager/bullet_manager.h"
 
 
 const CVector3  CMazeGame::m_player_default_forward = CVector3(0.0f, 0.0f, -1.0f);
@@ -53,6 +54,7 @@ void CMazeGame::Initialize(SCENE_ID scene_id)
 	CTransform transform;
 	transform.position = m_player_position[0];
 	m_Light.Initialize(transform, CVector3::DOWN, GetColorF(1.0f, 1.0f, 1.0f, 1.0f), 0.0f, CLight::LIGHT_TYPE::DIRECTIONAL);
+	CBulletManager::GetInstance().Initialize();
 
 }
 
@@ -60,6 +62,7 @@ void CMazeGame::Update(void)
 {
 	CGame::Update();
 	m_Light.Update();
+	CBulletManager::GetInstance().Update();
 
 	CCamera::GetInstance().Update();
 
@@ -69,12 +72,15 @@ void CMazeGame::Draw(void)
 {
 	m_Light.Draw();
 	CGame::Draw();
+	CBulletManager::GetInstance().Draw();
+
 }
 
 void CMazeGame::Finalize(void)
 {
 	CGame::Finalize();
 	CCamera::GetInstance().Finalize();
+	CBulletManager::GetInstance().Finalize();
 
 	//BGMí‚é~
 	CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);

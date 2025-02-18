@@ -42,7 +42,6 @@ CPlayer::CPlayer()
     , m_Skill(nullptr)
     , m_Accelerator(CVector3::ZERO)
     , m_InvincibleTimer(m_max_invincible_time)
-//    , m_FallSpeed(0)
     , m_StopFlag(false)
     , m_FrictionFlag(true)
     , m_ActionFlag(true)
@@ -188,7 +187,7 @@ bool CPlayer::GetPlayerMoving()
 
 
     //ジャンプ
-    if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
+    if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_B) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
         Input = true;
 
     //if (m_IsGround == false)
@@ -304,7 +303,7 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
 */
 void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, float power)
 {
-    CVector3 m_EffectPosition = this->GetPosition();
+    CVector3 m_EffectPosition = GetPosition();
 
     m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
 
@@ -355,7 +354,7 @@ void CPlayer::Control(void)
 
 
     //ジャンプ
-    if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_1) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
+    if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_B) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
         if (m_IsGround == true)
         {
             m_Parent = nullptr;
@@ -369,7 +368,7 @@ void CPlayer::Control(void)
     
     //スキル
     if(m_Skill != nullptr)
-        if ((GetJoypadInputState(joyPad) & PAD_INPUT_2 || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN)) && !m_StopFlag)
+        if ((GetJoypadInputState(joyPad) & PAD_INPUT_A || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN)) && !m_StopFlag)
             m_Skill->Action();
 
     //停止

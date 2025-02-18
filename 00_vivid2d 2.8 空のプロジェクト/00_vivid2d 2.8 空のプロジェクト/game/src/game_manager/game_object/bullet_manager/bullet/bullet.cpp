@@ -27,6 +27,7 @@ IBullet(const std::string& file_name, COLLIDER_ID collider_id)
     , m_CapsulePosA(CVector3())
     , m_CapsulePosB(CVector3())
     , m_Power(1.0f)
+    , m_BulletID(BULLET_ID::NONE)
 {
 }
 
@@ -240,4 +241,9 @@ CModel IBullet::GetModel(void)
 float IBullet::GetPower()
 {
     return m_Power;
+}
+
+BULLET_ID IBullet::GetID()
+{
+    return m_BulletID;
 }

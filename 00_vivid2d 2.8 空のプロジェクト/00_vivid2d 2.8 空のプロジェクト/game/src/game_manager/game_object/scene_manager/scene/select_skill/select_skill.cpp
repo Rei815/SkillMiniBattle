@@ -605,6 +605,9 @@ SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_MAZE skill_id)
     case SKILL_ID_MAZE::INVISIBLE:
         temp = SKILL_ID::INVISIBLE;
         break;
+    case SKILL_ID_MAZE::STOMP:
+        temp = SKILL_ID::STOMP;
+        break;
     case SKILL_ID_MAZE::MAX:
         temp = SKILL_ID::MAX;
         break;

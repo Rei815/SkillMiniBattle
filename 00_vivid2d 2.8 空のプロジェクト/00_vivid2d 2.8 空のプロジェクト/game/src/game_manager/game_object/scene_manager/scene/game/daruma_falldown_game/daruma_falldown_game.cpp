@@ -107,6 +107,7 @@ void CDaruma_FallDownGame::Draw(void)
 
 void CDaruma_FallDownGame::Finalize(void)
 {
+	CGame::Finalize();
 	CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
 }
 
