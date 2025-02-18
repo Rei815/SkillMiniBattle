@@ -45,6 +45,7 @@ Initialize(void)
 {
 	CUI::Initialize(m_position);
 	m_Handle = LoadGraph(m_file_name[0].c_str());
+	ChangeMovieVolumeToGraph(0, m_Handle);
 	PlayMovieToGraph(m_Handle);
 }
 
@@ -90,5 +91,6 @@ CGameVideo::
 SetGameVideo(GAME_ID game_id)
 {
 	m_Handle = LoadGraph(m_file_name[(int)game_id].c_str());
+	ChangeMovieVolumeToGraph(0, m_Handle);
 	PlayMovieToGraph(m_Handle);
 }

@@ -174,6 +174,7 @@ SetSkillVideo(int skill_num, SKILL_ID skill_id)
 	}
 
 	m_Handle[skill_num] = LoadGraph(m_skill_video_file_name[(int)skill_id].c_str());
+	ChangeMovieVolumeToGraph(0, m_Handle[skill_num]);
 }
 
 void

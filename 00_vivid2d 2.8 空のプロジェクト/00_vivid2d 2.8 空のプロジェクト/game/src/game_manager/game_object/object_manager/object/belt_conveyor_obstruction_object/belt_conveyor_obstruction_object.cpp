@@ -2,8 +2,12 @@
 
 const std::string CBeltConveyorObstructionObject::m_model_file_name_list[] =
 {
-	"data\\Models\\belt_conveyor_obstruction_test.mv1",
-	"data\\Models\\belt_conveyor_obstruction_test.mv1"
+	"data\\Models\\belt_conveyor_obstruction_1.mv1",
+	"data\\Models\\belt_conveyor_obstruction_2.mv1",
+	"data\\Models\\belt_conveyor_obstruction_3.mv1",
+	"data\\Models\\belt_conveyor_obstruction_4.mv1",
+	"data\\Models\\belt_conveyor_obstruction_5.mv1",
+	"data\\Models\\belt_conveyor_obstruction_6.mv1"
 };
 
 CBeltConveyorObstructionObject::CBeltConveyorObstructionObject()
