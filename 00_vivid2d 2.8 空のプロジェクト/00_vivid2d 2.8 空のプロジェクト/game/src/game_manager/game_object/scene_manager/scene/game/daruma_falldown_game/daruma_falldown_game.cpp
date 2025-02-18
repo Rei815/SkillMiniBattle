@@ -13,15 +13,16 @@
 #include <EffekseerForDXLib.h>
 
 
-const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(100, 1000.0f, -1500.0f);
+const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(-500,700.0f, -1000.0f);
 const CVector3	CDaruma_FallDownGame::m_camera_direction = CVector3(0, -100, 100);
 
-const CVector3	CDaruma_FallDownGame::m_ogre_position = CVector3(1500, 0, 0);
+const CVector3	CDaruma_FallDownGame::m_ogre_position = CVector3(500, 0, 0);
 const CVector3	CDaruma_FallDownGame::m_ogre_rotation = CVector3(0, 0, 0);
 
 const float CDaruma_FallDownGame::m_move_speed = 0.3f;
 
 const CVector3 CDaruma_FallDownGame::m_player_default_forward = CVector3(1.0f, 0.0f, 0.0f);
+const CVector3 CDaruma_FallDownGame::m_goal_position = CVector3(300.0f, 0.0f, 0.0f);
 
 CDaruma_FallDownGame::CDaruma_FallDownGame(void)
 	: m_PlayerPosition{ (CVector3(-1500,0,100)) }
@@ -183,15 +184,13 @@ void CDaruma_FallDownGame::Play(void)
 
 		if (!gimmick) continue;
 
-		//ãSÇ™êUÇËï‘Ç¡ÇƒÇÈéûÇÃèàóù
-
 		for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 		{
 			player = um.GetPlayer((UNIT_ID)i);
 
 			if (!player) continue;
 
-
+			//ãSÇ™êUÇËï‘Ç¡ÇƒÇÈéûÇÃèàóù
 			if (gimmick->GetState() == GIMMICK_STATE::PLAY && player->GetInvincibleFlag() == false)
 			{
 				if (player->GetPlayerMoving())
@@ -213,12 +212,13 @@ void CDaruma_FallDownGame::Play(void)
 					player->SetActionFlag(true);
 				}
 
-				if ((player->GetPosition().x >= 1300))
+				if ((player->GetPosition().x >= m_goal_position.x)&& (player->GetPosition().z <= m_goal_position.z + 10)&& (player->GetPosition().z >= m_goal_position.z - 10))
 				{
 					m_TempFirstNum = i;
 					Ranking();
 				}
 			}
+
 		}
 	}
 
