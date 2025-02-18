@@ -57,6 +57,9 @@ Update(void)
 				CVector3 resurrectPos = (*it)->GetPosition();
 				resurrectPos.y += m_resurrect_height;
 				m_Player->SetPosition(resurrectPos);
+				m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+				m_SkillEffect->SetParent(m_Player);
+
 				m_State = SKILL_STATE::COOLDOWN;
 				break;
 			}
@@ -109,8 +112,6 @@ void
 CSkillResurrectFallout::
 Action()
 {
-	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
 }
 
 /*!

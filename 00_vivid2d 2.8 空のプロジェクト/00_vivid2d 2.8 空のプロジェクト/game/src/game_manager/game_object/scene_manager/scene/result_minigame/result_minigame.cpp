@@ -113,6 +113,8 @@ void CResultMiniGame::Draw(void)
 
 void CResultMiniGame::Finalize(void)
 {
+    CUIManager::GetInstance().Finalize();
+    CEffectManager::GetInstance().Finalize();
     CAnimationManager::GetInstance().Finalize();
     IScene::Finalize();
 

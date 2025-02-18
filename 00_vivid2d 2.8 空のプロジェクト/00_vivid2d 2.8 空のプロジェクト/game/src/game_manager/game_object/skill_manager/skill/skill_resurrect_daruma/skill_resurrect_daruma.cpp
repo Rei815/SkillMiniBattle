@@ -9,6 +9,7 @@ const float CSkillResurrectDaruma::m_effect_scale = 2.0f;
 CSkillResurrectDaruma::CSkillResurrectDaruma(void)
 	:CSkill(SKILL_CATEGORY::PASSIVE, m_duration_time)
 	, m_SkillEffect(nullptr)
+	, m_EffectFlag(false)
 {
 }
 
@@ -30,6 +31,14 @@ void CSkillResurrectDaruma::Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
+		if (m_EffectFlag == false)
+		{
+			m_EffectFlag = true;
+			m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+			m_SkillEffect->SetParent(m_Player);
+
+		}
+
 		break;
 	case SKILL_STATE::COOLDOWN:
 		CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
@@ -49,8 +58,6 @@ void CSkillResurrectDaruma::Finalize(void)
 
 void CSkillResurrectDaruma::Action(void)
 {
-	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
 }
 
 void CSkillResurrectDaruma::ActionEnd(void)

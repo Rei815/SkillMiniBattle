@@ -38,13 +38,13 @@ void CPlayerReady::Update(void)
 {
 	CUI::Update();
 	if (m_ReadyFlag == true) return;
-	CControllerManager& cm = CControllerManager::GetInstance();
-	CController* controller = cm.GetController(CONTROLLER_ID::ONE);
-	int playerNum = (int)controller->GetID();
-	if (controller->GetButtonDown(BUTTON_ID::B) & PAD_INPUT_B)
-	{
-		m_Color[playerNum] = 0x007f7f7f;
-	}
+	//CControllerManager& cm = CControllerManager::GetInstance();
+	//CController* controller = cm.GetController(CONTROLLER_ID::ONE);
+	//int playerNum = (int)controller->GetID();
+	//if (controller->GetButtonDown(BUTTON_ID::B) & PAD_INPUT_B)
+	//{
+	//	m_Color[playerNum] = 0x007f7f7f;
+	//}
 //#if _DEBUG
 	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
 	{

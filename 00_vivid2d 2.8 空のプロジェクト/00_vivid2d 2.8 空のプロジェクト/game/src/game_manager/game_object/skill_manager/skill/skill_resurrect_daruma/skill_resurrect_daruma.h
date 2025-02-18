@@ -44,4 +44,5 @@ protected:
 
     IEffect*            m_SkillEffect;
     CVector3            m_Resurrect_Position;
+    bool                m_EffectFlag;
 };

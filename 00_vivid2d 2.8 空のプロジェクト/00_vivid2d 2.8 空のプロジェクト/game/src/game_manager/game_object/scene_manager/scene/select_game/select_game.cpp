@@ -162,7 +162,7 @@ void CSelectGame::Update(void)
             m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
         }
     }
-#if _DEBUG
+//#if _DEBUG
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
     {
         m_SelectedGameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
@@ -213,7 +213,7 @@ void CSelectGame::Update(void)
         }
     }
 
-#endif
+//#endif
 
     if (m_SecondSceneUIParent)
     {

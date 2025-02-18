@@ -110,7 +110,7 @@ Action(void)
 	CSoundManager::GetInstance().Play_SE(SE_ID::BARRIER, false);
 
 	m_Player->StartInvincible(m_duration_time);
-	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 1.0f);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_BARRIER, m_Player->GetPosition(), 0.04f);
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO,CVector3(), m_effect_scale);
 	m_SkillEffect->SetParent(m_Player);
 
