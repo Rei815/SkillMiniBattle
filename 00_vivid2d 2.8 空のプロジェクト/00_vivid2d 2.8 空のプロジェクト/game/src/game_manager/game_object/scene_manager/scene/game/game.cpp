@@ -210,6 +210,9 @@ void CGame::AddRanking(UNIT_ID unitID)
 void
 CGame::Start(void)
 {
+    CSoundManager::GetInstance().Play_SE(SE_ID::GAME_START, false);
+
+
     if (!m_SetActionflag)
     {
         m_SetActionflag = true;
@@ -274,6 +277,8 @@ void
 CGame::
 Finish(void)
 {
+    CSoundManager::GetInstance().Play_SE(SE_ID::GAME_FINISH, false);
+
     if (!m_FinishFlag)
     {
         m_WaitTimer.SetUp(m_finish_text_time);

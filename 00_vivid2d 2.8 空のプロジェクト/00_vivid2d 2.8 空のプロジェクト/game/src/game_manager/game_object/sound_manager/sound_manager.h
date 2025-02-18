@@ -22,6 +22,7 @@ enum class BGM_ID
 {
     MAIN_BGM,
     RESULT_BGM,
+    READY_BGM,
 
     MAX
 };
@@ -54,7 +55,7 @@ enum class SE_ID
     STOMP,
     STRONG_WIND,
     STUN,
-
+    REFLECTION,
     MAX
 };
 
@@ -100,6 +101,11 @@ public:
     void        Play_SE(SE_ID id, bool loop = false);
     void        Stop_SE(SE_ID id);
     void        SetSEVolume(SE_ID id, int volume = 1);
+
+    /*
+    *Å@âï˙
+    */
+    virtual void    Finalize(void);
 
 private:
     /*!

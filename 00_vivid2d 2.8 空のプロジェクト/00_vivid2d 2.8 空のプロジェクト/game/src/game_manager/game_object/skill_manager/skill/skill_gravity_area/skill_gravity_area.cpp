@@ -10,6 +10,7 @@ const float CSkillGravityArea::m_duration_time = 10.0f;
 const float CSkillGravityArea::m_cool_time = 15.0f;
 const float CSkillGravityArea::m_gravity_area_radius = 500.0f;
 const float CSkillGravityArea::m_effect_scale = 2.0f;
+const int   CSkillGravityArea::m_se_volume = 9000;
 
 CSkillGravityArea::CSkillGravityArea(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
@@ -150,9 +151,8 @@ Action(void)
 	if (m_State != SKILL_STATE::WAIT)
 		return;
 
-	const int se_volume = 11500;
 	CSoundManager::GetInstance().Play_SE(SE_ID::GRAVITYAREA, false);
-	CSoundManager::GetInstance().SetSEVolume(SE_ID::GRAVITYAREA, se_volume);
+	CSoundManager::GetInstance().SetSEVolume(SE_ID::GRAVITYAREA, m_se_volume);
 	//エフェクトの生成（仮置き、エフェクトが完成したらセットする）
 
 	CVector3 effectPosition = m_Player->GetPosition();

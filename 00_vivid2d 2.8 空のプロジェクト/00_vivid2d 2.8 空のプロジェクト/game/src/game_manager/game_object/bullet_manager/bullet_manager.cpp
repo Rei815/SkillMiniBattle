@@ -17,6 +17,7 @@
 #include "bullet\cannon_bullet\cannon_bullet.h"
 #include "../stage/stage.h"
 #include "../effect_manager/effect_manager.h"
+#include "../sound_manager/sound_manager.h"
 
  /*
   *  インスタンスの取得
@@ -200,6 +201,8 @@ void CBulletManager::CheckHitModel(const CModel& model)
         {
             CEffectManager::GetInstance().Create(EFFECT_ID::HIT_INVINCBLE, bullet->GetPosition());
             bullet->SetActive(false);
+
+            //
         }
 
         // 当たり判定情報の後始末
@@ -226,6 +229,8 @@ void CBulletManager::CheckReflectModel(const CModel& model)
         DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
         if (hit_poly_dim.HitNum >= 1)
         {
+            CSoundManager::GetInstance().Play_SE(SE_ID::REFLECTION, false);
+
             for (int i = 0; i < hit_poly_dim.HitNum; i++)
             {
                 CVector3 NowVelocity = -((*it)->GetVelocity());

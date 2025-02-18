@@ -96,6 +96,8 @@ void CMazeGame::Finish(void)
 {
 
 	CGame::Finish();
+	CSoundManager::GetInstance().Finalize();
+
 }
 
 /*

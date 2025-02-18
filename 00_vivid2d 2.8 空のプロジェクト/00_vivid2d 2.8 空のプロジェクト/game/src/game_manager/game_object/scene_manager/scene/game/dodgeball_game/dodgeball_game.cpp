@@ -231,6 +231,8 @@ void CDodgeBallGame::Play(void)
 void CDodgeBallGame::Finish(void)
 {
 	CGame::Finish();
+	CSoundManager::GetInstance().Finalize();
+
 }
 
 /*!

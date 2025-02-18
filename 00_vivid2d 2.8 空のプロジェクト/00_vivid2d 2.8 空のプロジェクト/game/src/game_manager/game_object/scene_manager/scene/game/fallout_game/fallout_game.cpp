@@ -359,6 +359,8 @@ void CFallOutGame::Finish(void)
 {
 
 	CGame::Finish();
+	CSoundManager::GetInstance().Finalize();
+
 }
 
 /*
