@@ -18,6 +18,11 @@ CControllerManager::Initialize(void)
 {
     m_ControllerNum = vivid::controller::GetConnectCount();
     m_ControllerList.clear();
+    Create(CONTROLLER_ID::ONE);
+    Create(CONTROLLER_ID::TWO);
+    Create(CONTROLLER_ID::THREE);
+    Create(CONTROLLER_ID::FOUR);
+
 }
 
 /*

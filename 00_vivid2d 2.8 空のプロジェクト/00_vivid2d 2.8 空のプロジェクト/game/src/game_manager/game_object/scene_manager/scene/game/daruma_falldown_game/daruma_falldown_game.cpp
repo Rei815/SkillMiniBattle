@@ -102,12 +102,6 @@ void CDaruma_FallDownGame::Update(void)
 void CDaruma_FallDownGame::Draw(void)
 {
 	CGame::Draw();
-	vivid::DrawText(30, std::to_string(vivid::controller::GetAnalogStickLeft(vivid::controller::DEVICE_ID::PLAYER1).x),vivid::Vector2(100.0f, 10.0f));
-	vivid::DrawText(30, std::to_string(vivid::controller::GetAnalogStickLeft
-	(vivid::controller::DEVICE_ID::PLAYER1).y),vivid::Vector2(100.0f, 40.0f));
-
-	vivid::DrawText(30, std::to_string(m_CountTime-(int)m_Timer.GetTimer()), vivid::Vector2(100.0f, 70.0f));
-
 }
 
 void CDaruma_FallDownGame::Finalize(void)

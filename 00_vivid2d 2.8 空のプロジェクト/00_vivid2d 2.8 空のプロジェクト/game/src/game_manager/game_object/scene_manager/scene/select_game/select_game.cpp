@@ -7,6 +7,7 @@
 #include "../../../sound_manager/sound_manager.h"
 #include "../../../ui_manager/ui/game_video/game_video.h"
 #include "../../../ui_manager/ui/player_ready/player_ready.h"
+#include "../../../controller_manager/controller_manager.h"
 
 const int CSelectGame::m_games_num = 4;
 const float CSelectGame::m_circle_radius = 500.0f;
@@ -86,11 +87,17 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
             m_planeGameImage = plameGameImage;
         }
     }
+    CControllerManager& cm = CControllerManager::GetInstance();
+    cm.Initialize();
 
 }
 
 void CSelectGame::Update(void)
 {
+    CControllerManager& cm = CControllerManager::GetInstance();
+
+    cm.Update();
+
     CCamera::GetInstance().Update();
     CUIManager& um = CUIManager::GetInstance();
     CAnimationManager::GetInstance().Update();

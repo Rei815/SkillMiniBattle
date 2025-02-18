@@ -48,16 +48,6 @@ void CDaruma_FallDownGimmick::Update(void)
 
 void CDaruma_FallDownGimmick::Draw(void)
 {
-	vivid::Vector2 debug_pos = vivid::Vector2(1000.0f, 200.0f);
-	std::string text = "null";
-
-	//switch (m_State)
-	//{
-	//case GIMMICK_STATE::WAIT:	text = "ë“ã@"; break;
-	//case GIMMICK_STATE::PLAY:	text = "êUÇËå¸Ç¢ÇƒÇÈ"; break;
-	//case GIMMICK_STATE::FINISH:	text = "ñﬂÇ¡ÇƒÇÈ"; break;
-	//}
-	vivid::DrawText(30, text, debug_pos);
 }
 
 void CDaruma_FallDownGimmick::Finalize(void)

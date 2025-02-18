@@ -157,7 +157,7 @@ void CLight::Update()
 void CLight::Draw()
 {
 	// ÇRÇcãÛä‘è„Ç…ãÖÇï`âÊÇ∑ÇÈ
-	DrawSphere3D(m_Transform.position, 80.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
+	//DrawSphere3D(m_Transform.position, 80.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
 }
 
 void CLight::Finalize()
