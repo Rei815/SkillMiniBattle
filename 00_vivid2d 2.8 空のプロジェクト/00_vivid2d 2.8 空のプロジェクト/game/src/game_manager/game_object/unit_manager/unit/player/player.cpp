@@ -409,6 +409,7 @@ void CPlayer::Move(void)
     }
 
     IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
+    
     if (floorObject)
     {
         if (floorObject->GetTag() == "Floor")
