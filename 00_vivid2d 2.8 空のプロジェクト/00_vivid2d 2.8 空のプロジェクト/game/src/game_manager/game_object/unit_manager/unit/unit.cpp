@@ -20,6 +20,7 @@
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
+//const CVector3          IUnit::m_gravity = CVector3(0.0f, 0.0f, 0.0f);
 const CVector3          IUnit::m_gravity = CVector3(0.0f, -0.85f, 0.0f);
 
 IUnit::IUnit()

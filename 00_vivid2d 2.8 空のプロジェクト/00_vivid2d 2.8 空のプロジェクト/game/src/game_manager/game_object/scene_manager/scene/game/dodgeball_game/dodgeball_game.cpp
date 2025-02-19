@@ -55,8 +55,8 @@ const CVector3		CDodgeBallGame::m_camera_direction = CVector3(0, -1.0f, 0.6f);
 
 CDodgeBallGame::CDodgeBallGame(void)
 	:m_CannonCount(0)
-	,m_SpawnTimer()
-	,m_ShotTimer()
+	,m_SpawnTimer(0)
+	,m_ShotTimer(m_initial_shot_time)
 	,m_NowShotTime(m_initial_shot_time)
 	,m_StageShrinkTimer()
 	,m_StageShrinkFlg(false)
@@ -191,6 +191,7 @@ void CDodgeBallGame::Play(void)
 	m_ShotTimer.Update();
 	if (m_ShotTimer.Finished())
 	{
+		m_ShotTimer.Reset();
 		if (m_NowShotTime > m_min_shot_time)
 		{
 			m_NowShotTime -= m_shot_time_acceleration * m_NowShotTime;
@@ -315,24 +316,27 @@ IObject* CDodgeBallGame::ChooseCannon(void)
 		return nullptr;
 
 	CObjectManager::OBJECT_LIST ReadyCannonObjectList;
-	CObjectManager::OBJECT_LIST::iterator it;
+	ReadyCannonObjectList.clear();
+	CObjectManager::OBJECT_LIST::iterator it = objectList.begin();
 
-	for (it = objectList.begin(); it != objectList.end(); it++)
+	while (it != objectList.end())
 	{
 		CDodgeBallGimmick* DodgeBallGimmick = nullptr;
 
-		if((*it)->GetGimmick() != nullptr)
+		if ((*it)->GetGimmick() != nullptr)
 			DodgeBallGimmick = dynamic_cast<CDodgeBallGimmick*>((*it)->GetGimmick());
 
 
 		if (DodgeBallGimmick != nullptr)
 		{
-			if (DodgeBallGimmick->GetNowState() == CANNON_STATE::MOVE && 
+			if (DodgeBallGimmick->GetNowState() == CANNON_STATE::MOVE &&
 				!DodgeBallGimmick->GetShotFlag())
 			{
 				ReadyCannonObjectList.push_back((*it));
 			}
 		}
+
+		++it;
 	}
 
 	if (ReadyCannonObjectList.size() < 1)

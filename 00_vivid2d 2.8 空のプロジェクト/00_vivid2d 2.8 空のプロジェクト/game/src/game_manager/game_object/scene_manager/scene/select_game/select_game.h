@@ -46,7 +46,7 @@ private:
     static const float  m_circle_radius;
     CSceneUIParent*     m_FirstSceneUIParent;
     CSceneUIParent*     m_SecondSceneUIParent;
-    CPlaneGameImage*    m_planeGameImage;
+    CPlaneGameImage*    m_PlaneGameImage;
     bool                m_SelectedGameFlag;
     bool                m_GameInfomationFlag;
     GAME_ID             m_SelectedGameID;

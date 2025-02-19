@@ -3,6 +3,7 @@
 const float CPlaneScale::m_speed = 0.01f;
 const CVector3 CPlaneScale::m_min_scale = CVector3(0.0f, 0.0f, 0.0f);
 CPlaneScale::CPlaneScale()
+	: m_Plane(nullptr)
 {
 }
 

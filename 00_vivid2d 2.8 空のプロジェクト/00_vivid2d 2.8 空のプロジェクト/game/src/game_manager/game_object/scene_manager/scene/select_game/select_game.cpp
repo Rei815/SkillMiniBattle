@@ -17,6 +17,7 @@ CSelectGame::CSelectGame(void)
     , m_FirstSceneUIParent(nullptr)
     , m_SecondSceneUIParent(nullptr)
     , m_SelectedGameID(GAME_ID::MAX)
+    , m_PlaneGameImage(nullptr)
 {
 
 }
@@ -85,7 +86,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
         CPlaneGameImage* plameGameImage = (CPlaneGameImage*)ui;
         if (plameGameImage->GetGameID() == m_SelectedGameID)
         {
-            m_planeGameImage = plameGameImage;
+            m_PlaneGameImage = plameGameImage;
         }
     }
     CControllerManager& cm = CControllerManager::GetInstance();
@@ -141,15 +142,15 @@ void CSelectGame::Update(void)
 
             if (planeGameImage->GetGameID() == m_SelectedGameID)
             {
-                m_planeGameImage = planeGameImage;
+                m_PlaneGameImage = planeGameImage;
                 IAnimation* animation = nullptr;
-                animation = am.Create(ANIMATION_ID::PLANE_UP, m_planeGameImage);
-                m_planeGameImage->SetAnimation(animation);
+                animation = am.Create(ANIMATION_ID::PLANE_UP, m_PlaneGameImage);
+                m_PlaneGameImage->SetAnimation(animation);
                 m_SelectedGameFlag = true;
             }
             else
             {
-                am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);   // 選ばれていないものは小さくなる
+                planeGameImage->SetAnimation(am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage));   // 選ばれていないものは小さくなる
             }
 
         }
@@ -157,9 +158,9 @@ void CSelectGame::Update(void)
     if (m_SelectedGameFlag == true)
     {
         //上昇アニメーションが終了している
-        if (m_planeGameImage->GetAnimation() == nullptr && m_GameInfomationFlag == false)
+        if (m_PlaneGameImage->GetAnimation() == nullptr && m_GameInfomationFlag == false)
         {
-            m_planeGameImage->SetActive(false);
+            m_PlaneGameImage->SetActive(false);
             m_GameInfomationFlag = true;
             um.Create(UI_ID::MENU_BG);
             um.Create(UI_ID::MINIGAME_OVERVIEW);
@@ -222,7 +223,7 @@ void CSelectGame::Update(void)
         CPlaneGameImage* plameGameImage = (CPlaneGameImage*)ui;
         if (plameGameImage->GetGameID() == m_SelectedGameID)
         {
-            m_planeGameImage = plameGameImage;
+            m_PlaneGameImage = plameGameImage;
         }
     }
 

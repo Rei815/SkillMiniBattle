@@ -3,6 +3,8 @@
 const float CKeyScale::m_speed = 0.08f;
 const vivid::Vector2 CKeyScale::m_max_scale = vivid::Vector2(5.0f,5.0f);
 CKeyScale::CKeyScale()
+	: m_Key(nullptr)
+	, m_MinScale()
 {
 }
 

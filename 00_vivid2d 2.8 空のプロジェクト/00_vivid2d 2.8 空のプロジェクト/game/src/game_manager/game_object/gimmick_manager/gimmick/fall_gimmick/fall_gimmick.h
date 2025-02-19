@@ -22,13 +22,6 @@ public:
      */
     void    Initialize(IObject* object);
 
-    /*!
-     *  @brief      初期化
-     *  @param[in]  object          オブジェクトのポインタ
-     *  @param[in]  timer           タイマーの設定
-     *
-     */
-    void    Initialize(IObject* object, float time);
 
     /*!
      *  @brief      更新

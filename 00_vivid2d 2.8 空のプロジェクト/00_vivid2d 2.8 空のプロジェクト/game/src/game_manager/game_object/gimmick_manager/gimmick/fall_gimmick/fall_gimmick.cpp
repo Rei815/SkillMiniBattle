@@ -7,6 +7,8 @@ const	float				CFallGimmick::m_return_time = 3.0f;
 CFallGimmick::CFallGimmick()
 	: CGimmick()
 	, m_ReturnTime(m_return_time)
+	, m_StartHeight(0.0f)
+	, m_ReturnTimer(m_return_time)
 {
 }
 
@@ -17,15 +19,10 @@ CFallGimmick::~CFallGimmick(void)
 void CFallGimmick::Initialize(IObject* object)
 {
 	CGimmick::Initialize(object);
-	m_Object->SetGimmick(this);
-	m_StartHeight = m_Object->GetPosition().y;
+	object->SetGimmick(this);
+	m_StartHeight = object->GetPosition().y;
+	m_Timer.SetUp(m_ReturnTime);
 	m_ReturnTimer.SetUp(m_ReturnTime);
-}
-
-void CFallGimmick::Initialize(IObject* object, float time)
-{
-	CGimmick::Initialize(object, time);
-	m_Object->SetGimmick(this);
 }
 
 void CFallGimmick::Update(void)

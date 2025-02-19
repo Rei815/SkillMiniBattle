@@ -37,7 +37,14 @@ const CVector3  CFallOutGame::m_player_default_forward = CVector3(0.0f,0.0f,-1.0
 const CVector3  CFallOutGame::m_floor_offset = CVector3(475.0f, -100.0f, 275.0f);
 const CVector3	CFallOutGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallOutGame::m_camera_direction = CVector3(0.0f, -1.0f, 1.0f);
+
 CFallOutGame::CFallOutGame(void)
+	: m_FallTime(m_fall_time)
+	, m_ChooseObjectTimer()
+	, m_AddTopicTimer(m_add_topic_time)
+	, m_ResetTopicTimer(m_reset_topic_time)
+	, m_ExtendTimer(m_extend_return_time)
+	, m_TopicList()
 {
 }
 
@@ -48,6 +55,7 @@ CFallOutGame::~CFallOutGame(void)
 void CFallOutGame::Initialize(SCENE_ID scene_id)
 {
 	CGame::Initialize(scene_id);
+	CCamera::GetInstance().Initialize();
 	m_BackGround.Initialize("data\\Textures\\fall_out_bg.png");
 	m_FallTime = m_fall_time;
 	for (int i = 0; i < m_max_topic_num; i++)
@@ -58,9 +66,6 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	m_AddTopicTimer.SetUp(m_add_topic_time);
 	m_ResetTopicTimer.SetUp(m_reset_topic_time);
 	m_ExtendTimer.SetUp(m_extend_return_time);
-	CGame::Initialize(scene_id);
-	CStage::GetInstance().Initialize();
-	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 
@@ -108,20 +113,13 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	//CreateFloor(CVector3(1800.0f, -1000.0f, 1500.0f));
-
-	//CreateFloor(CVector3(-1800.0f, -2000.0f, 3000.0f));
 }
 
 void CFallOutGame::Update(void)
 {
-	m_BackGround.Update();
 	CGame::Update();
-#ifdef VIVID_DEBUG
+	m_BackGround.Update();
 	CBulletManager::GetInstance().Update();
-#endif
-	CStage::GetInstance().Update();
-
 	CCamera::GetInstance().Update();
 }
 
@@ -142,8 +140,8 @@ void CFallOutGame::Draw(void)
 
 void CFallOutGame::Finalize(void)
 {
+	m_BackGround.Finalize();
 	CGame::Finalize();
-	CStage::GetInstance().Finalize();
 	CBulletManager::GetInstance().Finalize();
 
 	CCamera::GetInstance().Finalize();
