@@ -328,7 +328,7 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
 #ifdef VIVID_DEBUG
 
         // ü•ª‚Ì•`‰æ
-        DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
+        DrawLine3D(startPos, end_position, GetColor(255, 255, 255));
 
 #endif // VIVID_DEBUG
 
@@ -337,13 +337,13 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
     {
 
         hitPos = object->GetModel().GetHitLinePosition(startPos, end_position);
-        float footPos = unit->GetPosition().y - unit->GetHeight() / 2.0f;
-        end_position.y = footPos;
-
+        float footPos = 0.0f;
+        footPos = unit->GetPosition().y - (unit->GetHeight() / 2.0f);
 
         if (hitPos.y < footPos) return;
 
-        float diffHeight = hitPos.y - footPos;
+        float diffHeight = 0.0f;
+        diffHeight = hitPos.y - footPos;
 
         CVector3 unitPos = unit->GetPosition();
         unitPos.y += diffHeight;
@@ -351,25 +351,25 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
     }
 
     //ã•ûŒü
-    end_position = startPos + (-down_dir * length);
-    if (object->GetModel().CheckHitLine(startPos, end_position) == true)
-    {
+    //end_position = startPos + (-down_dir * length);
+    //if (object->GetModel().CheckHitLine(startPos, end_position) == true)
+    //{
 
-        hitPos = object->GetModel().GetHitLinePosition(startPos, end_position);
-        float headPos = unit->GetPosition().y + unit->GetHeight() / 2.0f;
+    //    hitPos = object->GetModel().GetHitLinePosition(startPos, end_position);
+    //    float headPos = unit->GetPosition().y + unit->GetHeight() / 2.0f;
 
-        // ü•ª‚Ì•`‰æ
-        //end_position.y = headPos;
-        //DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
+    //    // ü•ª‚Ì•`‰æ
+    //    //end_position.y = headPos;
+    //    //DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
 
-        if (hitPos.y > headPos) return;
+    //    if (hitPos.y > headPos) return;
 
-        float diffHeight = headPos - hitPos.y;
+    //    float diffHeight = headPos - hitPos.y;
 
-        CVector3 unitPos = unit->GetPosition();
-        unitPos.y -= diffHeight;
-        unit->SetPosition(unitPos);
-    }
+    //    CVector3 unitPos = unit->GetPosition();
+    //    unitPos.y -= diffHeight;
+    //    unit->SetPosition(unitPos);
+    //}
 }
 
 /*

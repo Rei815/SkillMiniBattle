@@ -415,6 +415,7 @@ void CPlayer::Move(void)
         {
             m_Parent = floorObject;
             m_IsGround = true;
+            m_Velocity.y = 0;
         }
     }
     else if(m_Parent == nullptr)

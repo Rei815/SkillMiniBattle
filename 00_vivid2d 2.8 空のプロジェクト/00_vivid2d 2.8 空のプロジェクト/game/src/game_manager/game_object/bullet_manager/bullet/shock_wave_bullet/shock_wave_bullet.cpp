@@ -3,10 +3,10 @@
 
 const std::string   CShockWaveBullet::m_file_name = "data\\Models\\stomp_coll.mv1";
 const float         CShockWaveBullet::m_max_speed = 50.0f;
-const float         CShockWaveBullet::m_spread_speed = 6.0f;
+const float         CShockWaveBullet::m_spread_speed = 8.0f;
 const float         CShockWaveBullet::m_height = 21.0f;
-const int           CShockWaveBullet::m_life_time = 120;
-const float         CShockWaveBullet::m_acceleration = 0.025f;
+const int           CShockWaveBullet::m_life_time = 60;
+const float         CShockWaveBullet::m_acceleration = 0.2f;
 const float         CShockWaveBullet::m_scale = 0.5f;
 const float         CShockWaveBullet::m_power = 0.5f;
 

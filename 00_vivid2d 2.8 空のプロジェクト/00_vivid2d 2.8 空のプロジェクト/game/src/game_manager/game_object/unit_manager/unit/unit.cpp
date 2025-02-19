@@ -203,7 +203,6 @@ bool IUnit::CheckHitBulletModel(IBullet* bullet)
         else
             CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
 
-        bullet->SetActive(false);
 
         if (m_InvincibleFlag)
             return hit_flag;
@@ -213,6 +212,7 @@ bool IUnit::CheckHitBulletModel(IBullet* bullet)
             direction = hit_poly_dim.Dim->Normal;
         }
         Impact(hitPosition, direction, bullet->GetPower());
+        bullet->SetActive(false);
     }
     // “–‚½‚è”»’èî•ñ‚ÌŒãn––
     MV1CollResultPolyDimTerminate(hit_poly_dim);

@@ -142,7 +142,7 @@ bool CModel::CheckHitLine(const CVector3& startPos, const CVector3& endPos)
 {
 	MV1_COLL_RESULT_POLY hitPoly = MV1CollCheck_Line(m_Handle, -1, startPos, endPos);
 	if (hitPoly.HitFlag == 1)
-		return true;
+			return true;
 	return false;
 }
 

@@ -55,7 +55,7 @@ public:
 
 
     /*!
-     *  @brief      ユニットとステージとのアタリ判定
+     *  @brief      ユニットとオブジェクトとのアタリ判定
      *  @param[in]  object  オブジェクトクラス
      */
     void        CheckHitObject(IObject* object);

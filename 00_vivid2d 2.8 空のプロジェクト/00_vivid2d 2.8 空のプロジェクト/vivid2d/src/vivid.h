@@ -220,7 +220,7 @@ namespace vivid
             //, COMMA         = 0x33  //! ,(カンマ)
             //, PERILD        = 0x34  //! .(ピリオド)
             //, SLASH         = 0x35  //! '/'(スラッシュ)
-            //, RSHIFT        = 0x36  //! シフト(右側)
+            , RSHIFT        = 0x36  //! シフト(右側)
             //, MULTIPLY      = 0x37  //! *(NumPad)
             //, LMENU         = 0x38  //! Alt(左側)
             , SPACE         = 0x39  //! Space

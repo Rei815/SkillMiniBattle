@@ -25,6 +25,7 @@ void CMazeStage::Initialize(OBJECT_ID id, const CTransform& transform)
 void CMazeStage::Update(void)
 {
 	IObject::Update();
+
 	m_Model.Update(m_Transform);
 }
 
