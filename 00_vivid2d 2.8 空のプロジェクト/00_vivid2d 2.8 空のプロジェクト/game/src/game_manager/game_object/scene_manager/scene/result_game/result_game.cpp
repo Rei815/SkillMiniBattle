@@ -2,6 +2,7 @@
 #include "..\..\scene_manager.h"
 #include "..\..\..\data_manager\data_manager.h"
 #include "..\..\..\game_object.h"
+#include "../../../controller_manager/controller_manager.h"
 
 CResultGame::CResultGame(void)
 {
@@ -30,7 +31,11 @@ void CResultGame::Initialize(SCENE_ID scene_id)
 
 void CResultGame::Update(void)
 {
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+    CControllerManager& cm = CControllerManager::GetInstance();
+    CController* controller_1 = cm.GetController(CONTROLLER_ID::ONE);
+    cm.Update();
+
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(INPUT_ID::ALL))
     {
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::TITLE);
     }

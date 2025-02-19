@@ -4,7 +4,9 @@
 CController::CController()
 	: m_Active(true)
 	, m_BButton(false)
-	, m_AnyButton(false)
+	, m_AllButton(false)
+	, m_BButtonDown(0)
+	, m_AllButtonDown(0)
 {
 }
 
@@ -40,14 +42,64 @@ void CController::Initialize(CONTROLLER_ID controller_id)
 
 void CController::Update(void)
 {
-	Reset();
+	//Reset();
+
+	//B
 	if (GetJoypadInputState(m_JoyPad) & PAD_INPUT_B)
 	{
+		m_BButtonDown++;
 		m_BButton = true;
 	}
-	if (GetJoypadInputState(m_JoyPad) & (PAD_INPUT_B | PAD_INPUT_A))
+	else
 	{
-		m_AnyButton = true;
+		m_BButtonDown = 0;
+		m_BButton = false;
+
+	}
+
+	//A
+	if (GetJoypadInputState(m_JoyPad) & PAD_INPUT_A)
+	{
+		m_AButtonDown++;
+		m_AButton = true;
+	}
+	else
+	{
+		m_AButtonDown = 0;
+		m_AButton = false;
+	}
+	//All
+	if (GetJoypadInputState(m_JoyPad) & (PAD_INPUT_A | PAD_INPUT_B))
+	{
+		m_AllButtonDown++;
+		m_AllButton = true;
+	}
+	else
+	{
+		m_AllButtonDown = 0;
+		m_AllButton = false;
+	}
+	//左スティックの左
+	if (GetJoypadInputState(m_JoyPad) & PAD_INPUT_LEFT)
+	{
+		m_StickLeftDown++;
+		m_StickLeftButton = true;
+	}
+	else
+	{
+		m_StickLeftDown = 0;
+		m_StickLeftButton = false;
+	}
+	//左スティックの右
+	if (GetJoypadInputState(m_JoyPad) & PAD_INPUT_RIGHT)
+	{
+		m_StickRightDown++;
+		m_StickRightButton = true;
+	}
+	else
+	{
+		m_StickRightDown = 0;
+		m_StickRightButton = false;
 	}
 }
 
@@ -61,19 +113,28 @@ bool CController::GetActive(void)
 	return m_Active;
 }
 
-bool CController::GetButtonDown(BUTTON_ID button_id)
+bool CController::GetButtonDown(INPUT_ID input_id)
 {
-	bool button = false;
-	switch (button_id)
+	bool input = false;
+	switch (input_id)
 	{
-	case BUTTON_ID::B:
-		button = m_BButton;
+	case INPUT_ID::B:
+		input = m_BButton && (m_BButtonDown == 1);
 		break;
-	case BUTTON_ID::ALL:
-		button = m_AnyButton;
+	case INPUT_ID::A:
+		input = m_AButton && (m_AButtonDown == 1);
+		break;
+	case INPUT_ID::ALL:
+		input = m_AllButton && (m_AllButtonDown == 1);
+		break;
+	case INPUT_ID::STICK_LEFT:
+		input = m_StickLeftButton && (m_StickLeftDown == 1);
+		break;
+	case INPUT_ID::STICK_RIGHT:
+		input = m_StickRightButton && (m_StickRightDown == 1);
 		break;
 	}
-	return button;
+	return input;
 }
 
 CONTROLLER_ID CController::GetID()
@@ -84,5 +145,5 @@ CONTROLLER_ID CController::GetID()
 void CController::Reset(void)
 {
 	m_BButton = false;
-	m_AnyButton = false;
+	m_AllButton = false;
 }

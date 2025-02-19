@@ -1,5 +1,5 @@
 #pragma once
-#include "button_id.h"
+#include "input_id.h"
 #include "controller_id.h"
 #include <vivid.h>
 
@@ -32,7 +32,7 @@ public:
     /*!
      *  @brief      ボタンが押されたかどうか
      */
-    bool    GetButtonDown(BUTTON_ID button_id);
+    bool    GetButtonDown(INPUT_ID button_id);
 
     /*!
      *  @brief      コントローラーのIDを取得
@@ -50,6 +50,21 @@ private:
     vivid::controller::DEVICE_ID    m_Device;
     int                             m_JoyPad;
     bool                            m_BButton;
-    bool                            m_AnyButton;
+    bool                            m_AButton;
+    bool                            m_AllButton;
+    bool                            m_StickLeftButton;
+    bool                            m_StickRightButton;
     CONTROLLER_ID                   m_ControllerID;
+    int                             m_AllButtonDown;
+    int                             m_BButtonDown;
+    int                             m_AButtonDown;
+    int                             m_StickLeftDown;
+    int                             m_StickRightDown;
+};
+
+class CButton
+{
+public:
+
+
 };

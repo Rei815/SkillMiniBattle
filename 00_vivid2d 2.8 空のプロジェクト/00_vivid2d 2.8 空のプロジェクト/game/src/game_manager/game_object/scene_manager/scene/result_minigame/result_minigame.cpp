@@ -6,6 +6,7 @@
 #include "../../../animation_manager/animation_manager.h"
 #include "../../../ui_manager/ui/player_icon/player_icon.h"
 #include "../../../ui_manager/ui/notice/notice.h"
+#include "../../../controller_manager/controller_manager.h"
 
 const vivid::Vector2  CResultMiniGame::m_origin_key_pos = vivid::Vector2(40, 250);
 const vivid::Vector2  CResultMiniGame::m_origin_icon_pos = vivid::Vector2(85, 100);
@@ -72,6 +73,11 @@ void CResultMiniGame::Initialize(SCENE_ID scene_id)
 void CResultMiniGame::Update(void)
 {
     CDataManager& dm = CDataManager::GetInstance();
+    CControllerManager& cm = CControllerManager::GetInstance();
+    CController* controller_1 = cm.GetController(CONTROLLER_ID::ONE);
+    cm.Update();
+
+    CAnimationManager::GetInstance().Update();
     if (m_SceneUIParent)
     {
         if (m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
@@ -88,9 +94,9 @@ void CResultMiniGame::Update(void)
 
         }
     }
-    CAnimationManager::GetInstance().Update();
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(INPUT_ID::ALL)))
     {
+
         SCENE_ID sceneID = SCENE_ID::SELECTGAME;
         for (int i = 0; i < dm.GetCurrentPlayer(); i++)
         {

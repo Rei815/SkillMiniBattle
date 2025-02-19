@@ -61,7 +61,7 @@ int CDataManager::GetCurrentPlayer()
 
 void CDataManager::SetCurrentPlayer(int num)
 {
-    if (num > 4 || num < 1) return;
+    if (num > 4 || num < 2) return;
     m_CurrentPlayerNum = num;
 
     ResetLastGameRanking();
@@ -152,7 +152,7 @@ int CDataManager::GetConnectControllerNum()
 CDataManager::
 CDataManager(void)
     : m_PlayerWins()
-    , m_CurrentPlayerNum(1)
+    , m_CurrentPlayerNum(2)
     , m_LastGameRanking{UNIT_ID::NONE}
     , m_NowGameRankingNum(1)
 {

@@ -1000,7 +1000,7 @@ Released(vivid::keyboard::KEY_ID key)
  */
 bool
 vivid::mouse::
-Button(vivid::mouse::BUTTON_ID button)
+Button(vivid::mouse::INPUT_ID button)
 {
     return (g_MouseState & static_cast<int>(button));
 }
@@ -1010,7 +1010,7 @@ Button(vivid::mouse::BUTTON_ID button)
  */
 bool
 vivid::mouse::
-Trigger(vivid::mouse::BUTTON_ID button)
+Trigger(vivid::mouse::INPUT_ID button)
 {
     return (g_MouseState & static_cast<int>(button)) && !(g_PrevMouseState & static_cast<int>(button));
 }
@@ -1020,7 +1020,7 @@ Trigger(vivid::mouse::BUTTON_ID button)
  */
 bool
 vivid::mouse::
-Released(vivid::mouse::BUTTON_ID button)
+Released(vivid::mouse::INPUT_ID button)
 {
     return !(g_MouseState & static_cast<int>(button)) && (g_PrevMouseState & static_cast<int>(button));
 }
@@ -1055,7 +1055,7 @@ GetWheel(void)
  */
 bool
 vivid::controller::
-Button(vivid::controller::DEVICE_ID device, vivid::controller::BUTTON_ID button)
+Button(vivid::controller::DEVICE_ID device, vivid::controller::INPUT_ID button)
 {
     return (g_ControllerState[static_cast<int>(device)].Buttons[static_cast<int>(button)]);
 }
@@ -1065,7 +1065,7 @@ Button(vivid::controller::DEVICE_ID device, vivid::controller::BUTTON_ID button)
  */
 bool
 vivid::controller::
-Trigger(vivid::controller::DEVICE_ID device, vivid::controller::BUTTON_ID button)
+Trigger(vivid::controller::DEVICE_ID device, vivid::controller::INPUT_ID button)
 {
     return (g_ControllerState[static_cast<int>(device)].Buttons[static_cast<int>(button)]) && !(g_PrevControllerState[static_cast<int>(device)].Buttons[static_cast<int>(button)]);
 }
@@ -1075,7 +1075,7 @@ Trigger(vivid::controller::DEVICE_ID device, vivid::controller::BUTTON_ID button
  */
 bool
 vivid::controller::
-Released(vivid::controller::DEVICE_ID device, vivid::controller::BUTTON_ID button)
+Released(vivid::controller::DEVICE_ID device, vivid::controller::INPUT_ID button)
 {
     return !(g_ControllerState[static_cast<int>(device)].Buttons[static_cast<int>(button)]) && (g_PrevControllerState[static_cast<int>(device)].Buttons[static_cast<int>(button)]);
 }

@@ -9,7 +9,7 @@
 #include "../../../ui_manager/ui/player_ready/player_ready.h"
 #include "../../../controller_manager/controller_manager.h"
 
-const int CSelectGame::m_games_num = 5;
+const int CSelectGame::m_games_num = 3;
 const float CSelectGame::m_circle_radius = 500.0f;
 CSelectGame::CSelectGame(void)
     : m_SelectedGameFlag(false)
@@ -95,6 +95,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
 void CSelectGame::Update(void)
 {
     CControllerManager& cm = CControllerManager::GetInstance();
+    CController* controller_1 = cm.GetController(CONTROLLER_ID::ONE);
 
     cm.Update();
 
@@ -126,9 +127,10 @@ void CSelectGame::Update(void)
         }
 
     }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(INPUT_ID::B)) && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
     {
-
+        uiList = CUIManager::GetInstance().GetList();
+        it = uiList.begin();
         while (it != uiList.end())
         {
             CPlaneGameImage* planeGameImage = (CPlaneGameImage*)(*it);
@@ -139,12 +141,15 @@ void CSelectGame::Update(void)
             if (planeGameImage->GetGameID() == m_SelectedGameID)
             {
                 m_planeGameImage = planeGameImage;
-                IAnimation* animation = am.Create(ANIMATION_ID::PLANE_UP, m_planeGameImage);
+                IAnimation* animation = nullptr;
+                animation = am.Create(ANIMATION_ID::PLANE_UP, m_planeGameImage);
                 m_planeGameImage->SetAnimation(animation);
                 m_SelectedGameFlag = true;
             }
             else
+            {
                 am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);   // ëIÇŒÇÍÇƒÇ¢Ç»Ç¢Ç‡ÇÃÇÕè¨Ç≥Ç≠Ç»ÇÈ
+            }
 
         }
     }
