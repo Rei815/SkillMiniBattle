@@ -95,16 +95,14 @@ void CSelectPlayer::Update(void)
             m_PlayerNumUI[i]->SetSelected(false);
     }
 
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::BACK) || controller_1->GetButtonDown(INPUT_ID::A))
-        && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::BACK) || controller_1->GetButtonDown(INPUT_ID::A)) && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
     {
         m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);
         CSceneManager::GetInstance().PushScene(SCENE_ID::TITLE);
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
 
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(INPUT_ID::B)
-        && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(INPUT_ID::B)) && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
     {
         CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTGAME);
         m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
