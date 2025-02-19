@@ -47,7 +47,6 @@ CPlayer::CPlayer()
     , m_FrictionFlag(true)
     , m_ActionFlag(true)
     , m_Controller()
-    , m_ForwardVector(CVector3::FORWARD)
     , m_Effect(nullptr)
 {
 }
@@ -195,19 +194,6 @@ bool CPlayer::GetPlayerMoving()
         //Input = true;
 
     return Input;
-}
-
-void CPlayer::SetForwardVector(const CVector3& forward_vector)
-{
-    if (forward_vector != CVector3::ZERO)
-    {
-        m_ForwardVector = forward_vector;
-    }
-}
-
-CVector3 CPlayer::GetForwardVector()
-{
-    return m_ForwardVector;
 }
 
 void CPlayer::SetSkill(CSkill* skill)

@@ -156,32 +156,22 @@ void CUnitManager::CheckHitObject(IObject* object)
         }
         IUnit* unit = (*it);
         
-        //水平方向の判定-----------------------------------------------------
-        if ((*it)->GetVelocity().x != 0 || (*it)->GetVelocity().z != 0)
+        //水平方向の判定-----------------------------------------------------        
+        
+        CVector3 startPos, endPos, ForwardVector, CheckVector;
+
+        //正面方向の取得
+        startPos = (*it)->GetPosition();
+        ForwardVector = (*it)->GetForwardVector();
+        ForwardVector.y = 0.0f;
+        ForwardVector = CVector3().Normalize(ForwardVector);
+
+        //判定する（45度おきに8方向をチェック）
+        for (int i = 0; i < 8; i++)
         {
-            CVector3 startPos, endPos, tempVelocity, tempVelocity2;
-
-            //移動方向の正面
-            startPos = (*it)->GetPosition();
             endPos = startPos;
-            tempVelocity = (*it)->GetVelocity();
-            tempVelocity.y = 0.0f;
-            tempVelocity = CVector3().Normalize(tempVelocity);
-            endPos += tempVelocity * (*it)->GetRadius();
-            CheckHitObjectHorizontal(object, (*it), startPos, endPos);
-
-            //移動方向の右側45°
-            startPos = (*it)->GetPosition();
-            endPos = startPos;
-            tempVelocity2 = tempVelocity.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f).Normalize();
-            endPos += tempVelocity2 * (*it)->GetRadius();
-            CheckHitObjectHorizontal(object, (*it), startPos, endPos);
-
-            //移動方向の左側45°
-            startPos = (*it)->GetPosition();
-            endPos = startPos;
-            tempVelocity2 = tempVelocity.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, -45.0f).Normalize();
-            endPos += tempVelocity2 * (*it)->GetRadius();
+            CheckVector = ForwardVector.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f * i).Normalize();
+            endPos += CheckVector * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, (*it), startPos, endPos);
         }
 
@@ -198,6 +188,7 @@ void CUnitManager::CheckHitObject(IObject* object)
 
         ++it;
     }
+
     return;
 }
 

@@ -33,6 +33,7 @@ IUnit::
 IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     : m_Transform(CTransform())
     , m_Velocity(CVector3::ZERO)
+    , m_ForwardVector(CVector3::FORWARD)
     , m_AffectedVelocity(CVector3::ZERO)
     , m_ActiveFlag(true)
     , m_Category(category)
@@ -344,6 +345,19 @@ float IUnit::GetRadius(void)
 float IUnit::GetHeight(void)
 {
     return m_Height;
+}
+
+void IUnit::SetForwardVector(const CVector3& forward_vector)
+{
+    if (forward_vector != CVector3::ZERO)
+    {
+        m_ForwardVector = forward_vector;
+    }
+}
+
+CVector3 IUnit::GetForwardVector()
+{
+    return m_ForwardVector;
 }
 
 void IUnit::AddShot(void)
