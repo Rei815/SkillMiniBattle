@@ -52,6 +52,7 @@ public:
     SKILL_ID ConvertGameSkillID(SKILL_ID_DARUMA skill_id);
     SKILL_ID ConvertGameSkillID(SKILL_ID_DODGEBALL skill_id);
     SKILL_ID ConvertGameSkillID(SKILL_ID_FALLOUT skill_id);
+    SKILL_ID ConvertGameSkillID(SKILL_ID_BELTCONVEYOR skill_id);
     SKILL_ID ConvertGameSkillID(SKILL_ID_MAZE skill_id);
 
 private:

@@ -136,18 +136,16 @@ void CBeltConveyorGame::CheckFinish(void)
 
 		if (unit->GetPosition().y < m_defeat_height)
 		{
-			/*
 			CPlayer* player = dynamic_cast<CPlayer*>(unit);
 			if (player != nullptr)
 			{
 				CSkill* skill = player->GetSkill();
-				if (skill->GetSkillID() == SKILL_ID::RESURRECT_FALLOUT && skill->GetState() != SKILL_STATE::COOLDOWN)
+				if (skill->GetSkillID() == SKILL_ID::RESURRECT_BELT && skill->GetState() != SKILL_STATE::COOLDOWN)
 				{
 					skill->SetState(SKILL_STATE::ACTIVE);
 					break;
 				}
 			}
-			*/
 
 			AddRanking(unit->GetUnitID());
 			unit->SetDefeatFlag(true);
