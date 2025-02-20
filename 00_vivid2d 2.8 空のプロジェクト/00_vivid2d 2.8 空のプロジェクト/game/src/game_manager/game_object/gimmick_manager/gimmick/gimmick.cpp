@@ -5,7 +5,7 @@ CGimmick::CGimmick()
 	, m_Timer()
 	, m_Switch(false)
 	, m_State(GIMMICK_STATE::WAIT)
-	, m_ActiveFlag(false)
+	, m_ActiveFlag(true)
 {
 }
 
