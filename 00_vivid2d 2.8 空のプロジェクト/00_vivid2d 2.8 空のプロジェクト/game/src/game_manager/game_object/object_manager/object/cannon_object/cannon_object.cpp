@@ -1,6 +1,7 @@
 #include "cannon_object.h"
 
 const std::string CCannonObject::m_model_file_name = "data\\Models\\cannon.mv1";
+const float CCannonObject::m_scale = 0.5f;
 
 CCannonObject::CCannonObject()
 	: IObject()
@@ -18,6 +19,7 @@ void CCannonObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	m_ColliderActiveFlag = false;
 	IObject::Initialize(id, transform);
 
+	m_Transform.scale = m_scale;
 	m_Model.Initialize(m_FileName, m_Transform);
 }
 

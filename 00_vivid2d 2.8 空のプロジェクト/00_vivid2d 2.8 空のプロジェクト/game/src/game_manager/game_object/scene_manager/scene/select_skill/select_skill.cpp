@@ -8,6 +8,7 @@
 #include "..\..\..\ui_manager\ui\skill_icon\skill_icon.h"
 #include "..\..\..\ui_manager\ui\skill_name\skill_name.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../controller_manager/controller_manager.h"
 
 
 const float             CSelectSkill::m_cursor_move_time = 0.2f;
@@ -59,6 +60,7 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
     CSkillManager::GetInstance().Initialize();
+    CControllerManager::GetInstance().Initialize();
 
     m_GameID = CDataManager::GetInstance().GetSelectGameID();
 
@@ -135,10 +137,12 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
     m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
     m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+
 }
 
 void CSelectSkill::Update(void)
 {
+    CControllerManager::GetInstance().Update();
     MoveCursor();
 
     if (m_SceneUIParent)
@@ -350,6 +354,10 @@ void CSelectSkill::CreateCursor(void)
     m_NowCursorPosNum = 0;
 
     m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))], m_icon_scale);
+
+    //コントローラーを振動させる
+    CControllerManager::GetInstance().Vibration((CONTROLLER_ID)m_NowCursorID_Num);
+
 }
 
 void CSelectSkill::MoveCursor(void)
@@ -357,21 +365,21 @@ void CSelectSkill::MoveCursor(void)
     if (m_SceneUIParent != nullptr) return;
 
     m_CursorMoveTimer.Update();
-
-    int     joyPad = 0;
+    CControllerManager& cm = CControllerManager::GetInstance();
+    CController* controller = nullptr;
     switch (m_CursorID[m_NowCursorID_Num])
     {
     case UNIT_ID::PLAYER1:
-        joyPad = DX_INPUT_PAD1;
+        controller = cm.GetController(CONTROLLER_ID::ONE);
         break;
     case UNIT_ID::PLAYER2:
-        joyPad = DX_INPUT_PAD2;
+        controller = cm.GetController(CONTROLLER_ID::TWO);
         break;
     case UNIT_ID::PLAYER3:
-        joyPad = DX_INPUT_PAD3;
+        controller = cm.GetController(CONTROLLER_ID::THREE);
         break;
     case UNIT_ID::PLAYER4:
-        joyPad = DX_INPUT_PAD4;
+        controller = cm.GetController(CONTROLLER_ID::FOUR);
         break;
     }
 
@@ -379,7 +387,7 @@ void CSelectSkill::MoveCursor(void)
     {
         int TempPosNum = m_NowCursorPosNum;
 
-        if ((GetJoypadInputState(joyPad) & PAD_INPUT_RIGHT) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+        if (controller->GetButtonDown(INPUT_ID::STICK_RIGHT) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
         {
             m_NowCursorPosNum++;
             if (m_NowCursorPosNum >= m_CursorPosNumList.size())
@@ -387,7 +395,7 @@ void CSelectSkill::MoveCursor(void)
                 m_NowCursorPosNum = 0;
             }
         }
-        if ((GetJoypadInputState(joyPad) & PAD_INPUT_LEFT) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+        if (controller->GetButtonDown(INPUT_ID::STICK_LEFT) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         {
             m_NowCursorPosNum--;
             if (m_NowCursorPosNum < 0)
@@ -406,7 +414,7 @@ void CSelectSkill::MoveCursor(void)
         }
     }
 
-    if ((GetJoypadInputState(joyPad) & PAD_INPUT_2) || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+    if (controller->GetButtonDown(INPUT_ID::B) || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
     {
         //プレイヤーにスキルをセットする
         SKILL_ID tempSkillID = m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];
@@ -424,6 +432,7 @@ void CSelectSkill::MoveCursor(void)
             m_CursorID[m_NowCursorID_Num] != UNIT_ID::NONE)
         {
             CreateCursor();
+
             m_SkillVideo->SetSkillNum(*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));
         }
         //全員が選択を終了している場合、シーンの移行を行う

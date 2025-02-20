@@ -1,6 +1,8 @@
 #include "controller.h"
 #include <DxLib.h>
 
+const float	CController::m_vibration_power = 100.0f;
+const float	CController::m_vibration_time = 1.0f;
 CController::CController()
 	: m_Active(true)
 	, m_BButton(false)
@@ -16,27 +18,7 @@ CController::~CController()
 
 void CController::Initialize(CONTROLLER_ID controller_id)
 {
-	switch (controller_id)
-	{
-	case CONTROLLER_ID::ONE:
-		m_Device = vivid::controller::DEVICE_ID::PLAYER1;
-		m_JoyPad = DX_INPUT_PAD1;
-		break;
-	case CONTROLLER_ID::TWO:
-		m_Device = vivid::controller::DEVICE_ID::PLAYER2;
-		m_JoyPad = DX_INPUT_PAD2;
-
-		break;
-	case CONTROLLER_ID::THREE:
-		m_Device = vivid::controller::DEVICE_ID::PLAYER3;
-		m_JoyPad = DX_INPUT_PAD3;
-
-		break;
-	case CONTROLLER_ID::FOUR:
-		m_Device = vivid::controller::DEVICE_ID::PLAYER4;
-		m_JoyPad = DX_INPUT_PAD4;
-		break;
-	}
+	SetControllerID(controller_id);
 	m_ControllerID = controller_id;
 }
 
@@ -140,6 +122,30 @@ bool CController::GetButtonDown(INPUT_ID input_id)
 CONTROLLER_ID CController::GetID()
 {
 	return m_ControllerID;
+}
+
+void CController::Vibration()
+{
+	StartJoypadVibration(m_JoyPad, m_vibration_power, m_vibration_time * 1000.0f, -1);
+}
+
+void CController::SetControllerID(CONTROLLER_ID controller_id)
+{
+	switch (controller_id)
+	{
+	case CONTROLLER_ID::ONE:
+		m_JoyPad = DX_INPUT_PAD1;
+		break;
+	case CONTROLLER_ID::TWO:
+		m_JoyPad = DX_INPUT_PAD2;
+		break;
+	case CONTROLLER_ID::THREE:
+		m_JoyPad = DX_INPUT_PAD3;
+		break;
+	case CONTROLLER_ID::FOUR:
+		m_JoyPad = DX_INPUT_PAD4;
+		break;
+	}
 }
 
 void CController::Reset(void)

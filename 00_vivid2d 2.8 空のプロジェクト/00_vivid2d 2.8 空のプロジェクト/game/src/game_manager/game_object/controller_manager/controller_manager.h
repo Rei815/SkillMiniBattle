@@ -56,6 +56,13 @@ public:
      */
     CController* GetController(CONTROLLER_ID controller_id);
 
+    /*!
+     *  @brief      コントローラーを振動させる
+     *
+     *  @param[in]  controller_id          コントローラーのID
+     */
+    void Vibration(CONTROLLER_ID controller_id);
+
 private:
 
     /*!
