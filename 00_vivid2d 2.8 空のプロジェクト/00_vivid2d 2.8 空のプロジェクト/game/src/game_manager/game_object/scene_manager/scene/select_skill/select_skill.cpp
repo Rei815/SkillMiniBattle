@@ -213,20 +213,24 @@ void CSelectSkill::ChooseSkill(void)
         for (int i = 0; i < (int)SKILL_ID_FALLOUT::MAX; i++)
             TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_FALLOUT)i));
         break;
+
     case GAME_ID::DODGE_BALL_GAME:
         for (int i = 0; i < (int)SKILL_ID_DODGEBALL::MAX; i++)
             TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_DODGEBALL)i));
         break;
+
     case GAME_ID::DARUMA_FALL_DOWN_GAME:
         for (int i = 0; i < (int)SKILL_ID_DARUMA::MAX; i++)
             TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_DARUMA)i));
         break;
+
+    case GAME_ID::BELT_CONVEYOR_GAME:
+        for (int i = 0; i < (int)SKILL_ID_BELTCONVEYOR::MAX; i++)
+            TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_BELTCONVEYOR)i));
+        break;
+
     case GAME_ID::MAX:
     case GAME_ID::DEBUG_GAME:
-        for (int i = 0; i < (int)SKILL_ID_DODGEBALL::MAX; i++)
-            TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_DODGEBALL)i));
-        break;
-    case GAME_ID::BELT_CONVEYOR_GAME:
         for (int i = 0; i < (int)SKILL_ID_DODGEBALL::MAX; i++)
             TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_DODGEBALL)i));
         break;
@@ -566,6 +570,44 @@ SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_FALLOUT skill_id)
         temp = SKILL_ID::HIDE_TOPIC;
         break;
     case SKILL_ID_FALLOUT::MAX:
+        temp = SKILL_ID::MAX;
+        break;
+    }
+
+    return temp;
+}
+
+SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_BELTCONVEYOR skill_id)
+{
+    SKILL_ID temp = SKILL_ID::MAX;
+
+    switch (skill_id)
+    {
+    case SKILL_ID_BELTCONVEYOR::SPEED_UP:
+        temp = SKILL_ID::SPEED_UP;
+        break;
+    case SKILL_ID_BELTCONVEYOR::JUMP_UP:
+        temp = SKILL_ID::JUMP_UP;
+        break;
+    case SKILL_ID_BELTCONVEYOR::DASH:
+        temp = SKILL_ID::DASH;
+        break;
+    case SKILL_ID_BELTCONVEYOR::GRAVITY_AREA:
+        temp = SKILL_ID::GRAVITY_AREA;
+        break;
+    case SKILL_ID_BELTCONVEYOR::SLOW:
+        temp = SKILL_ID::SLOW;
+        break;
+    case SKILL_ID_BELTCONVEYOR::FLOATING:
+        temp = SKILL_ID::FLOATING;
+        break;
+    case SKILL_ID_BELTCONVEYOR::STRONG_WIND:
+        temp = SKILL_ID::STRONG_WIND;
+        break;
+    case SKILL_ID_BELTCONVEYOR::RESURRECT_BELT:
+        temp = SKILL_ID::RESURRECT_BELT;
+        break;
+    case SKILL_ID_BELTCONVEYOR::MAX:
         temp = SKILL_ID::MAX;
         break;
     }
