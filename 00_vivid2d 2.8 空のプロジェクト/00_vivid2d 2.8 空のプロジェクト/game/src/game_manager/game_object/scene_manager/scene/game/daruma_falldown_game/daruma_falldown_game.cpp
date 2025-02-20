@@ -27,8 +27,9 @@ const CVector3 CDaruma_FallDownGame::m_goal_position = CVector3(300.0f, 0.0f, 0.
 CDaruma_FallDownGame::CDaruma_FallDownGame(void)
 	: m_PlayerPosition{ (CVector3(-1500,0,100)) }
 	, m_Timer()
-	,m_OgreObject(nullptr)
-	,m_GimmickOn(false)
+	, m_OgreObject(nullptr)
+	, m_GimmickOn(false)
+	,m_MovePlayer()
 {
 }
 
@@ -103,6 +104,11 @@ void CDaruma_FallDownGame::Update(void)
 void CDaruma_FallDownGame::Draw(void)
 {
 	CGame::Draw();
+
+	/*for (int i = 0; i < 4; i++)
+	{
+		vivid::DrawText(40, m_MovePlayer[i] + "P“®‚¢‚½", vivid::Vector2(1000, (vivid::WINDOW_HEIGHT / 2) + 20 * i));
+	}*/
 }
 
 void CDaruma_FallDownGame::Finalize(void)
@@ -195,6 +201,9 @@ void CDaruma_FallDownGame::Play(void)
 					player->SetActionFlag(false);
 					player->SetVelocity(CVector3::ZERO);
 
+
+					m_MovePlayer[i] = ((int)player->GetUnitID() + 1);
+
 					CSkill* skill = player->GetSkill();
 					if (skill->GetSkillID() == SKILL_ID::RESURRECT_DARUMA && skill->GetState() != SKILL_STATE::COOLDOWN)
 						skill->SetState(SKILL_STATE::ACTIVE);
@@ -217,6 +226,7 @@ void CDaruma_FallDownGame::Play(void)
 			}
 
 		}
+		
 	}
 
 	if (m_Timer.Finished())
