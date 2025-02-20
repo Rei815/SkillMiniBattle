@@ -65,4 +65,5 @@ private:
     int                             m_CountTime;
     float                           m_TempFirstDis;
     bool                            m_GimmickOn;
+    int                             m_MovePlayer[4];
 };
