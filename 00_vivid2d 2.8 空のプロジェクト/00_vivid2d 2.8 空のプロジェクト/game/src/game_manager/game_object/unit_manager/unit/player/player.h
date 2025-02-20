@@ -111,10 +111,6 @@ public:
 
     bool            GetPlayerMoving();
 
-    void            SetForwardVector(const CVector3& forward_vector);
-
-    CVector3        GetForwardVector();
-
 protected:
     /*!
      *  @brief      攻撃
@@ -184,7 +180,5 @@ protected:
     CTimer                          m_InvincibleTimer;              //!< 無敵時間タイマー
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
     vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
-    CVector3                        m_ForwardVector;                //!< 正面方向のベクトル
     IEffect*                        m_Effect;
-
 };

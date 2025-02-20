@@ -294,10 +294,12 @@ public:
      *  @param[in]  parent    親のオブジェクト
      */
     void        SetParent(IObject* parent);
+
+    void            SetForwardVector(const CVector3& forward_vector);
+
+    CVector3        GetForwardVector();
+
 protected:
-
-
-
 
     /*!
      *  @brief      出現
@@ -356,6 +358,7 @@ protected:
     float                   m_Height;
     CModel                  m_Model;
     CTransform	            m_Transform;		    //!< トランスフォーム
+    CVector3                m_ForwardVector;        //!< 正面方向のベクトル
     CVector3	            m_Max_Vertex;		    //!< 最大頂点座標
     CVector3                m_Velocity;             //!< 速度
     CVector3                m_AffectedVelocity;     //!< 外部からの影響による速度
