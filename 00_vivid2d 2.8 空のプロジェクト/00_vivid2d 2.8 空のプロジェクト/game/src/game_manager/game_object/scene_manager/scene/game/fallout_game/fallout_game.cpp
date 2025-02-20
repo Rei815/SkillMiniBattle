@@ -16,9 +16,6 @@
 const CTransform CFallOutGame::m_object_transform_list[] = 
 {CTransform(CVector3(475,-100,-275)),CTransform(CVector3(-475,-100,275)), CTransform(CVector3(0,-100,475)),
 CTransform(CVector3(-475,-100,-275)), CTransform(CVector3(0,-100,-475)), CTransform(CVector3(475,-100,275)) };
-//const CTransform CFallOutGame::m_object_transform_list[] = 
-//{CTransform(CVector3(450,-100,-300)),CTransform(CVector3(-450,-100,250)), CTransform(CVector3(0,-100,450)),
-//CTransform(CVector3(-450,-100,-300)), CTransform(CVector3(0,-100,-500)), CTransform(CVector3(450,-100,250)) };
 
 const vivid::Vector2    CFallOutGame::m_topic_positionList[] = { vivid::Vector2(0, -200),vivid::Vector2(250, -200),vivid::Vector2(500, -200),
 vivid::Vector2(750, -200),vivid::Vector2(1000, -200),vivid::Vector2(1250, -200) };
@@ -28,9 +25,9 @@ const float		CFallOutGame::m_min_time = 1.5f;
 const float		CFallOutGame::m_fall_time = 3.0f;
 const float		CFallOutGame::m_defeat_height = -500.0f;
 const float		CFallOutGame::m_object_delay_time = 1.0f;
-const float		CFallOutGame::m_add_topic_time = 10.0f;
+const float		CFallOutGame::m_add_topic_time = 7.0f;
 const float		CFallOutGame::m_reset_topic_time = 0.5f;
-const float		CFallOutGame::m_extend_return_time = 180.0f;
+const float		CFallOutGame::m_extend_return_time = 30.0f;
 const float		CFallOutGame::m_topic_interval_time = 1.0f;
 const int		CFallOutGame::m_max_topic_num = 5;
 const CVector3  CFallOutGame::m_player_default_forward = CVector3(0.0f,0.0f,-1.0f);
