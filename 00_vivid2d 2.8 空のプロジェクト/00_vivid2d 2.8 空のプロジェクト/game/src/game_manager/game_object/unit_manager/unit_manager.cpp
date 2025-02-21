@@ -372,8 +372,12 @@ CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos,
 {
     CVector3 hitPos;
 
+#ifdef DEBUG
     // ü•ª‚Ì•`‰æ
     DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
+
+#endif // DEBUG
+
 
     if (object->GetModel().CheckHitLine(startPos, endPos) == true)
     {

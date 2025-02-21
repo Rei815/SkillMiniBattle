@@ -25,26 +25,31 @@ public:
     void    Finalize(void);
 
     /*!
-     *  @brief      アクティブフラグの取得
+     *  @brief  アクティブフラグの取得
      */
-    bool    GetActive(void);
+    bool        GetActive(void);
 
     /*!
-     *  @brief      ボタンが押されたかどうか
+     *  @brief  ボタンが押されたかどうか
      */
-    bool    GetButtonDown(INPUT_ID button_id);
+    bool        GetButtonDown(INPUT_ID button_id);
 
     /*!
      *  @brief      コントローラーのIDを取得
      */
-    CONTROLLER_ID    GetID();
+    CONTROLLER_ID       GetID();
 
+    void                Vibration();
 
+    void                SetControllerID(CONTROLLER_ID controller_id);
 private:
     /*!
      *  @brief      入力のリセット
      */
     void    Reset(void);
+
+    static const float              m_vibration_power;
+    static const float              m_vibration_time;
 
     bool                            m_Active;
     vivid::controller::DEVICE_ID    m_Device;

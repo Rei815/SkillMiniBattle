@@ -110,6 +110,23 @@ CController* CControllerManager::GetController(CONTROLLER_ID controller_id)
     return nullptr;
 }
 
+void CControllerManager::Vibration(CONTROLLER_ID controller_id)
+{
+    if (m_ControllerList.empty()) return;
+
+    CONTROLLER_LIST::iterator it = m_ControllerList.begin();
+
+    while (it != m_ControllerList.end())
+    {
+        CController* controller = (CController*)(*it);
+        if (controller->GetID() == controller_id)
+            controller->Vibration();
+
+        ++it;
+    }
+
+}
+
 
 /*
  *  コンストラクタ

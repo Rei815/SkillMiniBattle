@@ -3,14 +3,15 @@
 #include "vivid.h"
 #include <EffekseerForDXLib.h>      // effekseerƒ‰ƒCƒuƒ‰ƒŠ‚Ì“Ç‚İ‚İ
 
-const float CCamera::m_lerp_speed = 0.1f;
-const float CCamera::m_near = 100.0f;
-const float CCamera::m_far = 200000.0f;
-const int   CCamera::m_shake_interval = 3;  //—h‚ê‚ÌŠÔŠu
-const int   CCamera::m_shake_max_num = 5;   //—h‚ê‚é‰ñ”
-const float         CCamera::m_shake_value = 5.0f;//—h‚ê‚Ì‘å‚«‚³
-const CVector3              CCamera::m_initial_position = CVector3();//—h‚ê‚Ì‘å‚«‚³
-const CVector3              CCamera::m_initial_direction = CVector3();   //—h‚ê‚é‰ñ”
+const float                 CCamera::m_lerp_speed = 0.1f;
+const float                 CCamera::m_near = 100.0f;
+const float                 CCamera::m_far = 200000.0f;
+const float                 CCamera::m_fov = 60.0f;
+const int                   CCamera::m_shake_interval = 3;                  //—h‚ê‚ÌŠÔŠu
+const int                   CCamera::m_shake_max_num = 5;                   //—h‚ê‚é‰ñ”
+const float                 CCamera::m_shake_value = 5.0f;                  //—h‚ê‚Ì‘å‚«‚³
+const CVector3              CCamera::m_initial_position = CVector3();       //‰ŠúˆÊ’u
+const CVector3              CCamera::m_initial_direction = CVector3();      //‰Šú‚ÌŒü‚«
 
 CCamera& CCamera::GetInstance(void)
 {
@@ -102,7 +103,7 @@ void CCamera::Update()
     SetCameraPositionAndTarget_UpVecY(m_Position + m_ShakeVector, m_Position + m_Direction + m_ShakeVector);
 
     // ‰“‹ß–@‚ÌƒZƒbƒgƒAƒbƒv( ƒ‰ƒWƒAƒ“’l‚É•ÏŠ·‚µ‚Ä‚¢‚Ü‚· )
-    SetupCamera_Perspective(m_Fov * DX_PI_F / 180.0f);
+    SetupCamera_Perspective(DEG_TO_RAD(m_Fov));
 
     Effekseer_Sync3DSetting();
 
@@ -189,7 +190,7 @@ void CCamera::_Shake()
 CCamera::CCamera()
 	: m_Position()
     , m_Direction()
-    , m_Fov(60.0f)
+    , m_Fov(m_fov)
     , m_Offset()
     , m_ShakeCount()
     , m_ShakeFlag()

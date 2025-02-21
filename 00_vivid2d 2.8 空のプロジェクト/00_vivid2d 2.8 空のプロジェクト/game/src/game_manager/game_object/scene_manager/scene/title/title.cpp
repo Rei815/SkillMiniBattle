@@ -55,6 +55,8 @@ void CTitle::Initialize(SCENE_ID scene_id)
     }
     CControllerManager& cm = CControllerManager::GetInstance();
     cm.Initialize();
+    CController* controller_1 = cm.GetController(CONTROLLER_ID::ONE);
+    controller_1->Vibration();
 }
 
 void CTitle::Update(void)
