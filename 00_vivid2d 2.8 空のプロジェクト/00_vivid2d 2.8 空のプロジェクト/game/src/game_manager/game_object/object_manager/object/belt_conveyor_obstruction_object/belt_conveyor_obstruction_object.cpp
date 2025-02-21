@@ -31,7 +31,7 @@ void CBeltConveyorObstructionObject::Initialize(OBJECT_ID id, const CTransform& 
 	IObject::Initialize(id, transform);
 
 	m_Model.Initialize(m_FileName, m_Transform);
-	m_Tag = "Floor";
+	//m_Tag = "Floor";
 }
 
 void CBeltConveyorObstructionObject::Update(void)

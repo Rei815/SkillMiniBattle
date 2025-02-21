@@ -92,7 +92,7 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 	if (m_bgm == nullptr)
 		m_bgm->CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
 
-	 //CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
+	//CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
 	//
 	m_DebugText = "ドッジボールゲーム";
 
