@@ -302,7 +302,7 @@ namespace vivid
          *  @brief      マウスボタンID<br>
          *              クリック判定で使用可能なボタンID
          */
-        enum class INPUT_ID
+        enum class BUTTON_ID
         {
               LEFT    = MOUSE_INPUT_LEFT      //! 左ボタン
             , RIGHT   = MOUSE_INPUT_RIGHT     //! 右ボタン
@@ -330,22 +330,22 @@ namespace vivid
         /*!
          *  @brief      ボタンID
          */
-        enum class INPUT_ID
+        enum class BUTTON_ID
         {
-              UP              = XINPUT_BUTTON_DPAD_UP         //! ボタン上
-            , DOWN            = XINPUT_BUTTON_DPAD_DOWN       //! ボタン下
-            , LEFT            = XINPUT_BUTTON_DPAD_LEFT       //! ボタン左
-            , RIGHT           = XINPUT_BUTTON_DPAD_RIGHT      //! ボタン右
-            , START           = XINPUT_BUTTON_START           //! STARTボタン
-            , BACK            = XINPUT_BUTTON_BACK            //! BACKボタン
-            , LEFT_THUMB      = XINPUT_BUTTON_LEFT_THUMB      //! 左スティック押し込み
-            , RIGHT_THUMB     = XINPUT_BUTTON_RIGHT_THUMB     //! 右スティック押し込み
-            , LEFT_SHOULDER   = XINPUT_BUTTON_LEFT_SHOULDER   //! LBボタン
-            , RIGHT_SHOULDER  = XINPUT_BUTTON_RIGHT_SHOULDER  //! RBボタン
-            , A               = XINPUT_BUTTON_A               //! Aボタン
-            , B               = XINPUT_BUTTON_B               //! Bボタン
-            , X               = XINPUT_BUTTON_X               //! Xボタン
-            , Y               = XINPUT_BUTTON_Y               //! Yボタン
+              UP                = XINPUT_BUTTON_DPAD_UP         //! ボタン上
+            , DOWN              = XINPUT_BUTTON_DPAD_DOWN       //! ボタン下
+            , LEFT              = XINPUT_BUTTON_DPAD_LEFT       //! ボタン左
+            , RIGHT             = XINPUT_BUTTON_DPAD_RIGHT      //! ボタン右
+            , START             = XINPUT_BUTTON_START           //! STARTボタン
+            , BACK              = XINPUT_BUTTON_BACK            //! BACKボタン
+            , LEFT_THUMB        = XINPUT_BUTTON_LEFT_THUMB      //! 左スティック押し込み
+            , RIGHT_THUMB       = XINPUT_BUTTON_RIGHT_THUMB     //! 右スティック押し込み
+            , LEFT_SHOULDER     = XINPUT_BUTTON_LEFT_SHOULDER   //! LBボタン
+            , RIGHT_SHOULDER    = XINPUT_BUTTON_RIGHT_SHOULDER  //! RBボタン
+            , A                 = XINPUT_BUTTON_A               //! Aボタン
+            , B                 = XINPUT_BUTTON_B               //! Bボタン
+            , X                 = XINPUT_BUTTON_X               //! Xボタン
+            , Y                 = XINPUT_BUTTON_Y               //! Yボタン
         };
     }
     /*!
@@ -1019,7 +1019,7 @@ namespace vivid
          *
          *  @return     押されている間trueを返す
          */
-        bool    Button(INPUT_ID button);
+        bool    Button(BUTTON_ID button);
 
         /*!
          *  @brief      トリガー入力判定
@@ -1028,7 +1028,7 @@ namespace vivid
          *
          *  @return     押された瞬間だけtrueを返す
          */
-        bool    Trigger(INPUT_ID button);
+        bool    Trigger(BUTTON_ID button);
 
         /*!
          *  @brief      リリースド入力判定
@@ -1037,7 +1037,7 @@ namespace vivid
          *
          *  @return     離された瞬間だけtrueを返す
          */
-        bool    Released(INPUT_ID button);
+        bool    Released(BUTTON_ID button);
 
         /*!
          *  @brief      マウスカーソルの座標取得
@@ -1070,7 +1070,7 @@ namespace vivid
          *
          *  @return     押されている間trueを返す
          */
-        bool    Button(DEVICE_ID device, INPUT_ID button );
+        bool    Button(DEVICE_ID device, BUTTON_ID button );
 
         /*!
          *  @brief      トリガー入力判定
@@ -1080,7 +1080,7 @@ namespace vivid
          *
          *  @return     押された瞬間だけtrueを返す
          */
-        bool    Trigger(DEVICE_ID device, INPUT_ID button);
+        bool    Trigger(DEVICE_ID device, BUTTON_ID button);
 
         /*!
          *  @brief      リリースド入力判定
@@ -1090,7 +1090,7 @@ namespace vivid
          *
          *  @return     離された瞬間だけtrueを返す
          */
-        bool    Released(DEVICE_ID device, INPUT_ID button);
+        bool    Released(DEVICE_ID device, BUTTON_ID button);
 
         /*!
          *  @brief      左アナログスティック取得

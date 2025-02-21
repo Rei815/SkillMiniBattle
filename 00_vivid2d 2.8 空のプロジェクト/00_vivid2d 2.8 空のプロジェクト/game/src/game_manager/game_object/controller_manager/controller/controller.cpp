@@ -5,10 +5,9 @@ const float	CController::m_vibration_power = 100.0f;
 const float	CController::m_vibration_time = 1.0f;
 CController::CController()
 	: m_Active(true)
-	, m_BButton(false)
-	, m_AllButton(false)
-	, m_BButtonDown(0)
-	, m_AllButtonDown(0)
+	, m_Stick()
+	, m_LeftHorizontal(false)
+	, m_LeftVertical(false)
 {
 }
 
@@ -24,7 +23,17 @@ void CController::Initialize(CONTROLLER_ID controller_id)
 
 void CController::Update(void)
 {
+	m_Stick = GetLeftStick();
 
+	//ÉjÉÖÅ[ÉgÉâÉãÇ…Ç»Ç¡ÇΩÇÁfalse
+	if (m_Stick.x == 0.0f)
+	{
+		m_LeftHorizontal = false;
+	}
+	if (m_Stick.y == 0.0f)
+	{
+		m_LeftVertical = false;
+	}
 }
 
 void CController::Finalize(void)
@@ -37,28 +46,44 @@ bool CController::GetActive(void)
 	return m_Active;
 }
 
-bool CController::GetButtonDown(INPUT_ID input_id)
+bool CController::GetButtonDown(BUTTON_ID button_id)
 {
-	bool input = false;
-	switch (input_id)
+	bool button = false;
+	switch (button_id)
 	{
-	case INPUT_ID::B:
-		input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::B);
+	case BUTTON_ID::B:
+		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::B);
 		break;
-	case INPUT_ID::A:
-		input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::A);
-		break;
-	case INPUT_ID::ALL:
-		//input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::);
-		break;
-	case INPUT_ID::STICK_LEFT:
-		input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::LEFT);
-		break;
-	case INPUT_ID::STICK_RIGHT:
-		input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::RIGHT);
+	case BUTTON_ID::A:
+		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::A);
 		break;
 	}
-	return input;
+	return button;
+}
+
+vivid::Vector2 CController::GetLeftStick()
+{
+	return vivid::controller::GetAnalogStickLeft(m_Device);
+}
+
+bool CController::GetLeftHorizontal()
+{
+	return m_LeftHorizontal;
+}
+
+void CController::SetLeftHorizontal(bool flag)
+{
+	m_LeftHorizontal = flag;
+}
+
+bool CController::GetLeftVertical()
+{
+	return m_LeftVertical;
+}
+
+void CController::SetLeftVertical(bool flag)
+{
+	m_LeftVertical = flag;
 }
 
 CONTROLLER_ID CController::GetID()
@@ -95,10 +120,4 @@ void CController::SetControllerID(CONTROLLER_ID controller_id)
 		m_JoyPad = DX_INPUT_PAD4;
 		break;
 	}
-}
-
-void CController::Reset(void)
-{
-	m_BButton = false;
-	m_AllButton = false;
 }

@@ -70,7 +70,7 @@ void CTitle::Update(void)
         m_FadeSpeed = -m_FadeSpeed;
 
     CSceneManager& sm = CSceneManager::GetInstance();
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(INPUT_ID::ALL)) && sm.GetList().size() == 1)
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || cm.GetAnyControllerButtonDown(BUTTON_ID::B)) && sm.GetList().size() == 1)
     {
         m_Color = 0xff000000;
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);

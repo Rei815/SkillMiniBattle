@@ -22,7 +22,7 @@ public:
      *
      *  @param[in]  position    初期位置
      */
-    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller);
+    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name);
 
     /*!
      *  @brief      更新
@@ -46,7 +46,7 @@ public:
  */
     void                SetActionFlag(bool flag);
 
-    vivid::controller::DEVICE_ID GetController(void);
+    CController*        GetController(void);
     
     /*!
      *  @brief      スキルの取得
@@ -179,6 +179,6 @@ protected:
     bool                            m_FrictionFlag;                 //!< 減速フラグ
     CTimer                          m_InvincibleTimer;              //!< 無敵時間タイマー
     bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
-    vivid::controller::DEVICE_ID    m_Controller;                   //!< コントローラー識別
+    CController*                    m_Controller;                   //!< コントローラー
     IEffect*                        m_Effect;
 };

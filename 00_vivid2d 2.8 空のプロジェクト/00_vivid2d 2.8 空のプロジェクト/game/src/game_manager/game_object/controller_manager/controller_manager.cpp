@@ -110,6 +110,23 @@ CController* CControllerManager::GetController(CONTROLLER_ID controller_id)
     return nullptr;
 }
 
+bool CControllerManager::GetAnyControllerButtonDown(BUTTON_ID button_id)
+{
+    if (m_ControllerList.empty()) return false;
+
+    CONTROLLER_LIST::iterator it = m_ControllerList.begin();
+
+    while (it != m_ControllerList.end())
+    {
+        if ((*it)->GetButtonDown(button_id) == true)
+            return true;
+
+        ++it;
+    }
+
+    return false;
+}
+
 void CControllerManager::Vibration(CONTROLLER_ID controller_id)
 {
     if (m_ControllerList.empty()) return;

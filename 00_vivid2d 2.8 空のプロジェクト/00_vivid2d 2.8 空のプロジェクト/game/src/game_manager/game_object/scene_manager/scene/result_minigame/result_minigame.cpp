@@ -94,7 +94,7 @@ void CResultMiniGame::Update(void)
 
         }
     }
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(INPUT_ID::ALL)))
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(BUTTON_ID::ALL)))
     {
 
         SCENE_ID sceneID = SCENE_ID::SELECTGAME;

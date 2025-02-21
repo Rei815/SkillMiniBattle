@@ -1,9 +1,6 @@
 #pragma once
-enum class INPUT_ID
+enum class STICK_ID
 {
-	B,
-	A,
 	STICK_LEFT,
 	STICK_RIGHT,
-	ALL,
 };

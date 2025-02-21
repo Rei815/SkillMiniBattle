@@ -8,7 +8,6 @@
 #include "../ui_manager/ui_manager.h"
 
 const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player_rabbit.mv1", "data\\Models\\player_rabbit.mv1", "data\\Models\\player_rabbit.mv1", "data\\Models\\player_rabbit.mv1" };
-const vivid::controller::DEVICE_ID           CUnitManager::m_controller_list[] = { vivid::controller::DEVICE_ID::PLAYER1 , vivid::controller::DEVICE_ID::PLAYER2,vivid::controller::DEVICE_ID::PLAYER3,vivid::controller::DEVICE_ID::PLAYER4 };
 /*
  *  インスタンスの取得
  */
@@ -109,7 +108,7 @@ Create(UNIT_ID id, const CVector3& pos)
 
     if (!unit) return nullptr;
 
-    unit->Initialize(id, pos, m_file_name_list[(int)id], m_controller_list[(int)id]);
+    unit->Initialize(id, pos, m_file_name_list[(int)id]);
 
     m_UnitList.push_back(unit);
     return unit;

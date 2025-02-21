@@ -125,7 +125,7 @@ SetActive(bool active)
 
 bool CUI::OnMouseClick(const vivid::Vector2& position, int width, int height)
 {
-    if (vivid::mouse::Trigger(vivid::mouse::INPUT_ID::LEFT))
+    if (vivid::mouse::Trigger(vivid::mouse::BUTTON_ID::LEFT))
     {
         vivid::Point mouse_pos = vivid::mouse::GetCursorPos();
         if (position.x - width / 2.0f < mouse_pos.x && mouse_pos.x < position.x + width / 2.0f &&

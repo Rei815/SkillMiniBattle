@@ -142,7 +142,6 @@ private:
     void    CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos);
 
     static const std::string                            m_file_name_list[];
-    static const vivid::controller::DEVICE_ID           m_controller_list[];
 
     UNIT_LIST                                           m_UnitList;             //!< ユニットリスト
     DEFEAT_LIST                                         m_DefeatList;             //!< ランキングリスト

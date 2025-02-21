@@ -129,7 +129,7 @@ void CSelectGame::Update(void)
         }
 
     }
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(INPUT_ID::B)) && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(BUTTON_ID::B)) && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
     {
         uiList = CUIManager::GetInstance().GetList();
         it = uiList.begin();

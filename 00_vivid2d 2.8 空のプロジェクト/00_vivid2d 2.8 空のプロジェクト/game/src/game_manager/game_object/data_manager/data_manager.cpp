@@ -20,7 +20,6 @@ void
 CDataManager::
 Initialize(void)
 {
-    m_OverallRankingList->clear();
     for (int i = 0; i < m_CurrentPlayerNum; i++)
     {
         m_PlayerWins[i] = 0;
@@ -43,6 +42,7 @@ void CDataManager::Finalize(void)
 {
     for (int i = 0; i < m_CurrentPlayerNum; i++)
     {
+        m_LastGameRanking[i] = UNIT_ID::NONE;
         m_PlayerWins[i] = 0;
     }
 }

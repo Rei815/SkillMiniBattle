@@ -387,16 +387,19 @@ void CSelectSkill::MoveCursor(void)
     {
         int TempPosNum = m_NowCursorPosNum;
 
-        if (controller->GetButtonDown(INPUT_ID::STICK_RIGHT) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+        if ((!controller->GetLeftHorizontal() && controller->GetLeftStick().x == 1.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
         {
+            controller->SetLeftHorizontal(true);
             m_NowCursorPosNum++;
             if (m_NowCursorPosNum >= m_CursorPosNumList.size())
             {
                 m_NowCursorPosNum = 0;
             }
         }
-        if (controller->GetButtonDown(INPUT_ID::STICK_LEFT) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+        if ((!controller->GetLeftHorizontal() && controller->GetLeftStick().x == -1.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         {
+            controller->SetLeftHorizontal(true);
+
             m_NowCursorPosNum--;
             if (m_NowCursorPosNum < 0)
             {
@@ -414,7 +417,7 @@ void CSelectSkill::MoveCursor(void)
         }
     }
 
-    if (controller->GetButtonDown(INPUT_ID::B) || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+    if (controller->GetButtonDown(BUTTON_ID::B) || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
     {
         //プレイヤーにスキルをセットする
         SKILL_ID tempSkillID = m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];

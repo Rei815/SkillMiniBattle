@@ -53,7 +53,7 @@ public:
      *
      *  @param[in]  position    à íu
      */
-    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller);
+    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name);
 
     /*!
      *  @brief      çXêV

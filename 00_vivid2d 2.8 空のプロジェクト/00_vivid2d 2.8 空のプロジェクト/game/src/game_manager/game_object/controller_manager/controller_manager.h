@@ -36,13 +36,13 @@ public:
      * 
      *  @param[in]  num          コントローラーの数
      */
-    void SetControllerNum(int num);
+    void        SetControllerNum(int num);
 
     /*!
      *  @brief      コントローラーの数を取得
      *  @return     コントローラーの数
      */
-    int GetControllerNum();
+    int         GetControllerNum();
 
     /*!
      *  @brief      コントローラー生成
@@ -55,6 +55,12 @@ public:
      *  @brief      コントローラーを取得
      */
     CController* GetController(CONTROLLER_ID controller_id);
+
+    /*!
+     *  @brief      いずれかのコントローラーのボタンの状態を取得
+     *  @return     指定のボタンが押されたか
+     */
+    bool         GetAnyControllerButtonDown(BUTTON_ID button_id);
 
     /*!
      *  @brief      コントローラーを振動させる

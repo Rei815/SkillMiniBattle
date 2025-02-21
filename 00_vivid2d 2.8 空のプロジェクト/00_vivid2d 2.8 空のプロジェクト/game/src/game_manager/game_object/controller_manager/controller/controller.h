@@ -1,7 +1,7 @@
 #pragma once
-#include "input_id.h"
 #include "controller_id.h"
 #include <vivid.h>
+#include "button_id.h"
 
 class CController
 {
@@ -32,7 +32,43 @@ public:
     /*!
      *  @brief  ボタンが押されたかどうか
      */
-    bool        GetButtonDown(INPUT_ID button_id);
+    bool        GetButtonDown(BUTTON_ID input_id);
+
+    /*!
+     *  @brief  左スティックの状態を取得
+     * 
+     *  @return vivid::Vector2          -1.0f～1.0f
+     */
+    vivid::Vector2        GetLeftStick();
+
+    /*!
+     *  @brief  左スティックが左右に傾いたかのフラグを取得
+     * 
+     *  @return bool          左右に傾いたか
+     */
+    bool        GetLeftHorizontal();
+
+    /*!
+     *  @brief  左スティックが左右に傾いたかのフラグを設定
+     * 
+     *  @param[in]      flag    左右に傾いたか
+     */
+    void        SetLeftHorizontal(bool flag);
+
+    /*!
+     *  @brief  左スティックが上下に傾いたかのフラグを取得
+     * 
+     *  @return bool          上下に傾いたか
+     */
+    bool        GetLeftVertical();
+
+    /*!
+     *  @brief  左スティックが上下に傾いたかのフラグを設定
+     * 
+     *  @param[in]      flag    上下に傾いたか
+     */
+    void        SetLeftVertical(bool flag);
+
 
     /*!
      *  @brief      コントローラーのIDを取得
@@ -43,10 +79,6 @@ public:
 
     void                SetControllerID(CONTROLLER_ID controller_id);
 private:
-    /*!
-     *  @brief      入力のリセット
-     */
-    void    Reset(void);
 
     static const float              m_vibration_power;
     static const float              m_vibration_time;
@@ -54,22 +86,8 @@ private:
     bool                            m_Active;
     vivid::controller::DEVICE_ID    m_Device;
     int                             m_JoyPad;
-    bool                            m_BButton;
-    bool                            m_AButton;
-    bool                            m_AllButton;
-    bool                            m_StickLeftButton;
-    bool                            m_StickRightButton;
     CONTROLLER_ID                   m_ControllerID;
-    int                             m_AllButtonDown;
-    int                             m_BButtonDown;
-    int                             m_AButtonDown;
-    int                             m_StickLeftDown;
-    int                             m_StickRightDown;
-};
-
-class CButton
-{
-public:
-
-
+    bool                            m_LeftHorizontal;
+    bool                            m_LeftVertical;
+    vivid::Vector2                  m_Stick;
 };

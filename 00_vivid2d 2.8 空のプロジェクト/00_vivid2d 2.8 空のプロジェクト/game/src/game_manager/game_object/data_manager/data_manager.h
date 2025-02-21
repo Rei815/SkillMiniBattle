@@ -122,13 +122,7 @@ private:
      */
     CDataManager& operator=(const CDataManager& rhs);
 
-    /*!
-     *  @brief      プレイヤーリスト型
-     */
-    using RANKING_LIST = std::vector<CPlayer*>;
-    
     static const int    m_max_game_num;
-    RANKING_LIST        m_OverallRankingList[(int)UNIT_ID::NONE];             //!< 全体のランキングリスト
 
     UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];              //1つ前のゲームのランキング
     int                 m_NowGameRankingNum;                                //1つ前のゲームのランキングをつけるため、次の順位を格納する変数

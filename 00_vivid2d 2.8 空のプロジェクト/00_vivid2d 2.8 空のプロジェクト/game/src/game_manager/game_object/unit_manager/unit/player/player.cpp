@@ -3,6 +3,7 @@
 #include "../../unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
 #include "../../../object_manager/object_manager.h"
+#include "../../../controller_manager/controller_manager.h"
 
 
 const float             CPlayer::m_radius = 50.0f;
@@ -54,11 +55,11 @@ CPlayer::~CPlayer()
 {
 }
 
-void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name, vivid::controller::DEVICE_ID controller)
+void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name)
 {
     (void)position;
 
-    IUnit::Initialize(id, position, file_name, controller);
+    IUnit::Initialize(id, position, file_name);
 
     switch (id)
     {
@@ -96,6 +97,8 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
 
     m_StopFlag = false;
     m_FrictionFlag = true;
+    CControllerManager::GetInstance().GetController(CONTROLLER_ID::O)
+    cm.
     m_Controller = controller;
 }
 
@@ -145,7 +148,7 @@ void CPlayer::SetActionFlag(bool flag)
     m_ActionFlag = flag;
 }
 
-vivid::controller::DEVICE_ID CPlayer::GetController()
+CController* CPlayer::GetController()
 {
     return m_Controller;
 }
@@ -159,38 +162,28 @@ bool CPlayer::GetPlayerMoving()
 {
     bool Input = false;
 
-    int     joyPad = 0;
-    switch (m_Controller)
-    {
-    case vivid::controller::DEVICE_ID::PLAYER1: joyPad = DX_INPUT_PAD1; break;
-    case vivid::controller::DEVICE_ID::PLAYER2: joyPad = DX_INPUT_PAD2; break;
-    case vivid::controller::DEVICE_ID::PLAYER3: joyPad = DX_INPUT_PAD3; break;
-    case vivid::controller::DEVICE_ID::PLAYER4: joyPad = DX_INPUT_PAD4; break;
-    }
-
     //¶ˆÚ“®
-    if (GetJoypadInputState(joyPad) & PAD_INPUT_LEFT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+    if (m_Controller->GetButtonDown(BUTTON_ID::B) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         Input = true;
 
     //‰EˆÚ“®
-    if (GetJoypadInputState(joyPad) & PAD_INPUT_RIGHT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
         Input = true;
 
     //ãˆÚ“®
-    if (GetJoypadInputState(joyPad) & PAD_INPUT_UP || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
         Input = true;
 
     //‰ºˆÚ“®
-    if (GetJoypadInputState(joyPad) & PAD_INPUT_DOWN || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
+    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
         Input = true;
 
+    if (m_Controller->GetLeftHorizontal() || m_Controller->GetLeftVertical())
+        Input = true;
 
     //ƒWƒƒƒ“ƒv
-    if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_B) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
+    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE) && !m_StopFlag)
         Input = true;
-
-    //if (m_IsGround == false)
-        //Input = true;
 
     return Input;
 }

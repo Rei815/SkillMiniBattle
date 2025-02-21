@@ -76,17 +76,6 @@ void CSelectPlayer::Update(void)
 
     CDataManager& dm = CDataManager::GetInstance();
     int currentPlayer = dm.GetCurrentPlayer();
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A) || controller_1->GetButtonDown(INPUT_ID::STICK_LEFT))
-    {
-        currentPlayer--;
-        dm.SetCurrentPlayer(currentPlayer);
-    }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::D) || controller_1->GetButtonDown(INPUT_ID::STICK_RIGHT))
-    {
-        currentPlayer++;
-        dm.SetCurrentPlayer(currentPlayer);
-    }
-
     for (int i = 1; i < (int)UNIT_ID::NONE; i++)
     {
         if (i + 1 == dm.GetCurrentPlayer())
@@ -94,23 +83,39 @@ void CSelectPlayer::Update(void)
         else
             m_PlayerNumUI[i]->SetSelected(false);
     }
-
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::BACK) || controller_1->GetButtonDown(INPUT_ID::A)) && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
-    {
-        m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);
-        CSceneManager::GetInstance().PushScene(SCENE_ID::TITLE);
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-    }
-
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(INPUT_ID::B)) && m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
-    {
-        CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTGAME);
-        m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-    }
-
     if (m_SceneUIParent)
     {
+        if (m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
+        {
+            if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A) || (!controller_1->GetLeftHorizontal() && controller_1->GetLeftStick().x == -1.0f))
+            {
+                controller_1->SetLeftHorizontal(true);
+                currentPlayer--;
+                dm.SetCurrentPlayer(currentPlayer);
+            }
+            if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::D) || (!controller_1->GetLeftHorizontal() && controller_1->GetLeftStick().x == 1.0f))
+            {
+                controller_1->SetLeftHorizontal(true);
+
+                currentPlayer++;
+                dm.SetCurrentPlayer(currentPlayer);
+            }
+
+            if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::BACK) || controller_1->GetButtonDown(BUTTON_ID::A)))
+            {
+                m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);
+                CSceneManager::GetInstance().PushScene(SCENE_ID::TITLE);
+                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+            }
+
+            if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(BUTTON_ID::B)))
+            {
+                CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTGAME);
+                m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+                CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+            }
+        }
+
         if (m_SceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
 
         const float min_height = -vivid::GetWindowHeight() / 2;
@@ -118,6 +123,7 @@ void CSelectPlayer::Update(void)
         if (m_SceneUIParent->GetPosition().y <= min_height || max_height <= m_SceneUIParent->GetPosition().y)
             CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTPLAYER);
     }
+
 }
 
 void CSelectPlayer::Draw(void)
