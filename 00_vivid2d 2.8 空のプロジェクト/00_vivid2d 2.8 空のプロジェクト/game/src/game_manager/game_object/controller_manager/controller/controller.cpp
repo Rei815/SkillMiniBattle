@@ -24,65 +24,7 @@ void CController::Initialize(CONTROLLER_ID controller_id)
 
 void CController::Update(void)
 {
-	//Reset();
 
-	//B
-	if (GetJoypadInputState(m_JoyPad) & PAD_INPUT_B)
-	{
-		m_BButtonDown++;
-		m_BButton = true;
-	}
-	else
-	{
-		m_BButtonDown = 0;
-		m_BButton = false;
-
-	}
-
-	//A
-	if (GetJoypadInputState(m_JoyPad) & PAD_INPUT_A)
-	{
-		m_AButtonDown++;
-		m_AButton = true;
-	}
-	else
-	{
-		m_AButtonDown = 0;
-		m_AButton = false;
-	}
-	//All
-	if (GetJoypadInputState(m_JoyPad) & (PAD_INPUT_A | PAD_INPUT_B))
-	{
-		m_AllButtonDown++;
-		m_AllButton = true;
-	}
-	else
-	{
-		m_AllButtonDown = 0;
-		m_AllButton = false;
-	}
-	//左スティックの左
-	if (GetJoypadInputState(m_JoyPad) & PAD_INPUT_LEFT)
-	{
-		m_StickLeftDown++;
-		m_StickLeftButton = true;
-	}
-	else
-	{
-		m_StickLeftDown = 0;
-		m_StickLeftButton = false;
-	}
-	//左スティックの右
-	if (GetJoypadInputState(m_JoyPad) & PAD_INPUT_RIGHT)
-	{
-		m_StickRightDown++;
-		m_StickRightButton = true;
-	}
-	else
-	{
-		m_StickRightDown = 0;
-		m_StickRightButton = false;
-	}
 }
 
 void CController::Finalize(void)
@@ -101,19 +43,19 @@ bool CController::GetButtonDown(INPUT_ID input_id)
 	switch (input_id)
 	{
 	case INPUT_ID::B:
-		input = m_BButton && (m_BButtonDown == 1);
+		input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::B);
 		break;
 	case INPUT_ID::A:
-		input = m_AButton && (m_AButtonDown == 1);
+		input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::A);
 		break;
 	case INPUT_ID::ALL:
-		input = m_AllButton && (m_AllButtonDown == 1);
+		//input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::);
 		break;
 	case INPUT_ID::STICK_LEFT:
-		input = m_StickLeftButton && (m_StickLeftDown == 1);
+		input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::LEFT);
 		break;
 	case INPUT_ID::STICK_RIGHT:
-		input = m_StickRightButton && (m_StickRightDown == 1);
+		input = vivid::controller::Trigger(m_Device, vivid::controller::INPUT_ID::RIGHT);
 		break;
 	}
 	return input;
@@ -126,7 +68,7 @@ CONTROLLER_ID CController::GetID()
 
 void CController::Vibration()
 {
-	StartJoypadVibration(m_JoyPad, m_vibration_power, m_vibration_time * 1000.0f, -1);
+	vivid::controller::StartVibration(m_Device, m_vibration_power, m_vibration_time);
 }
 
 void CController::SetControllerID(CONTROLLER_ID controller_id)
@@ -134,15 +76,22 @@ void CController::SetControllerID(CONTROLLER_ID controller_id)
 	switch (controller_id)
 	{
 	case CONTROLLER_ID::ONE:
+		m_Device = vivid::controller::DEVICE_ID::PLAYER1;
 		m_JoyPad = DX_INPUT_PAD1;
 		break;
 	case CONTROLLER_ID::TWO:
+		m_Device = vivid::controller::DEVICE_ID::PLAYER2;
+
 		m_JoyPad = DX_INPUT_PAD2;
 		break;
 	case CONTROLLER_ID::THREE:
+		m_Device = vivid::controller::DEVICE_ID::PLAYER3;
+
 		m_JoyPad = DX_INPUT_PAD3;
 		break;
 	case CONTROLLER_ID::FOUR:
+		m_Device = vivid::controller::DEVICE_ID::PLAYER4;
+
 		m_JoyPad = DX_INPUT_PAD4;
 		break;
 	}
