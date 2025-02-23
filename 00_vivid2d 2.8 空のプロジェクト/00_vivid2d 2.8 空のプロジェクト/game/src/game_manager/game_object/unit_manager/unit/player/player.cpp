@@ -162,7 +162,7 @@ bool CPlayer::GetPlayerMoving()
     bool Input = false;
 
     //左移動
-    if (m_Controller->GetButtonDown(BUTTON_ID::B) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         Input = true;
 
     //右移動
@@ -181,7 +181,7 @@ bool CPlayer::GetPlayerMoving()
         Input = true;
 
     //ジャンプ
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE) && !m_StopFlag)
+    if ((m_Controller->GetButtonDown(BUTTON_ID::B) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
         Input = true;
 
     return Input;
@@ -307,20 +307,18 @@ void CPlayer::Control(void)
 {
     vivid::Vector2 stick = m_Controller->GetLeftStick();
     //左移動
-    if ((m_Controller->GetLeftHorizontal() && stick.x > 0.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+    if ((stick != vivid::Vector2::ZERO && stick.x < -0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         m_Accelerator.x += -m_move_speed * m_MoveSpeedRate;
 
     //右移動
-    if ((m_Controller->GetLeftHorizontal() && stick.x < 0.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
-    {
+    if ((stick != vivid::Vector2::ZERO && stick.x > 0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
         m_Accelerator.x += m_move_speed * m_MoveSpeedRate;
-    }
     //上移動
-    if ((m_Controller->GetLeftVertical() && stick.y > 0.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+    if ((stick != vivid::Vector2::ZERO && stick.y < -0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
         m_Accelerator.z += m_move_speed * m_MoveSpeedRate;
 
     //下移動
-    if ((m_Controller->GetLeftVertical() && stick.y < 0.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
+    if ((stick != vivid::Vector2::ZERO && stick.y > 0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
         m_Accelerator.z += -m_move_speed * m_MoveSpeedRate;
 
 

@@ -9,7 +9,7 @@
 #include "../../../ui_manager/ui/player_ready/player_ready.h"
 #include "../../../controller_manager/controller_manager.h"
 
-const int CSelectGame::m_games_num = 4;
+const int CSelectGame::m_games_num = 5;
 const float CSelectGame::m_circle_radius = 500.0f;
 CSelectGame::CSelectGame(void)
     : m_SelectedGameFlag(false)

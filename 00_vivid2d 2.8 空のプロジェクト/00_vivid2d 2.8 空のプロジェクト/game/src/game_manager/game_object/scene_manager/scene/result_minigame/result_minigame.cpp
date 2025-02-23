@@ -85,6 +85,7 @@ void CResultMiniGame::Update(void)
             int firstPlayerID = (int)dm.GetLastGameRanking(0);
 
             //アニメーション付きのカギの表示(一位のみ)
+
             vivid::Vector2 offsetPos = vivid::Vector2((m_key_offset * (dm.GetPlayerWin(firstPlayerID) - 1)) + (m_players_key_offset * firstPlayerID), 0);
 
             CUI* animationKey = CUIManager::GetInstance().Create(UI_ID::KEY, m_origin_key_pos + offsetPos);
