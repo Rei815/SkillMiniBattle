@@ -6,6 +6,7 @@
 #include "../../../bullet_manager/bullet/bullet.h"
 #include "../../../skill_manager/skill/skill.h"
 #include "../../../effect_manager/effect_manager.h"
+#include "../../../controller_manager/controller/controller.h"
 
 class CSkill;
 

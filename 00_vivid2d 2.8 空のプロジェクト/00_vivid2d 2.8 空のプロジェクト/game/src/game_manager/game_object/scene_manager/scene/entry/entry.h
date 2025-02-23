@@ -3,7 +3,8 @@
 #include "vivid.h"
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
-
+#include <list>
+#include "..\..\..\controller_manager\controller\controller.h"
 class CEntry : public IScene
 {
 public:

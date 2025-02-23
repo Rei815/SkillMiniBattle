@@ -60,23 +60,25 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
     (void)position;
 
     IUnit::Initialize(id, position, file_name);
-
+    CControllerManager& cm = CControllerManager::GetInstance();
     switch (id)
     {
-    case UNIT_ID::PLAYER1: 
+    case UNIT_ID::PLAYER1:
         m_Category = UNIT_CATEGORY::PLAYER1;
+        m_Controller = cm.GetController(CONTROLLER_ID::ONE);
+
         break;
     case UNIT_ID::PLAYER2: 
         m_Category = UNIT_CATEGORY::PLAYER2;
-
+        m_Controller = cm.GetController(CONTROLLER_ID::TWO);
         break;
     case UNIT_ID::PLAYER3: 
         m_Category = UNIT_CATEGORY::PLAYER3;
-
+        m_Controller = cm.GetController(CONTROLLER_ID::THREE);
         break;
     case UNIT_ID::PLAYER4: 
         m_Category = UNIT_CATEGORY::PLAYER4;
-
+        m_Controller = cm.GetController(CONTROLLER_ID::FOUR);
         break;
     }
 
@@ -97,9 +99,6 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
 
     m_StopFlag = false;
     m_FrictionFlag = true;
-    CControllerManager::GetInstance().GetController(CONTROLLER_ID::O)
-    cm.
-    m_Controller = controller;
 }
 
 void CPlayer::Update(void)
@@ -306,34 +305,27 @@ void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, fl
 }
 void CPlayer::Control(void)
 {
-    int     joyPad = 0;
-    switch (m_Controller)
-    {
-    case vivid::controller::DEVICE_ID::PLAYER1: joyPad = DX_INPUT_PAD1; break;
-    case vivid::controller::DEVICE_ID::PLAYER2: joyPad = DX_INPUT_PAD2; break;
-    case vivid::controller::DEVICE_ID::PLAYER3: joyPad = DX_INPUT_PAD3; break;
-    case vivid::controller::DEVICE_ID::PLAYER4: joyPad = DX_INPUT_PAD4; break;
-    }
+    vivid::Vector2 stick = m_Controller->GetLeftStick();
     //左移動
-    if (GetJoypadInputState(joyPad) & PAD_INPUT_LEFT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+    if ((m_Controller->GetLeftHorizontal() && stick.x > 0.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         m_Accelerator.x += -m_move_speed * m_MoveSpeedRate;
 
     //右移動
-    if (GetJoypadInputState(joyPad) & PAD_INPUT_RIGHT || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+    if ((m_Controller->GetLeftHorizontal() && stick.x < 0.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
     {
         m_Accelerator.x += m_move_speed * m_MoveSpeedRate;
     }
     //上移動
-    if (GetJoypadInputState(joyPad) & PAD_INPUT_UP || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+    if ((m_Controller->GetLeftVertical() && stick.y > 0.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
         m_Accelerator.z += m_move_speed * m_MoveSpeedRate;
 
     //下移動
-    if (GetJoypadInputState(joyPad) & PAD_INPUT_DOWN || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
+    if ((m_Controller->GetLeftVertical() && stick.y < 0.0f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
         m_Accelerator.z += -m_move_speed * m_MoveSpeedRate;
 
 
     //ジャンプ
-    if (m_IsGround && ((GetJoypadInputState(joyPad) & PAD_INPUT_B) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
+    if ((m_Controller->GetButtonDown(BUTTON_ID::B) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
         if (m_IsGround == true)
         {
             m_Parent = nullptr;
@@ -347,8 +339,9 @@ void CPlayer::Control(void)
     
     //スキル
     if(m_Skill != nullptr)
-        if ((GetJoypadInputState(joyPad) & PAD_INPUT_A || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN)) && !m_StopFlag)
+        if ((m_Controller->GetButtonDown(BUTTON_ID::A) || vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN)) && !m_StopFlag)
             m_Skill->Action();
+
 
     //停止
     if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::LSHIFT))
