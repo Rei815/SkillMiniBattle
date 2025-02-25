@@ -10,7 +10,7 @@ const std::string CMiniGameTitle::m_file_name[] =
 		"data\\Textures\\minigame_title_daruma_fall_down.png",
 		"data\\Textures\\minigame_title_fallout.png",
 		"data\\Textures\\minigame_title_dodge_ball.png",
-		"data\\Textures\\minigame_title_dodge_ball.png",
+		"data\\Textures\\minigame_title_belt_conveyor.png",
 		"data\\Textures\\minigame_title_dodge_ball.png",
 		"data\\Textures\\minigame_title_dodge_ball.png",
 		"data\\Textures\\minigame_title_dodge_ball.png",

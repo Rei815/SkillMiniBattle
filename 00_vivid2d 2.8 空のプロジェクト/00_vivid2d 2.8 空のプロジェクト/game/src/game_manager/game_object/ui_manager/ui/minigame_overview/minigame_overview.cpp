@@ -13,7 +13,7 @@ const std::string CMiniGameOverView::m_file_name[] =
 		"data\\Textures\\overview_daruma_fall_down.png",
 		"data\\Textures\\overview_fall_out.png",
 		"data\\Textures\\overview_dodge_ball.png",
-		"data\\Textures\\overview_dodge_ball.png",
+		"data\\Textures\\overview_belt_conveyor.png",
 		"data\\Textures\\overview_dodge_ball.png",
 		"data\\Textures\\overview_dodge_ball.png",
 		"data\\Textures\\overview_dodge_ball.png",
