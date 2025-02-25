@@ -89,6 +89,9 @@ private:
     static const float      m_defeat_distance;
 
     static const float      m_stage_shrink_time;
+    static const CVector3   m_default_stage_position;
+    static const CVector3   m_default_stage_rotation;
+    static const float      m_default_stage_scale;
 
     static const CVector3   m_camera_position;
     static const CVector3   m_camera_direction;

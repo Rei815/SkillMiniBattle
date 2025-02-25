@@ -53,6 +53,7 @@ private:
 
     CTimer                  m_ObstructionSpawnTimer;
     static const float      m_default_obstruction_spawn_time;
+
     static const float      m_obstruction_object_scale;
     static const CVector3   m_obstruction_spawn_relative_pos;
     static const float      m_obstruction_delete_height;
