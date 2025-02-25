@@ -3,14 +3,15 @@
 #include "..\..\..\effect_manager\effect_manager.h"
 #include "..\..\..\unit_manager\unit_manager.h"
 
-const float			CBeltConveyorGimmick::m_mid_belt_speed_time = 180.0f;
+const float			CBeltConveyorGimmick::m_mid_belt_speed_time = 60.0f;
 
 const float			CBeltConveyorGimmick::m_default_belt_move_speed	= 5.0f;
 const float			CBeltConveyorGimmick::m_min_belt_speed_rate		= 1.0f;
 const float			CBeltConveyorGimmick::m_mid_belt_speed_rate		= 2.0f;
 const float			CBeltConveyorGimmick::m_max_belt_speed_rate		= 3.0f;
 
-const float			CBeltConveyorGimmick::m_default_obstruction_spawn_time	= 2.0f;
+const float			CBeltConveyorGimmick::m_default_obstruction_spawn_time	= 3.0f;
+
 const float			CBeltConveyorGimmick::m_obstruction_object_scale		= 0.5f;
 const CVector3		CBeltConveyorGimmick::m_obstruction_spawn_relative_pos	= CVector3(0.0f, 50.0f, -1000.0f);
 const float			CBeltConveyorGimmick::m_obstruction_delete_height		= -1000.0f;
@@ -19,7 +20,8 @@ const float			CBeltConveyorGimmick::m_obstruction_object_fall_speed = 10.0f;
 
 CBeltConveyorGimmick::CBeltConveyorGimmick()
 	: CGimmick()
-	, m_NowBeltSpeedRate(0.0f)
+	, m_NowBeltSpeedRate(0)
+	, m_ObstructionSpawnTimer()
 	, m_BeltConveyorForward(CVector3::FORWARD)
 	, m_ObstructionObjectList()
 {
@@ -54,6 +56,9 @@ void CBeltConveyorGimmick::Update(void)
 	m_NowBeltSpeedRate = m_min_belt_speed_rate + (m_mid_belt_speed_rate - m_min_belt_speed_rate) * m_Timer.GetTimer() / m_mid_belt_speed_time;
 	if (m_NowBeltSpeedRate > m_max_belt_speed_rate)
 		m_NowBeltSpeedRate = m_max_belt_speed_rate;
+
+	//障害物のスポーン頻度更新
+	m_ObstructionSpawnTimer.SetLimitTime(m_default_obstruction_spawn_time / m_NowBeltSpeedRate);
 
 	//障害物のスポーン
 	m_ObstructionSpawnTimer.Update();

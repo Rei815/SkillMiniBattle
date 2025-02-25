@@ -267,7 +267,13 @@ CSceneManager::CreateScene(SCENE_ID id)
     case SCENE_ID::MAZE_GAME:           scene = new CMazeGame();                break;
     }
     m_SceneList.push_back(scene);
+    
+    //初期化
     scene->Initialize(id);
+
+    //初期化時の調整を反映するため、1フレーム分だけ更新する
+    scene->Update();
+
     return scene;
 }
 
