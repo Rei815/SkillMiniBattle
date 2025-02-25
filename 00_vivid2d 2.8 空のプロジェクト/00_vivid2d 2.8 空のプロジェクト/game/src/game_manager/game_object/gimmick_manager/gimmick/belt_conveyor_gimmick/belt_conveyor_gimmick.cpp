@@ -68,12 +68,14 @@ void CBeltConveyorGimmick::Update(void)
 
 		CTransform SpawnTr;
 		CVector3 SpawnRelativePos = m_obstruction_spawn_relative_pos;
-		SpawnTr.position = m_Object->GetPosition() + SpawnRelativePos.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, m_Object->GetRotation().y);
+		SpawnTr.position = CVector3(9999,9999,9999);
 		SpawnTr.rotation = m_Object->GetRotation();
 		SpawnTr.scale = CVector3(m_obstruction_object_scale, m_obstruction_object_scale, m_obstruction_object_scale);
 
 		IObject* SpawnObj = CObjectManager::GetInstance().Create(OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_OBJECT, SpawnTr);
 	
+		SpawnObj->SetPosition(m_Object->GetPosition() + SpawnRelativePos.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, m_Object->GetRotation().y));
+
 		m_ObstructionObjectList.push_back(SpawnObj);
 	}
 	
@@ -104,7 +106,7 @@ void CBeltConveyorGimmick::Update(void)
 			else
 			{
 				(*it)->SetPosition(ObjPos + m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate * 0.5f) + CVector3::DOWN * m_obstruction_object_fall_speed);
-				(*it)->SetRotation((*it)->GetRotation() + CVector3(0.1f, 0.0f, 0.0f));
+				(*it)->SetRotation((*it)->GetRotation() + CVector3(0.2f, 0.0f, 0.0f));
 			}
 
 			it++;
