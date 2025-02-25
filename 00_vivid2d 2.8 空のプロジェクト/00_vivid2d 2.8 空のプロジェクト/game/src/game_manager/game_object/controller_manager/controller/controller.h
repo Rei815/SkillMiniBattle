@@ -2,7 +2,9 @@
 #include "controller_id.h"
 #include <vivid.h>
 #include "button_id.h"
+#include "../../unit_manager/unit/player/player.h"
 
+class CPlayer;
 class CController
 {
 public:
@@ -43,7 +45,7 @@ public:
 
     /*!
      *  @brief  左スティックが左右に傾いたかのフラグを取得
-     * 
+     *          自動でtrueにならない
      *  @return bool          左右に傾いたか
      */
     bool        GetLeftHorizontal();
@@ -57,7 +59,7 @@ public:
 
     /*!
      *  @brief  左スティックが上下に傾いたかのフラグを取得
-     * 
+     *          自動でtrueにならない
      *  @return bool          上下に傾いたか
      */
     bool        GetLeftVertical();
@@ -78,6 +80,22 @@ public:
     void                Vibration();
 
     void                SetControllerID(CONTROLLER_ID controller_id);
+
+    /*!
+     *  @brief      プレイヤーを取得
+     * 
+     *  @return     CPlayer*    プレイヤーのポインター
+     */
+    CPlayer*        GetPlayer();
+
+    /*!
+     *  @brief      プレイヤーを設定
+     *
+     *  @param[in]  player    プレイヤーのポインター
+     */
+    void            SetPlayer(CPlayer* player);
+
+
 private:
 
     static const float              m_vibration_power;
@@ -90,4 +108,5 @@ private:
     bool                            m_LeftHorizontal;
     bool                            m_LeftVertical;
     vivid::Vector2                  m_Stick;
+    CPlayer*                        m_Player;
 };

@@ -8,6 +8,7 @@ CController::CController()
 	, m_Stick()
 	, m_LeftHorizontal(false)
 	, m_LeftVertical(false)
+	, m_Player(nullptr)
 {
 }
 
@@ -56,6 +57,15 @@ bool CController::GetButtonDown(BUTTON_ID button_id)
 		break;
 	case BUTTON_ID::A:
 		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::A);
+		break;
+	case BUTTON_ID::X:
+		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::X);
+		break;
+	case BUTTON_ID::Y:
+		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::Y);
+		break;
+	case BUTTON_ID::START:
+		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::START);
 		break;
 	}
 	return button;
@@ -120,4 +130,14 @@ void CController::SetControllerID(CONTROLLER_ID controller_id)
 		m_JoyPad = DX_INPUT_PAD4;
 		break;
 	}
+}
+
+CPlayer* CController::GetPlayer()
+{
+	return m_Player;
+}
+
+void CController::SetPlayer(CPlayer* player)
+{
+	m_Player = player;
 }

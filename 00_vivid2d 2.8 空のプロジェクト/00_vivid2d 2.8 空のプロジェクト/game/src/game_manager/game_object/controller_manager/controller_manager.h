@@ -69,6 +69,13 @@ public:
      */
     void Vibration(CONTROLLER_ID controller_id);
 
+    /*!
+     *  @brief      指定のボタンを押したコントローラーを取得
+     *  @param[in]  player    プレイヤーのポインター
+     *  @return     CPlayer*    プレイヤーのポインター
+     */
+    CController* GetSpecifiedButtonDownController(BUTTON_ID button_id);
+
 private:
 
     /*!
