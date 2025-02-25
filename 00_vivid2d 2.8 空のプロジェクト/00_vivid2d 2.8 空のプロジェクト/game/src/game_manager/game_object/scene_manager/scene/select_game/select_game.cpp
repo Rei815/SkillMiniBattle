@@ -89,15 +89,11 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
             m_PlaneGameImage = plameGameImage;
         }
     }
-    CControllerManager& cm = CControllerManager::GetInstance();
-    cm.Initialize();
-
 }
 
 void CSelectGame::Update(void)
 {
     CControllerManager& cm = CControllerManager::GetInstance();
-    CController* controller_1 = cm.GetController(CONTROLLER_ID::ONE);
 
     cm.Update();
 
@@ -129,7 +125,8 @@ void CSelectGame::Update(void)
         }
 
     }
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(BUTTON_ID::B)) && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || cm.GetSpecifiedButtonDownController(BUTTON_ID::B))
+        && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
     {
         uiList = CUIManager::GetInstance().GetList();
         it = uiList.begin();

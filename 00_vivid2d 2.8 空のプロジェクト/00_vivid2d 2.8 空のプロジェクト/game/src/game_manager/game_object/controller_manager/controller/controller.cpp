@@ -8,7 +8,8 @@ CController::CController()
 	, m_Stick()
 	, m_LeftHorizontal(false)
 	, m_LeftVertical(false)
-	, m_Player(nullptr)
+	, m_UnitID(UNIT_ID::NONE)
+	, m_Device(vivid::controller::DEVICE_ID::MAX)
 {
 }
 
@@ -27,14 +28,15 @@ void CController::Update(void)
 	m_Stick = GetLeftStick();
 
 	//ÉjÉÖÅ[ÉgÉâÉãÇ…Ç»Ç¡ÇΩÇÁfalse
-	if (m_Stick.x == 0.0f)
+	if (-0.1f <= m_Stick.x && m_Stick.x <= 0.1f)
 	{
 		m_LeftHorizontal = false;
 	}
-	if (m_Stick.y == 0.0f)
+	if (-0.1f <= m_Stick.y && m_Stick.y <= 0.1f)
 	{
 		m_LeftVertical = false;
 	}
+
 }
 
 void CController::Finalize(void)
@@ -66,6 +68,13 @@ bool CController::GetButtonDown(BUTTON_ID button_id)
 		break;
 	case BUTTON_ID::START:
 		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::START);
+		break;
+	case BUTTON_ID::ANY:
+		button = (vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::START)
+			|| vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::B)
+			|| vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::A)
+			|| vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::X)
+			|| vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::Y));
 		break;
 	}
 	return button;
@@ -132,12 +141,12 @@ void CController::SetControllerID(CONTROLLER_ID controller_id)
 	}
 }
 
-CPlayer* CController::GetPlayer()
+UNIT_ID CController::GetUnitID()
 {
-	return m_Player;
+	return m_UnitID;
 }
 
-void CController::SetPlayer(CPlayer* player)
+void CController::SetUnitID(UNIT_ID unit_id)
 {
-	m_Player = player;
+	m_UnitID = unit_id;
 }

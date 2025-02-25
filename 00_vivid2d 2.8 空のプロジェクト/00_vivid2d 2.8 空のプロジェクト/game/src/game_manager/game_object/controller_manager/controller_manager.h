@@ -76,6 +76,14 @@ public:
      */
     CController* GetSpecifiedButtonDownController(BUTTON_ID button_id);
 
+    using CONTROLLER_LIST = std::list<CController*>;
+
+    /*!
+     *  @brief      リストを取得
+     *  @return     コントローラーリスト
+     */
+    CONTROLLER_LIST GetList();
+
 private:
 
     /*!
@@ -104,10 +112,9 @@ private:
      */
     CControllerManager& operator=(const CControllerManager& rhs);
 
-    int             m_ControllerNum;
+    int                                             m_ControllerNum;
 
     std::list<vivid::controller::DEVICE_ID>         m_ControllerIDList;
-    using CONTROLLER_LIST = std::list<CController*>;
 
     CONTROLLER_LIST                                 m_ControllerList;
 };

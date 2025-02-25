@@ -5,13 +5,17 @@
 #include "../../../controller_manager/controller_manager.h"
 #include "../../../object_manager/object_manager.h"
 #include "../../../unit_manager/unit_manager.h"
+#include "../../../effect_manager/effect_manager.h"
+#include "../../../data_manager/data_manager.h"
 
 const   CVector3    CEntry::m_spawn_position = CVector3(0.0f, 100.0f, 0.0f);
 const   float       CEntry::m_respawn_height = -200.0f;
-const CVector3		CEntry::m_camera_position = CVector3(0, 1600.0f, -800.0f);
-const CVector3		CEntry::m_camera_direction = CVector3(0, -1.0f, 0.6f);
+const   float       CEntry::m_start_time = 30.0f;
+const CVector3		CEntry::m_camera_position = CVector3(0, 400.0f, -1600.0f);
+const CVector3		CEntry::m_camera_direction = CVector3(0, 0.0f, 0.6f);
 CEntry::CEntry(void)
     : m_UnitID(UNIT_ID::PLAYER1)
+    , m_StartTimer(m_start_time)
 {
 
 }
@@ -24,6 +28,7 @@ void CEntry::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
 
+    CEffectManager::GetInstance().Initialize();
     CCamera::GetInstance().Initialize();
     CCamera::GetInstance().SetPosition(m_camera_position);
     CCamera::GetInstance().SetDirection(m_camera_direction);
@@ -50,7 +55,16 @@ void CEntry::Initialize(SCENE_ID scene_id)
 
 void CEntry::Update(void)
 {
+    int playerNum = 0;
+    for (int i = 0; i < 4; i++)
+        if (m_PlayerArray[i] != UNIT_ID::NONE)
+            playerNum++;
+
+    //二人以上ならタイマースタート
+    if(playerNum > 1)
+        m_StartTimer.Update();
     CControllerManager& cm = CControllerManager::GetInstance();
+    CEffectManager::GetInstance().Update();
     CObjectManager& om = CObjectManager::GetInstance();
     CUnitManager& um = CUnitManager::GetInstance();
     cm.Update();
@@ -95,35 +109,53 @@ void CEntry::Update(void)
             }
         }
     }
-    CController* controller = cm.GetSpecifiedButtonDownController(BUTTON_ID::X);
+    CController* controller = cm.GetSpecifiedButtonDownController(BUTTON_ID::ANY);
     if (controller)
     {
-        if(controller->GetPlayer() == nullptr)
+        if(controller->GetUnitID() == UNIT_ID::NONE)
         {
             if (m_UnitID != UNIT_ID::NONE)
             {
-                CUnitManager::GetInstance().Create(m_UnitID, m_spawn_position, controller);
+                controller->SetUnitID(m_UnitID);
+                CUnitManager::GetInstance().Create(m_UnitID, m_spawn_position);
             }
         }
     }
-    controller = cm.GetSpecifiedButtonDownController(BUTTON_ID::Y);
-    if (controller)
+    //controller = cm.GetSpecifiedButtonDownController(BUTTON_ID::Y);
+    //if (controller)
+    //{
+    //    if(controller->GetUnitID() != UNIT_ID::NONE)
+    //    {
+    //        UNIT_ID deleteUnitID = controller->GetUnitID();
+    //        um.Delete(deleteUnitID);
+    //        controller->SetUnitID(UNIT_ID::NONE);
+    //        m_PlayerArray[(int)deleteUnitID] = UNIT_ID::NONE;
+    //    }
+    //}
+
+    //ゲーム開始
+    if (m_StartTimer.Finished())
     {
-        if(controller->GetPlayer() != nullptr)
-        {
-            UNIT_ID deleteUnitID = controller->GetPlayer()->GetUnitID();
-            um.Delete(deleteUnitID);
-            controller->GetPlayer()->SetController(nullptr);
-            controller->SetPlayer(nullptr);
-            m_PlayerArray[(int)deleteUnitID] = UNIT_ID::NONE;
-        }
+        CDataManager::GetInstance().SetCurrentPlayer(playerNum);
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
     }
     controller = cm.GetSpecifiedButtonDownController(BUTTON_ID::START);
     if (controller)
     {
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
+        bool correctFlag = true;
+        for (int i = 0; i < playerNum; i++)
+        {
+            if (m_PlayerArray[i] == UNIT_ID::NONE)
+            {
+                correctFlag = false;
+                break;
+            }
+        }
+        if (correctFlag)
+        {
+        }
     }
-
+    
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
     {
@@ -166,9 +198,6 @@ void CEntry::Update(void)
         }
     }
 
-#ifndef VIVID_DEBUG
-#endif // !_DEBUG
-
     CUnitManager::UNIT_LIST::iterator it = unitList.begin();
     //落ちても戻す
     while (it != unitList.end())
@@ -188,11 +217,13 @@ void CEntry::Update(void)
 
 void CEntry::Draw(void)
 {
+    CEffectManager::GetInstance().Draw();
     CObjectManager& om = CObjectManager::GetInstance();
     CUnitManager& um = CUnitManager::GetInstance();
     om.Draw();
     um.Draw();
-stdd:string text;
+    std::string text, timerText;
+    timerText = std::to_string((int)m_StartTimer.GetTimer());
     switch (m_UnitID)
     {
     case UNIT_ID::PLAYER1:
@@ -214,6 +245,7 @@ stdd:string text;
         break;
     }
     vivid::DrawText(30, text, vivid::Vector2::ZERO);
+    vivid::DrawText(30, timerText, vivid::Vector2(vivid::GetWindowWidth() /2.0f - vivid::GetTextWidth(30, timerText) / 2.0f, 30));
 
     for (int i = 0; i < 4; i++)
     {
@@ -227,5 +259,5 @@ void CEntry::Finalize(void)
     IScene::Finalize();
     CUIManager::GetInstance().Finalize();
     CObjectManager::GetInstance().Finalize();
-    CControllerManager::GetInstance().Finalize();
+    CEffectManager::GetInstance().Finalize();
 }

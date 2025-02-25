@@ -177,6 +177,11 @@ CController* CControllerManager::GetSpecifiedButtonDownController(BUTTON_ID butt
 }
 
 
+CControllerManager::CONTROLLER_LIST CControllerManager::GetList()
+{
+    return m_ControllerList;
+}
+
 /*
  *  コンストラクタ
  */

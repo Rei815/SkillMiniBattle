@@ -114,31 +114,6 @@ Create(UNIT_ID id, const CVector3& pos)
     return unit;
 }
 
-IUnit* CUnitManager::Create(UNIT_ID id, const CVector3& pos, CController* controller)
-{
-    IUnit* unit = nullptr;
-
-    std::string fileName = m_file_name_list[(int)id];
-    switch (id)
-    {
-    case UNIT_ID::PLAYER1:
-    case UNIT_ID::PLAYER2:
-    case UNIT_ID::PLAYER3:
-    case UNIT_ID::PLAYER4:
-        unit = new CPlayer();  break;
-    }
-
-
-    if (!unit) return nullptr;
-
-    unit->Initialize(id, pos, m_file_name_list[(int)id]);
-    m_UnitList.push_back(unit);
-    CPlayer* player = (CPlayer*)(unit);
-    player->SetController(controller);
-    controller->SetPlayer(player);
-    return unit;
-}
-
 void CUnitManager::Delete(UNIT_ID id)
 {
     if (m_UnitList.empty()) return;

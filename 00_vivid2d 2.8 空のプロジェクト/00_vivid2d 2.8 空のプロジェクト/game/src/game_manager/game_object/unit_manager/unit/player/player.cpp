@@ -46,7 +46,7 @@ CPlayer::CPlayer()
     , m_StopFlag(false)
     , m_FrictionFlag(true)
     , m_ActionFlag(true)
-    , m_Controller()
+    , m_Controller(nullptr)
     , m_Effect(nullptr)
 {
 }
@@ -61,26 +61,17 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
 
     IUnit::Initialize(id, position, file_name);
     CControllerManager& cm = CControllerManager::GetInstance();
-    //switch (id)
-    //{
-    //case UNIT_ID::PLAYER1:
-    //    m_Category = UNIT_CATEGORY::PLAYER1;
-    //    m_Controller = cm.GetController(CONTROLLER_ID::ONE);
-    //    break;
-    //case UNIT_ID::PLAYER2: 
-    //    m_Category = UNIT_CATEGORY::PLAYER2;
-    //    m_Controller = cm.GetController(CONTROLLER_ID::TWO);
-    //    break;
-    //case UNIT_ID::PLAYER3: 
-    //    m_Category = UNIT_CATEGORY::PLAYER3;
-    //    m_Controller = cm.GetController(CONTROLLER_ID::THREE);
-    //    break;
-    //case UNIT_ID::PLAYER4: 
-    //    m_Category = UNIT_CATEGORY::PLAYER4;
-    //    m_Controller = cm.GetController(CONTROLLER_ID::FOUR);
-    //    break;
-    //}
-    //m_Controller->SetPlayer(this);
+    CControllerManager::CONTROLLER_LIST controllerList = cm.GetList();
+    CControllerManager::CONTROLLER_LIST::iterator it = controllerList.begin();
+    while (it != controllerList.end())
+    {
+        if ((*it)->GetUnitID() == id)
+        {
+            m_Controller = (*it);
+            break;
+        }
+        ++it;
+    }
     m_Radius = m_radius;
     m_Height = m_height;
     m_Transform.scale = CVector3(m_model_scale, m_model_scale, m_model_scale);
@@ -163,6 +154,7 @@ CSkill* CPlayer::GetSkill()
 
 bool CPlayer::GetPlayerMoving()
 {
+    if (m_Controller == nullptr) return false;
     bool Input = false;
 
     vivid::Vector2 stick = m_Controller->GetLeftStick();

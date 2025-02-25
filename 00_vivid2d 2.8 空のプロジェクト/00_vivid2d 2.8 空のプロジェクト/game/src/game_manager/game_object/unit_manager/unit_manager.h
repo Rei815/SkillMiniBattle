@@ -47,14 +47,6 @@ public:
     IUnit*      Create(UNIT_ID id, const CVector3& pos);
 
     /*!
-     *  @brief      ユニット生成
-     *
-     *  @param[in]  id          ユニットID
-     *  @param[in]  pos         位置
-     *  @param[in]  controller  コントローラー
-     */
-    IUnit*      Create(UNIT_ID id, const CVector3& pos, CController* controller);
-    /*!
      *  @brief      ユニット削除
      *
      *  @param[in]  id          ユニットID

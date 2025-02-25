@@ -82,18 +82,18 @@ public:
     void                SetControllerID(CONTROLLER_ID controller_id);
 
     /*!
-     *  @brief      プレイヤーを取得
-     * 
-     *  @return     CPlayer*    プレイヤーのポインター
+     *  @brief      ユニットIDを取得
+     *
+     *  @return     ユニットID
      */
-    CPlayer*        GetPlayer();
+    UNIT_ID         GetUnitID();
 
     /*!
-     *  @brief      プレイヤーを設定
+     *  @brief      ユニットIDを設定
      *
-     *  @param[in]  player    プレイヤーのポインター
+     *  @param[in]  unit_id    ユニットID
      */
-    void            SetPlayer(CPlayer* player);
+    void            SetUnitID(UNIT_ID unit_id);
 
 
 private:
@@ -108,5 +108,5 @@ private:
     bool                            m_LeftHorizontal;
     bool                            m_LeftVertical;
     vivid::Vector2                  m_Stick;
-    CPlayer*                        m_Player;
+    UNIT_ID                        m_UnitID;
 };
