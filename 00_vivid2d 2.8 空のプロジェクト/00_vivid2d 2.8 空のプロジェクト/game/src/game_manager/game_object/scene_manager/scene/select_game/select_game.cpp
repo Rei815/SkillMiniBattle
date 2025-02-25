@@ -256,7 +256,8 @@ void CSelectGame::Draw(void)
     vivid::DrawText(20, "1キーでだるまさんがころんだゲーム", vivid::Vector2(0, 0));
     vivid::DrawText(20, "2キーでフォールアウトゲーム", vivid::Vector2(0, 30));
     vivid::DrawText(20, "3キーでドッジボールゲーム", vivid::Vector2(0, 60));
-    vivid::DrawText(20, std::to_string((int)m_SelectedGameID + 1), vivid::Vector2(0, 80));
+    vivid::DrawText(20, "4キーでベルトコンベアゲーム", vivid::Vector2(0, 90));
+    vivid::DrawText(20, std::to_string((int)m_SelectedGameID + 1), vivid::Vector2(0, 110));
 
 #endif // _DEBUG
 

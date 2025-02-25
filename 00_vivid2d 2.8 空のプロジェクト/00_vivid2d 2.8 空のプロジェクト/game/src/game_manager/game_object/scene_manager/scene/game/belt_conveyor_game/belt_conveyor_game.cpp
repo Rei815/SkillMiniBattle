@@ -28,6 +28,7 @@ const CVector3 CBeltConveyorGame::m_player_default_forward = CVector3(1.0f, 0.0f
 
 CBeltConveyorGame::CBeltConveyorGame(void)
 	: m_StageObject(nullptr)
+	, m_StageLight()
 {
 
 }
@@ -41,6 +42,8 @@ CBeltConveyorGame::~CBeltConveyorGame(void)
 void CBeltConveyorGame::Initialize(SCENE_ID scene_id)
 {
 	CGame::Initialize(scene_id);
+
+	m_BackGround.Initialize("data\\Textures\\belt_conveyor_bg.png");
 
 	//ステージ生成
 	m_StageObject = CObjectManager::GetInstance().Create(OBJECT_ID::BELT_CONVEYOR_STAGE_OBJECT, CTransform(m_belt_conveyor_position, CVector3(0.0f, m_belt_conveyor_rotate_y, 0.0f)));
@@ -84,8 +87,9 @@ void CBeltConveyorGame::Update(void)
 
 void CBeltConveyorGame::Draw(void)
 {
+	m_BackGround.Draw();
+	
 	CGame::Draw();
-
 }
 
 void CBeltConveyorGame::Finalize(void)
