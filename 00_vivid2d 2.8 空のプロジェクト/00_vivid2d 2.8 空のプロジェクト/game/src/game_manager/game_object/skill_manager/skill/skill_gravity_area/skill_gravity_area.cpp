@@ -4,9 +4,9 @@
 #include "../../../data_manager/data_manager.h"
 #include "../../../sound_manager/sound_manager.h"
 
-const float CSkillGravityArea::m_gravity_speed_down_rate = 0.5f;
-const float CSkillGravityArea::m_gravity_jump_down_rate = 0.5f;
-const float CSkillGravityArea::m_duration_time = 10.0f;
+const float CSkillGravityArea::m_gravity_speed_down_rate = 0.7f;
+const float CSkillGravityArea::m_gravity_jump_down_rate = 0.7f;
+const float CSkillGravityArea::m_duration_time = 7.5f;
 const float CSkillGravityArea::m_cool_time = 15.0f;
 const float CSkillGravityArea::m_gravity_area_radius = 500.0f;
 const float CSkillGravityArea::m_effect_scale = 2.0f;

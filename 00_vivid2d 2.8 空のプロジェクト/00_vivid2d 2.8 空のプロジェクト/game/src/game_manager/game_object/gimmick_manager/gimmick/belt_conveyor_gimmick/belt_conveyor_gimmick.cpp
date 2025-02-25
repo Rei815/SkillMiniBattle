@@ -5,14 +5,15 @@
 
 const float			CBeltConveyorGimmick::m_mid_belt_speed_time = 180.0f;
 
-const float			CBeltConveyorGimmick::m_default_belt_move_speed = 5.0f;
-const float			CBeltConveyorGimmick::m_min_belt_speed_rate = 1.0f;
-const float			CBeltConveyorGimmick::m_mid_belt_speed_rate = 2.0f;
-const float			CBeltConveyorGimmick::m_max_belt_speed_rate = 3.0f;
+const float			CBeltConveyorGimmick::m_default_belt_move_speed	= 5.0f;
+const float			CBeltConveyorGimmick::m_min_belt_speed_rate		= 1.0f;
+const float			CBeltConveyorGimmick::m_mid_belt_speed_rate		= 2.0f;
+const float			CBeltConveyorGimmick::m_max_belt_speed_rate		= 3.0f;
 
-const float			CBeltConveyorGimmick::m_default_obstruction_spawn_time = 2.0f;
-const float			CBeltConveyorGimmick::m_obstruction_object_scale = 0.5f;
-const CVector3		CBeltConveyorGimmick::m_obstruction_spawn_relative_pos = CVector3(0.0f, 50.0f, -1000.0f);
+const float			CBeltConveyorGimmick::m_default_obstruction_spawn_time	= 2.0f;
+const float			CBeltConveyorGimmick::m_obstruction_object_scale		= 0.5f;
+const CVector3		CBeltConveyorGimmick::m_obstruction_spawn_relative_pos	= CVector3(0.0f, 50.0f, -1000.0f);
+const float			CBeltConveyorGimmick::m_obstruction_delete_height		= -1000.0f;
 
 const float			CBeltConveyorGimmick::m_obstruction_object_fall_speed = 10.0f;
 
@@ -75,12 +76,18 @@ void CBeltConveyorGimmick::Update(void)
 	if (!m_ObstructionObjectList.empty())
 	{
 		std::list<IObject*>::iterator it = m_ObstructionObjectList.begin();
+		std::list<IObject*> DeleteObjList;
 
 		while (it != m_ObstructionObjectList.end())
 		{
 			CVector3 ObjPos = (*it)->GetPosition();
-
-			//if(ObjPos.y < )
+			
+			if ((*it)->GetPosition().y < m_obstruction_delete_height)
+			{
+				DeleteObjList.push_back(*it);
+				it++;
+				continue;
+			}
 
 			CVector3 CheckLineEndPos = ObjPos + CVector3(0.0f, 50.0f, 0.0f);
 
@@ -91,9 +98,18 @@ void CBeltConveyorGimmick::Update(void)
 			}
 			else
 			{
-				(*it)->SetPosition(ObjPos + CVector3::DOWN * m_obstruction_object_fall_speed);
+				(*it)->SetPosition(ObjPos + m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate * 0.5f) + CVector3::DOWN * m_obstruction_object_fall_speed);
+				(*it)->SetRotation((*it)->GetRotation() + CVector3(0.1f, 0.0f, 0.0f));
 			}
 
+			it++;
+		}
+
+		it = DeleteObjList.begin();
+		while (it != DeleteObjList.end())
+		{
+			m_ObstructionObjectList.remove((*it));
+			(*it)->SetActive(false);
 			it++;
 		}
 	}

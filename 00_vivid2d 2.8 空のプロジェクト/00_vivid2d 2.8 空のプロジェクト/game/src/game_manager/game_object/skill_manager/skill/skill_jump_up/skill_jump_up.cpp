@@ -1,7 +1,7 @@
 #include "skill_jump_up.h"
 #include "../../../unit_manager/unit_manager.h"
 
-const float CSkillJumpUp::m_jump_up_rate = 1.5f;
+const float CSkillJumpUp::m_jump_up_rate = 1.4f;
 
 CSkillJumpUp::CSkillJumpUp(void)
 	:CSkill(SKILL_CATEGORY::PASSIVE)

@@ -8,12 +8,12 @@
 #include "..\..\..\..\gimmick_manager\gimmick_manager.h"
 
 const float		CBeltConveyorGame::m_defeat_height			= -500.0f;
-const CVector3	CBeltConveyorGame::m_camera_position		= CVector3(0.0f, 900.0f, -1350.0f);
-const CVector3	CBeltConveyorGame::m_camera_direction		= CVector3(0.0f, -0.6f, 0.6f);
+const CVector3	CBeltConveyorGame::m_camera_position		= CVector3(0.0f, 800.0f, -1350.0f);
+const CVector3	CBeltConveyorGame::m_camera_direction		= CVector3(0.0f, -0.45f, 0.6f);
 
 const CVector3	CBeltConveyorGame::m_belt_conveyor_position	= CVector3(0.0f, -100.0f, 0.0f);
 const float		CBeltConveyorGame::m_belt_conveyor_rotate_y	= -135.0f;
-const float     CBeltConveyorGame::m_belt_conveyor_scale = 0.6f;
+const float     CBeltConveyorGame::m_belt_conveyor_scale	= 0.6f;
 
 const CVector3 CBeltConveyorGame::m_player_spawnpos_list[] =
 {
