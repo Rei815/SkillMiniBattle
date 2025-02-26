@@ -651,6 +651,9 @@ SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_MAZE skill_id)
     case SKILL_ID_MAZE::GRAVITY_AREA:
         temp = SKILL_ID::GRAVITY_AREA;
         break;
+    case SKILL_ID_MAZE::SLOW:
+        temp = SKILL_ID::SLOW;
+        break;
     case SKILL_ID_MAZE::FLOATING:
         temp = SKILL_ID::FLOATING;
         break;

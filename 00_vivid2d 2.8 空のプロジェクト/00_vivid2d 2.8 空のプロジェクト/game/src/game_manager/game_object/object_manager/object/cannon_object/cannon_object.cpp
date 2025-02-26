@@ -1,7 +1,7 @@
 #include "cannon_object.h"
 
 const std::string CCannonObject::m_model_file_name = "data\\Models\\cannon.mv1";
-const float CCannonObject::m_scale = 0.5f;
+const float CCannonObject::m_scale = 1.0f;
 
 CCannonObject::CCannonObject()
 	: IObject()
