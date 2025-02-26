@@ -15,12 +15,14 @@ const   float       CEntry::m_hold_start_time = 3.0f;
 const   float       CEntry::m_exit_time = 0.5f;
 const CVector3		CEntry::m_camera_position = CVector3(0, 400.0f, -1600.0f);
 const CVector3		CEntry::m_camera_direction = CVector3(0, 0.0f, 0.6f);
+
 CEntry::CEntry(void)
     : m_UnitID(UNIT_ID::PLAYER1)
     , m_GameStartTimer()
     , m_HoldStartTimer(m_hold_start_time)
     , m_HoldTimer()
     , m_WasPressd(false)
+    , m_GameStartGauge(nullptr)
 {
 
 }
@@ -52,9 +54,16 @@ void CEntry::Initialize(SCENE_ID scene_id)
     for (int i = 0; i < 4; i++)
     {
         m_PlayerArray[i] = UNIT_ID::NONE;
-        m_HoldTimer[i].SetUp(m_exit_time);
+        m_HoldTimer[i].SetUp(m_hold_start_time);
     }
     m_GameStartTimer.SetUp(m_start_time, CTimer::COUNT_TYPE::DOWN);
+    vivid::Vector2  GaugePos = vivid::Vector2(1200, 50);
+    float  GaugeScale = 0.3f;
+    m_GameStartGauge = (CSkillGauge*)um.Create(UI_ID::SKILL_GAUGE);
+    if (m_GameStartGauge)
+    {
+        m_GameStartGauge->SetGauge(GaugePos,GaugeScale);
+    }
 }
 
 void CEntry::Update(void)
@@ -246,6 +255,9 @@ void CEntry::CheckButtonHold(void)
         UNIT_ID unitID = buttonHoldController->GetUnitID();
         if (unitID == UNIT_ID::NONE || m_PlayerNum <= 1) return;
         m_HoldTimer[(int)unitID].Update();
+        if (m_GameStartGauge)
+            m_GameStartGauge->SetPercent((m_HoldTimer[(int)unitID].GetTimer() / m_hold_start_time) * 100.0f);
+
         if (m_HoldTimer[(int)unitID].Finished())
         {
             CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
@@ -253,6 +265,7 @@ void CEntry::CheckButtonHold(void)
         }
     }
     CController* controller = nullptr;
+    bool         resetGaugeFlag = true;
     //長押ししていないコントローラーのタイマーをリセット
     for (int i = 0; i < 4; i++)
     {
@@ -261,9 +274,12 @@ void CEntry::CheckButtonHold(void)
 
         if (!controller->GetButtonHold(BUTTON_ID::X) && unitID != UNIT_ID::NONE)
         {
+            resetGaugeFlag = false;
             m_HoldTimer[(int)controller->GetUnitID()].Reset();
         }
     }
+    if (m_GameStartGauge && resetGaugeFlag)
+        m_GameStartGauge->SetPercent(0.0f);
 }
 
 void CEntry::CheckButtonDown(void)

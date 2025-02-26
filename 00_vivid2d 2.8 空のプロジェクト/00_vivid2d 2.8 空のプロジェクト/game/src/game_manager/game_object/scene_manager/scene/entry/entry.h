@@ -6,6 +6,7 @@
 #include <list>
 #include "..\..\..\controller_manager\controller\controller.h"
 #include "..\..\..\unit_manager\unit\unit_id.h"
+#include "..\..\..\ui_manager\ui\skill_gauge\skill_gauge.h"
 class CEntry : public IScene
 {
 public:
@@ -68,4 +69,5 @@ private:
     bool                    m_WasPressdThisFrame;   //同フレーム中の押下フラグ
     bool                    m_WasPressd;            //押下フラグ
     int                     m_PlayerNum;
+    CSkillGauge*            m_GameStartGauge;
 };
