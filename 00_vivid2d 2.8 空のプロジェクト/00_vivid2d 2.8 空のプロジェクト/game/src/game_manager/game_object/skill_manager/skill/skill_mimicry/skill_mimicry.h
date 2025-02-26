@@ -44,6 +44,12 @@ protected:
     static const float m_duration_time;
     static const float m_mimicry_speed_rate;
     static const float m_effect_scale;
+    static const std::string m_model_name;
+    static const CVector3 m_model_pos;
+    static const CVector3 m_model_rot;
+    static const float m_model_scale;
 
-    IEffect* m_SkillEffect;
+    IEffect*    m_SkillEffect;
+    CModel      m_ObjModel;
+    CTransform  m_ObjTransform;
 };

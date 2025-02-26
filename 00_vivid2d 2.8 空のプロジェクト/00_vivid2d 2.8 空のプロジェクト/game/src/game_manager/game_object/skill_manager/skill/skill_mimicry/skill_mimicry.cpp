@@ -6,9 +6,15 @@ const float CSkillMimicry::m_duration_time = 5.0f;
 const float CSkillMimicry::m_mimicry_speed_rate = 0.5f;
 const float CSkillMimicry::m_effect_scale = 3.0f;
 
+const CVector3 CSkillMimicry::m_model_pos = CVector3(100.0f, 0, 0);
+const CVector3 CSkillMimicry::m_model_rot = CVector3(0, 90.0f, 0);
+const float CSkillMimicry::m_model_scale = 0.1f;
+const std::string CSkillMimicry::m_model_name = "data\\Models\\skill_mimicry_obj.mv1";
+
 CSkillMimicry::CSkillMimicry(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 	,m_SkillEffect(nullptr)
+	,m_ObjModel()
 {
 }
 
@@ -19,6 +25,11 @@ CSkillMimicry::~CSkillMimicry(void)
 void CSkillMimicry::Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
+
+	m_ObjModel.Initialize(m_model_name,CVector3::ZERO, CVector3(m_model_scale, m_model_scale, m_model_scale));
+	
+	m_ObjTransform.rotation = m_model_rot;
+	m_ObjTransform.scale = CVector3(m_model_scale, m_model_scale, m_model_scale);
 }
 
 void CSkillMimicry::Update(void)
@@ -28,27 +39,36 @@ void CSkillMimicry::Update(void)
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
-		m_Player->SetAlpha(1.0f);
+		//m_Player->SetAlpha(1.0f);
 		break;
 
 	case SKILL_STATE::ACTIVE:
-		m_Player->DecAlpha(0.5f);
+		//m_Player->DecAlpha(0.5f);
 		break;
 
 	case SKILL_STATE::COOLDOWN:
-		m_Player->RevertAlpha(1.0f);
+		//m_Player->RevertAlpha(1.0f);
 		break;
 	}
+
+	m_ObjTransform.position = m_Player->GetPosition() + m_model_pos;
+	m_ObjModel.Update(m_ObjTransform);
 }
 
 void CSkillMimicry::Draw(void)
 {
 	CSkill::Draw();
+
+	if (m_State == SKILL_STATE::ACTIVE)
+	{
+		m_ObjModel.Draw();
+	}
 }
 
 void CSkillMimicry::Finalize(void)
 {
 	CSkill::Finalize();
+	m_ObjModel.Finalize();
 }
 
 void CSkillMimicry::Action()
