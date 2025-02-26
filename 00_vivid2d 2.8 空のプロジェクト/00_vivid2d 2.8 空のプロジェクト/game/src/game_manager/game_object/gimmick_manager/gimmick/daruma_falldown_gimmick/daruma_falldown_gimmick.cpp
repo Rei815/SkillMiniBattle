@@ -86,13 +86,13 @@ void CDaruma_FallDownGimmick::Ready()//U‚è•Ô‚è•û‚ÌÝ’è
 void CDaruma_FallDownGimmick::Play()//U‚è•Ô‚é
 {
 	//­‚µ‚¾‚¯U‚è•Ô‚é
-	if (m_Object->GetRotation().y < 20)
+	if (m_Object->GetRotation().y < 40)
 	{
 		m_Transform.rotation.y += m_turn_speed;
 
-		if (20 <= m_Transform.rotation.y)
+		if (40 <= m_Transform.rotation.y)
 
-			m_Transform.rotation.y = 20;
+			m_Transform.rotation.y = 40;
 
 		m_Object->SetRotation(m_Transform.rotation);
 	}
