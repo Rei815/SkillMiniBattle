@@ -17,6 +17,7 @@
 #include "effect/skill_star_effect/skill_star_effect.h"
 #include "effect/ogre_control_effect/ogre_control_effect.h"
 #include "effect/debuff_effect/debuff_effect.h"
+#include "effect/resurrect_effect/resurrect_effect.h"
  /*
   *  インスタンスの取得
   */
@@ -243,18 +244,13 @@ IEffect* CEffectManager::CreateClass(EFFECT_ID id)
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
     case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
     case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
-    case EFFECT_ID::GRAVITY_AREA:           effect = new CGravityAreaEffect();
-      break;
-    case EFFECT_ID::STRONG_WIND:            effect = new CStrongWindEffect();
-      break;
-    case EFFECT_ID::COLLIDE:                effect = new CCollideEffect();
-      break;
-    case EFFECT_ID::SKILL_STAR:             effect = new CSkillStarEffect();
-      break;
-    case EFFECT_ID::OGRE_CONTROL:           effect = new COgreControlEffect();
-        break;
-    case EFFECT_ID::DEBUFF:                 effect = new CDebuffEffect();
-        break;
+    case EFFECT_ID::GRAVITY_AREA:           effect = new CGravityAreaEffect();      break;
+    case EFFECT_ID::STRONG_WIND:            effect = new CStrongWindEffect();       break;
+    case EFFECT_ID::COLLIDE:                effect = new CCollideEffect();          break;
+    case EFFECT_ID::SKILL_STAR:             effect = new CSkillStarEffect();        break;
+    case EFFECT_ID::OGRE_CONTROL:           effect = new COgreControlEffect();      break;
+    case EFFECT_ID::DEBUFF:                 effect = new CDebuffEffect();           break;
+    case EFFECT_ID::RESURRECT:              effect = new CResurrectEffect();        break;
     }
     return effect;
 }

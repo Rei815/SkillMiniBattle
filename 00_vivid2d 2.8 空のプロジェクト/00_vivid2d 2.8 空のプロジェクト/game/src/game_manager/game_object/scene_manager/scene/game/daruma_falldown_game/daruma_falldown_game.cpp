@@ -6,6 +6,7 @@
 #include "../../../../camera/camera.h"
 #include "../../../../unit_manager/unit/player/player.h"
 #include "../../../../unit_manager/unit/unit.h"
+#include "../../../../unit_manager/unit_manager.h"
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
 #include "../../../../sound_manager/sound_manager.h"
@@ -29,19 +30,21 @@ CDaruma_FallDownGame::CDaruma_FallDownGame(void)
 	, m_Timer()
 	, m_OgreObject(nullptr)
 	, m_GimmickOn(false)
-	,m_MovePlayer()
+	, m_StartPosition{ (CVector3(0,0,0)) }
+	, m_MovePlayer()
+	, m_TextureColor{(0x00000000)}
+	, m_TextPosition(vivid::Vector2(0,0))
 {
 }
 
 CDaruma_FallDownGame::~CDaruma_FallDownGame(void)
 {
 }
-
 void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 {
 	CGame::Initialize(scene_id);
 	m_RemainCount = CDataManager::GetInstance().GetCurrentPlayer();
-	m_CountTime = 180;
+	m_CountTime = 90;
 	m_Timer.SetUp(m_CountTime);
 
 	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
@@ -57,6 +60,7 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
 		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 100, 100 * i));
+		m_StartPosition[i] = unit->GetPosition();
 		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
 		if (Player != nullptr)
 		{
@@ -105,10 +109,10 @@ void CDaruma_FallDownGame::Draw(void)
 {
 	CGame::Draw();
 
-	/*for (int i = 0; i < 4; i++)
-	{
-		vivid::DrawText(40, m_MovePlayer[i] + "P“®‚¢‚½", vivid::Vector2(1000, (vivid::WINDOW_HEIGHT / 2) + 20 * i));
-	}*/
+	vivid::DrawTexture("data\\Textures\\1P_ogre_saw.png", vivid::Vector2(1000, 0), m_TextureColor[0]);
+	vivid::DrawTexture("data\\Textures\\2P_ogre_saw.png", vivid::Vector2(1050, 0), m_TextureColor[1]);
+	vivid::DrawTexture("data\\Textures\\3P_ogre_saw.png", vivid::Vector2(1100, 0), m_TextureColor[2]);
+	vivid::DrawTexture("data\\Textures\\4P_ogre_saw.png", vivid::Vector2(1150, 0), m_TextureColor[3]);
 }
 
 void CDaruma_FallDownGame::Finalize(void)
@@ -148,7 +152,6 @@ void CDaruma_FallDownGame::Ranking(void)
 		}
 
 		CDataManager::GetInstance().AddLastGameRanking((*temp)->GetUnitID());
-
 		LosePlayerList.erase(temp);
 	}
 
@@ -156,6 +159,23 @@ void CDaruma_FallDownGame::Ranking(void)
 	CDataManager::GetInstance().PlayerWin((UNIT_ID)m_TempFirstNum);
 
 	CGame::SetGameState(GAME_STATE::FINISH);
+}
+
+void CDaruma_FallDownGame::ResetPosition(void)
+{
+	CPlayer* ReturnPlayer = m_MovePlayer.front();
+	CVector3  pos = CVector3(0.05f,0,0);
+
+	if (ReturnPlayer != nullptr && ReturnPlayer->GetPosition().x > -1500)
+	{
+		for (float i = ReturnPlayer->GetPosition().x; i > -1500; i--)
+		{
+			ReturnPlayer->SetPosition(CVector3(ReturnPlayer->GetPosition() - pos));
+		}
+		ReturnPlayer->SetActionFlag(true);
+		ReturnPlayer = nullptr;
+		m_MovePlayer.pop_front();
+	}
 }
 
 void CDaruma_FallDownGame::Start(void)
@@ -168,6 +188,13 @@ void CDaruma_FallDownGame::Play(void)
 	CGame::Play();
 	CUnitManager& um = CUnitManager::GetInstance();
 	CDataManager& dm = CDataManager::GetInstance();
+
+	if (m_TextPosition.x > 0)
+	{
+		m_TextPosition.x -= 10;
+	}
+	else
+		m_TextPosition.x = 1100;
 
 	if (!m_GimmickOn)
 	{
@@ -201,18 +228,22 @@ void CDaruma_FallDownGame::Play(void)
 					player->SetActionFlag(false);
 					player->SetVelocity(CVector3::ZERO);
 
-
-					m_MovePlayer[i] = ((int)player->GetUnitID() + 1);
+					m_MovePlayer.push_back(player);
+					m_TextureColor[i] = 0xffffffff;
 
 					CSkill* skill = player->GetSkill();
 					if (skill->GetSkillID() == SKILL_ID::RESURRECT_DARUMA && skill->GetState() != SKILL_STATE::COOLDOWN)
 						skill->SetState(SKILL_STATE::ACTIVE);
 					else
-						player->SetPosition(CVector3(-1500, 100, 100 * i));
+					{
+						ResetPosition();
+					}
 				}
 			}
 			else
 			{
+				m_TextureColor[i] = 0x00000000;
+
 				if (player->GetPosition().x <= -1500)
 				{
 					player->SetActionFlag(true);
@@ -224,9 +255,7 @@ void CDaruma_FallDownGame::Play(void)
 					Ranking();
 				}
 			}
-
 		}
-		
 	}
 
 	if (m_Timer.Finished())
