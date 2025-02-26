@@ -60,7 +60,6 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
     CSkillManager::GetInstance().Initialize();
-    CControllerManager::GetInstance().Initialize();
 
     m_GameID = CDataManager::GetInstance().GetSelectGameID();
 
@@ -338,6 +337,7 @@ void CSelectSkill::SetCursorID(void)
 void CSelectSkill::CreateCursor(void)
 {
     CUI* ui = CUIManager::GetInstance().Create(UI_ID::SKILL_CURSOR);
+    CControllerManager& cm = CControllerManager::GetInstance();
     if (m_SkillSelectCursor != nullptr)
     {
         m_SkillCursorList.push_back(m_SkillSelectCursor);
@@ -355,8 +355,9 @@ void CSelectSkill::CreateCursor(void)
 
     m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))], m_icon_scale);
 
+    CController* controller = cm.GetController((CONTROLLER_ID)m_CursorID[m_NowCursorID_Num]);
     //コントローラーを振動させる
-    CControllerManager::GetInstance().Vibration((CONTROLLER_ID)m_NowCursorID_Num);
+    cm.Vibration((CONTROLLER_ID)controller->GetUnitID());
 
 }
 
@@ -366,23 +367,18 @@ void CSelectSkill::MoveCursor(void)
 
     m_CursorMoveTimer.Update();
     CControllerManager& cm = CControllerManager::GetInstance();
+    CControllerManager::CONTROLLER_LIST controllerList = cm.GetList();
+    CControllerManager::CONTROLLER_LIST::iterator it = controllerList.begin();
     CController* controller = nullptr;
-    switch (m_CursorID[m_NowCursorID_Num])
+    while (it != controllerList.end())
     {
-    case UNIT_ID::PLAYER1:
-        controller = cm.GetController(CONTROLLER_ID::ONE);
-        break;
-    case UNIT_ID::PLAYER2:
-        controller = cm.GetController(CONTROLLER_ID::TWO);
-        break;
-    case UNIT_ID::PLAYER3:
-        controller = cm.GetController(CONTROLLER_ID::THREE);
-        break;
-    case UNIT_ID::PLAYER4:
-        controller = cm.GetController(CONTROLLER_ID::FOUR);
-        break;
+        if ((*it)->GetUnitID() == m_CursorID[m_NowCursorID_Num])
+        {
+            controller = (*it);
+            break;
+        }
+        ++it;
     }
-
     if (m_CursorMoveTimer.Finished())
     {
         int TempPosNum = m_NowCursorPosNum;

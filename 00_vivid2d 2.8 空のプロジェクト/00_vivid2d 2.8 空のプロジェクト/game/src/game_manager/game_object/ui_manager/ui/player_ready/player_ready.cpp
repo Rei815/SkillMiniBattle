@@ -43,19 +43,18 @@ void CPlayerReady::Update(void)
 	CController* controller2 = cm.GetController(CONTROLLER_ID::TWO);
 	CController* controller3 = cm.GetController(CONTROLLER_ID::THREE);
 	CController* controller4 = cm.GetController(CONTROLLER_ID::FOUR);
-	int playerNum = (int)controller1->GetID();
 	if (controller1)
 		if (controller1->GetButtonDown(BUTTON_ID::B))
-			m_Color[0] ^= 0x007f7f7f;
+			m_Color[(int)controller1->GetUnitID()] ^= 0x007f7f7f;
 	if (controller2)
 		if (controller2->GetButtonDown(BUTTON_ID::B))
-			m_Color[1] ^= 0x007f7f7f;
+			m_Color[(int)controller2->GetUnitID()] ^= 0x007f7f7f;
 	if (controller3)
 		if (controller3->GetButtonDown(BUTTON_ID::B))
-			m_Color[2] ^= 0x007f7f7f;
+			m_Color[(int)controller3->GetUnitID()] ^= 0x007f7f7f;
 	if (controller4)
 		if (controller4->GetButtonDown(BUTTON_ID::B))
-			m_Color[3] ^= 0x007f7f7f;
+			m_Color[(int)controller4->GetUnitID()] ^= 0x007f7f7f;
 	//#if _DEBUG
 	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
 	{

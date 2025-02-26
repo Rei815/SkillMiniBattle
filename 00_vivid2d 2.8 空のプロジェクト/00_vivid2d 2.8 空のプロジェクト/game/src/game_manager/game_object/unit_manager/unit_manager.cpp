@@ -114,6 +114,23 @@ Create(UNIT_ID id, const CVector3& pos)
     return unit;
 }
 
+void CUnitManager::Delete(UNIT_ID id)
+{
+    if (m_UnitList.empty()) return;
+
+    UNIT_LIST::iterator it = m_UnitList.begin();
+
+    while (it != m_UnitList.end())
+    {
+        IUnit* unit = (IUnit*)(*it);
+        if (unit->GetUnitID() == id)
+            unit->SetActive(false);
+
+        ++it;
+
+    }
+}
+
 /*
  *  ユニットと弾のアタリ判定
  */

@@ -17,6 +17,7 @@ enum class SCENE_ID
 	DEBUGGAME,			//!< デバッグゲームシーン
 	RESULT_MINIGAME,	//!< ミニゲームリザルトシーン
 	RESULT_GAME,		//!< ミニゲームリザルトシーン
+	ENTRY,				//!< エントリーシーン
 
 
 	MAX			//!< シーンID数

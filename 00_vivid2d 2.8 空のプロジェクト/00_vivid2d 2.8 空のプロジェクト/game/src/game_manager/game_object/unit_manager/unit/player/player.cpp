@@ -46,7 +46,7 @@ CPlayer::CPlayer()
     , m_StopFlag(false)
     , m_FrictionFlag(true)
     , m_ActionFlag(true)
-    , m_Controller()
+    , m_Controller(nullptr)
     , m_Effect(nullptr)
 {
 }
@@ -61,27 +61,17 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
 
     IUnit::Initialize(id, position, file_name);
     CControllerManager& cm = CControllerManager::GetInstance();
-    switch (id)
+    CControllerManager::CONTROLLER_LIST controllerList = cm.GetList();
+    CControllerManager::CONTROLLER_LIST::iterator it = controllerList.begin();
+    while (it != controllerList.end())
     {
-    case UNIT_ID::PLAYER1:
-        m_Category = UNIT_CATEGORY::PLAYER1;
-        m_Controller = cm.GetController(CONTROLLER_ID::ONE);
-
-        break;
-    case UNIT_ID::PLAYER2: 
-        m_Category = UNIT_CATEGORY::PLAYER2;
-        m_Controller = cm.GetController(CONTROLLER_ID::TWO);
-        break;
-    case UNIT_ID::PLAYER3: 
-        m_Category = UNIT_CATEGORY::PLAYER3;
-        m_Controller = cm.GetController(CONTROLLER_ID::THREE);
-        break;
-    case UNIT_ID::PLAYER4: 
-        m_Category = UNIT_CATEGORY::PLAYER4;
-        m_Controller = cm.GetController(CONTROLLER_ID::FOUR);
-        break;
+        if ((*it)->GetUnitID() == id)
+        {
+            m_Controller = (*it);
+            break;
+        }
+        ++it;
     }
-
     m_Radius = m_radius;
     m_Height = m_height;
     m_Transform.scale = CVector3(m_model_scale, m_model_scale, m_model_scale);
@@ -152,6 +142,11 @@ CController* CPlayer::GetController()
     return m_Controller;
 }
 
+void CPlayer::SetController(CController* controller)
+{
+    m_Controller = controller;
+}
+
 CSkill* CPlayer::GetSkill()
 {
     return m_Skill;
@@ -159,25 +154,25 @@ CSkill* CPlayer::GetSkill()
 
 bool CPlayer::GetPlayerMoving()
 {
+    if (m_Controller == nullptr) return false;
     bool Input = false;
 
+    vivid::Vector2 stick = m_Controller->GetLeftStick();
+
     //¶ˆÚ“®
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+    if ((stick != vivid::Vector2::ZERO && stick.x < -0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         Input = true;
 
     //‰EˆÚ“®
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
-        Input = true;
+    if ((stick != vivid::Vector2::ZERO && stick.x > 0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+        Input = true; 
 
     //ãˆÚ“®
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+    if ((stick != vivid::Vector2::ZERO && stick.y < -0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
         Input = true;
 
     //‰ºˆÚ“®
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
-        Input = true;
-
-    if (m_Controller->GetLeftHorizontal() || m_Controller->GetLeftVertical())
+    if ((stick != vivid::Vector2::ZERO && stick.y > 0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
         Input = true;
 
     //ƒWƒƒƒ“ƒv
@@ -305,6 +300,7 @@ void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, fl
 }
 void CPlayer::Control(void)
 {
+    if (m_Controller == nullptr) return;
     vivid::Vector2 stick = m_Controller->GetLeftStick();
     //¶ˆÚ“®
     if ((stick != vivid::Vector2::ZERO && stick.x < -0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))

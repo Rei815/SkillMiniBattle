@@ -24,6 +24,7 @@
 #include "scene\result_minigame\result_minigame.h"
 #include "scene\result_game\result_game.h"
 #include "scene\game\maze_game\maze_game.h"
+#include "scene\entry\entry.h"
 #include "../ui_manager/ui_manager.h"
 const int               CSceneManager::m_fade_speed = 10;
 const float             CSceneManager::m_wait_time = 0.0f;
@@ -252,19 +253,20 @@ CSceneManager::CreateScene(SCENE_ID id)
 
     switch (id)
     {
-    case SCENE_ID::TITLE:               scene = new CTitle();                   break;
-    case SCENE_ID::SELECTMODE:          scene = new CSelectMode();              break;
-    case SCENE_ID::SELECTPLAYER:        scene = new CSelectPlayer();            break;
-    case SCENE_ID::SELECTSKILL:         scene = new CSelectSkill();             break;
-    case SCENE_ID::SELECTGAME:          scene = new CSelectGame();              break;
-    case SCENE_ID::FALLGAME:            scene = new CFallOutGame();             break;
-    case SCENE_ID::DARUMAFALLDOWN:      scene = new CDaruma_FallDownGame();     break;
-    case SCENE_ID::DODGEBALLGAME:       scene = new CDodgeBallGame();           break;
-    case SCENE_ID::BELTCONVEYORGAME:    scene = new CBeltConveyorGame();        break;
-    case SCENE_ID::DEBUGGAME:           scene = new CDebugGame();               break;
-    case SCENE_ID::RESULT_MINIGAME:     scene = new CResultMiniGame();          break;
-    case SCENE_ID::RESULT_GAME:         scene = new CResultGame();              break;
-    case SCENE_ID::MAZE_GAME:           scene = new CMazeGame();                break;
+    case SCENE_ID::TITLE:               scene = new CTitle();               break;
+    case SCENE_ID::SELECTMODE:          scene = new CSelectMode();          break;
+    case SCENE_ID::SELECTPLAYER:        scene = new CSelectPlayer();        break;
+    case SCENE_ID::SELECTSKILL:         scene = new CSelectSkill();         break;
+    case SCENE_ID::SELECTGAME:          scene = new CSelectGame();          break;
+    case SCENE_ID::FALLGAME:            scene = new CFallOutGame();         break;
+    case SCENE_ID::DARUMAFALLDOWN:      scene = new CDaruma_FallDownGame(); break;
+    case SCENE_ID::DODGEBALLGAME:       scene = new CDodgeBallGame();       break;
+    case SCENE_ID::BELTCONVEYORGAME:    scene = new CBeltConveyorGame();    break;
+    case SCENE_ID::DEBUGGAME:           scene = new CDebugGame();           break;
+    case SCENE_ID::RESULT_MINIGAME:     scene = new CResultMiniGame();      break;
+    case SCENE_ID::RESULT_GAME:         scene = new CResultGame();          break;
+    case SCENE_ID::MAZE_GAME:           scene = new CMazeGame();            break;
+    case SCENE_ID::ENTRY:               scene = new CEntry();               break;
     }
     m_SceneList.push_back(scene);
     

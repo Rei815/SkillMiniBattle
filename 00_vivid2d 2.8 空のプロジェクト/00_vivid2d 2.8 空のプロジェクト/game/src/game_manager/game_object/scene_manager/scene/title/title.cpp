@@ -43,20 +43,17 @@ void CTitle::Initialize(SCENE_ID scene_id)
     IScene* previousScene = (*CSceneManager::GetInstance().GetList().begin());
 
     //このシーンが作られた際にタイトルからなのかセレクトモードシーンから作られたかで動きを変える
-    if (previousScene->GetSceneID() == SCENE_ID::SELECTPLAYER)
-    {
-        m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() * 1.5));
-        m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);
-    }
-    else if (previousScene->GetSceneID() == SCENE_ID::TITLE)
+    //if (previousScene->GetSceneID() == SCENE_ID::SELECTPLAYER)
+    //{
+    //    m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() * 1.5));
+    //    m_SceneUIParent->SetState(CSceneUIParent::STATE::BACK_ONE);
+    //}
+    /*else */if (previousScene->GetSceneID() == SCENE_ID::TITLE)
     {
         m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, vivid::GetWindowHeight() / 2));
         m_SceneUIParent->SetState(CSceneUIParent::STATE::WAIT);
     }
-    CControllerManager& cm = CControllerManager::GetInstance();
-    cm.Initialize();
-    CController* controller_1 = cm.GetController(CONTROLLER_ID::ONE);
-    controller_1->Vibration();
+    CControllerManager::GetInstance().Initialize();
 }
 
 void CTitle::Update(void)
@@ -75,8 +72,8 @@ void CTitle::Update(void)
         m_Color = 0xff000000;
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
 
-        CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTPLAYER);
-        m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+        //m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::ENTRY);
 
     }
 
@@ -103,5 +100,6 @@ void CTitle::Draw(void)
 void CTitle::Finalize(void)
 {
     IScene::Finalize();
-    CUIManager::GetInstance().Delete(m_SceneUIParent);
+    //CUIManager::GetInstance().Delete(m_SceneUIParent);
+    CUIManager::GetInstance().Finalize();
 }

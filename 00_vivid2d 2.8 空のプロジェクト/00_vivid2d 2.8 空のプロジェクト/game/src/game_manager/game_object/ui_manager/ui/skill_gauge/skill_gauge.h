@@ -55,8 +55,8 @@ private:
     static const int                m_width;            //!< •
     static const vivid::Rect        m_rect;             //!< “Ç‚Ýž‚Ý”ÍˆÍ
     static const vivid::Vector2     m_anchor;           //!< Šî€“_
-    static const float              m_default_scale;            //!< Šgk
-    static const unsigned int       m_background_color;
+    static const float              m_default_scale;    //!< Šgk
+    static const unsigned int       m_background_color; 
 
     static const std::string        m_file_name;
     static const double             m_start_percent;

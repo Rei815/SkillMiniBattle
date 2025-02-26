@@ -47,6 +47,13 @@ public:
     IUnit*      Create(UNIT_ID id, const CVector3& pos);
 
     /*!
+     *  @brief      ユニット削除
+     *
+     *  @param[in]  id          ユニットID
+     */
+    void      Delete(UNIT_ID id);
+
+    /*!
      *  @brief      ユニットと弾とのアタリ判定
      *
      *  @param[in]  bullet  弾クラス
