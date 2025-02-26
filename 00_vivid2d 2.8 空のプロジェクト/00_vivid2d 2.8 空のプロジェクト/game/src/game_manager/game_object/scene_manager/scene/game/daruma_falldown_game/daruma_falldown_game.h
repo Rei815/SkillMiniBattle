@@ -63,6 +63,7 @@ private:
     static const float              m_move_speed;
     static const CVector3           m_player_default_forward;   //プレイヤーのスポーン時の正面方向
     static const CVector3           m_goal_position;
+    static const CVector3           m_reset_speed;
 
     IObject* m_OgreObject;
     CTimer                          m_Timer;
