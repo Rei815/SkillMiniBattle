@@ -9,7 +9,7 @@ const float		CSkillResurrectBelt::m_effect_scale = 2.0f;
 
 CSkillResurrectBelt::CSkillResurrectBelt(void)
 	:CSkill(SKILL_CATEGORY::PASSIVE)
-	, m_Effect(nullptr)
+	, m_ResurrectEffect(nullptr)
 	, m_SkillEffect(nullptr)
 
 {
@@ -50,10 +50,13 @@ Update(void)
 	case SKILL_STATE::ACTIVE:
 		CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
 		m_Player->SetPosition(m_resurrect_position);
+
 		if (m_SkillEffect == nullptr)
 		{
 			m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+			m_ResurrectEffect = CEffectManager::GetInstance().Create(EFFECT_ID::RESURRECT, CVector3().ZERO, CVector3(), m_effect_scale);
 			m_SkillEffect->SetParent(m_Player);
+			m_ResurrectEffect->SetParent(m_Player);
 		}
 		m_State = SKILL_STATE::COOLDOWN;
 		break;
@@ -108,5 +111,10 @@ ActionEnd(void)
 	{
 		m_SkillEffect->SetActive(false);
 		m_SkillEffect = nullptr;
+	}
+	if (m_ResurrectEffect != nullptr)
+	{
+		m_ResurrectEffect->SetActive(false);
+		m_ResurrectEffect = nullptr;
 	}
 }

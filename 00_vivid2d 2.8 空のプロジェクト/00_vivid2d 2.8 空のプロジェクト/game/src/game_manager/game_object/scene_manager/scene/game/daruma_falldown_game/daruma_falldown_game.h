@@ -1,6 +1,8 @@
 #pragma once
 
 #include "..\game.h"
+#include "../../../../unit_manager/unit/player/player.h"
+
 
 class CDaruma_FallDownGame : public CGame
 {
@@ -29,9 +31,14 @@ public:
     void        Finalize(void);
 
     /*!
- *  @brief      解放
- */
+     *  @brief      ゲーム終了、リザルト画面へ
+     */
     void        Ranking(void);
+
+    /*!
+     *  @brief      ゲーム終了、リザルト画面へ
+     */
+    void        ResetPosition(void);
 
 private:
     /*!
@@ -60,10 +67,13 @@ private:
     IObject* m_OgreObject;
     CTimer                          m_Timer;
     CVector3                        m_PlayerPosition[4];
+    CVector3                        m_StartPosition[4];
     int                             m_RemainCount;
     int                             m_TempFirstNum;
     int                             m_CountTime;
+    int                             m_TextureColor[4];
     float                           m_TempFirstDis;
     bool                            m_GimmickOn;
-    int                             m_MovePlayer[4];
+    std::list<CPlayer*>             m_MovePlayer;
+    vivid::Vector2                  m_TextPosition;
 };

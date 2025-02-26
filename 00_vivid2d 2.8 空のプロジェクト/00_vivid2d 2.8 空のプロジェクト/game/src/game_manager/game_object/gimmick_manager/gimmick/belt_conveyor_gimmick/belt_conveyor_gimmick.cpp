@@ -7,8 +7,8 @@ const float			CBeltConveyorGimmick::m_mid_belt_speed_time = 60.0f;
 
 const float			CBeltConveyorGimmick::m_default_belt_move_speed	= 5.0f;
 const float			CBeltConveyorGimmick::m_min_belt_speed_rate		= 1.0f;
-const float			CBeltConveyorGimmick::m_mid_belt_speed_rate		= 2.0f;
-const float			CBeltConveyorGimmick::m_max_belt_speed_rate		= 3.0f;
+const float			CBeltConveyorGimmick::m_mid_belt_speed_rate		= 3.0f;
+const float			CBeltConveyorGimmick::m_max_belt_speed_rate		= 5.0f;
 
 const float			CBeltConveyorGimmick::m_default_obstruction_spawn_time	= 3.0f;
 

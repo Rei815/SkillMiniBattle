@@ -24,4 +24,5 @@ enum class EFFECT_ID
     SKILL_STAR,             //!< スキル発動時の共通エフェクト
     OGRE_CONTROL,           //!< 鬼操作のエフェクト
     DEBUFF,                 //!< デバフエフェクト
+    RESURRECT,              //!< 復活エフェクト
 };

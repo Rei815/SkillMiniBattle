@@ -43,6 +43,7 @@ protected:
     static const float m_effect_scale;
 
     IEffect*            m_SkillEffect;
+    IEffect*            m_ResurrectEffect;
     CVector3            m_Resurrect_Position;
     bool                m_EffectFlag;
 };

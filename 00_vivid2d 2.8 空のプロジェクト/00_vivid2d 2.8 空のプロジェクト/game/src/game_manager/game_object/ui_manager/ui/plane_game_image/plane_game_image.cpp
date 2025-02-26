@@ -12,7 +12,7 @@ const std::string       CPlaneGameImage::m_file_names[] =
 	"data\\Textures\\plane_ui_daruma.png",
 	"data\\Textures\\plane_ui_fall_out.png",
 	"data\\Textures\\plane_ui_dodge_ball.png",
-	"data\\Textures\\plane_ui_daruma.png", 
+	"data\\Textures\\plane_ui_belt_conveyor.png", 
 	"data\\Textures\\plane_ui_daruma.png", 
 	"data\\Textures\\plane_ui_daruma.png", 
 	"data\\Textures\\plane_ui_daruma.png"

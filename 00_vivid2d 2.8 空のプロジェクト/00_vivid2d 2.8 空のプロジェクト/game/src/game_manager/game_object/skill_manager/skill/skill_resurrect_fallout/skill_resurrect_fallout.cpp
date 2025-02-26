@@ -10,7 +10,7 @@ const CVector3	CSkillResurrectFallout::m_initial_position = CVector3();
 
 CSkillResurrectFallout::CSkillResurrectFallout(void)
 	:CSkill(SKILL_CATEGORY::PASSIVE)
-	, m_Effect(nullptr)
+	, m_ResurrectEffect(nullptr)
 	, m_SkillEffect(nullptr)
 
 {
@@ -58,7 +58,9 @@ Update(void)
 				resurrectPos.y += m_resurrect_height;
 				m_Player->SetPosition(resurrectPos);
 				m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+				m_ResurrectEffect = CEffectManager::GetInstance().Create(EFFECT_ID::RESURRECT, CVector3().ZERO, CVector3(), m_effect_scale);
 				m_SkillEffect->SetParent(m_Player);
+				m_ResurrectEffect->SetParent(m_Player);
 
 				m_State = SKILL_STATE::COOLDOWN;
 				break;
@@ -125,5 +127,10 @@ ActionEnd(void)
 	{
 		m_SkillEffect->SetActive(false);
 		m_SkillEffect = nullptr;
+	}
+	if (m_ResurrectEffect != nullptr)
+	{
+		m_ResurrectEffect->SetActive(false);
+		m_ResurrectEffect = nullptr;
 	}
 }
