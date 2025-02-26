@@ -44,5 +44,5 @@ protected:
     static const float      m_effect_scale;
 
     IEffect*                m_SkillEffect;
-    IEffect*                m_Effect;
+    IEffect*                m_ResurrectEffect;
 };

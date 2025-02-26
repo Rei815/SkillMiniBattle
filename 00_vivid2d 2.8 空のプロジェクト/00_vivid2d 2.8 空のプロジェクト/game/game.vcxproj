@@ -182,6 +182,7 @@
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\floating_effect\floating_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\gravity_area_effect\gravity_area_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\ogre_control_effect\ogre_control_effect.cpp" />
+    <ClCompile Include="src\game_manager\game_object\effect_manager\effect\resurrect_effect\resurrect_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\skill_star_effect\skill_star_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\belt_conveyor_gimmick\belt_conveyor_gimmick.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\belt_conveyor_obstruction_object\belt_conveyor_obstruction_object.cpp" />
@@ -358,6 +359,7 @@
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\debuff_effect\debuff_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\gravity_area_effect\gravity_area_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\ogre_control_effect\ogre_control_effect.h" />
+    <ClInclude Include="src\game_manager\game_object\effect_manager\effect\resurrect_effect\resurrect_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\skill_star_effect\skill_star_effect.h" />
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\belt_conveyor_gimmick\belt_conveyor_gimmick.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object\belt_conveyor_obstruction_object\belt_conveyor_obstruction_object.h" />
