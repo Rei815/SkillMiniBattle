@@ -66,6 +66,11 @@ public:
 	*/
 	void SetPosition(const CVector3& position);
 
+	/*!
+	*  @brief  ‰ñ“]İ’è
+	*/
+	void SetRotation(const CVector3& rotation);
+
 
 	/*!
 	 *  @brief      Šg‘åİ’è

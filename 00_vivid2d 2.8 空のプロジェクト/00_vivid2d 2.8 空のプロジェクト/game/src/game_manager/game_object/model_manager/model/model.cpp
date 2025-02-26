@@ -28,7 +28,7 @@ void CModel::Initialize(const std::string& file_name, const CVector3& position, 
 
 void CModel::Initialize(const std::string& file_name, const CVector3& position, const CVector3& scale)
 {
-	CTransform TempTr = m_Transform;
+	CTransform TempTr;
 	TempTr.position = position;
 	Initialize(file_name, TempTr, scale);
 }
@@ -126,6 +126,11 @@ int CModel::GetModelHandle() const
 void CModel::SetPosition(const CVector3& position)
 {
 	m_Transform.position = position;
+}
+
+void CModel::SetRotation(const CVector3& rotation)
+{
+	m_Transform.rotation == rotation;
 }
 
 void CModel::SetScale(float scale)
