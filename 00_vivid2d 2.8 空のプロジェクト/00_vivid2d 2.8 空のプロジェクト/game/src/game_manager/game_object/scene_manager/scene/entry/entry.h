@@ -7,6 +7,7 @@
 #include "..\..\..\controller_manager\controller\controller.h"
 #include "..\..\..\unit_manager\unit\unit_id.h"
 #include "..\..\..\ui_manager\ui\skill_gauge\skill_gauge.h"
+#include "..\..\..\ui_manager\ui\game_bg\game_bg.h"
 class CEntry : public IScene
 {
 public:
@@ -70,4 +71,5 @@ private:
     bool                    m_WasPressd;            //‰Ÿ‰ºƒtƒ‰ƒO
     int                     m_PlayerNum;
     CSkillGauge*            m_GameStartGauge;
+    CGameBG                 m_BackGround;
 };
