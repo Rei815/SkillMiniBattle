@@ -95,7 +95,7 @@ void CResultMiniGame::Update(void)
 
         }
     }
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || controller_1->GetButtonDown(BUTTON_ID::ANY)))
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || cm.GetAnyControllerButtonDown(BUTTON_ID::ANY)))
     {
 
         SCENE_ID sceneID = SCENE_ID::SELECTGAME;
@@ -113,9 +113,6 @@ void CResultMiniGame::Update(void)
 
 void CResultMiniGame::Draw(void)
 {
-    vivid::DrawText(20, "ミニゲームリザルト", vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
-    vivid::DrawText(20, "Xで次へ", vivid::Vector2(vivid::WINDOW_WIDTH / 2.0f, 0));
-
 }
 
 void CResultMiniGame::Finalize(void)

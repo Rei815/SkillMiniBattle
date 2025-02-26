@@ -11,7 +11,7 @@
 const   CVector3    CEntry::m_spawn_position = CVector3(0.0f, 100.0f, 0.0f);
 const   float       CEntry::m_respawn_height = -200.0f;
 const   float       CEntry::m_start_time = 30.0f;
-const   float       CEntry::m_hold_start_time = 3.0f;
+const   float       CEntry::m_hold_start_time = 2.5f;
 const   float       CEntry::m_exit_time = 0.5f;
 const CVector3		CEntry::m_camera_position = CVector3(0, 400.0f, -1600.0f);
 const CVector3		CEntry::m_camera_direction = CVector3(0, 0.0f, 0.6f);
@@ -256,7 +256,10 @@ void CEntry::CheckButtonHold(void)
         if (unitID == UNIT_ID::NONE || m_PlayerNum <= 1) return;
         m_HoldTimer[(int)unitID].Update();
         if (m_GameStartGauge)
-            m_GameStartGauge->SetPercent((m_HoldTimer[(int)unitID].GetTimer() / m_hold_start_time) * 100.0f);
+        {
+            float percent = (m_HoldTimer[(int)unitID].GetTimer() / (m_hold_start_time - m_exit_time)) * 100.0f;
+            m_GameStartGauge->SetPercent(percent);
+        }
 
         if (m_HoldTimer[(int)unitID].Finished())
         {
@@ -265,17 +268,23 @@ void CEntry::CheckButtonHold(void)
         }
     }
     CController* controller = nullptr;
-    bool         resetGaugeFlag = true;
+    bool         resetGaugeFlag = false;
     //長押ししていないコントローラーのタイマーをリセット
     for (int i = 0; i < 4; i++)
     {
         controller = cm.GetController((CONTROLLER_ID)i);
         UNIT_ID unitID = controller->GetUnitID();
 
+        //プレイヤーを操作できるコントローラーが長押ししていない
         if (!controller->GetButtonHold(BUTTON_ID::X) && unitID != UNIT_ID::NONE)
         {
-            resetGaugeFlag = false;
+            resetGaugeFlag = true;
             m_HoldTimer[(int)controller->GetUnitID()].Reset();
+        }
+        if (controller->GetButtonHold(BUTTON_ID::X) && unitID != UNIT_ID::NONE)
+        {
+            resetGaugeFlag = false;
+            break;
         }
     }
     if (m_GameStartGauge && resetGaugeFlag)

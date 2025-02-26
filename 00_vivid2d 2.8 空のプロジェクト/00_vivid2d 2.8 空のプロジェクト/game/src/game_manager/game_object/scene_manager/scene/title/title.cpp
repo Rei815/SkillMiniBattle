@@ -3,6 +3,7 @@
 #include "..\..\..\game_object.h"
 #include "../../../sound_manager/sound_manager.h"
 #include "../../../controller_manager/controller_manager.h"
+#include "../../../data_manager/data_manager.h"
 
 const int CTitle::m_fade_speed = 2;
 CTitle::CTitle(void)
@@ -29,6 +30,7 @@ void CTitle::Initialize(SCENE_ID scene_id)
     IScene::Initialize(scene_id);
 
     CCamera::GetInstance().Initialize();
+    CDataManager::GetInstance().Initialize();
     CUIManager& um = CUIManager::GetInstance();
     CUIManager::UI_LIST uiList = um.GetList();
     CSoundManager::GetInstance().Play_BGM(BGM_ID::READY_BGM, true);
