@@ -178,6 +178,11 @@ void CEntry::Update(void)
             m_PlayerArray[3] = UNIT_ID::NONE;
         }
     }
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+    {
+        CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
+    }
 #endif // _DEBUG
 
 
