@@ -76,6 +76,20 @@ public:
      */
     CController* GetSpecifiedButtonDownController(BUTTON_ID button_id);
 
+    /*!
+     *  @brief      指定のボタンを離したコントローラーを取得
+     *  @param[in]  player    プレイヤーのポインター
+     *  @return     CPlayer*    プレイヤーのポインター
+     */
+    CController* GetSpecifiedButtonUpController(BUTTON_ID button_id);
+
+    /*!
+     *  @brief      指定のボタンを押しているコントローラーを取得
+     *  @param[in]  player    プレイヤーのポインター
+     *  @return     CPlayer*    プレイヤーのポインター
+     */
+    CController* GetSpecifiedButtonHoldController(BUTTON_ID button_id);
+
     using CONTROLLER_LIST = std::list<CController*>;
 
     /*!

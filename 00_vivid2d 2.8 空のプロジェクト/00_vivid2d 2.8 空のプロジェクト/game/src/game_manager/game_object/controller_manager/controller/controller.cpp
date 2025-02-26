@@ -80,6 +80,68 @@ bool CController::GetButtonDown(BUTTON_ID button_id)
 	return button;
 }
 
+bool CController::GetButtonUp(BUTTON_ID button_id)
+{
+	bool button = false;
+	switch (button_id)
+	{
+	case BUTTON_ID::B:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::B);
+		break;
+	case BUTTON_ID::A:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::A);
+		break;
+	case BUTTON_ID::X:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::X);
+		break;
+	case BUTTON_ID::Y:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::Y);
+		break;
+	case BUTTON_ID::START:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::START);
+		break;
+	case BUTTON_ID::ANY:
+		button = (vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::START)
+			|| vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::B)
+			|| vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::A)
+			|| vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::X)
+			|| vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::Y));
+		break;
+	}
+	return button;
+}
+
+bool CController::GetButtonHold(BUTTON_ID button_id)
+{
+	bool button = false;
+	switch (button_id)
+	{
+	case BUTTON_ID::B:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::B);
+		break;
+	case BUTTON_ID::A:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::A);
+		break;
+	case BUTTON_ID::X:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::X);
+		break;
+	case BUTTON_ID::Y:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::Y);
+		break;
+	case BUTTON_ID::START:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::START);
+		break;
+	case BUTTON_ID::ANY:
+		button = (vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::START)
+			|| vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::B)
+			|| vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::A)
+			|| vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::X)
+			|| vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::Y));
+		break;
+	}
+	return button;
+}
+
 vivid::Vector2 CController::GetLeftStick()
 {
 	return vivid::controller::GetAnalogStickLeft(m_Device);

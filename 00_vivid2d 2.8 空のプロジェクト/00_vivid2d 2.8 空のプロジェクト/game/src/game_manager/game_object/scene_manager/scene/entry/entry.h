@@ -40,13 +40,32 @@ public:
     void Finalize(void);
 
 private:
-    std::list<CController*> m_PlayerControllerList;
-    static const CVector3   m_spawn_position;
-    static const float      m_respawn_height;
-    static const float      m_start_time;
-    static const CVector3   m_camera_position;
-    static const CVector3   m_camera_direction;
-    UNIT_ID                 m_UnitID;
-    UNIT_ID                 m_PlayerArray[4];
-    CTimer                  m_StartTimer;
+    /*!
+     *  @brief      ボタンの長押しをチェック
+     */
+    void CheckButtonHold(void);
+    /*!
+     *  @brief      ボタンの押下をチェック
+     */
+    void CheckButtonDown(void);
+    /*!
+     *  @brief      ボタンを離したかチェック
+     */
+    void CheckButtonUp(void);
+
+    static const CVector3   m_spawn_position;       //生成位置
+    static const float      m_respawn_height;       //リスポーンさせる高さ
+    static const float      m_start_time;           //開始までの時間
+    static const float      m_hold_start_time;      //長押しで開始する秒数
+    static const float      m_exit_time;            //退室までに必要な秒数
+    static const CVector3   m_camera_position;      //カメラの位置
+    static const CVector3   m_camera_direction;     //カメラの向き
+    UNIT_ID                 m_UnitID;               //次に生成するプレイヤーのID
+    UNIT_ID                 m_PlayerArray[4];       //存在しているプレイヤーのID
+    CTimer                  m_GameStartTimer;       //ゲーム開始までのタイマー
+    CTimer                  m_HoldStartTimer;       //長押しで開始するタイマー
+    CTimer                  m_HoldTimer[4];         //長押ししている時間
+    bool                    m_WasPressdThisFrame;   //同フレーム中の押下フラグ
+    bool                    m_WasPressd;            //押下フラグ
+    int                     m_PlayerNum;
 };

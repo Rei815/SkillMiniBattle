@@ -34,7 +34,17 @@ public:
     /*!
      *  @brief  ボタンが押されたかどうか
      */
-    bool        GetButtonDown(BUTTON_ID input_id);
+    bool        GetButtonDown(BUTTON_ID button_id);
+
+    /*!
+     *  @brief  ボタンが離されたかどうか
+     */
+    bool        GetButtonUp(BUTTON_ID button_id);
+
+    /*!
+     *  @brief  ボタンが押されているかどうか
+     */
+    bool        GetButtonHold(BUTTON_ID button_id);
 
     /*!
      *  @brief  左スティックの状態を取得
