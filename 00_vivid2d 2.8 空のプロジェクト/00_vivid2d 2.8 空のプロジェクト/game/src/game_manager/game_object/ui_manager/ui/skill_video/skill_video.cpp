@@ -7,7 +7,7 @@ const vivid::Vector2    CSkillVideo::m_default_position = vivid::Vector2(vivid::
 
 const std::string CSkillVideo::m_skill_video_file_name[] =
 {
-		"data\\video_test.mp4",
+		"data\\video\\skill_video_move_up.mp4",
 		"data\\video_test.mp4",
 		"data\\skill_movie_floating_test.mp4",
 		"data\\video_test.mp4",
