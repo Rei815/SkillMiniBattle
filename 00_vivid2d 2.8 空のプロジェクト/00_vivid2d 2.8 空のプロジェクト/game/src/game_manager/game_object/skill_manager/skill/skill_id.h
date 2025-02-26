@@ -48,6 +48,7 @@ enum class SKILL_ID_FALLOUT
 	STOMP,
 	RESURRECT,
 	HIDE_TOPIC,
+
 	MAX,
 
 };
