@@ -65,6 +65,21 @@ CControllerManager::Update(void)
 void
 CControllerManager::Finalize(void)
 {
+    if (m_ControllerList.empty()) return;
+
+    CONTROLLER_LIST::iterator it = m_ControllerList.begin();
+
+    while (it != m_ControllerList.end())
+    {
+        (*it)->Finalize();
+
+        delete (*it);
+
+        ++it;
+    }
+
+    m_ControllerList.clear();
+
 }
 
 void CControllerManager::SetControllerNum(int num)
@@ -144,6 +159,62 @@ void CControllerManager::Vibration(CONTROLLER_ID controller_id)
 
 }
 
+CController* CControllerManager::GetSpecifiedButtonDownController(BUTTON_ID button_id)
+{
+    if (m_ControllerList.empty()) return nullptr;
+
+    CONTROLLER_LIST::iterator it = m_ControllerList.begin();
+
+    while (it != m_ControllerList.end())
+    {
+        if ((*it)->GetButtonDown(button_id) == true)
+            return (*it);
+
+        ++it;
+    }
+
+    return nullptr;
+}
+
+CController* CControllerManager::GetSpecifiedButtonUpController(BUTTON_ID button_id)
+{
+    if (m_ControllerList.empty()) return nullptr;
+
+    CONTROLLER_LIST::iterator it = m_ControllerList.begin();
+
+    while (it != m_ControllerList.end())
+    {
+        if ((*it)->GetButtonUp(button_id) == true)
+            return (*it);
+
+        ++it;
+    }
+
+    return nullptr;
+}
+
+CController* CControllerManager::GetSpecifiedButtonHoldController(BUTTON_ID button_id)
+{
+    if (m_ControllerList.empty()) return nullptr;
+
+    CONTROLLER_LIST::iterator it = m_ControllerList.begin();
+
+    while (it != m_ControllerList.end())
+    {
+        if ((*it)->GetButtonHold(button_id) == true)
+            return (*it);
+
+        ++it;
+    }
+
+    return nullptr;
+}
+
+
+CControllerManager::CONTROLLER_LIST CControllerManager::GetList()
+{
+    return m_ControllerList;
+}
 
 /*
  *  コンストラクタ

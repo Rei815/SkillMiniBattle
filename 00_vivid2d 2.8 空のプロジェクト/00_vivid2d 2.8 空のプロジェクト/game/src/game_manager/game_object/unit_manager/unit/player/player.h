@@ -9,6 +9,7 @@
 #include "../../../controller_manager/controller/controller.h"
 
 class CSkill;
+class CController;
 
 class CPlayer: public IUnit
 {
@@ -47,8 +48,20 @@ public:
  */
     void                SetActionFlag(bool flag);
 
-    CController*        GetController(void);
+    /*!
+     *  @brief      コントローラーの取得
+     *
+     *  @return     コントローラーのポインタ
+     */
+
+    CController*    GetController(void);
     
+    /*!
+     *  @brief      コントローラーの設定
+     *
+     *  @param[in]  controller    コントローラーのポインタ
+     */
+    void            SetController(CController* controller);
     /*!
      *  @brief      スキルの取得
      *

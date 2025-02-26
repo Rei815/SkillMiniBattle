@@ -2,7 +2,9 @@
 #include "controller_id.h"
 #include <vivid.h>
 #include "button_id.h"
+#include "../../unit_manager/unit/player/player.h"
 
+class CPlayer;
 class CController
 {
 public:
@@ -32,7 +34,17 @@ public:
     /*!
      *  @brief  ボタンが押されたかどうか
      */
-    bool        GetButtonDown(BUTTON_ID input_id);
+    bool        GetButtonDown(BUTTON_ID button_id);
+
+    /*!
+     *  @brief  ボタンが離されたかどうか
+     */
+    bool        GetButtonUp(BUTTON_ID button_id);
+
+    /*!
+     *  @brief  ボタンが押されているかどうか
+     */
+    bool        GetButtonHold(BUTTON_ID button_id);
 
     /*!
      *  @brief  左スティックの状態を取得
@@ -43,7 +55,7 @@ public:
 
     /*!
      *  @brief  左スティックが左右に傾いたかのフラグを取得
-     * 
+     *          自動でtrueにならない
      *  @return bool          左右に傾いたか
      */
     bool        GetLeftHorizontal();
@@ -57,7 +69,7 @@ public:
 
     /*!
      *  @brief  左スティックが上下に傾いたかのフラグを取得
-     * 
+     *          自動でtrueにならない
      *  @return bool          上下に傾いたか
      */
     bool        GetLeftVertical();
@@ -78,6 +90,22 @@ public:
     void                Vibration();
 
     void                SetControllerID(CONTROLLER_ID controller_id);
+
+    /*!
+     *  @brief      ユニットIDを取得
+     *
+     *  @return     ユニットID
+     */
+    UNIT_ID         GetUnitID();
+
+    /*!
+     *  @brief      ユニットIDを設定
+     *
+     *  @param[in]  unit_id    ユニットID
+     */
+    void            SetUnitID(UNIT_ID unit_id);
+
+
 private:
 
     static const float              m_vibration_power;
@@ -90,4 +118,5 @@ private:
     bool                            m_LeftHorizontal;
     bool                            m_LeftVertical;
     vivid::Vector2                  m_Stick;
+    UNIT_ID                        m_UnitID;
 };

@@ -8,6 +8,8 @@ CController::CController()
 	, m_Stick()
 	, m_LeftHorizontal(false)
 	, m_LeftVertical(false)
+	, m_UnitID(UNIT_ID::NONE)
+	, m_Device(vivid::controller::DEVICE_ID::MAX)
 {
 }
 
@@ -26,14 +28,15 @@ void CController::Update(void)
 	m_Stick = GetLeftStick();
 
 	//ƒjƒ…[ƒgƒ‰ƒ‹‚É‚È‚Á‚½‚çfalse
-	if (m_Stick.x == 0.0f)
+	if (-0.1f <= m_Stick.x && m_Stick.x <= 0.1f)
 	{
 		m_LeftHorizontal = false;
 	}
-	if (m_Stick.y == 0.0f)
+	if (-0.1f <= m_Stick.y && m_Stick.y <= 0.1f)
 	{
 		m_LeftVertical = false;
 	}
+
 }
 
 void CController::Finalize(void)
@@ -56,6 +59,84 @@ bool CController::GetButtonDown(BUTTON_ID button_id)
 		break;
 	case BUTTON_ID::A:
 		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::A);
+		break;
+	case BUTTON_ID::X:
+		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::X);
+		break;
+	case BUTTON_ID::Y:
+		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::Y);
+		break;
+	case BUTTON_ID::START:
+		button = vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::START);
+		break;
+	case BUTTON_ID::ANY:
+		button = (vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::START)
+			|| vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::B)
+			|| vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::A)
+			|| vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::X)
+			|| vivid::controller::Trigger(m_Device, vivid::controller::BUTTON_ID::Y));
+		break;
+	}
+	return button;
+}
+
+bool CController::GetButtonUp(BUTTON_ID button_id)
+{
+	bool button = false;
+	switch (button_id)
+	{
+	case BUTTON_ID::B:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::B);
+		break;
+	case BUTTON_ID::A:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::A);
+		break;
+	case BUTTON_ID::X:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::X);
+		break;
+	case BUTTON_ID::Y:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::Y);
+		break;
+	case BUTTON_ID::START:
+		button = vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::START);
+		break;
+	case BUTTON_ID::ANY:
+		button = (vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::START)
+			|| vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::B)
+			|| vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::A)
+			|| vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::X)
+			|| vivid::controller::Released(m_Device, vivid::controller::BUTTON_ID::Y));
+		break;
+	}
+	return button;
+}
+
+bool CController::GetButtonHold(BUTTON_ID button_id)
+{
+	bool button = false;
+	switch (button_id)
+	{
+	case BUTTON_ID::B:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::B);
+		break;
+	case BUTTON_ID::A:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::A);
+		break;
+	case BUTTON_ID::X:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::X);
+		break;
+	case BUTTON_ID::Y:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::Y);
+		break;
+	case BUTTON_ID::START:
+		button = vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::START);
+		break;
+	case BUTTON_ID::ANY:
+		button = (vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::START)
+			|| vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::B)
+			|| vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::A)
+			|| vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::X)
+			|| vivid::controller::Button(m_Device, vivid::controller::BUTTON_ID::Y));
 		break;
 	}
 	return button;
@@ -120,4 +201,14 @@ void CController::SetControllerID(CONTROLLER_ID controller_id)
 		m_JoyPad = DX_INPUT_PAD4;
 		break;
 	}
+}
+
+UNIT_ID CController::GetUnitID()
+{
+	return m_UnitID;
+}
+
+void CController::SetUnitID(UNIT_ID unit_id)
+{
+	m_UnitID = unit_id;
 }

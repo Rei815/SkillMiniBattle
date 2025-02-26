@@ -5,5 +5,6 @@ enum class BUTTON_ID
 	B,
 	X,
 	Y,
+	START,
 	ANY,
 };

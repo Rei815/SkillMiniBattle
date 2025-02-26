@@ -182,7 +182,6 @@ IObject* CObjectManager::CheckHitObject(CPlayer* player)
 
         float radius = player->GetRadius();
         float offset = radius / 2.0f;
-        const int check_point_count = 4;
         for (int i = 0; i < 9; ++i)
         {
             CVector3 unit_pos = player->GetPosition();
