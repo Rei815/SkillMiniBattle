@@ -48,6 +48,7 @@ protected:
     
     IEffect* m_SkillEffect;
     IEffect* m_DebuffEffect;
+    std::list<IEffect*> m_EffectList;
     CDataManager&       dm = CDataManager::GetInstance();
     CUnitManager&       um = CUnitManager::GetInstance();
 };
