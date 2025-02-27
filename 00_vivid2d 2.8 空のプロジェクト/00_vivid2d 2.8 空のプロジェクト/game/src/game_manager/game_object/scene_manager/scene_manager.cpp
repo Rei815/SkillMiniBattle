@@ -81,11 +81,19 @@ CSceneManager::Update(void)
 
     CEffectManager& em = CEffectManager::GetInstance();
     CControllerManager& cm = CControllerManager::GetInstance();
+#ifdef _DEBUG
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB) && GetLastSceneID() != SCENE_ID::TITLE && m_State == STATE::SCENE_UPDATE)
+    {
+        Pause();
+    }
+
+#endif // DEBUG
+
     if(m_PauseController == nullptr)
         m_PauseController = cm.GetSpecifiedButtonDownController(BUTTON_ID::START);
     if (m_PauseController == nullptr) return;
-    m_PauseController->Update();
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB) || m_PauseController->GetButtonDown(BUTTON_ID::START)) && GetLastSceneID() != SCENE_ID::TITLE && m_State == STATE::SCENE_UPDATE)
+        m_PauseController->Update();
+    if (m_PauseController->GetButtonDown(BUTTON_ID::START) && GetLastSceneID() != SCENE_ID::TITLE && m_State == STATE::SCENE_UPDATE)
     {
         Pause();
     }

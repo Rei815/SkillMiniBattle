@@ -5,6 +5,12 @@
 class CEntryXButton : public CUI
 {
 public:
+    enum class STATE
+    {
+        WAIT,
+        FADE_IN,
+        FADE_OUT,
+    };
     /*!
      *  @brief      コンストラクタ
      */
@@ -42,9 +48,12 @@ private:
     static const vivid::Rect        m_rect;         //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;       //!< 基準点
     static const vivid::Vector2     m_scale;        //!< 拡縮
+    static const float              m_wait_time;    //!< 待機時間
 
     unsigned int                    m_Color[2];
     static const int                m_fade_speed;
     int                             m_FadeSpeed;
     int                             m_UINum;
+    CTimer                          m_WaitTimer;
+    STATE                           m_State;
 };

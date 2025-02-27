@@ -389,9 +389,7 @@ void CSelectSkill::MoveCursor(void)
         {
             m_NowCursorPosNum++;
             if (m_NowCursorPosNum >= m_CursorPosNumList.size())
-            {
                 m_NowCursorPosNum = 0;
-            }
         }
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A))
         {

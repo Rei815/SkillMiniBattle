@@ -4,7 +4,8 @@
 const int    CEntryXButton::m_width = 800;
 const int    CEntryXButton::m_height = 130;
 const vivid::Vector2    CEntryXButton::m_position = vivid::Vector2(0, 0);
-const int    CEntryXButton::m_fade_speed = 2;
+const int               CEntryXButton::m_fade_speed = 4;
+const float             CEntryXButton::m_wait_time = 0.8f;
 
 /*
  *  コンストラクタ
@@ -15,6 +16,8 @@ CEntryXButton(UI_ID id)
     , m_Color()
     , m_FadeSpeed(m_fade_speed)
     , m_UINum(0)
+    , m_WaitTimer(m_wait_time)
+    , m_State(STATE::WAIT)
 {
 }
 
@@ -36,6 +39,7 @@ Initialize(void)
     CUI::Initialize(m_position);
     m_Color[0] = 0xffffffff;
     m_Color[1] = 0x00ffffff;
+    
 }
 
 /*
@@ -47,11 +51,34 @@ Update(void)
 {
     CUI::Update();
     unsigned int alpha = vivid::alpha::GetAlpha(m_Color[m_UINum]);
-    if (alpha == 255u || alpha == 0u)
-        m_FadeSpeed = -m_FadeSpeed;
-    if (alpha == 0u)
-        m_UINum ^= 1;
-    m_Color[m_UINum] = vivid::alpha::AdjustAlpha(m_Color[m_UINum], m_FadeSpeed);
+    switch (m_State)
+    {
+    case CEntryXButton::STATE::WAIT:
+        m_WaitTimer.Update();
+        if (m_WaitTimer.Finished())
+        {
+            m_State = STATE::FADE_OUT;
+
+            m_WaitTimer.Reset();
+        }
+
+        break;
+    case CEntryXButton::STATE::FADE_IN:
+        m_Color[m_UINum] = vivid::alpha::AdjustAlpha(m_Color[m_UINum], m_fade_speed);
+        if (alpha == 255u)
+            m_State = STATE::WAIT;
+
+        break;
+    case CEntryXButton::STATE::FADE_OUT:
+        m_Color[m_UINum] = vivid::alpha::AdjustAlpha(m_Color[m_UINum], -m_fade_speed);
+        if (alpha == 0u)
+        {
+            m_State = STATE::FADE_IN;
+            m_UINum ^= 1;
+        }
+
+        break;
+    }
 
 }
 

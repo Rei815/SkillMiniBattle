@@ -78,6 +78,15 @@ Update(void)
     }
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
     {
+        CSceneManager& sm = CSceneManager::GetInstance();
+
+        if (m_UINum == 0)
+            sm.Pause();
+        else if (m_UINum == 1)
+        {
+            sm.SetPauseFlag(false);
+            sm.ChangeScene(SCENE_ID::TITLE);
+        }
 
     }
 
