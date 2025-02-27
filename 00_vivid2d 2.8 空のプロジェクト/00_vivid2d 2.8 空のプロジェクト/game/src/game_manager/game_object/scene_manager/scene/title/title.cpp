@@ -39,11 +39,8 @@ void CTitle::Initialize(SCENE_ID scene_id)
     CUIManager::UI_LIST uiList = um.GetList();
     CSoundManager::GetInstance().Play_BGM(BGM_ID::READY_BGM, true);
 
-    if (uiList.size() == 0)
-    {
-        um.Initialize();
-        um.Create(UI_ID::TITLE_LOGO);
-    }
+    um.Initialize();
+    um.Create(UI_ID::TITLE_LOGO);
     um.Create(UI_ID::TITLE_BUTTON);
 
     IScene* previousScene = (*CSceneManager::GetInstance().GetList().begin());
