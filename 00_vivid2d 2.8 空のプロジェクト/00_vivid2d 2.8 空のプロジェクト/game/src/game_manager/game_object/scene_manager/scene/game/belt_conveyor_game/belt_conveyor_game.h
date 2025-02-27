@@ -1,7 +1,6 @@
 #pragma once
 
 #include "..\game.h"
-#include "..\..\..\..\light\light.h"
 
 class CBeltConveyorGame : public CGame
 {
@@ -70,6 +69,6 @@ private:
     static const float      m_belt_conveyor_rotate_y;
     static const float      m_belt_conveyor_scale;
 
-    CLight                  m_StageLight;
     IObject*                m_StageObject;
+
 };

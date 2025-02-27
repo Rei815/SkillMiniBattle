@@ -10,10 +10,10 @@ const std::string		CPlayerJoin::m_file_names[] = {
 };
 const int               CPlayerJoin::m_width = 164;
 const int               CPlayerJoin::m_height = 69;
-const vivid::Vector2    CPlayerJoin::m_offset = vivid::Vector2(100.0f, 0.0f);
-const vivid::Vector2    CPlayerJoin::m_position = vivid::Vector2(800.0f, 600.0f);
+const vivid::Vector2    CPlayerJoin::m_offset = vivid::Vector2(0.0f, 100.0f);
+const vivid::Vector2    CPlayerJoin::m_position = vivid::Vector2(1100.0f, 150.0f);
 const vivid::Rect       CPlayerJoin::m_rect = vivid::Rect{ 0, 0, m_width, m_height };
-const vivid::Vector2    CPlayerJoin::m_scale = vivid::Vector2(0.5f, 0.7f);
+const vivid::Vector2    CPlayerJoin::m_scale = vivid::Vector2(1.0f, 1.2f);
 const vivid::Vector2    CPlayerJoin::m_anchor = vivid::Vector2(m_width / 2.0f, m_height / 2.0f);
 const unsigned int		CPlayerJoin::m_color_dark = 0xff808080;
 const unsigned int		CPlayerJoin::m_color_light = 0xffffffff;
@@ -44,7 +44,7 @@ void CPlayerJoin::Update(void)
 
 void CPlayerJoin::Draw(void)
 {
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
 	{
 		vivid::DrawTexture(m_file_names[i], m_Position + (m_offset * i), m_Color[i], m_rect, m_anchor, m_scale);
 	}

@@ -16,7 +16,7 @@ const vivid::Vector2    CPause::m_anchor = vivid::Vector2((m_width * m_scale.x) 
  */
 CPause::
 CPause(UI_ID id)
-    : CUI(m_width, m_height, id)
+    : CUI(m_width, m_height, id, 2)
     , m_UINum(0)
 {
 }

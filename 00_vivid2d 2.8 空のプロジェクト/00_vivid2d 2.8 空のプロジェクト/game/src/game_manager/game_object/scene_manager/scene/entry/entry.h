@@ -74,4 +74,5 @@ private:
     CSkillGauge*            m_GameStartGauge;
     CGameBG                 m_BackGround;
     CPlayerJoin*            m_PlayerJoinUI;
+    bool                    m_GameStartFlag;
 };

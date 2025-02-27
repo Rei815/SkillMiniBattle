@@ -29,7 +29,6 @@ const CVector3 CBeltConveyorGame::m_player_default_forward = CVector3(1.0f, 0.0f
 
 CBeltConveyorGame::CBeltConveyorGame(void)
 	: m_StageObject(nullptr)
-	, m_StageLight()
 {
 
 }
@@ -74,6 +73,8 @@ void CBeltConveyorGame::Initialize(SCENE_ID scene_id)
 	}
 
 	CSkillManager::GetInstance().SetSkill();
+	CTransform transform = CTransform();
+
 }
 
 void CBeltConveyorGame::Update(void)
@@ -89,7 +90,7 @@ void CBeltConveyorGame::Update(void)
 void CBeltConveyorGame::Draw(void)
 {
 	m_BackGround.Draw();
-	
+
 	CGame::Draw();
 }
 

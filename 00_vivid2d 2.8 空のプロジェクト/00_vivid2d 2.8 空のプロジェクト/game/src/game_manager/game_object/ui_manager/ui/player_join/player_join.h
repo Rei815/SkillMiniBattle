@@ -39,7 +39,8 @@ private:
     static const int                m_width;            //!< 幅
     static const vivid::Vector2     m_offset;           //!< 画像同士の幅
     static const vivid::Vector2     m_position;         //!< 位置
-    static const unsigned int       m_color[];          //!< 色
+    static const unsigned int       m_color_dark;       //!< 色
+    static const unsigned int       m_color_light;      //!< 色
 
     static const vivid::Rect        m_rect;             //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;           //!< 基準点

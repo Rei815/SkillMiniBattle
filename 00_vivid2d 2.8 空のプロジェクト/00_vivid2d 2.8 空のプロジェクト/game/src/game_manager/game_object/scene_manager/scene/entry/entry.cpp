@@ -24,6 +24,7 @@ CEntry::CEntry(void)
     , m_WasPressd(false)
     , m_GameStartGauge(nullptr)
     , m_BackGround(UI_ID::GAME_BG)
+    , m_GameStartFlag(false)
 {
 
 }
@@ -91,12 +92,22 @@ void CEntry::Update(void)
     um.Update();
 
     m_WasPressdThisFrame = false;
+    m_GameStartFlag = true;
 
     m_PlayerNum = 0;
     for (int i = 0; i < 4; i++)
+    {
         if (m_PlayerArray[i] != UNIT_ID::NONE)
             m_PlayerNum++;
-
+    }
+    for (int i = 0; i < m_PlayerNum; i++)
+    {
+        if (m_PlayerArray[i] != (UNIT_ID)i)
+        {
+            m_GameStartFlag = false;
+            break;
+        }
+    }
     //二人以上ならカウントダウンする
     if (m_PlayerNum > 1)
         m_GameStartTimer.Update();
@@ -284,14 +295,14 @@ void CEntry::CheckButtonHold(void)
             return;
         }
         m_HoldTimer[(int)unitID].Update();
-        if (m_GameStartGauge)
+        if (m_GameStartGauge && m_GameStartFlag)
         {
             float percent = (m_HoldTimer[(int)unitID].GetTimer() - m_exit_time) / (m_hold_start_time - m_exit_time) * 100.0f;
             //退室可能な0.5秒まではゲージを表示しない
             m_GameStartGauge->SetPercent(percent);
         }
 
-        if (m_HoldTimer[(int)unitID].Finished())
+        if (m_HoldTimer[(int)unitID].Finished() && m_GameStartFlag)
         {
             CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
