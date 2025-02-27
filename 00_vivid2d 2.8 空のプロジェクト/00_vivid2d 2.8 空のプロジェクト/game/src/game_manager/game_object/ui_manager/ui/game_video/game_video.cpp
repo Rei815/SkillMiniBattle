@@ -8,7 +8,7 @@ const vivid::Vector2    CGameVideo::m_position = vivid::Vector2(80, 130);
 //GAME_ID‚Æ“¯‚¶•À‚Ñ‚É‚·‚é
 const std::string CGameVideo::m_file_name[] =
 {
-		"data\\Video\\game_video_daruma_fall_down_test.mp4",
+		"data\\Video\\game_video_daruma_fall_down.mp4",
 		"data\\Video\\game_video_fallout.mp4",
 		"data\\Video\\game_video_dodge_ball.mp4",
 		"data\\Video\\game_video_belt_conveyor.mp4",

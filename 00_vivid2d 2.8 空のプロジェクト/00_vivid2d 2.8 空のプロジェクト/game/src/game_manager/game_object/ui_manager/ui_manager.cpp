@@ -38,6 +38,7 @@
 #include "ui/concentration_line/concentration_line.h"
 #include "ui/result_winner/result_winner.h"
 #include "ui/entry_x_button/entry_x_button.h"
+#include "ui/player_join/player_join.h"
 #include "..\scene_manager\scene_manager.h"
  /*
   *  インスタンスの取得
@@ -354,6 +355,8 @@ CUI* CUIManager::CreateClass(UI_ID id)
         ui = new CResultWinner(id);           break;
     case UI_ID::ENTRY_X_BUTTON:
         ui = new CEntryXButton(id);           break;
+    case UI_ID::PLAYER_JOIN:
+        ui = new CPlayerJoin(id);           break;
     }
 
     return ui;
