@@ -66,6 +66,16 @@ void CEntry::Initialize(SCENE_ID scene_id)
         m_GameStartGauge->SetGauge(GaugePos,GaugeScale);
     }
     um.Create(UI_ID::ENTRY_X_BUTTON);
+
+    CUI* TempUI = um.Create(UI_ID::PLAYER_JOIN);
+    m_PlayerJoinUI = dynamic_cast<CPlayerJoin*>(TempUI);
+
+    //キャストチェック（念のため）
+    if (m_PlayerJoinUI == nullptr)
+    {
+        TempUI->SetActive(false);
+        TempUI = nullptr;
+    }
 }
 
 void CEntry::Update(void)
@@ -326,6 +336,7 @@ void CEntry::CheckButtonDown(void)
                 m_WasPressd = true;
                 buttonDownController->SetUnitID(m_UnitID);
                 CUnitManager::GetInstance().Create(m_UnitID, m_spawn_position);
+                m_PlayerJoinUI->SetPlayer(m_UnitID, true);
             }
         }
     }
@@ -355,6 +366,7 @@ void CEntry::CheckButtonUp(void)
             um.Delete(deleteUnitID);
             buttonUpController->SetUnitID(UNIT_ID::NONE);
             m_PlayerArray[(int)deleteUnitID] = UNIT_ID::NONE;
+            m_PlayerJoinUI->SetPlayer(deleteUnitID, false);
         }
     }
 

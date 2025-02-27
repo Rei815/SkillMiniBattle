@@ -45,4 +45,5 @@ enum class UI_ID
     CONCENTRATION_LINE,
     RESULT_WINNER,
     ENTRY_X_BUTTON,
+    PLAYER_JOIN,
 };

@@ -225,6 +225,7 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\minigame_manual\minigame_manual.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\minigame_title\minigame_title.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\notice\notice.cpp" />
+    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_join\player_join.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\result_winner\result_winner.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\text_manual\text_manual.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\text_overview\text_overview.cpp" />
@@ -400,6 +401,7 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\minigame_manual\minigame_manual.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\minigame_title\minigame_title.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\notice\notice.h" />
+    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_join\player_join.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\result_winner\result_winner.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\text_manual\text_manual.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\text_overview\text_overview.h" />
