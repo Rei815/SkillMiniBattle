@@ -234,36 +234,36 @@ void CEntry::Draw(void)
     CUnitManager& um = CUnitManager::GetInstance();
     om.Draw();
     um.Draw();
-    std::string text, timerText;
-    timerText = std::to_string((int)m_GameStartTimer.GetTimer());
-    switch (m_UnitID)
-    {
-    case UNIT_ID::PLAYER1:
-        text = "éüÇÕPLAYER1";
-        break;
-    case UNIT_ID::PLAYER2:
-        text = "éüÇÕPLAYER2";
-        break;
-    case UNIT_ID::PLAYER3:
-        text = "éüÇÕPLAYER3";
+    //std::string text, timerText;
+    //timerText = std::to_string((int)m_GameStartTimer.GetTimer());
+    //switch (m_UnitID)
+    //{
+    //case UNIT_ID::PLAYER1:
+    //    text = "éüÇÕPLAYER1";
+    //    break;
+    //case UNIT_ID::PLAYER2:
+    //    text = "éüÇÕPLAYER2";
+    //    break;
+    //case UNIT_ID::PLAYER3:
+    //    text = "éüÇÕPLAYER3";
 
-        break;
-    case UNIT_ID::PLAYER4:
-        text = "éüÇÕPLAYER4";
+    //    break;
+    //case UNIT_ID::PLAYER4:
+    //    text = "éüÇÕPLAYER4";
 
-        break;
-    case UNIT_ID::NONE:
-        text = "ç≈ëÂêlêî";
-        break;
-    }
-    vivid::DrawText(30, text, vivid::Vector2::ZERO);
-    vivid::DrawText(30, timerText, vivid::Vector2(vivid::GetWindowWidth() /2.0f - vivid::GetTextWidth(30, timerText) / 2.0f, 30));
+    //    break;
+    //case UNIT_ID::NONE:
+    //    text = "ç≈ëÂêlêî";
+    //    break;
+    //}
+    //vivid::DrawText(30, text, vivid::Vector2::ZERO);
+    //vivid::DrawText(30, timerText, vivid::Vector2(vivid::GetWindowWidth() /2.0f - vivid::GetTextWidth(30, timerText) / 2.0f, 30));
 
-    for (int i = 0; i < 4; i++)
-    {
-        std::string _text = std::to_string((int)m_PlayerArray[i]);
-        vivid::DrawText(30,_text, vivid::Vector2(0, 50 + (30* i)));
-    }
+    //for (int i = 0; i < 4; i++)
+    //{
+    //    std::string _text = std::to_string((int)m_PlayerArray[i]);
+    //    vivid::DrawText(30,_text, vivid::Vector2(0, 50 + (30* i)));
+    //}
 }
 
 void CEntry::Finalize(void)
