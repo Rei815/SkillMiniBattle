@@ -61,6 +61,7 @@ public:
     SCENE_STATE     GetSceneState();
 
     void            SetSceneState(SCENE_STATE state);
+
 protected:
 
     /*!
@@ -77,4 +78,5 @@ protected:
     bool        m_ActiveFlag;
     SCENE_ID    m_SceneID;
     SCENE_STATE m_State;
+
 };

@@ -2,19 +2,18 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-#include "..\..\..\controller_manager\controller\controller.h"
-class CPause : public CUI
+class CEntryXButton : public CUI
 {
 public:
     /*!
      *  @brief      コンストラクタ
      */
-    CPause(UI_ID id);
+    CEntryXButton(UI_ID id);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CPause(void);
+    ~CEntryXButton(void);
 
     /*!
      *  @brief      初期化
@@ -36,7 +35,6 @@ public:
      */
     void        Finalize(void);
 
-    void        SetPauseController(CController* controller);
 private:
     static const vivid::Vector2     m_position;     //!< 位置
     static const int                m_height;       //!< 高さ
@@ -44,10 +42,9 @@ private:
     static const vivid::Rect        m_rect;         //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;       //!< 基準点
     static const vivid::Vector2     m_scale;        //!< 拡縮
-    static const vivid::Vector2     m_offset;       //!< 拡縮
+
     unsigned int                    m_Color[2];
-    CController*                    m_PauseController;
+    static const int                m_fade_speed;
+    int                             m_FadeSpeed;
     int                             m_UINum;
-    vivid::Vector2                  m_Anchor[2];
-    vivid::Vector2                  m_Scale[2];
 };

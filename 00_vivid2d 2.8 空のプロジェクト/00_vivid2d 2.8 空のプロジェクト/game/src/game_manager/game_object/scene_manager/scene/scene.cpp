@@ -44,7 +44,6 @@ IScene::Initialize(SCENE_ID scene_id)
 void
 IScene::Update(void)
 {
-
 }
 
 /*

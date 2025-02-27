@@ -37,6 +37,8 @@
 #include "ui/text_manual/text_manual.h"
 #include "ui/concentration_line/concentration_line.h"
 #include "ui/result_winner/result_winner.h"
+#include "ui/entry_x_button/entry_x_button.h"
+#include "..\scene_manager\scene_manager.h"
  /*
   *  インスタンスの取得
   */
@@ -72,7 +74,8 @@ CUIManager::Update(void)
     while (it != m_UIList.end())
     {
         CUI* ui = (CUI*)(*it);
-        ui->Update();
+        if(ui->GetUI_ID() == UI_ID::PAUSE || !CSceneManager::GetInstance().Pausing())
+            ui->Update();
         SortList();
         if (!ui->GetActive())
         {
@@ -349,6 +352,8 @@ CUI* CUIManager::CreateClass(UI_ID id)
         ui = new CConcentrationLine(id);           break;
     case UI_ID::RESULT_WINNER:
         ui = new CResultWinner(id);           break;
+    case UI_ID::ENTRY_X_BUTTON:
+        ui = new CEntryXButton(id);           break;
     }
 
     return ui;

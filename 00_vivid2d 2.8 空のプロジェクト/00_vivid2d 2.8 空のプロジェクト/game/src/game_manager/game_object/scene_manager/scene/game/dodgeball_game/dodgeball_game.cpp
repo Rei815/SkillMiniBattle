@@ -13,6 +13,7 @@
 
 
 #include "../../../../gimmick_manager/gimmick/fall_gimmick/fall_gimmick.h"
+#include "../../../scene_manager.h"
 
 // 大砲の位置
 // 上下左右の4方向 × 各方向に5つずつ ＝ 20こ
@@ -121,7 +122,7 @@ void CDodgeBallGame::Update(void)
 {
 	CGame::Update();
 
-	if (!m_PauseFlag)
+	if (!CSceneManager::GetInstance().Pausing())
 	{
 		CCamera::GetInstance().Update();
 		CLauncher::GetInstance().Update();
@@ -159,7 +160,7 @@ void CDodgeBallGame::Play(void)
 	CGame::Play();
 
 	//ポーズだったら処理をスキップ
-	if (m_PauseFlag)
+	if (CSceneManager::GetInstance().Pausing())
 		return;
 	
 	if (m_CannonCount < m_max_cannnon_count)

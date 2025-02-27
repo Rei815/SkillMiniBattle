@@ -66,13 +66,6 @@ public:
      */
     void            SetGameState(GAME_STATE state);
 
-    /*!
-     *  @brief      ポーズフラグ取得
-     *
-     *  @return     ポーズフラグ
-     */
-    bool            GetPauseFlag(void);
-
 protected:
 
     /*!
@@ -111,7 +104,6 @@ protected:
 
     CTimer          m_WaitTimer;    //!< 待機時間のタイマー
     bool            m_CountFlag;    //!< カウントダウンのフラグ
-    bool            m_PauseFlag;    //!< ポーズフラグ
     std::string     m_DebugText;    //!< デバッグ用
     bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用
     bool            m_FinishFlag;

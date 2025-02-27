@@ -15,9 +15,11 @@
 #include"scene\scene_id.h"
 #include <list>
 #include "..\..\..\utility\utility.h"
+#include "..\controller_manager\controller\controller.h"
 #include"scene\game\game.h"
 
 class IScene;
+class CController;
 
 /*!
  *  @class      CSceneManager
@@ -92,19 +94,18 @@ public:
 
     SCENE_LIST  GetList();
 
-    ///*!
-    // *  @brief      現在のシーンを取得
-    // *
-    // *  @return     現在のシーン
-    // */
-    //IScene* GetScene(SCENE_ID scene_id);
-
     /*!
-     *  @brief      現在アクティブのゲームシーンを取得
+     *  @brief      ポーズ中か
      *
-     *  @return     現在アクティブのゲームシーン
+     *  @return     ポーズフラグ
      */
-    CGame*          GetGameScene();
+    bool            Pausing(void);
+    /*!
+     *  @brief      ポーズフラグ設定
+     *
+     *  @return     ポーズフラグ
+     */
+    void            SetPauseFlag(bool active);
 
 
     ///*!
@@ -114,6 +115,7 @@ public:
     // */
     SCENE_ID GetLastSceneID(void);
 
+    void Pause();
 private:
     /*!
      *  @brief      コンストラクタ
@@ -169,7 +171,7 @@ private:
     void        SceneChange();
 
     /*!
-     *  @brief      シーン変更
+     *  @brief      シーン取得
      */
     IScene*     GetScene(SCENE_ID scene_id);
 
@@ -197,5 +199,7 @@ private:
     unsigned int                m_FadeColor;
     int                         m_FadeSpeed;
     CTimer                      m_Timer;
+    bool                        m_PauseFlag;    //!< ポーズフラグ
+    CController*                m_PauseController;
 
 };

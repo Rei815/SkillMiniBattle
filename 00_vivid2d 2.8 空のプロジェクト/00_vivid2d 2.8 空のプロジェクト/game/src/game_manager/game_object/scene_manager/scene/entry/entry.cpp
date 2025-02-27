@@ -11,8 +11,8 @@
 const   CVector3    CEntry::m_spawn_position = CVector3(0.0f, 100.0f, 0.0f);
 const   float       CEntry::m_respawn_height = -200.0f;
 const   float       CEntry::m_start_time = 30.0f;
-const   float       CEntry::m_hold_start_time = 3.0f;
-const   float       CEntry::m_exit_time = 0.5f;
+const   float       CEntry::m_hold_start_time = 2.0f;
+const   float       CEntry::m_exit_time = 0.3f;
 const CVector3		CEntry::m_camera_position = CVector3(0, 400.0f, -1600.0f);
 const CVector3		CEntry::m_camera_direction = CVector3(0, 0.0f, 0.6f);
 
@@ -23,6 +23,7 @@ CEntry::CEntry(void)
     , m_HoldTimer()
     , m_WasPressd(false)
     , m_GameStartGauge(nullptr)
+    , m_BackGround(UI_ID::GAME_BG)
 {
 
 }
@@ -43,7 +44,7 @@ void CEntry::Initialize(SCENE_ID scene_id)
     CUIManager& um = CUIManager::GetInstance();
     CUIManager::UI_LIST uiList = um.GetList();
     um.Initialize();
-    //um.Create(UI_ID::TITLE_LOGO);
+    m_BackGround.Initialize("data\\Textures\\dodge_ball_bg.jpg");
 
     CControllerManager& cm = CControllerManager::GetInstance();
     om.Initialize();
@@ -64,10 +65,13 @@ void CEntry::Initialize(SCENE_ID scene_id)
     {
         m_GameStartGauge->SetGauge(GaugePos,GaugeScale);
     }
+    um.Create(UI_ID::ENTRY_X_BUTTON);
 }
 
 void CEntry::Update(void)
 {
+    IScene::Update();
+    m_BackGround.Update();
     CControllerManager& cm = CControllerManager::GetInstance();
     CEffectManager::GetInstance().Update();
     CObjectManager& om = CObjectManager::GetInstance();
@@ -84,7 +88,7 @@ void CEntry::Update(void)
             m_PlayerNum++;
 
     //二人以上ならカウントダウンする
-    if(m_PlayerNum > 1)
+    if (m_PlayerNum > 1)
         m_GameStartTimer.Update();
     CUnitManager::UNIT_LIST unitList = um.GetUnitList();
     CUnitManager::UNIT_LIST entryList = unitList;
@@ -127,12 +131,12 @@ void CEntry::Update(void)
 
     CheckButtonDown();
 
-    //ゲーム開始
-    if (m_GameStartTimer.Finished())
-    {
-        CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
-    }
+    ////ゲーム開始
+    //if (m_GameStartTimer.Finished())
+    //{
+    //    CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
+    //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
+    //}
     
 #ifdef _DEBUG
 
@@ -176,6 +180,11 @@ void CEntry::Update(void)
             m_PlayerArray[3] = UNIT_ID::NONE;
         }
     }
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+    {
+        CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
+        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
+    }
 #endif // _DEBUG
 
 
@@ -198,6 +207,7 @@ void CEntry::Update(void)
 
 void CEntry::Draw(void)
 {
+    m_BackGround.Draw();
     CEffectManager::GetInstance().Draw();
     CObjectManager& om = CObjectManager::GetInstance();
     CUnitManager& um = CUnitManager::GetInstance();
@@ -237,6 +247,7 @@ void CEntry::Draw(void)
 
 void CEntry::Finalize(void)
 {
+    m_BackGround.Finalize();
     IScene::Finalize();
     CUIManager::GetInstance().Finalize();
     CObjectManager::GetInstance().Finalize();
@@ -253,10 +264,22 @@ void CEntry::CheckButtonHold(void)
     if (buttonHoldController)
     {
         UNIT_ID unitID = buttonHoldController->GetUnitID();
-        if (unitID == UNIT_ID::NONE || m_PlayerNum <= 1) return;
+        if (unitID == UNIT_ID::NONE || m_PlayerNum <= 1)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                m_HoldTimer[i].Reset();
+            }
+            m_GameStartGauge->SetPercent(0.0f);
+            return;
+        }
         m_HoldTimer[(int)unitID].Update();
         if (m_GameStartGauge)
-            m_GameStartGauge->SetPercent((m_HoldTimer[(int)unitID].GetTimer() / m_hold_start_time) * 100.0f);
+        {
+            float percent = (m_HoldTimer[(int)unitID].GetTimer() - m_exit_time) / (m_hold_start_time - m_exit_time) * 100.0f;
+            //退室可能な0.5秒まではゲージを表示しない
+            m_GameStartGauge->SetPercent(percent);
+        }
 
         if (m_HoldTimer[(int)unitID].Finished())
         {
@@ -265,17 +288,23 @@ void CEntry::CheckButtonHold(void)
         }
     }
     CController* controller = nullptr;
-    bool         resetGaugeFlag = true;
+    bool         resetGaugeFlag = false;
     //長押ししていないコントローラーのタイマーをリセット
     for (int i = 0; i < 4; i++)
     {
         controller = cm.GetController((CONTROLLER_ID)i);
         UNIT_ID unitID = controller->GetUnitID();
 
+        //プレイヤーを操作できるコントローラーが長押ししていない
         if (!controller->GetButtonHold(BUTTON_ID::X) && unitID != UNIT_ID::NONE)
         {
-            resetGaugeFlag = false;
+            resetGaugeFlag = true;
             m_HoldTimer[(int)controller->GetUnitID()].Reset();
+        }
+        if (controller->GetButtonHold(BUTTON_ID::X) && unitID != UNIT_ID::NONE)
+        {
+            resetGaugeFlag = false;
+            break;
         }
     }
     if (m_GameStartGauge && resetGaugeFlag)
