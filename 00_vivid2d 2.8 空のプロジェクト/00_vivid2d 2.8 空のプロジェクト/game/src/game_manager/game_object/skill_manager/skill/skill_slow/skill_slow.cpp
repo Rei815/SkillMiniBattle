@@ -9,6 +9,7 @@ CSkillSlow::CSkillSlow(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 	,m_SkillEffect(nullptr)
 	,m_DebuffEffect(nullptr)
+	, m_EffectList()
 {
 }
 
@@ -55,13 +56,15 @@ void CSkillSlow::Action()
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::SLOW, false);
 
+	
+
 	for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 	{
 		if (um.GetPlayer(UNIT_ID(i)) != m_Player)
 		{
 			um.GetPlayer(UNIT_ID(i))->MulMoveSpeedRate(0.5f);
-			m_DebuffEffect = CEffectManager::GetInstance().Create(EFFECT_ID::DEBUFF, CVector3().ZERO, CVector3(), m_effect_scale);
-			m_DebuffEffect->SetParent(um.GetPlayer(UNIT_ID(i)));
+			m_EffectList.push_front(CEffectManager::GetInstance().Create(EFFECT_ID::DEBUFF, CVector3().ZERO, CVector3(), m_effect_scale));
+			m_EffectList.front()->SetParent(um.GetPlayer(UNIT_ID(i)));
 		}
 	}
 
@@ -77,10 +80,17 @@ void CSkillSlow::ActionEnd(void)
 		m_SkillEffect->SetActive(false);
 		m_SkillEffect = nullptr;
 	}
-	if (m_DebuffEffect != nullptr)
+
+	if (m_EffectList.empty() == false)
 	{
-		m_DebuffEffect->SetActive(false);
-		m_DebuffEffect = nullptr;
+		std::list<IEffect*>::iterator it = m_EffectList.begin();
+		while (it != m_EffectList.end())
+		{
+			(*it)->SetActive(false);
+
+			it++;
+		}
+		m_EffectList.clear();
 	}
 
 	for (int i = 0; i < dm.GetCurrentPlayer(); i++)

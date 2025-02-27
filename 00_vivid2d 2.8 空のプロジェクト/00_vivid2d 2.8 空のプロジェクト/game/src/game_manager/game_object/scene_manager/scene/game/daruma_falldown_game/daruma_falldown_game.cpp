@@ -25,7 +25,7 @@ const float CDaruma_FallDownGame::m_move_speed = 0.3f;
 const CVector3 CDaruma_FallDownGame::m_player_default_forward = CVector3(1.0f, 0.0f, 0.0f);
 const CVector3 CDaruma_FallDownGame::m_goal_position = CVector3(300.0f, 0.0f, 0.0f);
 
-const CVector3 CDaruma_FallDownGame::m_reset_speed = CVector3(3.0f, 0.0f, 0.0f);
+const CVector3 CDaruma_FallDownGame::m_reset_speed = CVector3(2.0f, 0.0f, 0.0f);
 
 CDaruma_FallDownGame::CDaruma_FallDownGame(void)
 	: m_PlayerPosition{ (CVector3(-1500,0,100)) }
@@ -165,21 +165,19 @@ void CDaruma_FallDownGame::Ranking(void)
 
 void CDaruma_FallDownGame::ResetPosition(void)
 {
-	CPlayer* ReturnPlayer = m_MovePlayer.front();
+	//CPlayer* ReturnPlayer = m_MovePlayer.front();
+	for (int i = 0; i < m_MovePlayer.size(); i++)
 	{
-		for (int i = 0; i < m_MovePlayer.size(); i++)
+		if (m_MovePlayer.front()->GetPosition().x > -1500)
 		{
-			if (m_MovePlayer.front()->GetPosition().x > -1500)
-			{
-				m_MovePlayer.front()->SetPosition(CVector3(m_MovePlayer.front()->GetPosition() - m_reset_speed));
-				m_MovePlayer.push_back(m_MovePlayer.front());
-				m_MovePlayer.pop_front();
-			}
-			else
-			{
-				m_MovePlayer.front()->SetActionFlag(true);
-				m_MovePlayer.pop_front();
-			}
+			m_MovePlayer.front()->SetPosition(CVector3(m_MovePlayer.front()->GetPosition() - m_reset_speed));
+			m_MovePlayer.push_back(m_MovePlayer.front());
+			m_MovePlayer.pop_front();
+		}
+		else
+		{
+			m_MovePlayer.front()->SetActionFlag(true);
+			m_MovePlayer.pop_front();
 		}
 	}
 }
