@@ -61,7 +61,6 @@ CGame::Initialize(SCENE_ID scene_id)
 
     m_GameState = GAME_STATE::START;
 
-    m_PauseFlag = false;
     m_DebugText = "親ゲームシーン";
 }
 
@@ -72,7 +71,7 @@ void
 CGame::Update(void)
 {
     CEffectManager& em = CEffectManager::GetInstance();
-    if(!m_PauseFlag)
+    if(!CSceneManager::GetInstance().Pausing())
     {
         switch (m_GameState)
         {
@@ -93,23 +92,6 @@ CGame::Update(void)
     }
 
     CControllerManager::GetInstance().Update();
-
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB))
-    {
-        if (m_PauseFlag == false)
-            em.PauseAllEffect();
-        else
-            em.ResumeAllEffect();
-
-
-        if (m_PauseFlag)
-            CUIManager::GetInstance().Delete(UI_ID::PAUSE);
-        else
-            CUIManager::GetInstance().Create(UI_ID::PAUSE);
-        m_PauseFlag ^= true;
-
-    }
-
 }
 
 /*
@@ -179,11 +161,6 @@ SetGameState(GAME_STATE state)
     m_GameState = state;
 }
 
-bool CGame::GetPauseFlag(void)
-{
-    return m_PauseFlag;
-}
-
 void CGame::AddRanking(UNIT_ID unitID)
 {
     IUnit* unit = CUnitManager::GetInstance().GetPlayer(unitID);
@@ -219,7 +196,7 @@ CGame::Start(void)
     }
 
 
-    if (!m_PauseFlag)
+    if (!CSceneManager::GetInstance().Pausing())
     {
         m_WaitTimer.Update();
 

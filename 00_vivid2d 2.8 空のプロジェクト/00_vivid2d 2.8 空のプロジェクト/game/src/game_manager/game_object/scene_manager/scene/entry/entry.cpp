@@ -65,10 +65,12 @@ void CEntry::Initialize(SCENE_ID scene_id)
     {
         m_GameStartGauge->SetGauge(GaugePos,GaugeScale);
     }
+    um.Create(UI_ID::ENTRY_X_BUTTON);
 }
 
 void CEntry::Update(void)
 {
+    IScene::Update();
     m_BackGround.Update();
     CControllerManager& cm = CControllerManager::GetInstance();
     CEffectManager::GetInstance().Update();

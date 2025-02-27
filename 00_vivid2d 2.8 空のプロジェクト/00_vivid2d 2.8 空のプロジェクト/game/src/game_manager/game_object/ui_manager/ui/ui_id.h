@@ -44,4 +44,5 @@ enum class UI_ID
     PLAYER_ICON,
     CONCENTRATION_LINE,
     RESULT_WINNER,
+    ENTRY_X_BUTTON,
 };

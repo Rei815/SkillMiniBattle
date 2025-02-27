@@ -26,6 +26,11 @@
 #include "scene\game\maze_game\maze_game.h"
 #include "scene\entry\entry.h"
 #include "../ui_manager/ui_manager.h"
+#include "../controller_manager/controller_manager.h"
+#include "../ui_manager/ui_manager.h"
+#include "../effect_manager/effect_manager.h"
+#include "../ui_manager/ui/pause/pause.h"
+
 const int               CSceneManager::m_fade_speed = 10;
 const float             CSceneManager::m_wait_time = 0.0f;
 
@@ -55,6 +60,7 @@ CSceneManager::Initialize(void)
     m_Timer.SetUp(m_wait_time);
     m_FadeSpeed = m_fade_speed;
     m_FadeColor = 0x00ffffff;
+    m_PauseController = nullptr;
 }
 
 /*
@@ -66,24 +72,23 @@ CSceneManager::Update(void)
     switch (m_State)
     {
     case STATE::FADEIN:          FadeIn();      break;
-    case STATE::SCENE_UPDATE:    SceneUpdate(); break;
+    case STATE::SCENE_UPDATE:    SceneUpdate();  break;
     case STATE::FADEOUT:         FadeOut();     break;
     case STATE::SCENE_CHANGE:    SceneChange(); break;
     }
+    CUIManager& um = CUIManager::GetInstance();
+    um.Update();
 
-
-    CGame* gameScene = GetGameScene();
-    //ゲーム中はポーズ中にUIの動きを止める
-    if (gameScene)
+    CEffectManager& em = CEffectManager::GetInstance();
+    CControllerManager& cm = CControllerManager::GetInstance();
+    if(m_PauseController == nullptr)
+        m_PauseController = cm.GetSpecifiedButtonDownController(BUTTON_ID::START);
+    if (m_PauseController == nullptr) return;
+    m_PauseController->Update();
+    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TAB) || m_PauseController->GetButtonDown(BUTTON_ID::START)) && GetLastSceneID() != SCENE_ID::TITLE && m_State == STATE::SCENE_UPDATE)
     {
-        if(!gameScene->GetPauseFlag())
-            CUIManager::GetInstance().Update();
+        Pause();
     }
-    else
-    {
-        CUIManager::GetInstance().Update();
-    }
-
 }
 
 /*
@@ -182,14 +187,15 @@ CSceneManager::SCENE_LIST CSceneManager::GetList()
     return m_SceneList;
 }
 
-/*
- *  現在のシーンを取得
- */
-//IScene*
-//CSceneManager::GetScene(void)
-//{
-//    return m_Scene;
-//}
+bool CSceneManager::Pausing(void)
+{
+    return m_PauseFlag;
+}
+
+void CSceneManager::SetPauseFlag(bool flag)
+{
+    m_PauseFlag = flag;
+}
 
 SCENE_ID CSceneManager::GetLastSceneID(void)
 {
@@ -204,6 +210,32 @@ SCENE_ID CSceneManager::GetLastSceneID(void)
         return SCENE_ID::WAIT;
 }
 
+void CSceneManager::Pause()
+{
+    CUIManager& um = CUIManager::GetInstance();
+
+    CEffectManager& em = CEffectManager::GetInstance();
+
+    if (m_PauseFlag == false)
+        em.PauseAllEffect();
+    else
+        em.ResumeAllEffect();
+
+
+    if (m_PauseFlag)
+    {
+        um.Delete(UI_ID::PAUSE);
+        m_PauseController = nullptr;
+    }
+    else
+    {
+        CPause* pause = (CPause*)um.Create(UI_ID::PAUSE);
+        pause->SetPauseController(m_PauseController);
+    }
+    m_PauseFlag ^= true;
+
+}
+
 /*
  *  コンストラクタ
  */
@@ -212,6 +244,7 @@ CSceneManager::CSceneManager(void)
     , m_CurrentSceneID(SCENE_ID::WAIT)
     , m_NextSceneID(SCENE_ID::WAIT)
     , m_ChangeScene(false)
+    , m_PauseController(nullptr)
 {
 }
 
@@ -311,7 +344,9 @@ CSceneManager::SceneUpdate(void)
     while (it != m_SceneList.end())
     {
         IScene* scene = (IScene*)(*it);
-        if(scene->GetSceneState() == SCENE_STATE::ACTIVE)
+
+        //アクティブかつポーズ中でない
+        if(scene->GetSceneState() == SCENE_STATE::ACTIVE && !m_PauseFlag)
             scene->Update();
 
         if (!scene->GetActive())
@@ -409,26 +444,6 @@ IScene* CSceneManager::GetScene(SCENE_ID scene_id)
             return scene;
 
         ++it;
-    }
-    return nullptr;
-}
-
-CGame* CSceneManager::GetGameScene()
-{
-    if (m_SceneList.empty()) return nullptr;
-
-    SCENE_LIST::iterator it = m_SceneList.begin();
-
-    while (it != m_SceneList.end())
-    {
-        CGame* gameScene = dynamic_cast<CGame*>(*it);
-
-        ++it;
-        if (gameScene == nullptr) continue;
-
-        if (gameScene->GetActive())
-            return gameScene;
-
     }
     return nullptr;
 }

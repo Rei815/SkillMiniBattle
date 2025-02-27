@@ -272,9 +272,10 @@ Attack(void)
     {
         Control();
     }
-        Move();
 
-        Damage();
+    Move();
+
+    Damage();
 }
 
 

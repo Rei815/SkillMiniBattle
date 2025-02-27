@@ -485,7 +485,7 @@ void CSelectSkill::MoveCursor(void)
                 m_SkillVideo->SetSkillNum(*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));
             }
 
-            if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+            if (controller->GetButtonDown(BUTTON_ID::B))
             {
                 //プレイヤーにスキルをセットする
                 SKILL_ID tempSkillID = m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];

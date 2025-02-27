@@ -6,6 +6,7 @@
 #include "..\..\..\..\camera\camera.h"
 #include "..\..\..\..\skill_manager\skill_manager.h"
 #include "..\..\..\..\gimmick_manager\gimmick_manager.h"
+#include "..\..\..\..\scene_manager\scene_manager.h"
 
 const float		CBeltConveyorGame::m_defeat_height			= -500.0f;
 const CVector3	CBeltConveyorGame::m_camera_position		= CVector3(0.0f, 800.0f, -1350.0f);
@@ -79,7 +80,7 @@ void CBeltConveyorGame::Update(void)
 {
 	CGame::Update();
 
-	if (!m_PauseFlag)
+	if (!CSceneManager::GetInstance().Pausing())
 	{
 		CCamera::GetInstance().Update();
 	}
@@ -117,7 +118,7 @@ void CBeltConveyorGame::Play(void)
 	CGame::Play();
 
 	//ポーズだったら処理をスキップ
-	if (m_PauseFlag)
+	if (CSceneManager::GetInstance().Pausing())
 		return;
 }
 
