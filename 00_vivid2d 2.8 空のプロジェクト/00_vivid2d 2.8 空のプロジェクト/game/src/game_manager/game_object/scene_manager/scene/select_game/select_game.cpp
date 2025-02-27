@@ -38,21 +38,18 @@ CSelectGame::~CSelectGame(void)
 void CSelectGame::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
+    CUIManager& um = CUIManager::GetInstance();
 
     CCamera::GetInstance().Initialize();
     CCamera::GetInstance().SetPosition(CVector3(0.0f, 600.0f, -1000.0f));
     CCamera::GetInstance().SetDirection(CVector3(0.0f, 0.0f, 1.0f));
     CAnimationManager::GetInstance().Initialize();
-    CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
 
-    //ミニゲームから戻ってきた場合の処理
-    if (uiList.size() == 0)
-    {
-        CUIManager::GetInstance().Initialize();
-        CUIManager::GetInstance().Create(UI_ID::TITLE_LOGO);
-        CSoundManager::GetInstance().Play_BGM(BGM_ID::READY_BGM, true);
-    }
+    um.Initialize();
+    um.Create(UI_ID::TITLE_LOGO);
+    CSoundManager::GetInstance().Play_BGM(BGM_ID::READY_BGM, true);
 
+    CUIManager::UI_LIST uiList = um.GetList();
     //ゲームの画像を円状かつ均等に配置
     for (int i = 0; i < m_games_num; i++)
     {
@@ -65,7 +62,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
         transform.position.x = 0.0f;//_x;
         transform.position.z = -m_circle_radius;//_z;
         
-        CPlaneGameImage* planeGameImage = dynamic_cast<CPlaneGameImage*>(CUIManager::GetInstance().Create(UI_ID::PLANE_GAME_IMAGE, transform));
+        CPlaneGameImage* planeGameImage = dynamic_cast<CPlaneGameImage*>(um.Create(UI_ID::PLANE_GAME_IMAGE, transform));
         planeGameImage->SetGameID((GAME_ID)i);
     }
     // Ｘ軸のマイナス方向のディレクショナルライトに変更
@@ -73,7 +70,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
 
     IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
 
-    m_FirstSceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
+    m_FirstSceneUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
     m_FirstSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
     //ミニゲームの決定
@@ -81,7 +78,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     m_SelectedGameID = (GAME_ID)game_id;
     CDataManager::GetInstance().SetGameID(m_SelectedGameID);
 
-    uiList = CUIManager::GetInstance().GetList();
+    uiList = um.GetList();
     CUIManager::UI_LIST::iterator it = uiList.begin();
 
     //上昇させるゲーム画像をキープ
@@ -103,17 +100,17 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
 void CSelectGame::Update(void)
 {
     CControllerManager& cm = CControllerManager::GetInstance();
+    CAnimationManager& am = CAnimationManager::GetInstance();
+    CUIManager& um = CUIManager::GetInstance();
+    CDataManager& dm = CDataManager::GetInstance();
 
     cm.Update();
 
     CCamera::GetInstance().Update();
-    CUIManager& um = CUIManager::GetInstance();
-    CAnimationManager::GetInstance().Update();
+    am.Update();
 
-    CDataManager& dm = CDataManager::GetInstance();
-    CAnimationManager& am = CAnimationManager::GetInstance();
 
-    CUIManager::UI_LIST uiList = CUIManager::GetInstance().GetList();
+    CUIManager::UI_LIST uiList = um.GetList();
     CUIManager::UI_LIST::iterator it = uiList.begin();
     if (m_FirstSceneUIParent)
     {
@@ -129,6 +126,9 @@ void CSelectGame::Update(void)
                 plameGameImage->SetParent(nullptr);
             }
 
+
+
+
             m_FirstSceneUIParent->SetActive(false);
             m_FirstSceneUIParent = nullptr;
         }
@@ -137,8 +137,6 @@ void CSelectGame::Update(void)
     if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || cm.GetSpecifiedButtonDownController(BUTTON_ID::B))
         && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
     {
-        uiList = CUIManager::GetInstance().GetList();
-        it = uiList.begin();
         while (it != uiList.end())
         {
             CPlaneGameImage* planeGameImage = (CPlaneGameImage*)(*it);
@@ -156,7 +154,11 @@ void CSelectGame::Update(void)
             }
             else
             {
-                planeGameImage->SetAnimation(am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage));   // 選ばれていないものは小さくなる
+                // 選ばれていないものは小さくなる
+                IAnimation* animation = nullptr;
+                animation = am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);
+
+                planeGameImage->SetAnimation(animation);
             }
 
         }
@@ -237,7 +239,7 @@ void CSelectGame::Update(void)
 
     if (m_SecondSceneUIParent)
     {
-        CPlayerReady* playerReady = (CPlayerReady*)CUIManager::GetInstance().GetUI(UI_ID::PLAYER_READY);
+        CPlayerReady* playerReady = (CPlayerReady*)um.GetUI(UI_ID::PLAYER_READY);
         if (playerReady == nullptr) return;
         //ミニゲーム情報が中心にある状態
         if (playerReady->GetReadyFlag() == true && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)

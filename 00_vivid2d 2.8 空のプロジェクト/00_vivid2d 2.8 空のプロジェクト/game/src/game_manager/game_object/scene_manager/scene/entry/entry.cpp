@@ -159,7 +159,7 @@ void CEntry::Update(void)
     //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
     //}
     
-#ifdef _DEBUG
+//#ifdef _DEBUG
 
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
     {
@@ -206,7 +206,7 @@ void CEntry::Update(void)
         CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
     }
-#endif // _DEBUG
+//#endif // _DEBUG
 
 
     CUnitManager::UNIT_LIST::iterator it = unitList.begin();
