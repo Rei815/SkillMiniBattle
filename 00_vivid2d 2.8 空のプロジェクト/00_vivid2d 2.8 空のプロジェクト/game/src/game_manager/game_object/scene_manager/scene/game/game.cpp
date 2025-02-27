@@ -137,7 +137,6 @@ CGame::Finalize(void)
     CSkillManager::GetInstance().Finalize();
     CUIManager::GetInstance().Finalize();
     CEffectManager::GetInstance().Finalize();
-    CControllerManager::GetInstance().Finalize();
     CGimmickManager::GetInstance().Finalize();
     CObjectManager::GetInstance().Finalize();
 }
