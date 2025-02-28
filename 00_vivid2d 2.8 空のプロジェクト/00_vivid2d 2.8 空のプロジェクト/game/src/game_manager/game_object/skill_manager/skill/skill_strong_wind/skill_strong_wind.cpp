@@ -4,7 +4,7 @@
 #include "../../../effect_manager/effect_manager.h"
 
 
-const float CSkillStrongWind::m_wind_strength = 0.1f;
+const float CSkillStrongWind::m_wind_strength = 0.15f;
 const float CSkillStrongWind::m_cool_time = 5.0f;
 const float CSkillStrongWind::m_duration_time = 5.0f;
 const float CSkillStrongWind::m_effect_scale = 2.0f;

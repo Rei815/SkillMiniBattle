@@ -63,6 +63,23 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
     CControllerManager& cm = CControllerManager::GetInstance();
     CControllerManager::CONTROLLER_LIST controllerList = cm.GetList();
     CControllerManager::CONTROLLER_LIST::iterator it = controllerList.begin();
+    switch (id)
+    {
+    case UNIT_ID::PLAYER1:
+        m_Category = UNIT_CATEGORY::PLAYER1;
+        break;
+    case UNIT_ID::PLAYER2:
+        m_Category = UNIT_CATEGORY::PLAYER2;
+
+        break;
+    case UNIT_ID::PLAYER3:
+        m_Category = UNIT_CATEGORY::PLAYER3;
+
+        break;
+    case UNIT_ID::PLAYER4:
+        m_Category = UNIT_CATEGORY::PLAYER4;
+        break;
+    }
     while (it != controllerList.end())
     {
         if ((*it)->GetUnitID() == id)

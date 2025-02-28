@@ -123,6 +123,7 @@ void CFallOutGame::Update(void)
 void CFallOutGame::Draw(void)
 {
 	m_BackGround.Draw();
+	CBulletManager::GetInstance().Draw();
 
 	CGame::Draw();
 #ifdef VIVID_DEBUG
