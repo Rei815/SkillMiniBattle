@@ -24,11 +24,6 @@ public:
      */
     void        Update(void);
 
-    ///*!
-    // *  @brief      •`‰æ
-    // */
-    //void        Draw(void);
-
     /*!
      *  @brief      ‰ð•ú
      */

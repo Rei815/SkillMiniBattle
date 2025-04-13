@@ -13,6 +13,7 @@ const   float       CEntry::m_respawn_height = -200.0f;
 const   float       CEntry::m_start_time = 30.0f;
 const   float       CEntry::m_hold_start_time = 2.0f;
 const   float       CEntry::m_exit_time = 0.3f;
+const   int         CEntry::m_min_player = 2;
 const CVector3		CEntry::m_camera_position = CVector3(0, 400.0f, -1600.0f);
 const CVector3		CEntry::m_camera_direction = CVector3(0, 0.0f, 0.6f);
 
@@ -24,7 +25,7 @@ CEntry::CEntry(void)
     , m_WasPressd(false)
     , m_GameStartGauge(nullptr)
     , m_BackGround(UI_ID::GAME_BG)
-    , m_GameStartFlag(false)
+    , m_CanStartFlag(false)
 {
 
 }
@@ -92,7 +93,7 @@ void CEntry::Update(void)
     um.Update();
 
     m_WasPressdThisFrame = false;
-    m_GameStartFlag = true;
+    m_CanStartFlag = true;
 
     m_PlayerNum = 0;
     for (int i = 0; i < 4; i++)
@@ -104,12 +105,12 @@ void CEntry::Update(void)
     {
         if (m_PlayerArray[i] != (UNIT_ID)i)
         {
-            m_GameStartFlag = false;
+            m_CanStartFlag = false;
             break;
         }
     }
     //二人以上ならカウントダウンする
-    if (m_PlayerNum > 1)
+    if (m_PlayerNum >= m_min_player)
         m_GameStartTimer.Update();
     CUnitManager::UNIT_LIST unitList = um.GetUnitList();
     CUnitManager::UNIT_LIST entryList = unitList;
@@ -152,15 +153,8 @@ void CEntry::Update(void)
 
     CheckButtonDown();
 
-    ////ゲーム開始
-    //if (m_GameStartTimer.Finished())
-    //{
-    //    CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
-    //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
-    //}
-    
-//#ifdef _DEBUG
 
+    //デバッグ用
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
     {
         if(um.GetPlayer(UNIT_ID::PLAYER1) == nullptr)
@@ -206,7 +200,6 @@ void CEntry::Update(void)
         CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
     }
-//#endif // _DEBUG
 
 
     CUnitManager::UNIT_LIST::iterator it = unitList.begin();
@@ -233,38 +226,7 @@ void CEntry::Draw(void)
     CObjectManager& om = CObjectManager::GetInstance();
     CUnitManager& um = CUnitManager::GetInstance();
     om.Draw();
-    um.Draw();
-    //std::string text, timerText;
-    //timerText = std::to_string((int)m_GameStartTimer.GetTimer());
-    //switch (m_UnitID)
-    //{
-    //case UNIT_ID::PLAYER1:
-    //    text = "次はPLAYER1";
-    //    break;
-    //case UNIT_ID::PLAYER2:
-    //    text = "次はPLAYER2";
-    //    break;
-    //case UNIT_ID::PLAYER3:
-    //    text = "次はPLAYER3";
-
-    //    break;
-    //case UNIT_ID::PLAYER4:
-    //    text = "次はPLAYER4";
-
-    //    break;
-    //case UNIT_ID::NONE:
-    //    text = "最大人数";
-    //    break;
-    //}
-    //vivid::DrawText(30, text, vivid::Vector2::ZERO);
-    //vivid::DrawText(30, timerText, vivid::Vector2(vivid::GetWindowWidth() /2.0f - vivid::GetTextWidth(30, timerText) / 2.0f, 30));
-
-    //for (int i = 0; i < 4; i++)
-    //{
-    //    std::string _text = std::to_string((int)m_PlayerArray[i]);
-    //    vivid::DrawText(30,_text, vivid::Vector2(0, 50 + (30* i)));
-    //}
-}
+    um.Draw();}
 
 void CEntry::Finalize(void)
 {
@@ -285,7 +247,9 @@ void CEntry::CheckButtonHold(void)
     if (buttonHoldController)
     {
         UNIT_ID unitID = buttonHoldController->GetUnitID();
-        if (unitID == UNIT_ID::NONE || m_PlayerNum <= 1)
+
+        //一人以下の時にタイマーのリセット
+        if (unitID == UNIT_ID::NONE || m_PlayerNum < m_min_player)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -295,14 +259,14 @@ void CEntry::CheckButtonHold(void)
             return;
         }
         m_HoldTimer[(int)unitID].Update();
-        if (m_GameStartGauge && m_GameStartFlag)
+        if (m_GameStartGauge && m_CanStartFlag)
         {
             float percent = (m_HoldTimer[(int)unitID].GetTimer() - m_exit_time) / (m_hold_start_time - m_exit_time) * 100.0f;
             //退室可能な0.5秒まではゲージを表示しない
             m_GameStartGauge->SetPercent(percent);
         }
 
-        if (m_HoldTimer[(int)unitID].Finished() && m_GameStartFlag)
+        if (m_HoldTimer[(int)unitID].Finished() && m_CanStartFlag)
         {
             CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);

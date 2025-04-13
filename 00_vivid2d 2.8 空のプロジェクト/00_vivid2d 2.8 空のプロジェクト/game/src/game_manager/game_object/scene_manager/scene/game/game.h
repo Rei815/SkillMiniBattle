@@ -2,7 +2,6 @@
 
 #include"..\scene.h"
 #include "../../../model_manager/model/model.h"
-#include "../../../stage/stage.h"
 #include "game_id.h"
 #include "../../../object_manager/object/object.h"
 #include "../../../unit_manager/unit/unit.h"

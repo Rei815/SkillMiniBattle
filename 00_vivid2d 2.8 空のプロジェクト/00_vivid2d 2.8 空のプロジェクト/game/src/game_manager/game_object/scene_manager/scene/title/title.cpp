@@ -95,9 +95,6 @@ void CTitle::Update(void)
 
 void CTitle::Draw(void)
 {
-    vivid::Vector2 position = vivid::Vector2(vivid::WINDOW_WIDTH / 2 - vivid::GetTextWidth(50, "ボタンを押してね！") / 2, vivid::WINDOW_HEIGHT / 2 + 100);
-    vivid::DrawText(50, "ボタンを押してね！", position, m_Color);
-
 }
 
 void CTitle::Finalize(void)

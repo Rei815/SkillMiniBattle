@@ -63,6 +63,7 @@ private:
     static const float      m_exit_time;            //退室までに必要な秒数
     static const CVector3   m_camera_position;      //カメラの位置
     static const CVector3   m_camera_direction;     //カメラの向き
+    static const int        m_min_player;           //開始可能な最少人数
     UNIT_ID                 m_UnitID;               //次に生成するプレイヤーのID
     UNIT_ID                 m_PlayerArray[4];       //存在しているプレイヤーのID
     CTimer                  m_GameStartTimer;       //ゲーム開始までのタイマー
@@ -74,5 +75,5 @@ private:
     CSkillGauge*            m_GameStartGauge;
     CGameBG                 m_BackGround;
     CPlayerJoin*            m_PlayerJoinUI;
-    bool                    m_GameStartFlag;
+    bool                    m_CanStartFlag;
 };

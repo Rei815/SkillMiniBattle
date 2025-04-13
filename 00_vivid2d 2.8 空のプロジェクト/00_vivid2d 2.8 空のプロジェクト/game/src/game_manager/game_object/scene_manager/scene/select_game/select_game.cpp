@@ -8,17 +8,10 @@
 #include "../../../ui_manager/ui/game_video/game_video.h"
 #include "../../../ui_manager/ui/player_ready/player_ready.h"
 #include "../../../controller_manager/controller_manager.h"
+#include <random>
+#include <iostream>
 
-const int CSelectGame::m_games_num = 4
-
-
-
-
-
-
-
-
-;
+const int CSelectGame::m_games_num = 4;
 const float CSelectGame::m_circle_radius = 500.0f;
 CSelectGame::CSelectGame(void)
     : m_SelectedGameFlag(false)
@@ -73,32 +66,11 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
     m_FirstSceneUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
     m_FirstSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
-    //ミニゲームの決定
-    int game_id = rand() % (int)GAME_ID::MAX;
-    m_SelectedGameID = (GAME_ID)game_id;
-    CDataManager::GetInstance().SetGameID(m_SelectedGameID);
-
-    uiList = um.GetList();
-    CUIManager::UI_LIST::iterator it = uiList.begin();
-
-    //上昇させるゲーム画像をキープ
-    while (it != uiList.end())
-    {
-        CUI* ui = (CUI*)(*it);
-
-        ++it;
-
-        if (ui->GetUI_ID() != UI_ID::PLANE_GAME_IMAGE) continue;
-        CPlaneGameImage* plameGameImage = (CPlaneGameImage*)ui;
-        if (plameGameImage->GetGameID() == m_SelectedGameID)
-        {
-            m_PlaneGameImage = plameGameImage;
-        }
-    }
 }
 
 void CSelectGame::Update(void)
 {
+
     CControllerManager& cm = CControllerManager::GetInstance();
     CAnimationManager& am = CAnimationManager::GetInstance();
     CUIManager& um = CUIManager::GetInstance();
@@ -111,24 +83,17 @@ void CSelectGame::Update(void)
 
 
     CUIManager::UI_LIST uiList = um.GetList();
-    CUIManager::UI_LIST::iterator it = uiList.begin();
     if (m_FirstSceneUIParent)
     {
         if (m_FirstSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
         {
-            while (it != uiList.end())
+            for (CUI* ui : uiList)
             {
-                CUI* ui = (CUI*)(*it);
-
-                ++it;
-                if (ui->GetUI_ID() != UI_ID::PLANE_GAME_IMAGE) continue;
-                CPlaneGameImage* plameGameImage = (CPlaneGameImage*)ui;
-                plameGameImage->SetParent(nullptr);
+                if (ui->GetUI_ID() == UI_ID::PLANE_GAME_IMAGE)
+                {
+                    static_cast<CPlaneGameImage*>(ui)->SetParent(nullptr);
+                }
             }
-
-
-
-
             m_FirstSceneUIParent->SetActive(false);
             m_FirstSceneUIParent = nullptr;
         }
@@ -137,31 +102,58 @@ void CSelectGame::Update(void)
     if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || cm.GetSpecifiedButtonDownController(BUTTON_ID::B))
         && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
     {
-        while (it != uiList.end())
-        {
-            CPlaneGameImage* planeGameImage = (CPlaneGameImage*)(*it);
 
-            ++it;
-            if (planeGameImage->GetUI_ID() == UI_ID::TITLE_LOGO) continue;
+            //ミニゲームの決定
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<int> dist(0, (int)GAME_ID::MAX - 1);
+            int game_id = dist(gen);
+            m_SelectedGameID = (GAME_ID)game_id;
+            CDataManager::GetInstance().SetGameID(m_SelectedGameID);
+            uiList = um.GetList();
+            CUIManager::UI_LIST::iterator it = uiList.begin();
 
-            if (planeGameImage->GetGameID() == m_SelectedGameID)
+            while (it != uiList.end())
             {
-                m_PlaneGameImage = planeGameImage;
-                IAnimation* animation = nullptr;
-                animation = am.Create(ANIMATION_ID::PLANE_UP, m_PlaneGameImage);
-                m_PlaneGameImage->SetAnimation(animation);
-                m_SelectedGameFlag = true;
-            }
-            else
-            {
-                // 選ばれていないものは小さくなる
-                IAnimation* animation = nullptr;
-                animation = am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);
+                CPlaneGameImage* planeGameImage = dynamic_cast<CPlaneGameImage*>(*it);
+                ++it;
 
-                planeGameImage->SetAnimation(animation);
+                //ダウンキャストチェック
+                if (planeGameImage == nullptr) continue;
+
+                if (planeGameImage->GetGameID() == (GAME_ID)game_id)
+                {
+                    m_PlaneGameImage = planeGameImage;
+                    IAnimation* animation = nullptr;
+                    animation = am.Create(ANIMATION_ID::PLANE_UP, m_PlaneGameImage);
+                    if (animation == nullptr)
+                    {
+                        std::cerr << "Error: Failed to create animation!" << std::endl;
+                        return;
+                    }
+                    m_PlaneGameImage->SetAnimation(animation);
+                    m_SelectedGameFlag = true;
+                }
+                if (planeGameImage->GetGameID() != (GAME_ID)game_id)
+                {
+
+                    // 選ばれていないものは小さくなる
+                    IAnimation* animation = nullptr;
+                    animation = am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);
+                    if (animation == nullptr)
+                    {
+                        std::cerr << "Error: Failed to create animation!" << std::endl;
+                        return;
+                    }
+
+                    planeGameImage->SetAnimation(animation);
+                }
+                std::cerr << "planeGameImage ID: " << (int)planeGameImage->GetGameID() << " -> "
+                    << ((planeGameImage->GetGameID() == m_SelectedGameID) ? "UP" : "SCALE") << std::endl;
             }
 
-        }
+
+
     }
     if (m_SelectedGameFlag == true)
     {
@@ -170,16 +162,19 @@ void CSelectGame::Update(void)
         {
             m_PlaneGameImage->SetActive(false);
             m_GameInfomationFlag = true;
+            um.Delete(m_FirstSceneUIParent);
             um.Create(UI_ID::MENU_BG);
             um.Create(UI_ID::MINIGAME_OVERVIEW);
             um.Create(UI_ID::MINIGAME_MANUAL);
+            um.Create(UI_ID::TEXT_OVERVIEW);
+            um.Create(UI_ID::TEXT_MANUAL);
+
             um.Create(UI_ID::PLAYER_READY);
 
             CGameVideo* gameVideo = (CGameVideo*)um.Create(UI_ID::GAME_VIDEO);
             gameVideo->SetGameVideo(m_SelectedGameID);
             um.Create(UI_ID::MINIGAME_TITLE);
 
-            um.Delete(m_FirstSceneUIParent);
             m_SecondSceneUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
             m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
         }
@@ -192,7 +187,6 @@ void CSelectGame::Update(void)
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
-
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
     {
         m_SelectedGameID = GAME_ID::FALLOUT_GAME;
@@ -221,20 +215,6 @@ void CSelectGame::Update(void)
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
-    it = uiList.begin();
-    while (it != uiList.end())
-    {
-        CUI* ui = (CUI*)(*it);
-
-        ++it;
-        if (ui->GetUI_ID() != UI_ID::PLANE_GAME_IMAGE) continue;
-        CPlaneGameImage* plameGameImage = (CPlaneGameImage*)ui;
-        if (plameGameImage->GetGameID() == m_SelectedGameID)
-        {
-            m_PlaneGameImage = plameGameImage;
-        }
-    }
-
 //#endif
 
     if (m_SecondSceneUIParent)

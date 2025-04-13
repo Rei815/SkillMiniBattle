@@ -55,4 +55,6 @@ void
 CTitleLogo::Finalize(void)
 {
 
+
+
 }

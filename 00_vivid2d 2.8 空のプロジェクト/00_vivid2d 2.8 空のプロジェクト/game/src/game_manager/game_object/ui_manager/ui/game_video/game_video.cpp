@@ -8,11 +8,11 @@ const vivid::Vector2    CGameVideo::m_position = vivid::Vector2(80, 130);
 //GAME_ID‚Æ“¯‚¶•À‚Ñ‚É‚·‚é
 const std::string CGameVideo::m_file_name[] =
 {
-		"data\\Video\\game_video_daruma_fall_down.mp4",
-		"data\\Video\\game_video_fallout.mp4",
-		"data\\Video\\game_video_dodge_ball.mp4",
-		"data\\Video\\game_video_belt_conveyor.mp4",
-		"data\\video_test.mp4",
+		"data\\video\\game_video_daruma_fall_down.mp4",
+		"data\\video\\game_video_fallout.mp4",
+		"data\\video\\game_video_dodge_ball.mp4",
+		"data\\video\\game_video_belt_conveyor.mp4",
+		"data\\video\\game_video_belt_conveyor.mp4",
 		"data\\video_test.mp4",
 		"data\\video_test.mp4",
 		"data\\video_test.mp4",
@@ -25,6 +25,7 @@ const std::string CGameVideo::m_file_name[] =
 CGameVideo::
 CGameVideo(UI_ID id)
 	: CUI(m_width, m_height, id)
+	, m_Handle(VIVID_DX_ERROR)
 {
 }
 
@@ -44,7 +45,6 @@ CGameVideo::
 Initialize(void)
 {
 	CUI::Initialize(m_position);
-	m_Handle = LoadGraph(m_file_name[0].c_str());
 	ChangeMovieVolumeToGraph(0, m_Handle);
 	PlayMovieToGraph(m_Handle);
 }

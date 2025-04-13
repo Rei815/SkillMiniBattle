@@ -15,7 +15,6 @@
 #include "bullet\homing_bullet\homing_bullet.h"
 #include "bullet\shock_wave_bullet\shock_wave_bullet.h"
 #include "bullet\cannon_bullet\cannon_bullet.h"
-#include "../stage/stage.h"
 #include "../effect_manager/effect_manager.h"
 #include "../sound_manager/sound_manager.h"
 

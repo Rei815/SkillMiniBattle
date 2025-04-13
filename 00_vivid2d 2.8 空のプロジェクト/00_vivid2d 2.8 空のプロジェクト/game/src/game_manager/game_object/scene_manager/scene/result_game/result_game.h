@@ -3,7 +3,6 @@
 #include "vivid.h"
 #include "..\scene.h"
 #include "..\..\..\camera\camera.h"
-#include "../../../stage/stage.h"
 #include "../../../sound_manager/sound_manager.h"
 
 class CResultGame : public IScene

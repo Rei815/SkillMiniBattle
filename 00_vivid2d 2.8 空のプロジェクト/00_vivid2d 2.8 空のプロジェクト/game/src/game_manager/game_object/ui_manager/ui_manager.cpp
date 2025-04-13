@@ -74,12 +74,13 @@ CUIManager::Update(void)
 
     while (it != m_UIList.end())
     {
-        CUI* ui = (CUI*)(*it);
+        CUI* ui = static_cast<CUI*>(*it);
         if(ui->GetUI_ID() == UI_ID::PAUSE || !CSceneManager::GetInstance().Pausing())
             ui->Update();
         SortList();
         if (!ui->GetActive())
         {
+
             ui->Finalize();
 
             delete ui;

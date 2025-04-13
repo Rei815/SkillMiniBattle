@@ -120,7 +120,6 @@ void CDaruma_FallDownGame::Draw(void)
 void CDaruma_FallDownGame::Finalize(void)
 {
 	CGame::Finalize();
-	CStage::GetInstance().Finalize();
 	CCamera::GetInstance().Finalize();
 	CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
 }

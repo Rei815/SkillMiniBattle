@@ -253,10 +253,6 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\scene_ui_parent\scene_ui_parent.cpp" />
     <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
     <ClCompile Include="src\primitive\plane\plane.cpp" />
-    <ClCompile Include="src\collider\box_collider\box_collider.cpp" />
-    <ClCompile Include="src\collider\capsule_collider\capsule_collider.cpp" />
-    <ClCompile Include="src\collider\collider.cpp" />
-    <ClCompile Include="src\collider\sphere_collider\sphere_collider.cpp" />
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\bullet.cpp" />
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\cannon_bullet\cannon_bullet.cpp" />
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\homing_bullet\homing_bullet.cpp" />
@@ -319,7 +315,6 @@
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill_speed_up\skill_speed_up.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\sound_manager\sound_manager.cpp" />
-    <ClCompile Include="src\game_manager\game_object\stage\stage.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fade\fade.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\fallout_topic\fallout_topic.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\finish_backGround\finish_backGround.cpp" />
@@ -433,12 +428,6 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\scene_ui_parent\scene_ui_parent.h" />
     <ClInclude Include="src\mathematics\matrix\matrix.h" />
     <ClInclude Include="src\primitive\plane\plane.h" />
-    <ClInclude Include="src\collider\box_collider\box_collider.h" />
-    <ClInclude Include="src\collider\capsule_collider\capsule_collider.h" />
-    <ClInclude Include="src\collider\collider.h" />
-    <ClInclude Include="src\collider\colliders.h" />
-    <ClInclude Include="src\collider\collider_attribute.h" />
-    <ClInclude Include="src\collider\sphere_collider\sphere_collider.h" />
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\bullet.h" />
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\cannon_bullet\cannon_bullet.h" />
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\collider_id.h" />
@@ -510,7 +499,6 @@
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill_speed_up\skill_speed_up.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill_manager.h" />
     <ClInclude Include="src\game_manager\game_object\sound_manager\sound_manager.h" />
-    <ClInclude Include="src\game_manager\game_object\stage\stage.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fade\fade.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\fallout_topic\fallout_topic.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\finish_backGround\finish_backGround.h" />

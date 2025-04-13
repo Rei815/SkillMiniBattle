@@ -541,6 +541,7 @@ vivid::
 Finalize(void)
 {
     // すべてのグラフィックスを解放
+
     InitGraph();
 
     // すべてのフォントを解放する

@@ -4,7 +4,6 @@
 #include "unit\unit_id.h"
 #include "unit\unit.h"
 #include "..\bullet_manager\bullet\bullet.h"
-#include "../stage/stage.h"
 #include "..\scene_manager\scene\game\game.h"
 #include "unit/player/player.h"
 class CUnitManager
@@ -79,8 +78,6 @@ public:
      *
      */
     void      SetAllPlayerAction(bool flag);
-
-    CVector3 CheckHitLine(const CVector3& startPos, const CVector3& endPos);
 
     bool CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos);
 

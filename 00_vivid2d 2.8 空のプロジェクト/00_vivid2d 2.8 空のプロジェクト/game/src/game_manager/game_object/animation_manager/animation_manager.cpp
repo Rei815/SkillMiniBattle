@@ -56,22 +56,6 @@ CAnimationManager::Update(void)
 
 }
 
-///*
-// *  •`‰æ
-// */
-//void CAnimationManager::Draw(void)
-//{
-//    if (m_AnimationList.empty()) return;
-//
-//    ANIMATION_LIST::iterator it = m_AnimationList.begin();
-//
-//    while (it != m_AnimationList.end())
-//    {
-//        (*it)->Draw();
-//
-//        ++it;
-//    }
-//}
 
 /*
  *  ‰ð•ú

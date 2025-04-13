@@ -247,22 +247,6 @@ void CUnitManager::SetAllPlayerAction(bool flag)
 
 }
 
-CVector3 CUnitManager::CheckHitLine(const CVector3& startPos, const CVector3& endPos)
-{
-    CVector3 hitPos = CStage::GetInstance().GetModel().GetHitLinePosition(startPos, endPos);
-    if (m_UnitList.empty()) return hitPos;
-    UNIT_LIST::iterator it = m_UnitList.begin();
-
-    while (it != m_UnitList.end())
-    {
-        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true)
-            hitPos = (*it)->GetModel().GetHitLinePosition(startPos, endPos);
-
-        ++it;
-    }
-    return hitPos;
-}
-
 bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos)
 {
     if (m_UnitList.empty()) return false;

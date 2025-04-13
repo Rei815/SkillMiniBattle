@@ -7,15 +7,16 @@
 #include "../../../../object_manager/object/fall_object/mark_id.h"
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
-#include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
 #include "../../../../gimmick_manager/gimmick/fall_gimmick/fall_gimmick.h"
 #include "../../../../sound_manager/sound_manager.h"
 #include "../../../../bullet_manager/bullet_manager.h"
 
-
-const CTransform CFallOutGame::m_object_transform_list[] = 
-{CTransform(CVector3(475,-100,-275)),CTransform(CVector3(-475,-100,275)), CTransform(CVector3(0,-100,475)),
-CTransform(CVector3(-475,-100,-275)), CTransform(CVector3(0,-100,-475)), CTransform(CVector3(475,-100,275)) };
+constexpr float floor_x = 475;
+constexpr float floor_y = -100;
+constexpr float floor_z = 275;
+const CTransform CFallOutGame::m_floor_transform_list[] = 
+{CTransform(CVector3(floor_x,floor_y,-floor_z)),CTransform(CVector3(-floor_x,floor_y,floor_z)), CTransform(CVector3(0,floor_y,floor_x)),
+CTransform(CVector3(-floor_x,floor_y,-floor_z)), CTransform(CVector3(0,floor_y,-floor_x)), CTransform(CVector3(floor_x,floor_y,floor_z)) };
 
 const vivid::Vector2    CFallOutGame::m_topic_positionList[] = { vivid::Vector2(0, -200),vivid::Vector2(250, -200),vivid::Vector2(500, -200),
 vivid::Vector2(750, -200),vivid::Vector2(1000, -200),vivid::Vector2(1250, -200) };
@@ -31,7 +32,6 @@ const float		CFallOutGame::m_extend_return_time = 30.0f;
 const float		CFallOutGame::m_topic_interval_time = 1.0f;
 const int		CFallOutGame::m_max_topic_num = 5;
 const CVector3  CFallOutGame::m_player_default_forward = CVector3(0.0f,0.0f,-1.0f);
-const CVector3  CFallOutGame::m_floor_offset = CVector3(475.0f, -100.0f, 275.0f);
 const CVector3	CFallOutGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallOutGame::m_camera_direction = CVector3(0.0f, -1.0f, 1.0f);
 
@@ -70,8 +70,8 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
 
 	m_DebugText = "フォールゲーム";
-	CVector3 playerPos[] = { m_object_transform_list[(int)MARK_ID::CIRCLE].position, m_object_transform_list[(int)MARK_ID::CROSS].position,
-	m_object_transform_list[(int)MARK_ID::MOON].position,m_object_transform_list[(int)MARK_ID::SQUARE].position };
+	CVector3 playerPos[] = { m_floor_transform_list[(int)MARK_ID::CIRCLE].position, m_floor_transform_list[(int)MARK_ID::CROSS].position,
+	m_floor_transform_list[(int)MARK_ID::MOON].position,m_floor_transform_list[(int)MARK_ID::SQUARE].position };
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
@@ -92,22 +92,22 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	CGimmickManager& gm = CGimmickManager::GetInstance();
 
 	IObject* object = nullptr;
-	object = om.Create(OBJECT_ID::CIRCLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::CIRCLE]);
+	object = om.Create(OBJECT_ID::CIRCLE_FALL_OBJECT,m_floor_transform_list[(int)MARK_ID::CIRCLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	object = om.Create(OBJECT_ID::CROSS_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::CROSS]);
+	object = om.Create(OBJECT_ID::CROSS_FALL_OBJECT,m_floor_transform_list[(int)MARK_ID::CROSS]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	object = om.Create(OBJECT_ID::MOON_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::MOON]);
+	object = om.Create(OBJECT_ID::MOON_FALL_OBJECT,m_floor_transform_list[(int)MARK_ID::MOON]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	object = om.Create(OBJECT_ID::SQUARE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SQUARE]);
+	object = om.Create(OBJECT_ID::SQUARE_FALL_OBJECT,m_floor_transform_list[(int)MARK_ID::SQUARE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	object = om.Create(OBJECT_ID::SUN_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::SUN]);
+	object = om.Create(OBJECT_ID::SUN_FALL_OBJECT,m_floor_transform_list[(int)MARK_ID::SUN]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
-	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_object_transform_list[(int)MARK_ID::TRIANGLE]);
+	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_floor_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
 }
@@ -442,31 +442,31 @@ void CFallOutGame::CreateFloor(const CVector3& position)
 {
 	CObjectManager& om = CObjectManager::GetInstance();
 
-	CTransform transform = m_object_transform_list[(int)MARK_ID::CIRCLE];
+	CTransform transform = m_floor_transform_list[(int)MARK_ID::CIRCLE];
 	transform.position += position;
 	om.Create(OBJECT_ID::CIRCLE_FALL_OBJECT, transform);
 
-	transform = m_object_transform_list[(int)MARK_ID::CROSS];
+	transform = m_floor_transform_list[(int)MARK_ID::CROSS];
 	transform.position += position;
 
 	om.Create(OBJECT_ID::CROSS_FALL_OBJECT, transform);
 
-	transform = m_object_transform_list[(int)MARK_ID::MOON];
+	transform = m_floor_transform_list[(int)MARK_ID::MOON];
 	transform.position += position;
 
 	om.Create(OBJECT_ID::MOON_FALL_OBJECT, transform);
 
-	transform = m_object_transform_list[(int)MARK_ID::SQUARE];
+	transform = m_floor_transform_list[(int)MARK_ID::SQUARE];
 	transform.position += position;
 
 	om.Create(OBJECT_ID::SQUARE_FALL_OBJECT, transform);
 
-	transform = m_object_transform_list[(int)MARK_ID::SUN];
+	transform = m_floor_transform_list[(int)MARK_ID::SUN];
 	transform.position += position;
 
 	om.Create(OBJECT_ID::SUN_FALL_OBJECT, transform);
 
-	transform = m_object_transform_list[(int)MARK_ID::TRIANGLE];
+	transform = m_floor_transform_list[(int)MARK_ID::TRIANGLE];
 	transform.position += position;
 
 	om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT, transform);

@@ -42,7 +42,6 @@ Initialize(void)
 	CUI::Initialize(m_position);
 	CUI* bg = CUIManager::GetInstance().Create(UI_ID::NOTICE, m_bg_position);
 	bg->SetScale(m_bg_scale);
-	CUIManager::GetInstance().Create(UI_ID::TEXT_MANUAL);
 
 	SetOrderInLayer(1);
 

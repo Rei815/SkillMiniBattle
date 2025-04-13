@@ -45,7 +45,6 @@ Initialize(void)
 	CUI::Initialize(m_position);
 	CUI* bg = CUIManager::GetInstance().Create(UI_ID::NOTICE_WIDE, m_bg_position);
 	bg->SetScale(m_bg_scale);
-	CUIManager::GetInstance().Create(UI_ID::TEXT_OVERVIEW);
 	SetOrderInLayer(1);
 	m_FileName = m_file_name[(int)CDataManager::GetInstance().GetSelectGameID()];
 }

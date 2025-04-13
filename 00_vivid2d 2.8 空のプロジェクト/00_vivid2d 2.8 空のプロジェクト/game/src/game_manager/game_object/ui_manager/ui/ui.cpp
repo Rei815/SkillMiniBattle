@@ -120,6 +120,7 @@ void
 CUI::
 SetActive(bool active)
 {
+
     m_ActiveFlag = active;
 }
 
