@@ -83,9 +83,7 @@ private:
     static const vivid::Vector2 m_video_position;
 
     static const vivid::Vector2 m_video_poster_scale;
-    static const vivid::Vector2     m_icon_positionList[];
     static const vivid::Vector2     m_bg_position;
-    static const vivid::Vector2     m_info_position;
 
     SKILL_ID            m_ChooseSkillID[(int)UNIT_ID::NONE];
     CSkillIcon*         m_SkillSelectIcon[(int)UNIT_ID::NONE];
