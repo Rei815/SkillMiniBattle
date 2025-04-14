@@ -134,7 +134,7 @@ void CSelectGame::Update(void)
                     m_PlaneGameImage->SetAnimation(animation);
                     m_SelectedGameFlag = true;
                 }
-                if (planeGameImage->GetGameID() != (GAME_ID)game_id)
+                else
                 {
 
                     // ëIÇŒÇÍÇƒÇ¢Ç»Ç¢Ç‡ÇÃÇÕè¨Ç≥Ç≠Ç»ÇÈ

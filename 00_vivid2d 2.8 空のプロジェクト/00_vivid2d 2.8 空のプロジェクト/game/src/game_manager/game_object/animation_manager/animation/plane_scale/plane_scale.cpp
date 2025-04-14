@@ -13,16 +13,15 @@ CPlaneScale::~CPlaneScale()
 
 void CPlaneScale::Initialize(void* plane_pointer)
 {
-	m_Plane = (CPlaneGameImage*)plane_pointer;
-	if (!m_Plane) return;
+	if (!plane_pointer) return;
+	m_Plane = static_cast<CPlaneGameImage*>(plane_pointer);
 	m_Plane->SetSpeed(0.0f);
-	m_Plane->SetParent(nullptr);
 
 }
 
 void CPlaneScale::Update()
 {
-	if (m_Plane == nullptr) return;
+	if (!m_Plane) return;
 
 	CTransform transform = m_Plane->GetTransform();
 	CVector3 scale = transform.scale;
@@ -40,5 +39,4 @@ void CPlaneScale::Update()
 
 void CPlaneScale::Finalize()
 {
-	m_Plane = nullptr;
 }

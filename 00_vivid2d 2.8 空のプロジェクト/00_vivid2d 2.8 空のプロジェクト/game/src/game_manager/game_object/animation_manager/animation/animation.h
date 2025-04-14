@@ -17,17 +17,17 @@ public:
 	 *
 	 *  @param[in]  object_pointer    アニメーションさせるオブジェクトのポインタ
 	*/
-	virtual void Initialize(void* object_pointer) = 0;
+	virtual void	Initialize(void* object_pointer) = 0;
 
 	/*!
 	 *  @brief      更新
 	 */
-	virtual void Update(void);
+	virtual void	Update(void);
 
 	/*!
 	 *  @brief      解放
 	 */
-	virtual void Finalize(void);
+	virtual void	Finalize(void);
 
 	/*!
 	 *  @brief      アクティブフラグ取得

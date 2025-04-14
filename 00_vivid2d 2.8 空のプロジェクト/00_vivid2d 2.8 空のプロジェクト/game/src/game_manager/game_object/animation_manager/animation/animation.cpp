@@ -9,10 +9,6 @@ IAnimation::~IAnimation()
 
 }
 
-void IAnimation::Initialize(void* object_pointer)
-{
-}
-
 void IAnimation::Update(void)
 {
 

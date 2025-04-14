@@ -14,7 +14,8 @@ CKeyScale::~CKeyScale()
 
 void CKeyScale::Initialize(void* key_pointer)
 {
-	m_Key = (CUI*)key_pointer;
+	m_Key = static_cast<CUI*>(key_pointer);
+	
 	if (!m_Key) return;
 	m_MinScale = m_Key->GetScale();
 	m_Key->SetScale(m_max_scale);
