@@ -208,13 +208,6 @@ void CSelectGame::Update(void)
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FIVE))
-    {
-        m_SelectedGameID = GAME_ID::MAZE_GAME;
-        dm.SetGameID(m_SelectedGameID);
-
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-    }
 //#endif
 
     if (m_SecondSceneUIParent)

@@ -104,24 +104,3 @@ enum class SKILL_ID_BELTCONVEYOR
 	MAX,
 
 };
-
-
-/*!
- *  @brief      –À˜H‚ÌƒXƒLƒ‹ID
- */
-enum class SKILL_ID_MAZE
-{
-	SPEED_UP,
-	JUMP_UP,
-	SPAWN_WALL,
-	STOMP,
-	MAX,
-	DASH,
-	GRAVITY_AREA,
-
-	INVISIBLE,
-	BARRIER,
-	FLOATING,
-	STRONG_WIND,
-
-};

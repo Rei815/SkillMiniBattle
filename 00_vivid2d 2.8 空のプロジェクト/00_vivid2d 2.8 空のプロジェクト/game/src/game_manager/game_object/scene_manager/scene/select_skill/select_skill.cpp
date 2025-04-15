@@ -237,10 +237,6 @@ void CSelectSkill::ChooseSkill(void)
         for (int i = 0; i < (int)SKILL_ID_DODGEBALL::MAX; i++)
             TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_DODGEBALL)i));
         break;
-    case GAME_ID::MAZE_GAME:
-        for (int i = 0; i < (int)SKILL_ID_MAZE::MAX; i++)
-            TempSkillNumList.push_back(ConvertGameSkillID((SKILL_ID_MAZE)i));
-        break;
     }
 
     //’Š‘I
@@ -437,18 +433,15 @@ void CSelectSkill::MoveCursor(void)
                     CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                     CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
                     break;
-                case GAME_ID::MAX:
-                case GAME_ID::DEBUG_GAME:
-                    CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-                    CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME);
-                    break;
                 case GAME_ID::BELT_CONVEYOR_GAME:
                     CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                     CSceneManager::GetInstance().ChangeScene(SCENE_ID::BELTCONVEYORGAME);
                     break;
-                case GAME_ID::MAZE_GAME:
+
+                case GAME_ID::MAX:
+                case GAME_ID::DEBUG_GAME:
                     CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-                    CSceneManager::GetInstance().ChangeScene(SCENE_ID::MAZE_GAME);
+                    CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME);
                     break;
                 }
             }
@@ -522,10 +515,6 @@ void CSelectSkill::MoveCursor(void)
                     case GAME_ID::BELT_CONVEYOR_GAME:
                         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                         CSceneManager::GetInstance().ChangeScene(SCENE_ID::BELTCONVEYORGAME);
-                        break;
-                    case GAME_ID::MAZE_GAME:
-                        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::MAZE_GAME);
                         break;
                     }
                 }
@@ -689,50 +678,6 @@ SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_BELTCONVEYOR skill_id)
         temp = SKILL_ID::RESURRECT_BELT;
         break;
     case SKILL_ID_BELTCONVEYOR::MAX:
-        temp = SKILL_ID::MAX;
-        break;
-    }
-
-    return temp;
-}
-
-SKILL_ID CSelectSkill::ConvertGameSkillID(SKILL_ID_MAZE skill_id)
-{
-    SKILL_ID temp = SKILL_ID::MAX;
-
-    switch (skill_id)
-    {
-    case SKILL_ID_MAZE::SPEED_UP:
-        temp = SKILL_ID::SPEED_UP;
-        break;
-    case SKILL_ID_MAZE::JUMP_UP:
-        temp = SKILL_ID::JUMP_UP;
-        break;
-    case SKILL_ID_MAZE::DASH:
-        temp = SKILL_ID::DASH;
-        break;
-    case SKILL_ID_MAZE::SPAWN_WALL:
-        temp = SKILL_ID::SPAWN_WALL;
-        break;
-    case SKILL_ID_MAZE::BARRIER:
-        temp = SKILL_ID::BARRIER;
-        break;
-    case SKILL_ID_MAZE::GRAVITY_AREA:
-        temp = SKILL_ID::GRAVITY_AREA;
-        break;
-    case SKILL_ID_MAZE::FLOATING:
-        temp = SKILL_ID::FLOATING;
-        break;
-    case SKILL_ID_MAZE::STRONG_WIND:
-        temp = SKILL_ID::STRONG_WIND;
-        break;
-    case SKILL_ID_MAZE::INVISIBLE:
-        temp = SKILL_ID::INVISIBLE;
-        break;
-    case SKILL_ID_MAZE::STOMP:
-        temp = SKILL_ID::STOMP;
-        break;
-    case SKILL_ID_MAZE::MAX:
         temp = SKILL_ID::MAX;
         break;
     }
