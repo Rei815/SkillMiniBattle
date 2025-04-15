@@ -23,23 +23,10 @@ void CCannonBullet::Initialize(UNIT_CATEGORY category, CShot::BulletParameters* 
     m_Accleration = bulletParameter->acceleration;
     
     MV1SetMaterialDifColor(m_Model.GetModelHandle(), 0, GetColorF(1.0f, 0.0f, 0.0f, 1.0f));
-
-    //m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::ENEMY_BULLET, position);
 }
 
 void CCannonBullet::Update()
 {
-    /*
-    m_Speed += m_Accleration;    // ™X‚É‰Á‘¬‚³‚¹‚é
-
-    // Å‚‘¬“x§ŒÀ
-    if (m_Speed > m_max_speed)
-        m_Speed = m_max_speed;
-    m_Velocity = m_Direction * m_Speed;
-    */
-
-    //if (m_Effect != nullptr)
-    //    m_Effect->SetPosition(m_Transform.position);
 
     IBullet::Update();
 
@@ -47,8 +34,5 @@ void CCannonBullet::Update()
 
 void CCannonBullet::Finalize(void)
 {
-    //if (m_Effect != nullptr)
-    //    m_Effect->SetActive(false);
-
     IBullet::Finalize();
 }
