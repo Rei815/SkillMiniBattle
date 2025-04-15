@@ -44,16 +44,16 @@ public:
 private:
 
 	static const unsigned short m_index[];
-	CTransform			m_Transform;
-	std::string			m_FileName;
-	int					m_Handle;
-	DxLib::COLOR_U8		m_Color;
-	DxLib::VERTEX3D		m_Vertices[4];
-	MATRICES			m_Matrices;
+	CTransform					m_Transform;
+	std::string					m_FileName;
+	int							m_Handle;
+	DxLib::COLOR_U8				m_Color;
+	DxLib::VERTEX3D				m_Vertices[4];
+	MATRICES					m_Matrices;
 
 	/**/
-	int			m_Width;
-	int			m_Height;
-	CVector3	m_Normal;
+	int							m_Width;
+	int							m_Height;
+	CVector3					m_Normal;
 
 };

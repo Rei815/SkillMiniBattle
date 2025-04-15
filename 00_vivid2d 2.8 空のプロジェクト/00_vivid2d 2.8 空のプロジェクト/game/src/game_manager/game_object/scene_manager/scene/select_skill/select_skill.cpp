@@ -381,39 +381,40 @@ void CSelectSkill::MoveCursor(void)
         int TempPosNum = m_NowCursorPosNum;
 
 //#ifdef _DEBUG
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::D))
-        {
-            m_NowCursorPosNum++;
-            if (m_NowCursorPosNum >= m_CursorPosNumList.size())
-                m_NowCursorPosNum = 0;
-        }
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A))
-        {
-            m_NowCursorPosNum--;
-            if (m_NowCursorPosNum < 0)
-            {
-                m_NowCursorPosNum = m_CursorPosNumList.size() - 1;
-            }
-        }
-        if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
-        {
-            //プレイヤーにスキルをセットする
-            SKILL_ID tempSkillID = m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];
-            UNIT_ID tempPlayerID = m_CursorID[m_NowCursorID_Num];
+        //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::D))
+        //{
+        //    m_NowCursorPosNum++;
+        //    if (m_NowCursorPosNum >= m_CursorPosNumList.size())
+        //        m_NowCursorPosNum = 0;
+        //}
+        //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::A))
+        //{
+        //    m_NowCursorPosNum--;
+        //    if (m_NowCursorPosNum < 0)
+        //    {
+        //        m_NowCursorPosNum = m_CursorPosNumList.size() - 1;
+        //    }
+        //}
+        //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+        //{
+        //    //プレイヤーにスキルをセットする
+        //    SKILL_ID tempSkillID = m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];
+        //    UNIT_ID tempPlayerID = m_CursorID[m_NowCursorID_Num];
 
-            CSkillManager::GetInstance().CreateSkill(tempSkillID, tempPlayerID);
+        //    CSkillManager::GetInstance().CreateSkill(tempSkillID, tempPlayerID);
 
-            //選択されたスキルを選択肢から取り除く
-            m_CursorPosNumList.erase(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum));
-            m_NowCursorPosNum = 0;
+        //    //選択されたスキルを選択肢から取り除く
+        //    m_CursorPosNumList.erase(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum));
+        //    m_NowCursorPosNum = 0;
 
-            //まだ選択を終了していないプレイヤーがいる場合、次のプレイヤーのカーソルに切り替わる
-            m_NowCursorID_Num++;
-            if (m_NowCursorID_Num < (int)UNIT_ID::NONE &&
-                m_CursorID[m_NowCursorID_Num] != UNIT_ID::NONE)
-            {
-                CreateCursor();
+        //    //まだ選択を終了していないプレイヤーがいる場合、次のプレイヤーのカーソルに切り替わる
+        //    m_NowCursorID_Num++;
+        //    if (m_NowCursorID_Num < (int)UNIT_ID::NONE &&
+        //        m_CursorID[m_NowCursorID_Num] != UNIT_ID::NONE)
+        //    {
+        //        CreateCursor();
 
+<<<<<<< Updated upstream
                 m_SkillVideo->SetSkillNum(*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));
             }
             //全員が選択を終了している場合、シーンの移行を行う
@@ -446,6 +447,43 @@ void CSelectSkill::MoveCursor(void)
                 }
             }
         }
+=======
+        //        m_SkillVideo->SetSkillNum(*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));
+        //    }
+        //    //全員が選択を終了している場合、シーンの移行を行う
+        //    else if (m_SceneUIParent == nullptr)
+        //    {
+        //        switch (m_GameID)
+        //        {
+        //        case GAME_ID::FALLOUT_GAME:
+        //            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+        //            CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
+        //            break;
+        //        case GAME_ID::DODGE_BALL_GAME:
+        //            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+        //            CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
+        //            break;
+        //        case GAME_ID::DARUMA_FALL_DOWN_GAME:
+        //            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+        //            CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
+        //            break;
+        //        case GAME_ID::MAX:
+        //        case GAME_ID::DEBUG_GAME:
+        //            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+        //            CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME);
+        //            break;
+        //        case GAME_ID::BELT_CONVEYOR_GAME:
+        //            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+        //            CSceneManager::GetInstance().ChangeScene(SCENE_ID::BELTCONVEYORGAME);
+        //            break;
+        //        case GAME_ID::MAZE_GAME:
+        //            CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+        //            CSceneManager::GetInstance().ChangeScene(SCENE_ID::MAZE_GAME);
+        //            break;
+        //        }
+        //    }
+        //}
+>>>>>>> Stashed changes
 
 //#endif // DEBUG
 
@@ -479,13 +517,14 @@ void CSelectSkill::MoveCursor(void)
 
                 //選択されたスキルを選択肢から取り除く
                 m_CursorPosNumList.erase(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum));
-                m_NowCursorPosNum = 0;
 
                 //まだ選択を終了していないプレイヤーがいる場合、次のプレイヤーのカーソルに切り替わる
                 m_NowCursorID_Num++;
                 if (m_NowCursorID_Num < (int)UNIT_ID::NONE &&
                     m_CursorID[m_NowCursorID_Num] != UNIT_ID::NONE)
                 {
+                    m_NowCursorPosNum = 0;
+
                     CreateCursor();
 
                     m_SkillVideo->SetSkillNum(*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));

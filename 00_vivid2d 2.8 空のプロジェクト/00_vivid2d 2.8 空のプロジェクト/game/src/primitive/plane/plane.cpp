@@ -34,7 +34,7 @@ void CPlane::SetUp(const std::string fileName)
 {
 	m_FileName = fileName;
 	vivid::LoadTexture(fileName);
-	m_Handle = vivid::core::FindLoadedTexture(fileName);//DxLib::LoadGraph(fileName.c_str(), TRUE);
+	m_Handle = vivid::core::FindLoadedTexture(fileName);
 	SetUp();
 }
 

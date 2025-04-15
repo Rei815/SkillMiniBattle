@@ -75,7 +75,6 @@ void CTitle::Update(void)
         m_Color = 0xff000000;
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
 
-        //m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::ENTRY);
 
     }

@@ -33,14 +33,16 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
 
     CDataManager::GetInstance().Initialize();
 
+    CUIManager& um = CUIManager::GetInstance();
+    um.Create(UI_ID::TITLE_LOGO);
 
-    CUIManager::GetInstance().Create(UI_ID::MENU_BG);
+    um.Create(UI_ID::MENU_BG);
 
-    CUIManager::GetInstance().Create(UI_ID::SCENE_TITLE);
+    um.Create(UI_ID::SCENE_TITLE);
 
     for (int i = 1; i < (int)UNIT_ID::NONE; i++)
     {
-        CUI* ui = CUIManager::GetInstance().Create(UI_ID::PLAYER_NUM_SELECT);
+        CUI* ui = um.Create(UI_ID::PLAYER_NUM_SELECT);
 
         m_PlayerNumUI[i] = dynamic_cast<CPlayerNumSelect*>(ui);
 
@@ -58,7 +60,7 @@ void CSelectPlayer::Initialize(SCENE_ID scene_id)
     //このシーンが作られた際にタイトルからなのかセレクトモードシーンから作られたかで動きを変える
     if (previousScene->GetSceneID() == SCENE_ID::TITLE)
     {
-        m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
+        m_SceneUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
         m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
     }
     //else if(previousScene->GetSceneID() == SCENE_ID::SELECTMODE)

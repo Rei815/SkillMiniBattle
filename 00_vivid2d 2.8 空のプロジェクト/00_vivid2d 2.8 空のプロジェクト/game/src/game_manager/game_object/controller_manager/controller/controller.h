@@ -34,24 +34,24 @@ public:
     /*!
      *  @brief  ボタンが押されたかどうか
      */
-    bool        GetButtonDown(BUTTON_ID button_id);
+    virtual bool        GetButtonDown(BUTTON_ID button_id);
 
     /*!
      *  @brief  ボタンが離されたかどうか
      */
-    bool        GetButtonUp(BUTTON_ID button_id);
+    virtual bool        GetButtonUp(BUTTON_ID button_id);
 
     /*!
      *  @brief  ボタンが押されているかどうか
      */
-    bool        GetButtonHold(BUTTON_ID button_id);
+    virtual bool        GetButtonHold(BUTTON_ID button_id);
 
     /*!
      *  @brief  左スティックの状態を取得
      * 
      *  @return vivid::Vector2          -1.0f～1.0f
      */
-    vivid::Vector2        GetLeftStick();
+    virtual vivid::Vector2        GetLeftStick();
 
     /*!
      *  @brief  左スティックが左右に傾いたかのフラグを取得
@@ -118,5 +118,5 @@ private:
     bool                            m_LeftHorizontal;
     bool                            m_LeftVertical;
     vivid::Vector2                  m_Stick;
-    UNIT_ID                        m_UnitID;
+    UNIT_ID                         m_UnitID;
 };

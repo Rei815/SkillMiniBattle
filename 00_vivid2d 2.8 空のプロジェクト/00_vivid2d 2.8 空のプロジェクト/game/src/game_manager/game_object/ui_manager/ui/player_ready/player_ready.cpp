@@ -18,7 +18,12 @@ const vivid::Vector2    CPlayerReady::m_anchor = vivid::Vector2((m_width * m_sca
 const unsigned int		CPlayerReady::m_color[] = { 0xff808080,0xff808080 ,0xff808080, 0xff808080 };
 CPlayerReady::CPlayerReady(UI_ID id)
 	: CUI(m_width, m_height, id)
+	, m_ReadyFlag(false)
 {
+	for (int i = 0; i < 4; i++)
+	{
+		m_Color[i] = m_color[i];
+	}
 }
 
 CPlayerReady::~CPlayerReady()
@@ -43,6 +48,7 @@ void CPlayerReady::Update(void)
 	CController* controller2 = cm.GetController(CONTROLLER_ID::TWO);
 	CController* controller3 = cm.GetController(CONTROLLER_ID::THREE);
 	CController* controller4 = cm.GetController(CONTROLLER_ID::FOUR);
+	CController* keyboard = cm.GetController(CONTROLLER_ID::KEYBOARD);
 	if (controller1)
 		if (controller1->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)controller1->GetUnitID()] ^= 0x007f7f7f;
@@ -55,6 +61,9 @@ void CPlayerReady::Update(void)
 	if (controller4)
 		if (controller4->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)controller4->GetUnitID()] ^= 0x007f7f7f;
+	if (keyboard)
+		if (keyboard->GetButtonDown(BUTTON_ID::B))
+			m_Color[(int)keyboard->GetUnitID()] ^= 0x007f7f7f;
 	//#if _DEBUG
 	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
 	{

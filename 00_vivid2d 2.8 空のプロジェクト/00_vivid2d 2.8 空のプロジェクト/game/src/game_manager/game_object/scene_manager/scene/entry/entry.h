@@ -68,7 +68,7 @@ private:
     UNIT_ID                 m_PlayerArray[4];       //存在しているプレイヤーのID
     CTimer                  m_GameStartTimer;       //ゲーム開始までのタイマー
     CTimer                  m_HoldStartTimer;       //長押しで開始するタイマー
-    CTimer                  m_HoldTimer[4];         //長押ししている時間
+    CTimer                  m_HoldTimer[5];         //長押ししている時間
     bool                    m_WasPressdThisFrame;   //同フレーム中の押下フラグ
     bool                    m_WasPressd;            //押下フラグ
     int                     m_PlayerNum;

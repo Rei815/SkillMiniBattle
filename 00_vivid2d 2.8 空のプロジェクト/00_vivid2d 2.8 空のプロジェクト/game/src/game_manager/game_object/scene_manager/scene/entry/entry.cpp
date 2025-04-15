@@ -57,7 +57,11 @@ void CEntry::Initialize(SCENE_ID scene_id)
     for (int i = 0; i < 4; i++)
     {
         m_PlayerArray[i] = UNIT_ID::NONE;
+    }
+    for (int i = 0; i < 5; i++)
+    {
         m_HoldTimer[i].SetUp(m_hold_start_time);
+
     }
     m_GameStartTimer.SetUp(m_start_time, CTimer::COUNT_TYPE::DOWN);
     vivid::Vector2  GaugePos = vivid::Vector2(1200, 50);
@@ -195,11 +199,11 @@ void CEntry::Update(void)
             m_PlayerArray[3] = UNIT_ID::NONE;
         }
     }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
-    {
-        CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
-        CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
-    }
+    //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
+    //{
+    //    CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
+    //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
+    //}
 
 
     CUnitManager::UNIT_LIST::iterator it = unitList.begin();
@@ -251,7 +255,7 @@ void CEntry::CheckButtonHold(void)
         //一人以下の時にタイマーのリセット
         if (unitID == UNIT_ID::NONE || m_PlayerNum < m_min_player)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 m_HoldTimer[i].Reset();
             }
@@ -275,7 +279,7 @@ void CEntry::CheckButtonHold(void)
     CController* controller = nullptr;
     bool         resetGaugeFlag = false;
     //長押ししていないコントローラーのタイマーをリセット
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         controller = cm.GetController((CONTROLLER_ID)i);
         UNIT_ID unitID = controller->GetUnitID();

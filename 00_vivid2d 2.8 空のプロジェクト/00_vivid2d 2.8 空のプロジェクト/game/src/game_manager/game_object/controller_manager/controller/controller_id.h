@@ -6,4 +6,5 @@ enum class CONTROLLER_ID
 	TWO,
 	THREE,
 	FOUR,
+	KEYBOARD,
 };
