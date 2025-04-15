@@ -27,6 +27,7 @@ public:
 	void Finalize();
 private:
 	static const CVector3	m_min_scale;	//!< 拡大率の最小値
-	static const float		m_speed;		//アニメーション速度
+	static const float		m_speed;		//!< アニメーション速度
+
 	CPlaneGameImage*		m_Plane;		//!< 平面のポインタ
 };

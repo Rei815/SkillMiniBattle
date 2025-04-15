@@ -148,8 +148,6 @@ void CSelectGame::Update(void)
 
                     planeGameImage->SetAnimation(animation);
                 }
-                std::cerr << "planeGameImage ID: " << (int)planeGameImage->GetGameID() << " -> "
-                    << ((planeGameImage->GetGameID() == m_SelectedGameID) ? "UP" : "SCALE") << std::endl;
             }
 
 

@@ -43,29 +43,7 @@ public:
 	 */
 	void            SetActive(bool active);
 
-	/*!
-	 *  @brief      終了フラグ取得
-	 *
-	 *  @return     終了フラグ
-	 */
-	bool            GetFinishFlag(void);
-
-	/*!
-	 *  @brief      終了フラグ設定
-	 *
-	 *  @param[in]  finish  終了フラグ
-	 */
-	void            SetFinishFlag(bool finish);
-
-	/*!
-	 *  @brief      アクティブフラグ設定
-	 *
-	 *  @param[in]  active  アクティブフラグ
-	 */
-	void            SetEndPosition(bool active);
-
 protected:
 	
 	bool            m_ActiveFlag;   //!< アクティブフラグ
-	bool			m_FinishFlag;
 };

@@ -21,7 +21,10 @@ void CPlaneScale::Initialize(void* plane_pointer)
 
 void CPlaneScale::Update()
 {
-	if (!m_Plane) return;
+	if (!m_Plane)
+	{
+		return;
+	}
 
 	CTransform transform = m_Plane->GetTransform();
 	CVector3 scale = transform.scale;

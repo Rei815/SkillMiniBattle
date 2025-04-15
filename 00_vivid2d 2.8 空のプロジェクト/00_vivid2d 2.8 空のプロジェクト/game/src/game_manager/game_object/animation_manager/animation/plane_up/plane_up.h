@@ -38,13 +38,14 @@ private:
 	static const CVector3		m_down_initial_position;	//!< 降りるときの初期位置
 	static const float			m_up_time;					//!< 上がっている時間
 	static const float			m_speed;					//!< 動きの速さ
+	static const float          m_end_time;					//!< 終了時間
+
 	CPlaneGameImage*			m_Plane;					//!< 平面のポインタ
 	CTimer						m_Timer;					//!< タイマー
 	STATE						m_State;					//!< 状態
 	
-	static const float          m_end_time;         //!< 終了時間
-	float                       m_EaseTimer;        //!< 経過時間
-	float                       m_StartValue;       //!< 開始値
-	float                       m_FinishValue;      //!< 終了値
+	float                       m_EaseTimer;				//!< 経過時間
+	float                       m_StartValue;				//!< 開始値
+	float                       m_FinishValue;				//!< 終了値
 
 };

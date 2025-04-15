@@ -455,6 +455,7 @@ void CSelectSkill::MoveCursor(void)
         }
 
 #endif // DEBUG
+
         if (controller)
         {
 
@@ -474,14 +475,6 @@ void CSelectSkill::MoveCursor(void)
                     m_NowCursorPosNum = m_CursorPosNumList.size() - 1;
             }
 
-            if (m_NowCursorPosNum != TempPosNum)
-            {
-                m_CursorMoveTimer.Reset();
-
-                m_SkillSelectCursor->SetPosition(m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))]);
-
-                m_SkillVideo->SetSkillNum(*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));
-            }
 
             if (controller->GetButtonDown(BUTTON_ID::B))
             {
@@ -538,6 +531,15 @@ void CSelectSkill::MoveCursor(void)
                 }
             }
         }
+        if (m_NowCursorPosNum != TempPosNum)
+        {
+            m_CursorMoveTimer.Reset();
+
+            m_SkillSelectCursor->SetPosition(m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))]);
+
+            m_SkillVideo->SetSkillNum(*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum)));
+        }
+
     }
     if (m_SkillInfomation != nullptr && !m_CursorPosNumList.empty() && m_NowCursorID_Num < (int)UNIT_ID::NONE && m_CursorID[m_NowCursorID_Num] != UNIT_ID::NONE)
     {

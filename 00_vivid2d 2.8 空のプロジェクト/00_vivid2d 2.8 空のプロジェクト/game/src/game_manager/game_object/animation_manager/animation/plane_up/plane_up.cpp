@@ -16,7 +16,7 @@ CPlaneUp::~CPlaneUp()
 void CPlaneUp::Initialize(void* plane_pointer)
 {
 	if (!plane_pointer) return;
-	m_Plane = (CPlaneGameImage*)plane_pointer;
+	m_Plane = static_cast<CPlaneGameImage*>(plane_pointer);
 	m_Timer.SetUp(m_up_time);
 	m_StartValue = m_Plane->GetTransform().position.y;
 	m_EaseTimer = 0.0f;
