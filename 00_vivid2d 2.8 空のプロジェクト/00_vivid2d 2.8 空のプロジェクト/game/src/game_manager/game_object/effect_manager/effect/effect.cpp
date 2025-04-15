@@ -13,15 +13,12 @@ IEffect::IEffect()
 }
 
 IEffect::IEffect(const std::string& file_name, EFFECT_ID effectID, float speed)
-    : m_Scale(CVector3(25.0f, 25.0f, 25.0f))
-    , m_ActiveFlag(true)
-    , m_FileName(file_name)
-    , m_PlayHandle(VIVID_DX_ERROR)
+    : m_FileName(file_name)
+    //, m_Transform()
     , m_Parent(nullptr)
     , m_EffectID(effectID)
     , m_Speed(speed)
     , m_StopFlag(false)
-
 {
 }
 /*
@@ -44,6 +41,7 @@ IEffect(int width, int height)
     , m_StopFlag(false)
 
 {
+    IEffect();
 }
 
 /*
