@@ -15,8 +15,7 @@ CUI::CUI(UI_ID id)
 /*
  *  コンストラクタ
  */
-CUI::
-CUI(int width, int height, UI_ID id, int layer)
+CUI::CUI(int width, int height, UI_ID id, int layer)
     : m_Width(width)
     , m_Height(height)
     , m_ActiveFlag(true)

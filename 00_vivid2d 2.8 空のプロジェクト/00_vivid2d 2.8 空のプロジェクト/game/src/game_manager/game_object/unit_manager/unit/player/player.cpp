@@ -344,7 +344,7 @@ void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, fl
 }
 void CPlayer::Control(void)
 {
-#ifdef _DEBUG
+//#ifdef _DEBUG
     //¶ˆÚ“®
     if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
         m_Accelerator.x += -m_move_speed * m_MoveSpeedRate;
@@ -386,7 +386,7 @@ void CPlayer::Control(void)
     else
         m_StopFlag = false;
 
-#endif // DEBUG
+//#endif // DEBUG
 
     if (m_Controller == nullptr) return;
     vivid::Vector2 stick = m_Controller->GetLeftStick();

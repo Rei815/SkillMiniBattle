@@ -384,7 +384,7 @@ void CSelectSkill::MoveCursor(void)
     {
         int TempPosNum = m_NowCursorPosNum;
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
         if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::D))
         {
             m_NowCursorPosNum++;
@@ -454,7 +454,7 @@ void CSelectSkill::MoveCursor(void)
             }
         }
 
-#endif // DEBUG
+//#endif // DEBUG
 
         if (controller)
         {
