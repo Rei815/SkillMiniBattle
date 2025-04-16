@@ -176,6 +176,7 @@
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation\plane_up\plane_up.cpp" />
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\controller_manager\controller\controller.cpp" />
+    <ClCompile Include="src\game_manager\game_object\controller_manager\controller\dummy_controller\dummy_controller.cpp" />
     <ClCompile Include="src\game_manager\game_object\controller_manager\controller\keyboard\keyboard.cpp" />
     <ClCompile Include="src\game_manager\game_object\data_manager\data_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\collide_effect\collide_effect.cpp" />
@@ -341,6 +342,7 @@
     <ClInclude Include="src\game_manager\game_object\controller_manager\controller\button_id.h" />
     <ClInclude Include="src\game_manager\game_object\controller_manager\controller\controller.h" />
     <ClInclude Include="src\game_manager\game_object\controller_manager\controller\controller_id.h" />
+    <ClInclude Include="src\game_manager\game_object\controller_manager\controller\dummy_controller\dummy_controller.h" />
     <ClInclude Include="src\game_manager\game_object\controller_manager\controller\keyboard\keyboard.h" />
     <ClInclude Include="src\game_manager\game_object\controller_manager\controller\stick_id.h" />
     <ClInclude Include="src\game_manager\game_object\data_manager\data_manager.h" />

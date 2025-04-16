@@ -50,8 +50,10 @@ void CPlayerReady::Update(void)
 	CController* controller4 = cm.GetController(CONTROLLER_ID::FOUR);
 	CController* keyboard = cm.GetController(CONTROLLER_ID::KEYBOARD);
 	if (controller1)
+	{
 		if (controller1->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)controller1->GetUnitID()] ^= 0x007f7f7f;
+	}
 	if (controller2)
 		if (controller2->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)controller2->GetUnitID()] ^= 0x007f7f7f;
@@ -64,7 +66,12 @@ void CPlayerReady::Update(void)
 	if (keyboard)
 		if (keyboard->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)keyboard->GetUnitID()] ^= 0x007f7f7f;
-	//#if _DEBUG
+
+	if (CDataManager::GetInstance().GetCurrentPlayer() == 2 && cm.GetController(CONTROLLER_ID::DUMMY)->GetUnitID() == UNIT_ID::PLAYER2)
+		m_Color[(int)UNIT_ID::PLAYER2] = 0xffffffff;
+
+	
+#if _DEBUG
 	if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
 	{
 		m_Color[0] ^= 0x007f7f7f;
@@ -82,7 +89,9 @@ void CPlayerReady::Update(void)
 		m_Color[3] ^= 0x007f7f7f;
 	}
 
-//#endif // _DEBUG
+ #endif // _DEBUG
+
+
 	bool flag = false;
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{

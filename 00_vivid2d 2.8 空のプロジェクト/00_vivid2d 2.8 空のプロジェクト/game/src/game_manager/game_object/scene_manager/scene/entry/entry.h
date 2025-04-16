@@ -64,12 +64,11 @@ private:
     static const CVector3   m_camera_position;      //カメラの位置
     static const CVector3   m_camera_direction;     //カメラの向き
     static const int        m_min_player;           //開始可能な最少人数
-    UNIT_ID                 m_UnitID;               //次に生成するプレイヤーのID
+    UNIT_ID                 m_NextUnitID;               //次に生成するプレイヤーのID
     UNIT_ID                 m_PlayerArray[4];       //存在しているプレイヤーのID
     CTimer                  m_GameStartTimer;       //ゲーム開始までのタイマー
     CTimer                  m_HoldStartTimer;       //長押しで開始するタイマー
     CTimer                  m_HoldTimer[5];         //長押ししている時間
-    bool                    m_WasPressdThisFrame;   //同フレーム中の押下フラグ
     bool                    m_WasPressd;            //押下フラグ
     int                     m_PlayerNum;
     CSkillGauge*            m_GameStartGauge;
