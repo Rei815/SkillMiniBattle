@@ -295,10 +295,11 @@ CSceneManager::CreateScene(SCENE_ID id)
     case SCENE_ID::DARUMAFALLDOWN:      scene = new CDaruma_FallDownGame(); break;
     case SCENE_ID::DODGEBALLGAME:       scene = new CDodgeBallGame();       break;
     case SCENE_ID::BELTCONVEYORGAME:    scene = new CBeltConveyorGame();    break;
-    case SCENE_ID::DEBUGGAME:           scene = new CDebugGame();           break;
     case SCENE_ID::RESULT_MINIGAME:     scene = new CResultMiniGame();      break;
     case SCENE_ID::RESULT_GAME:         scene = new CResultGame();          break;
     case SCENE_ID::ENTRY:               scene = new CEntry();               break;
+
+    case SCENE_ID::DEBUGGAME:           scene = new CDebugGame();           break;
     }
     m_SceneList.push_back(scene);
     

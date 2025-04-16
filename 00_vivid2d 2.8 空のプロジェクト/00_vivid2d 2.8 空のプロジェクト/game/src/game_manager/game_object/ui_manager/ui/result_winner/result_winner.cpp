@@ -12,7 +12,6 @@ const std::string CResultWinner::m_file_name[] =
 		"data\\Textures\\winner_3.png",
 		"data\\Textures\\winner_4.png",
 		"data\\Textures\\winner_none.png"
-
 };
 
 /*

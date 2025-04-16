@@ -13,12 +13,11 @@ enum class SCENE_ID
 	DARUMAFALLDOWN,		//!< ダルマさんが転んだゲームシーン
 	DODGEBALLGAME,		//!< ドッジボールゲームシーン
 	BELTCONVEYORGAME,	//!< ベルトコンベアゲームシーン
-	MAZE_GAME,			//!< 迷路ゲームシーン
-	DEBUGGAME,			//!< デバッグゲームシーン
 	RESULT_MINIGAME,	//!< ミニゲームリザルトシーン
 	RESULT_GAME,		//!< ミニゲームリザルトシーン
 	ENTRY,				//!< エントリーシーン
 
+	DEBUGGAME,			//!< デバッグゲームシーン
 
 	MAX			//!< シーンID数
 };

@@ -439,14 +439,15 @@ void CSelectSkill::MoveCursor(void)
                         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                         CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
                         break;
+                    case GAME_ID::BELT_CONVEYOR_GAME:
+                        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::BELTCONVEYORGAME);
+                        break;
+
                     case GAME_ID::MAX:
                     case GAME_ID::DEBUG_GAME:
                         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
                         CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME);
-                        break;
-                    case GAME_ID::BELT_CONVEYOR_GAME:
-                        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::BELTCONVEYORGAME);
                         break;
                     }
                 }
