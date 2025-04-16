@@ -3,7 +3,7 @@
 
 const int    CResultWinner::m_width = 320;
 const int    CResultWinner::m_height = 150;
-const vivid::Vector2    CResultWinner::m_position = vivid::Vector2(vivid::GetWindowWidth() / 2.0f - m_width / 2.0f, 10);
+const vivid::Vector2    CResultWinner::m_position = vivid::Vector2(vivid::GetWindowWidth() / 2.0f - m_width / 2.0f, vivid::GetWindowHeight() / 2.0f - m_height / 2.0f);
 
 const std::string CResultWinner::m_file_name[] =
 {
