@@ -78,37 +78,14 @@ Update(void)
 		m_PosAngle = 0;
 	if (m_Angle > 360)
 		m_Angle = 0;
-	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
-	{
-		m_Transform.position.z += 10.0f;
-
-	}
-	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
-	{
-		m_Transform.position.x -= 10.0f;
-
-	}
-	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
-	{
-		m_Transform.position.z -= 10.0f;
-
-	}
-	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
-	{
-		m_Transform.position.x += 10.0f;
-
-	}
-	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::G))
-		m_Transform.rotation.y -= 1.0f;
-	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::Q))
-		m_PosAngle -= 1.0f;
-	if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::F))
-		m_Transform.rotation.y += 1.0f;
 	m_Plane.SetPosition(m_Transform.position);
 	m_Plane.Update();
 
 	float rad = DEG_TO_RAD(m_PosAngle);
 	float _rad = DEG_TO_RAD(m_Angle);
+
+	//çsóÒÇÃçÏê¨
+	//âÒì]å„Ç…à⁄ìÆÇµÅAçƒìxâÒì]Ç≥ÇπÇÈ
 	m_Matrix = CMatrix::Rotate(CVector3(0.0f, _rad, 0.0f)) * CMatrix::Translate(m_Transform.position) * CMatrix::Rotate(CVector3(0.0f, rad, 0.0f));
 
 }
@@ -119,9 +96,7 @@ Update(void)
 void
 CPlaneGameImage::
 Draw(void)
-{
-
-	
+{	
 	m_Plane.Draw(m_Matrix);
 }
 /*

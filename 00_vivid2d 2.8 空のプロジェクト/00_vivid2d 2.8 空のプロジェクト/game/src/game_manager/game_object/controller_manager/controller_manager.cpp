@@ -1,5 +1,6 @@
 #include "controller_manager.h"
 #include "controller/keyboard/keyboard.h"
+#include "controller/dummy_controller/dummy_controller.h"
 /*
  *  インスタンスの取得
  */
@@ -23,7 +24,7 @@ CControllerManager::Initialize(void)
     Create(CONTROLLER_ID::THREE);
     Create(CONTROLLER_ID::FOUR);
     Create(CONTROLLER_ID::KEYBOARD);
-
+    Create(CONTROLLER_ID::DUMMY);
 }
 
 /*
@@ -107,6 +108,9 @@ CController* CControllerManager::Create(CONTROLLER_ID id)
         break;
     case CONTROLLER_ID::KEYBOARD:
         controller = new CKeyboard();
+        break;
+    case CONTROLLER_ID::DUMMY:
+        controller = new CDummyController();
         break;
     }
     if (!controller) return nullptr;

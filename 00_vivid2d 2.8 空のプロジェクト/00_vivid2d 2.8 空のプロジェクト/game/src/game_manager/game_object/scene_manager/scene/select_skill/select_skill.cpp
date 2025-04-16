@@ -400,7 +400,7 @@ void CSelectSkill::MoveCursor(void)
             }
 
 
-            if (controller->GetButtonDown(BUTTON_ID::B))
+            if (controller->GetButtonDown(BUTTON_ID::B) || controller->GetID() == CONTROLLER_ID::DUMMY)
             {
                 //プレイヤーにスキルをセットする
                 SKILL_ID tempSkillID = m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];
