@@ -21,6 +21,7 @@ CTitle::~CTitle(void)
 
 void CTitle::Initialize(SCENE_ID scene_id)
 {
+    //ライティングの初期設定
     MATERIALPARAM Material;
     Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
     Material.Specular = GetColorF(0.0f, 1.0f, 0.0f, 0.0f);

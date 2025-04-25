@@ -49,14 +49,14 @@ public:
      * 
      *  @return     ゲームのID
      */
-    GAME_ID     GetGameID(void);
+    GAME_ID         GetGameID(void);
 
     /*!
-     *  @brief      設定されているゲームのIDを設定
+     *  @brief      ゲームのIDを設定
      * 
      *  @param[in]  game_id     ゲームのID
      */
-    void        SetGameID(GAME_ID game_id);
+    void            SetGameID(GAME_ID game_id);
 
     /*!
      *  @brief      トランスフォーム設定
@@ -103,18 +103,18 @@ private:
     static const vivid::Vector2     m_anchor;           //!< 基準点
     static const CVector3           m_scale;            //!< 拡縮
     static const float              m_rotation_speed;
-    static const float              m_speed;
+    static const float              m_speed;            //!< 位置を軸に回転する速さ
 
     float                           m_Speed;
     std::string                     m_FileName;
     int                             m_Width;
     int                             m_Height;
     int                             m_Handle;
-    float                           m_Angle;
-    float                           m_PosAngle;
-    CPlane                          m_Plane;
+    float                           m_Angle;            //!< 自身の回転
+    float                           m_PosAngle;         //!< 位置を軸に回転
+    CPlane                          m_Plane;            //!< 平面
     CVector3                        m_InitialPosition;  //!< 初期位置
-    GAME_ID                         m_GameID;
+    GAME_ID                         m_GameID;           //!< 画像のゲームID
     CMatrix                         m_Matrix;
     IAnimation*                     m_Animation;
 };

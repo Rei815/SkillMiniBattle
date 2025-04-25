@@ -4,15 +4,15 @@ enum class SCENE_ID
 {
 	DUMMY,					//!< ダミーID
 	TITLE,					//!< タイトルシーン
-	RANDOM_GAME,			//!< ゲームが決められるシーン
+	GAME_ROLL_AND_REVEAL,	//!< ゲームが選出され、情報が流れるシーン
 	SELECT_SKILL,			//!< スキルを決めるシーン
 	GAME_MAIN,				//!< ゲームメインシーン
 	FALL_GAME,				//!< フォールゲームシーン
 	DARUMA_FALLDOWN_GAME,	//!< ダルマさんが転んだゲームシーン
 	DODGEBALL_GAME,			//!< ドッジボールゲームシーン
 	BELTCONVEYOR_GAME,		//!< ベルトコンベアゲームシーン
-	RESULT_MINIGAME,		//!< ミニゲームリザルトシーン
-	RESULT_GAME,			//!< ミニゲームリザルトシーン
+	MINIGAME_RESULT,		//!< ミニゲームの結果発表シーン
+	GAME_RESULT,			//!< 結果発表シーン
 	ENTRY,					//!< エントリーシーン
 	MAX						//!< シーンID数
 };

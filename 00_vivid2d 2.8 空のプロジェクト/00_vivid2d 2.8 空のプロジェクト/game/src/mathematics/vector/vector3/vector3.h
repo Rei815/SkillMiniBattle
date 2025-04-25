@@ -22,176 +22,177 @@ public:
 	CVector3(void);
 
 	/*!
-		*  @brief  コンストラクタ
+		*  @brief		コンストラクタ
 		*
-		*  @param[in]  xVal   X成分
-		*  @param[in]  yVal   Y成分
-		*  @param[in]  zVal   Z成分
+		*  @param[in]	xVal   X成分
+		*  @param[in]	yVal   Y成分
+		*  @param[in]	zVal   Z成分
 		*/
 	CVector3(float xVal, float yVal, float zVal);
 
 	/*!
-		*  @brief  コンストラクタ
+		*  @brief		コンストラクタ
 		*
-		*  @param[in]  v  ベクトル
+		*  @param[in]	v  ベクトル
 		*/
 	CVector3(const DxLib::VECTOR& v);
+
 	/*!
 		*  @brief  デストラクタ
 		*/
 	~CVector3(void);
 
 	/*!
-		*  @brief      ベクトルの正規化<br>
-		*              自身のベクトルも正規化される
+		*  @brief		ベクトルの正規化<br>
+		*				自身のベクトルも正規化される
 		*
-		*  @return     正規化されたベクトル
+		*  @return		正規化されたベクトル
 		*/
-	CVector3            Normalize(void);
+	CVector3			Normalize(void);
 
 	/*!
-		*  @brief      ベクトルの正規化
+		*  @brief		ベクトルの正規化
 		*
-		*  @param[in]  v   ベクトルクラス
+		*  @param[in]	v   ベクトルクラス
 		*
-		*  @return     正規化されたベクトル
+		*  @return		正規化されたベクトル
 		*/
 	static CVector3     Normalize(const CVector3& v);
 
 	/*!
-		*  @brief      ベクトルの大きさ取得
+		*  @brief		ベクトルの大きさ取得
 		*
-		*  @return     ベクトルの大きさ
+		*  @return		ベクトルの大きさ
 		*/
 	float               Length(void);
 
 	/*!
-		*  @brief      ベクトルの大きさ取得
+		*  @brief		ベクトルの大きさ取得
 		*
-		*  @param[in]  v   ベクトルクラス
+		*  @param[in]	v   ベクトルクラス
 		*
-		*  @return     ベクトルの大きさ
+		*  @return		ベクトルの大きさ
 		*/
 	static float        Length(const CVector3& v);
 
 	/*!
-		*  @brief      2つのベクトルの内積<br>
-		*              dot = vA・vB
+		*  @brief		2つのベクトルの内積<br>
+		*				dot = vA・vB
 		*
-		*  @param[in]  vA  ベクトルクラス
-		*  @param[in]  vB  ベクトルクラス
+		*  @param[in]	vA  ベクトルクラス
+		*  @param[in]	vB  ベクトルクラス
 		*
-		*  @return     内積
+		*  @return		内積
 		*/
 	static float        Dot(const CVector3& vA, const CVector3& vB);
 
 	/*!
-		*  @brief      2つのベクトルの外積<br>
-		*              cross = vA×vB
+		*  @brief		2つのベクトルの外積<br>
+		*				cross = vA×vB
 		*
-		*  @param[in]  vA  ベクトルクラス
-		*  @param[in]  vB  ベクトルクラス
+		*  @param[in]	vA  ベクトルクラス
+		*  @param[in]	vB  ベクトルクラス
 		*
-		*  @return     外積
+		*  @return		外積
 		*/
-	static CVector3        Cross(const CVector3& vA, const CVector3& vB);
+	static CVector3     Cross(const CVector3& vA, const CVector3& vB);
 
 	/*!
-	*  @brief      線形補間
-	*              lerp(a,b,t) = (1 - t) * a + t * b
+	*  @brief			線形補間
+	*					lerp(a,b,t) = (1 - t) * a + t * b
 	*
-	*  @param[in]  start  開始点
-	*  @param[in]  end  終了点
-	*  @param[in]  t  0から１までの範囲の補間パラメータ
+	*  @param[in]		start  開始点
+	*  @param[in]		end  終了点
+	*  @param[in]		t  0から１までの範囲の補間パラメータ
 	*
-	*  @return     位置
+	*  @return			位置
 	*/
-	static CVector3        Lerp(const CVector3& start, const CVector3& end, float t);
+	static CVector3     Lerp(const CVector3& start, const CVector3& end, float t);
 
 	/*!
-		*  @brief      代入演算子のオーバーロード
+		*  @brief		代入演算子のオーバーロード
 		*
-		*  @param[in]  v   ベクトルクラス
+		*  @param[in]	v   ベクトルクラス
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	CVector3& operator=(const CVector3& v);
+	CVector3&			operator=(const CVector3& v);
 
 	/*!
-		*  @brief      代入演算子のオーバーロード
+		*  @brief		代入演算子のオーバーロード
 		*
-		*  @param[in]  f   フロート値
+		*  @param[in]	f   フロート値
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	CVector3& operator=(float f);
+	CVector3&			operator=(float f);
 
 	/*!
-		*  @brief      加算演算子のオーバーロード
+		*  @brief		加算演算子のオーバーロード
 		*
-		*  @param[in]  v   ベクトルクラス
+		*  @param[in]	v   ベクトルクラス
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	CVector3& operator+=(const CVector3& v);
+	CVector3&			operator+=(const CVector3& v);
 
 	/*!
-		*  @brief      減算演算子のオーバーロード
+		*  @brief		減算演算子のオーバーロード
 		*
-		*  @param[in]  v   ベクトルクラス
+		*  @param[in]	v   ベクトルクラス
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	CVector3& operator-=(const CVector3& v);
+	CVector3&			operator-=(const CVector3& v);
 
 	/*!
-		*  @brief      乗算演算子のオーバーロード
+		*  @brief		乗算演算子のオーバーロード
 		*
-		*  @param[in]  scalar  スカラー値
+		*  @param[in]	scalar  スカラー値
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	CVector3& operator*=(float scalar);
+	CVector3&			operator*=(float scalar);
 
 	/*!
-		*  @brief      乗算演算子のオーバーロード
+		*  @brief		乗算演算子のオーバーロード
 		*
-		*  @param[in]  v  ベクトルクラス
+		*  @param[in]	v  ベクトルクラス
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	CVector3& operator*=(const CVector3& v);
+	CVector3&			operator*=(const CVector3& v);
 
 	/*!
-		*  @brief      除算演算子のオーバーロード
+		*  @brief		除算演算子のオーバーロード
 		*
-		*  @param[in]  scalar  スカラー値
+		*  @param[in]	scalar  スカラー値
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	CVector3& operator/=(float scalar);
+	CVector3&			operator/=(float scalar);
 
 	/*!
-		*  @brief      等価演算子のオーバーロード
+		*  @brief		等価演算子のオーバーロード
 		*
-		*  @param[in]  v   ベクトルクラス
+		*  @param[in]	v   ベクトルクラス
 		*
-		*  @return     二つのベクトルが等しい
-		*  @retval     true    等しい
-		*  @retval     false   等しくない
+		*  @return		二つのベクトルが等しい
+		*  @retval		true    等しい
+		*  @retval		false   等しくない
 		*/
 	bool                operator==(const CVector3& v) const;
 
 	/*!
-		*  @brief      不等演算子のオーバーロード
+		*  @brief		不等演算子のオーバーロード
 		*
-		*  @param[in]  v   ベクトルクラス
+		*  @param[in]	v   ベクトルクラス
 		*
-		*  @return     二つのベクトルが等しくない
-		*  @retval     true    等しくない
-		*  @retval     false   等しい
+		*  @return		二つのベクトルが等しくない
+		*  @retval		true    等しくない
+		*  @retval		false   等しい
 		*/
-	bool                operator!=(const CVector3& v) const;
+	bool				operator!=(const CVector3& v) const;
 
 	/*!
 		*  @brief      正符号演算子のオーバーロード
@@ -203,114 +204,116 @@ public:
 	friend CVector3     operator+(const CVector3& v);
 
 	/*!
-		*  @brief      負符号演算子のオーバーロード
+		*  @brief		負符号演算子のオーバーロード
 		*
-		*  @param[in]  v   ベクトルクラス
+		*  @param[in]	v   ベクトルクラス
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
 	friend CVector3     operator-(const CVector3& v);
 
 	/*!
-		*  @brief      加算演算子のオーバーロード
+		*  @brief		加算演算子のオーバーロード
 		*
-		*  @param[in]  vA  ベクトルクラス
-		*  @param[in]  vB  ベクトルクラス
+		*  @param[in]	vA  ベクトルクラス
+		*  @param[in]	vB  ベクトルクラス
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
 	friend CVector3     operator+(const CVector3& vA, const CVector3& vB);
 
 	/*!
-		*  @brief      加算演算子のオーバーロード
+		*  @brief		加算演算子のオーバーロード
 		*
-		*  @param[in]  v  ベクトルクラス
-		*  @param[in]  f  float型
+		*  @param[in]	v  ベクトルクラス
+		*  @param[in]	f  float型
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	friend CVector3     operator+(const CVector3& vA, float f);
+	friend CVector3		operator+(const CVector3& vA, float f);
 
 	/*!
-		*  @brief      減算演算子のオーバーロード
+		*  @brief		減算演算子のオーバーロード
 		*
-		*  @param[in]  vA  ベクトルクラス
-		*  @param[in]  vB  ベクトルクラス
+		*  @param[in]	vA  ベクトルクラス
+		*  @param[in]	vB  ベクトルクラス
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	friend CVector3     operator-(const CVector3& vA, const CVector3& vB);
+	friend CVector3		operator-(const CVector3& vA, const CVector3& vB);
 
 	/*!
-		*  @brief      乗算演算子のオーバーロード
+		*  @brief		乗算演算子のオーバーロード
 		*
-		*  @param[in]  vA  ベクトルクラス
-		*  @param[in]  vB  ベクトルクラス
+		*  @param[in]	vA  ベクトルクラス
+		*  @param[in]	vB  ベクトルクラス
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	friend CVector3     operator*(const CVector3& vA, const CVector3& vB);
+	friend CVector3		operator*(const CVector3& vA, const CVector3& vB);
 
 	/*!
-		*  @brief      乗算演算子のオーバーロード
+		*  @brief		乗算演算子のオーバーロード
 		*
-		*  @param[in]  v       ベクトルクラス
-		*  @param[in]  scalar  スカラー値
+		*  @param[in]	v       ベクトルクラス
+		*  @param[in]	scalar  スカラー値
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
-	friend CVector3     operator*(const CVector3& v, float scalar);
+	friend CVector3		operator*(const CVector3& v, float scalar);
 
 	/*!
-		*  @brief      乗算演算子のオーバーロード
+		*  @brief		乗算演算子のオーバーロード
 		*
-		*  @param[in]  scalar  スカラー値
-		*  @param[in]  v       ベクトルクラス
+		*  @param[in]	scalar  スカラー値
+		*  @param[in]	v       ベクトルクラス
 		*
-		*  @return     ベクトルクラス
+		*  @return		ベクトルクラス
 		*/
 	friend CVector3     operator*(float scalar, const CVector3& v);
 
 
 	/*!
-		*  @brief				ベクトルの方向を回転値（XYZオイラー角）に変換して返す
+		*  @brief		ベクトルの方向を回転値（XYZオイラー角）に変換して返す
 		*
-		*  @param[in]  vector	回転値に変換するベクトル
+		*  @param[in]	vector	回転値に変換するベクトル
 		*
-		*  @return				回転値（XYZオイラー角）
+		*  @return		回転値（XYZオイラー角）
 		*/
-	CVector3 GetVectorRotateXYZ(void);
-	CVector3 GetVectorRotateXYZ(const CVector3& vector);
+	CVector3			GetVectorRotateXYZ(void);
+
+
+	CVector3			GetVectorRotateXYZ(const CVector3& vector);
 
 	/*!
-		*  @brief      ベクトルを座標軸周りで回転させる
+		*  @brief		ベクトルを座標軸周りで回転させる
 		*
-		*  @param[in]  axis          回転軸になる座標軸の種類
-		*  @param[in]  degree_angle  回転させる角度（度数法）
+		*  @param[in]	axis          回転軸になる座標軸の種類
+		*  @param[in]	degree_angle  回転させる角度（度数法）
 		*
-		*  @return     回転後のベクトル
+		*  @return		回転後のベクトル
 		*/
-	CVector3 RotateAroundCoordinatesAxis(COORDINATES_AXIS axis, float degree_angle);
+	CVector3			RotateAroundCoordinatesAxis(COORDINATES_AXIS axis, float degree_angle);
 
 	/*!
-	 *  @brief      発射方向にブレを持たせる
-	 *
-	 *  @param[in]  direction    発射方向
-	 *
-	 *  @param[in]  deviation    偏差の大きさ
-	 *
-	 *  @return     ブレを持った向き
-	 */
-	static CVector3        DeviationToDirection(const CVector3& direction, float deviationAmount);
+		*  @brief		方向にブレを持たせる
+		*
+		*  @param[in]	direction    方向
+		*
+		*  @param[in]	deviation    偏差の大きさ
+		*
+		*  @return		ブレを持った向き
+		 */
+	static CVector3     DeviationToDirection(const CVector3& direction, float deviationAmount);
 
 	/*!
-	 *  @brief      ランダムな偏差を生成
+	 *  @brief			ランダムな偏差を生成
 	 *
-	 *  @param[in]  deviation    偏差の大きさ
+	 *  @param[in]		deviation    偏差の大きさ
 	 *
-	 *  @return     ブレの値
+	 *  @return			ブレの値
 	 */
-	static CVector3        GetRandomDeviation(float deviationAmount);
+	static CVector3     GetRandomDeviation(float deviationAmount);
 
 	static const CVector3   ZERO;   //!< 成分がすべて0のベクトル
 	static const CVector3   ONE;    //!< 成分がすべて1のベクトル
@@ -323,70 +326,70 @@ public:
 };
 
 /*!
-	*  @brief      正符号演算子のオーバーロード
+	*  @brief			正符号演算子のオーバーロード
 	*
-	*  @param[in]  v   ベクトルクラス
+	*  @param[in]		v   ベクトルクラス
 	*
-	*  @return     ベクトルクラス
+	*  @return			ベクトルクラス
 	*/
-CVector3     operator+(const CVector3& v);
+CVector3				operator+(const CVector3& v);
 
 /*!
-	*  @brief      負符号演算子のオーバーロード
+	*  @brief			負符号演算子のオーバーロード
 	*
-	*  @param[in]  v   ベクトルクラス
+	*  @param[in]		v   ベクトルクラス
 	*
-	*  @return     ベクトルクラス
+	*  @return			ベクトルクラス
 	*/
-CVector3     operator-(const CVector3& v);
+CVector3				operator-(const CVector3& v);
 
 /*!
-	*  @brief      加算演算子のオーバーロード
+	*  @brief			加算演算子のオーバーロード
 	*
-	*  @param[in]  vA  ベクトルクラス
-	*  @param[in]  vB  ベクトルクラス
+	*  @param[in]		vA  ベクトルクラス
+	*  @param[in]		vB  ベクトルクラス
 	*
-	*  @return     ベクトルクラス
+	*  @return			ベクトルクラス
 	*/
-CVector3     operator+(const CVector3& vA, const CVector3& vB);
+CVector3				operator+(const CVector3& vA, const CVector3& vB);
 
 /*!
-	*  @brief      減算演算子のオーバーロード
+	*  @brief			減算演算子のオーバーロード
 	*
-	*  @param[in]  vA  ベクトルクラス
-	*  @param[in]  vB  ベクトルクラス
+	*  @param[in]		vA  ベクトルクラス
+	*  @param[in]		vB  ベクトルクラス
 	*
-	*  @return     ベクトルクラス
+	*  @return			ベクトルクラス
 	*/
-CVector3     operator-(const CVector3& vA, const CVector3& vB);
+CVector3				operator-(const CVector3& vA, const CVector3& vB);
 
 /*!
-	*  @brief      乗算演算子のオーバーロード
+	*  @brief			乗算演算子のオーバーロード
 	*
-	*  @param[in]  vA  ベクトルクラス
-	*  @param[in]  vB  ベクトルクラス
+	*  @param[in]		vA  ベクトルクラス
+	*  @param[in]		vB  ベクトルクラス
 	*
-	*  @return     ベクトルクラス
+	*  @return			ベクトルクラス
 	*/
-CVector3     operator*(const CVector3& vA, const CVector3& vB);
+CVector3				operator*(const CVector3& vA, const CVector3& vB);
 
 /*!
-	*  @brief      乗算演算子のオーバーロード
+	*  @brief			乗算演算子のオーバーロード
 	*
-	*  @param[in]  v       ベクトルクラス
-	*  @param[in]  scalar  スカラー値
+	*  @param[in]		v       ベクトルクラス
+	*  @param[in]		scalar  スカラー値
 	*
-	*  @return     ベクトルクラス
+	*  @return			ベクトルクラス
 	*/
-CVector3     operator*(const CVector3& v, float scalar);
+CVector3				operator*(const CVector3& v, float scalar);
 
 /*!
-	*  @brief      乗算演算子のオーバーロード
+	*  @brief			乗算演算子のオーバーロード
 	*
-	*  @param[in]  scalar  スカラー値
-	*  @param[in]  v       ベクトルクラス
+	*  @param[in]		scalar  スカラー値
+	*  @param[in]		v       ベクトルクラス
 	*
-	*  @return     ベクトルクラス
+	*  @return			ベクトルクラス
 	*/
-CVector3     operator*(float scalar, const CVector3& v);
+CVector3				operator*(float scalar, const CVector3& v);
 

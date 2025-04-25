@@ -58,7 +58,7 @@ void CPlaneGameImage::Initialize(const CTransform& transform)
 
 	m_InitialPosition = m_Transform.position;
 	m_Transform.scale = m_scale;
-	m_Handle = LoadGraph(m_FileName.c_str(), TRUE);
+	LoadGraph(m_FileName.c_str(), TRUE);
 	m_Plane.SetUp(m_FileName);
 	m_Plane.SetTransform(m_Transform);
 	m_PosAngle = m_Transform.rotation.y;
@@ -74,14 +74,15 @@ Update(void)
 {
 	CUI::Update();
 	m_PosAngle += m_Speed;
+
 	if (m_PosAngle > 360)
 		m_PosAngle = 0;
+
 	if (m_Angle > 360)
 		m_Angle = 0;
-	m_Plane.SetPosition(m_Transform.position);
-	m_Plane.Update();
 
 	float rad = DEG_TO_RAD(m_PosAngle);
+
 	float _rad = DEG_TO_RAD(m_Angle);
 
 	//行列の作成
@@ -106,8 +107,6 @@ void
 CPlaneGameImage::
 Finalize(void)
 {
-    // 読み込んだ画像のグラフィックハンドルを削除
-    DeleteGraph(m_Handle);
 }
 
 GAME_ID CPlaneGameImage::GetGameID(void)

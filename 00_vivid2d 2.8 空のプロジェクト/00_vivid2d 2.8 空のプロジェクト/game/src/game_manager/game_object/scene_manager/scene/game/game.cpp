@@ -265,7 +265,7 @@ Finish(void)
     {
         if (!m_ResultFlag)
         {
-            Push(SCENE_ID::RESULT_MINIGAME);
+            Push(SCENE_ID::MINIGAME_RESULT);
             m_ResultFlag = true;
         }
     }

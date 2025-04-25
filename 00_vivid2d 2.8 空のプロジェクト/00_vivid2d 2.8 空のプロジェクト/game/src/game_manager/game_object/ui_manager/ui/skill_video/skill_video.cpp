@@ -12,9 +12,9 @@ const std::string CSkillVideo::m_skill_video_file_name[] =
 		"data\\Video\\skill_video_floating.mp4",
 		"data\\Video\\skill_video_stomp.mp4",
 		"data\\Video\\skill_video_dash.mp4",
-		"data\\Video\\skill_video_spawnwall.mp4",
+		"data\\Video\\skill_video_spawn_wall.mp4",
 		"data\\Video\\skill_video_barrier.mp4",
-		"data\\Video\\skill_video_gravityarea.mp4",
+		"data\\Video\\skill_video_gravity_area.mp4",
 		"data\\Video\\skill_video_invisible.mp4",
 		"data\\Video\\skill_video_stun.mp4",
 		"data\\Video\\skill_video_mimicry.mp4",
@@ -23,9 +23,8 @@ const std::string CSkillVideo::m_skill_video_file_name[] =
 		"data\\Video\\skill_video_resurrect_daruma.mp4",
 		"data\\Video\\skill_video_resurrect_fallout.mp4",
 		"data\\Video\\skill_video_resurrect_belt_conveyor.mp4",
-		"data\\Video\\skill_video_strongwind.mp4",
-		"data\\Video\\skill_video_hidetopic.mp4",
-		"data\\video_test.mp4"
+		"data\\Video\\skill_video_strong_wind.mp4",
+		"data\\Video\\skill_video_hide_topic.mp4",
 };
 
 /*

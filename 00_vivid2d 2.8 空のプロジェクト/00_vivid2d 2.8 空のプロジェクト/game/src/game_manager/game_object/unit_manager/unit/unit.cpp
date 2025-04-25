@@ -168,10 +168,8 @@ CheckHitBullet(IBullet* bullet)
         hitPosition.x = hit_poly_dim.Dim->HitPosition.x;
         hitPosition.y = hit_poly_dim.Dim->HitPosition.y;
         hitPosition.z = hit_poly_dim.Dim->HitPosition.z;
-        if (m_InvincibleFlag)
-            CEffectManager::GetInstance().Create(EFFECT_ID::HIT_INVINCBLE, hitPosition);
-        else
-            CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
+
+        CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
 
         bullet->SetActive(false);
 
@@ -201,10 +199,8 @@ bool IUnit::CheckHitBulletModel(IBullet* bullet)
         hitPosition.x = hit_poly_dim.Dim->HitPosition.x;
         hitPosition.y = hit_poly_dim.Dim->HitPosition.y;
         hitPosition.z = hit_poly_dim.Dim->HitPosition.z;
-        if (m_InvincibleFlag)
-            CEffectManager::GetInstance().Create(EFFECT_ID::HIT_INVINCBLE, hitPosition);
-        else
-            CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
+
+        CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
 
 
         if (m_InvincibleFlag)

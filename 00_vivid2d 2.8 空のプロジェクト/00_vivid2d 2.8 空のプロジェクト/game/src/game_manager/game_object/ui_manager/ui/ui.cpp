@@ -123,18 +123,6 @@ SetActive(bool active)
     m_ActiveFlag = active;
 }
 
-bool CUI::OnMouseClick(const vivid::Vector2& position, int width, int height)
-{
-    if (vivid::mouse::Trigger(vivid::mouse::BUTTON_ID::LEFT))
-    {
-        vivid::Point mouse_pos = vivid::mouse::GetCursorPos();
-        if (position.x - width / 2.0f < mouse_pos.x && mouse_pos.x < position.x + width / 2.0f &&
-            position.y < mouse_pos.y && mouse_pos.y < position.y + height)
-            return true;
-        else return false;
-    }
-}
-
 vivid::Vector2 CUI::GetPosition(void)
 {
     return m_Position;

@@ -7,7 +7,7 @@
 #include "..\..\..\utility\utility.h"
 #include "../ui_manager/ui_manager.h"
 
-const std::string   CUnitManager::m_file_name_list[] = { "data\\Models\\player_rabbit.mv1", "data\\Models\\player_rabbit.mv1", "data\\Models\\player_rabbit.mv1", "data\\Models\\player_rabbit.mv1" };
+const std::string   CUnitManager::m_file_name = "data\\Models\\player_rabbit.mv1";
 /*
  *  インスタンスの取得
  */
@@ -95,7 +95,6 @@ Create(UNIT_ID id, const CVector3& pos)
 {
     IUnit* unit = nullptr;
 
-    std::string fileName = m_file_name_list[(int)id];
     switch (id)
     {
     case UNIT_ID::PLAYER1:
@@ -108,7 +107,7 @@ Create(UNIT_ID id, const CVector3& pos)
 
     if (!unit) return nullptr;
 
-    unit->Initialize(id, pos, m_file_name_list[(int)id]);
+    unit->Initialize(id, pos, m_file_name);
 
     m_UnitList.push_back(unit);
     return unit;

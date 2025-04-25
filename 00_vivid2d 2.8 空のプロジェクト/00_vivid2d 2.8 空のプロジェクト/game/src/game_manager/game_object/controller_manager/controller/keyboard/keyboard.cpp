@@ -15,10 +15,10 @@ bool CKeyboard::GetButtonDown(BUTTON_ID button_id)
 	switch (button_id)
 	{
 	case BUTTON_ID::B:
-		button = vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::SPACE);
+		button = vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN);
 		break;
 	case BUTTON_ID::A:
-		button = vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN);
+		button = vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::SPACE);
 		break;
 	case BUTTON_ID::X:
 		button = vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN);

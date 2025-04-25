@@ -1,6 +1,6 @@
 #include "daruma_falldown_stage_object.h"
 
-const std::string CDarumaFallDownStageObject::m_model_file_name = "data\\darumaStage.mv1";
+const std::string CDarumaFallDownStageObject::m_model_file_name = "data\\Models\\darumaStage.mv1";
 
 CDarumaFallDownStageObject::CDarumaFallDownStageObject()
 	: IObject()

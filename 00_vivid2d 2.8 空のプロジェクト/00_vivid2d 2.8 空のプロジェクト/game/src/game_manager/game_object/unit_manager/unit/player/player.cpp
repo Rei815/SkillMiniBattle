@@ -292,10 +292,6 @@ void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
 */
 void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, float power)
 {
-    CVector3 m_EffectPosition = GetPosition();
-
-    CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
-
     //当たった向きを取得
     CVector3 TempVelocity = (m_Transform.position - hit_position);
     //垂直方向の速度は最後に計算するので、一度ゼロにする
@@ -335,7 +331,7 @@ void CPlayer::Control(void)
 
 
     //ジャンプ
-    if (m_Controller->GetButtonDown(BUTTON_ID::B) && !m_StopFlag)
+    if (m_Controller->GetButtonDown(BUTTON_ID::A) && !m_StopFlag)
         if (m_IsGround == true)
         {
             m_Parent = nullptr;
@@ -349,7 +345,7 @@ void CPlayer::Control(void)
     
     //スキル
     if(m_Skill != nullptr)
-        if (m_Controller->GetButtonDown(BUTTON_ID::A) && !m_StopFlag)
+        if (m_Controller->GetButtonDown(BUTTON_ID::B) && !m_StopFlag)
             m_Skill->Action();
 
 }
