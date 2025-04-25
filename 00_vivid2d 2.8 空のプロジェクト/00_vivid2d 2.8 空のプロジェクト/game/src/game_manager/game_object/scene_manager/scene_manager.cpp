@@ -164,7 +164,7 @@ void CSceneManager::PushScene(SCENE_ID id)
     CreateScene(id);
 }
 
-void CSceneManager::PopScene(SCENE_ID id)
+void CSceneManager::RemoveScene(SCENE_ID id)
 {
     if (m_SceneList.size() <= 1) return;
 

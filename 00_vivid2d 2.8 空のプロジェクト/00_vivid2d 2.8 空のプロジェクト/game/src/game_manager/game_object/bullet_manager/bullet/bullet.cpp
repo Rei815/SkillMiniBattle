@@ -97,11 +97,6 @@ void
 IBullet::
 Draw(void)
 {
-#ifdef VIVID_DEBUG
-    // ‹…‚Ì•`‰æ
-    //int ok = DxLib::DrawSphere3D(m_Transform.position, 50.0f, 8, GetColor(255, 255, 0), GetColor(255, 255, 255), FALSE);
-#endif
-
     m_Model.Draw();
 }
 

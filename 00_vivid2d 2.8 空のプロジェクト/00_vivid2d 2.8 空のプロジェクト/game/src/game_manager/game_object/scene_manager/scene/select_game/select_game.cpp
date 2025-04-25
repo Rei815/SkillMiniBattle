@@ -228,7 +228,7 @@ void CSelectGame::Update(void)
         const float min_height = -vivid::GetWindowHeight() / 2;
         const float max_height = vivid::GetWindowHeight() * 1.5;
         if (m_SecondSceneUIParent->GetPosition().y <= min_height || max_height <= m_SecondSceneUIParent->GetPosition().y)
-            CSceneManager::GetInstance().PopScene(SCENE_ID::SELECTGAME);
+            CSceneManager::GetInstance().RemoveScene(SCENE_ID::SELECTGAME);
     }
 }
 void CSelectGame::Draw(void)

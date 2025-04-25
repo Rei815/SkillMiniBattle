@@ -98,5 +98,5 @@ void IScene::Push(SCENE_ID id)
 
 void IScene::Pop(SCENE_ID id)
 {
-    CSceneManager::GetInstance().PopScene(id);
+    CSceneManager::GetInstance().RemoveScene(id);
 }

@@ -88,6 +88,7 @@ Update(void)
     if (m_Parent != nullptr)
     {
 
+        //一度接地したらジャンプや判定の外に行かない限り接地したオブジェクトに追従する
         float offset = m_Radius - m_Radius / 3.0f;
         const float line_length = 100.0f;
         bool releaseFlag = false;

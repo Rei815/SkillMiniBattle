@@ -194,7 +194,8 @@ void CUnitManager::CheckHitObject(IObject* object)
         //垂直方向の判定-----------------------------------------------------
         float radius = unit->GetRadius();
         float offset = radius / 2.0f;
-        //const int check_point_count = 4;
+
+        //左上から右下までチェック
         for (int i = 0; i < 9; ++i)
         {
             CVector3 unit_pos = unit->GetPosition();
@@ -316,12 +317,6 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
 {
     CVector3 hitPos;
     CVector3 end_position = startPos + (down_dir * length);
-#ifdef VIVID_DEBUG
-
-        // 線分の描画
-        DrawLine3D(startPos, end_position, GetColor(255, 255, 255));
-
-#endif // VIVID_DEBUG
 
     //下方向
     if (object->GetModel().CheckHitLine(startPos, end_position) == true)
@@ -349,9 +344,6 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
         hitPos = object->GetModel().GetHitLinePosition(startPos, end_position);
         float headPos = unit->GetPosition().y + unit->GetHeight() / 2.0f;
 
-        // 線分の描画
-        //end_position.y = headPos;
-        //DrawLine3D(startPos, end_position, GetColor(255, 255, 0));
 
         if (hitPos.y > headPos) return;
 
@@ -371,13 +363,6 @@ CUnitManager::
 CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos)
 {
     CVector3 hitPos;
-
-#ifdef DEBUG
-    // 線分の描画
-    DrawLine3D(startPos, endPos, GetColor(255, 255, 0));
-
-#endif // DEBUG
-
 
     if (object->GetModel().CheckHitLine(startPos, endPos) == true)
     {

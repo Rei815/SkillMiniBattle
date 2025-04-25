@@ -126,14 +126,6 @@ void CFallOutGame::Draw(void)
 	CBulletManager::GetInstance().Draw();
 
 	CGame::Draw();
-#ifdef VIVID_DEBUG
-
-	for (int i = 0; i < m_max_topic_num; i++)
-	{
-		vivid::DrawText(30, std::to_string(m_ChooseObjectTimer[i].GetTimer()), vivid::Vector2(vivid::WINDOW_WIDTH - vivid::GetTextWidth(30, std::to_string(m_ChooseObjectTimer[i].GetTimer())), 10 * i));
-
-	}
-#endif // VIVID_DEBUG
 }
 
 void CFallOutGame::Finalize(void)
@@ -144,9 +136,7 @@ void CFallOutGame::Finalize(void)
 
 	CCamera::GetInstance().Finalize();
 
-	//BGM停止
 	CSoundManager::GetInstance().Stop_BGM(BGM_ID::MAIN_BGM);
-	//
 }
 
 void CFallOutGame::Start(void)
@@ -233,20 +223,27 @@ void CFallOutGame::ChooseTopic(void)
 	if (!chooseFlag) return;
 
 	//抽選する
-	FALL_INFO fallInfo = ChooseObject();
+	FALL_OBJECT＿INFO fallInfo = ChooseObject();
 
 	if (fallInfo.object == nullptr) return;
 
 	if (fallInfo.object->GetObjectID() != OBJECT_ID::NONE)
 	{
-		CFallGimmick* gimmick = (CFallGimmick*)fallInfo.object->GetGimmick();
-		gimmick->SetTimer(m_object_delay_time);
-		gimmick->SetState(GIMMICK_STATE::PLAY);
+		CFallGimmick* fallGimmick = dynamic_cast<CFallGimmick*>(fallInfo.object->GetGimmick());
+
+		//ダウンキャストのチェック
+		if (fallGimmick == nullptr) return;
+
+		//落下の開始
+		fallGimmick->SetTimer(m_object_delay_time);
+		fallGimmick->SetState(GIMMICK_STATE::PLAY);
+
+		//段々と床の復活が遅くなる
 		if (m_ExtendTimer.Finished())
 		{
 			const float extend_time = 1.0f;
 
-			gimmick->AddReturnTime(extend_time);
+			fallGimmick->AddReturnTime(extend_time);
 		}
 
 		topic->SetMarkID(fallInfo.markID);
@@ -310,9 +307,9 @@ void CFallOutGame::AddTopic(void)
 
 }
 
-CFallOutGame::FALL_INFO CFallOutGame::ChooseObject(void)
+CFallOutGame::FALL_OBJECT＿INFO CFallOutGame::ChooseObject(void)
 {
-	FALL_INFO fallInfo = FALL_INFO();
+	FALL_OBJECT＿INFO fallInfo = FALL_OBJECT＿INFO();
 
 	int index = (int)OBJECT_ID::NONE;
 
@@ -436,39 +433,4 @@ void CFallOutGame::FinishTopic(void)
 	{
 		(*it)->SetState(CFallOutTopic::STATE::FINISH);
 	}
-}
-
-void CFallOutGame::CreateFloor(const CVector3& position)
-{
-	CObjectManager& om = CObjectManager::GetInstance();
-
-	CTransform transform = m_floor_transform_list[(int)MARK_ID::CIRCLE];
-	transform.position += position;
-	om.Create(OBJECT_ID::CIRCLE_FALL_OBJECT, transform);
-
-	transform = m_floor_transform_list[(int)MARK_ID::CROSS];
-	transform.position += position;
-
-	om.Create(OBJECT_ID::CROSS_FALL_OBJECT, transform);
-
-	transform = m_floor_transform_list[(int)MARK_ID::MOON];
-	transform.position += position;
-
-	om.Create(OBJECT_ID::MOON_FALL_OBJECT, transform);
-
-	transform = m_floor_transform_list[(int)MARK_ID::SQUARE];
-	transform.position += position;
-
-	om.Create(OBJECT_ID::SQUARE_FALL_OBJECT, transform);
-
-	transform = m_floor_transform_list[(int)MARK_ID::SUN];
-	transform.position += position;
-
-	om.Create(OBJECT_ID::SUN_FALL_OBJECT, transform);
-
-	transform = m_floor_transform_list[(int)MARK_ID::TRIANGLE];
-	transform.position += position;
-
-	om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT, transform);
-
 }

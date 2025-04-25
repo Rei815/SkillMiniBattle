@@ -171,7 +171,6 @@
   <ItemGroup>
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation\animation.cpp" />
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation\key_scale\key_scale.cpp" />
-    <ClCompile Include="src\game_manager\game_object\animation_manager\animation\object_down\ui_down.cpp" />
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation\plane_scale\plane_scale.cpp" />
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation\plane_up\plane_up.cpp" />
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation_manager.cpp" />
@@ -335,7 +334,6 @@
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\animation.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\animation_id.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\key_scale\key_scale.h" />
-    <ClInclude Include="src\game_manager\game_object\animation_manager\animation\object_down\ui_down.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\plane_scale\plane_scale.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\plane_up\plane_up.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation_manager.h" />

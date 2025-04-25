@@ -47,7 +47,6 @@ CPlayer::CPlayer()
     , m_FrictionFlag(true)
     , m_ActionFlag(true)
     , m_Controller(nullptr)
-    , m_Effect(nullptr)
 {
 }
 
@@ -136,11 +135,6 @@ void CPlayer::Draw(void)
 {
     IUnit::Draw();
     m_Model.Draw();
-#if _DEBUG
-
-    vivid::DrawText(30, std::to_string(m_IsGround), vivid::Vector2(1000, 500));
-#endif // _DEBUG
-
 }
 
 void CPlayer::Finalize(void)
@@ -172,28 +166,6 @@ CSkill* CPlayer::GetSkill()
 bool CPlayer::GetPlayerMoving()
 {
     bool Input = false;
-#ifdef _DEBUG
-    //左移動
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
-        Input = true;
-
-    //右移動
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
-        Input = true;
-
-    //上移動
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
-        Input = true;
-
-    //下移動
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
-        Input = true;
-
-    //ジャンプ
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE) && !m_StopFlag)
-        Input = true;
-
-#endif // DEBUG
 
     if (m_Controller)
     {
@@ -322,7 +294,7 @@ void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, fl
 {
     CVector3 m_EffectPosition = GetPosition();
 
-    m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
+    CEffectManager::GetInstance().Create(EFFECT_ID::COLLIDE, m_EffectPosition, CVector3(), 3.0f);
 
     //当たった向きを取得
     CVector3 TempVelocity = (m_Transform.position - hit_position);
@@ -344,50 +316,6 @@ void CPlayer::Impact(const CVector3& hit_position, const CVector3& direction, fl
 }
 void CPlayer::Control(void)
 {
-////#ifdef _DEBUG
-//    //左移動
-//    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
-//        m_Accelerator.x += -m_move_speed * m_MoveSpeedRate;
-//
-//    //右移動
-//    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
-//        m_Accelerator.x += m_move_speed * m_MoveSpeedRate;
-//    //上移動
-//    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
-//        m_Accelerator.z += m_move_speed * m_MoveSpeedRate;
-//
-//    //下移動
-//    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
-//        m_Accelerator.z += -m_move_speed * m_MoveSpeedRate;
-//
-//
-//    //ジャンプ
-//    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE) && !m_StopFlag)
-//        if (m_IsGround == true)
-//        {
-//            m_Parent = nullptr;
-//            m_IsGround = false;
-//
-//            m_Accelerator.y = m_jump_power * m_JumpPowerRate;
-//
-//            CEffectManager::GetInstance().Create(EFFECT_ID::JUMP, m_Transform.position);
-//
-//        }
-//
-//    //スキル
-//    if (m_Skill != nullptr)
-//        if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN)) && !m_StopFlag)
-//            m_Skill->Action();
-//
-//
-//    //停止
-//    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::LSHIFT))
-//        m_StopFlag = true;
-//    else
-//        m_StopFlag = false;
-//
-//#endif // DEBUG
-
     if (m_Controller == nullptr) return;
     vivid::Vector2 stick = m_Controller->GetLeftStick();
     //左移動

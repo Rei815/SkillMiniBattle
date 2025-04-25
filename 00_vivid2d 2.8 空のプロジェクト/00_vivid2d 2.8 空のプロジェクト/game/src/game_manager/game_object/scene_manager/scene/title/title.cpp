@@ -87,7 +87,7 @@ void CTitle::Update(void)
         const float min_height = -vivid::GetWindowHeight() / 2;
         const float max_height = vivid::GetWindowHeight() * 1.5;
         if (m_SceneUIParent->GetPosition().y <= min_height || max_height <= m_SceneUIParent->GetPosition().y)
-            CSceneManager::GetInstance().PopScene(SCENE_ID::TITLE);
+            CSceneManager::GetInstance().RemoveScene(SCENE_ID::TITLE);
     }
 
 }

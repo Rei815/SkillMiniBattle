@@ -41,7 +41,8 @@ public:
 
 private:
 
-    struct FALL_INFO
+    //落ちる床のポインタとマーク
+    struct FALL_OBJECT＿INFO
     {
         IObject*    object;
         MARK_ID     markID = MARK_ID::CIRCLE;
@@ -77,7 +78,7 @@ private:
      * 
      *  @return     オブジェクトID
      */
-    FALL_INFO    ChooseObject(void);
+    FALL_OBJECT＿INFO    ChooseObject(void);
 
     /*!
      *  @brief      終了
@@ -94,14 +95,7 @@ private:
      */
     void    FinishTopic(void);
 
-    /*!
-     *  @brief      床をすべて生成
-     * 
-     * 　@param[in] position     中心位置
-     */
-    void    CreateFloor(const CVector3& position);
-
-    static const CTransform         m_floor_transform_list[];  //!< 落ちる床のトランスフォーム
+    static const CTransform         m_floor_transform_list[];   //!< 落ちる床のトランスフォーム
     static const float              m_time_accelerator;         //!< 落ちるまでの速度を増やす
     static const float              m_min_time;                 //!< 落ちるまでの最小時間
     static const float              m_fall_time;                //!< 落ちるまでの初期時間
