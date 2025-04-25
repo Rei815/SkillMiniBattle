@@ -11,22 +11,18 @@
 
 #include "scene_manager.h"
 #include "scene\title\title.h"
-#include "scene\select_mode\select_mode.h"
-#include "scene\select_player\select_player.h"
-#include "scene\select_game\select_game.h"
+#include "scene\random_game\random_game.h"
 #include "scene\select_skill\select_skill.h"
 #include "scene\game\game.h"
 #include "scene\game\fallout_game\fallout_game.h"
 #include "scene\game\daruma_falldown_game\daruma_falldown_game.h"
 #include "scene\game\dodgeball_game\dodgeball_game.h"
 #include "scene\game\belt_conveyor_game\belt_conveyor_game.h"
-#include "scene\game\debug_game\debug_game.h"
 #include "scene\result_minigame\result_minigame.h"
 #include "scene\result_game\result_game.h"
 #include "scene\entry\entry.h"
 #include "../ui_manager/ui_manager.h"
 #include "../controller_manager/controller_manager.h"
-#include "../ui_manager/ui_manager.h"
 #include "../effect_manager/effect_manager.h"
 #include "../ui_manager/ui/pause/pause.h"
 
@@ -128,23 +124,23 @@ CSceneManager::DrawSceneEffect(void)
 void
 CSceneManager::Finalize(void)
 {
-    //// シーン解放
-    //if (m_SceneList.empty()) return;
+    // シーン解放
+    if (m_SceneList.empty()) return;
 
-    //SCENE_LIST::iterator it = m_SceneList.begin();
+    SCENE_LIST::iterator it = m_SceneList.begin();
 
-    //while (it != m_SceneList.end())
-    //{
-    //    (*it)->Finalize();
+    while (it != m_SceneList.end())
+    {
+        (*it)->Finalize();
 
-    //    delete (*it);
+        delete (*it);
 
-    //    m_SceneList.erase(it);
+        it = m_SceneList.erase(it);
 
-    //    ++it;
-    //}
+        continue;
+    }
 
-    //m_SceneList.clear();
+    m_SceneList.clear();
 }
 
 /*
@@ -207,7 +203,7 @@ SCENE_ID CSceneManager::GetLastSceneID(void)
         return (*it)->GetSceneID();
     }
     else
-        return SCENE_ID::WAIT;
+        return SCENE_ID::DUMMY;
 }
 
 void CSceneManager::Pause()
@@ -241,8 +237,8 @@ void CSceneManager::Pause()
  */
 CSceneManager::CSceneManager(void)
     : m_SceneList()
-    , m_CurrentSceneID(SCENE_ID::WAIT)
-    , m_NextSceneID(SCENE_ID::WAIT)
+    , m_CurrentSceneID(SCENE_ID::DUMMY)
+    , m_NextSceneID(SCENE_ID::DUMMY)
     , m_ChangeScene(false)
     , m_PauseController(nullptr)
 {
@@ -287,19 +283,15 @@ CSceneManager::CreateScene(SCENE_ID id)
     switch (id)
     {
     case SCENE_ID::TITLE:               scene = new CTitle();               break;
-    case SCENE_ID::SELECTMODE:          scene = new CSelectMode();          break;
-    case SCENE_ID::SELECTPLAYER:        scene = new CSelectPlayer();        break;
-    case SCENE_ID::SELECTSKILL:         scene = new CSelectSkill();         break;
-    case SCENE_ID::SELECTGAME:          scene = new CSelectGame();          break;
-    case SCENE_ID::FALLGAME:            scene = new CFallOutGame();         break;
-    case SCENE_ID::DARUMAFALLDOWN:      scene = new CDaruma_FallDownGame(); break;
-    case SCENE_ID::DODGEBALLGAME:       scene = new CDodgeBallGame();       break;
-    case SCENE_ID::BELTCONVEYORGAME:    scene = new CBeltConveyorGame();    break;
+    case SCENE_ID::SELECT_SKILL:         scene = new CSelectSkill();         break;
+    case SCENE_ID::RANDOM_GAME:          scene = new CRandomGame();          break;
+    case SCENE_ID::FALL_GAME:            scene = new CFallOutGame();         break;
+    case SCENE_ID::DARUMA_FALLDOWN_GAME:      scene = new CDaruma_FallDownGame(); break;
+    case SCENE_ID::DODGEBALL_GAME:       scene = new CDodgeBallGame();       break;
+    case SCENE_ID::BELTCONVEYOR_GAME:    scene = new CBeltConveyorGame();    break;
     case SCENE_ID::RESULT_MINIGAME:     scene = new CResultMiniGame();      break;
     case SCENE_ID::RESULT_GAME:         scene = new CResultGame();          break;
     case SCENE_ID::ENTRY:               scene = new CEntry();               break;
-
-    case SCENE_ID::DEBUGGAME:           scene = new CDebugGame();           break;
     }
     m_SceneList.push_back(scene);
     

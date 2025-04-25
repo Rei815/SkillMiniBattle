@@ -98,7 +98,7 @@ void CResultMiniGame::Update(void)
     if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || cm.GetAnyControllerButtonDown(BUTTON_ID::ANY)))
     {
 
-        SCENE_ID sceneID = SCENE_ID::SELECTGAME;
+        SCENE_ID sceneID = SCENE_ID::RANDOM_GAME;
         for (int i = 0; i < dm.GetCurrentPlayer(); i++)
         {
             if (dm.GetPlayerWin(i) == dm.GetMaxGameNum())

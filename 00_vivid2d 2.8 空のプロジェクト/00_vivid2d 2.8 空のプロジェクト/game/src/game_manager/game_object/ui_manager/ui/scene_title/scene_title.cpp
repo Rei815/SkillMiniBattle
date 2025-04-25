@@ -24,7 +24,6 @@ const std::string CSceneTitle::m_scene_title_file_name[(int)SCENE_ID::MAX] =
 		"data\\Textures\\skill_icon_null_test.png",
 		"data\\Textures\\skill_icon_null_test.png",
 		"data\\Textures\\skill_icon_null_test.png",
-		"data\\Textures\\skill_icon_null_test.png"
 };
 
 /*

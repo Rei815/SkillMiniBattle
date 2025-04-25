@@ -281,7 +281,7 @@ void CEntry::CheckButtonHold(void)
             }
 
             CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
-            CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
+            CSceneManager::GetInstance().ChangeScene(SCENE_ID::RANDOM_GAME);
         }
     }
     CController* controller = nullptr;

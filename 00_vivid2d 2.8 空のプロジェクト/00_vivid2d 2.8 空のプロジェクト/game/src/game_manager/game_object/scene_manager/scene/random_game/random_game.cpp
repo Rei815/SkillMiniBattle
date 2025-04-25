@@ -1,4 +1,4 @@
-#include "select_game.h"
+#include "random_game.h"
 #include "..\..\scene_manager.h"
 #include "..\..\..\game_object.h"
 #include "../../../data_manager/data_manager.h"
@@ -11,9 +11,9 @@
 #include <random>
 #include <iostream>
 
-const int CSelectGame::m_games_num = 4;
-const float CSelectGame::m_circle_radius = 500.0f;
-CSelectGame::CSelectGame(void)
+const int CRandomGame::m_games_num = 4;
+const float CRandomGame::m_circle_radius = 500.0f;
+CRandomGame::CRandomGame(void)
     : m_SelectedGameFlag(false)
     , m_GameInfomationFlag(false)
     , m_FirstSceneUIParent(nullptr)
@@ -24,11 +24,11 @@ CSelectGame::CSelectGame(void)
 
 }
 
-CSelectGame::~CSelectGame(void)
+CRandomGame::~CRandomGame(void)
 {
 }
 
-void CSelectGame::Initialize(SCENE_ID scene_id)
+void CRandomGame::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
     CUIManager& um = CUIManager::GetInstance();
@@ -77,7 +77,7 @@ void CSelectGame::Initialize(SCENE_ID scene_id)
 
 }
 
-void CSelectGame::Update(void)
+void CRandomGame::Update(void)
 {
 
     CControllerManager& cm = CControllerManager::GetInstance();
@@ -217,7 +217,7 @@ void CSelectGame::Update(void)
         //ミニゲーム情報が中心にある状態
         if (playerReady->GetReadyFlag() == true && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
         {
-            CSceneManager::GetInstance().PushScene(SCENE_ID::SELECTSKILL);
+            CSceneManager::GetInstance().PushScene(SCENE_ID::SELECT_SKILL);
             CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
 
             m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
@@ -228,10 +228,10 @@ void CSelectGame::Update(void)
         const float min_height = -vivid::GetWindowHeight() / 2;
         const float max_height = vivid::GetWindowHeight() * 1.5;
         if (m_SecondSceneUIParent->GetPosition().y <= min_height || max_height <= m_SecondSceneUIParent->GetPosition().y)
-            CSceneManager::GetInstance().RemoveScene(SCENE_ID::SELECTGAME);
+            CSceneManager::GetInstance().RemoveScene(SCENE_ID::RANDOM_GAME);
     }
 }
-void CSelectGame::Draw(void)
+void CRandomGame::Draw(void)
 {
 #if _DEBUG
     vivid::DrawText(20, "1キーでだるまさんがころんだゲーム", vivid::Vector2(0, 0));
@@ -245,7 +245,7 @@ void CSelectGame::Draw(void)
 
 }
 
-void CSelectGame::Finalize(void)
+void CRandomGame::Finalize(void)
 {
     IScene::Finalize();
 

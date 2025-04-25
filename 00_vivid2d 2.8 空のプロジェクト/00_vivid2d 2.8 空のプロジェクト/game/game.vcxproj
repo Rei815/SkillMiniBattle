@@ -291,15 +291,12 @@
     <ClCompile Include="src\game_manager\game_object\object_manager\object\fall_object\fall_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\object.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object_manager.cpp" />
-    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\debug_game\debug_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\dodgeball_game\dodgeball_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\fallout_game\fallout_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\result_minigame\result_minigame.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\scene.cpp" />
-    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_game\select_game.cpp" />
-    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_mode\select_mode.cpp" />
-    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\select_player\select_player.cpp" />
+    <ClCompile Include="src\game_manager\game_object\scene_manager\scene\random_game\random_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\title\title.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\skill_manager\skill\skill.cpp" />
@@ -463,7 +460,6 @@
     <ClInclude Include="src\game_manager\game_object\object_manager\object\ogre_object\ogre_object.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object\dodgeball_stage_object\dodgeball_stage_object.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\daruma_falldown_game\daruma_falldown_game.h" />
-    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\debug_game\debug_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\dodgeball_game\dodgeball_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\fallout_game\fallout_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\game.h" />
@@ -471,9 +467,7 @@
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\result_minigame\result_minigame.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\scene.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\scene_id.h" />
-    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_game\select_game.h" />
-    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_mode\select_mode.h" />
-    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_player\select_player.h" />
+    <ClInclude Include="src\game_manager\game_object\scene_manager\scene\random_game\random_game.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\title\title.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene_manager.h" />
     <ClInclude Include="src\game_manager\game_object\skill_manager\skill\skill.h" />
