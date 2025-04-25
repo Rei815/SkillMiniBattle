@@ -1765,6 +1765,14 @@ unsigned int vivid::alpha::GetAlpha(unsigned int color)
     return (color >> 24) & 0xff;
 }
 
+
+template <typename T>
+T clamp(T value, T min, T max)
+{
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+}
 unsigned int vivid::alpha::SetAlpha(unsigned int color, unsigned int alpha)
 {
     alpha = clamp(alpha, 0u, 255u);
@@ -1777,12 +1785,4 @@ unsigned int vivid::alpha::AdjustAlpha(unsigned int color, int delta)
     alpha = clamp(static_cast<int>(alpha) + delta, 0, 255);
     return SetAlpha(color, alpha);
 
-}
-
-template <typename T>
-T clamp(T value, T min, T max)
-{
-    if (value < min) return min;
-    if (value > max) return max;
-    return value;
 }
