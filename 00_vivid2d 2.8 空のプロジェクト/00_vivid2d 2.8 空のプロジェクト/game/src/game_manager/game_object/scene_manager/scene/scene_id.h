@@ -14,7 +14,7 @@ enum class SCENE_ID
 	DODGEBALLGAME,		//!< ドッジボールゲームシーン
 	BELTCONVEYORGAME,	//!< ベルトコンベアゲームシーン
 	RESULT_MINIGAME,	//!< ミニゲームリザルトシーン
-	RESULT_GAME,		//!< ミニゲームリザルトシーン
+	RESULT_GAME,		//!< ゲーム全体リザルトシーン
 	ENTRY,				//!< エントリーシーン
 
 	DEBUGGAME,			//!< デバッグゲームシーン

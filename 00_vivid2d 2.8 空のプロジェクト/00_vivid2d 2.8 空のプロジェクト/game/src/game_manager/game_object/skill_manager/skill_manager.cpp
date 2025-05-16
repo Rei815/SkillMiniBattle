@@ -124,41 +124,41 @@ CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
     switch (skill_id)
     {
     case SKILL_ID::SPEED_UP:
-        skill = new CSkillSpeedUp();        break;
+        skill = new CSkillSpeedUp();            break;
     case SKILL_ID::JUMP_UP:
-        skill = new CSkillJumpUp();         break;
+        skill = new CSkillJumpUp();             break;
     case SKILL_ID::FLOATING:
-        skill = new CSkillFloating();            break;
+        skill = new CSkillFloating();           break;
     case SKILL_ID::STOMP:
-        skill = new CSkillStomp();               break;
+        skill = new CSkillStomp();              break;
     case SKILL_ID::DASH:
-        skill = new CSkillDash();           break;
+        skill = new CSkillDash();               break;
     case SKILL_ID::SPAWN_WALL:
-        skill = new CSkillSpawnWall();      break;
+        skill = new CSkillSpawnWall();          break;
     case SKILL_ID::BARRIER:
-        skill = new CSkillBarrier();        break;
+        skill = new CSkillBarrier();            break;
     case SKILL_ID::GRAVITY_AREA:
-        skill = new CSkillGravityArea();    break;
+        skill = new CSkillGravityArea();        break;
     case SKILL_ID::INVISIBLE:
-        skill = new CSkillInvisible();      break;
+        skill = new CSkillInvisible();          break;
     case SKILL_ID::STUN:
-        skill = new CSkillStun();           break;
+        skill = new CSkillStun();               break;
     case SKILL_ID::MIMICRY:
-        skill = new CSkillMimicry();        break;
+        skill = new CSkillMimicry();            break;
     case SKILL_ID::SLOW:
-        skill = new CSkillSlow();           break;
+        skill = new CSkillSlow();               break;
     case SKILL_ID::OGRE_CONTOROL:
-        skill = new CSkillOgreControl();    break;
+        skill = new CSkillOgreControl();        break;
     case SKILL_ID::RESURRECT_DARUMA:
         skill = new CSkillResurrectDaruma();    break;
     case SKILL_ID::RESURRECT_FALLOUT:
-        skill = new CSkillResurrectFallout();    break;
+        skill = new CSkillResurrectFallout();   break;
     case SKILL_ID::RESURRECT_BELT:
-        skill = new CSkillResurrectBelt();    break;
+        skill = new CSkillResurrectBelt();      break;
     case SKILL_ID::STRONG_WIND:
-        skill = new CSkillStrongWind();    break;
+        skill = new CSkillStrongWind();         break;
     case SKILL_ID::HIDE_TOPIC:
-        skill = new CSkillHideTopic();    break;
+        skill = new CSkillHideTopic();          break;
 
     default:
         break;
