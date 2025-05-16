@@ -50,10 +50,8 @@ void CPlayerReady::Update(void)
 	CController* controller4 = cm.GetController(CONTROLLER_ID::FOUR);
 	CController* keyboard = cm.GetController(CONTROLLER_ID::KEYBOARD);
 	if (controller1)
-	{
 		if (controller1->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)controller1->GetUnitID()] ^= 0x007f7f7f;
-	}
 	if (controller2)
 		if (controller2->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)controller2->GetUnitID()] ^= 0x007f7f7f;

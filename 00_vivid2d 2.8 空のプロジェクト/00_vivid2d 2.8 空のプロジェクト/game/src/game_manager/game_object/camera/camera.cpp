@@ -43,59 +43,6 @@ void CCamera::Initialize()
  */
 void CCamera::Update()
 {
-    if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::RSHIFT))
-    {
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::UP))
-            m_Position.z += 5.0f;
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::DOWN))
-            m_Position.z -= 5.0f;
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::RIGHT))
-            m_Position.x += 5.0f;
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::LEFT))
-            m_Position.x -= 5.0f;
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::E))
-            m_Position.y += 5.0f;
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::Q))
-            m_Position.y -= 5.0f;
-        if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::T))
-        {
-            m_Direction.x += 0.1f;
-            if (m_Direction.x > 1.0f)
-                m_Direction.x = 1.0f;
-        }
-        if (vivid::keyboard::Button(vivid::keyboard::KEY_ID::G))
-        {
-            m_Direction.x -= 0.1f;
-            if (m_Direction.x < -1.0f)
-                m_Direction.x = -1.0f;
-        }
-
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::F))
-        {
-            m_Direction.y += 0.1f;
-            if (m_Direction.y > 1.0f)
-                m_Direction.y = 1.0f;
-        }
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::H))
-        {
-            m_Direction.y -= 0.1f;
-            if (m_Direction.y < -1.0f)
-                m_Direction.y = -1.0f;
-        }
-
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::R))
-        {
-            m_Direction.z += 0.1f;
-            if (m_Direction.z > 1.0f)
-                m_Direction.z = 1.0f;
-        }
-        if(vivid::keyboard::Button(vivid::keyboard::KEY_ID::Y))
-        {
-            m_Direction.z -= 0.1f;
-            if (m_Direction.z < -1.0f)
-                m_Direction.z = -1.0f;
-        }
-    }
     //ƒJƒƒ‰‚ð—h‚ç‚·ˆ—
     _Shake();
 

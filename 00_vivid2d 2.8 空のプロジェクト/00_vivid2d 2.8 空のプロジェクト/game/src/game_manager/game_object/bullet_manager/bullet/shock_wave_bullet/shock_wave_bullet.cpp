@@ -46,5 +46,4 @@ void CShockWaveBullet::Update()
 
 void CShockWaveBullet::Draw()
 {
-    IBullet::Draw();
 }

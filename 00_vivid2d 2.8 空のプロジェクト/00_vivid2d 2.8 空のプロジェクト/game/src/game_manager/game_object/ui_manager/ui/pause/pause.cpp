@@ -59,39 +59,6 @@ void
 CPause::
 Update(void)
 {
-#ifdef _DEBUG
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::W))
-    {
-        m_UINum = 0;
-        m_Scale[m_UINum] = vivid::Vector2(1.0f, 1.0f);
-        m_Scale[1] = m_scale;
-        m_Color[1] = 0xff808080;
-        m_Color[m_UINum] = 0xffffffff;
-    }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::S))
-    {
-        m_UINum = 1;
-        m_Scale[m_UINum] = vivid::Vector2(1.0f, 1.0f);
-        m_Scale[0] = m_scale;
-        m_Color[0] = 0xff808080;
-        m_Color[m_UINum] = 0xffffffff;
-    }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
-    {
-        CSceneManager& sm = CSceneManager::GetInstance();
-
-        if (m_UINum == 0)
-            sm.Pause();
-        else if (m_UINum == 1)
-        {
-            sm.SetPauseFlag(false);
-            sm.ChangeScene(SCENE_ID::TITLE);
-        }
-
-    }
-
-#endif // _DEBUG
-
     vivid::Vector2 stick = vivid::Vector2::ZERO;
     if (m_PauseController != nullptr)
     {

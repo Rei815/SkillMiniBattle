@@ -29,16 +29,22 @@ public:
 
     /*!
      *  @brief      初期化
+     * 
+     *  @param[in]  position    位置(3D)
      */
     virtual void    Initialize(const CVector3& position);
 
     /*!
      *  @brief      初期化
+     *
+     *  @param[in]  position    位置(2D)
      */
     virtual void    Initialize(const vivid::Vector2& position);
 
     /*!
      *  @brief      初期化
+     *
+     *  @param[in]  transform   トランスフォーム
      */
     virtual void    Initialize(const CTransform& transform);
 
@@ -70,8 +76,6 @@ public:
      *  @param[in]  active  アクティブフラグ
      */
     void            SetActive(bool active);
-
-    bool            OnMouseClick(const vivid::Vector2& position, int width, int height);
 
     /*!
      *  @brief      位置取得
@@ -189,16 +193,21 @@ public:
 
 protected:
 
+    /*!
+     *  @brief      移動ベクトルの取得
+     * 
+     *  @return     Vector3     ベクトル
+     */
     CVector3        GetVelocity();
+
     CTransform                      m_Transform;        //!< トランスフォーム
     vivid::Vector2                  m_Position;         //!< 位置
     int                             m_Height;           //!< 高さ
     int                             m_Width;            //!< 幅
     bool                            m_ActiveFlag;       //!< アクティブフラグ
     UI_ID                           m_UI_ID;            //!< ID
-
     vivid::Vector2                  m_Scale;            //!< 拡大率
-    CUI*                            m_Parent;
+    CUI*                            m_Parent;           //!< 親のポインタ
     int                             m_OrderInLayer;     //!< 描画順
     CVector3                        m_Velocity;         //!< 移動ベクトル
     SCENE_ID                        m_SceneID;          //!< シーンID

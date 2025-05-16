@@ -42,11 +42,14 @@ void CFallGimmick::Update(void)
 			m_Timer.SetActive(false);
 			m_Object->SetVelocity(CVector3(0, -m_fall_speed, 0));
 		}
+		//アルファ値を落下距離に合わせて下げる
 		alpha = (objectPos.y - m_return_height) / (m_StartHeight - m_return_height);
 		m_Object->SetAlpha(alpha);
 
+		//アルファ値が半分以下になったら判定を消す
 		if (alpha <= 0.5f)
 			m_Object->SetColliderActiveFlag(false);
+
 		if (m_Object->GetPosition().y <= m_return_height)
 		{
 			m_Timer.SetActive(true);

@@ -76,18 +76,18 @@ public:
     void        ChangeScene(SCENE_ID id);
 
     /*!
-     *  @brief      シーンをスタックする
+     *  @brief      シーンを追加する
      *
      *  @param[in]  id  シーンID
      */
     void        PushScene(SCENE_ID id);
 
     /*!
-     *  @brief      スタックされたシーンを取り出す
+     *  @brief      シーンを削除する
      *
      *  @param[in]  id  シーンID
      */
-    void        PopScene(SCENE_ID id);
+    void        RemoveScene(SCENE_ID id);
 
     using SCENE_LIST = std::list<IScene*>;
     SCENE_LIST                  m_SceneList;            //!< シーンクラス

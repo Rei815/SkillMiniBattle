@@ -31,6 +31,7 @@ void CPlaneUp::Update()
 	CTransform transform = m_Plane->GetTransform();
 	if (transform.position.y < m_up_final_height)
 	{
+		//­‚µ‰º‚ª‚Á‚Ä‚©‚çã¸
 		float current_y = Easing::InBack(m_EaseTimer, m_end_time, m_StartValue, m_FinishValue);
 
 		transform.position.y = current_y;

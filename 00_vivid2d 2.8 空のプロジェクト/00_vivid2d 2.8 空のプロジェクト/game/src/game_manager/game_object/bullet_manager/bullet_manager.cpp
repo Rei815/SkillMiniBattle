@@ -11,7 +11,6 @@
 
 #include "bullet_manager.h"
 #include "..\unit_manager\unit_manager.h"
-#include "bullet\normal_bullet\normal_bullet.h"
 #include "bullet\shock_wave_bullet\shock_wave_bullet.h"
 #include "bullet\cannon_bullet\cannon_bullet.h"
 #include "../effect_manager/effect_manager.h"
@@ -139,7 +138,6 @@ Create(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter,  CVecto
 
     switch (bulletParameter->bulletID)
     {
-    case BULLET_ID::NORMAL:         bullet = new CNormalBullet();   break;
     case BULLET_ID::SHOCK_WAVE:     bullet = new CShockWaveBullet();   break;
     case BULLET_ID::CANNON:         bullet = new CCannonBullet();   break;
     }
@@ -163,7 +161,6 @@ IBullet* CBulletManager::Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& 
 
     switch (id)
     {
-    case BULLET_ID::NORMAL:         bullet = new CNormalBullet();   break;
     case BULLET_ID::SHOCK_WAVE:     bullet = new CShockWaveBullet();   break;
     case BULLET_ID::CANNON:         bullet = new CCannonBullet();   break;
     }
@@ -195,10 +192,7 @@ void CBulletManager::CheckHitModel(const CModel& model)
         DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
         if (hit_poly_dim.HitNum >= 1)
         {
-            CEffectManager::GetInstance().Create(EFFECT_ID::HIT_INVINCBLE, bullet->GetPosition());
             bullet->SetActive(false);
-
-            //
         }
 
         // “–‚½‚è”»’èî•ñ‚ÌŒãn––

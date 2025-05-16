@@ -1,7 +1,7 @@
 #include "belt_conveyor_object.h"
 
 
-const std::string CBeltConveyorObject::m_model_file_name = "data\\Models\\belt_conveyor_test.mv1";
+const std::string CBeltConveyorObject::m_model_file_name = "data\\Models\\belt_conveyor_stage.mv1";
 
 
 CBeltConveyorObject::CBeltConveyorObject()

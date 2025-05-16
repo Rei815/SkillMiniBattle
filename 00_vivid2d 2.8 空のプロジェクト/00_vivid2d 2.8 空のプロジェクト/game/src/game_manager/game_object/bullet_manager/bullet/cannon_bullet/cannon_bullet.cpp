@@ -1,6 +1,5 @@
 #include "cannon_bullet.h"
 #include "../../../launcher/launcher.h"
-#include "../../../effect_manager/effect_manager.h"
 
 const std::string   CCannonBullet::m_file_name = "data\\Models\\Bullet.mv1";
 const float         CCannonBullet::m_max_speed = 50.0f;
@@ -10,7 +9,6 @@ const float         CCannonBullet::m_max_speed = 50.0f;
  */
 CCannonBullet::CCannonBullet()
     : IBullet(m_file_name, COLLIDER_ID::SPHERE)
-//    , m_Effect(nullptr)
 {
 
 }

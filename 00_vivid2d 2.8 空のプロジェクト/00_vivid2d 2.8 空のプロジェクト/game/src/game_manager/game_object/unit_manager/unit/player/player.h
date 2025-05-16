@@ -41,11 +41,11 @@ public:
      */
     virtual void    Finalize(void);
 
-/*!
+    /*!
      *  @brief          行動の可不可を設定
      *
      *  @param[in]      flag    行動フラグ
- */
+     */
     void                SetActionFlag(bool flag);
 
     /*!
@@ -166,33 +166,31 @@ protected:
      */
     void        Damage(void);
 
-    static const float              m_radius;                       //!< 半径
-    static const float              m_height;                       //!< 高さ
-    static const float              m_model_scale;
-    static const float              m_move_speed;                   //!< 移動速度
-    static const float              m_jump_power;                   //!< ジャンプ力
-    static const CVector3           m_move_friction;                //!< 移動用減速率
-    static const float              m_fly_away_speed;               //!< 被弾時の吹っ飛び速度
-    static const float              m_max_life;                     //!< 最大ライフ
-    static const float              m_max_invincible_time;          //!< 無敵時間
-    static const int                m_invincible_visible_interval;  //!< 無敵時間中の点滅間隔
-    static const float              m_fall_accelerator;             //!< 落下加速度
+    static const float              m_radius;                                   //!< 半径
+    static const float              m_height;                                   //!< 高さ
+    static const float              m_model_scale;                              //1< モデルの大きさ
+    static const float              m_move_speed;                               //!< 移動速度
+    static const float              m_jump_power;                               //!< ジャンプ力
+    static const CVector3           m_move_friction;                            //!< 移動用減速率
+    static const float              m_fly_away_speed;                           //!< 被弾時の吹っ飛び速度
+    static const float              m_max_life;                                 //!< 最大ライフ
+    static const float              m_max_invincible_time;                      //!< 無敵時間
+    static const int                m_invincible_visible_interval;              //!< 無敵時間中の点滅間隔
+    static const float              m_fall_accelerator;                         //!< 落下加速度
 
-    static const unsigned int       m_player_body_color[(int)UNIT_ID::NONE];
-    static const unsigned int       m_player_eye_color[(int)UNIT_ID::NONE];
+    static const unsigned int       m_player_body_color[(int)UNIT_ID::NONE];    //!< 体の色
+    static const unsigned int       m_player_eye_color[(int)UNIT_ID::NONE];     //!< 目の色
 
-    float                           m_MoveSpeedRate;                //!< 移動速度の倍率
-    float                           m_JumpPowerRate;                //!< ジャンプ力の倍率
+    float                           m_MoveSpeedRate;                            //!< 移動速度の倍率
+    float                           m_JumpPowerRate;                            //!< ジャンプ力の倍率
 
-    CSkill*                         m_Skill;                        //!< スキル
+    CSkill*                         m_Skill;                                    //!< スキル
 
-    //float                           m_FallSpeed;                    //!< 落下速度
-    CVector3                        m_Accelerator;                  //!< 加速度影響による移動速度
-    CVector3                        m_InitialPosition;              //!< 初期位置
-    bool                            m_StopFlag;                     //!< 停止フラグ
-    bool                            m_FrictionFlag;                 //!< 減速フラグ
-    CTimer                          m_InvincibleTimer;              //!< 無敵時間タイマー
-    bool                            m_ActionFlag;                   //!< 行動処理有効フラグ
-    CController*                    m_Controller;                   //!< コントローラー
-    IEffect*                        m_Effect;
+    CVector3                        m_Accelerator;                              //!< 加速度影響による移動速度
+    CVector3                        m_InitialPosition;                          //!< 初期位置
+    bool                            m_StopFlag;                                 //!< 停止フラグ
+    bool                            m_FrictionFlag;                             //!< 減速フラグ
+    CTimer                          m_InvincibleTimer;                          //!< 無敵時間タイマー
+    bool                            m_ActionFlag;                               //!< 行動処理有効フラグ
+    CController*                    m_Controller;                               //!< コントローラー
 };

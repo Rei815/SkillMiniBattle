@@ -88,6 +88,7 @@ Update(void)
     if (m_Parent != nullptr)
     {
 
+        //一度接地したらジャンプや判定の外に行かない限り接地したオブジェクトに追従する
         float offset = m_Radius - m_Radius / 3.0f;
         const float line_length = 100.0f;
         bool releaseFlag = false;
@@ -167,10 +168,8 @@ CheckHitBullet(IBullet* bullet)
         hitPosition.x = hit_poly_dim.Dim->HitPosition.x;
         hitPosition.y = hit_poly_dim.Dim->HitPosition.y;
         hitPosition.z = hit_poly_dim.Dim->HitPosition.z;
-        if (m_InvincibleFlag)
-            CEffectManager::GetInstance().Create(EFFECT_ID::HIT_INVINCBLE, hitPosition);
-        else
-            CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
+
+        CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
 
         bullet->SetActive(false);
 
@@ -200,10 +199,8 @@ bool IUnit::CheckHitBulletModel(IBullet* bullet)
         hitPosition.x = hit_poly_dim.Dim->HitPosition.x;
         hitPosition.y = hit_poly_dim.Dim->HitPosition.y;
         hitPosition.z = hit_poly_dim.Dim->HitPosition.z;
-        if (m_InvincibleFlag)
-            CEffectManager::GetInstance().Create(EFFECT_ID::HIT_INVINCBLE, hitPosition);
-        else
-            CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
+
+        CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
 
 
         if (m_InvincibleFlag)

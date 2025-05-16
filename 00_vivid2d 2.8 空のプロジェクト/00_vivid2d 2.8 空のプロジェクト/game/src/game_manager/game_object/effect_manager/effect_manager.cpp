@@ -1,19 +1,14 @@
 #include "effect_manager.h"
 #include "effect/destroy_effect/destroy_effect.h"
 #include "effect/hit_effect/hit_effect.h"
-#include "effect/hit_invincible_effect/hit_invincible_effect.h"
 #include "effect/jump_effect/jump_effect.h"
 #include "effect/dust_cloud_effect/dust_cloud_effect.h"
-#include "effect/emergency_effect/emergency_effect.h"
 #include "effect/shock_wave_effect/shock_wave_effect.h"
-#include "effect/player_bullet_effect/player_bullet_effect.h"
-#include "effect/enemy_bullet_effect/enemy_bullet_effect.h"
 #include "effect/forecast_line_effect/forecast_line_effect.h"
-#include "effect/skill_barrier_effect/skill_barrier_effect.h"
+#include "effect/barrier_effect/barrier_effect.h"
 #include "effect/floating_effect/floating_effect.h"
 #include "effect/gravity_area_effect/gravity_area_effect.h"
 #include "effect/strong_wind_effect/strong_wind_effect.h"
-#include "effect/collide_effect/collide_effect.h"
 #include "effect/skill_star_effect/skill_star_effect.h"
 #include "effect/ogre_control_effect/ogre_control_effect.h"
 #include "effect/debuff_effect/debuff_effect.h"
@@ -168,30 +163,6 @@ IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector
     return effect;
 }
 
-/*
- *  エフェクト生成
- */
-IEffect*
-CEffectManager::
-Create(EFFECT_ID id, const vivid::Vector2& pos, unsigned int color, float rotation)
-{
-    IEffect* effect = nullptr;
-
-    switch (id)
-    {
-    case EFFECT_ID::EMERGENCY:           effect = new CEmergencyEffect();        break;
-    }
-
-    if (!effect) return nullptr;
-
-    effect->Initialize(pos, color, rotation);
-
-    m_EffectList.push_back(effect);
-    return effect;
-}
-
-
-
 void CEffectManager::PauseAllEffect()
 {
     if (m_EffectList.empty()) return;
@@ -235,18 +206,14 @@ IEffect* CEffectManager::CreateClass(EFFECT_ID id)
     {
     case EFFECT_ID::DESTROY:                effect = new CDestroyEffect();          break;
     case EFFECT_ID::HIT:                    effect = new CHitEffect();              break;
-    case EFFECT_ID::HIT_INVINCBLE:          effect = new CHitInvincibleEffect();    break;
     case EFFECT_ID::JUMP:                   effect = new CJumpEffect();             break;
     case EFFECT_ID::DUST_CLOUD:             effect = new CDustCloudEffect();        break;
     case EFFECT_ID::SHOCK_WAVE:             effect = new CShockWaveEffect();        break;
-    case EFFECT_ID::PLAYER_BULLET:          effect = new CPlayerBulletEffect();     break;
-    case EFFECT_ID::ENEMY_BULLET:           effect = new CEnemyBulletEffect();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
-    case EFFECT_ID::SKILL_BARRIER:          effect = new CSkillBarrierEffect();     break;
+    case EFFECT_ID::BARRIER:          effect = new CBarrierEffect();     break;
     case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
     case EFFECT_ID::GRAVITY_AREA:           effect = new CGravityAreaEffect();      break;
     case EFFECT_ID::STRONG_WIND:            effect = new CStrongWindEffect();       break;
-    case EFFECT_ID::COLLIDE:                effect = new CCollideEffect();          break;
     case EFFECT_ID::SKILL_STAR:             effect = new CSkillStarEffect();        break;
     case EFFECT_ID::OGRE_CONTROL:           effect = new COgreControlEffect();      break;
     case EFFECT_ID::DEBUFF:                 effect = new CDebuffEffect();           break;

@@ -2,22 +2,17 @@
 
 enum class SCENE_ID
 {
-	WAIT,				//!< ダミーID
-	TITLE,				//!< タイトルシーン
-	SELECTMODE,			//!< モードセレクトシーン
-	SELECTPLAYER,		//!< プレイヤーセレクトシーン
-	SELECTGAME,			//!< ゲームを決めるシーン
-	SELECTSKILL,		//!< スキルを決めるシーン
-	GAMEMAIN,			//!< ゲームメインシーン
-	FALLGAME,			//!< フォールゲームシーン
-	DARUMAFALLDOWN,		//!< ダルマさんが転んだゲームシーン
-	DODGEBALLGAME,		//!< ドッジボールゲームシーン
-	BELTCONVEYORGAME,	//!< ベルトコンベアゲームシーン
-	RESULT_MINIGAME,	//!< ミニゲームリザルトシーン
-	RESULT_GAME,		//!< ゲーム全体リザルトシーン
-	ENTRY,				//!< エントリーシーン
-
-	DEBUGGAME,			//!< デバッグゲームシーン
-
-	MAX			//!< シーンID数
+	DUMMY,					//!< ダミーID
+	TITLE,					//!< タイトルシーン
+	GAME_ROLL_AND_REVEAL,	//!< ゲームが選出され、情報が流れるシーン
+	SELECT_SKILL,			//!< スキルを決めるシーン
+	GAME_MAIN,				//!< ゲームメインシーン
+	FALL_GAME,				//!< フォールゲームシーン
+	DARUMA_FALLDOWN_GAME,	//!< ダルマさんが転んだゲームシーン
+	DODGEBALL_GAME,			//!< ドッジボールゲームシーン
+	BELTCONVEYOR_GAME,		//!< ベルトコンベアゲームシーン
+	MINIGAME_RESULT,		//!< ミニゲームの結果発表シーン
+	GAME_RESULT,			//!< 結果発表シーン
+	ENTRY,					//!< エントリーシーン
+	MAX						//!< シーンID数
 };

@@ -1760,6 +1760,12 @@ int vivid::model::LoadModel(const std::string& file_name)
 {
     return 0;
 }
+unsigned int vivid::alpha::GetAlpha(unsigned int color)
+{
+    return (color >> 24) & 0xff;
+}
+
+
 template <typename T>
 T clamp(T value, T min, T max)
 {
@@ -1767,11 +1773,6 @@ T clamp(T value, T min, T max)
     if (value > max) return max;
     return value;
 }
-unsigned int vivid::alpha::GetAlpha(unsigned int color)
-{
-    return (color >> 24) & 0xff;
-}
-
 unsigned int vivid::alpha::SetAlpha(unsigned int color, unsigned int alpha)
 {
     alpha = clamp(alpha, 0u, 255u);

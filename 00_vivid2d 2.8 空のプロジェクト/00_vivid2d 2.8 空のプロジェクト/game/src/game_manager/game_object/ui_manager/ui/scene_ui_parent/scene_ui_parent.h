@@ -66,16 +66,15 @@ public:
     void            ReleaseChildren();
 private:
 
-
-    static const vivid::Vector2             m_position;             //!< 位置
+    static const vivid::Vector2 m_position;             //!< 位置
     static const int            m_speed;                //!< 移動速度
     static const float			m_down_final_height;	//!< 降りるときの最終高度
-    static const float			m_max_height;	//!< 最高高度
-    static const float			m_min_height;	//!< 最低高度
-    static const float			m_wait_height;	//!< 待機する高さ
+    static const float			m_max_height;	        //!< 最高高度
+    static const float			m_min_height;	        //!< 最低高度
+    static const float			m_wait_height;	        //!< 待機する高さ
 
-    STATE                       m_State;
     using CHILDRENLIST = std::list<CUI*>;
-    CHILDRENLIST               m_ChildrenList;
-    bool                        m_WaitFlag;
+    CHILDRENLIST                m_ChildrenList;         //!< 子UIのリスト
+    STATE                       m_State;                //!< 動きの状態
+    bool                        m_WaitFlag;             //!< 待機するフラグ
 };

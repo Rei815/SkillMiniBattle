@@ -429,25 +429,22 @@ void CSelectSkill::MoveCursor(void)
                     {
                     case GAME_ID::FALLOUT_GAME:
                         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALLGAME);
+                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::FALL_GAME);
                         break;
                     case GAME_ID::DODGE_BALL_GAME:
                         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALLGAME);
+                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::DODGEBALL_GAME);
                         break;
                     case GAME_ID::DARUMA_FALL_DOWN_GAME:
                         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMAFALLDOWN);
+                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::DARUMA_FALLDOWN_GAME);
                         break;
                     case GAME_ID::BELT_CONVEYOR_GAME:
                         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::BELTCONVEYORGAME);
+                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::BELTCONVEYOR_GAME);
                         break;
 
                     case GAME_ID::MAX:
-                    case GAME_ID::DEBUG_GAME:
-                        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-                        CSceneManager::GetInstance().ChangeScene(SCENE_ID::DEBUGGAME);
                         break;
                     }
                 }
