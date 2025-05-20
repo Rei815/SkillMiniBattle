@@ -2,14 +2,13 @@
 #include "../../../unit_manager/unit_manager.h"
 
 
-const float CSkillDash::m_dash_speed_up_rate = 5.0f;
+const float CSkillDash:: m_dash_speed_up_rate = 5.0f;
 const float CSkillDash:: m_duration_time = 0.35f;
 const float CSkillDash:: m_cool_time = 5.0f;
 
 CSkillDash::CSkillDash(void)
-	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
+	: CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
 	, m_SkillEffect(nullptr)
-
 {
 
 }

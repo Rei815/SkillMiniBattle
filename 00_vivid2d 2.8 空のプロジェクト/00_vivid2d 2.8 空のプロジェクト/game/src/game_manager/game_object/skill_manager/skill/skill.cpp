@@ -23,7 +23,7 @@ CSkill::CSkill(float duration_time, float cool_time)
 	, m_UiSkillIcon(nullptr)
 	, m_UiSkillGauge(nullptr)
 	, m_UiSkillCursor(nullptr)
-	,m_Sound(SE_ID::SKILL)
+	, m_Sound(SE_ID::SKILL)
 {
 
 }
@@ -66,7 +66,7 @@ void CSkill::Initialize(SKILL_ID skill_id)
  */
 void CSkill::Update(void)
 {
-	//スキル更新
+	//スキル状態更新
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
@@ -75,7 +75,6 @@ void CSkill::Update(void)
 	case SKILL_STATE::ACTIVE:
 		if (m_DurationTime > 0)
 		{
-
 			m_Timer.Update();
 			m_GaugePercent = (m_DurationTime - m_Timer.GetTimer()) / m_DurationTime * 100.0f;
 			if (m_Timer.Finished())
@@ -88,8 +87,6 @@ void CSkill::Update(void)
 		break;
 
 	case SKILL_STATE::COOLDOWN:
-
-
 		if (m_CoolTime > 0)
 		{
 			m_Timer.Update();
