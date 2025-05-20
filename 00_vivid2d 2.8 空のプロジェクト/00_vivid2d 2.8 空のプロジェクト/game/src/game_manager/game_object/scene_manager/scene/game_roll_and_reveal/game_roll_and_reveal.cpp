@@ -179,7 +179,7 @@ void CGameRollAndReveal::Update(void)
             m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
         }
     }
-//#ifdef _DEBUG
+
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
     {
         m_SelectedGameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
@@ -187,6 +187,7 @@ void CGameRollAndReveal::Update(void)
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
+
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
     {
         m_SelectedGameID = GAME_ID::FALLOUT_GAME;
@@ -194,6 +195,7 @@ void CGameRollAndReveal::Update(void)
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
+
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::THREE))
     {
         m_SelectedGameID = GAME_ID::DODGE_BALL_GAME;
@@ -201,6 +203,7 @@ void CGameRollAndReveal::Update(void)
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
+
     if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FOUR))
     {
         m_SelectedGameID = GAME_ID::BELT_CONVEYOR_GAME;
@@ -208,7 +211,6 @@ void CGameRollAndReveal::Update(void)
 
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
-//#endif
 
     if (m_SecondSceneUIParent)
     {
@@ -233,16 +235,6 @@ void CGameRollAndReveal::Update(void)
 }
 void CGameRollAndReveal::Draw(void)
 {
-#if _DEBUG
-    vivid::DrawText(20, "1キーでだるまさんがころんだゲーム", vivid::Vector2(0, 0));
-    vivid::DrawText(20, "2キーでフォールアウトゲーム", vivid::Vector2(0, 30));
-    vivid::DrawText(20, "3キーでドッジボールゲーム", vivid::Vector2(0, 60));
-    vivid::DrawText(20, "4キーでベルトコンベアゲーム", vivid::Vector2(0, 90));
-    vivid::DrawText(20, std::to_string((int)m_SelectedGameID + 1), vivid::Vector2(0, 110));
-
-#endif // _DEBUG
-
-
 }
 
 void CGameRollAndReveal::Finalize(void)

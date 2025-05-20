@@ -1,14 +1,3 @@
-
-/*!
- *  @file       scene.h
- *  @brief      シーンベース
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #pragma once
 #include "scene_id.h"
 

@@ -40,9 +40,4 @@ public:
     void Finalize(void);
 
 private:
-
-    unsigned int        m_Color;
-    static const int    m_fade_speed;
-    int                 m_FadeSpeed;
-    CSceneUIParent*     m_SceneUIParent;
 };

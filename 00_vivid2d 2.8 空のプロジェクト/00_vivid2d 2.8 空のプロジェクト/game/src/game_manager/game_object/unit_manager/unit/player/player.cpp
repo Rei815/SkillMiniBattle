@@ -172,23 +172,23 @@ bool CPlayer::GetPlayerMoving()
         vivid::Vector2 stick = m_Controller->GetLeftStick();
 
         //ç∂à⁄ìÆ
-        if ((stick != vivid::Vector2::ZERO && stick.x < -0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::A))
+        if ((stick != vivid::Vector2::ZERO && stick.x < -0.5f))
             Input = true;
 
         //âEà⁄ìÆ
-        if ((stick != vivid::Vector2::ZERO && stick.x > 0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::D))
+        if ((stick != vivid::Vector2::ZERO && stick.x > 0.5f))
             Input = true; 
 
         //è„à⁄ìÆ
-        if ((stick != vivid::Vector2::ZERO && stick.y < -0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::W))
+        if ((stick != vivid::Vector2::ZERO && stick.y < -0.5f))
             Input = true;
 
         //â∫à⁄ìÆ
-        if ((stick != vivid::Vector2::ZERO && stick.y > 0.5f) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::S))
+        if ((stick != vivid::Vector2::ZERO && stick.y > 0.5f))
             Input = true;
 
         //ÉWÉÉÉìÉv
-        if ((m_Controller->GetButtonDown(BUTTON_ID::B) || vivid::keyboard::Button(vivid::keyboard::KEY_ID::SPACE)) && !m_StopFlag)
+        if (m_Controller->GetButtonDown(BUTTON_ID::A) && !m_StopFlag)
             Input = true;
 
     }
