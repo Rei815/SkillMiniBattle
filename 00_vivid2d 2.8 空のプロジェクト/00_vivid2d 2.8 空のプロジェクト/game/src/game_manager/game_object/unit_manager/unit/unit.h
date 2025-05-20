@@ -19,18 +19,6 @@ enum class UNIT_STATE
     DEFEAT,
 };
 
-
-/*!
- *  @class      IUnit
- *
- *  @brief      ユニットベースクラス
- *
- *  @author     Kazuya Maruyama
- *
- *  @date       2020/11/13
- *
- *  @since      1.0
- */
 class IUnit
 {
 public:
