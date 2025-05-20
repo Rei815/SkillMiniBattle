@@ -232,7 +232,6 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_ready\player_ready.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\menu_bg\menu_bg.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\menu_poster\menu_poster.cpp" />
-    <ClCompile Include="src\game_manager\game_object\ui_manager\ui\player_num_select\player_num_select.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\scene_title\scene_title.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_gauge\skill_gauge.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\skill_cursor\skill_cursor.cpp" />
@@ -385,7 +384,6 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_ready\player_ready.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\menu_bg\menu_bg.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\menu_poster\menu_poster.h" />
-    <ClInclude Include="src\game_manager\game_object\ui_manager\ui\player_num_select\player_num_select.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\scene_title\scene_title.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_gauge\skill_gauge.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_cursor\skill_cursor.h" />

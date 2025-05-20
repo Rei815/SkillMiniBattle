@@ -14,7 +14,6 @@ enum class UI_ID
     MENU_BG,
     MENU_POSTER,
     SCENE_TITLE,
-    PLAYER_NUM_SELECT,
     SKILL_ICON,
     SKILL_GAUGE,
     SKILL_CURSOR,

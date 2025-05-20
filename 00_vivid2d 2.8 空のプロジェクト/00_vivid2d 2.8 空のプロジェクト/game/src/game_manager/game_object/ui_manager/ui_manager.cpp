@@ -20,7 +20,6 @@
 #include "ui/game_bg/game_bg.h"
 #include "ui/menu_bg/menu_bg.h"
 #include "ui/menu_poster/menu_poster.h"
-#include "ui/player_num_select/player_num_select.h"
 #include "ui/scene_title/scene_title.h"
 #include "ui/skill_video/skill_video.h"
 #include "ui/scene_ui_parent/scene_ui_parent.h"
@@ -294,8 +293,6 @@ CUI* CUIManager::CreateClass(UI_ID id)
         ui = new CMenuPoster(id);           break;
     case UI_ID::SCENE_TITLE:
         ui = new CSceneTitle(id);           break;
-    case UI_ID::PLAYER_NUM_SELECT:
-        ui = new CPlayerNumSelect(id);      break;
     case UI_ID::SKILL_ICON:
         ui = new CSkillIcon(id);            break;
     case UI_ID::SKILL_GAUGE:
