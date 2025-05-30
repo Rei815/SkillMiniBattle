@@ -207,7 +207,7 @@ void IEffect::SetRotation(const CVector3& rotation)
  */
 bool
 IEffect::
-GetActive(void)
+IsActive(void)
 {
     return m_ActiveFlag;
 }

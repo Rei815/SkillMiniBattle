@@ -41,7 +41,7 @@ public:
     virtual void    Finalize(void);
 
 
-    bool            GetActive();
+    bool            IsActive();
 
     void            SetActive(bool active);
 

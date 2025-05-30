@@ -107,7 +107,7 @@ Finalize(void)
  */
 bool
 CUI::
-GetActive(void)
+IsActive(void)
 {
     return m_ActiveFlag;
 }

@@ -44,7 +44,7 @@ GIMMICK_ID CGimmick::GetGimmickID(void)
 	return GIMMICK_ID();
 }
 
-bool CGimmick::GetActive(void)
+bool CGimmick::IsActive(void)
 {
 	return m_ActiveFlag;
 }

@@ -43,7 +43,7 @@ CControllerManager::Update(void)
 
         controller->Update();
 
-        if (!controller->GetActive())
+        if (!controller->IsActive())
         {
             controller->Finalize();
 

@@ -40,7 +40,7 @@ OBJECT_ID IObject::GetObjectID(void)
 	return m_ObjectID;
 }
 
-bool IObject::GetActive(void)
+bool IObject::IsActive(void)
 {
 	return m_ActiveFlag;
 }

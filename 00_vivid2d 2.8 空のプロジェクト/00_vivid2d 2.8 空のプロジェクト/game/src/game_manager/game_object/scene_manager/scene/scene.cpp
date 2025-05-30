@@ -63,7 +63,7 @@ IScene::Finalize(void)
     m_ActiveFlag = false;
 }
 
-bool IScene::GetActive()
+bool IScene::IsActive()
 {
     return m_ActiveFlag;
 }

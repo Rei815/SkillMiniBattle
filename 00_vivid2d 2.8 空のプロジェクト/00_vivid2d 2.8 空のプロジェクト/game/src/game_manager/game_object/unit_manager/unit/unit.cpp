@@ -253,7 +253,7 @@ SetPosition(const CVector3& positioin)
  */
 bool
 IUnit::
-GetActive(void)
+IsActive(void)
 {
     return m_ActiveFlag;
 }

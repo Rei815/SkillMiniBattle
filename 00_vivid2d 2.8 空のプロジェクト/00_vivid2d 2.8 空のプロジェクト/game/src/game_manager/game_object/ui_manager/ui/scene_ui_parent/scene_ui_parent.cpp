@@ -79,7 +79,7 @@ void CSceneUIParent::Update(void)
     while (it != m_ChildrenList.end())
     {
         CUI* ui = (CUI*)(*it);
-        if (ui->GetParent() == nullptr || ui->GetActive() == false || ui == nullptr)
+        if (ui->GetParent() == nullptr || ui->IsActive() == false || ui == nullptr)
         {
            it = m_ChildrenList.erase(it);
            continue;

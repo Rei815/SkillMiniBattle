@@ -341,7 +341,7 @@ CSceneManager::SceneUpdate(void)
         if(scene->GetSceneState() == SCENE_STATE::ACTIVE && !m_PauseFlag)
             scene->Update();
 
-        if (!scene->GetActive())
+        if (!scene->IsActive())
         {
             scene->Finalize();
 
@@ -399,7 +399,7 @@ CSceneManager::SceneChange()
         while (it != m_SceneList.end())
         {
             IScene* scene = (IScene*)(*it);
-            if (scene->GetActive() == true)
+            if (scene->IsActive() == true)
             {
                 scene->Finalize();
 
@@ -432,7 +432,7 @@ IScene* CSceneManager::GetScene(SCENE_ID scene_id)
     {
         IScene* scene = (IScene*)(*it);
 
-        if (scene->GetActive() && scene->GetSceneID() == scene_id)
+        if (scene->IsActive() && scene->GetSceneID() == scene_id)
             return scene;
 
         ++it;

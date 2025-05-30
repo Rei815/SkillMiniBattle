@@ -1,29 +1,11 @@
-
-/*!
- *  @file       ui_manager.h
- *  @brief      UI管理
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #pragma once
 
 #include "vivid.h"
 #include "ui/ui.h"
 #include <list>
+#include <memory>
  /*!
-  *  @class      CUIManager
-  *
-  *  @brief      UI管理クラス
-  *
-  *  @author     Kazuya Maruyama
-  *
-  *  @date       2020/11/13
-  *
-  *  @since      1.0
+  *  @brief      UIマネージャークラス
   */
 class CUIManager
 {
@@ -68,7 +50,6 @@ public:
      *
      *  @param[in]  id          UIのID
      *  @param[in]  position    UIの位置
-     *  @param[in]  layerNum    UIの描画順
      */
     CUI*        Create(UI_ID id, const vivid::Vector2& position);
 
@@ -85,8 +66,6 @@ public:
      *
      *  @param[in]  id          UIのID
      *  @param[in]  transform    UIのトランスフォーム
-     *  @param[in]  layerNum    UIの描画順
-
      */
     CUI*        Create(UI_ID id, const CTransform& transform);
 
@@ -98,26 +77,9 @@ public:
     void        Delete(UI_ID id);
 
     /*!
-     *  @brief      UI削除
-     *
-     *  @param[in]  ui          UIのポインタ
-     */
-    void        Delete(const CUI* ui_pointer);
-
-    /*!
-     *  @brief      指定のUIのアクティブを取得
-     *
-     *  @return     1  アクティブ
-     *  @return     0 非アクティブ
-     *  @return     -1 存在しない
-     *
-     */
-    int             GetUIActive(UI_ID ui_id);
-
-    /*!
      *  @brief      UIリスト型
      */
-    using UI_LIST = std::list<CUI*>;
+    using UI_LIST = std::list<std::shared_ptr<CUI>>;
 
     /*!
      *  @brief      リスト取得
@@ -140,6 +102,8 @@ public:
     CUI*            GetUI(UI_ID ui_id);
 
 private:
+    UI_LIST             m_UIList;             //!< UIリスト
+
     /*!
      *  @brief      UIのクラスを作成
      *
@@ -175,5 +139,4 @@ private:
      */
     CUIManager& operator=(const CUIManager& rhs);
 
-    UI_LIST             m_UIList;             //!< UIリスト
 };

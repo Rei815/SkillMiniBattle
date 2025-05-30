@@ -5,15 +5,9 @@ class CTransform
 {
 public:
 
-    CVector3 position;
-    CVector3 rotation;
-    CVector3 scale;
-
-    /*
-    CVector3 forward;
-    CVector3 right;
-    CVector3 up;
-    */
+    CVector3 position;  //!< 位置
+    CVector3 rotation;  //!< 回転
+    CVector3 scale;     //!< 大きさ
 
     /*!
      *  @brief  コンストラクタ

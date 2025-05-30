@@ -292,7 +292,7 @@ UpdateUnit(void)
 
         unit->Update();
 
-        if (!unit->GetActive())
+        if (!unit->IsActive())
         {
             unit->Finalize();
 

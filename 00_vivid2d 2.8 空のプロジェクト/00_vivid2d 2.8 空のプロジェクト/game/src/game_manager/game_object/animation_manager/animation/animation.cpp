@@ -20,7 +20,7 @@ void IAnimation::Finalize(void)
 
 }
 
-bool IAnimation::GetActive(void)
+bool IAnimation::IsActive(void)
 {
 	return m_ActiveFlag;
 }

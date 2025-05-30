@@ -63,7 +63,7 @@ Update(void)
 
 
         // 弾が非アクティブなら削除してリストから外す
-        if (!bullet->GetActive())
+        if (!bullet->IsActive())
         {
 
             bullet->Finalize();

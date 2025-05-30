@@ -142,7 +142,7 @@ public:
      *
      *  @return     アクティブフラグ
      */
-    bool            GetActive(void);
+    bool            IsActive(void);
 
     /*!
      *  @brief      アクティブフラグ設定

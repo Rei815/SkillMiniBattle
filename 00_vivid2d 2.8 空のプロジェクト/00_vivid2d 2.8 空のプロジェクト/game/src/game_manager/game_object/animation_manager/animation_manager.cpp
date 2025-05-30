@@ -40,7 +40,7 @@ CAnimationManager::Update(void)
 
         animation->Update();
 
-        if (!animation->GetActive())
+        if (!animation->IsActive())
         {
             animation->Finalize();
 

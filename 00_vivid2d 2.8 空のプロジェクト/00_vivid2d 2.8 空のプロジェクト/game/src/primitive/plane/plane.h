@@ -3,28 +3,41 @@
 #include "..\..\mathematics\mathematics.h"
 #include "..\..\utility\utility.h"
 
-
+/*!
+ *  @brief  プレーンクラス
+ */
 class CPlane
 {
 public:
 
+	/*!
+	 *  @brief  コンストラクタ
+	 */
 	CPlane();
 
+	/*!
+	 *  @brief  デストラクタ
+	 */
 	~CPlane();
 
 	/*!
 	 *  @brief      初期設定
+	 * 
 	 *  @param[in]	fileName	画像のファイル名
 	 */
 	void SetUp(const std::string fileName);
 
-	void _Draw();
+	/*!
+	 *  @brief      トランスフォームの更新
+	 *
+	 */
+	void UpdateTransform();
 
 	/*!
-	 *  @brief      行列を渡して描画する
-	 *  @param[in]	mat	行列
+	 *  @brief      描画
+	 * 
 	 */
-	void Draw(const CMatrix& mat);
+	void Draw() const;
 
 	/*!
 	 *  @brief      解放
@@ -33,6 +46,7 @@ public:
 
 	/*!
 	 *  @brief      トランスフォームの設定
+	 * 
 	 *  @param[in]	transform	トランスフォーム
 	 */
 	void	SetTransform(const CTransform& transform);
@@ -46,5 +60,5 @@ private:
 	int							m_Width;
 	int							m_Height;
 	CVector3					m_Normal;
-
+	CMatrix						m_WorldMatrix;
 };

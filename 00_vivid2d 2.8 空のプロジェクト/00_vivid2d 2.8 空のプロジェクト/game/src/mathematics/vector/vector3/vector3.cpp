@@ -12,8 +12,8 @@ const CVector3 CVector3::LEFT = CVector3(-1.0f, 0.0f, 0.0f);
 const CVector3 CVector3::DOWN = CVector3(0.0f, -1.0f, 0.0f);
 
 /*
-* コンストラクタ
-*/
+ * コンストラクタ
+ */
 CVector3::CVector3(void)
 {
 	x = 0.0f;
@@ -22,8 +22,8 @@ CVector3::CVector3(void)
 }
 
 /*
-* コンストラクタ
-*/
+ * コンストラクタ
+ */
 CVector3::CVector3(float xVal, float yVal, float zVal)
 {
 	x = xVal;
@@ -32,16 +32,16 @@ CVector3::CVector3(float xVal, float yVal, float zVal)
 }
 
 /*
-* コンストラクタ
-*/
+ * コンストラクタ
+ */
 CVector3::CVector3(const DxLib::VECTOR& v)
 	: CVector3(v.x, v.y, v.z)
 {
 }
 
 /*
-* デストラクタ
-*/
+ * デストラクタ
+ */
 CVector3::~CVector3()
 {
 }
@@ -110,6 +110,10 @@ CVector3 CVector3::Lerp(const CVector3& start, const CVector3& end, float t)
 {
 	return (1 - t) * start + t * end;
 }
+
+/*
+ *  代入演算子のオーバーロード
+ */
 CVector3& CVector3::operator=(const CVector3& v)
 {
 	x = v.x;
@@ -118,6 +122,9 @@ CVector3& CVector3::operator=(const CVector3& v)
 	return *this;
 }
 
+/*
+ *  代入演算子のオーバーロード
+ */
 CVector3& CVector3::operator=(const float f)
 {
 	x = f;
@@ -162,6 +169,9 @@ CVector3& CVector3::operator*=(float scalar)
 	return *this;
 }
 
+/*
+ *  乗算演算子のオーバーロード
+ */
 CVector3& CVector3::operator*=(const CVector3& v)
 {
 	x *= v.x;
@@ -171,6 +181,9 @@ CVector3& CVector3::operator*=(const CVector3& v)
 	return *this;
 }
 
+/*
+ *  除算演算子のオーバーロード
+ */
 CVector3& CVector3::operator/=(float scalar)
 {
 	x /= scalar;
@@ -341,11 +354,12 @@ CVector3 CVector3::RotateAroundCoordinatesAxis(COORDINATES_AXIS axis, float degr
 
 CVector3 CVector3::DeviationToDirection(const CVector3& direction, float deviationAmount)
 {
-	CVector3 deviation = GetRandomDeviation(deviationAmount);
+	CVector3 deviation = CreateRandomDeviation(deviationAmount);
 
 	return direction + deviation;
 }
-CVector3 CVector3::GetRandomDeviation(float deviationAmount)
+
+CVector3 CVector3::CreateRandomDeviation(float deviationAmount)
 {
 	static std::random_device rd;
 

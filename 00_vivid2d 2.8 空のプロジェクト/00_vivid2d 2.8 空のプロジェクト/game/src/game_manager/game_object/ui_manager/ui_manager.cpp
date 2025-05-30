@@ -74,16 +74,15 @@ CUIManager::Update(void)
 
     while (it != m_UIList.end())
     {
-        CUI* ui = static_cast<CUI*>(*it);
+        CUI* ui = dynamic_cast<CUI*>((*it).get());
+
         if(ui->GetUI_ID() == UI_ID::PAUSE || !CSceneManager::GetInstance().Pausing())
             ui->Update();
         SortList();
-        if (!ui->GetActive())
+        if (!ui->IsActive())
         {
-
             ui->Finalize();
 
-            delete ui;
             it = m_UIList.erase(it);
 
             continue;
@@ -123,7 +122,6 @@ void CUIManager::Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
         ++it;
     }
 
@@ -136,7 +134,7 @@ CUI* CUIManager::Create(UI_ID id)
     if (!ui) return nullptr;
 
     ui->Initialize();
-    m_UIList.push_back(ui);
+    m_UIList.emplace_back(ui);
 
     SortList();
 
@@ -150,7 +148,7 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
     if (!ui) return nullptr;
 
     ui->Initialize(position);
-    m_UIList.push_back(ui);
+    m_UIList.emplace_back(ui);
     return ui;
 }
 
@@ -161,7 +159,7 @@ CUI* CUIManager::Create(UI_ID id, const CVector3& position)
     if (!ui) return nullptr;
 
     ui->Initialize(position);
-    m_UIList.push_back(ui);
+    m_UIList.emplace_back(ui);
 
     return ui;
 }
@@ -173,7 +171,7 @@ CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
     if (!ui) return nullptr;
 
     ui->Initialize(transform);
-    m_UIList.push_back(ui);
+    m_UIList.emplace_back(ui);
 
     return ui;
 }
@@ -186,7 +184,7 @@ void CUIManager::Delete(UI_ID id)
 
     while (it != m_UIList.end())
     {
-        CUI* ui = (CUI*)(*it);
+        CUI* ui = dynamic_cast<CUI*>((*it).get());
 
 
         if (ui->GetUI_ID() == id)
@@ -196,48 +194,6 @@ void CUIManager::Delete(UI_ID id)
 
         ++it;
     }
-}
-
-void CUIManager::Delete(const CUI* ui_pointer)
-{
-    if (m_UIList.empty()) return;
-
-    UI_LIST::iterator it = m_UIList.begin();
-
-    while (it != m_UIList.end())
-    {
-        CUI* ui = (CUI*)(*it);
-
-
-        if (ui == ui_pointer)
-        {
-            (*it)->SetActive(false);
-        }
-
-        ++it;
-    }
-
-}
-
-int CUIManager::GetUIActive(UI_ID ui_id)
-{
-    if (m_UIList.empty()) return -1;
-
-    UI_LIST::iterator it = m_UIList.begin();
-
-    while (it != m_UIList.end())
-    {
-        CUI* ui = (CUI*)(*it);
-
-
-        if (ui->GetUI_ID() == ui_id && ui->GetActive() != false)
-            return 1;
-
-        if(ui->GetUI_ID() == ui_id && ui->GetActive() != true)
-            return 0;
-        ++it;
-    }
-    return -1;
 }
 
 CUIManager::UI_LIST CUIManager::GetList()
@@ -250,9 +206,6 @@ void CUIManager::SortList(void)
     m_UIList.sort([](const CUI* p, const CUI* q) {return *p < *q; });
 }
 
-/*
- *  Žw’è‚ÌUI‚ð•Ô‚·
- */
 CUI* CUIManager::GetUI(UI_ID ui_id)
 {
     if (m_UIList.empty()) return nullptr;
@@ -261,7 +214,7 @@ CUI* CUIManager::GetUI(UI_ID ui_id)
 
     while (it != m_UIList.end())
     {
-        CUI* ui = (CUI*)(*it);
+        CUI* ui = dynamic_cast<CUI*>((*it).get());
 
 
         if (ui->GetUI_ID() == ui_id)
@@ -275,92 +228,92 @@ CUI* CUIManager::GetUI(UI_ID ui_id)
 
 CUI* CUIManager::CreateClass(UI_ID id)
 {
-   CUI* ui = nullptr;
+   std::shared_ptr<CUI> ui = nullptr;
     switch (id)
     {
     case UI_ID::PAUSE:
-        ui = new CPause(id);                break;
+        ui = std::make_shared<CPause>(id);              break;
     case UI_ID::FALLOUT_TOPIC:
-        ui = new CFallOutTopic(id);         break;
+        ui = std::make_shared<CFallOutTopic>(id);       break;
     case UI_ID::FALLOUT_TOPIC_BG:
-        ui = new CFalloutTopicBG(id);       break;
+        ui = std::make_shared<CFalloutTopicBG>(id);     break;
     case UI_ID::TOPIC_SHUTTER:
-        ui = new CTopicShutter(id);         break;
+        ui = std::make_shared<CTopicShutter>(id);       break;
     case UI_ID::PLANE_GAME_IMAGE:
-        ui = new CPlaneGameImage(id);       break;
+        ui = std::make_shared<CPlaneGameImage>(id);     break;
     case UI_ID::MENU_BG:
-        ui = new CMenuBG(id);               break;
+        ui = std::make_shared<CMenuBG>(id);             break;
     case UI_ID::MENU_POSTER:
-        ui = new CMenuPoster(id);           break;
+        ui = std::make_shared<CMenuPoster>(id);         break;
     case UI_ID::SCENE_TITLE:
-        ui = new CSceneTitle(id);           break;
+        ui = std::make_shared<CSceneTitle>(id);         break;
     case UI_ID::PLAYER_NUM_SELECT:
-        ui = new CPlayerNumSelect(id);      break;
+        ui = std::make_shared<CPlayerNumSelect>(id);    break;
     case UI_ID::SKILL_ICON:
-        ui = new CSkillIcon(id);            break;
+        ui = std::make_shared<CSkillIcon>(id);          break;
     case UI_ID::SKILL_GAUGE:
-        ui = new CSkillGauge(id);           break;
+        ui = std::make_shared<CSkillGauge>(id);         break;
     case UI_ID::SKILL_CURSOR:
-        ui = new CSkillCursor(id);          break;
+        ui = std::make_shared<CSkillCursor>(id);        break;
     case UI_ID::SKILL_NAME:
-        ui = new CSkillName(id);            break;
+        ui = std::make_shared<CSkillName>(id);          break;
     case UI_ID::SKILL_INFO:
-        ui = new CSkillInfomation(id);      break;
+        ui = std::make_shared<CSkillInfomation>(id);    break;
     case UI_ID::SKILL_VIDEO:
-        ui = new CSkillVideo(id);           break;
+        ui = std::make_shared<CSkillVideo>(id);         break;
     case UI_ID::FINISH_GAME_BG:
-        ui = new CFinishGameBG(id);         break;
+        ui = std::make_shared<CFinishGameBG>(id);       break;
     case UI_ID::TITLE_LOGO:
-        ui = new CTitleLogo(id);            break;
+        ui = std::make_shared<CTitleLogo>(id);          break;
     case UI_ID::START_COUNTDOWN:
-        ui = new CStartGameCount(id);       break;
+        ui = std::make_shared<CStartGameCount>(id);     break;
     case UI_ID::START_TEXT:
-        ui = new CStartGameText(id);        break;
+        ui = std::make_shared<CStartGameText>(id);      break;
     case UI_ID::FINISH_TEXT:
-        ui = new CFinishGameText(id);       break;
+        ui = std::make_shared<CFinishGameText>(id);     break;
     case UI_ID::KEY:
-        ui = new CKey(id);                  break;
+        ui = std::make_shared<CKey>(id);                break;
     case UI_ID::KEY_BG:
-        ui = new CKeyBG(id);                break;
+        ui = std::make_shared<CKeyBG>(id);              break;
     case UI_ID::FADE:
-        ui = new CFade(id);                 break;
+        ui = std::make_shared<CFade>(id);               break;
     case UI_ID::GAME_BG:
-        ui = new CGameBG(id);               break;
+        ui = std::make_shared<CGameBG>(id);             break;
     case UI_ID::SCENE_UI_PARENT:
-        ui = new CSceneUIParent(id);        break;
+        ui = std::make_shared<CSceneUIParent>(id);      break;
     case UI_ID::TITLE_BUTTON:
-        ui = new CTitleButton(id);          break;
+        ui = std::make_shared<CTitleButton>(id);        break;
     case UI_ID::GAME_VIDEO:
-        ui = new CGameVideo(id);            break;
+        ui = std::make_shared<CGameVideo>(id);          break;
     case UI_ID::MINIGAME_TITLE:
-        ui = new CMiniGameTitle(id);        break;
+        ui = std::make_shared<CMiniGameTitle>(id);      break;
     case UI_ID::MINIGAME_MANUAL:
-        ui = new CMiniGameManual(id);       break;
+        ui = std::make_shared<CMiniGameManual>(id);     break;
     case UI_ID::MINIGAME_OVERVIEW:
-        ui = new CMiniGameOverView(id);     break;
+        ui = std::make_shared<CMiniGameOverView>(id);   break;
     case UI_ID::PLAYER_READY:
-        ui = new CPlayerReady(id);          break;
+        ui = std::make_shared<CPlayerReady>(id);        break;
     case UI_ID::NOTICE:
-        ui = new CNotice(id);               break;
+        ui = std::make_shared<CNotice>(id);             break;
     case UI_ID::NOTICE_WIDE:
-        ui = new CNoticeWide(id);           break;
+        ui = std::make_shared<CNoticeWide>(id);         break;
     case UI_ID::TEXT_MANUAL:
-        ui = new CTextManual(id);           break;
+        ui = std::make_shared<CTextManual>(id);         break;
     case UI_ID::TEXT_OVERVIEW:
-        ui = new CTextOverview(id);           break;
+        ui = std::make_shared<CTextOverview>(id);       break;
     case UI_ID::PLAYER_ICON:
-        ui = new CPlayerIcon(id);           break;
+        ui = std::make_shared<CPlayerIcon>(id);         break;
     case UI_ID::CONCENTRATION_LINE:
-        ui = new CConcentrationLine(id);           break;
+        ui = std::make_shared<CConcentrationLine>(id);  break;
     case UI_ID::RESULT_WINNER:
-        ui = new CResultWinner(id);           break;
+        ui = std::make_shared<CResultWinner>(id);       break;
     case UI_ID::ENTRY_X_BUTTON:
-        ui = new CEntryXButton(id);           break;
+        ui = std::make_shared<CEntryXButton>(id);       break;
     case UI_ID::PLAYER_JOIN:
-        ui = new CPlayerJoin(id);           break;
+        ui = std::make_shared<CPlayerJoin>(id);         break;
     }
 
-    return ui;
+    return dynamic_cast<CUI*>(ui.get());
 }
 
 /*

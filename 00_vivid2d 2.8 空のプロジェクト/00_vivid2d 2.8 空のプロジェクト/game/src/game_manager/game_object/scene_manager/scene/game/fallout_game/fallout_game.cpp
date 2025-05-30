@@ -267,7 +267,7 @@ void CFallOutGame::ResetTopic(void)
 		++gimmick_it;
 	}
 	//現在出ている最後のお題が抽選され出現中のお題がなく、オブジェクトがすべて待機中なら全てのお題を再抽選
-	if (m_ChooseObjectTimer[m_TopicList.size() - 1].GetActive() == true || gimmick_it != gimmickList.end()) return;
+	if (m_ChooseObjectTimer[m_TopicList.size() - 1].IsActive() == true || gimmick_it != gimmickList.end()) return;
 
 	m_ResetTopicTimer.Update();
 

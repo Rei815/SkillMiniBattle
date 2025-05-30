@@ -215,7 +215,7 @@ UpdateObject(void)
 
         object->Update();
 
-        if (!object->GetActive())
+        if (!object->IsActive())
         {
             object->Finalize();
 

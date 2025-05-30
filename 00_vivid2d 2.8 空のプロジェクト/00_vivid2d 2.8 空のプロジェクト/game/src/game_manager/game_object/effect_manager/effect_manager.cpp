@@ -53,7 +53,7 @@ Update(void)
 
         effect->Update();
 
-        if (!effect->GetActive())
+        if (!effect->IsActive())
         {
             effect->Finalize();
 

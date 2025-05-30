@@ -16,8 +16,8 @@ const float CGameRollAndReveal::m_circle_radius = 500.0f;
 CGameRollAndReveal::CGameRollAndReveal(void)
     : m_SelectedGameFlag(false)
     , m_GameInfomationFlag(false)
-    , m_FirstSceneUIParent(nullptr)
-    , m_SecondSceneUIParent(nullptr)
+    , m_PlaneUIParent(nullptr)
+    , m_RevealUIParent(nullptr)
     , m_SelectedGameID(GAME_ID::MAX)
     , m_PlaneGameImage(nullptr)
 {
@@ -63,8 +63,8 @@ void CGameRollAndReveal::Initialize(SCENE_ID scene_id)
 
     IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
 
-    m_FirstSceneUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
-    m_FirstSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+    m_PlaneUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
+    m_PlaneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
     //ミニゲームの決定
     std::random_device rd;
@@ -92,24 +92,23 @@ void CGameRollAndReveal::Update(void)
 
 
     CUIManager::UI_LIST uiList = um.GetList();
-    if (m_FirstSceneUIParent)
+    if (m_PlaneUIParent)
     {
-        if (m_FirstSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
+        if (m_PlaneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
         {
-            for (CUI* ui : uiList)
+            for (auto& ui : uiList)
             {
                 if (ui->GetUI_ID() == UI_ID::PLANE_GAME_IMAGE)
                 {
-                    static_cast<CPlaneGameImage*>(ui)->SetParent(nullptr);
+                    ui->SetParent(nullptr);
                 }
             }
-            m_FirstSceneUIParent->SetActive(false);
-            m_FirstSceneUIParent = nullptr;
+            m_PlaneUIParent->SetActive(false);
         }
 
     }
     if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || cm.GetSpecifiedButtonDownController(BUTTON_ID::B))
-        && m_FirstSceneUIParent == nullptr && m_SelectedGameFlag == false)
+        && m_PlaneUIParent == nullptr && m_SelectedGameFlag == false)
     {
 
             uiList = um.GetList();
@@ -117,7 +116,7 @@ void CGameRollAndReveal::Update(void)
 
             while (it != uiList.end())
             {
-                CPlaneGameImage* planeGameImage = dynamic_cast<CPlaneGameImage*>(*it);
+                CPlaneGameImage* planeGameImage = dynamic_cast<CPlaneGameImage*>((*it).get());
                 ++it;
 
                 //ダウンキャストチェック
@@ -130,7 +129,6 @@ void CGameRollAndReveal::Update(void)
                     animation = am.Create(ANIMATION_ID::PLANE_UP, m_PlaneGameImage);
                     if (animation == nullptr)
                     {
-                        std::cerr << "Error: Failed to create animation!" << std::endl;
                         return;
                     }
                     m_PlaneGameImage->SetAnimation(animation);
@@ -143,10 +141,7 @@ void CGameRollAndReveal::Update(void)
                     IAnimation* animation = nullptr;
                     animation = am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);
                     if (animation == nullptr)
-                    {
-                        std::cerr << "Error: Failed to create animation!" << std::endl;
                         return;
-                    }
 
                     planeGameImage->SetAnimation(animation);
                 }
@@ -162,7 +157,6 @@ void CGameRollAndReveal::Update(void)
         {
             m_PlaneGameImage->SetActive(false);
             m_GameInfomationFlag = true;
-            um.Delete(m_FirstSceneUIParent);
             um.Create(UI_ID::MENU_BG);
             um.Create(UI_ID::MINIGAME_OVERVIEW);
             um.Create(UI_ID::MINIGAME_MANUAL);
@@ -175,8 +169,8 @@ void CGameRollAndReveal::Update(void)
             gameVideo->SetGameVideo(m_SelectedGameID);
             um.Create(UI_ID::MINIGAME_TITLE);
 
-            m_SecondSceneUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
-            m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+            m_RevealUIParent = (CSceneUIParent*)um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
+            m_RevealUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
         }
     }
 
@@ -212,24 +206,24 @@ void CGameRollAndReveal::Update(void)
         CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
     }
 
-    if (m_SecondSceneUIParent)
+    if (m_RevealUIParent)
     {
         CPlayerReady* playerReady = (CPlayerReady*)um.GetUI(UI_ID::PLAYER_READY);
         if (playerReady == nullptr) return;
         //ミニゲーム情報が中心にある状態
-        if (playerReady->GetReadyFlag() == true && m_SecondSceneUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
+        if (playerReady->GetReadyFlag() == true && m_RevealUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)
         {
             CSceneManager::GetInstance().PushScene(SCENE_ID::SELECT_SKILL);
             CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
 
-            m_SecondSceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
+            m_RevealUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
         }
-        if (m_SecondSceneUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
+        if (m_RevealUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
 
         const float min_height = -vivid::GetWindowHeight() / 2;
         const float max_height = vivid::GetWindowHeight() * 1.5;
-        if (m_SecondSceneUIParent->GetPosition().y <= min_height || max_height <= m_SecondSceneUIParent->GetPosition().y)
+        if (m_RevealUIParent->GetPosition().y <= min_height || max_height <= m_RevealUIParent->GetPosition().y)
             CSceneManager::GetInstance().RemoveScene(SCENE_ID::GAME_ROLL_AND_REVEAL);
     }
 }
@@ -243,6 +237,6 @@ void CGameRollAndReveal::Finalize(void)
 
     CCamera::GetInstance().Finalize();
 
-    CUIManager::GetInstance().Delete(m_FirstSceneUIParent);
-    CUIManager::GetInstance().Delete(m_SecondSceneUIParent);
+    m_PlaneUIParent->SetActive(false);
+    m_RevealUIParent;
 }

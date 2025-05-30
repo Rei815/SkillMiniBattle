@@ -44,7 +44,7 @@ void CController::Finalize(void)
 	m_Active = false;
 }
 
-bool CController::GetActive(void)
+bool CController::IsActive(void)
 {
 	return m_Active;
 }

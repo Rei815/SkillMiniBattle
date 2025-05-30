@@ -42,7 +42,7 @@ CGimmickManager::Update(void)
 
         gimmick->Update();
 
-        if (!gimmick->GetActive())
+        if (!gimmick->IsActive())
         {
             gimmick->Finalize();
 
