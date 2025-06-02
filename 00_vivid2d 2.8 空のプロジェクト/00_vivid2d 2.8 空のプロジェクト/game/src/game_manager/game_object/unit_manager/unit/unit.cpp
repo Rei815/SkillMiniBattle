@@ -37,6 +37,7 @@ IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     , m_DefeatFlag(false)
     , m_Gravity()
     , m_Parent(nullptr)
+    , m_Model()
 {
 }
 
@@ -140,10 +141,10 @@ CheckHitBullet(IBullet* bullet)
     switch (bullet->GetColliderID())
     {
     case COLLIDER_ID::SPHERE:
-        hit_poly_dim = MV1CollCheck_Sphere(m_Model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
+        hit_poly_dim = MV1CollCheck_Sphere(m_Model->GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
         break;
     case COLLIDER_ID::CAPSULE:
-        hit_poly_dim = MV1CollCheck_Capsule(m_Model.GetModelHandle(), -1, bullet->GetColliderPosA(), bullet->GetColliderPosB(),bullet->GetRadius());
+        hit_poly_dim = MV1CollCheck_Capsule(m_Model->GetModelHandle(), -1, bullet->GetColliderPosA(), bullet->GetColliderPosB(),bullet->GetRadius());
         break;
     }
     bool hit_flag = false;
@@ -379,9 +380,9 @@ void IUnit::SetDefeatFlag(bool flag)
     m_DefeatFlag = flag;
 }
 
-CModel IUnit::GetModel(void)
+CModel* IUnit::GetModel(void)
 {
-    return m_Model;
+    return dynamic_cast<CModel*>((m_Model).get());
 }
 
 void IUnit::SetIsGround(bool flag)
@@ -415,13 +416,13 @@ void IUnit::RevertAlpha(float alpha = 1.0f)
 
     m_Alpha += m_alpha_speed;
 
-    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
+    MV1SetOpacityRate(m_Model->GetModelHandle(), m_Alpha);
 }
 
 void IUnit::SetAlpha(float alpha)
 {
     m_Alpha = alpha;
-    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
+    MV1SetOpacityRate(m_Model->GetModelHandle(), m_Alpha);
 
 }
 
@@ -449,7 +450,7 @@ void IUnit::DecAlpha(float alpha)
     else
         m_Alpha = 0.0f;
 
-    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
+    MV1SetOpacityRate(m_Model->GetModelHandle(), m_Alpha);
 
 }
 

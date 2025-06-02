@@ -6,7 +6,7 @@ IObject::IObject()
 	, m_Velocity()
 	, m_Gimmick(nullptr)
 	, m_Tag("None")
-	,m_ActiveFlag(true)
+	, m_ActiveFlag(true)
 	, m_ColliderActiveFlag(true)
 {
 }

@@ -6,7 +6,7 @@
 * コンストラクタ
 */
 CModel::CModel()
-	: m_Transform()
+	: m_Transform(CVector3())
  	, m_Handle(VIVID_DX_ERROR)
 {
 }

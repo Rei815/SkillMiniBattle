@@ -93,10 +93,11 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position)
 
     m_InitialPosition = position;
 
-    m_Model.Initialize(m_file_name, position, m_model_scale);
+    m_Model = std::make_unique<CModel>();
+    m_Model->Initialize(m_file_name, position, m_model_scale);
 
-    m_Model.SetMaterialDif(0, m_player_body_color[(int)id]);
-    m_Model.SetMaterialDif(1, m_player_eye_color[(int)id]);
+    m_Model->SetMaterialDif(0, m_player_body_color[(int)id]);
+    m_Model->SetMaterialDif(1, m_player_eye_color[(int)id]);
 
     m_Accelerator = CVector3(0,0,0);
 
@@ -127,19 +128,19 @@ void CPlayer::Update(void)
         m_Transform.rotation.y = RotY;
     }
 
-    m_Model.Update(m_Transform);
+    m_Model->Update(m_Transform);
 }
 
 void CPlayer::Draw(void)
 {
     IUnit::Draw();
-    m_Model.Draw();
+    m_Model->Draw();
 }
 
 void CPlayer::Finalize(void)
 {
-    //IUnit::Finalize();
-    //m_Model.Finalize();
+    IUnit::Finalize();
+    m_Model->Finalize();
 }
 
 void CPlayer::SetActionFlag(bool flag)

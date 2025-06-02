@@ -258,7 +258,7 @@ bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& e
 
     while (it != m_UnitList.end())
     {
-        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true && (*it)->GetUnitCategory() != UNIT_CATEGORY::PLAYER)
+        if ((*it)->GetModel()->CheckHitLine(startPos, endPos) == true && (*it)->GetUnitCategory() != UNIT_CATEGORY::PLAYER)
             return true;
 
         ++it;

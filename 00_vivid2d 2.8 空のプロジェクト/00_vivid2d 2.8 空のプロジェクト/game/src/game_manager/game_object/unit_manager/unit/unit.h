@@ -224,7 +224,7 @@ public:
      */
     void       SetDefeatFlag(bool flag);
 
-    CModel      GetModel(void);
+    CModel*     GetModel(void);
 
     /*!
          *  @brief      地上にいるかどうかを設定
@@ -335,7 +335,7 @@ protected:
 
     float                   m_Radius;
     float                   m_Height;
-    CModel                  m_Model;
+    std::unique_ptr<CModel> m_Model;
     CTransform	            m_Transform;		    //!< トランスフォーム
     CVector3                m_ForwardVector;        //!< 正面方向のベクトル
     CVector3	            m_Max_Vertex;		    //!< 最大頂点座標
