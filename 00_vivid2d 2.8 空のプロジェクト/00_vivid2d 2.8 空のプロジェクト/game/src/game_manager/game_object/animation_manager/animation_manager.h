@@ -30,13 +30,14 @@ public:
      */
     void        Finalize(void);
 
-    ///*!
-    // *  @brief        アニメーション生成
-    // *
-    // *  @param[in]    id                  ギミックID
-    // *  @return       アニメーション
-    // */
-    IAnimation*        Create(ANIMATION_ID id, void* object_pointer);
+    /*!
+     *  @brief        アニメーション生成
+     *
+     *  @param[in]    id                ギミックID
+     *  @param[in]    pointer           アニメーションさせるインスタンスのポインタ
+     *  @return       アニメーション
+     */
+    IAnimation*        Create(ANIMATION_ID id, void* pointer);
 
     /*!
      *  @brief      ギミックリスト型

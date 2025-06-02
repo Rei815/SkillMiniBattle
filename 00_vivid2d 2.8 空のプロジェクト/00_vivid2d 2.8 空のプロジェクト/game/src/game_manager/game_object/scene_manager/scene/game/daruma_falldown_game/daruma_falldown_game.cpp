@@ -84,8 +84,6 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 
-	m_DebugText = "だるまさんがころんだシーン";
-
 	//オブジェクトの生成
 	m_OgreObject = CObjectManager::GetInstance().Create(OBJECT_ID::OGRE_OBJECT, Temp);
 

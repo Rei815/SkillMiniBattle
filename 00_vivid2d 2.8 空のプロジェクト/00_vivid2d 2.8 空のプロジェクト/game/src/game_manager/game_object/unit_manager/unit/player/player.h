@@ -42,26 +42,12 @@ public:
     virtual void    Finalize(void);
 
     /*!
-     *  @brief          行動の可不可を設定
+     *  @brief      行動の可不可を設定
      *
-     *  @param[in]      flag    行動フラグ
+     *  @param[in]  flag    行動フラグ
      */
-    void                SetActionFlag(bool flag);
-
-    /*!
-     *  @brief      コントローラーの取得
-     *
-     *  @return     コントローラーのポインタ
-     */
-
-    CController*    GetController(void);
+    void            SetActionFlag(bool flag);
     
-    /*!
-     *  @brief      コントローラーの設定
-     *
-     *  @param[in]  controller    コントローラーのポインタ
-     */
-    void            SetController(CController* controller);
     /*!
      *  @brief      スキルの取得
      *
@@ -129,14 +115,14 @@ protected:
     /*!
      *  @brief      攻撃
      */
-    void        Attack(void);
+    void            Attack(void);
 
     /*!
      *  @brief      被弾
      *  @param[in]  bullet          被弾した弾
      *  @param[in]  hit_position    被弾位置
      */
-    void    HitBullet(IBullet* bullet, CVector3 hit_position);
+    void            HitBullet(IBullet* bullet, CVector3 hit_position);
 
     /*!
      *  @brief      衝撃を与える
@@ -144,27 +130,27 @@ protected:
      *  @param[in]  direction      向き
      *  @param[in]  float          衝撃力
      */
-    void    Impact(const CVector3& hit_position, const CVector3& direction, float power);
+    void            Impact(const CVector3& hit_position, const CVector3& direction, float power);
     /*!
      *  @brief      死亡
      */
-    void        Defeat(void);
+    void            Defeat(void);
 
 
     /*!
      *  @brief      操作
      */
-    void        Control(void);
+    void            Control(void);
 
     /*!
      *  @brief      移動処理
      */
-    void        Move(void);
+    void            Move(void);
 
     /*!
      *  @brief      ダメージを喰らった時の処理(ダメージの計算はUnit)
      */
-    void        Damage(void);
+    void            Damage(void);
 
     static const std::string        m_file_name;                                //!< モデルのファイル名
     static const float              m_radius;                                   //!< 半径
@@ -193,5 +179,5 @@ protected:
     bool                            m_StopFlag;                                 //!< 停止フラグ
     bool                            m_FrictionFlag;                             //!< 減速フラグ
     bool                            m_ActionFlag;                               //!< 行動処理有効フラグ
-    CController*                    m_Controller;                               //!< コントローラー
+    std::shared_ptr<CController>    m_Controller;                               //!< コントローラー
 };

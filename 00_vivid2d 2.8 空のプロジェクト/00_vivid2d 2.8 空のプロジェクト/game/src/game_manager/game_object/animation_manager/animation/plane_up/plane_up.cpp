@@ -13,9 +13,9 @@ CPlaneUp::~CPlaneUp()
 {
 }
 
-void CPlaneUp::Initialize()
+void CPlaneUp::Initialize(void* plane_pointer)
 {
-	m_Plane = std::make_unique<CPlaneGameImage>();
+	m_Plane = std::shared_ptr<CPlaneGameImage>(static_cast<CPlaneGameImage*>(plane_pointer));
 	if (!m_Plane) return;
 
 	m_Timer.SetUp(m_up_time);

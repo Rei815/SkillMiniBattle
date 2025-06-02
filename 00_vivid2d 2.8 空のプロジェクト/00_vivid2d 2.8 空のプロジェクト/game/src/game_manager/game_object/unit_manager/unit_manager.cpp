@@ -37,10 +37,8 @@ void
 CUnitManager::
 Update(void)
 {
-
     // ユニット更新
     UpdateUnit();
-
 }
 
 /*
@@ -119,9 +117,18 @@ void CUnitManager::Delete(UNIT_ID id)
     while (it != m_UnitList.end())
     {
         IUnit* unit = dynamic_cast<IUnit*>((*it).get());
-        if (unit->GetUnitID() == id)
-            unit->SetActive(false);
+        if (!unit) 
+        {
+            it = m_UnitList.erase(it);
+            continue;
+        }
 
+        if (unit->GetUnitID() == id)
+        {
+            unit->Finalize();
+            it = m_UnitList.erase(it);
+            return;
+        }
         ++it;
 
     }
@@ -293,8 +300,6 @@ UpdateUnit(void)
         {
             unit->Finalize();
 
-            delete unit;
-
             it = m_UnitList.erase(it);
 
             continue;
@@ -303,7 +308,6 @@ UpdateUnit(void)
         ++it;
     }
 }
-
 /*
  *  ユニットとステージとのアタリ判定の処理（垂直）
  */

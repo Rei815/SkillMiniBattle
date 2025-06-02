@@ -39,7 +39,7 @@ void CSceneUIParent::Initialize(const vivid::Vector2& position)
     CUIManager::UI_LIST::iterator it = uiList.begin();
     while (it != uiList.end())
     {
-        CUI* ui = (CUI*)(*it);
+        CUI* ui = dynamic_cast<CUI*>((*it).get());
         ++it;
         if (ui->GetUI_ID() == UI_ID::TITLE_LOGO)        continue;
 
@@ -66,7 +66,7 @@ void CSceneUIParent::Initialize(const vivid::Vector2& position)
         ui->SetPosition(position);
         ui->SetTransform(transform);
         ui->SetParent(this);
-        m_ChildrenList.push_back(ui);
+        m_ChildrenList.emplace_back(ui);
     }
 }
 
@@ -78,7 +78,7 @@ void CSceneUIParent::Update(void)
     CHILDRENLIST::iterator it = m_ChildrenList.begin();
     while (it != m_ChildrenList.end())
     {
-        CUI* ui = (CUI*)(*it);
+        CUI* ui = dynamic_cast<CUI*>((*it).get());
         if (ui->GetParent() == nullptr || ui->IsActive() == false || ui == nullptr)
         {
            it = m_ChildrenList.erase(it);
@@ -149,9 +149,11 @@ CSceneUIParent::Finalize(void)
     CHILDRENLIST::iterator it = m_ChildrenList.begin();
     while (it != m_ChildrenList.end())
     {
-        (*it)->SetActive(false);
+        (*it)->Delete();
         ++it;
     }
+    m_ChildrenList.clear();
+
 }
 
 CSceneUIParent::STATE CSceneUIParent::GetState(void)
@@ -181,7 +183,7 @@ void CSceneUIParent::ReleaseChildren()
     CHILDRENLIST::iterator it = m_ChildrenList.begin();
     while (it != m_ChildrenList.end())
     {
-        CUI* ui = (CUI*)(*it);
+        CUI* ui = dynamic_cast<CUI*>((*it).get());
         ui->SetParent(nullptr);
         ++it;
     }

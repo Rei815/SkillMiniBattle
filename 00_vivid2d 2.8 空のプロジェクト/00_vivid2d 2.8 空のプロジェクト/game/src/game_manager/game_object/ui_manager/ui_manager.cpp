@@ -130,7 +130,7 @@ void CUIManager::Finalize(void)
 
 CUI* CUIManager::Create(UI_ID id)
 {
-    CUI* ui = CreateClass(id);
+    std::shared_ptr<CUI> ui = CreateClass(id);
     if (!ui) return nullptr;
 
     ui->Initialize();
@@ -138,42 +138,42 @@ CUI* CUIManager::Create(UI_ID id)
 
     SortList();
 
-    return ui;
+    return ui.get();
 }
 
 CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
 {
-    CUI* ui = CreateClass(id);
+    std::shared_ptr<CUI> ui = CreateClass(id);
 
     if (!ui) return nullptr;
 
     ui->Initialize(position);
     m_UIList.emplace_back(ui);
-    return ui;
+    return ui.get();
 }
 
 CUI* CUIManager::Create(UI_ID id, const CVector3& position)
 {
-    CUI* ui = CreateClass(id);
+    std::shared_ptr<CUI> ui = CreateClass(id);
 
     if (!ui) return nullptr;
 
     ui->Initialize(position);
     m_UIList.emplace_back(ui);
 
-    return ui;
+    return ui.get();
 }
 
 CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
 {
-    CUI* ui = CreateClass(id);
+    std::shared_ptr<CUI> ui = CreateClass(id);
 
     if (!ui) return nullptr;
 
     ui->Initialize(transform);
     m_UIList.emplace_back(ui);
 
-    return ui;
+    return ui.get();
 }
 
 void CUIManager::Delete(UI_ID id)
@@ -189,7 +189,7 @@ void CUIManager::Delete(UI_ID id)
 
         if (ui->GetUI_ID() == id)
         {
-            (*it)->SetActive(false);
+            (*it)->Delete();
         }
 
         ++it;
@@ -203,7 +203,7 @@ CUIManager::UI_LIST CUIManager::GetList()
 
 void CUIManager::SortList(void)
 {
-    m_UIList.sort([](const CUI* p, const CUI* q) {return *p < *q; });
+    m_UIList.sort([](const std::shared_ptr<CUI> p, const std::shared_ptr<CUI> q) {return p < q; });
 }
 
 CUI* CUIManager::GetUI(UI_ID ui_id)
@@ -226,7 +226,7 @@ CUI* CUIManager::GetUI(UI_ID ui_id)
     }
 }
 
-CUI* CUIManager::CreateClass(UI_ID id)
+std::shared_ptr<CUI> CUIManager::CreateClass(UI_ID id)
 {
    std::shared_ptr<CUI> ui = nullptr;
     switch (id)
@@ -313,7 +313,7 @@ CUI* CUIManager::CreateClass(UI_ID id)
         ui = std::make_shared<CPlayerJoin>(id);         break;
     }
 
-    return dynamic_cast<CUI*>(ui.get());
+    return ui;
 }
 
 /*

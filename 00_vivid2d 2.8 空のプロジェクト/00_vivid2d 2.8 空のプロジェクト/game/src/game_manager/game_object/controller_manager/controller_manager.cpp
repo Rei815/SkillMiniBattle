@@ -118,7 +118,7 @@ CController* CControllerManager::Create(CONTROLLER_ID id)
 
     m_ControllerList.emplace_back(controller);
 
-    return controller;
+    return dynamic_cast<CController*>(controller.get());
 }
 
 CController* CControllerManager::GetController(CONTROLLER_ID controller_id)

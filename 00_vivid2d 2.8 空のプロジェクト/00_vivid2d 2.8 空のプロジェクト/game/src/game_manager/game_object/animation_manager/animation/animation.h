@@ -16,7 +16,7 @@ public:
 	 *  @brief      初期化(純粋仮想関数のため派生先で定義)
 	 *
 	*/
-	virtual void	Initialize() = 0;
+	virtual void	Initialize(void* pointer) = 0;
 
 	/*!
 	 *  @brief      更新
@@ -37,10 +37,8 @@ public:
 
 	/*!
 	 *  @brief      アクティブフラグ設定
-	 *
-	 *  @param[in]  active  アクティブフラグ
 	 */
-	void            SetActive(bool active);
+	void            Delete();
 
 protected:
 	

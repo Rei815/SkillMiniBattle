@@ -6,7 +6,7 @@
 
 const float		CSkillResurrectFallout::m_resurrect_height = 200.0f;
 const float		CSkillResurrectFallout::m_effect_scale = 2.0f;
-const CVector3	CSkillResurrectFallout::m_initial_position = CVector3();
+const CVector3	CSkillResurrectFallout::m_position = CVector3();
 
 CSkillResurrectFallout::CSkillResurrectFallout(void)
 	:CSkill(SKILL_CATEGORY::PASSIVE)
@@ -71,7 +71,7 @@ Update(void)
 
 		if (it == objectList.end())
 		{
-			m_Player->SetPosition(m_initial_position);
+			m_Player->SetPosition(m_position);
 			m_State = SKILL_STATE::COOLDOWN;
 
 		}

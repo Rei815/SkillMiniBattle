@@ -1,14 +1,3 @@
-
-/*!
- *  @file       scene_manager.h
- *  @brief      シーン管理
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #pragma once
 
 #include "vivid.h"
@@ -21,17 +10,6 @@
 class IScene;
 class CController;
 
-/*!
- *  @class      CSceneManager
- *
- *  @brief      シーン管理クラス
- *
- *  @author     Kazuya Maruyama
- *
- *  @date       2020/11/13
- *
- *  @since      1.0
- */
 class CSceneManager
 {
 public:

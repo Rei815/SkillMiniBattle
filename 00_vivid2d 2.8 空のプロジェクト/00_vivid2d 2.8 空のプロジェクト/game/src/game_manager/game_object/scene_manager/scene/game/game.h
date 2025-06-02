@@ -16,8 +16,7 @@ enum class GAME_STATE
     FINISH,
 };
 
-class CGame
-    : public IScene
+class CGame : public IScene
 {
 public:
 
@@ -99,29 +98,19 @@ protected:
     static const float m_finish_text_time;
 
     GAME_STATE      m_GameState;    //!< ゲームの状態
-
-
     CTimer          m_WaitTimer;    //!< 待機時間のタイマー
     bool            m_CountFlag;    //!< カウントダウンのフラグ
-    std::string     m_DebugText;    //!< デバッグ用
     bool            m_SetActionflag;//!< プレイヤーアクションフラグ設定用
-    bool            m_FinishFlag;
-    bool            m_ResultFlag;
+    bool            m_FinishFlag;   //!< ミニゲームが終了したか
+    bool            m_ResultFlag;   //!< リザルトが出ているか
 
-   
+    using ENTRY_LIST = std::list<std::shared_ptr<IUnit>>;   //!< 参加もしくは生存中のプレイヤーのリスト
+    using RESULT_LIST = std::list<std::shared_ptr<IUnit>>;  //!< 敗北してリザルトに移ったプレイヤーのリスト
 
-    /*!
-     *  @brief      プレイヤーリスト型
-     */
+    ENTRY_LIST          m_EntryList;    //!< エントリーリスト
+    RESULT_LIST         m_ResultList;   //!< リザルトリスト
 
-
-    using ENTRY_LIST = std::list<IUnit*>;
-    using RESULT_LIST = std::list<IUnit*>;
-
-    ENTRY_LIST          m_EntryList;
-    RESULT_LIST         m_ResultList;             //!< リザルトリスト
-
-    CTimer              m_PlayTimer;            //!< プレイ中のタイマー
-    CGameBG             m_BackGround;
+    CTimer              m_PlayTimer;    //!< プレイ中のタイマー
+    CGameBG             m_BackGround;   //!< ゲーム背景
 
 };

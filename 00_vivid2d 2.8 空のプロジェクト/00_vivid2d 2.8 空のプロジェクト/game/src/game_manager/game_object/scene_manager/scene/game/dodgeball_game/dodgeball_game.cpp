@@ -96,8 +96,6 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 
 	//BGM再生
 	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
-	//
-	m_DebugText = "ドッジボールゲーム";
 
 	//プレイヤーのスポーン
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
@@ -109,7 +107,7 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 			Player->SetActionFlag(false);
 			Player->SetForwardVector(m_player_default_forward);
 		}
-		m_EntryList.push_back(unit);
+		m_EntryList.emplace_back(unit);
 	}
 
 	CSkillManager::GetInstance().SetSkill();
@@ -245,7 +243,7 @@ void CDodgeBallGame::CheckFinish(void)
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		IUnit* unit = (*it);
+		IUnit* unit = ((*it).get());
 		++it;
 
 		if (unit->GetDefeatFlag() == true)	continue;

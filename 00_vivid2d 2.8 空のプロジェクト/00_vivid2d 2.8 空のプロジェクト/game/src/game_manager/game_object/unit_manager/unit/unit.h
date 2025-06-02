@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "unit_id.h"
@@ -107,11 +106,9 @@ public:
     bool            IsActive(void);
 
     /*!
-     *  @brief      アクティブフラグ設定
-     *
-     *  @param[in]  active  アクティブフラグ
+     *  @brief      削除
      */
-    void            SetActive(bool active);
+    void            Delete();
 
     /*!
      *  @brief      ユニット識別子取得
@@ -332,12 +329,6 @@ protected:
      *  @brief      敗北
      */
     virtual void    Defeat(void);
-
-    /*!
-     *  @brief      削除
-     */
-    virtual void    Delete(void);
-
     static const float      m_destroy_scale_adjust;     //!< エフェクト(destroy)の大きさ調整値
     static const float      m_alpha_speed;              //!< アルファ値の速度
     static const CVector3   m_gravity;

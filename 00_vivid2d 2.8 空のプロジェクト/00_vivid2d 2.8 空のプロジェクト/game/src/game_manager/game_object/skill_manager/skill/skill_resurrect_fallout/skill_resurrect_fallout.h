@@ -40,7 +40,7 @@ public:
 
 protected:
     static const float      m_resurrect_height;
-    static const CVector3   m_initial_position;
+    static const CVector3   m_position;
     static const float      m_effect_scale;
 
     IEffect*                m_SkillEffect;

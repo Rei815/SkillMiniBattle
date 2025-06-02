@@ -74,7 +74,7 @@ void CAnimationManager::Finalize(void)
     m_AnimationList.clear();
 }
 
-IAnimation* CAnimationManager::Create(ANIMATION_ID id, void* object_pointer)
+IAnimation* CAnimationManager::Create(ANIMATION_ID id, void* pointer)
 {
     std::shared_ptr<IAnimation> animation = nullptr;
 
@@ -92,7 +92,7 @@ IAnimation* CAnimationManager::Create(ANIMATION_ID id, void* object_pointer)
     }
     if (!animation) return nullptr;
 
-    animation->Initialize();
+    animation->Initialize(pointer);
     m_AnimationList.emplace_back(animation);
     return dynamic_cast<IAnimation*>(animation.get());
 

@@ -42,9 +42,9 @@ Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
-		if (m_Parent)
+		if (m_ParentTopic)
 		{
-			m_Shutter->SetPosition(m_Parent->GetPosition());
+			m_Shutter->SetPosition(m_ParentTopic->GetPosition());
 		}
 		break;
 	case SKILL_STATE::COOLDOWN:
@@ -94,10 +94,10 @@ Action(void)
 
 	while (it != uiList.end())
 	{
-		CUI* ui = (*it);
+		CUI* ui = ((*it).get());
 		if (ui->GetUI_ID() == UI_ID::FALLOUT_TOPIC_BG)
 		{
-			topicList.push_back(ui);
+			topicList.emplace_back(ui);
 		}
 		++it;
 	}
@@ -105,7 +105,7 @@ Action(void)
 	it = topicList.begin();
 	int num = rand() % topicList.size();
 	std::advance(it, num);
-	m_Parent = (*it);
+	m_ParentTopic = ((*it).get());
 	m_Shutter = CUIManager::GetInstance().Create(UI_ID::TOPIC_SHUTTER, (*it)->GetPosition());
 	m_State = SKILL_STATE::ACTIVE;
 

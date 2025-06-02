@@ -51,7 +51,7 @@ public:
      *
      *  @param[in]  id          ユニットID
      */
-    void      Delete(UNIT_ID id);
+    void        Delete(UNIT_ID id);
 
     /*!
      *  @brief      ユニットと弾とのアタリ判定
@@ -72,15 +72,15 @@ public:
      *
      *  @return     プレイヤー
      */
-    CPlayer*      GetPlayer(UNIT_ID id);
+    CPlayer*    GetPlayer(UNIT_ID id);
 
     /*!
      *  @brief      全てのプレイヤーのアクションフラグの設定
      *
      */
-    void      SetAllPlayerAction(bool flag);
+    void        SetAllPlayerAction(bool flag);
 
-    bool CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos);
+    bool        CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos);
 
     /*!
      *  @brief      ユニットリスト型

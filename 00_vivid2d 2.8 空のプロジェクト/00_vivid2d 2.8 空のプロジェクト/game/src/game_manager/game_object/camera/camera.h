@@ -106,10 +106,10 @@ private:
 	static const float		m_far;					//!< FarƒNƒŠƒbƒv
 	static const float		m_fov;					//!< FovƒNƒŠƒbƒv
 	static const int		m_shake_max_num;		//!< —h‚ê‚é‰ñ”
-	static const int		m_shake_interval;		//!< —h‚ê‚ÌŠÔŠu
+	static const float		m_shake_interval;		//!< —h‚ê‚ÌŠÔŠu
 	static const float		m_shake_value;			//!< —h‚ê‚Ì‘å‚«‚³
-	static const CVector3	m_initial_position;		//!< ‰ŠúˆÊ’u
-	static const CVector3	m_initial_direction;	//!< ‰ŠúŠp“x
+	static const CVector3	m_position;				//!< ‰ŠúˆÊ’u
+	static const CVector3	m_direction;			//!< ‰ŠúŠp“x
 
 	CVector3				m_Position;				//!< ˆÊ’u(Ž‹“_)
 	CVector3				m_Direction;			//!< Œü‚«
@@ -118,7 +118,6 @@ private:
 	CVector3				m_ShakeVector;			//!< —h‚ê‚ÌƒxƒNƒgƒ‹
 	bool					m_ShakeFlag;			//!< —h‚êƒtƒ‰ƒO
 	int						m_ShakeCount;			//!< —h‚ê‚½‰ñ”
-	float					m_ShakeTimer;			//!< —h‚êƒ^ƒCƒ}[
 	CVector3				m_PreviousPosition;		//!< —h‚ê‘O‚ÌˆÊ’u
-
+	CTimer					m_ShakeTimer;			//!< —h‚êƒ^ƒCƒ}[
 };

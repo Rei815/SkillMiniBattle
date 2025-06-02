@@ -50,6 +50,7 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
+
 }
 
 void CPlayer::Initialize(UNIT_ID id, const CVector3& position)
@@ -81,7 +82,7 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position)
     {
         if ((*it)->GetUnitID() == id)
         {
-            m_Controller = (*it);
+            m_Controller = std::shared_ptr<CController>((*it).get());
             break;
         }
         ++it;
@@ -137,23 +138,13 @@ void CPlayer::Draw(void)
 
 void CPlayer::Finalize(void)
 {
-    IUnit::Finalize();
-    m_Model.Finalize();
+    //IUnit::Finalize();
+    //m_Model.Finalize();
 }
 
 void CPlayer::SetActionFlag(bool flag)
 {
     m_ActionFlag = flag;
-}
-
-CController* CPlayer::GetController()
-{
-    return m_Controller;
-}
-
-void CPlayer::SetController(CController* controller)
-{
-    m_Controller = controller;
 }
 
 CSkill* CPlayer::GetSkill()
@@ -370,6 +361,7 @@ void CPlayer::Move(void)
 
     IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
     
+    //床に当たっているならそのオブジェクトを親にする
     if (floorObject)
     {
         if (floorObject->GetTag() == "Floor")
@@ -384,6 +376,7 @@ void CPlayer::Move(void)
         m_IsGround = false;
     }
 
+    //摩擦による減速
     if (m_FrictionFlag)
     {
         m_Velocity.x *= m_move_friction.x;
@@ -395,6 +388,7 @@ void CPlayer::Move(void)
         m_AffectedVelocity.z *= m_move_friction.z;
     }
 
+    //地上なら落ちないように
     if (m_IsGround)
     {
         if(m_Velocity.y > 0.0f)

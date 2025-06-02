@@ -105,7 +105,7 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     m_SkillInfomation = dynamic_cast<CSkillInfomation*>(SkillInfo);
     if (m_SkillInfomation == nullptr)
     {
-        SkillInfo->SetActive(false);
+        SkillInfo->Delete();
     }
     else
     {
@@ -121,7 +121,7 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     m_SkillVideo = dynamic_cast<CSkillVideo*>(SkillVideo);
     if (m_SkillVideo == nullptr)
     {
-        SkillVideo->SetActive(false);
+        SkillVideo->Delete();
     }
     else
     {
@@ -134,7 +134,8 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
         m_SkillVideo->SetScale(m_video_scale);
     }
     IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
-    m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
+    m_SceneUIParent = std::shared_ptr<CSceneUIParent>(dynamic_cast<CSceneUIParent*>(CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, 
+        vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2))));
     m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
 }
@@ -149,8 +150,7 @@ void CSelectSkill::Update(void)
         if (m_SceneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
         {
             m_SceneUIParent->ReleaseChildren();
-            CUIManager::GetInstance().Delete(m_SceneUIParent);
-            m_SceneUIParent = nullptr;
+            m_SceneUIParent->Delete();
             CreateCursor();
         }
     }
@@ -168,7 +168,7 @@ void CSelectSkill::Finalize(void)
     {
         if (m_SkillSelectIcon[i] != nullptr)
         {
-            m_SkillSelectIcon[i]->SetActive(false);
+            m_SkillSelectIcon[i]->Delete();
             m_SkillSelectIcon[i] = nullptr;
         }
     }
@@ -178,26 +178,26 @@ void CSelectSkill::Finalize(void)
         std::list<CSkillCursor*>::iterator it = m_SkillCursorList.begin();
         while (it != m_SkillCursorList.end())
         {
-            (*it)->SetActive(false);
+            (*it)->Delete();
             ++it;
         }
     }
 
     if (m_SkillSelectCursor != nullptr)
     {
-        m_SkillSelectCursor->SetActive(false);
+        m_SkillSelectCursor->Delete();
         m_SkillSelectCursor = nullptr;
     }
 
     if (m_SkillInfomation != nullptr)
     {
-        m_SkillInfomation->SetActive(false);
+        m_SkillInfomation->Delete();
         m_SkillInfomation = nullptr;
     }
 
     if (m_SkillVideo != nullptr)
     {
-        m_SkillVideo->SetActive(false);
+        m_SkillVideo->Delete();
         m_SkillVideo = nullptr;
     }
     CUIManager::GetInstance().Finalize();
@@ -287,7 +287,7 @@ void CSelectSkill::CreateSkillIcon(void)
         SkillNameUI = dynamic_cast<CSkillName*>(ui);
         if (SkillNameUI == nullptr) //ダウンキャストのチェック
         {
-            ui->SetActive(false);
+            ui->Delete();
         }
         else
         {
@@ -300,7 +300,7 @@ void CSelectSkill::CreateSkillIcon(void)
         
         if (SkillIconUI == nullptr) //ダウンキャストのチェック
         {
-            ui->SetActive(false);
+            ui->Delete();
             continue;
         }
 
@@ -343,7 +343,7 @@ void CSelectSkill::CreateCursor(void)
 
     if (m_SkillSelectCursor == nullptr) //ダウンキャストのチェック
     {
-        ui->SetActive(false);
+        ui->Delete();
         return;
     }
 
@@ -371,7 +371,7 @@ void CSelectSkill::MoveCursor(void)
     {
         if ((*it)->GetUnitID() == m_CursorID[m_NowCursorID_Num])
         {
-            controller = (*it);
+            controller = ((*it).get());
             break;
         }
         ++it;

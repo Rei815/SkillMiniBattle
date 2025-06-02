@@ -4,6 +4,8 @@
 #include "..\..\..\..\ui_manager\ui\ui_id.h"
 #include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
 #include <memory>
+#include <array>
+#include <random>
 class CFallOutGame : public CGame
 {
 public:
@@ -95,29 +97,29 @@ private:
      */
     void    FinishTopic(void);
 
-    static const CTransform         m_floor_transform_list[];   //!< 落ちる床のトランスフォーム
-    static const float              m_time_accelerator;         //!< 落ちるまでの速度を増やす
-    static const float              m_min_time;                 //!< 落ちるまでの最小時間
-    static const float              m_fall_time;                //!< 落ちるまでの初期時間
-    static const float              m_object_delay_time;        //!< 再抽選までの時間
-    static const float              m_topic_interval_time;      //!< 抽選の感覚
-    static const float              m_add_topic_time;           //!< お題が増えるまでの時間
-    static const float              m_reset_topic_time;         //!< リセットまでの待機時間
-    static const float              m_defeat_height;            //!< 負ける高さ
-    static const float              m_extend_return_time;       //!< 床の復活が延びるまでの時間
-    static const CVector3           m_camera_position;          //!< カメラの位置
-    static const CVector3           m_camera_direction;         //!< カメラの方向
-    static const vivid::Vector2     m_topic_positionList[];     //!< お題位置
-    static const int                m_max_topic_num;            //!< お題数
-    static const CVector3           m_player_default_forward;   //!< プレイヤーのスポーン時の正面方向
-    float                           m_FallTime;                 //!< 落ちるまでの時間
-    CTimer                          m_ChooseObjectTimer[5];     //!< 抽選タイマー
-    CTimer                          m_AddTopicTimer;            //!< お題が増えるタイマー
-    CTimer                          m_ResetTopicTimer;          //!< お題リセットタイマー
-    CTimer                          m_ExtendTimer;              //!< 床の復活が延びるまでのタイマー
+    static const CTransform             m_floor_transform_list[];   //!< 落ちる床のトランスフォーム
+    static const float                  m_time_accelerator;         //!< 落ちるまでの速度を増やす
+    static const float                  m_min_time;                 //!< 落ちるまでの最小時間
+    static const float                  m_fall_time;                //!< 落ちるまでの初期時間
+    static const float                  m_object_delay_time;        //!< 再抽選までの時間
+    static const float                  m_topic_interval_time;      //!< 抽選の感覚
+    static const float                  m_add_topic_time;           //!< お題が増えるまでの時間
+    static const float                  m_reset_topic_time;         //!< リセットまでの待機時間
+    static const float                  m_defeat_height;            //!< 負ける高さ
+    static const float                  m_extend_return_time;       //!< 床の復活が延びるまでの時間
+    static const CVector3               m_camera_position;          //!< カメラの位置
+    static const CVector3               m_camera_direction;         //!< カメラの方向
+    static const vivid::Vector2         m_topic_positionList[];     //!< お題位置
+    static constexpr int                m_max_topic_num = 5;        //!< お題数
+    static const CVector3               m_player_default_forward;   //!< プレイヤーのスポーン時の正面方向
+    float                               m_FallTime;                 //!< 落ちるまでの時間
+    std::array<CTimer,m_max_topic_num>  m_ChooseObjectTimer;     //!< 抽選タイマー
+    CTimer                              m_AddTopicTimer;            //!< お題が増えるタイマー
+    CTimer                              m_ResetTopicTimer;          //!< お題リセットタイマー
+    CTimer                              m_ExtendTimer;              //!< 床の復活が延びるまでのタイマー
 
-    using TOPIC_LIST = std::list<CFallOutTopic*>;
+    using TOPIC_LIST = std::list<std::shared_ptr<CFallOutTopic>>;
 
-    TOPIC_LIST                      m_TopicList;                //!< お題のリスト
-
+    TOPIC_LIST                          m_TopicList;                //!< お題のリスト
+    std::mt19937                        m_RandEngine; // メルセンヌ・ツイスターエンジン
 };

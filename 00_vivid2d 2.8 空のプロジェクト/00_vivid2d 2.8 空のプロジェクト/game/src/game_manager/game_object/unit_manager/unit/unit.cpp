@@ -1,14 +1,3 @@
-
-/*!
- *  @file       unit.cpp
- *  @brief      ユニット
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #include "unit.h"
 #include "..\..\..\..\utility\utility.h"
 #include "..\..\effect_manager\effect_manager.h"
@@ -20,7 +9,6 @@
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
-//const CVector3          IUnit::m_gravity = CVector3(0.0f, 0.0f, 0.0f);
 const CVector3          IUnit::m_gravity = CVector3(0.0f, -0.85f, 0.0f);
 
 IUnit::IUnit()
@@ -258,13 +246,13 @@ IsActive(void)
 }
 
 /*
- *  アクティブフラグ設定
+ *  削除
  */
 void
 IUnit::
-SetActive(bool active)
+Delete()
 {
-    m_ActiveFlag = active;
+    m_ActiveFlag = false;
 }
 
 /*
@@ -532,7 +520,6 @@ void IUnit::Impact(const CVector3& hit_position, const CVector3& direction, cons
 {
 }
 
-
 /*
  *  死亡
  */
@@ -541,10 +528,4 @@ IUnit::
 Defeat(void)
 {
     m_DefeatFlag = true;
-}
-
-void IUnit::Delete(void)
-{
-    m_ActiveFlag = false;
-
 }

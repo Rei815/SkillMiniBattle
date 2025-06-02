@@ -128,9 +128,9 @@ CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
     case SKILL_ID::JUMP_UP:
         skill = new CSkillJumpUp();         break;
     case SKILL_ID::FLOATING:
-        skill = new CSkillFloating();            break;
+        skill = new CSkillFloating();       break;
     case SKILL_ID::STOMP:
-        skill = new CSkillStomp();               break;
+        skill = new CSkillStomp();          break;
     case SKILL_ID::DASH:
         skill = new CSkillDash();           break;
     case SKILL_ID::SPAWN_WALL:

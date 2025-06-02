@@ -158,17 +158,17 @@ void CSkill::SetPlayer(CPlayer* player)
 	temp = uim.Create(UI_ID::SKILL_ICON);
 	m_UiSkillIcon = dynamic_cast<CSkillIcon*>(temp);
 	if (m_UiSkillIcon == nullptr)
-		temp->SetActive(false);
+		temp->Delete();
 
 	temp = uim.Create(UI_ID::SKILL_CURSOR);
 	m_UiSkillCursor = dynamic_cast<CSkillCursor*>(temp);
 	if (m_UiSkillCursor == nullptr)
-		temp->SetActive(false);
+		temp->Delete();
 
 	temp = uim.Create(UI_ID::SKILL_GAUGE);
 	m_UiSkillGauge = dynamic_cast<CSkillGauge*>(temp);
 	if (m_UiSkillGauge == nullptr)
-		temp->SetActive(false);
+		temp->Delete();
 
 	m_Player = player;
 	m_Player->SetSkill(this);

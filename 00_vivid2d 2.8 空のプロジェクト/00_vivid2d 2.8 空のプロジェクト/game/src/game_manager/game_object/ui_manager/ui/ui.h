@@ -71,11 +71,9 @@ public:
     bool            IsActive(void);
 
     /*!
-     *  @brief      アクティブフラグ設定
-     *
-     *  @param[in]  active  アクティブフラグ
+     *  @brief      削除
      */
-    void            SetActive(bool active);
+    void            Delete();
 
     /*!
      *  @brief      位置取得

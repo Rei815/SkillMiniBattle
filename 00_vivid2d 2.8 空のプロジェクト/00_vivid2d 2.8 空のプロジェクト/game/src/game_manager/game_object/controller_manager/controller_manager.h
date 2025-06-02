@@ -126,7 +126,7 @@ private:
      */
     CControllerManager& operator=(const CControllerManager& rhs);
 
+    CONTROLLER_LIST                                 m_ControllerList;   //!< コントローラーのリスト
     int                                             m_ControllerNum;    //!< コントローラー数
 
-    CONTROLLER_LIST                                 m_ControllerList;   //!< コントローラーのリスト
 };

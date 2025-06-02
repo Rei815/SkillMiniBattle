@@ -14,12 +14,15 @@
 constexpr float floor_x = 475;
 constexpr float floor_y = -100;
 constexpr float floor_z = 275;
+
 const CTransform CFallOutGame::m_floor_transform_list[] = 
 {CTransform(CVector3(floor_x,floor_y,-floor_z)),CTransform(CVector3(-floor_x,floor_y,floor_z)), CTransform(CVector3(0,floor_y,floor_x)),
 CTransform(CVector3(-floor_x,floor_y,-floor_z)), CTransform(CVector3(0,floor_y,-floor_x)), CTransform(CVector3(floor_x,floor_y,floor_z)) };
 
-const vivid::Vector2    CFallOutGame::m_topic_positionList[] = { vivid::Vector2(0, -200),vivid::Vector2(250, -200),vivid::Vector2(500, -200),
-vivid::Vector2(750, -200),vivid::Vector2(1000, -200),vivid::Vector2(1250, -200) };
+constexpr float topic_x = 250;
+constexpr float topic_y = 200;
+const vivid::Vector2    CFallOutGame::m_topic_positionList[] = { vivid::Vector2(0, -topic_y),vivid::Vector2(topic_x, -topic_y),vivid::Vector2(topic_x * 2, -topic_y),
+vivid::Vector2(topic_x * 3, -topic_y),vivid::Vector2(topic_x * 4, -topic_y),vivid::Vector2(topic_x * 5, -topic_y) };;
 
 const float		CFallOutGame::m_time_accelerator = 0.1f;
 const float		CFallOutGame::m_min_time = 1.5f;
@@ -30,7 +33,6 @@ const float		CFallOutGame::m_add_topic_time = 7.0f;
 const float		CFallOutGame::m_reset_topic_time = 0.5f;
 const float		CFallOutGame::m_extend_return_time = 30.0f;
 const float		CFallOutGame::m_topic_interval_time = 1.0f;
-const int		CFallOutGame::m_max_topic_num = 5;
 const CVector3  CFallOutGame::m_player_default_forward = CVector3(0.0f,0.0f,-1.0f);
 const CVector3	CFallOutGame::m_camera_position = CVector3(0, 1000.0f, -1000.0f);
 const CVector3	CFallOutGame::m_camera_direction = CVector3(0.0f, -1.0f, 1.0f);
@@ -54,7 +56,8 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	CGame::Initialize(scene_id);
 	CCamera::GetInstance().Initialize();
 	m_BackGround.Initialize("data\\Textures\\fall_out_bg.png");
-	m_FallTime = m_fall_time;
+
+	//タイマーの初期化
 	for (int i = 0; i < m_max_topic_num; i++)
 	{
 		m_ChooseObjectTimer[i].SetUp(m_FallTime);
@@ -63,13 +66,14 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	m_AddTopicTimer.SetUp(m_add_topic_time);
 	m_ResetTopicTimer.SetUp(m_reset_topic_time);
 	m_ExtendTimer.SetUp(m_extend_return_time);
+
+	//カメラの設定
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 
 	//BGM再生
 	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
 
-	m_DebugText = "フォールゲーム";
 	CVector3 playerPos[] = { m_floor_transform_list[(int)MARK_ID::CIRCLE].position, m_floor_transform_list[(int)MARK_ID::CROSS].position,
 	m_floor_transform_list[(int)MARK_ID::MOON].position,m_floor_transform_list[(int)MARK_ID::SQUARE].position };
 
@@ -83,7 +87,7 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 			Player->SetActionFlag(false);
 			Player->SetForwardVector(m_player_default_forward);
 		}
-		m_EntryList.push_back(unit);
+		m_EntryList.emplace_back(unit);
 
 	}
 	CBulletManager::GetInstance().Initialize();
@@ -109,7 +113,7 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 
 	object = om.Create(OBJECT_ID::TRIANGLE_FALL_OBJECT,m_floor_transform_list[(int)MARK_ID::TRIANGLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
-
+	m_RandEngine.seed(std::random_device()());
 }
 
 void CFallOutGame::Update(void)
@@ -146,9 +150,15 @@ void CFallOutGame::Start(void)
 	{
 		CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
 
-		m_TopicList.push_back((CFallOutTopic*)ui);
+		m_TopicList.emplace_back(static_cast<CFallOutTopic*>(ui));
 		m_ChooseObjectTimer[m_TopicList.size() - 1].SetActive(true);
 
+		// 新しく追加されたお題に対応するタイマーをアクティブにする
+		// ここで m_TopicList.size() は新しい要素が追加された後のサイズ
+		if (!m_TopicList.empty() && m_TopicList.size() <= m_max_topic_num) 
+		{
+			m_ChooseObjectTimer[m_TopicList.size() - 1].SetActive(true);
+		}
 	}
 
 }
@@ -202,7 +212,7 @@ void CFallOutGame::ChooseTopic(void)
 	bool chooseFlag = false;
 	while (it != m_TopicList.end())
 	{
-		topic = (*it);
+		topic = ((*it).get());
 
 		//取得に失敗したら早期リターン
 		if (!topic)
@@ -285,7 +295,7 @@ void CFallOutGame::ResetTopic(void)
 
 		while (topic_it != m_TopicList.end())
 		{
-			CFallOutTopic* topic = (*topic_it);
+			CFallOutTopic* topic = ((*topic_it).get());
 
 			if (!topic || topic->GetState() == CFallOutTopic::STATE::APPEAR)
 				break;
@@ -301,10 +311,16 @@ void CFallOutGame::AddTopic(void)
 
 	CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
 
-	m_TopicList.push_back((CFallOutTopic*)ui);
-	m_ChooseObjectTimer[m_TopicList.size()].SetActive(true);
-	m_ChooseObjectTimer[m_TopicList.size()].SetUp(m_ChooseObjectTimer[m_TopicList.size() - 1].GetTimer() + m_topic_interval_time);
+	m_TopicList.emplace_back(static_cast<CFallOutTopic*>(ui));
+	// m_ChooseObjectTimer のインデックスは新しい要素が追加された後の m_TopicList.size() - 1
+	if (m_TopicList.size() - 1 < m_max_topic_num)
+	{
+		m_ChooseObjectTimer[m_TopicList.size() - 1].SetActive(true);
 
+		//ひとつ前のタイマーの制限時間から少し増やす
+		float prev_timer_limit = (m_TopicList.size() - 2 >= 0) ? m_ChooseObjectTimer[m_TopicList.size() - 2].GetLimitTime() : m_FallTime;
+		m_ChooseObjectTimer[m_TopicList.size() - 1].SetUp(prev_timer_limit + m_topic_interval_time);
+	}
 }
 
 CFallOutGame::FALL_OBJECT＿INFO CFallOutGame::ChooseObject(void)
@@ -371,7 +387,7 @@ void CFallOutGame::CheckFinish()
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		IUnit* unit = (*it);
+		IUnit* unit = ((*it).get());
 		if (unit->GetDefeatFlag() == true)
 		{
 			++it;

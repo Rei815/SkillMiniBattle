@@ -117,10 +117,9 @@ IsActive(void)
  */
 void
 CUI::
-SetActive(bool active)
+Delete()
 {
-
-    m_ActiveFlag = active;
+    m_ActiveFlag = false;
 }
 
 vivid::Vector2 CUI::GetPosition(void)

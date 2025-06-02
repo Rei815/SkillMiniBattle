@@ -105,11 +105,11 @@ private:
     UI_LIST             m_UIList;             //!< UIリスト
 
     /*!
-     *  @brief      UIのクラスを作成
+     *  @brief              UIのクラスを作成
      *
-     *  @param[in]  id     UIのID
+     *  @param[in]  id      UIのID
      */
-    CUI*            CreateClass(UI_ID id);
+    std::shared_ptr<CUI>    CreateClass(UI_ID id);
 
 
     /*!
