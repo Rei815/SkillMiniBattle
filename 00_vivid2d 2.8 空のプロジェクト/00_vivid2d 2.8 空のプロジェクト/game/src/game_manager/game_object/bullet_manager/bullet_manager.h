@@ -1,14 +1,3 @@
-
-/*!
- *  @file       bullet_manager.h
- *  @brief      íeä«óù
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #pragma once
 
 #include <list>
@@ -17,17 +6,6 @@
 #include "..\unit_manager\unit\unit_id.h"
 #include "../launcher/launcher.h"
 
-/*!
- *  @class      CBulletManager
- *
- *  @brief      íeä«óùÉNÉâÉX
- *
- *  @author     Kazuya Maruyama
- *
- *  @date       2020/11/13
- *
- *  @since      1.0
- */
 class CBulletManager
 {
 public:

@@ -12,9 +12,9 @@ CKeyScale::~CKeyScale()
 {
 }
 
-void CKeyScale::Initialize(void* key_pointer)
+void CKeyScale::Initialize()
 {
-	m_Key = static_cast<CUI*>(key_pointer);
+	m_Key = std::make_unique<CUI>();
 	
 	if (!m_Key) return;
 	m_MinScale = m_Key->GetScale();

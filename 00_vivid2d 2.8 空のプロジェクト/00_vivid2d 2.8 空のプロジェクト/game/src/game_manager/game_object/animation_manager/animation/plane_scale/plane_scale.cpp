@@ -11,10 +11,11 @@ CPlaneScale::~CPlaneScale()
 {
 }
 
-void CPlaneScale::Initialize(void* plane_pointer)
+void CPlaneScale::Initialize()
 {
-	if (!plane_pointer) return;
-	m_Plane = static_cast<CPlaneGameImage*>(plane_pointer);
+	m_Plane = std::make_unique<CPlaneGameImage>();
+	if (!m_Plane) return;
+
 	m_Plane->SetSpeed(0.0f);
 
 }

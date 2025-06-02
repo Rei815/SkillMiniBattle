@@ -7,7 +7,7 @@
 #include "..\..\bullet_manager\bullet\bullet.h"
 #include "..\..\object_manager\object\object.h"
 #include "../../launcher/shot/shot.h"
-
+#include <memory>
 
 /*!
  *  @brief  ユニットの状態ID
@@ -19,18 +19,6 @@ enum class UNIT_STATE
     DEFEAT,
 };
 
-
-/*!
- *  @class      IUnit
- *
- *  @brief      ユニットベースクラス
- *
- *  @author     Kazuya Maruyama
- *
- *  @date       2020/11/13
- *
- *  @since      1.0
- */
 class IUnit
 {
 public:
@@ -53,7 +41,7 @@ public:
      *
      *  @param[in]  position    位置
      */
-    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name);
+    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position);
 
     /*!
      *  @brief      更新
@@ -369,12 +357,12 @@ protected:
     bool                    m_InvincibleFlag;       //!< 無敵フラグ
     UNIT_STATE              m_UnitState;            //!< 状態ID
     bool                    m_AimFlag;              //!< 狙うかどうか
-    float                   m_DamageRate;
+    float                   m_DamageRate;           //!< ダメージの倍率
     CShot*                  m_Shot;
-    bool                    m_RevertAlpha;              //!< アルファ値を戻す
-    float                   m_Alpha;                    //!< アルファ値
-    bool                    m_DefeatFlag;               //!< 敗北フラグ
+    bool                    m_RevertAlpha;          //!< アルファ値を戻す
+    float                   m_Alpha;                //!< アルファ値
+    bool                    m_DefeatFlag;           //!< 敗北フラグ
     std::string             m_FileName;
-    bool                    m_IsGround;                 //!< 地上にいるか
-    IObject*                m_Parent;                   //!< 親のオブジェクト
+    bool                    m_IsGround;             //!< 地上にいるか
+    IObject*                m_Parent;               //!< 親のオブジェクト
 };

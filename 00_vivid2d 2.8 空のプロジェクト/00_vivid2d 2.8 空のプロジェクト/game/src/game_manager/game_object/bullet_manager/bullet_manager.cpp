@@ -1,14 +1,3 @@
-
-/*!
- *  @file       bullet_manager.cpp
- *  @brief      íeä«óù
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #include "bullet_manager.h"
 #include "..\unit_manager\unit_manager.h"
 #include "bullet\shock_wave_bullet\shock_wave_bullet.h"

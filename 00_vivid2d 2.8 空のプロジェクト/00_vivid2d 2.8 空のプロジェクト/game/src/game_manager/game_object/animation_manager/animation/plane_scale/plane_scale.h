@@ -12,9 +12,8 @@ public:
 	/*!
 	 *  @brief      初期化
 	 *
-	 *  @param[in]  plane_pointer    平面のポインタ
 	*/
-	void Initialize(void* plane_pointer);
+	void Initialize();
 
 	/*!
 	 *  @brief      更新
@@ -26,8 +25,8 @@ public:
 	 */
 	void Finalize();
 private:
-	static const CVector3	m_min_scale;	//!< 拡大率の最小値
-	static const float		m_speed;		//!< アニメーション速度
+	static const CVector3				m_min_scale;	//!< 拡大率の最小値
+	static const float					m_speed;		//!< アニメーション速度
 
-	CPlaneGameImage*		m_Plane;		//!< 平面のポインタ
+	std::unique_ptr<CPlaneGameImage>	m_Plane;		//!< 平面のポインタ
 };

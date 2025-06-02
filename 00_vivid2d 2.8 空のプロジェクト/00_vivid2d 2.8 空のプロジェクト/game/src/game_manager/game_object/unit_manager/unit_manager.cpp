@@ -7,7 +7,6 @@
 #include "..\..\..\utility\utility.h"
 #include "../ui_manager/ui_manager.h"
 
-const std::string   CUnitManager::m_file_name = "data\\Models\\player_rabbit.mv1";
 /*
  *  インスタンスの取得
  */
@@ -78,8 +77,6 @@ Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
-
         ++it;
     }
 
@@ -93,7 +90,7 @@ IUnit*
 CUnitManager::
 Create(UNIT_ID id, const CVector3& pos)
 {
-    IUnit* unit = nullptr;
+    std::shared_ptr<IUnit> unit = nullptr;
 
     switch (id)
     {
@@ -101,16 +98,16 @@ Create(UNIT_ID id, const CVector3& pos)
     case UNIT_ID::PLAYER2:
     case UNIT_ID::PLAYER3:
     case UNIT_ID::PLAYER4:
-    unit = new CPlayer();  break;
+    unit = std::make_shared<CPlayer>();  break;
     }
     
 
     if (!unit) return nullptr;
 
-    unit->Initialize(id, pos, m_file_name);
+    unit->Initialize(id, pos);
 
-    m_UnitList.push_back(unit);
-    return unit;
+    m_UnitList.emplace_back(unit);
+    return dynamic_cast<IUnit*>(unit.get());
 }
 
 void CUnitManager::Delete(UNIT_ID id)
@@ -121,7 +118,7 @@ void CUnitManager::Delete(UNIT_ID id)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = (IUnit*)(*it);
+        IUnit* unit = dynamic_cast<IUnit*>((*it).get());
         if (unit->GetUnitID() == id)
             unit->SetActive(false);
 
@@ -143,7 +140,7 @@ CheckHitBullet(IBullet* bullet)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = (IUnit*)(*it);
+        IUnit* unit = dynamic_cast<IUnit*>((*it).get());
 
         if (bullet->GetColliderID() == COLLIDER_ID::MODEL)
             unit->CheckHitBulletModel(bullet);
@@ -169,7 +166,7 @@ void CUnitManager::CheckHitObject(IObject* object)
             ++it;
             continue;
         }
-        IUnit* unit = (*it);
+        IUnit* unit = dynamic_cast<IUnit*>((*it).get());
         
         //水平方向の判定-----------------------------------------------------        
         
@@ -187,7 +184,7 @@ void CUnitManager::CheckHitObject(IObject* object)
             endPos = startPos;
             CheckVector = ForwardVector.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f * i).Normalize();
             endPos += CheckVector * (*it)->GetRadius();
-            CheckHitObjectHorizontal(object, (*it), startPos, endPos);
+            CheckHitObjectHorizontal(object, unit, startPos, endPos);
         }
 
         //垂直方向の判定-----------------------------------------------------
@@ -199,7 +196,7 @@ void CUnitManager::CheckHitObject(IObject* object)
         {
             CVector3 unit_pos = unit->GetPosition();
             CVector3 start = unit_pos + CVector3(-offset + (offset) * (i % 3), 0.0f, -offset + (offset) * (i / 3));
-            CheckHitObjectVertical(object, (*it), start, CVector3(0.0f, -radius * 3, 0.0f));
+            CheckHitObjectVertical(object, unit, start, CVector3(0.0f, -radius * 3, 0.0f));
         }
 
         ++it;
@@ -218,7 +215,7 @@ CPlayer* CUnitManager::GetPlayer(UNIT_ID id)
     while (it != m_UnitList.end())
     {
         if ((*it)->GetUnitID() == id)
-            return (CPlayer*)(*it);
+            return dynamic_cast<CPlayer*>((*it).get());
 
         ++it;
     }
@@ -236,7 +233,7 @@ void CUnitManager::SetAllPlayerAction(bool flag)
     {
         if ((*it)->GetUnitCategory() == UNIT_CATEGORY::PLAYER)
         {
-            CPlayer* player = (CPlayer*)(*it);
+            CPlayer* player = dynamic_cast<CPlayer*>((*it).get());
             player->SetActionFlag(flag);
         }
 
@@ -288,7 +285,7 @@ UpdateUnit(void)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = (IUnit*)(*it);
+        IUnit* unit = dynamic_cast<IUnit*>((*it).get());
 
         unit->Update();
 

@@ -5,20 +5,18 @@
 #include "../../../object_manager/object_manager.h"
 #include "../../../controller_manager/controller_manager.h"
 
-
+const std::string       CPlayer::m_file_name = "data\\Models\\player_rabbit.mv1";
 const float             CPlayer::m_radius = 50.0f;
 const float             CPlayer::m_height = 70.0f;
 const float             CPlayer::m_model_scale = 0.33f;
-
 const float             CPlayer::m_move_speed = 0.6f;
 const float             CPlayer::m_jump_power = 20.0f;
-const CVector3          CPlayer::m_move_friction = CVector3(0.9f,0.975f,0.9f);
 const float             CPlayer::m_fly_away_speed = 40.0f;
-
 const float             CPlayer::m_max_life = 3.0f;
 const float             CPlayer::m_max_invincible_time = 1.0f;
-const int               CPlayer::m_invincible_visible_interval = 4;
 const float             CPlayer::m_fall_accelerator = 0.025f;
+const CVector3          CPlayer::m_move_friction = CVector3(0.9f,0.975f,0.9f);
+const int               CPlayer::m_invincible_visible_interval = 4;
 
 const unsigned int      CPlayer::m_player_body_color[] =
 {
@@ -54,14 +52,14 @@ CPlayer::~CPlayer()
 {
 }
 
-void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name)
+void CPlayer::Initialize(UNIT_ID id, const CVector3& position)
 {
-    (void)position;
-
-    IUnit::Initialize(id, position, file_name);
+    IUnit::Initialize(id, position);
     CControllerManager& cm = CControllerManager::GetInstance();
     CControllerManager::CONTROLLER_LIST controllerList = cm.GetList();
     CControllerManager::CONTROLLER_LIST::iterator it = controllerList.begin();
+
+    //IDによってカテゴリーの切り替え
     switch (id)
     {
     case UNIT_ID::PLAYER1:
@@ -94,7 +92,7 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
 
     m_InitialPosition = position;
 
-    m_Model.Initialize(file_name, position, m_model_scale);
+    m_Model.Initialize(m_file_name, position, m_model_scale);
 
     m_Model.SetMaterialDif(0, m_player_body_color[(int)id]);
     m_Model.SetMaterialDif(1, m_player_eye_color[(int)id]);
@@ -364,14 +362,6 @@ Defeat(void)
 
 void CPlayer::Move(void)
 {
-    ////重力処理
-    //if (!m_IsGround && !m_StopFlag)
-    //{
-    //    m_Accelerator.y -= m_FallSpeed;
-
-    //    m_FallSpeed += m_fall_accelerator;
-    //}
-
     if (!m_StopFlag)
     {
         m_Velocity += m_Accelerator;
@@ -412,8 +402,6 @@ void CPlayer::Move(void)
 
         if(m_AffectedVelocity.y > 0.0f)
             m_AffectedVelocity.y = 0.0f;
-
-//        m_FallSpeed = 0.0f;
     }
 
     m_Accelerator = CVector3::ZERO;

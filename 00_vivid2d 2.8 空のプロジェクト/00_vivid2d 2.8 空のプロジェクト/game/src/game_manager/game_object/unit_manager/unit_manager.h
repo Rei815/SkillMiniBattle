@@ -6,6 +6,7 @@
 #include "..\bullet_manager\bullet\bullet.h"
 #include "..\scene_manager\scene\game\game.h"
 #include "unit/player/player.h"
+#include <memory>
 class CUnitManager
 {
 public:
@@ -84,12 +85,12 @@ public:
     /*!
      *  @brief      ユニットリスト型
      */
-    using UNIT_LIST = std::list<IUnit*>;
+    using UNIT_LIST = std::list<std::shared_ptr<IUnit>>;
     UNIT_LIST   GetUnitList();
     /*!
      *  @brief      プレイヤーリスト型
      */
-    using DEFEAT_LIST = std::list<IUnit*>;
+    using DEFEAT_LIST = std::list<std::shared_ptr<IUnit>>;
 
     DEFEAT_LIST GetDefeatList();
 private:
@@ -144,8 +145,6 @@ private:
      *  @param[in]  endPos      当たり判定をする線分の終了地点
      */
     void    CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos);
-
-    static const std::string                            m_file_name;
 
     UNIT_LIST                                           m_UnitList;             //!< ユニットリスト
     DEFEAT_LIST                                         m_DefeatList;             //!< ランキングリスト

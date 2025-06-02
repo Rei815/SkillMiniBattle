@@ -1,3 +1,6 @@
+/*動きの確認が出来るサイト
+ *https://easings.net/ja
+ */
 #include "easing.h"
 #include <cmath>
 #include "../utility.h"

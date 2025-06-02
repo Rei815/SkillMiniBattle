@@ -36,15 +36,13 @@ CAnimationManager::Update(void)
 
     while (it != m_AnimationList.end())
     {
-        IAnimation* animation = (IAnimation*)(*it);
+        IAnimation* animation = dynamic_cast<IAnimation*>((*it).get());
 
         animation->Update();
 
         if (!animation->IsActive())
         {
             animation->Finalize();
-
-            delete animation;
 
             it = m_AnimationList.erase(it);
 
@@ -70,8 +68,6 @@ void CAnimationManager::Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
-
         ++it;
     }
 
@@ -80,25 +76,25 @@ void CAnimationManager::Finalize(void)
 
 IAnimation* CAnimationManager::Create(ANIMATION_ID id, void* object_pointer)
 {
-    IAnimation* animation = nullptr;
+    std::shared_ptr<IAnimation> animation = nullptr;
 
     switch (id)
     {
     case ANIMATION_ID::KEY_SCALE:
-        animation = new CKeyScale();
+        animation = std::make_shared<CKeyScale>();
         break;
     case ANIMATION_ID::PLANE_UP:
-        animation = new CPlaneUp();
+        animation = std::make_shared<CPlaneUp>();
         break;
     case ANIMATION_ID::PLANE_SCALE:
-        animation = new CPlaneScale();
+        animation = std::make_shared<CPlaneScale>();
         break;
     }
     if (!animation) return nullptr;
 
-    animation->Initialize(object_pointer);
-    m_AnimationList.push_back(animation);
-    return animation;
+    animation->Initialize();
+    m_AnimationList.emplace_back(animation);
+    return dynamic_cast<IAnimation*>(animation.get());
 
 }
 

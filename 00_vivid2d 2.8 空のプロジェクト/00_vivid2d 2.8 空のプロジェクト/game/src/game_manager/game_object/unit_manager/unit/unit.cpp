@@ -65,7 +65,7 @@ IUnit::
  */
 void
 IUnit::
-Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name)
+Initialize(UNIT_ID id, const CVector3& position)
 {
     m_UnitID = id;
     m_Transform.position = position;
@@ -75,7 +75,6 @@ Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name)
     m_UnitState = UNIT_STATE::APPEAR;
     m_Alpha = 0.0f;
     m_RevertAlpha = false;
-    m_FileName = file_name;
     m_Gravity = m_gravity;
 }
 /*

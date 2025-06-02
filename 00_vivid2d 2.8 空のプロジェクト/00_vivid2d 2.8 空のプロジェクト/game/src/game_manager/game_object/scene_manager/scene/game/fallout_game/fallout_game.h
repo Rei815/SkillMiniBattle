@@ -3,7 +3,7 @@
 #include "..\game.h"
 #include "..\..\..\..\ui_manager\ui\ui_id.h"
 #include "../../../../ui_manager/ui/fallout_topic/fallout_topic.h"
-
+#include <memory>
 class CFallOutGame : public CGame
 {
 public:

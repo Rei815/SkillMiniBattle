@@ -4,6 +4,7 @@
 #include <list>
 #include "animation/animation_id.h"
 #include "animation/animation.h"
+#include <memory>
 class CAnimationManager
 {
 public:
@@ -40,7 +41,7 @@ public:
     /*!
      *  @brief      ギミックリスト型
      */
-    using ANIMATION_LIST = std::list<IAnimation*>;
+    using ANIMATION_LIST = std::list<std::shared_ptr<IAnimation>>;
 
     /*!
      *  @brief      リスト取得

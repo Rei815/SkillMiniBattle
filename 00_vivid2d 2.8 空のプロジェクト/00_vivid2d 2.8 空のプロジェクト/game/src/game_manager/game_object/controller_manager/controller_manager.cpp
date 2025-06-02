@@ -1,6 +1,7 @@
 #include "controller_manager.h"
 #include "controller/keyboard/keyboard.h"
 #include "controller/dummy_controller/dummy_controller.h"
+
 /*
  *  インスタンスの取得
  */
@@ -39,7 +40,7 @@ CControllerManager::Update(void)
 
     while (it != m_ControllerList.end())
     {
-        CController* controller = (CController*)(*it);
+        CController* controller = dynamic_cast<CController*>((*it).get());
 
         controller->Update();
 
@@ -75,8 +76,6 @@ CControllerManager::Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
-
         ++it;
     }
 
@@ -96,7 +95,7 @@ int CControllerManager::GetControllerNum()
 
 CController* CControllerManager::Create(CONTROLLER_ID id)
 {
-    CController* controller = nullptr;
+    std::shared_ptr<CController> controller = nullptr;
 
     switch (id)
     {
@@ -104,20 +103,20 @@ CController* CControllerManager::Create(CONTROLLER_ID id)
     case CONTROLLER_ID::TWO:
     case CONTROLLER_ID::THREE:
     case CONTROLLER_ID::FOUR:
-        controller = new CController();
+        controller = std::make_shared<CController>();
         break;
     case CONTROLLER_ID::KEYBOARD:
-        controller = new CKeyboard();
+        controller = std::make_shared<CKeyboard>();
         break;
     case CONTROLLER_ID::DUMMY:
-        controller = new CDummyController();
+        controller = std::make_shared<CDummyController>();
         break;
     }
     if (!controller) return nullptr;
 
     controller->Initialize(id);
 
-    m_ControllerList.push_back(controller);
+    m_ControllerList.emplace_back(controller);
 
     return controller;
 }
@@ -131,7 +130,8 @@ CController* CControllerManager::GetController(CONTROLLER_ID controller_id)
     while (it != m_ControllerList.end())
     {
         if ((*it)->GetID() == controller_id)
-            return (*it);
+            return dynamic_cast<CController*>((*it).get());
+
 
         ++it;
     }
@@ -164,7 +164,7 @@ void CControllerManager::Vibration(CONTROLLER_ID controller_id)
 
     while (it != m_ControllerList.end())
     {
-        CController* controller = (CController*)(*it);
+        CController* controller = dynamic_cast<CController*>((*it).get());
         if (controller->GetID() == controller_id)
             controller->Vibration();
 
@@ -182,7 +182,7 @@ CController* CControllerManager::GetSpecifiedButtonDownController(BUTTON_ID butt
     while (it != m_ControllerList.end())
     {
         if ((*it)->GetButtonDown(button_id) == true)
-            return (*it);
+            return dynamic_cast<CController*>((*it).get());
 
         ++it;
     }
@@ -199,7 +199,7 @@ CController* CControllerManager::GetSpecifiedButtonUpController(BUTTON_ID button
     while (it != m_ControllerList.end())
     {
         if ((*it)->GetButtonUp(button_id) == true)
-            return (*it);
+            return dynamic_cast<CController*>((*it).get());
 
         ++it;
     }
@@ -216,7 +216,7 @@ CController* CControllerManager::GetSpecifiedButtonHoldController(BUTTON_ID butt
     while (it != m_ControllerList.end())
     {
         if ((*it)->GetButtonHold(button_id) == true)
-            return (*it);
+            return dynamic_cast<CController*>((*it).get());
 
         ++it;
     }

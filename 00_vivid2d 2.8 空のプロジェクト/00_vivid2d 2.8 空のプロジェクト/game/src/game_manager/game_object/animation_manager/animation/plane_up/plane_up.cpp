@@ -13,10 +13,11 @@ CPlaneUp::~CPlaneUp()
 {
 }
 
-void CPlaneUp::Initialize(void* plane_pointer)
+void CPlaneUp::Initialize()
 {
-	if (!plane_pointer) return;
-	m_Plane = static_cast<CPlaneGameImage*>(plane_pointer);
+	m_Plane = std::make_unique<CPlaneGameImage>();
+	if (!m_Plane) return;
+
 	m_Timer.SetUp(m_up_time);
 	m_StartValue = m_Plane->GetTransform().position.y;
 	m_EaseTimer = 0.0f;
