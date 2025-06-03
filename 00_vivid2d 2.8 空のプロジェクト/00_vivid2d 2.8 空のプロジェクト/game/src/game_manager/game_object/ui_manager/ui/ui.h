@@ -11,7 +11,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    CUI(UI_ID id);
+    CUI(UI_ID id, int layer = 0);
     /*!
      *  @brief      コンストラクタ
      */

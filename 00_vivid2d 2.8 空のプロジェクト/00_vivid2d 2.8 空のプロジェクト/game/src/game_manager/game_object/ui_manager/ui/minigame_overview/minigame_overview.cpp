@@ -23,7 +23,7 @@ const std::string CMiniGameOverView::m_file_name[] =
  */
 CMiniGameOverView::
 CMiniGameOverView(UI_ID id)
-	: CUI(id)
+	: CUI(id, -1)
 {
 }
 

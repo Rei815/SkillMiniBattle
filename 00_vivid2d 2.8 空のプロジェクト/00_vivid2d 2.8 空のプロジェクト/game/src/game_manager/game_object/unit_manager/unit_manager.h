@@ -85,12 +85,17 @@ public:
     /*!
      *  @brief      ユニットリスト型
      */
-    using UNIT_LIST = std::list<std::shared_ptr<IUnit>>;
+    using UNIT_LIST = std::list<IUnit*>;
+    /*!
+     *  @brief      ユニットリスト型
+     */
+    //using UNIT_LIST = std::list<std::shared_ptr<IUnit>>;
     UNIT_LIST   GetUnitList();
     /*!
      *  @brief      プレイヤーリスト型
      */
-    using DEFEAT_LIST = std::list<std::shared_ptr<IUnit>>;
+    using DEFEAT_LIST = std::list<IUnit*>;
+    //using DEFEAT_LIST = std::list<std::shared_ptr<IUnit>>;
 
     DEFEAT_LIST GetDefeatList();
 private:

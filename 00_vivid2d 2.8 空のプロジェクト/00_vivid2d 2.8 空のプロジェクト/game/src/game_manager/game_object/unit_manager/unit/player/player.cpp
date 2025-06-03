@@ -82,7 +82,8 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position)
     {
         if ((*it)->GetUnitID() == id)
         {
-            m_Controller = std::shared_ptr<CController>((*it).get());
+            //m_Controller = ((*it).get());
+            m_Controller = std::shared_ptr<CController>(*it);
             break;
         }
         ++it;
@@ -93,11 +94,12 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position)
 
     m_InitialPosition = position;
 
-    m_Model = std::make_unique<CModel>();
-    m_Model->Initialize(m_file_name, position, m_model_scale);
+    
+    
+    m_Model.Initialize(m_file_name, position, m_model_scale);
 
-    m_Model->SetMaterialDif(0, m_player_body_color[(int)id]);
-    m_Model->SetMaterialDif(1, m_player_eye_color[(int)id]);
+    m_Model.SetMaterialDif(0, m_player_body_color[(int)id]);
+    m_Model.SetMaterialDif(1, m_player_eye_color[(int)id]);
 
     m_Accelerator = CVector3(0,0,0);
 
@@ -128,19 +130,19 @@ void CPlayer::Update(void)
         m_Transform.rotation.y = RotY;
     }
 
-    m_Model->Update(m_Transform);
+    m_Model.Update(m_Transform);
 }
 
 void CPlayer::Draw(void)
 {
     IUnit::Draw();
-    m_Model->Draw();
+    m_Model.Draw();
 }
 
 void CPlayer::Finalize(void)
 {
     IUnit::Finalize();
-    m_Model->Finalize();
+    m_Model.Finalize();
 }
 
 void CPlayer::SetActionFlag(bool flag)
@@ -354,6 +356,36 @@ Defeat(void)
 
 void CPlayer::Move(void)
 {
+    if (m_Parent != nullptr)
+    {
+        //一度接地したらジャンプや判定の外に行かない限り接地したオブジェクトに追従する
+        const float ground_check_offset_x = m_Radius - m_Radius / 3.0f;
+        const float ground_check_line_length = 100.0f;
+        bool releaseFlag = false;
+        for (int i = 0; i < 9; i++)
+        {
+            CVector3 start = m_Transform.position + CVector3(-ground_check_offset_x + (ground_check_offset_x) * (i % 3), 0.0f, -ground_check_offset_x + (ground_check_offset_x) * (i / 3));
+            CVector3 end = start + CVector3(0, -ground_check_line_length, 0);
+            CVector3 hitPos = m_Parent->GetModel().GetHitLinePosition(start, end);
+            if (hitPos != end)
+            {
+                m_Transform.position.y = hitPos.y + m_Radius;
+            }
+            else
+            {
+                releaseFlag = true;
+                break;
+            }
+        }
+
+        if (releaseFlag || m_Parent->GetColliderActiveFlag() == false)
+            m_Parent = nullptr;
+    }
+    else
+    {
+        m_Velocity += m_Gravity;
+    }
+
     if (!m_StopFlag)
     {
         m_Velocity += m_Accelerator;

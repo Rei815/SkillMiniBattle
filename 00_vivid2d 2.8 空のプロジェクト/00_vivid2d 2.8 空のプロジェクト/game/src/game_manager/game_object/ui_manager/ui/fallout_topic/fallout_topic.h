@@ -74,7 +74,7 @@ private:
     CTimer                          m_Timer;
     CTimer                          m_SelectTimer;      //!< ‚¨‘è‚ªŒˆ‚Ü‚é‚Ü‚Å‚ÌŽžŠÔ
     CTimer                          m_StopTimer;
-        MARK_ID                         m_CurrentID;        //!< ¡‰ñ‚ÌID
+    MARK_ID                         m_CurrentID;        //!< ¡‰ñ‚ÌID
 
     STATE                           m_State;
     CUI*                            m_BackGround;

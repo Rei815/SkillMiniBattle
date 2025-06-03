@@ -13,7 +13,7 @@ CPlaneScale::~CPlaneScale()
 
 void CPlaneScale::Initialize(void* plane_pointer)
 {
-	m_Plane = std::shared_ptr<CPlaneGameImage>(static_cast<CPlaneGameImage*>(plane_pointer));
+	m_Plane = static_cast<CPlaneGameImage*>(plane_pointer);
 	if (!m_Plane) return;
 
 	m_Plane->SetSpeed(0.0f);

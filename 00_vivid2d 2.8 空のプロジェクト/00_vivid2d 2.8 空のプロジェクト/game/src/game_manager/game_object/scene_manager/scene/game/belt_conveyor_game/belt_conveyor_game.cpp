@@ -41,6 +41,8 @@ CBeltConveyorGame::~CBeltConveyorGame(void)
 
 void CBeltConveyorGame::Initialize(SCENE_ID scene_id)
 {
+	SetLightDirection(CVector3::DOWN + CVector3::FORWARD);
+
 	CGame::Initialize(scene_id);
 
 	m_BackGround.Initialize("data\\Textures\\belt_conveyor_bg.png");
@@ -132,7 +134,8 @@ void CBeltConveyorGame::CheckFinish(void)
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		IUnit* unit = ((*it).get());
+		//IUnit* unit = ((*it).get());
+		IUnit* unit = *it;
 		++it;
 
 		if (unit->GetDefeatFlag() == true)	continue;

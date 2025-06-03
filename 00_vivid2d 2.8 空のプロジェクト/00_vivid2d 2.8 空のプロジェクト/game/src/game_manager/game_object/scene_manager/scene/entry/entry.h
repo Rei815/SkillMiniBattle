@@ -64,6 +64,7 @@ private:
     static const CVector3           m_camera_position;      //!< カメラの位置
     static const CVector3           m_camera_direction;     //!< カメラの向き
     static const int                m_min_player;           //!< 開始可能な最少人数
+
     UNIT_ID                         m_NextUnitID;           //!< 次に生成するプレイヤーのID
     UNIT_ID                         m_PlayerArray[4];       //!< 存在しているプレイヤーのID
     CTimer                          m_GameStartTimer;       //!< ゲーム開始までのタイマー
@@ -72,7 +73,7 @@ private:
     bool                            m_WasPressd;            //!< 押下フラグ
     int                             m_PlayerNum;            //!< プレイヤーの人数
     CGameBG                         m_BackGround;           //!< 背景
-    std::shared_ptr<CSkillGauge>    m_GameStartGauge;       //!< ゲーム開始までのゲージ
-    std::shared_ptr<CPlayerJoin>    m_PlayerJoinUI;         //!< プレイヤー参加のUI
+    CSkillGauge*                    m_GameStartGauge;       //!< ゲーム開始までのゲージ
+    CPlayerJoin*                    m_PlayerJoinUI;         //!< プレイヤー参加のUI
     bool                            m_CanStartFlag;         //!< スタート可能かどうか
 };

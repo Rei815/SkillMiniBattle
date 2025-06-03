@@ -8,7 +8,6 @@
 #include "object\belt_conveyor_object\belt_conveyor_object.h"
 #include "object\belt_conveyor_obstruction_object\belt_conveyor_obstruction_object.h"
 #include "object\skill_wall_object\skill_wall_object.h"
-#include "object\maze_stage\maze_stage.h"
 #include "..\gimmick_manager\gimmick_manager.h"
 #include "..\unit_manager\unit_manager.h"
 
@@ -129,8 +128,6 @@ Create(OBJECT_ID id, const CTransform& transform)
         object = new CBeltConveyorObstructionObject(); break;
     case OBJECT_ID::SKILL_WALL_OBJECT:
         object = new CSkillWallObject(); break;
-    case OBJECT_ID::MAZE_STAGE:
-        object = new CMazeStage(); break;
     }
 
     if (!object) return nullptr;

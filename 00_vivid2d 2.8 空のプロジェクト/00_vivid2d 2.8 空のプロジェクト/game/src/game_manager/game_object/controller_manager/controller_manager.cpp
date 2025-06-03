@@ -48,8 +48,6 @@ CControllerManager::Update(void)
         {
             controller->Finalize();
 
-            delete controller;
-
             it = m_ControllerList.erase(it);
 
             continue;

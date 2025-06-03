@@ -103,6 +103,6 @@ private:
     CSkillVideo*                    m_SkillVideo;
 
     GAME_ID                         m_GameID;
-    std::shared_ptr<CSceneUIParent> m_SceneUIParent;
+    CSceneUIParent*                 m_SceneUIParent;
 
 };

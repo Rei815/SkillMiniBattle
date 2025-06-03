@@ -164,33 +164,6 @@ IBullet* CBulletManager::Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& 
     return bullet;
 }
 
-void CBulletManager::CheckHitModel(const CModel& model)
-{
-    // リストが空なら終了
-    if (m_BulletList.empty()) return;
-
-    BULLET_LIST::iterator it = m_BulletList.begin();
-
-    while (it != m_BulletList.end())
-    {
-        IBullet* bullet = (IBullet*)(*it);
-
-        if (!bullet || model.GetModelHandle() == VIVID_DX_ERROR)
-            return;
-
-        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
-        if (hit_poly_dim.HitNum >= 1)
-        {
-            bullet->SetActive(false);
-        }
-
-        // 当たり判定情報の後始末
-        MV1CollResultPolyDimTerminate(hit_poly_dim);
-
-        ++it;
-    }
-}
-
 void CBulletManager::CheckReflectModel(const CModel& model)
 {
     // リストが空なら終了
@@ -203,7 +176,10 @@ void CBulletManager::CheckReflectModel(const CModel& model)
         IBullet* bullet = (IBullet*)(*it);
 
         if (!bullet || model.GetModelHandle() == VIVID_DX_ERROR)
-            return;
+        {
+            ++it;
+            continue;
+        }
 
         DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
         if (hit_poly_dim.HitNum >= 1)

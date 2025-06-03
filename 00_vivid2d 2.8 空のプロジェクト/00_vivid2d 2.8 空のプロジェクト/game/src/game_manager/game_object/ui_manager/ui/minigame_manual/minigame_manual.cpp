@@ -20,7 +20,7 @@ const std::string CMiniGameManual::m_file_name[] =
  */
 CMiniGameManual::
 CMiniGameManual(UI_ID id)
-	: CUI(id)
+	: CUI(id, -1)
 {
 }
 

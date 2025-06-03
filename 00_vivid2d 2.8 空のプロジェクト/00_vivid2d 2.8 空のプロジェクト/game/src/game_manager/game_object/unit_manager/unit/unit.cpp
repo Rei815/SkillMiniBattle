@@ -28,14 +28,11 @@ IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     , m_Category(category)
     , m_UnitID(unit_id)
     , m_InvincibleFlag(false)
-    , m_UnitState(UNIT_STATE::ATTACK)
-    , m_Max_Vertex()
+    , m_UnitState(UNIT_STATE::APPEAR)
     , m_Radius()
-    , m_DamageRate(1.0f)
-    , m_Shot()
     , m_Alpha()
     , m_DefeatFlag(false)
-    , m_Gravity()
+    , m_Gravity(m_gravity)
     , m_Parent(nullptr)
     , m_Model()
 {
@@ -58,13 +55,6 @@ Initialize(UNIT_ID id, const CVector3& position)
 {
     m_UnitID = id;
     m_Transform.position = position;
-    m_Velocity = CVector3();
-    m_ActiveFlag = true;
-    m_InvincibleFlag = false;
-    m_UnitState = UNIT_STATE::APPEAR;
-    m_Alpha = 0.0f;
-    m_RevertAlpha = false;
-    m_Gravity = m_gravity;
 }
 /*
  *  更新
@@ -73,35 +63,6 @@ void
 IUnit::
 Update(void)
 {
-    if (m_Parent != nullptr)
-    {
-
-        //一度接地したらジャンプや判定の外に行かない限り接地したオブジェクトに追従する
-        float offset = m_Radius - m_Radius / 3.0f;
-        const float line_length = 100.0f;
-        bool releaseFlag = false;
-        for (int i = 0; i < 9; i++)
-        {
-            CVector3 start = m_Transform.position + CVector3(-offset + (offset) * (i % 3), 0.0f, -offset + (offset) * (i / 3));
-            CVector3 end = start + CVector3(0, -line_length, 0);
-            CVector3 hitPos = m_Parent->GetModel().GetHitLinePosition(start, end);
-            if (hitPos != end)
-            {
-                m_Transform.position.y = hitPos.y + m_Radius;
-                releaseFlag = false;
-            }
-            else
-                releaseFlag = true;
-        }
-
-        if (releaseFlag || m_Parent->GetColliderActiveFlag() == false)
-            m_Parent = nullptr;
-    }
-    else
-    {
-        m_Velocity += m_Gravity;
-    }
-
     switch (m_UnitState)
     {
     case UNIT_STATE::APPEAR:    Appear();      break;
@@ -141,10 +102,10 @@ CheckHitBullet(IBullet* bullet)
     switch (bullet->GetColliderID())
     {
     case COLLIDER_ID::SPHERE:
-        hit_poly_dim = MV1CollCheck_Sphere(m_Model->GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
+        hit_poly_dim = MV1CollCheck_Sphere(m_Model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
         break;
     case COLLIDER_ID::CAPSULE:
-        hit_poly_dim = MV1CollCheck_Capsule(m_Model->GetModelHandle(), -1, bullet->GetColliderPosA(), bullet->GetColliderPosB(),bullet->GetRadius());
+        hit_poly_dim = MV1CollCheck_Capsule(m_Model.GetModelHandle(), -1, bullet->GetColliderPosA(), bullet->GetColliderPosB(),bullet->GetRadius());
         break;
     }
     bool hit_flag = false;
@@ -350,26 +311,6 @@ CVector3 IUnit::GetForwardVector()
     return m_ForwardVector;
 }
 
-void IUnit::AddShot(void)
-{
-    m_Shot->AddShot();
-}
-
-void IUnit::AddBullet(void)
-{
-    m_Shot->AddBullet();
-}
-
-void IUnit::DamageUp(float damageRate)
-{
-    m_DamageRate += damageRate;
-}
-
-float IUnit::GetDamageRate(void)
-{
-    return m_DamageRate;
-}
-
 bool IUnit::GetDefeatFlag(void)
 {
     return m_DefeatFlag;
@@ -380,9 +321,9 @@ void IUnit::SetDefeatFlag(bool flag)
     m_DefeatFlag = flag;
 }
 
-CModel* IUnit::GetModel(void)
+CModel IUnit::GetModel(void)
 {
-    return dynamic_cast<CModel*>((m_Model).get());
+    return m_Model;
 }
 
 void IUnit::SetIsGround(bool flag)
@@ -416,13 +357,13 @@ void IUnit::RevertAlpha(float alpha = 1.0f)
 
     m_Alpha += m_alpha_speed;
 
-    MV1SetOpacityRate(m_Model->GetModelHandle(), m_Alpha);
+    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
 }
 
 void IUnit::SetAlpha(float alpha)
 {
     m_Alpha = alpha;
-    MV1SetOpacityRate(m_Model->GetModelHandle(), m_Alpha);
+    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
 
 }
 
@@ -450,7 +391,7 @@ void IUnit::DecAlpha(float alpha)
     else
         m_Alpha = 0.0f;
 
-    MV1SetOpacityRate(m_Model->GetModelHandle(), m_Alpha);
+    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
 
 }
 

@@ -2,12 +2,12 @@
 #include "..\..\scene_manager\scene_manager.h"
 #include "../ui_manager.h"
 
-CUI::CUI(UI_ID id)
+CUI::CUI(UI_ID id, int layer)
     : m_ActiveFlag(true)
     , m_UI_ID(id)
     , m_Transform()
     , m_Parent(nullptr)
-    , m_OrderInLayer(0)
+    , m_OrderInLayer(layer)
     , m_SceneID(SCENE_ID::MAX)
 {
 }

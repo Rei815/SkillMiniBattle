@@ -28,16 +28,10 @@ public:
 	void SetUp(const std::string fileName);
 
 	/*!
-	 *  @brief      トランスフォームの更新
-	 *
-	 */
-	void UpdateTransform();
-
-	/*!
 	 *  @brief      描画
 	 * 
 	 */
-	void Draw() const;
+	void Draw(const CMatrix& mat);
 
 	/*!
 	 *  @brief      解放
@@ -60,5 +54,4 @@ private:
 	int							m_Width;
 	int							m_Height;
 	CVector3					m_Normal;
-	CMatrix						m_WorldMatrix;
 };

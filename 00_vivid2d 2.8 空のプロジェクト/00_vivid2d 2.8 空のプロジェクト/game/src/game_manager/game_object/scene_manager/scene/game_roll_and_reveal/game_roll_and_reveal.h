@@ -45,9 +45,9 @@ private:
     static const int                    m_games_num;            //!< ƒQ[ƒ€”
     static const CVector3               m_camera_position;      //!< ƒJƒƒ‰‚ÌˆÊ’u
     static const float                  m_circle_radius;        //!< ‰~‚Ì”¼Œa
-    std::shared_ptr<CSceneUIParent>     m_PlaneUIParent;        //!< UI‚Ìe(‰ñ“]ƒvƒŒ[ƒ“)
-    std::shared_ptr<CSceneUIParent>     m_RevealUIParent;       //!< UI‚Ìe(à–¾—pUI)
-    std::shared_ptr<CPlaneGameImage>    m_SelectedPlane;       //!< •½–Ê‚ÌƒQ[ƒ€‰æ‘œ
+    CSceneUIParent*                     m_PlaneUIParent;        //!< UI‚Ìe(‰ñ“]ƒvƒŒ[ƒ“)
+    CSceneUIParent*                     m_RevealUIParent;       //!< UI‚Ìe(à–¾—pUI)
+    CPlaneGameImage*                    m_SelectedPlane;        //!< •½–Ê‚ÌƒQ[ƒ€‰æ‘œ
     bool                                m_SelectedGameFlag;     //!< ƒQ[ƒ€‚ª‘I‚Î‚ê‚½‚©
     bool                                m_GameInfomationFlag;   //!< ƒQ[ƒ€‚Ìà–¾‚ªo‚½‚©
     GAME_ID                             m_SelectedGameID;       //!< ‘I‚Î‚ê‚½ƒQ[ƒ€‚ÌID

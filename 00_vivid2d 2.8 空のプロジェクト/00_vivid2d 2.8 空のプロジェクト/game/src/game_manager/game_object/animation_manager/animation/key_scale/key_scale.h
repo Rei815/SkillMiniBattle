@@ -28,5 +28,5 @@ private:
 	static const vivid::Vector2 m_max_scale;	//!< 拡大率の最大値
 	static const float			m_speed;
 	vivid::Vector2				m_MinScale;	//!< 拡大率の最小値
-	std::shared_ptr<CUI>		m_Key;	//!< 鍵のポインタ
+	CUI*						m_Key;	//!< 鍵のポインタ
 };

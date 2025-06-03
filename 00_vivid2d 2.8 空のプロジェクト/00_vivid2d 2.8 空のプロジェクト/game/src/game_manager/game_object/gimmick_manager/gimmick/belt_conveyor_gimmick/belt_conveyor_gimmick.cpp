@@ -127,7 +127,8 @@ void CBeltConveyorGimmick::Update(void)
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		IUnit* unit = ((*it).get());
+		IUnit* unit = *it;
+		//IUnit* unit = ((*it).get());
 		++it;
 
 		//敗北状態ならスキップ

@@ -14,7 +14,7 @@ CKeyScale::~CKeyScale()
 
 void CKeyScale::Initialize(void* ui_pointer)
 {
-	m_Key = std::shared_ptr<CUI>(static_cast<CUI*>(ui_pointer));
+	m_Key = static_cast<CUI*>(ui_pointer);
 	
 	if (!m_Key) return;
 	m_MinScale = m_Key->GetScale();

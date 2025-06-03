@@ -88,7 +88,8 @@ IUnit*
 CUnitManager::
 Create(UNIT_ID id, const CVector3& pos)
 {
-    std::shared_ptr<IUnit> unit = nullptr;
+    IUnit* unit = nullptr;
+    //std::shared_ptr<IUnit> unit = nullptr;
 
     switch (id)
     {
@@ -96,7 +97,8 @@ Create(UNIT_ID id, const CVector3& pos)
     case UNIT_ID::PLAYER2:
     case UNIT_ID::PLAYER3:
     case UNIT_ID::PLAYER4:
-    unit = std::make_shared<CPlayer>();  break;
+        unit = new CPlayer();  break;
+    //unit = std::make_shared<CPlayer>();  break;
     }
     
 
@@ -105,7 +107,8 @@ Create(UNIT_ID id, const CVector3& pos)
     unit->Initialize(id, pos);
 
     m_UnitList.emplace_back(unit);
-    return dynamic_cast<IUnit*>(unit.get());
+    return unit;
+    //return dynamic_cast<IUnit*>(unit.get());
 }
 
 void CUnitManager::Delete(UNIT_ID id)
@@ -116,7 +119,8 @@ void CUnitManager::Delete(UNIT_ID id)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = dynamic_cast<IUnit*>((*it).get());
+        IUnit* unit = (IUnit*)(*it);
+        //IUnit* unit = dynamic_cast<IUnit*>((*it).get());
         if (!unit) 
         {
             it = m_UnitList.erase(it);
@@ -125,8 +129,7 @@ void CUnitManager::Delete(UNIT_ID id)
 
         if (unit->GetUnitID() == id)
         {
-            unit->Finalize();
-            it = m_UnitList.erase(it);
+            unit->Delete();
             return;
         }
         ++it;
@@ -147,7 +150,8 @@ CheckHitBullet(IBullet* bullet)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = dynamic_cast<IUnit*>((*it).get());
+        IUnit* unit = (IUnit*)(*it);
+        //IUnit* unit = dynamic_cast<IUnit*>((*it).get());
 
         if (bullet->GetColliderID() == COLLIDER_ID::MODEL)
             unit->CheckHitBulletModel(bullet);
@@ -173,7 +177,8 @@ void CUnitManager::CheckHitObject(IObject* object)
             ++it;
             continue;
         }
-        IUnit* unit = dynamic_cast<IUnit*>((*it).get());
+        IUnit* unit = (IUnit*)(*it);
+        //IUnit* unit = dynamic_cast<IUnit*>((*it).get());
         
         //…•½•ûŒü‚Ì”»’è-----------------------------------------------------        
         
@@ -192,6 +197,7 @@ void CUnitManager::CheckHitObject(IObject* object)
             CheckVector = ForwardVector.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f * i).Normalize();
             endPos += CheckVector * (*it)->GetRadius();
             CheckHitObjectHorizontal(object, unit, startPos, endPos);
+            DrawLine3D(startPos, endPos, 0xffffffff);
         }
 
         //‚’¼•ûŒü‚Ì”»’è-----------------------------------------------------
@@ -222,7 +228,8 @@ CPlayer* CUnitManager::GetPlayer(UNIT_ID id)
     while (it != m_UnitList.end())
     {
         if ((*it)->GetUnitID() == id)
-            return dynamic_cast<CPlayer*>((*it).get());
+            return (CPlayer*)(*it);
+            //return dynamic_cast<CPlayer*>((*it).get());
 
         ++it;
     }
@@ -240,7 +247,8 @@ void CUnitManager::SetAllPlayerAction(bool flag)
     {
         if ((*it)->GetUnitCategory() == UNIT_CATEGORY::PLAYER)
         {
-            CPlayer* player = dynamic_cast<CPlayer*>((*it).get());
+            //CPlayer* player = dynamic_cast<CPlayer*>((*it).get());
+            CPlayer* player = (CPlayer*)(*it);
             player->SetActionFlag(flag);
         }
 
@@ -258,12 +266,11 @@ bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& e
 
     while (it != m_UnitList.end())
     {
-        if ((*it)->GetModel()->CheckHitLine(startPos, endPos) == true && (*it)->GetUnitCategory() != UNIT_CATEGORY::PLAYER)
+        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true && (*it)->GetUnitCategory() != UNIT_CATEGORY::PLAYER)
             return true;
 
         ++it;
     }
-
     return false;
 }
 
@@ -292,14 +299,16 @@ UpdateUnit(void)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = dynamic_cast<IUnit*>((*it).get());
+        //IUnit* unit = dynamic_cast<IUnit*>((*it).get());
+        IUnit* unit = (*it);
 
-        unit->Update();
+         unit->Update();
 
         if (!unit->IsActive())
         {
             unit->Finalize();
 
+            delete unit;
             it = m_UnitList.erase(it);
 
             continue;

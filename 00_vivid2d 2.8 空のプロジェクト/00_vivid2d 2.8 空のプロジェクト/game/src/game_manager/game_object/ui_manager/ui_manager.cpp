@@ -203,7 +203,7 @@ CUIManager::UI_LIST CUIManager::GetList()
 
 void CUIManager::SortList(void)
 {
-    m_UIList.sort([](const std::shared_ptr<CUI> p, const std::shared_ptr<CUI> q) {return p < q; });
+    m_UIList.sort([](const std::shared_ptr<CUI> p, const std::shared_ptr<CUI> q) {return p.get()->GetOrderInLayer() < p.get()->GetOrderInLayer(); });
 }
 
 CUI* CUIManager::GetUI(UI_ID ui_id)

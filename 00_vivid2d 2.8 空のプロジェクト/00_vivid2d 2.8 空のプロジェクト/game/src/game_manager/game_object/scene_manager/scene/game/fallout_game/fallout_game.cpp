@@ -387,7 +387,8 @@ void CFallOutGame::CheckFinish()
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		IUnit* unit = ((*it).get());
+		IUnit* unit = (*it);
+		//IUnit* unit = ((*it).get());
 		if (unit->GetDefeatFlag() == true)
 		{
 			++it;

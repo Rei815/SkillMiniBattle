@@ -243,7 +243,8 @@ void CDodgeBallGame::CheckFinish(void)
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		IUnit* unit = ((*it).get());
+		//IUnit* unit = ((*it).get());
+		IUnit* unit = *it;
 		++it;
 
 		if (unit->GetDefeatFlag() == true)	continue;

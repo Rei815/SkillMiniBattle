@@ -59,11 +59,6 @@ public:
      *  @param[in]  dir         Œü‚«
      */
     IBullet*        Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir);
-
-    /*!
-     *  @brief      ƒ‚ƒfƒ‹‚Æ‚Ì”»’è
-     */
-    void        CheckHitModel(const CModel& model);
     
     /*!
      *  @brief      ƒ‚ƒfƒ‹‚Æ‚Ì”½ŽË”»’è
