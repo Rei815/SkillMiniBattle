@@ -113,7 +113,7 @@ private:
     static constexpr int                m_max_topic_num = 5;        //!< お題数
     static const CVector3               m_player_default_forward;   //!< プレイヤーのスポーン時の正面方向
     float                               m_FallTime;                 //!< 落ちるまでの時間
-    std::array<CTimer,m_max_topic_num>  m_ChooseObjectTimer;     //!< 抽選タイマー
+    std::array<CTimer,m_max_topic_num>  m_ChooseObjectTimer;        //!< 抽選タイマー
     CTimer                              m_AddTopicTimer;            //!< お題が増えるタイマー
     CTimer                              m_ResetTopicTimer;          //!< お題リセットタイマー
     CTimer                              m_ExtendTimer;              //!< 床の復活が延びるまでのタイマー

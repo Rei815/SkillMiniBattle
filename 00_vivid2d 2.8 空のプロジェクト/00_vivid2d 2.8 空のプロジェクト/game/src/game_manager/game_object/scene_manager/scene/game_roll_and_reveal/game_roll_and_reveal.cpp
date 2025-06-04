@@ -65,12 +65,12 @@ void CGameRollAndReveal::Initialize(SCENE_ID scene_id)
         transform.position.x = 0.0f;//_x;
         transform.position.z = -m_circle_radius;//_z;
         
-        CPlaneGameImage* planeGameImage = dynamic_cast<CPlaneGameImage*>(um.Create(UI_ID::PLANE_GAME_IMAGE, transform));
+        std::shared_ptr<CPlaneGameImage> planeGameImage = dynamic_pointer_cast<CPlaneGameImage>(um.Create(UI_ID::PLANE_GAME_IMAGE, transform));
         planeGameImage->SetGameID((GAME_ID)i);
     }
     IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
 
-    m_PlaneUIParent = dynamic_cast<CSceneUIParent*>(um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
+    m_PlaneUIParent = dynamic_pointer_cast<CSceneUIParent>(um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
     m_PlaneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
     //ミニゲームの決定
@@ -165,11 +165,11 @@ void CGameRollAndReveal::Update(void)
 
             um.Create(UI_ID::PLAYER_READY);
 
-            CGameVideo* gameVideo = (CGameVideo*)um.Create(UI_ID::GAME_VIDEO);
+            std::shared_ptr<CGameVideo> gameVideo = dynamic_pointer_cast<CGameVideo>(um.Create(UI_ID::GAME_VIDEO));
             gameVideo->SetGameVideo(m_SelectedGameID);
             um.Create(UI_ID::MINIGAME_TITLE);
 
-            m_RevealUIParent = dynamic_cast<CSceneUIParent*>
+            m_RevealUIParent = dynamic_pointer_cast<CSceneUIParent>
                 (um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
             if (m_RevealUIParent == nullptr) return;
             m_RevealUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
@@ -214,7 +214,7 @@ void CGameRollAndReveal::Update(void)
 
     if (m_RevealUIParent)
     {
-        CPlayerReady* playerReady = (CPlayerReady*)um.GetUI(UI_ID::PLAYER_READY);
+        std::shared_ptr<CPlayerReady> playerReady = dynamic_pointer_cast<CPlayerReady>(um.GetUI(UI_ID::PLAYER_READY));
         if (playerReady == nullptr) return;
         //ミニゲーム情報が中心にある状態
         if (playerReady->GetReadyFlag() == true && m_RevealUIParent->GetState() == CSceneUIParent::STATE::WAIT && m_GameInfomationFlag == true)

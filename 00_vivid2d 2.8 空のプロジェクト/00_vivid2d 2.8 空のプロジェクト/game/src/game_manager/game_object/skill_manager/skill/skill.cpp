@@ -154,19 +154,19 @@ void CSkill::Finalize(void)
 void CSkill::SetPlayer(CPlayer* player)
 {
 	CUIManager& uim = CUIManager::GetInstance();
-	CUI* temp;
+	std::shared_ptr<CUI> temp;
 	temp = uim.Create(UI_ID::SKILL_ICON);
-	m_UiSkillIcon = dynamic_cast<CSkillIcon*>(temp);
+	m_UiSkillIcon = std::dynamic_pointer_cast<CSkillIcon>(temp);
 	if (m_UiSkillIcon == nullptr)
 		temp->Delete();
 
 	temp = uim.Create(UI_ID::SKILL_CURSOR);
-	m_UiSkillCursor = dynamic_cast<CSkillCursor*>(temp);
+	m_UiSkillCursor = std::dynamic_pointer_cast<CSkillCursor>(temp);
 	if (m_UiSkillCursor == nullptr)
 		temp->Delete();
 
 	temp = uim.Create(UI_ID::SKILL_GAUGE);
-	m_UiSkillGauge = dynamic_cast<CSkillGauge*>(temp);
+	m_UiSkillGauge = std::dynamic_pointer_cast<CSkillGauge>(temp);
 	if (m_UiSkillGauge == nullptr)
 		temp->Delete();
 

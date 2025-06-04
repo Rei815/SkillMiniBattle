@@ -40,7 +40,7 @@ CControllerManager::Update(void)
 
     while (it != m_ControllerList.end())
     {
-        CController* controller = dynamic_cast<CController*>((*it).get());
+        std::shared_ptr<CController> controller = *it;
 
         controller->Update();
 
@@ -91,7 +91,7 @@ int CControllerManager::GetControllerNum()
     return m_ControllerNum;
 }
 
-CController* CControllerManager::Create(CONTROLLER_ID id)
+std::shared_ptr<CController> CControllerManager::Create(CONTROLLER_ID id)
 {
     std::shared_ptr<CController> controller = nullptr;
 
@@ -116,10 +116,10 @@ CController* CControllerManager::Create(CONTROLLER_ID id)
 
     m_ControllerList.emplace_back(controller);
 
-    return dynamic_cast<CController*>(controller.get());
+    return controller;
 }
 
-CController* CControllerManager::GetController(CONTROLLER_ID controller_id)
+std::shared_ptr<CController> CControllerManager::GetController(CONTROLLER_ID controller_id)
 {
     if (m_ControllerList.empty()) return nullptr;
 
@@ -128,7 +128,7 @@ CController* CControllerManager::GetController(CONTROLLER_ID controller_id)
     while (it != m_ControllerList.end())
     {
         if ((*it)->GetID() == controller_id)
-            return dynamic_cast<CController*>((*it).get());
+            return (*it);
 
 
         ++it;
@@ -162,7 +162,7 @@ void CControllerManager::Vibration(CONTROLLER_ID controller_id)
 
     while (it != m_ControllerList.end())
     {
-        CController* controller = dynamic_cast<CController*>((*it).get());
+        std::shared_ptr<CController> controller = (*it);
         if (controller->GetID() == controller_id)
             controller->Vibration();
 
@@ -171,7 +171,7 @@ void CControllerManager::Vibration(CONTROLLER_ID controller_id)
 
 }
 
-CController* CControllerManager::GetSpecifiedButtonDownController(BUTTON_ID button_id)
+std::shared_ptr<CController> CControllerManager::GetSpecifiedButtonDownController(BUTTON_ID button_id)
 {
     if (m_ControllerList.empty()) return nullptr;
 
@@ -180,7 +180,7 @@ CController* CControllerManager::GetSpecifiedButtonDownController(BUTTON_ID butt
     while (it != m_ControllerList.end())
     {
         if ((*it)->GetButtonDown(button_id) == true)
-            return dynamic_cast<CController*>((*it).get());
+            return *it;
 
         ++it;
     }
@@ -188,7 +188,7 @@ CController* CControllerManager::GetSpecifiedButtonDownController(BUTTON_ID butt
     return nullptr;
 }
 
-CController* CControllerManager::GetSpecifiedButtonUpController(BUTTON_ID button_id)
+std::shared_ptr<CController> CControllerManager::GetSpecifiedButtonUpController(BUTTON_ID button_id)
 {
     if (m_ControllerList.empty()) return nullptr;
 
@@ -197,7 +197,7 @@ CController* CControllerManager::GetSpecifiedButtonUpController(BUTTON_ID button
     while (it != m_ControllerList.end())
     {
         if ((*it)->GetButtonUp(button_id) == true)
-            return dynamic_cast<CController*>((*it).get());
+            return *it;
 
         ++it;
     }
@@ -205,7 +205,7 @@ CController* CControllerManager::GetSpecifiedButtonUpController(BUTTON_ID button
     return nullptr;
 }
 
-CController* CControllerManager::GetSpecifiedButtonHoldController(BUTTON_ID button_id)
+std::shared_ptr<CController> CControllerManager::GetSpecifiedButtonHoldController(BUTTON_ID button_id)
 {
     if (m_ControllerList.empty()) return nullptr;
 
@@ -214,7 +214,7 @@ CController* CControllerManager::GetSpecifiedButtonHoldController(BUTTON_ID butt
     while (it != m_ControllerList.end())
     {
         if ((*it)->GetButtonHold(button_id) == true)
-            return dynamic_cast<CController*>((*it).get());
+            return *it;
 
         ++it;
     }

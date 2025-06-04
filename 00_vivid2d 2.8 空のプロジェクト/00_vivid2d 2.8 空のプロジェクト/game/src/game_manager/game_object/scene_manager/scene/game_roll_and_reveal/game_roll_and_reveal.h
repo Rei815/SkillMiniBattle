@@ -45,8 +45,8 @@ private:
     static const int                    m_games_num;            //!< ゲーム数
     static const CVector3               m_camera_position;      //!< カメラの位置
     static const float                  m_circle_radius;        //!< 円の半径
-    CSceneUIParent*                     m_PlaneUIParent;        //!< UIの親(回転プレーン)
-    CSceneUIParent*                     m_RevealUIParent;       //!< UIの親(説明用UI)
+    std::shared_ptr<CSceneUIParent>     m_PlaneUIParent;        //!< UIの親(回転プレーン)
+    std::shared_ptr<CSceneUIParent>     m_RevealUIParent;       //!< UIの親(説明用UI)
     CPlaneGameImage*                    m_SelectedPlane;        //!< 平面のゲーム画像
     bool                                m_SelectedGameFlag;     //!< ゲームが選ばれたか
     bool                                m_GameInfomationFlag;   //!< ゲームの説明が出たか

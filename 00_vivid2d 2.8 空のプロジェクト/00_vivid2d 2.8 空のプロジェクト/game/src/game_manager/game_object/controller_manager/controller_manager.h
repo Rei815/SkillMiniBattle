@@ -49,12 +49,12 @@ public:
      *
      *  @param[in]  id          コントローラーID
      */
-    CController*    Create(CONTROLLER_ID id);
+    std::shared_ptr<CController>    Create(CONTROLLER_ID id);
 
     /*!
      *  @brief      コントローラーを取得
      */
-    CController*    GetController(CONTROLLER_ID controller_id);
+    std::shared_ptr<CController>    GetController(CONTROLLER_ID controller_id);
 
     /*!
      *  @brief      いずれかのコントローラーのボタンの状態を取得
@@ -74,21 +74,21 @@ public:
      *  @param[in]  player    プレイヤーのポインター
      *  @return     CPlayer*    プレイヤーのポインター
      */
-    CController*    GetSpecifiedButtonDownController(BUTTON_ID button_id);
+    std::shared_ptr<CController>    GetSpecifiedButtonDownController(BUTTON_ID button_id);
 
     /*!
      *  @brief      指定のボタンを離したコントローラーを取得
      *  @param[in]  player    プレイヤーのポインター
      *  @return     CPlayer*    プレイヤーのポインター
      */
-    CController*    GetSpecifiedButtonUpController(BUTTON_ID button_id);
+    std::shared_ptr<CController>    GetSpecifiedButtonUpController(BUTTON_ID button_id);
 
     /*!
      *  @brief      指定のボタンを押しているコントローラーを取得
      *  @param[in]  player    プレイヤーのポインター
      *  @return     CPlayer*    プレイヤーのポインター
      */
-    CController*    GetSpecifiedButtonHoldController(BUTTON_ID button_id);
+    std::shared_ptr<CController>    GetSpecifiedButtonHoldController(BUTTON_ID button_id);
 
     using CONTROLLER_LIST = std::list<std::shared_ptr<CController>>;
 

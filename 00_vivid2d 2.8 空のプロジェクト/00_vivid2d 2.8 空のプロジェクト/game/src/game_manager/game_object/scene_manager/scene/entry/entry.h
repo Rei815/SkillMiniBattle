@@ -73,7 +73,7 @@ private:
     bool                            m_WasPressd;            //!< 押下フラグ
     int                             m_PlayerNum;            //!< プレイヤーの人数
     CGameBG                         m_BackGround;           //!< 背景
-    CSkillGauge*                    m_GameStartGauge;       //!< ゲーム開始までのゲージ
-    CPlayerJoin*                    m_PlayerJoinUI;         //!< プレイヤー参加のUI
+    std::shared_ptr<CSkillGauge>    m_GameStartGauge;       //!< ゲーム開始までのゲージ
+    std::shared_ptr<CPlayerJoin>    m_PlayerJoinUI;         //!< プレイヤー参加のUI
     bool                            m_CanStartFlag;         //!< スタート可能かどうか
 };

@@ -3,6 +3,7 @@
 #include "vivid.h"
 #include "..\ui.h"
 #include "../../../object_manager/object/fall_object/mark_id.h"
+#include <memory>
 class CFallOutTopic : public CUI
 {
 public:
@@ -77,6 +78,6 @@ private:
     MARK_ID                         m_CurrentID;        //!< ¡‰ñ‚ÌID
 
     STATE                           m_State;
-    CUI*                            m_BackGround;
+    std::shared_ptr<CUI>            m_BackGround;
 
 };

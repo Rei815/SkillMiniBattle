@@ -44,11 +44,11 @@ void CPlayerReady::Update(void)
 	CUI::Update();
 	if (m_ReadyFlag == true) return;
 	CControllerManager& cm = CControllerManager::GetInstance();
-	CController* controller1 = cm.GetController(CONTROLLER_ID::ONE);
-	CController* controller2 = cm.GetController(CONTROLLER_ID::TWO);
-	CController* controller3 = cm.GetController(CONTROLLER_ID::THREE);
-	CController* controller4 = cm.GetController(CONTROLLER_ID::FOUR);
-	CController* keyboard = cm.GetController(CONTROLLER_ID::KEYBOARD);
+	std::shared_ptr<CController> controller1 = cm.GetController(CONTROLLER_ID::ONE);
+	std::shared_ptr<CController> controller2 = cm.GetController(CONTROLLER_ID::TWO);
+	std::shared_ptr<CController> controller3 = cm.GetController(CONTROLLER_ID::THREE);
+	std::shared_ptr<CController> controller4 = cm.GetController(CONTROLLER_ID::FOUR);
+	std::shared_ptr<CController> keyboard = cm.GetController(CONTROLLER_ID::KEYBOARD);
 	if (controller1)
 		if (controller1->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)controller1->GetUnitID()] ^= 0x007f7f7f;

@@ -85,24 +85,24 @@ private:
     static const vivid::Vector2     m_bg_position;
 
     SKILL_ID                        m_ChooseSkillID[(int)UNIT_ID::NONE];
-    CSkillIcon*                     m_SkillSelectIcon[(int)UNIT_ID::NONE];
+    std::shared_ptr<CSkillIcon>     m_SkillSelectIcon[(int)UNIT_ID::NONE];
 
-    std::list<CSkillCursor*>        m_SkillCursorList;
+    std::list<std::shared_ptr<CSkillCursor>>        m_SkillCursorList;
 
-    std::list<int>                  m_CursorPosNumList;
-    int                             m_NowCursorPosNum;
+    std::list<int>                      m_CursorPosNumList;
+    int                                 m_NowCursorPosNum;
 
-    UNIT_ID                         m_CursorID[(int)UNIT_ID::NONE];
-    int                             m_NowCursorID_Num;
+    UNIT_ID                             m_CursorID[(int)UNIT_ID::NONE];
+    int                                 m_NowCursorID_Num;
 
-    CSkillCursor*                   m_SkillSelectCursor;
-    CTimer                          m_CursorMoveTimer;
+    std::shared_ptr<CSkillCursor>       m_SkillSelectCursor;
+    CTimer                              m_CursorMoveTimer;
 
-    CSkillInfomation*               m_SkillInfomation;
+    std::shared_ptr<CSkillInfomation>   m_SkillInfomation;
 
-    CSkillVideo*                    m_SkillVideo;
+    std::shared_ptr<CSkillVideo>        m_SkillVideo;
 
     GAME_ID                         m_GameID;
-    CSceneUIParent*                 m_SceneUIParent;
+    std::shared_ptr<CSceneUIParent>     m_SceneUIParent;
 
 };

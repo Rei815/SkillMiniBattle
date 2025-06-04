@@ -225,7 +225,7 @@ void CSceneManager::Pause()
     }
     else
     {
-        CPause* pause = (CPause*)um.Create(UI_ID::PAUSE);
+        std::shared_ptr<CPause> pause = dynamic_pointer_cast<CPause>(um.Create(UI_ID::PAUSE));
         pause->SetPauseController(m_PauseController);
     }
     m_PauseFlag ^= true;

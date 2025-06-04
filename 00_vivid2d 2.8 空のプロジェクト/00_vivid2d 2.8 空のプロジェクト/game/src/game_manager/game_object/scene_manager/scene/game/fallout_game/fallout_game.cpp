@@ -95,6 +95,7 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	CObjectManager& om = CObjectManager::GetInstance();
 	CGimmickManager& gm = CGimmickManager::GetInstance();
 
+	//各床にギミックを設定
 	IObject* object = nullptr;
 	object = om.Create(OBJECT_ID::CIRCLE_FALL_OBJECT,m_floor_transform_list[(int)MARK_ID::CIRCLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
@@ -148,9 +149,9 @@ void CFallOutGame::Start(void)
 	CGame::Start();
 	if (m_WaitTimer.Finished())
 	{
-		CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
+		std::shared_ptr<CFallOutTopic> topic = dynamic_pointer_cast<CFallOutTopic>(CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]));
 
-		m_TopicList.emplace_back(static_cast<CFallOutTopic*>(ui));
+		m_TopicList.emplace_back(topic);
 		m_ChooseObjectTimer[m_TopicList.size() - 1].SetActive(true);
 
 		// 新しく追加されたお題に対応するタイマーをアクティブにする
@@ -203,7 +204,7 @@ void CFallOutGame::Play(void)
 void CFallOutGame::ChooseTopic(void)
 {
 
-	CFallOutTopic* topic = nullptr;
+	std::shared_ptr<CFallOutTopic> topic = nullptr;
 
 
 	TOPIC_LIST::iterator it = m_TopicList.begin();
@@ -212,7 +213,7 @@ void CFallOutGame::ChooseTopic(void)
 	bool chooseFlag = false;
 	while (it != m_TopicList.end())
 	{
-		topic = ((*it).get());
+		topic = (*it);
 
 		//取得に失敗したら早期リターン
 		if (!topic)
@@ -295,7 +296,7 @@ void CFallOutGame::ResetTopic(void)
 
 		while (topic_it != m_TopicList.end())
 		{
-			CFallOutTopic* topic = ((*topic_it).get());
+			std::shared_ptr<CFallOutTopic> topic = *topic_it;
 
 			if (!topic || topic->GetState() == CFallOutTopic::STATE::APPEAR)
 				break;
@@ -309,9 +310,9 @@ void CFallOutGame::AddTopic(void)
 {
 	if (m_TopicList.size() >= m_max_topic_num) return;
 
-	CUI* ui = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]);
+	std::shared_ptr<CFallOutTopic> topic = dynamic_pointer_cast<CFallOutTopic>(CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC, m_topic_positionList[m_TopicList.size()]));
 
-	m_TopicList.emplace_back(static_cast<CFallOutTopic*>(ui));
+	m_TopicList.emplace_back(topic);
 	// m_ChooseObjectTimer のインデックスは新しい要素が追加された後の m_TopicList.size() - 1
 	if (m_TopicList.size() - 1 < m_max_topic_num)
 	{

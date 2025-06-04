@@ -50,8 +50,6 @@ CGameBG::
 Draw(void)
 {
     vivid::DrawTexture(m_FileName, m_position, 0xffffffff);
-
-
 }
 
 /*

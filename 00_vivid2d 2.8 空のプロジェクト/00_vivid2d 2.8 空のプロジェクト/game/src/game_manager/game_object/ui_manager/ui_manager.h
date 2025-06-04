@@ -43,7 +43,7 @@ public:
      *  @param[in]  id          UIのID
      *  @param[in]  layerNum    UIの描画順
      */
-    CUI*        Create(UI_ID id);
+    std::shared_ptr<CUI>        Create(UI_ID id);
 
     /*!
      *  @brief      UI生成
@@ -51,7 +51,7 @@ public:
      *  @param[in]  id          UIのID
      *  @param[in]  position    UIの位置
      */
-    CUI*        Create(UI_ID id, const vivid::Vector2& position);
+    std::shared_ptr<CUI>        Create(UI_ID id, const vivid::Vector2& position);
 
     /*!
      *  @brief      UI生成
@@ -59,7 +59,7 @@ public:
      *  @param[in]  id          UIのID
      *  @param[in]  position    UIの位置
      */
-    CUI*        Create(UI_ID id, const CVector3& position);
+    std::shared_ptr<CUI>        Create(UI_ID id, const CVector3& position);
 
     /*!
      *  @brief      UI生成
@@ -67,14 +67,14 @@ public:
      *  @param[in]  id          UIのID
      *  @param[in]  transform    UIのトランスフォーム
      */
-    CUI*        Create(UI_ID id, const CTransform& transform);
+    std::shared_ptr<CUI>        Create(UI_ID id, const CTransform& transform);
 
     /*!
      *  @brief      UI削除
      *
      *  @param[in]  id          UIのID
      */
-    void        Delete(UI_ID id);
+    void            Delete(UI_ID id);
 
     /*!
      *  @brief      UIリスト型
@@ -99,7 +99,7 @@ public:
      * @param[in]   ui_id          UIのID
     *  @return      オブジェクトリスト
     */
-    CUI*            GetUI(UI_ID ui_id);
+    std::shared_ptr<CUI>            GetUI(UI_ID ui_id);
 
 private:
     UI_LIST             m_UIList;             //!< UIリスト

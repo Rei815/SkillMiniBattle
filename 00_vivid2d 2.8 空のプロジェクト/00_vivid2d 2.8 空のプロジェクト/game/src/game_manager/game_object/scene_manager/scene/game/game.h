@@ -111,6 +111,6 @@ protected:
     RESULT_LIST         m_ResultList;   //!< リザルトリスト
 
     CTimer              m_PlayTimer;    //!< プレイ中のタイマー
-    CGameBG             m_BackGround;   //!< ゲーム背景
+    CGameBG             m_BackGround;   //!< ゲーム背景(UIリストとは別で動かす)
 
 };

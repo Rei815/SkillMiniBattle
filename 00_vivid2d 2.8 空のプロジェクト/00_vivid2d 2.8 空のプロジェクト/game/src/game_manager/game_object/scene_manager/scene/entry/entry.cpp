@@ -69,7 +69,7 @@ void CEntry::Initialize(SCENE_ID scene_id)
     m_GameStartTimer.SetUp(m_start_time, CTimer::COUNT_TYPE::DOWN);
     vivid::Vector2  GaugePos = vivid::Vector2(1200, 50);
     float  GaugeScale = 0.3f;
-    m_GameStartGauge = dynamic_cast<CSkillGauge*>(um.Create(UI_ID::SKILL_GAUGE));
+    m_GameStartGauge = dynamic_pointer_cast<CSkillGauge>(um.Create(UI_ID::SKILL_GAUGE));
     if (m_GameStartGauge)
     {
         m_GameStartGauge->SetGauge(GaugePos,GaugeScale);
@@ -81,7 +81,7 @@ void CEntry::Initialize(SCENE_ID scene_id)
     //}
     um.Create(UI_ID::ENTRY_X_BUTTON);
 
-    m_PlayerJoinUI = dynamic_cast<CPlayerJoin*>(um.Create(UI_ID::PLAYER_JOIN));
+    m_PlayerJoinUI = dynamic_pointer_cast<CPlayerJoin>(um.Create(UI_ID::PLAYER_JOIN));
     //m_PlayerJoinUI = std::shared_ptr<CPlayerJoin>(dynamic_cast<CPlayerJoin*>(um.Create(UI_ID::PLAYER_JOIN)));
 
     om.Create(OBJECT_ID::SKILL_WALL_OBJECT, CTransform(CVector3(400,0,0)));
@@ -203,7 +203,7 @@ void CEntry::CheckButtonHold(void)
 
     //ボタンを長押ししている時の処理
     //人数が二人以上でm_hold_start_time以上長押ししているコントローラーがある時ゲーム開始
-    CController* buttonHoldController = cm.GetSpecifiedButtonHoldController(BUTTON_ID::X);
+    std::shared_ptr<CController> buttonHoldController = cm.GetSpecifiedButtonHoldController(BUTTON_ID::X);
     if (buttonHoldController)
     {
         UNIT_ID unitID = buttonHoldController->GetUnitID();
@@ -231,7 +231,7 @@ void CEntry::CheckButtonHold(void)
         {
             if (m_PlayerNum == 1)
             {
-                CController* dummy = cm.GetController(CONTROLLER_ID::DUMMY);
+                std::shared_ptr<CController> dummy = cm.GetController(CONTROLLER_ID::DUMMY);
                 dummy->SetUnitID(m_NextUnitID);
 
                 CUnitManager::GetInstance().Create(m_NextUnitID, m_spawn_position);
@@ -242,7 +242,7 @@ void CEntry::CheckButtonHold(void)
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::GAME_ROLL_AND_REVEAL);
         }
     }
-    CController* controller = nullptr;
+    std::shared_ptr<CController> controller = nullptr;
     bool         resetGaugeFlag = false;
     //長押ししていないコントローラーのタイマーをリセット
     for (int i = 0; i < 5; i++)
@@ -270,7 +270,7 @@ void CEntry::CheckButtonDown(void)
 {
     CControllerManager& cm = CControllerManager::GetInstance();
     //ボタンを押したときにコントローラーが動かせるプレイヤーがいない場合プレイヤー生成
-    CController* buttonDownController = cm.GetSpecifiedButtonDownController(BUTTON_ID::X);
+    std::shared_ptr<CController> buttonDownController = cm.GetSpecifiedButtonDownController(BUTTON_ID::X);
     if (buttonDownController)
     {
         if (buttonDownController->GetUnitID() == UNIT_ID::NONE && m_NextUnitID != UNIT_ID::NONE)
@@ -289,7 +289,7 @@ void CEntry::CheckButtonUp(void)
     CControllerManager& cm = CControllerManager::GetInstance();
     CUnitManager& um = CUnitManager::GetInstance();
 
-    CController* buttonUpController = cm.GetSpecifiedButtonUpController(BUTTON_ID::X);
+    std::shared_ptr<CController> buttonUpController = cm.GetSpecifiedButtonUpController(BUTTON_ID::X);
 
     if (buttonUpController)
     {

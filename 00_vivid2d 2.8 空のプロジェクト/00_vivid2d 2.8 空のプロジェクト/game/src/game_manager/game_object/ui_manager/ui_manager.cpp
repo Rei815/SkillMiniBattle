@@ -74,7 +74,7 @@ CUIManager::Update(void)
 
     while (it != m_UIList.end())
     {
-        CUI* ui = dynamic_cast<CUI*>((*it).get());
+        std::shared_ptr<CUI> ui = (*it);
 
         if(ui->GetUI_ID() == UI_ID::PAUSE || !CSceneManager::GetInstance().Pausing())
             ui->Update();
@@ -128,7 +128,7 @@ void CUIManager::Finalize(void)
     m_UIList.clear();
 }
 
-CUI* CUIManager::Create(UI_ID id)
+std::shared_ptr<CUI> CUIManager::Create(UI_ID id)
 {
     std::shared_ptr<CUI> ui = CreateClass(id);
     if (!ui) return nullptr;
@@ -138,10 +138,10 @@ CUI* CUIManager::Create(UI_ID id)
 
     SortList();
 
-    return ui.get();
+    return ui;
 }
 
-CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
+std::shared_ptr<CUI> CUIManager::Create(UI_ID id, const vivid::Vector2& position)
 {
     std::shared_ptr<CUI> ui = CreateClass(id);
 
@@ -149,10 +149,10 @@ CUI* CUIManager::Create(UI_ID id, const vivid::Vector2& position)
 
     ui->Initialize(position);
     m_UIList.emplace_back(ui);
-    return ui.get();
+    return ui;
 }
 
-CUI* CUIManager::Create(UI_ID id, const CVector3& position)
+std::shared_ptr<CUI> CUIManager::Create(UI_ID id, const CVector3& position)
 {
     std::shared_ptr<CUI> ui = CreateClass(id);
 
@@ -161,10 +161,10 @@ CUI* CUIManager::Create(UI_ID id, const CVector3& position)
     ui->Initialize(position);
     m_UIList.emplace_back(ui);
 
-    return ui.get();
+    return ui;
 }
 
-CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
+std::shared_ptr<CUI> CUIManager::Create(UI_ID id, const CTransform& transform)
 {
     std::shared_ptr<CUI> ui = CreateClass(id);
 
@@ -173,7 +173,7 @@ CUI* CUIManager::Create(UI_ID id, const CTransform& transform)
     ui->Initialize(transform);
     m_UIList.emplace_back(ui);
 
-    return ui.get();
+    return ui;
 }
 
 void CUIManager::Delete(UI_ID id)
@@ -184,12 +184,12 @@ void CUIManager::Delete(UI_ID id)
 
     while (it != m_UIList.end())
     {
-        CUI* ui = dynamic_cast<CUI*>((*it).get());
+        std::shared_ptr<CUI> ui = (*it);
 
 
         if (ui->GetUI_ID() == id)
         {
-            (*it)->Delete();
+            ui->Delete();
         }
 
         ++it;
@@ -206,7 +206,7 @@ void CUIManager::SortList(void)
     m_UIList.sort([](const std::shared_ptr<CUI> p, const std::shared_ptr<CUI> q) {return p.get()->GetOrderInLayer() < p.get()->GetOrderInLayer(); });
 }
 
-CUI* CUIManager::GetUI(UI_ID ui_id)
+std::shared_ptr<CUI> CUIManager::GetUI(UI_ID ui_id)
 {
     if (m_UIList.empty()) return nullptr;
 
@@ -214,7 +214,7 @@ CUI* CUIManager::GetUI(UI_ID ui_id)
 
     while (it != m_UIList.end())
     {
-        CUI* ui = dynamic_cast<CUI*>((*it).get());
+        std::shared_ptr<CUI> ui = (*it);
 
 
         if (ui->GetUI_ID() == ui_id)

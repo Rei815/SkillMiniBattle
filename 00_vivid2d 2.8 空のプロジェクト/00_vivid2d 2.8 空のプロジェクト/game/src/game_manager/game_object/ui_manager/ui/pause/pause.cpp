@@ -119,7 +119,7 @@ Finalize(void)
 {
 }
 
-void CPause::SetPauseController(CController* controller)
+void CPause::SetPauseController(std::shared_ptr<CController> controller)
 {
     m_PauseController = controller;
 }

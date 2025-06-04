@@ -37,7 +37,7 @@ void CMiniGameResult::Initialize(SCENE_ID scene_id)
     {
         vivid::Vector2 noticePos = m_origin_notice_pos;
         noticePos.x += m_notice_offset * i;
-        CNotice* notice = (CNotice*)um.Create(UI_ID::NOTICE, noticePos);
+        std::shared_ptr<CNotice> notice = dynamic_pointer_cast<CNotice>(um.Create(UI_ID::NOTICE, noticePos));
         notice->SetScale(m_notice_scale);
         //îwåiï\é¶
         for (int j = 0; j < dm.GetMaxGameNum(); j++)
@@ -49,7 +49,7 @@ void CMiniGameResult::Initialize(SCENE_ID scene_id)
         vivid::Vector2 iconPos = m_origin_icon_pos;
         iconPos.x += m_icon_offset * i;
 
-        CPlayerIcon* playerIcon = (CPlayerIcon*)um.Create(UI_ID::PLAYER_ICON, iconPos);
+        std::shared_ptr<CPlayerIcon> playerIcon = dynamic_pointer_cast<CPlayerIcon>(um.Create(UI_ID::PLAYER_ICON, iconPos));
         playerIcon->SetPlayerID((UNIT_ID)i);
 
         //Ç±ÇÍÇ‹Ç≈ÇÃèüóòêîï\é¶
@@ -65,7 +65,7 @@ void CMiniGameResult::Initialize(SCENE_ID scene_id)
 
     }
 
-    m_SceneUIParent = (CSceneUIParent*)CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2));
+    m_SceneUIParent = dynamic_pointer_cast<CSceneUIParent>(um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
     m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
 }
@@ -74,7 +74,7 @@ void CMiniGameResult::Update(void)
 {
     CDataManager& dm = CDataManager::GetInstance();
     CControllerManager& cm = CControllerManager::GetInstance();
-    CController* controller_1 = cm.GetController(CONTROLLER_ID::ONE);
+    std::shared_ptr<CController> controller_1 = cm.GetController(CONTROLLER_ID::ONE);
     cm.Update();
 
     CAnimationManager::GetInstance().Update();
@@ -88,8 +88,8 @@ void CMiniGameResult::Update(void)
 
             vivid::Vector2 offsetPos = vivid::Vector2((m_key_offset * (dm.GetPlayerWin(firstPlayerID) - 1)) + (m_players_key_offset * firstPlayerID), 0);
 
-            CUI* animationKey = CUIManager::GetInstance().Create(UI_ID::KEY, m_origin_key_pos + offsetPos);
-            CAnimationManager::GetInstance().Create(ANIMATION_ID::KEY_SCALE, animationKey);
+            std::shared_ptr<CUI> animationKey = CUIManager::GetInstance().Create(UI_ID::KEY, m_origin_key_pos + offsetPos);
+            CAnimationManager::GetInstance().Create(ANIMATION_ID::KEY_SCALE, animationKey.get());
 
             m_SceneUIParent = nullptr;
 

@@ -82,7 +82,6 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position)
     {
         if ((*it)->GetUnitID() == id)
         {
-            //m_Controller = ((*it).get());
             m_Controller = std::shared_ptr<CController>(*it);
             break;
         }

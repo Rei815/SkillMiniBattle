@@ -178,6 +178,6 @@ private:
     int                         m_FadeSpeed;
     CTimer                      m_Timer;
     bool                        m_PauseFlag;    //!< ポーズフラグ
-    CController*                m_PauseController;
+    std::shared_ptr<CController>m_PauseController;
 
 };

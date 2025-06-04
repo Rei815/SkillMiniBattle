@@ -80,11 +80,6 @@ public:
      */
     void    SetState(SKILL_STATE state);
 
-    /*
-                ÉTÉEÉìÉhçƒê∂
-    */
-    void SoundPlay();
-
 protected:
     static const vivid::Vector2     m_icon_positionList[];
     static const float              m_icon_scale;
@@ -94,9 +89,9 @@ protected:
     SKILL_CATEGORY      m_Category;
     SKILL_ID            m_SkillID;
 
-    CSkillIcon*         m_UiSkillIcon;
-    CSkillGauge*        m_UiSkillGauge;
-    CSkillCursor*       m_UiSkillCursor;
+    std::shared_ptr<CSkillIcon>         m_UiSkillIcon;
+    std::shared_ptr<CSkillGauge>        m_UiSkillGauge;
+    std::shared_ptr<CSkillCursor>       m_UiSkillCursor;
 
     vivid::Vector2      m_IconPosition;
 

@@ -92,9 +92,10 @@ Action(void)
 	CUIManager::UI_LIST topicList;
 	CUIManager::UI_LIST::iterator it = uiList.begin();
 
+	//UIƒŠƒXƒg‚©‚ç‚¨‘è‚¾‚¯‚ðŽæ“¾‚·‚é
 	while (it != uiList.end())
 	{
-		CUI* ui = ((*it).get());
+		std::shared_ptr<CUI> ui = (*it);
 		if (ui->GetUI_ID() == UI_ID::FALLOUT_TOPIC_BG)
 		{
 			topicList.emplace_back(ui);
@@ -105,7 +106,7 @@ Action(void)
 	it = topicList.begin();
 	int num = rand() % topicList.size();
 	std::advance(it, num);
-	m_ParentTopic = ((*it).get());
+	m_ParentTopic = (*it);
 	m_Shutter = CUIManager::GetInstance().Create(UI_ID::TOPIC_SHUTTER, (*it)->GetPosition());
 	m_State = SKILL_STATE::ACTIVE;
 

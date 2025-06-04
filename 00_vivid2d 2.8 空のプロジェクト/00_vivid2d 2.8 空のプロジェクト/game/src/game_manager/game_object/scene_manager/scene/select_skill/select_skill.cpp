@@ -88,7 +88,7 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
 
     CUIManager::GetInstance().Create(UI_ID::SCENE_TITLE);
 
-    CUI* ui = CUIManager::GetInstance().Create(UI_ID::MENU_POSTER, m_icon_poster_position);
+    std::shared_ptr<CUI> ui = CUIManager::GetInstance().Create(UI_ID::MENU_POSTER, m_icon_poster_position);
     ui->SetScale(m_icon_poster_scale);
 
     //スキル抽選
@@ -101,8 +101,8 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     m_SkillSelectCursor = nullptr;
 
     //スキル説明の生成
-    CUI* SkillInfo = CUIManager::GetInstance().Create(UI_ID::SKILL_INFO);
-    m_SkillInfomation = dynamic_cast<CSkillInfomation*>(SkillInfo);
+    std::shared_ptr<CUI> SkillInfo = CUIManager::GetInstance().Create(UI_ID::SKILL_INFO);
+    m_SkillInfomation = dynamic_pointer_cast<CSkillInfomation>(SkillInfo);
     if (m_SkillInfomation == nullptr)
     {
         SkillInfo->Delete();
@@ -117,8 +117,8 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     ui = CUIManager::GetInstance().Create(UI_ID::MENU_POSTER, m_video_position);
     ui->SetScale(m_video_poster_scale);
 
-    CUI* SkillVideo = CUIManager::GetInstance().Create(UI_ID::SKILL_VIDEO);
-    m_SkillVideo = dynamic_cast<CSkillVideo*>(SkillVideo);
+    std::shared_ptr<CUI> SkillVideo = CUIManager::GetInstance().Create(UI_ID::SKILL_VIDEO);
+    m_SkillVideo = dynamic_pointer_cast<CSkillVideo>(SkillVideo);
     if (m_SkillVideo == nullptr)
     {
         SkillVideo->Delete();
@@ -134,7 +134,7 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
         m_SkillVideo->SetScale(m_video_scale);
     }
     IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
-    m_SceneUIParent = dynamic_cast<CSceneUIParent*>(CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, 
+    m_SceneUIParent = dynamic_pointer_cast<CSceneUIParent>(CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, 
         vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
     m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
@@ -176,7 +176,7 @@ void CSelectSkill::Finalize(void)
 
     if (!m_SkillCursorList.empty())
     {
-        std::list<CSkillCursor*>::iterator it = m_SkillCursorList.begin();
+        std::list<std::shared_ptr<CSkillCursor>>::iterator it = m_SkillCursorList.begin();
         while (it != m_SkillCursorList.end())
         {
             (*it)->Delete();
@@ -279,13 +279,13 @@ void CSelectSkill::ResetChooseSkill(void)
 void CSelectSkill::CreateSkillIcon(void)
 {
     CUIManager& uim = CUIManager::GetInstance();
-    CSkillName* SkillNameUI = nullptr;
-    CSkillIcon* SkillIconUI = nullptr;
+    std::shared_ptr<CSkillName> SkillNameUI = nullptr;
+    std::shared_ptr<CSkillIcon> SkillIconUI = nullptr;
 
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
-        CUI* ui = uim.Create(UI_ID::SKILL_NAME);
-        SkillNameUI = dynamic_cast<CSkillName*>(ui);
+        std::shared_ptr<CUI> ui = uim.Create(UI_ID::SKILL_NAME);
+        SkillNameUI = dynamic_pointer_cast<CSkillName>(ui);
         if (SkillNameUI == nullptr) //ダウンキャストのチェック
         {
             ui->Delete();
@@ -297,7 +297,7 @@ void CSelectSkill::CreateSkillIcon(void)
 
         ui = uim.Create(UI_ID::SKILL_ICON);
 
-        SkillIconUI = dynamic_cast<CSkillIcon*>(ui);
+        SkillIconUI = dynamic_pointer_cast<CSkillIcon>(ui);
         
         if (SkillIconUI == nullptr) //ダウンキャストのチェック
         {
@@ -333,14 +333,14 @@ void CSelectSkill::SetCursorID(void)
 
 void CSelectSkill::CreateCursor(void)
 {
-    CUI* ui = CUIManager::GetInstance().Create(UI_ID::SKILL_CURSOR);
+    std::shared_ptr<CUI> ui = CUIManager::GetInstance().Create(UI_ID::SKILL_CURSOR);
     CControllerManager& cm = CControllerManager::GetInstance();
     if (m_SkillSelectCursor != nullptr)
     {
-        m_SkillCursorList.push_back(m_SkillSelectCursor);
+        m_SkillCursorList.emplace_back(m_SkillSelectCursor);
         m_SkillSelectCursor = nullptr;
     }
-    m_SkillSelectCursor = dynamic_cast<CSkillCursor*>(ui);
+    m_SkillSelectCursor = dynamic_pointer_cast<CSkillCursor>(ui);
 
     if (m_SkillSelectCursor == nullptr) //ダウンキャストのチェック
     {
@@ -352,7 +352,7 @@ void CSelectSkill::CreateCursor(void)
 
     m_SkillSelectCursor->SetCursor(m_CursorID[m_NowCursorID_Num], m_icon_positionList[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))], m_icon_scale);
 
-    CController* controller = cm.GetController((CONTROLLER_ID)m_CursorID[m_NowCursorID_Num]);
+    std::shared_ptr<CController> controller = cm.GetController((CONTROLLER_ID)m_CursorID[m_NowCursorID_Num]);
     if (controller == nullptr) return;
     //コントローラーを振動させる
     cm.Vibration((CONTROLLER_ID)controller->GetUnitID());
@@ -367,12 +367,12 @@ void CSelectSkill::MoveCursor(void)
     CControllerManager& cm = CControllerManager::GetInstance();
     CControllerManager::CONTROLLER_LIST controllerList = cm.GetList();
     CControllerManager::CONTROLLER_LIST::iterator it = controllerList.begin();
-    CController* controller = nullptr;
+    std::shared_ptr<CController> controller = nullptr;
     while (it != controllerList.end())
     {
         if ((*it)->GetUnitID() == m_CursorID[m_NowCursorID_Num])
         {
-            controller = ((*it).get());
+            controller = *it;
             break;
         }
         ++it;
