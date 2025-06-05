@@ -70,7 +70,8 @@ CSceneManager::Update(void)
         m_PauseController = cm.GetSpecifiedButtonDownController(BUTTON_ID::START);
     if (m_PauseController == nullptr) return;
         m_PauseController->Update();
-    if (m_PauseController->GetButtonDown(BUTTON_ID::START) && GetLastSceneID() != SCENE_ID::TITLE && m_State == STATE::SCENE_UPDATE)
+        if (m_PauseController->GetButtonDown(BUTTON_ID::START) && 
+            GetLastSceneID() != SCENE_ID::TITLE && m_State == STATE::SCENE_UPDATE)
     {
         Pause();
     }
@@ -122,8 +123,6 @@ CSceneManager::Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
-
         it = m_SceneList.erase(it);
 
         continue;
@@ -156,11 +155,11 @@ void CSceneManager::RemoveScene(SCENE_ID id)
     SCENE_LIST::iterator it = m_SceneList.begin();
     while (it != m_SceneList.end())
     {
-        IScene* scene = (IScene*)(*it);
+        std::shared_ptr<IScene> scene = *it;
 
         if (scene->GetSceneID() == id)
         {
-            scene->SetActive(false);
+            scene->Delete();
             return;
         }
         ++it;
@@ -263,26 +262,26 @@ CSceneManager::operator=(const CSceneManager& rhs)
 /*
  *  シーン生成
  */
-IScene*
+std::shared_ptr<IScene>
 CSceneManager::CreateScene(SCENE_ID id)
 {
     //IDを基準にシーン多分岐
-    IScene* scene = nullptr;
+    std::shared_ptr<IScene> scene = nullptr;
 
     switch (id)
     {
-    case SCENE_ID::TITLE:                   scene = new CTitle();               break;
-    case SCENE_ID::SELECT_SKILL:            scene = new CSelectSkill();         break;
-    case SCENE_ID::GAME_ROLL_AND_REVEAL:   scene = new CGameRollAndReveal();  break;
-    case SCENE_ID::FALL_GAME:               scene = new CFallOutGame();         break;
-    case SCENE_ID::DARUMA_FALLDOWN_GAME:    scene = new CDaruma_FallDownGame(); break;
-    case SCENE_ID::DODGEBALL_GAME:          scene = new CDodgeBallGame();       break;
-    case SCENE_ID::BELTCONVEYOR_GAME:       scene = new CBeltConveyorGame();    break;
-    case SCENE_ID::MINIGAME_RESULT:         scene = new CMiniGameResult();      break;
-    case SCENE_ID::GAME_RESULT:             scene = new CGameResult();          break;
-    case SCENE_ID::ENTRY:                   scene = new CEntry();               break;
+    case SCENE_ID::TITLE:               scene = std::make_shared<CTitle>();                 break;
+    case SCENE_ID::SELECT_SKILL:        scene = std::make_shared<CSelectSkill>();           break;
+    case SCENE_ID::GAME_ROLL_AND_REVEAL:scene = std::make_shared<CGameRollAndReveal>();     break;
+    case SCENE_ID::FALL_GAME:           scene = std::make_shared<CFallOutGame>();           break;
+    case SCENE_ID::DARUMA_FALLDOWN_GAME:scene = std::make_shared<CDaruma_FallDownGame>();   break;
+    case SCENE_ID::DODGEBALL_GAME:      scene = std::make_shared<CDodgeBallGame>();         break;
+    case SCENE_ID::BELTCONVEYOR_GAME:   scene = std::make_shared<CBeltConveyorGame>();      break;
+    case SCENE_ID::MINIGAME_RESULT:     scene = std::make_shared<CMiniGameResult>();        break;
+    case SCENE_ID::GAME_RESULT:         scene = std::make_shared<CGameResult>();            break;
+    case SCENE_ID::ENTRY:               scene = std::make_shared<CEntry>();                 break;
     }
-    m_SceneList.push_back(scene);
+    m_SceneList.emplace_back(scene);
     
     //初期化
     scene->Initialize(id);
@@ -324,7 +323,7 @@ CSceneManager::SceneUpdate(void)
 
     while (it != m_SceneList.end())
     {
-        IScene* scene = (IScene*)(*it);
+        std::shared_ptr<IScene> scene = *it;
 
         //アクティブかつポーズ中でない
         if(scene->GetSceneState() == SCENE_STATE::ACTIVE && !m_PauseFlag)
@@ -333,8 +332,6 @@ CSceneManager::SceneUpdate(void)
         if (!scene->IsActive())
         {
             scene->Finalize();
-
-            delete scene;
 
             it = m_SceneList.erase(it);
 
@@ -387,12 +384,10 @@ CSceneManager::SceneChange()
         SCENE_LIST::iterator it = m_SceneList.begin();
         while (it != m_SceneList.end())
         {
-            IScene* scene = (IScene*)(*it);
+            std::shared_ptr<IScene> scene = *it;
             if (scene->IsActive() == true)
             {
                 scene->Finalize();
-
-                delete scene;
 
                 it = m_SceneList.erase(it);
 
@@ -411,7 +406,7 @@ CSceneManager::SceneChange()
     m_State = STATE::FADEIN;
 }
 
-IScene* CSceneManager::GetScene(SCENE_ID scene_id)
+std::shared_ptr<IScene> CSceneManager::GetScene(SCENE_ID scene_id)
 {
     if (m_SceneList.empty()) return nullptr;
 
@@ -419,7 +414,7 @@ IScene* CSceneManager::GetScene(SCENE_ID scene_id)
 
     while (it != m_SceneList.end())
     {
-        IScene* scene = (IScene*)(*it);
+        std::shared_ptr<IScene> scene = *it;
 
         if (scene->IsActive() && scene->GetSceneID() == scene_id)
             return scene;

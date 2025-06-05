@@ -24,50 +24,50 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize(void);
+    void            Initialize(void);
 
     /*!
      *  @brief      更新
      */
-    void        Update(void);
+    void            Update(void);
 
     /*!
      *  @brief      描画
      */
-    void        Draw(void);
+    void            Draw(void);
 
     /*!
      *  @brief      シーンエフェクト描画
      */
-    void        DrawSceneEffect(void);
+    void            DrawSceneEffect(void);
 
     /*!
      *  @brief      解放
      */
-    void        Finalize(void);
+    void            Finalize(void);
 
     /*!
      *  @brief      シーン切り換え
      *
      *  @param[in]  id  シーンID
      */
-    void        ChangeScene(SCENE_ID id);
+    void            ChangeScene(SCENE_ID id);
 
     /*!
      *  @brief      シーンを追加する
      *
      *  @param[in]  id  シーンID
      */
-    void        PushScene(SCENE_ID id);
+    void            PushScene(SCENE_ID id);
 
     /*!
      *  @brief      シーンを削除する
      *
      *  @param[in]  id  シーンID
      */
-    void        RemoveScene(SCENE_ID id);
+    void            RemoveScene(SCENE_ID id);
 
-    using SCENE_LIST = std::list<IScene*>;
+    using SCENE_LIST = std::list<std::shared_ptr<IScene>>;
     SCENE_LIST                  m_SceneList;            //!< シーンクラス
 
     SCENE_LIST  GetList();
@@ -85,13 +85,12 @@ public:
      */
     void            SetPauseFlag(bool active);
 
-
-    ///*!
-    // *  @brief      最新のシーンのIDを取得
-    // *
-    // *  @return     最新のシーンのID
-    // */
-    SCENE_ID GetLastSceneID(void);
+    /*!
+     *  @brief      最新のシーンのIDを取得
+     *
+     *  @return     最新のシーンのID
+     */
+    SCENE_ID        GetLastSceneID(void);
 
     void Pause();
 private:
@@ -126,32 +125,32 @@ private:
      *
      *  @param[in]  id  シーンID
      */
-    IScene*     CreateScene(SCENE_ID id);
+    std::shared_ptr<IScene>     CreateScene(SCENE_ID id);
 
     /*!
      *  @brief      フェードイン
      */
-    void        FadeIn(void);
+    void            FadeIn(void);
 
     /*!
      *  @brief      シーン更新
      */
-    void        SceneUpdate(void);
+    void            SceneUpdate(void);
 
     /*!
      *  @brief      フェードアウト
      */
-    void        FadeOut(void);
+    void            FadeOut(void);
 
     /*!
      *  @brief      シーン変更
      */
-    void        SceneChange();
+    void            SceneChange();
 
     /*!
-     *  @brief      シーン取得
+     *  @brief              シーン取得
      */
-    IScene*     GetScene(SCENE_ID scene_id);
+    std::shared_ptr<IScene> GetScene(SCENE_ID scene_id);
 
 
     /*!

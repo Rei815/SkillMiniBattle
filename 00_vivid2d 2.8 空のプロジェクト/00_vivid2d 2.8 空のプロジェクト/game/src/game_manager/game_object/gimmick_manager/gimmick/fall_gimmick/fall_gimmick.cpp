@@ -16,10 +16,10 @@ CFallGimmick::~CFallGimmick(void)
 {
 }
 
-void CFallGimmick::Initialize(IObject* object)
+void CFallGimmick::Initialize(std::shared_ptr<IObject> object)
 {
 	CGimmick::Initialize(object);
-	object->SetGimmick(this);
+	object->SetGimmick(shared_from_this());
 	m_StartHeight = object->GetPosition().y;
 	m_Timer.SetUp(m_ReturnTime);
 	m_ReturnTimer.SetUp(m_ReturnTime);

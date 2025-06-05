@@ -38,15 +38,13 @@ CGimmickManager::Update(void)
 
     while (it != m_GimmickList.end())
     {
-        CGimmick* gimmick = (CGimmick*)(*it);
+        std::shared_ptr<CGimmick> gimmick = (std::shared_ptr<CGimmick>)(*it);
 
         gimmick->Update();
 
         if (!gimmick->IsActive())
         {
             gimmick->Finalize();
-
-            delete gimmick;
 
             it = m_GimmickList.erase(it);
 
@@ -88,47 +86,45 @@ void CGimmickManager::Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
-
         ++it;
     }
 
     m_GimmickList.clear();
 }
 
-void CGimmickManager::Create(GIMMICK_ID id, IObject* object)
+void CGimmickManager::Create(GIMMICK_ID id, std::shared_ptr<IObject> object)
 {
-    CGimmick* gimmick = nullptr;
+    std::shared_ptr<CGimmick> gimmick = nullptr;
     switch (id)
     {
-    case GIMMICK_ID::FALL_GIMMICK:              gimmick = new CFallGimmick();               break;
-    case GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK:   gimmick = new CDaruma_FallDownGimmick();    break;
-    case GIMMICK_ID::DODGEBALL_GIMMICK:         gimmick = new CDodgeBallGimmick();          break;
-    case GIMMICK_ID::BELT_CONVEYOR_GIMMICK:     gimmick = new CBeltConveyorGimmick();       break;
+    case GIMMICK_ID::FALL_GIMMICK:              gimmick = std::make_shared<CFallGimmick>();               break;
+    case GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK:   gimmick = std::make_shared<CDaruma_FallDownGimmick>();    break;
+    case GIMMICK_ID::DODGEBALL_GIMMICK:         gimmick = std::make_shared<CDodgeBallGimmick>();          break;
+    case GIMMICK_ID::BELT_CONVEYOR_GIMMICK:     gimmick = std::make_shared<CBeltConveyorGimmick>();       break;
     }
 
     if (!gimmick) return;
 
     gimmick->Initialize(object);
-    m_GimmickList.push_back(gimmick);
+    m_GimmickList.emplace_back(gimmick);
 
 }
 
-void CGimmickManager::Create(GIMMICK_ID id, IObject* object, float time)
+void CGimmickManager::Create(GIMMICK_ID id, std::shared_ptr<IObject> object, float time)
 {
-    CGimmick* gimmick = nullptr;
+    std::shared_ptr<CGimmick> gimmick = nullptr;
     switch (id)
     {
-    case GIMMICK_ID::FALL_GIMMICK:              gimmick = new CFallGimmick();               break;
-    case GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK:   gimmick = new CDaruma_FallDownGimmick();    break;
-    case GIMMICK_ID::DODGEBALL_GIMMICK:         gimmick = new CDodgeBallGimmick();          break;
-    case GIMMICK_ID::BELT_CONVEYOR_GIMMICK:     gimmick = new CBeltConveyorGimmick();       break;
+    case GIMMICK_ID::FALL_GIMMICK:              gimmick = std::make_shared<CFallGimmick>();               break;
+    case GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK:   gimmick = std::make_shared<CDaruma_FallDownGimmick>();    break;
+    case GIMMICK_ID::DODGEBALL_GIMMICK:         gimmick = std::make_shared<CDodgeBallGimmick>();          break;
+    case GIMMICK_ID::BELT_CONVEYOR_GIMMICK:     gimmick = std::make_shared<CBeltConveyorGimmick>();       break;
     }
 
     if (!gimmick) return;
 
     gimmick->Initialize(object, time);
-    m_GimmickList.push_back(gimmick);
+    m_GimmickList.emplace_back(gimmick);
 
 }
 

@@ -13,13 +13,13 @@ CGimmick::~CGimmick(void)
 {
 }
 
-void CGimmick::Initialize(IObject* object)
+void CGimmick::Initialize(std::shared_ptr<IObject> object)
 {
 	m_Object = object;
 	m_Switch = false;
 }
 
-void CGimmick::Initialize(IObject* object, float time)
+void CGimmick::Initialize(std::shared_ptr<IObject> object, float time)
 {
 	m_Object = object;
 	m_Switch = false;

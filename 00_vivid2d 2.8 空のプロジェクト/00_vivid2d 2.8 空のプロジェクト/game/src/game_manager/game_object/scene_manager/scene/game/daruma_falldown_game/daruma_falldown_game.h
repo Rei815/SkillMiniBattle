@@ -65,7 +65,7 @@ private:
     static const CVector3           m_goal_position;
     static const CVector3           m_reset_speed;
 
-    IObject* m_OgreObject;
+    std::shared_ptr<IObject> m_OgreObject;
     CTimer                              m_Timer;
     CVector3                            m_PlayerPosition[4];
     CVector3                            m_StartPosition[4];

@@ -1,14 +1,3 @@
-
-/*!
- *  @file       scene.cpp
- *  @brief      シーンベース
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #include "scene.h"
 #include "../scene_manager.h"
 
@@ -68,9 +57,9 @@ bool IScene::IsActive()
     return m_ActiveFlag;
 }
 
-void IScene::SetActive(bool active)
+void IScene::Delete()
 {
-    m_ActiveFlag = active;
+    m_ActiveFlag = false;
 }
 
 SCENE_ID IScene::GetSceneID()

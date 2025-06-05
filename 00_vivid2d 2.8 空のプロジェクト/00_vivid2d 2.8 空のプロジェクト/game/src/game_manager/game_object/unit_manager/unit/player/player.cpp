@@ -391,7 +391,7 @@ void CPlayer::Move(void)
         m_Transform.position += m_Velocity + m_AffectedVelocity;
     }
 
-    IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
+    std::shared_ptr<IObject> floorObject = CObjectManager::GetInstance().CheckHitObject(shared_from_this());
     
     //床に当たっているならそのオブジェクトを親にする
     if (floorObject)

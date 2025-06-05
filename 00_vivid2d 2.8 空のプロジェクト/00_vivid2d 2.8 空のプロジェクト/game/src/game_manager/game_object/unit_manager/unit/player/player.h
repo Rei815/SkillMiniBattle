@@ -11,7 +11,7 @@
 class CSkill;
 class CController;
 
-class CPlayer: public IUnit
+class CPlayer: public IUnit , public std::enable_shared_from_this<CPlayer>
 {
 public:
 

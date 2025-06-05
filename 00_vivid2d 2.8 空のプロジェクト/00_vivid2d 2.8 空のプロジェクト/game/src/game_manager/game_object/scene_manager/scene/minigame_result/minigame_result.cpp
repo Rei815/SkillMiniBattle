@@ -89,7 +89,7 @@ void CMiniGameResult::Update(void)
             vivid::Vector2 offsetPos = vivid::Vector2((m_key_offset * (dm.GetPlayerWin(firstPlayerID) - 1)) + (m_players_key_offset * firstPlayerID), 0);
 
             std::shared_ptr<CUI> animationKey = CUIManager::GetInstance().Create(UI_ID::KEY, m_origin_key_pos + offsetPos);
-            CAnimationManager::GetInstance().Create(ANIMATION_ID::KEY_SCALE, animationKey.get());
+            CAnimationManager::GetInstance().Create(ANIMATION_ID::KEY_SCALE, animationKey);
 
             m_SceneUIParent = nullptr;
 

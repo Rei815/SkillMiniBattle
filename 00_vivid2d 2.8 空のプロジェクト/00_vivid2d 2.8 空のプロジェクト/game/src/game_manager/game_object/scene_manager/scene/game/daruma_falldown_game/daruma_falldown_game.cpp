@@ -162,7 +162,7 @@ void CDaruma_FallDownGame::Ranking(void)
 
 void CDaruma_FallDownGame::ResetPosition(void)
 {
-	//CPlayer* ReturnPlayer = m_MovePlayer.front();
+	//std::shared_ptr<CPlayer> ReturnPlayer = m_MovePlayer.front();
 	for (int i = 0; i < m_MovePlayer.size(); i++)
 	{
 		if (m_MovePlayer.front()->GetPosition().x > -1500)
@@ -210,7 +210,7 @@ void CDaruma_FallDownGame::Play(void)
 
 	for (it = objectList.begin(); it != objectList.end(); it++)
 	{
-		CGimmick* gimmick = (*it)->GetGimmick();
+		std::shared_ptr<CGimmick> gimmick = (*it)->GetGimmick();
 		std::shared_ptr<CPlayer> player;
 
 		if (!gimmick) continue;

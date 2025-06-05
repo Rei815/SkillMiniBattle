@@ -47,7 +47,7 @@ private:
     static const float                  m_circle_radius;        //!< ‰~‚Ì”¼Œa
     std::shared_ptr<CSceneUIParent>     m_PlaneUIParent;        //!< UI‚Ìe(‰ñ“]ƒvƒŒ[ƒ“)
     std::shared_ptr<CSceneUIParent>     m_RevealUIParent;       //!< UI‚Ìe(à–¾—pUI)
-    CPlaneGameImage*                    m_SelectedPlane;        //!< •½–Ê‚ÌƒQ[ƒ€‰æ‘œ
+    std::shared_ptr<CPlaneGameImage>    m_SelectedPlane;        //!< •½–Ê‚ÌƒQ[ƒ€‰æ‘œ
     bool                                m_SelectedGameFlag;     //!< ƒQ[ƒ€‚ª‘I‚Î‚ê‚½‚©
     bool                                m_GameInfomationFlag;   //!< ƒQ[ƒ€‚Ìà–¾‚ªo‚½‚©
     GAME_ID                             m_SelectedGameID;       //!< ‘I‚Î‚ê‚½ƒQ[ƒ€‚ÌID

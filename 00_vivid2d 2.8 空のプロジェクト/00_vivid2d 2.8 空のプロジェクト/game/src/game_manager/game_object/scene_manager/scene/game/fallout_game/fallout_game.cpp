@@ -97,7 +97,7 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	CGimmickManager& gm = CGimmickManager::GetInstance();
 
 	//各床にギミックを設定
-	IObject* object = nullptr;
+	std::shared_ptr<IObject> object = nullptr;
 	object = om.Create(OBJECT_ID::CIRCLE_FALL_OBJECT,m_floor_transform_list[(int)MARK_ID::CIRCLE]);
 	gm.Create(GIMMICK_ID::FALL_GIMMICK, object);
 
@@ -182,22 +182,15 @@ void CFallOutGame::Play(void)
 		if (m_ChooseObjectTimer[i].Finished())
 		{
 			m_ChooseObjectTimer[i].Reset();
-			//タイマーの停止
-			m_ChooseObjectTimer[i].SetActive(false);
 
+			m_ChooseObjectTimer[i].SetActive(false);
+			//お題の選択を開始
 			ChooseTopic();
 		}
 	}
 
 	//お題のリセット
 	ResetTopic();
-
-	////お題の追加
-	//if (m_AddTopicTimer.Finished())
-	//{
-	//	m_AddTopicTimer.Reset();
-	//}
-
 }
 
 
@@ -210,7 +203,7 @@ void CFallOutGame::ChooseTopic(void)
 	while (it != m_TopicList.end())
 	{
 		topic = (*it);
-		//取得に失敗したら早期リターン
+		//取得に失敗したら早期コンティニュー
 		if (!topic) { ++it; continue; }
 
 		//切り替わっている時のみにお題の指定
@@ -231,7 +224,7 @@ void CFallOutGame::ChooseTopic(void)
 
 	if (fallInfo.object->GetObjectID() != OBJECT_ID::NONE)
 	{
-		CFallGimmick* fallGimmick = dynamic_cast<CFallGimmick*>(fallInfo.object->GetGimmick());
+		std::shared_ptr<CFallGimmick> fallGimmick = dynamic_pointer_cast<CFallGimmick>(fallInfo.object->GetGimmick());
 
 		//ダウンキャストのチェック
 		if (fallGimmick == nullptr) return;
@@ -261,39 +254,47 @@ void CFallOutGame::ResetTopic(void)
 	bool allGimmicksWaiting = true;
 	if (!m_ExtendTimer.Finished())
 	{
-		for (const auto& gimmick : gimmickList) // イテレータの代わりに範囲forループを使用
+		for (const auto& gimmick : gimmickList)
 		{
 			if (gimmick == nullptr) continue;
+
+			// 1つでも待機中でないギミックがあればループを抜ける
 			if (gimmick->GetState() != GIMMICK_STATE::WAIT)
 			{
 				allGimmicksWaiting = false;
-				break; // 1つでも待機中でないギミックがあればループを抜ける
+				break;
 			}
 		}
 
 	}
 
-	// すべてのギミックが待機中で、かつ、すべてのお題が抽選された（つまり、対応するタイマーが非アクティブになった）場合
 	bool allTopicsChosen = true;
-	for (int i = 0; i < m_TopicList.size(); ++i) { // 現在表示されているお題の数だけチェック
-		if (m_ChooseObjectTimer[i].IsActive()) {
+
+	// 現在表示されているお題の数だけチェック
+	for (int i = 0; i < m_TopicList.size(); ++i)
+	{
+		//お題が抽選されていない
+		if (m_ChooseObjectTimer[i].IsActive()) 
+		{
 			allTopicsChosen = false;
 			break;
 		}
 	}
 
-	if (!allGimmicksWaiting || !allTopicsChosen) return; // いずれかが満たされない場合は再抽選しない
+	// すべてのギミックが待機中で、かつ、すべてのお題が抽選された場合に再抽選
+	// いずれかが満たされない場合は再抽選しない
+	if (!allGimmicksWaiting || !allTopicsChosen) return;
+
 	m_ResetTopicTimer.Update();
 
 	if (m_ResetTopicTimer.Finished())
 	{
 		m_ResetTopicTimer.Reset();
+
+		//時間をずらす
 		for (int i = 0; i < m_TopicList.size(); i++)
-		{
-			m_ChooseObjectTimer[i].SetActive(true);
 			m_ChooseObjectTimer[i].SetUp(m_ChooseObjectTimer[0].GetLimitTime() + i * 1.0f);
 
-		}
 		TOPIC_LIST::iterator topic_it = m_TopicList.begin();
 
 
@@ -306,6 +307,8 @@ void CFallOutGame::ResetTopic(void)
 			topic->SetState(CFallOutTopic::STATE::SWITCHING);
 			++topic_it;
 		}
+
+		//お題の追加
 		AddTopic();
 	}
 
@@ -331,7 +334,7 @@ void CFallOutGame::AddTopic(void)
 
 CFallOutGame::FALL_OBJECT＿INFO CFallOutGame::ChooseObject(void)
 {
-	FALL_OBJECT＿INFO fallInfo = FALL_OBJECT＿INFO();
+	FALL_OBJECT＿INFO fallInfo;
 
 	int index = (int)OBJECT_ID::NONE;
 
@@ -345,7 +348,7 @@ CFallOutGame::FALL_OBJECT＿INFO CFallOutGame::ChooseObject(void)
 	//待機中のオブジェクトがあるか調査
 	for (it = objectList.begin(); it != objectList.end(); it++)
 	{
-		CGimmick* gimmick = (*it)->GetGimmick();
+		std::shared_ptr<CGimmick> gimmick = (*it)->GetGimmick();
 		if (gimmick == nullptr) continue;
 		if (gimmick->GetState() == GIMMICK_STATE::WAIT)
 		{

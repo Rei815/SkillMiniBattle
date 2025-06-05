@@ -68,7 +68,6 @@ void CGameRollAndReveal::Initialize(SCENE_ID scene_id)
         std::shared_ptr<CPlaneGameImage> planeGameImage = dynamic_pointer_cast<CPlaneGameImage>(um.Create(UI_ID::PLANE_GAME_IMAGE, transform));
         planeGameImage->SetGameID((GAME_ID)i);
     }
-    IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
 
     m_PlaneUIParent = dynamic_pointer_cast<CSceneUIParent>(um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
     m_PlaneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
@@ -121,7 +120,7 @@ void CGameRollAndReveal::Update(void)
 
             while (it != uiList.end())
             {
-                CPlaneGameImage* planeGameImage = dynamic_cast<CPlaneGameImage*>((*it).get());
+                std::shared_ptr<CPlaneGameImage> planeGameImage = dynamic_pointer_cast<CPlaneGameImage>(*it);
                 ++it;
 
                 //ダウンキャストチェック
@@ -129,10 +128,10 @@ void CGameRollAndReveal::Update(void)
 
                 if (planeGameImage->GetGameID() == m_SelectedGameID)
                 {
-                    m_SelectedPlane = dynamic_cast<CPlaneGameImage*>(planeGameImage);
+                    m_SelectedPlane = dynamic_pointer_cast<CPlaneGameImage>(planeGameImage);
                     if (m_SelectedPlane == nullptr) return;
 
-                    IAnimation* animation = nullptr;
+                    std::shared_ptr<IAnimation> animation = nullptr;
                     animation = am.Create(ANIMATION_ID::PLANE_UP, planeGameImage);
                     if (animation == nullptr) return;
 
@@ -142,7 +141,7 @@ void CGameRollAndReveal::Update(void)
                 else
                 {
                     // 選ばれていないものは小さくなる
-                    IAnimation* animation = nullptr;
+                    std::shared_ptr<IAnimation> animation = nullptr;
                     animation = am.Create(ANIMATION_ID::PLANE_SCALE, planeGameImage);
                     if (animation == nullptr) return;
 

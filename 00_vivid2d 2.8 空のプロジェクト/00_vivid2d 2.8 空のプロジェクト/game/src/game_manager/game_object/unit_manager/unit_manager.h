@@ -65,7 +65,7 @@ public:
      *  @brief      ユニットとオブジェクトとのアタリ判定
      *  @param[in]  object  オブジェクトクラス
      */
-    void        CheckHitObject(IObject* object);
+    void        CheckHitObject(std::shared_ptr<IObject> object);
 
     /*!
      *  @brief      プレイヤー取得
@@ -88,7 +88,7 @@ public:
     using UNIT_LIST = std::list<std::shared_ptr<IUnit>>;
     UNIT_LIST   GetUnitList();
     /*!
-     *  @brief      プレイヤーリスト型
+     *  @brief      ユニットリスト型
      */
     using DEFEAT_LIST = std::list<std::shared_ptr<IUnit>>;
 
@@ -134,7 +134,7 @@ private:
      *  @param[in]  startPos    当たり判定をする線分の開始地点
      *  @param[in]  endPos      当たり判定をする線分の終了地点
      */
-    void    CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir = CVector3(0.0f, -1.0f, 0.0f), float length = 1.0f);
+    void    CheckHitObjectVertical(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir = CVector3(0.0f, -1.0f, 0.0f), float length = 1.0f);
     
     /*!
      *  @brief      ユニットとステージとのアタリ判定の処理（水平）
@@ -144,9 +144,9 @@ private:
      *  @param[in]  startPos    当たり判定をする線分の開始地点
      *  @param[in]  endPos      当たり判定をする線分の終了地点
      */
-    void    CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos);
+    void    CheckHitObjectHorizontal(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& endPos);
 
-    UNIT_LIST                                           m_UnitList;             //!< ユニットリスト
-    DEFEAT_LIST                                         m_DefeatList;             //!< ランキングリスト
+    UNIT_LIST                                           m_UnitList;     //!< ユニットリスト
+    DEFEAT_LIST                                         m_DefeatList;   //!< ランキングリスト
 
 };

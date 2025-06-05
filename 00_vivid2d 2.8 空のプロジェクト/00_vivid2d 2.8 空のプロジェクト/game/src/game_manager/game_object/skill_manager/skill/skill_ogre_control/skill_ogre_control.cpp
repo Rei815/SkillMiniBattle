@@ -68,7 +68,7 @@ void CSkillOgreControl::Action()
 	{
 		m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::OGRE_CONTROL, m_EffectPosition, CVector3(), 5.0f);
 
-		m_Gimmick = dynamic_cast<CDaruma_FallDownGimmick*>((*CObjectManager::GetInstance().GetList().begin())->GetGimmick());
+		m_Gimmick = dynamic_pointer_cast<CDaruma_FallDownGimmick>((*CObjectManager::GetInstance().GetList().begin())->GetGimmick());
 		m_State = SKILL_STATE::ACTIVE;
 
 		m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);

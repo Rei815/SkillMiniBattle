@@ -198,7 +198,7 @@ void CDodgeBallGame::Play(void)
 
 		m_ShotTimer.SetUp(m_NowShotTime);
 
-		IObject* temp = ChooseCannon();
+		std::shared_ptr<IObject> temp = ChooseCannon();
 		if(temp != nullptr)
 			temp->GetGimmick()->SetSwitch(true);
 	}
@@ -295,14 +295,14 @@ void CDodgeBallGame::SpawnCannnon(void)
 	Temp.rotation = m_cannon_rot_list[(int)m_NextCannnonDir * m_max_cannnon_count + m_CannonCount];
 
 	//大砲オブジェクトの生成
-	IObject* CannonObject = CObjectManager::GetInstance().Create(OBJECT_ID::CANNON_OBJECT, Temp);
+	std::shared_ptr<IObject> CannonObject = CObjectManager::GetInstance().Create(OBJECT_ID::CANNON_OBJECT, Temp);
 
 	//大砲ギミックのセット
 	CGimmickManager::GetInstance().Create(GIMMICK_ID::DODGEBALL_GIMMICK, CannonObject);
 }
 
 
-IObject* CDodgeBallGame::ChooseCannon(void)
+std::shared_ptr<IObject> CDodgeBallGame::ChooseCannon(void)
 {
 	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
 
@@ -315,10 +315,10 @@ IObject* CDodgeBallGame::ChooseCannon(void)
 
 	while (it != objectList.end())
 	{
-		CDodgeBallGimmick* DodgeBallGimmick = nullptr;
+		std::shared_ptr<CDodgeBallGimmick> DodgeBallGimmick = nullptr;
 
 		if ((*it)->GetGimmick() != nullptr)
-			DodgeBallGimmick = dynamic_cast<CDodgeBallGimmick*>((*it)->GetGimmick());
+			DodgeBallGimmick = dynamic_pointer_cast<CDodgeBallGimmick>((*it)->GetGimmick());
 
 
 		if (DodgeBallGimmick != nullptr)

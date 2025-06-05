@@ -1,14 +1,3 @@
-
-/*!
- *  @file       sound_manager.h
- *  @brief      サウンド管理
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #pragma once
 
 #include "vivid.h"
@@ -59,17 +48,6 @@ enum class SE_ID
     MAX
 };
 
-/*!
- *  @class      CSoundManager
- *
- *  @brief      サウンド管理クラス
- *
- *  @author     Kazuya Maruyama
- *
- *  @date       2020/11/13
- *
- *  @since      1.0
- */
 class CSoundManager
 {
 public:

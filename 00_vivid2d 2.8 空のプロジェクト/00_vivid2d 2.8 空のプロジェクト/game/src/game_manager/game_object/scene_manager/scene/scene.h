@@ -43,7 +43,7 @@ public:
 
     bool            IsActive();
 
-    void            SetActive(bool active);
+    void            Delete();
 
     SCENE_ID        GetSceneID();
 

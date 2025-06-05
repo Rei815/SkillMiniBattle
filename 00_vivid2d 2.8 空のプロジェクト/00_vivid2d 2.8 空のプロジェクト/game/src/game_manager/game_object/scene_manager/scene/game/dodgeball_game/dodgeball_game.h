@@ -72,7 +72,7 @@ private:
 
     void SpawnCannnon(void);
 
-    IObject* ChooseCannon(void);
+    std::shared_ptr<IObject> ChooseCannon(void);
 
 
     static const CVector3   m_cannon_pos_list[];
@@ -102,7 +102,7 @@ private:
     float               m_NowShotTime;
     CTimer              m_StageShrinkTimer;
     bool                m_StageShrinkFlg;
-    IObject*            m_StageObject;
+    std::shared_ptr<IObject>            m_StageObject;
     CANNON_DIRECTION    m_NextCannnonDir;
     CSoundManager*      m_bgm;
 };

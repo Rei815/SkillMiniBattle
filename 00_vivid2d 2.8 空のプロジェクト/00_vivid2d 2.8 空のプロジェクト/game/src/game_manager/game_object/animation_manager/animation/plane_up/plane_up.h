@@ -14,7 +14,7 @@ public:
 	 *  @brief      初期化
 	 *
 	*/
-	void Initialize(void* plane_pointer)override;
+	void Initialize(std::shared_ptr<void> plane_pointer)override;
 
 	/*!
 	 *  @brief      更新
@@ -40,7 +40,7 @@ private:
 	static const float					m_speed;					//!< 動きの速さ
 	static const float					m_end_time;					//!< 終了時間
 
-	CPlaneGameImage*					m_Plane;					//!< 平面のポインタ
+	std::shared_ptr<CPlaneGameImage>	m_Plane;					//!< 平面のポインタ
 	CTimer								m_Timer;					//!< タイマー
 	STATE								m_State;					//!< 状態
 	

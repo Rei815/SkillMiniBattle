@@ -95,12 +95,12 @@ CModel IObject::GetModel()
 	return m_Model;
 }
 
-void IObject::SetGimmick(CGimmick* gimmick)
+void IObject::SetGimmick(std::shared_ptr<CGimmick> gimmick)
 {
 	m_Gimmick = gimmick;
 }
 
-CGimmick* IObject::GetGimmick()
+std::shared_ptr<CGimmick> IObject::GetGimmick()
 {
 	return m_Gimmick;
 }

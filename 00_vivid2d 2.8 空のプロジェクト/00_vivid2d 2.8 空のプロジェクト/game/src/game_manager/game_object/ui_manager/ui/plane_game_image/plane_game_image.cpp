@@ -137,12 +137,12 @@ void CPlaneGameImage::SetSpeed(float speed)
 	m_Speed = speed;
 }
 
-IAnimation* CPlaneGameImage::GetAnimation(void)
+std::shared_ptr<IAnimation> CPlaneGameImage::GetAnimation(void)
 {
 	return m_Animation;
 }
 
-void CPlaneGameImage::SetAnimation(IAnimation* animation)
+void CPlaneGameImage::SetAnimation(std::shared_ptr<IAnimation> animation)
 {
 	m_Animation = animation;
 }

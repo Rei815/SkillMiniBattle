@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 class IAnimation
 {
 public:
@@ -16,7 +17,7 @@ public:
 	 *  @brief      初期化(純粋仮想関数のため派生先で定義)
 	 *
 	*/
-	virtual void	Initialize(void* pointer) = 0;
+	virtual void	Initialize(std::shared_ptr<void> pointer) = 0;
 
 	/*!
 	 *  @brief      更新

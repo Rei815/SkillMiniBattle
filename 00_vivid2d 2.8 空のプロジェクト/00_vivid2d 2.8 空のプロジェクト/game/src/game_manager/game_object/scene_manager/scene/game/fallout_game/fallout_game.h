@@ -46,7 +46,7 @@ private:
     //落ちる床のポインタとマーク
     struct FALL_OBJECT＿INFO
     {
-        IObject*    object;
+        std::shared_ptr<IObject>    object;
         MARK_ID     markID = MARK_ID::CIRCLE;
     };
 

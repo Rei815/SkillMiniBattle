@@ -46,5 +46,5 @@ protected:
     static const float  m_effect_scale;
 
     IEffect*            m_SkillEffect;
-    IObject*            m_WallObj;
+    std::shared_ptr<IObject>            m_WallObj;
 };

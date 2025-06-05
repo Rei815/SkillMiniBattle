@@ -5,6 +5,7 @@
 #include "../../model_manager/model/model.h"
 #include "..\..\object_manager\object\object.h"
 #include "..\..\..\..\utility\utility.h"
+#include <memory>
 class IObject;
 enum class GIMMICK_STATE
 {
@@ -13,7 +14,7 @@ enum class GIMMICK_STATE
     FINISH,
 };
 
-class CGimmick
+class CGimmick : public std::enable_shared_from_this<CGimmick>
 {
 public:
     /*!
@@ -30,7 +31,7 @@ public:
      *  @brief      初期化
      *
      */
-    virtual void    Initialize(IObject* object);
+    virtual void    Initialize(std::shared_ptr<IObject> object);
 
     /*!
      *  @brief      初期化
@@ -38,7 +39,7 @@ public:
      *  @param[in]  time            タイマーの設定
      *
      */
-    virtual void    Initialize(IObject* object, float time);
+    virtual void    Initialize(std::shared_ptr<IObject> object, float time);
 
     /*!
      *  @brief      更新
@@ -90,7 +91,7 @@ public:
     void            SetState(GIMMICK_STATE state);
 protected:
     bool            m_ActiveFlag;   //!< アクティブフラグ
-    IObject*        m_Object;
+    std::shared_ptr<IObject>        m_Object;
     CTimer          m_Timer;
     bool            m_Switch;
     GIMMICK_STATE   m_State;

@@ -154,7 +154,7 @@ CheckHitBullet(IBullet* bullet)
 /*
 * オブジェクトとの当たり判定
 */
-void CUnitManager::CheckHitObject(IObject* object)
+void CUnitManager::CheckHitObject(std::shared_ptr<IObject> object)
 {
     if (m_UnitList.empty()) return;
     UNIT_LIST::iterator it = m_UnitList.begin();
@@ -306,7 +306,7 @@ UpdateUnit(void)
  */
 void
 CUnitManager::
-CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir, float length)
+CheckHitObjectVertical(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir, float length)
 {
     CVector3 hitPos;
     CVector3 end_position = startPos + (down_dir * length);
@@ -353,7 +353,7 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
  */
 void
 CUnitManager::
-CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos)
+CheckHitObjectHorizontal(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& endPos)
 {
     CVector3 hitPos;
 

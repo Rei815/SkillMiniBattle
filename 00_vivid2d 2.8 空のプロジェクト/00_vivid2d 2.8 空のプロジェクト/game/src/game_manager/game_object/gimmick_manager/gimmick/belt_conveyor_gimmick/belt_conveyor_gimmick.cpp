@@ -31,16 +31,16 @@ CBeltConveyorGimmick::~CBeltConveyorGimmick(void)
 {
 }
 
-void CBeltConveyorGimmick::Initialize(IObject* object)
+void CBeltConveyorGimmick::Initialize(std::shared_ptr<IObject> object)
 {
 	Initialize(object, m_mid_belt_speed_time);
 }
 
-void CBeltConveyorGimmick::Initialize(IObject* object, float time)
+void CBeltConveyorGimmick::Initialize(std::shared_ptr<IObject> object, float time)
 {
 	CGimmick::Initialize(object, time);
 
-	m_Object->SetGimmick(this);
+	m_Object->SetGimmick(shared_from_this());
 	m_BeltConveyorForward = m_Object->GetTransform().GetForwardVector();
 
 	m_NowBeltSpeedRate = m_min_belt_speed_rate;
@@ -72,7 +72,7 @@ void CBeltConveyorGimmick::Update(void)
 		SpawnTr.rotation = m_Object->GetRotation();
 		SpawnTr.scale = CVector3(m_obstruction_object_scale, m_obstruction_object_scale, m_obstruction_object_scale);
 
-		IObject* SpawnObj = CObjectManager::GetInstance().Create(OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_OBJECT, SpawnTr);
+		std::shared_ptr<IObject> SpawnObj = CObjectManager::GetInstance().Create(OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_OBJECT, SpawnTr);
 	
 		SpawnObj->SetPosition(m_Object->GetPosition() + SpawnRelativePos.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, m_Object->GetRotation().y));
 
@@ -82,8 +82,8 @@ void CBeltConveyorGimmick::Update(void)
 	//è·äQï®ÇÃà⁄ìÆ
 	if (!m_ObstructionObjectList.empty())
 	{
-		std::list<IObject*>::iterator it = m_ObstructionObjectList.begin();
-		std::list<IObject*> DeleteObjList;
+		std::list<std::shared_ptr<IObject>>::iterator it = m_ObstructionObjectList.begin();
+		std::list<std::shared_ptr<IObject>> DeleteObjList;
 
 		while (it != m_ObstructionObjectList.end())
 		{

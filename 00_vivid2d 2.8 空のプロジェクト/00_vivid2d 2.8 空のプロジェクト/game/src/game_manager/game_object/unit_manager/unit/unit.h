@@ -276,14 +276,14 @@ public:
      *
      *  @return     親のオブジェクト
      */
-    IObject*        GetParent(void);
+    std::shared_ptr<IObject>        GetParent(void);
 
     /*!
      *  @brief      親のオブジェクトを設定
      *
      *  @param[in]  parent    親のオブジェクト
      */
-    void            SetParent(IObject* parent);
+    void            SetParent(std::shared_ptr<IObject> parent);
 
     void            SetForwardVector(const CVector3& forward_vector);
 
@@ -341,5 +341,5 @@ protected:
     float                   m_Alpha;                    //!< アルファ値
     bool                    m_DefeatFlag;               //!< 敗北フラグ
     bool                    m_IsGround;                 //!< 地上にいるか
-    IObject*                m_Parent;                   //!< 親のオブジェクト
+    std::shared_ptr<IObject>                m_Parent;                   //!< 親のオブジェクト
 };

@@ -133,11 +133,9 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
         m_SkillVideo->SetPosition(m_video_position);
         m_SkillVideo->SetScale(m_video_scale);
     }
-    IScene* scene = (*CSceneManager::GetInstance().GetList().begin());
     m_SceneUIParent = dynamic_pointer_cast<CSceneUIParent>(CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, 
         vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
     m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
-
 }
 
 void CSelectSkill::Update(void)

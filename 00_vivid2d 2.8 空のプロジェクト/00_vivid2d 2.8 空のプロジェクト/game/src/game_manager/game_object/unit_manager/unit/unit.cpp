@@ -367,12 +367,12 @@ void IUnit::SetAlpha(float alpha)
 
 }
 
-IObject* IUnit::GetParent(void)
+std::shared_ptr<IObject> IUnit::GetParent(void)
 {
     return m_Parent;
 }
 
-void IUnit::SetParent(IObject* parent)
+void IUnit::SetParent(std::shared_ptr<IObject> parent)
 {
     m_Parent = parent;
 }

@@ -37,7 +37,7 @@ public:
      *  @param[in]    pointer           アニメーションさせるインスタンスのポインタ
      *  @return       アニメーション
      */
-    IAnimation*        Create(ANIMATION_ID id, void* pointer);
+    std::shared_ptr<IAnimation>        Create(ANIMATION_ID id, std::shared_ptr<void> pointer);
 
     /*!
      *  @brief      ギミックリスト型
