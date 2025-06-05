@@ -33,7 +33,7 @@ public:
     /*!
      *  @brief      プレイヤーのセット
      */
-    void    SetPlayer(CPlayer* player);
+    void    SetPlayer(std::shared_ptr<CPlayer> player);
 
     /*!
      *  @brief      アクション呼び出し

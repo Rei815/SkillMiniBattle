@@ -63,7 +63,7 @@ Update(void)
 			if ((UNIT_ID)i == m_PlayerID)
 				continue;
 			
-			CPlayer* TempPlayer = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
+			std::shared_ptr<CPlayer> TempPlayer = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
 
 			if (TempPlayer == nullptr)
 				continue;
@@ -185,7 +185,7 @@ ActionEnd(void)
 		m_SkillEffect = nullptr;
 	}
 
-	CPlayer* TempPlayer;
+	std::shared_ptr<CPlayer> TempPlayer;
 	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
 	{
 		//d—Í‚Ì‰e‹¿‚ðÁ‚·

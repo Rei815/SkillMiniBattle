@@ -61,9 +61,9 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
-		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 100, 100 * i));
+		std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 100, 100 * i));
 		m_StartPosition[i] = unit->GetPosition();
-		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
+		std::shared_ptr<CPlayer> Player = dynamic_pointer_cast<CPlayer>(unit);
 		if (Player != nullptr)
 		{
 			Player->SetActionFlag(false);
@@ -75,7 +75,7 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
-		CPlayer* Player = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
+		std::shared_ptr<CPlayer> Player = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
 		Player->MulMoveSpeedRate(m_move_speed);
 		Player->SetActionFlag(false);
 	}
@@ -126,7 +126,7 @@ void CDaruma_FallDownGame::Ranking(void)
 {
 	CUnitManager& um = CUnitManager::GetInstance();
 
-	std::list<CPlayer*>LosePlayerList;
+	std::list<std::shared_ptr<CPlayer>> LosePlayerList;
 
 	//àÍà à»äOÇîsñkèÛë‘Ç…Ç∑ÇÈ
 	for (int j = 0; j < CDataManager::GetInstance().GetCurrentPlayer(); j++)
@@ -134,15 +134,15 @@ void CDaruma_FallDownGame::Ranking(void)
 		if (j != m_TempFirstNum)
 		{
 			um.GetPlayer((UNIT_ID)j)->SetDefeatFlag(true);
-			LosePlayerList.push_back(um.GetPlayer((UNIT_ID)j));
+			LosePlayerList.emplace_back(um.GetPlayer((UNIT_ID)j));
 		}
 	}
 
 	while (!LosePlayerList.empty())
 	{
-		std::list<CPlayer*>::iterator temp = LosePlayerList.begin();
+		std::list<std::shared_ptr<CPlayer>>::iterator temp = LosePlayerList.begin();
 
-		for (std::list<CPlayer*>::iterator it = LosePlayerList.begin(); it != LosePlayerList.end(); it++)
+		for (std::list<std::shared_ptr<CPlayer>>::iterator it = LosePlayerList.begin(); it != LosePlayerList.end(); it++)
 		{
 			if ((*temp)->GetPosition().x > (*it)->GetPosition().x)
 			{
@@ -168,7 +168,7 @@ void CDaruma_FallDownGame::ResetPosition(void)
 		if (m_MovePlayer.front()->GetPosition().x > -1500)
 		{
 			m_MovePlayer.front()->SetPosition(CVector3(m_MovePlayer.front()->GetPosition() - m_reset_speed));
-			m_MovePlayer.push_back(m_MovePlayer.front());
+			m_MovePlayer.emplace_back(m_MovePlayer.front());
 			m_MovePlayer.pop_front();
 		}
 		else
@@ -211,7 +211,7 @@ void CDaruma_FallDownGame::Play(void)
 	for (it = objectList.begin(); it != objectList.end(); it++)
 	{
 		CGimmick* gimmick = (*it)->GetGimmick();
-		CPlayer* player;
+		std::shared_ptr<CPlayer> player;
 
 		if (!gimmick) continue;
 
@@ -236,7 +236,7 @@ void CDaruma_FallDownGame::Play(void)
 						skill->SetState(SKILL_STATE::ACTIVE);
 					else
 					{
-						m_MovePlayer.push_back(player);
+						m_MovePlayer.emplace_back(player);
 					}
 				}
 			}

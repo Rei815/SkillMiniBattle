@@ -98,6 +98,7 @@ private:
     void    FinishTopic(void);
 
     static const CTransform             m_floor_transform_list[];   //!< 落ちる床のトランスフォーム
+    static const float                  m_player_spawn_height;      //!< プレイヤーが出現する高さ
     static const float                  m_time_accelerator;         //!< 落ちるまでの速度を増やす
     static const float                  m_min_time;                 //!< 落ちるまでの最小時間
     static const float                  m_fall_time;                //!< 落ちるまでの初期時間
@@ -110,7 +111,7 @@ private:
     static const CVector3               m_camera_position;          //!< カメラの位置
     static const CVector3               m_camera_direction;         //!< カメラの方向
     static const vivid::Vector2         m_topic_positionList[];     //!< お題位置
-    static constexpr int                m_max_topic_num = 5;        //!< お題数
+    static constexpr int                m_max_topic_num = 5;        //!< お題数(5)
     static const CVector3               m_player_default_forward;   //!< プレイヤーのスポーン時の正面方向
     float                               m_FallTime;                 //!< 落ちるまでの時間
     std::array<CTimer,m_max_topic_num>  m_ChooseObjectTimer;        //!< 抽選タイマー

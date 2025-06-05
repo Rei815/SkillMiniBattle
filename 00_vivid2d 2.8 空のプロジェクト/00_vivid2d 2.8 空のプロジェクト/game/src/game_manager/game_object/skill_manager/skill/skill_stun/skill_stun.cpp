@@ -57,26 +57,26 @@ void CSkillStun::Action()
 		return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::STUN, false);
-	std::list<CPlayer*>TopPlayerList;
+	std::list<std::shared_ptr<CPlayer>>TopPlayerList;
 
-	TopPlayerList.push_back(um.GetPlayer(UNIT_ID(0)));
+	TopPlayerList.emplace_back(um.GetPlayer(UNIT_ID(0)));
 
 	for (int i = 1; i < dm.GetCurrentPlayer(); i++)
 	{
 		if (um.GetPlayer(UNIT_ID(i))->GetPosition().x > (*TopPlayerList.begin())->GetPosition().x)
 		{
 			TopPlayerList.clear();
-			TopPlayerList.push_back(um.GetPlayer(UNIT_ID(i)));
+			TopPlayerList.emplace_back(um.GetPlayer(UNIT_ID(i)));
 
 		}
 		else if (um.GetPlayer(UNIT_ID(i))->GetPosition().x == (*TopPlayerList.begin())->GetPosition().x)
 		{
-			TopPlayerList.push_back(um.GetPlayer(UNIT_ID(i)));
+			TopPlayerList.emplace_back(um.GetPlayer(UNIT_ID(i)));
 		}
 	}
 
 	int TargetPlayer = rand() % TopPlayerList.size();
-	std::list<CPlayer*>::iterator it = TopPlayerList.begin();
+	std::list<std::shared_ptr<CPlayer>>::iterator it = TopPlayerList.begin();
 	std::next(it, TargetPlayer);
 
 	m_Target = (*it);

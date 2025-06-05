@@ -9,7 +9,7 @@
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
-const CVector3          IUnit::m_gravity = CVector3(0.0f, -0.85f, 0.0f);
+const CVector3          IUnit::m_gravity = CVector3(0.0f, -0.0f, 0.0f);
 
 IUnit::IUnit()
 {
@@ -410,47 +410,6 @@ void
 IUnit::
 Attack(void)
 {
-}
-
-void IUnit::Fire(CShot* shot, bool aim, CVector3& position)
-{
-    IUnit* player = nullptr;
-    CVector3 dir = CVector3::BACK;
-    if (!shot)
-        return;
-    if (aim)
-    {
-        player = CUnitManager::GetInstance().GetPlayer(UNIT_ID::PLAYER1);
-    }
-    if (player)
-    {
-        dir = player->GetPosition() - position;
-
-        dir = dir.Normalize();
-
-    }
-    shot->Shot(m_Category, position, dir);
-
-}
-
-void IUnit::Fire(CShot* shot, bool aim, CVector3& position, const CVector3& direction)
-{
-    IUnit* player = nullptr;
-    CVector3 dir = direction;
-    if (!shot)
-        return;
-    if (aim)
-    {
-        player = CUnitManager::GetInstance().GetPlayer(UNIT_ID::PLAYER1);
-    }
-    if (player)
-    {
-        dir = player->GetPosition() - position;
-
-        dir = dir.Normalize();
-
-    }
-    shot->Shot(m_Category, position, dir);
 }
 
 void IUnit::HitBullet(IBullet* bullet, CVector3 hit_position)

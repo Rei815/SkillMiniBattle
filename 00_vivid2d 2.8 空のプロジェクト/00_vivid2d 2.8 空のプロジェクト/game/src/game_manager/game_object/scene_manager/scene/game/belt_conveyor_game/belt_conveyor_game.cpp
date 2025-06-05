@@ -61,8 +61,8 @@ void CBeltConveyorGame::Initialize(SCENE_ID scene_id)
 	//プレイヤーのスポーン
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
-		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, m_player_spawnpos_list[i]);
-		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
+		std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().Create((UNIT_ID)i, m_player_spawnpos_list[i]);
+		std::shared_ptr<CPlayer> Player = dynamic_pointer_cast<CPlayer>(unit);
 		if (Player != nullptr)
 		{
 			Player->SetActionFlag(false);
@@ -134,15 +134,14 @@ void CBeltConveyorGame::CheckFinish(void)
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		//IUnit* unit = ((*it).get());
-		IUnit* unit = *it;
+		std::shared_ptr<IUnit> unit = *it;
 		++it;
 
 		if (unit->GetDefeatFlag() == true)	continue;
 
 		if (unit->GetPosition().y < m_defeat_height)
 		{
-			CPlayer* player = dynamic_cast<CPlayer*>(unit);
+			std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(unit);
 			if (player != nullptr)
 			{
 				CSkill* skill = player->GetSkill();

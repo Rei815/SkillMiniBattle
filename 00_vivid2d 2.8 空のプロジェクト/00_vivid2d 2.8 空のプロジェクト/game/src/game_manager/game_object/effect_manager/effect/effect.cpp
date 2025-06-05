@@ -223,7 +223,7 @@ SetActive(bool active)
 }
 
 
-void IEffect::SetParent(IUnit* parent)
+void IEffect::SetParent(std::shared_ptr<IUnit> parent)
 {
     m_Parent = parent;
 }

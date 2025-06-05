@@ -90,7 +90,7 @@ Finalize(void)
 /*!
  *  @brief      プレイヤーのセット
  */
-void CSkillBarrier::SetPlayer(CPlayer* player)
+void CSkillBarrier::SetPlayer(std::shared_ptr<CPlayer> player)
 {
 	CSkill::SetPlayer(player);
 

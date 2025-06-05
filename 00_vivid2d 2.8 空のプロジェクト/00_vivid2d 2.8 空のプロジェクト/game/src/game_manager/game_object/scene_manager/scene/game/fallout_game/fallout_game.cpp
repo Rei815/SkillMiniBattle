@@ -24,6 +24,7 @@ constexpr float topic_y = 200;
 const vivid::Vector2    CFallOutGame::m_topic_positionList[] = { vivid::Vector2(0, -topic_y),vivid::Vector2(topic_x, -topic_y),vivid::Vector2(topic_x * 2, -topic_y),
 vivid::Vector2(topic_x * 3, -topic_y),vivid::Vector2(topic_x * 4, -topic_y),vivid::Vector2(topic_x * 5, -topic_y) };;
 
+const float		CFallOutGame::m_player_spawn_height = 200.0f;
 const float		CFallOutGame::m_time_accelerator = 0.1f;
 const float		CFallOutGame::m_min_time = 1.5f;
 const float		CFallOutGame::m_fall_time = 3.0f;
@@ -79,9 +80,9 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
-		playerPos[i].y += 200.0f;
-		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
-		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
+		playerPos[i].y += m_player_spawn_height;
+		std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
+		std::shared_ptr<CPlayer> Player = dynamic_pointer_cast<CPlayer>(unit);
 		if (Player != nullptr)
 		{
 			Player->SetActionFlag(false);
@@ -191,41 +192,31 @@ void CFallOutGame::Play(void)
 	//お題のリセット
 	ResetTopic();
 
-	//お題の追加
-	if (m_AddTopicTimer.Finished())
-	{
-		m_AddTopicTimer.Reset();
-		AddTopic();
-	}
+	////お題の追加
+	//if (m_AddTopicTimer.Finished())
+	//{
+	//	m_AddTopicTimer.Reset();
+	//}
 
 }
 
 
 void CFallOutGame::ChooseTopic(void)
 {
-
 	std::shared_ptr<CFallOutTopic> topic = nullptr;
 
-
 	TOPIC_LIST::iterator it = m_TopicList.begin();
-
-
 	bool chooseFlag = false;
 	while (it != m_TopicList.end())
 	{
 		topic = (*it);
-
 		//取得に失敗したら早期リターン
-		if (!topic)
-		{
-			++it;
-			continue;
-		}
+		if (!topic) { ++it; continue; }
 
 		//切り替わっている時のみにお題の指定
 		if (topic->GetState() == CFallOutTopic::STATE::SWITCHING)
 		{
-			chooseFlag = true;
+			chooseFlag = true; 
 			break;
 		}
 		++it;
@@ -267,19 +258,31 @@ void CFallOutGame::ChooseTopic(void)
 void CFallOutGame::ResetTopic(void)
 {
 	CGimmickManager::GIMMICK_LIST gimmickList = CGimmickManager::GetInstance().GetList();
-	CGimmickManager::GIMMICK_LIST::iterator gimmick_it = gimmickList.begin();
-	while (gimmick_it != gimmickList.end())
+	bool allGimmicksWaiting = true;
+	if (!m_ExtendTimer.Finished())
 	{
-		GIMMICK_STATE state = (*gimmick_it)->GetState();
+		for (const auto& gimmick : gimmickList) // イテレータの代わりに範囲forループを使用
+		{
+			if (gimmick == nullptr) continue;
+			if (gimmick->GetState() != GIMMICK_STATE::WAIT)
+			{
+				allGimmicksWaiting = false;
+				break; // 1つでも待機中でないギミックがあればループを抜ける
+			}
+		}
 
-
-		if (state != GIMMICK_STATE::WAIT && m_ExtendTimer.Finished() == false)
-			break;
-		++gimmick_it;
 	}
-	//現在出ている最後のお題が抽選され出現中のお題がなく、オブジェクトがすべて待機中なら全てのお題を再抽選
-	if (m_ChooseObjectTimer[m_TopicList.size() - 1].IsActive() == true || gimmick_it != gimmickList.end()) return;
 
+	// すべてのギミックが待機中で、かつ、すべてのお題が抽選された（つまり、対応するタイマーが非アクティブになった）場合
+	bool allTopicsChosen = true;
+	for (int i = 0; i < m_TopicList.size(); ++i) { // 現在表示されているお題の数だけチェック
+		if (m_ChooseObjectTimer[i].IsActive()) {
+			allTopicsChosen = false;
+			break;
+		}
+	}
+
+	if (!allGimmicksWaiting || !allTopicsChosen) return; // いずれかが満たされない場合は再抽選しない
 	m_ResetTopicTimer.Update();
 
 	if (m_ResetTopicTimer.Finished())
@@ -303,7 +306,9 @@ void CFallOutGame::ResetTopic(void)
 			topic->SetState(CFallOutTopic::STATE::SWITCHING);
 			++topic_it;
 		}
+		AddTopic();
 	}
+
 }
 
 void CFallOutGame::AddTopic(void)
@@ -388,8 +393,7 @@ void CFallOutGame::CheckFinish()
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		IUnit* unit = (*it);
-		//IUnit* unit = ((*it).get());
+		std::shared_ptr<IUnit> unit = (*it);
 		if (unit->GetDefeatFlag() == true)
 		{
 			++it;
@@ -398,7 +402,7 @@ void CFallOutGame::CheckFinish()
 
 		if (unit->GetPosition().y < m_defeat_height)
 		{
-			CPlayer* player = (CPlayer*)unit;
+			std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(unit);
 
 			CSkill* skill = player->GetSkill();
 			if (skill->GetSkillID() == SKILL_ID::RESURRECT_FALLOUT && skill->GetState() != SKILL_STATE::COOLDOWN)

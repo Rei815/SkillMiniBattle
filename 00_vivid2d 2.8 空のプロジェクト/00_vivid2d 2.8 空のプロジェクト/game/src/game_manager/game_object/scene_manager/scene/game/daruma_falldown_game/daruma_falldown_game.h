@@ -66,15 +66,15 @@ private:
     static const CVector3           m_reset_speed;
 
     IObject* m_OgreObject;
-    CTimer                          m_Timer;
-    CVector3                        m_PlayerPosition[4];
-    CVector3                        m_StartPosition[4];
-    int                             m_RemainCount;
-    int                             m_TempFirstNum;
-    int                             m_CountTime;
-    int                             m_TextureColor[4];
-    float                           m_TempFirstDis;
-    bool                            m_GimmickOn;
-    std::list<CPlayer*>             m_MovePlayer;
-    vivid::Vector2                  m_TextPosition;
+    CTimer                              m_Timer;
+    CVector3                            m_PlayerPosition[4];
+    CVector3                            m_StartPosition[4];
+    int                                 m_RemainCount;
+    int                                 m_TempFirstNum;
+    int                                 m_CountTime;
+    int                                 m_TextureColor[4];
+    float                               m_TempFirstDis;
+    bool                                m_GimmickOn;
+    std::list<std::shared_ptr<CPlayer>> m_MovePlayer;
+    vivid::Vector2                      m_TextPosition;
 };

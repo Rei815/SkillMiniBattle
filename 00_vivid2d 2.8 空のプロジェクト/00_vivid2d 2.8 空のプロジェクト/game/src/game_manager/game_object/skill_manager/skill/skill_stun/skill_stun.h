@@ -46,7 +46,7 @@ protected:
 
     IEffect* m_SkillEffect;
     IEffect* m_Effect;
-    CPlayer* m_Target;
+    std::shared_ptr<CPlayer> m_Target;
     CUnitManager& um = CUnitManager::GetInstance();
     CDataManager& dm = CDataManager::GetInstance();
 };

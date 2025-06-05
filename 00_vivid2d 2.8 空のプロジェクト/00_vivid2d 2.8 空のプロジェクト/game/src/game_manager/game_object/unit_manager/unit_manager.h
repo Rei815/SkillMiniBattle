@@ -44,7 +44,7 @@ public:
      *  @param[in]  id          ユニットID
      *  @param[in]  pos         位置
      */
-    IUnit*      Create(UNIT_ID id, const CVector3& pos);
+    std::shared_ptr<IUnit>      Create(UNIT_ID id, const CVector3& pos);
 
     /*!
      *  @brief      ユニット削除
@@ -72,7 +72,7 @@ public:
      *
      *  @return     プレイヤー
      */
-    CPlayer*    GetPlayer(UNIT_ID id);
+    std::shared_ptr<CPlayer>    GetPlayer(UNIT_ID id);
 
     /*!
      *  @brief      全てのプレイヤーのアクションフラグの設定
@@ -85,17 +85,12 @@ public:
     /*!
      *  @brief      ユニットリスト型
      */
-    using UNIT_LIST = std::list<IUnit*>;
-    /*!
-     *  @brief      ユニットリスト型
-     */
-    //using UNIT_LIST = std::list<std::shared_ptr<IUnit>>;
+    using UNIT_LIST = std::list<std::shared_ptr<IUnit>>;
     UNIT_LIST   GetUnitList();
     /*!
      *  @brief      プレイヤーリスト型
      */
-    using DEFEAT_LIST = std::list<IUnit*>;
-    //using DEFEAT_LIST = std::list<std::shared_ptr<IUnit>>;
+    using DEFEAT_LIST = std::list<std::shared_ptr<IUnit>>;
 
     DEFEAT_LIST GetDefeatList();
 private:

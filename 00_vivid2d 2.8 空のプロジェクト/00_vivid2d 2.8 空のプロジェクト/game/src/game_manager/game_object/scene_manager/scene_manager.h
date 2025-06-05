@@ -159,25 +159,25 @@ private:
      */
     enum class STATE
     {
-        FADEIN,          //!< フェードイン
-        SCENE_UPDATE,    //!< シーン更新
-        FADEOUT,         //!< フェードアウト
+        FADEIN,         //!< フェードイン
+        SCENE_UPDATE,   //!< シーン更新
+        FADEOUT,        //!< フェードアウト
         SCENE_CHANGE    //!< シーン変更
     };
 
-    static const int            m_fade_speed;       //!< フェード速度
-    static const float          m_wait_time;    //!< アルファ値が最大になった時の待機時間
+    static const int            m_fade_speed;           //!< フェード速度
+    static const float          m_wait_time;            //!< アルファ値が最大になった時の待機時間
 
-    SCENE_ID                    m_CurrentSceneID;   //!< 現在のシーンID
-    SCENE_ID                    m_NextSceneID;      //!< 次のシーンID
+    SCENE_ID                    m_CurrentSceneID;       //!< 現在のシーンID
+    SCENE_ID                    m_NextSceneID;          //!< 次のシーンID
 
-    STATE                       m_State;            //!< 状態
-    bool                        m_ChangeScene;      //!< シーン変更フラグ
-    int                         m_FadeAlpha;        //!< フェード時のアルファ値
-    unsigned int                m_FadeColor;
-    int                         m_FadeSpeed;
-    CTimer                      m_Timer;
-    bool                        m_PauseFlag;    //!< ポーズフラグ
-    std::shared_ptr<CController>m_PauseController;
+    STATE                       m_State;                //!< 状態
+    bool                        m_ChangeScene;          //!< シーン変更フラグ
+    int                         m_FadeAlpha;            //!< フェード時のアルファ値
+    unsigned int                m_FadeColor;            //!< フェード時の色
+    int                         m_FadeSpeed;            //!< フェードスピード
+    CTimer                      m_SceneChangeWaitTimer; //!< フェード後にシーン切り替えするまでのタイマー            
+    bool                        m_PauseFlag;            //!< ポーズフラグ
+    std::shared_ptr<CController>m_PauseController;      //!< ポーズしているコントローラー
 
 };

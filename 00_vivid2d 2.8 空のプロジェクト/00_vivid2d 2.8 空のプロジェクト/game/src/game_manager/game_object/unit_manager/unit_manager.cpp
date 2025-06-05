@@ -84,12 +84,11 @@ Finalize(void)
 /*
  *  ÉÜÉjÉbÉgê∂ê¨
  */
-IUnit*
+std::shared_ptr<IUnit>
 CUnitManager::
 Create(UNIT_ID id, const CVector3& pos)
 {
-    IUnit* unit = nullptr;
-    //std::shared_ptr<IUnit> unit = nullptr;
+    std::shared_ptr<IUnit> unit = nullptr;
 
     switch (id)
     {
@@ -97,8 +96,7 @@ Create(UNIT_ID id, const CVector3& pos)
     case UNIT_ID::PLAYER2:
     case UNIT_ID::PLAYER3:
     case UNIT_ID::PLAYER4:
-        unit = new CPlayer();  break;
-    //unit = std::make_shared<CPlayer>();  break;
+        unit = std::make_shared<CPlayer>();  break;
     }
     
 
@@ -108,7 +106,6 @@ Create(UNIT_ID id, const CVector3& pos)
 
     m_UnitList.emplace_back(unit);
     return unit;
-    //return dynamic_cast<IUnit*>(unit.get());
 }
 
 void CUnitManager::Delete(UNIT_ID id)
@@ -119,14 +116,7 @@ void CUnitManager::Delete(UNIT_ID id)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = (IUnit*)(*it);
-        //IUnit* unit = dynamic_cast<IUnit*>((*it).get());
-        if (!unit) 
-        {
-            it = m_UnitList.erase(it);
-            continue;
-        }
-
+        std::shared_ptr<IUnit> unit = *it;
         if (unit->GetUnitID() == id)
         {
             unit->Delete();
@@ -150,8 +140,7 @@ CheckHitBullet(IBullet* bullet)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = (IUnit*)(*it);
-        //IUnit* unit = dynamic_cast<IUnit*>((*it).get());
+        std::shared_ptr<IUnit> unit = *it;
 
         if (bullet->GetColliderID() == COLLIDER_ID::MODEL)
             unit->CheckHitBulletModel(bullet);
@@ -177,9 +166,8 @@ void CUnitManager::CheckHitObject(IObject* object)
             ++it;
             continue;
         }
-        IUnit* unit = (IUnit*)(*it);
-        //IUnit* unit = dynamic_cast<IUnit*>((*it).get());
-        
+        std::shared_ptr<IUnit> unit = *it;
+
         //êÖïΩï˚å¸ÇÃîªíË-----------------------------------------------------        
         
         CVector3 startPos, endPos, ForwardVector, CheckVector;
@@ -196,7 +184,7 @@ void CUnitManager::CheckHitObject(IObject* object)
             endPos = startPos;
             CheckVector = ForwardVector.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f * i).Normalize();
             endPos += CheckVector * (*it)->GetRadius();
-            CheckHitObjectHorizontal(object, unit, startPos, endPos);
+            CheckHitObjectHorizontal(object, unit.get(), startPos, endPos);
             DrawLine3D(startPos, endPos, 0xffffffff);
         }
 
@@ -209,7 +197,7 @@ void CUnitManager::CheckHitObject(IObject* object)
         {
             CVector3 unit_pos = unit->GetPosition();
             CVector3 start = unit_pos + CVector3(-offset + (offset) * (i % 3), 0.0f, -offset + (offset) * (i / 3));
-            CheckHitObjectVertical(object, unit, start, CVector3(0.0f, -radius * 3, 0.0f));
+            CheckHitObjectVertical(object, unit.get(), start, CVector3(0.0f, -radius * 3, 0.0f));
         }
 
         ++it;
@@ -219,7 +207,7 @@ void CUnitManager::CheckHitObject(IObject* object)
 }
 
 
-CPlayer* CUnitManager::GetPlayer(UNIT_ID id)
+std::shared_ptr<CPlayer> CUnitManager::GetPlayer(UNIT_ID id)
 {
     if (m_UnitList.empty()) return nullptr;
 
@@ -228,8 +216,7 @@ CPlayer* CUnitManager::GetPlayer(UNIT_ID id)
     while (it != m_UnitList.end())
     {
         if ((*it)->GetUnitID() == id)
-            return (CPlayer*)(*it);
-            //return dynamic_cast<CPlayer*>((*it).get());
+            return dynamic_pointer_cast<CPlayer>(*it);
 
         ++it;
     }
@@ -247,8 +234,7 @@ void CUnitManager::SetAllPlayerAction(bool flag)
     {
         if ((*it)->GetUnitCategory() == UNIT_CATEGORY::PLAYER)
         {
-            //CPlayer* player = dynamic_cast<CPlayer*>((*it).get());
-            CPlayer* player = (CPlayer*)(*it);
+            std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(*it);
             player->SetActionFlag(flag);
         }
 
@@ -299,8 +285,7 @@ UpdateUnit(void)
 
     while (it != m_UnitList.end())
     {
-        //IUnit* unit = dynamic_cast<IUnit*>((*it).get());
-        IUnit* unit = (*it);
+        std::shared_ptr<IUnit> unit = *it;
 
          unit->Update();
 
@@ -308,7 +293,6 @@ UpdateUnit(void)
         {
             unit->Finalize();
 
-            delete unit;
             it = m_UnitList.erase(it);
 
             continue;

@@ -51,9 +51,7 @@ Update(void)
 	case SKILL_STATE::ACTIVE:
 		while (it != unitList.end())
 		{
-			IUnit* unit = (*it);
-			//IUnit* unit = ((*it).get());
-
+			std::shared_ptr<IUnit> unit = *it;
 			if (unit->GetUnitID() != m_Player->GetUnitID())
 				unit->AddAffectedVelocity(CVector3(0.0f, 0.0f, -m_wind_strength));
 

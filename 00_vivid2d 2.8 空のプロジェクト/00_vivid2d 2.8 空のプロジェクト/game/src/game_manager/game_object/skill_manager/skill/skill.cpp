@@ -151,7 +151,7 @@ void CSkill::Finalize(void)
 /*!
  *  @brief      プレイヤーのセット
  */
-void CSkill::SetPlayer(CPlayer* player)
+void CSkill::SetPlayer(std::shared_ptr<CPlayer> player)
 {
 	CUIManager& uim = CUIManager::GetInstance();
 	std::shared_ptr<CUI> temp;

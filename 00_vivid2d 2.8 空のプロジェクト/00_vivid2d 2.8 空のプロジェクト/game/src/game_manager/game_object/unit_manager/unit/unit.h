@@ -302,20 +302,6 @@ protected:
     virtual void    Attack(void);
 
     /*!
-     *  @brief      ŽËŒ‚
-     *  @param[in]  aim         Player‚ð‘_‚¤‚©‚Ç‚¤‚©
-     *  @param[in]  position    ”­ŽËˆÊ’u
-     */
-    void            Fire(CShot* shot, bool aim, CVector3& position);
-
-    /*!
-     *  @brief      ŽËŒ‚
-     *  @param[in]  aim         Player‚ð‘_‚¤‚©‚Ç‚¤‚©
-     *  @param[in]  position    ”­ŽËˆÊ’u
-     */
-    void            Fire(CShot* shot, bool aim, CVector3& position, const CVector3& direction);
-
-    /*!
      *  @brief      ”í’e
      *  @param[in]  bullet          ”í’e‚µ‚½’e
      *  @param[in]  hit_position    ”í’eˆÊ’u

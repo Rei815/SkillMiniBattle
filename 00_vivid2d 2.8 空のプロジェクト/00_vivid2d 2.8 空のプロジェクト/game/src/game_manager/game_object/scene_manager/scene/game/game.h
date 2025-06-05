@@ -104,8 +104,8 @@ protected:
     bool            m_FinishFlag;   //!< ミニゲームが終了したか
     bool            m_ResultFlag;   //!< リザルトが出ているか
 
-    using ENTRY_LIST = std::list<IUnit*>;   //!< 参加もしくは生存中のプレイヤーのリスト
-    using RESULT_LIST = std::list<IUnit*>;  //!< 敗北してリザルトに移ったプレイヤーのリスト
+    using ENTRY_LIST = std::list<std::shared_ptr<IUnit>>;   //!< 参加もしくは生存中のプレイヤーのリスト
+    using RESULT_LIST = std::list<std::shared_ptr<IUnit>>;  //!< 敗北してリザルトに移ったプレイヤーのリスト
 
     ENTRY_LIST          m_EntryList;    //!< エントリーリスト
     RESULT_LIST         m_ResultList;   //!< リザルトリスト

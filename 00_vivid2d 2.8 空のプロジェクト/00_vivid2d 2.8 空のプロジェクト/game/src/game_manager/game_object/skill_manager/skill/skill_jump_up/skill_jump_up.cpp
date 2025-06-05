@@ -67,7 +67,7 @@ Finalize(void)
  */
 void
 CSkillJumpUp::
-SetPlayer(CPlayer* player)
+SetPlayer(std::shared_ptr<CPlayer> player)
 {
 	CSkill::SetPlayer(player);
 

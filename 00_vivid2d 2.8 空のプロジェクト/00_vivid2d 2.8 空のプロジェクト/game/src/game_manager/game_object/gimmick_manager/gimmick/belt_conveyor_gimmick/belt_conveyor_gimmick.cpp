@@ -127,8 +127,7 @@ void CBeltConveyorGimmick::Update(void)
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		IUnit* unit = *it;
-		//IUnit* unit = ((*it).get());
+		std::shared_ptr<IUnit> unit = *it;
 		++it;
 
 		//敗北状態ならスキップ

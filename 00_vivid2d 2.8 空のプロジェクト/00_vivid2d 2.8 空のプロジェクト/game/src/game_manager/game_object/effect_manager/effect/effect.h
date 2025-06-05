@@ -156,7 +156,7 @@ public:
      *
      *  @param[in]  parent  親
      */
-    void            SetParent(IUnit* unit);
+    void            SetParent(std::shared_ptr<IUnit> unit);
 
     /*!
      *  @brief      エフェクトID取得
@@ -186,7 +186,7 @@ protected:
     vivid::Rect             m_Rect;         //!< 読み込み範囲
     vivid::Vector2          m_Scale2D;      //!< 2Dの拡大率
     float                   m_Rotation;     //!< 回転値
-    IUnit*                  m_Parent;       //!< 親
+    std::shared_ptr<IUnit>  m_Parent;       //!< 親
     EFFECT_ID               m_EffectID;     //!< エフェクトID
     float                   m_Speed;        //!< 再生速度
     bool                    m_StopFlag;     //!< 再生停止フラグ

@@ -1,14 +1,3 @@
-
-/*!
- *  @file       scene_manager.cpp
- *  @brief      シーン管理
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #include "scene_manager.h"
 #include "scene\title\title.h"
 #include "scene\game_roll_and_reveal\game_roll_and_reveal.h"
@@ -52,7 +41,7 @@ CSceneManager::Initialize(void)
     // シーン変更
     m_State = STATE::SCENE_CHANGE;
 
-    m_Timer.SetUp(m_wait_time);
+    m_SceneChangeWaitTimer.SetUp(m_wait_time);
     m_FadeSpeed = m_fade_speed;
     m_FadeColor = 0x00ffffff;
     m_PauseController = nullptr;
@@ -374,10 +363,10 @@ CSceneManager::FadeOut(void)
     unsigned int alpha = vivid::alpha::GetAlpha(m_FadeColor);
     if (alpha == 255u)
     {
-        m_Timer.Update();
-        if (m_Timer.Finished())
+        m_SceneChangeWaitTimer.Update();
+        if (m_SceneChangeWaitTimer.Finished())
         {
-            m_Timer.Reset();
+            m_SceneChangeWaitTimer.Reset();
             // シーン変更
             m_State = STATE::SCENE_CHANGE;
             m_FadeSpeed = -m_fade_speed;

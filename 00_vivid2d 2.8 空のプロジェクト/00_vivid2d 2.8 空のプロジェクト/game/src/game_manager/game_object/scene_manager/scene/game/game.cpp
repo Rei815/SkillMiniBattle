@@ -141,7 +141,7 @@ SetGameState(GAME_STATE state)
 
 void CGame::AddRanking(UNIT_ID unitID)
 {
-    IUnit* unit = CUnitManager::GetInstance().GetPlayer(unitID);
+    std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().GetPlayer(unitID);
 
     for (ENTRY_LIST::iterator entry_it = m_EntryList.begin(); entry_it != m_EntryList.end(); entry_it++)
     {
@@ -188,7 +188,7 @@ CGame::Start(void)
             {
                 m_GameState = GAME_STATE::PLAY;
 
-                CPlayer* TempPlayer;
+                std::shared_ptr<CPlayer> TempPlayer;
 
                 for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
                 {

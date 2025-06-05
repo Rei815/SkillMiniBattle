@@ -128,8 +128,7 @@ void CEntry::Update(void)
         //‘¶İ‚µ‚Ä‚¢‚éƒvƒŒƒCƒ„[‚ÌID‚ğ‚Á‚Ä‚¨‚­
         while (it != unitList.end())
         {
-            CPlayer* player = (CPlayer*)(*it);
-            //CPlayer* player = dynamic_cast<CPlayer*>((*it).get());
+            std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(*it);
             ++it;
             if (player == nullptr) continue;
             UNIT_ID unitID = player->GetUnitID();
@@ -165,8 +164,7 @@ void CEntry::Update(void)
     //—‚¿‚Ä‚à–ß‚·
     while (it != unitList.end())
     {
-        //CPlayer* player = dynamic_cast<CPlayer*>((*it).get());
-        CPlayer* player = (CPlayer*)(*it);
+        std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(*it);
 
         ++it;
         if (!player) continue;

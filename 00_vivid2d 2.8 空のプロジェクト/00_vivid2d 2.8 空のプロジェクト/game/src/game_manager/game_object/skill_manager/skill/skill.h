@@ -46,7 +46,7 @@ public:
     /*!
      *  @brief      プレイヤーのセット
      */
-    virtual void    SetPlayer(CPlayer* player);
+    virtual void    SetPlayer(std::shared_ptr<CPlayer> player);
 
     /*!
      *  @brief      アクション呼び出し
@@ -84,7 +84,7 @@ protected:
     static const vivid::Vector2     m_icon_positionList[];
     static const float              m_icon_scale;
 
-    CPlayer*            m_Player;
+    std::shared_ptr<CPlayer>            m_Player;
 
     SKILL_CATEGORY      m_Category;
     SKILL_ID            m_SkillID;
