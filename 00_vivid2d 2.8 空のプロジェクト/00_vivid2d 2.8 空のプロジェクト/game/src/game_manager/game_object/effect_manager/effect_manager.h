@@ -78,25 +78,6 @@ public:
      */
     std::shared_ptr<IEffect>        Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const CVector3& scale);
 
-
-    /*!
-     *  @brief      エフェクト生成
-     *
-     *  @param[in]  id          エフェクトID
-     *  @param[in]  pos         位置
-     *  @param[in]  color       色
-     *  @param[in]  rotation    回転値
-     */
-    std::shared_ptr<IEffect>        Create(EFFECT_ID id, const vivid::Vector2& pos, unsigned int color, float rotation);
-
-    /*!
-     *  @brief      親の位置設定
-     *
-     *  @param[in]  effectID        エフェクトid
-     *  @param[in]  parentPos       親の位置
-     */
-    void            SetParentPosition(EFFECT_ID effectID,CVector3& parentPos);
-
     /*!
      *  @brief      すべてのエフェクトを一時停止
      */

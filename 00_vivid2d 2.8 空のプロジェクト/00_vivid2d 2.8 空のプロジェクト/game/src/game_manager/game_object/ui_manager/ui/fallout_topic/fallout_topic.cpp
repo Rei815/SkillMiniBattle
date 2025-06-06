@@ -50,7 +50,7 @@ Initialize(const vivid::Vector2& position)
 	m_FinishValue = m_end_y;
 	m_Position = position;
 	m_BackGround = CUIManager::GetInstance().Create(UI_ID::FALLOUT_TOPIC_BG, m_Position);
-	m_BackGround->SetParent(this);
+	m_BackGround->SetParent(shared_from_this());
 	m_Rect = m_rect;
 	m_Timer.SetUp(m_change_time);
 }
