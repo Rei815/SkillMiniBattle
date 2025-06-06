@@ -44,8 +44,8 @@ protected:
     static const float m_duration_time;
     static const float m_effect_scale;
 
-    IEffect* m_SkillEffect;
-    IEffect* m_Effect;
+    std::shared_ptr<IEffect> m_SkillEffect;
+    std::shared_ptr<IEffect> m_Effect;
     std::shared_ptr<CPlayer> m_Target;
     CUnitManager& um = CUnitManager::GetInstance();
     CDataManager& dm = CDataManager::GetInstance();

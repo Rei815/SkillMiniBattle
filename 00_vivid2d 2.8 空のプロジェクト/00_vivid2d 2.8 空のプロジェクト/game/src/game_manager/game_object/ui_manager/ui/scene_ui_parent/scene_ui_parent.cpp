@@ -2,11 +2,11 @@
 #include "../../../scene_manager/scene_manager.h"
 #include "../../ui_manager.h"
 
-const vivid::Vector2      CSceneUIParent::m_position = vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2);
-const int           CSceneUIParent::m_speed = 10;
-const float            CSceneUIParent::m_max_height = vivid::GetWindowHeight() * 1.5;
-const float           CSceneUIParent::m_min_height =  - vivid::GetWindowHeight() / 2;
-const float           CSceneUIParent::m_wait_height = vivid::GetWindowHeight() / 2;
+const vivid::Vector2    CSceneUIParent::m_position = vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2);
+const int               CSceneUIParent::m_speed = 10;
+const float             CSceneUIParent::m_max_height = vivid::GetWindowHeight() * 1.5;
+const float             CSceneUIParent::m_min_height =  - vivid::GetWindowHeight() / 2;
+const float             CSceneUIParent::m_wait_height = vivid::GetWindowHeight() / 2;
 
 /*
  *  コンストラクタ
@@ -30,6 +30,7 @@ CSceneUIParent::~CSceneUIParent(void)
  */
 void CSceneUIParent::Initialize(const vivid::Vector2& position)
 {
+    //作られた時点で全てのUIを子にする
     m_ChildrenList.clear();
     CUI::Initialize(position);
     m_Transform.position.x = position.x;
@@ -39,7 +40,7 @@ void CSceneUIParent::Initialize(const vivid::Vector2& position)
     CUIManager::UI_LIST::iterator it = uiList.begin();
     while (it != uiList.end())
     {
-        CUI* ui = ((*it).get());
+        std::shared_ptr<CUI> ui = *it;
         ++it;
         if (ui->GetUI_ID() == UI_ID::TITLE_LOGO)        continue;
 
@@ -49,7 +50,9 @@ void CSceneUIParent::Initialize(const vivid::Vector2& position)
 
         if (ui->GetSceneID() != CSceneManager::GetInstance().GetLastSceneID()) continue;
 
-        int offsetHeight = vivid::GetWindowHeight() * -((position.y > 0) - (position.y < 0));
+        int offsetHeight;
+        if (position.y > 0) offsetHeight = vivid::GetWindowHeight() * -1;
+        else if (position.y < 0) offsetHeight = vivid::GetWindowHeight();
         if(m_Position.y == vivid::GetWindowHeight() / 2)
         {
             offsetHeight = 0;
@@ -66,7 +69,7 @@ void CSceneUIParent::Initialize(const vivid::Vector2& position)
         ui->SetPosition(position);
         ui->SetTransform(transform);
         ui->SetParent(this);
-        m_ChildrenList.push_back(ui);
+        m_ChildrenList.emplace_back(ui);
     }
 }
 
@@ -78,7 +81,7 @@ void CSceneUIParent::Update(void)
     CHILDREN_LIST::iterator it = m_ChildrenList.begin();
     while (it != m_ChildrenList.end())
     {
-        CUI* ui = (*it);
+        std::shared_ptr<CUI> ui = *it;
         if (ui->GetParent() == nullptr || ui->IsActive() == false || ui == nullptr)
         {
            it = m_ChildrenList.erase(it);
@@ -183,7 +186,7 @@ void CSceneUIParent::ReleaseChildren()
     CHILDREN_LIST::iterator it = m_ChildrenList.begin();
     while (it != m_ChildrenList.end())
     {
-        CUI* ui = (*it);
+        std::shared_ptr<CUI> ui = *it;
         ui->SetParent(nullptr);
         ++it;
     }

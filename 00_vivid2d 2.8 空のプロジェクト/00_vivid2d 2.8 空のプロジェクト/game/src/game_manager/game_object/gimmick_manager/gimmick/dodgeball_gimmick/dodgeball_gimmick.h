@@ -67,13 +67,13 @@ private:
     void Shot();
     void Stop();
 
-    CTransform          m_SetTransform;
-    CANNON_STATE        m_NowState;
-    CANNON_ROTATE       m_NowRotate;
-    CShot*              m_Shot;
-    CTimer              m_MoveTimer;
-    CTimer              m_ShotTimer;
-    IEffect*            m_Effect;
+    CTransform                  m_SetTransform;
+    CANNON_STATE                m_NowState;
+    CANNON_ROTATE               m_NowRotate;
+    std::shared_ptr<CShot>      m_Shot;
+    CTimer                      m_MoveTimer;
+    CTimer                      m_ShotTimer;
+    std::shared_ptr<IEffect>    m_Effect;
 
     static const CVector3       m_spawn_pos;
     static const float          m_spawn_time;

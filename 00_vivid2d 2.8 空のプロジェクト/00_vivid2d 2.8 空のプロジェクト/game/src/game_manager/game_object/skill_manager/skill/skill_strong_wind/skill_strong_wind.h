@@ -41,12 +41,12 @@ public:
     void    ActionEnd(void);
 
 protected:
-    static const float  m_wind_strength;
-    static const float  m_cool_time;
-    static const float  m_duration_time;
-    static const float  m_effect_scale;
-    static const int    m_se_volume;
+    static const float          m_wind_strength;    //•—‚Ì‹­‚³
+    static const float          m_cool_time;
+    static const float          m_duration_time;
+    static const float          m_effect_scale;
+    static const int            m_se_volume;
 
-    IEffect*            m_SkillEffect;
-    IEffect*            m_Effect;
+    std::shared_ptr<IEffect>    m_SkillEffect;
+    std::shared_ptr<IEffect>    m_Effect;
 };

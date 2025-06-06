@@ -149,7 +149,7 @@ void CPlayer::SetActionFlag(bool flag)
     m_ActionFlag = flag;
 }
 
-CSkill* CPlayer::GetSkill()
+std::shared_ptr<CSkill> CPlayer::GetSkill()
 {
     return m_Skill;
 }
@@ -188,7 +188,7 @@ bool CPlayer::GetPlayerMoving()
     return Input;
 }
 
-void CPlayer::SetSkill(CSkill* skill)
+void CPlayer::SetSkill(std::shared_ptr<CSkill> skill)
 {
     m_Skill = skill;
 }
@@ -262,7 +262,7 @@ Attack(void)
 /*
  *  ”í’e
  */
-void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
+void CPlayer::HitBullet(std::shared_ptr<IBullet> bullet, CVector3 hit_position)
 {
     if (m_InvincibleFlag)
         return;

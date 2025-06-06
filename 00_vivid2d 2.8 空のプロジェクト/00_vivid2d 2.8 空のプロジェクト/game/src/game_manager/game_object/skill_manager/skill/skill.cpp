@@ -104,7 +104,7 @@ void CSkill::Update(void)
 	}
 
 	//UIXV
-	if (m_Player != nullptr && !m_Player->GetDefeatFlag())
+	if (m_Player.lock() != nullptr && !m_Player.lock()->GetDefeatFlag())
 	{
 		if (m_UiSkillIcon != nullptr)
 		{
@@ -171,9 +171,9 @@ void CSkill::SetPlayer(std::shared_ptr<CPlayer> player)
 		temp->Delete();
 
 	m_Player = player;
-	m_Player->SetSkill(this);
+	m_Player.lock()->SetSkill(shared_from_this());
 
-	m_PlayerID = m_Player->GetUnitID();
+	m_PlayerID = m_Player.lock()->GetUnitID();
 	m_IconPosition = m_icon_positionList[(int)m_PlayerID];
 
 	if (m_UiSkillIcon != nullptr)

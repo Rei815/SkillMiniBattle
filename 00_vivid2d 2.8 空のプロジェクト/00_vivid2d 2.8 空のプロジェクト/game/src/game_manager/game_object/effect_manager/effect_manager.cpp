@@ -49,15 +49,13 @@ Update(void)
 
     while (it != m_EffectList.end())
     {
-        IEffect* effect = (IEffect*)(*it);
+        std::shared_ptr<IEffect> effect = *it;
 
         effect->Update();
 
         if (!effect->IsActive())
         {
             effect->Finalize();
-
-            delete effect;
 
             it = m_EffectList.erase(it);
 
@@ -102,63 +100,61 @@ Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
-
         ++it;
     }
 
     m_EffectList.clear();
 }
 
-IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const float scale)
+std::shared_ptr<IEffect> CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const float scale)
 {
-    IEffect* effect = CreateClass(id);
+    std::shared_ptr<IEffect> effect = CreateClass(id);
 
 
     if (!effect) return nullptr;
 
     effect->Initialize(pos, scale);
 
-    m_EffectList.push_back(effect);
+    m_EffectList.emplace_back(effect);
 
     return effect;
 }
 
-IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot)
+std::shared_ptr<IEffect> CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot)
 {
-    IEffect* effect = CreateClass(id);
+    std::shared_ptr<IEffect> effect = CreateClass(id);
 
     if (!effect) return nullptr;
 
     effect->Initialize(pos,rot);
 
-    m_EffectList.push_back(effect);
+    m_EffectList.emplace_back(effect);
 
     return effect;
 }
 
-IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const float scale)
+std::shared_ptr<IEffect> CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const float scale)
 {
-    IEffect* effect = CreateClass(id);
+    std::shared_ptr<IEffect> effect = CreateClass(id);
 
     if (!effect) return nullptr;
 
     effect->Initialize(pos, rot, scale);
 
-    m_EffectList.push_back(effect);
+    m_EffectList.emplace_back(effect);
 
     return effect;
 }
 
-IEffect* CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const CVector3& scale)
+std::shared_ptr<IEffect> CEffectManager::Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const CVector3& scale)
 {
-    IEffect* effect = CreateClass(id);
+    std::shared_ptr<IEffect> effect = CreateClass(id);
 
     if (!effect) return nullptr;
 
     effect->Initialize(pos, rot, scale);
 
-    m_EffectList.push_back(effect);
+    m_EffectList.emplace_back(effect);
 
     return effect;
 }
@@ -171,7 +167,7 @@ void CEffectManager::PauseAllEffect()
 
     while (it != m_EffectList.end())
     {
-        IEffect* effect = (IEffect*)(*it);
+        std::shared_ptr<IEffect> effect = *it;
 
         effect->Pause();
 
@@ -188,7 +184,7 @@ void CEffectManager::ResumeAllEffect()
 
     while (it != m_EffectList.end())
     {
-        IEffect* effect = (IEffect*)(*it);
+        std::shared_ptr<IEffect> effect = *it;
 
         effect->Resume();
 
@@ -198,26 +194,26 @@ void CEffectManager::ResumeAllEffect()
 
 }
 
-IEffect* CEffectManager::CreateClass(EFFECT_ID id)
+std::shared_ptr<IEffect> CEffectManager::CreateClass(EFFECT_ID id)
 {
-    IEffect* effect = nullptr;
+    std::shared_ptr<IEffect> effect = nullptr;
 
     switch (id)
     {
-    case EFFECT_ID::DESTROY:                effect = new CDestroyEffect();          break;
-    case EFFECT_ID::HIT:                    effect = new CHitEffect();              break;
-    case EFFECT_ID::JUMP:                   effect = new CJumpEffect();             break;
-    case EFFECT_ID::DUST_CLOUD:             effect = new CDustCloudEffect();        break;
-    case EFFECT_ID::SHOCK_WAVE:             effect = new CShockWaveEffect();        break;
-    case EFFECT_ID::FORECAST_LINE:          effect = new CForecastLineEffect();     break;
-    case EFFECT_ID::BARRIER:          effect = new CBarrierEffect();     break;
-    case EFFECT_ID::FLOATING:               effect = new CFloatingEffect();         break;
-    case EFFECT_ID::GRAVITY_AREA:           effect = new CGravityAreaEffect();      break;
-    case EFFECT_ID::STRONG_WIND:            effect = new CStrongWindEffect();       break;
-    case EFFECT_ID::SKILL_STAR:             effect = new CSkillStarEffect();        break;
-    case EFFECT_ID::OGRE_CONTROL:           effect = new COgreControlEffect();      break;
-    case EFFECT_ID::DEBUFF:                 effect = new CDebuffEffect();           break;
-    case EFFECT_ID::RESURRECT:              effect = new CResurrectEffect();        break;
+    case EFFECT_ID::DESTROY:                effect = std::make_shared<CDestroyEffect>();        break;
+    case EFFECT_ID::HIT:                    effect = std::make_shared<CHitEffect>();            break;
+    case EFFECT_ID::JUMP:                   effect = std::make_shared<CJumpEffect>();           break;
+    case EFFECT_ID::DUST_CLOUD:             effect = std::make_shared<CDustCloudEffect>();      break;
+    case EFFECT_ID::SHOCK_WAVE:             effect = std::make_shared<CShockWaveEffect>();      break;
+    case EFFECT_ID::FORECAST_LINE:          effect = std::make_shared<CForecastLineEffect>();   break;
+    case EFFECT_ID::BARRIER:                effect = std::make_shared<CBarrierEffect>();        break;
+    case EFFECT_ID::FLOATING:               effect = std::make_shared<CFloatingEffect>();       break;
+    case EFFECT_ID::GRAVITY_AREA:           effect = std::make_shared<CGravityAreaEffect>();    break;
+    case EFFECT_ID::STRONG_WIND:            effect = std::make_shared<CStrongWindEffect>();     break;
+    case EFFECT_ID::SKILL_STAR:             effect = std::make_shared<CSkillStarEffect>();      break;
+    case EFFECT_ID::OGRE_CONTROL:           effect = std::make_shared<COgreControlEffect>();    break;
+    case EFFECT_ID::DEBUFF:                 effect = std::make_shared<CDebuffEffect>();         break;
+    case EFFECT_ID::RESURRECT:              effect = std::make_shared<CResurrectEffect>();      break;
     }
     return effect;
 }

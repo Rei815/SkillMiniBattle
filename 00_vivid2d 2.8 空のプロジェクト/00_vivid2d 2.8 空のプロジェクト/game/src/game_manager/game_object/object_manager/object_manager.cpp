@@ -134,14 +134,14 @@ std::shared_ptr<IObject> CObjectManager::Create(OBJECT_ID id, const CTransform& 
     return object;
 }
 
-void CObjectManager::StartGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object)
+void CObjectManager::SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object)
 {
     if (m_ObjectList.empty()) return;
 
     CGimmickManager::GetInstance().Create(gimmick_id, object);
 }
 
-void CObjectManager::StartGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object, float time)
+void CObjectManager::SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object, float time)
 {
     if (m_ObjectList.empty()) return;
 

@@ -42,8 +42,8 @@ private:
     static const vivid::Rect        m_rect;         //!< 読み込み範囲
     static const vivid::Vector2     m_anchor;       //!< 基準点
     static const vivid::Vector2     m_scale;        //!< 拡縮
+    static const int                m_fade_speed;   //!< フェードスピード
 
-    unsigned int                    m_Color;
-    static const int                m_fade_speed;
-    int                             m_FadeSpeed;
+    unsigned int                    m_Color;        //!< 0xffffffff
+    int                             m_FadeSpeed;    //!< フェードスピード
 };

@@ -56,11 +56,11 @@ Update(void)
 				CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
 				CVector3 resurrectPos = (*it)->GetPosition();
 				resurrectPos.y += m_resurrect_height;
-				m_Player->SetPosition(resurrectPos);
+				m_Player.lock()->SetPosition(resurrectPos);
 				m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
 				m_ResurrectEffect = CEffectManager::GetInstance().Create(EFFECT_ID::RESURRECT, CVector3().ZERO, CVector3(), m_effect_scale);
-				m_SkillEffect->SetParent(m_Player);
-				m_ResurrectEffect->SetParent(m_Player);
+				m_SkillEffect->SetParent(m_Player.lock());
+				m_ResurrectEffect->SetParent(m_Player.lock());
 
 				m_State = SKILL_STATE::COOLDOWN;
 				break;
@@ -71,7 +71,7 @@ Update(void)
 
 		if (it == objectList.end())
 		{
-			m_Player->SetPosition(m_position);
+			m_Player.lock()->SetPosition(m_position);
 			m_State = SKILL_STATE::COOLDOWN;
 
 		}

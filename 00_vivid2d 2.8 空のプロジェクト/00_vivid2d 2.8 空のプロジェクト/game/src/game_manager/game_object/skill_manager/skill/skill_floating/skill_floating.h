@@ -44,6 +44,6 @@ protected:
     static const CVector3   m_scale;
     static const float      m_effect_scale;
 
-    IEffect*            m_Effect;
-    IEffect*            m_SkillEffect;
+    std::shared_ptr<IEffect>            m_Effect;
+    std::shared_ptr<IEffect>            m_SkillEffect;
 };

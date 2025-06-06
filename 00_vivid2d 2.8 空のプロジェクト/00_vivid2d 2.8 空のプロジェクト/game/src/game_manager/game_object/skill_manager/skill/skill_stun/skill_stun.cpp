@@ -79,9 +79,9 @@ void CSkillStun::Action()
 	std::list<std::shared_ptr<CPlayer>>::iterator it = TopPlayerList.begin();
 	std::next(it, TargetPlayer);
 
-	m_Target = (*it);
+	m_Target = *it;
 	
-	if (m_Target == m_Player)
+	if (m_Target == m_Player.lock())
 		return;
 
 	m_Target->SetActionFlag(false);
@@ -89,7 +89,7 @@ void CSkillStun::Action()
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::OGRE_CONTROL, m_Target->GetPosition(), CVector3(), 2.0f);
 
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 	m_State = SKILL_STATE::ACTIVE;
 }
 

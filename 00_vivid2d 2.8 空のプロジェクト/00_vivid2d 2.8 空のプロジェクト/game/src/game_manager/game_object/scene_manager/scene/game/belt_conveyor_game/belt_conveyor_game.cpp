@@ -144,7 +144,7 @@ void CBeltConveyorGame::CheckFinish(void)
 			std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(unit);
 			if (player != nullptr)
 			{
-				CSkill* skill = player->GetSkill();
+				std::shared_ptr<CSkill> skill = player->GetSkill();
 				if (skill->GetSkillID() == SKILL_ID::RESURRECT_BELT && skill->GetState() != SKILL_STATE::COOLDOWN)
 				{
 					skill->SetState(SKILL_STATE::ACTIVE);

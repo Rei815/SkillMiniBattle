@@ -45,6 +45,6 @@ protected:
     static const float  m_wall_spawn_distance;
     static const float  m_effect_scale;
 
-    IEffect*            m_SkillEffect;
+    std::shared_ptr<IEffect>            m_SkillEffect;
     std::shared_ptr<IObject>            m_WallObj;
 };

@@ -231,7 +231,7 @@ void CDaruma_FallDownGame::Play(void)
 
 					m_TextureColor[i] = 0xffffffff;
 
-					CSkill* skill = player->GetSkill();
+					std::shared_ptr<CSkill> skill = player->GetSkill();
 					if (skill->GetSkillID() == SKILL_ID::RESURRECT_DARUMA && skill->GetState() != SKILL_STATE::COOLDOWN)
 						skill->SetState(SKILL_STATE::ACTIVE);
 					else

@@ -4,7 +4,7 @@
 #include "shot/shot.h"
 #include <list>
 #include "shot/shot_id.h"
-
+#include <memory>
 class CLauncher
 {
 public:
@@ -59,7 +59,7 @@ public:
     void        Finalize(void);
 
 
-    CShot* Create(SHOT_ID shotID);
+    std::shared_ptr<CShot> Create(SHOT_ID shotID);
 
 private:
 
@@ -94,7 +94,7 @@ private:
     /*!
      *  @brief      ショットリスト型
      */
-    using SHOT_LIST = std::list<CShot*>;
+    using SHOT_LIST = std::list<std::shared_ptr<CShot>>;
 
     SHOT_LIST     m_ShotList;   //!< エフェクトリスト
 

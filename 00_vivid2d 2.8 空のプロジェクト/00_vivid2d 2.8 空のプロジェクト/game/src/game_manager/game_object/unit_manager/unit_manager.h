@@ -58,7 +58,7 @@ public:
      *
      *  @param[in]  bullet  弾クラス
      */
-    void        CheckHitBullet(IBullet* bullet);
+    void        CheckHitBullet(std::shared_ptr<IBullet> bullet);
 
 
     /*!
@@ -79,8 +79,6 @@ public:
      *
      */
     void        SetAllPlayerAction(bool flag);
-
-    bool        CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos);
 
     /*!
      *  @brief      ユニットリスト型

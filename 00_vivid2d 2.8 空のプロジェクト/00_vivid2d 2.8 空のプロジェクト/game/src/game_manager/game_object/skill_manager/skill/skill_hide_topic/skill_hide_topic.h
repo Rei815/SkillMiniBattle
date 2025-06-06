@@ -45,5 +45,5 @@ protected:
     static const float  m_effect_scale;
     std::shared_ptr<CUI>                m_ParentTopic;
     std::shared_ptr<CUI>                m_Shutter;
-    IEffect*            m_SkillEffect;
+    std::shared_ptr<IEffect>            m_SkillEffect;
 };

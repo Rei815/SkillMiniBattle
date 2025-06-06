@@ -46,9 +46,9 @@ protected:
     static const float m_effect_scale;
 
     
-    IEffect* m_SkillEffect;
-    IEffect* m_DebuffEffect;
-    std::list<IEffect*> m_EffectList;
+    std::shared_ptr<IEffect> m_SkillEffect;
+    std::shared_ptr<IEffect> m_DebuffEffect;
+    std::list<std::shared_ptr<IEffect>> m_EffectList;
     CDataManager&       dm = CDataManager::GetInstance();
     CUnitManager&       um = CUnitManager::GetInstance();
 };

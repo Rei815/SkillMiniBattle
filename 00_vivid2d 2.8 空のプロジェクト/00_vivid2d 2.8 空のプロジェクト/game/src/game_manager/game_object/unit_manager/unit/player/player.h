@@ -53,14 +53,14 @@ public:
      *
      *  @return     スキル
      */
-    CSkill*         GetSkill();
+    std::shared_ptr<CSkill>     GetSkill();
 
     /*!
      *  @brief      スキルのセット
      *
      *  @param[in]  skill    スキルのポインタ
      */
-    void            SetSkill(CSkill* skill);
+    void            SetSkill(std::shared_ptr<CSkill> skill);
 
     /*!
      *  @brief      スキル等によるスピード倍率のセット
@@ -122,7 +122,7 @@ protected:
      *  @param[in]  bullet          被弾した弾
      *  @param[in]  hit_position    被弾位置
      */
-    void            HitBullet(IBullet* bullet, CVector3 hit_position);
+    void            HitBullet(std::shared_ptr<IBullet> bullet, CVector3 hit_position);
 
     /*!
      *  @brief      衝撃を与える
@@ -171,7 +171,7 @@ protected:
     float                           m_MoveSpeedRate;                            //!< 移動速度の倍率
     float                           m_JumpPowerRate;                            //!< ジャンプ力の倍率
 
-    CSkill*                         m_Skill;                                    //!< スキル
+    std::shared_ptr<CSkill>         m_Skill;                                    //!< スキル
 
     CVector3                        m_Accelerator;                              //!< 加速度影響による移動速度
     CVector3                        m_InitialPosition;                          //!< 初期位置

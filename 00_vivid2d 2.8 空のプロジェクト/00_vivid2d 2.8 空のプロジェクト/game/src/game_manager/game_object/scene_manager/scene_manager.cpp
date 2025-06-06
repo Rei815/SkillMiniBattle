@@ -21,8 +21,7 @@ const float             CSceneManager::m_wait_time = 0.0f;
 /*
  *  インスタンスの取得
  */
-CSceneManager&
-CSceneManager::GetInstance(void)
+CSceneManager& CSceneManager::GetInstance(void)
 {
     static CSceneManager instance;
 
@@ -32,8 +31,7 @@ CSceneManager::GetInstance(void)
 /*
  *  初期化
  */
-void
-CSceneManager::Initialize(void)
+void CSceneManager::Initialize(void)
 {
     // ルートシーン生成
     m_NextSceneID = SCENE_ID::TITLE;
@@ -50,8 +48,7 @@ CSceneManager::Initialize(void)
 /*
  *  更新
  */
-void
-CSceneManager::Update(void)
+void CSceneManager::Update(void)
 {
     switch (m_State)
     {
@@ -80,8 +77,7 @@ CSceneManager::Update(void)
 /*
  *  描画
  */
-void
-CSceneManager::Draw(void)
+void CSceneManager::Draw(void)
 {
     // シーン描画
     if (m_SceneList.empty()) return;
@@ -101,8 +97,7 @@ CSceneManager::Draw(void)
 /*
  *  シーンエフェクト描画
  */
-void
-CSceneManager::DrawSceneEffect(void)
+void CSceneManager::DrawSceneEffect(void)
 {
     vivid::DrawTexture("data\\Textures\\white.png", vivid::Vector2(), m_FadeColor);
 
@@ -111,8 +106,7 @@ CSceneManager::DrawSceneEffect(void)
 /*
  *  解放
  */
-void
-CSceneManager::Finalize(void)
+void CSceneManager::Finalize(void)
 {
     // シーン解放
     if (m_SceneList.empty()) return;
@@ -134,8 +128,7 @@ CSceneManager::Finalize(void)
 /*
  *  シーン切換え
  */
-void
-CSceneManager::ChangeScene(SCENE_ID id)
+void CSceneManager::ChangeScene(SCENE_ID id)
 {
     // 次のシーンIDを登録
     m_NextSceneID = id;
@@ -262,8 +255,7 @@ CSceneManager::operator=(const CSceneManager& rhs)
 /*
  *  シーン生成
  */
-std::shared_ptr<IScene>
-CSceneManager::CreateScene(SCENE_ID id)
+std::shared_ptr<IScene> CSceneManager::CreateScene(SCENE_ID id)
 {
     //IDを基準にシーン多分岐
     std::shared_ptr<IScene> scene = nullptr;
@@ -295,8 +287,7 @@ CSceneManager::CreateScene(SCENE_ID id)
 /*
  *  フェードイン
  */
-void
-CSceneManager::FadeIn(void)
+void CSceneManager::FadeIn(void)
 {
     unsigned int alpha = vivid::alpha::GetAlpha(m_FadeColor);
     if (alpha == 0u)
@@ -313,8 +304,7 @@ CSceneManager::FadeIn(void)
 /*
  *  シーン更新
  */
-void
-CSceneManager::SceneUpdate(void)
+void CSceneManager::SceneUpdate(void)
 {
     // シーン更新
     if (m_SceneList.empty()) return;
@@ -354,8 +344,7 @@ CSceneManager::SceneUpdate(void)
 /*
  *  フェードアウト
  */
-void
-CSceneManager::FadeOut(void)
+void CSceneManager::FadeOut(void)
 {
     unsigned int alpha = vivid::alpha::GetAlpha(m_FadeColor);
     if (alpha == 255u)
@@ -376,8 +365,7 @@ CSceneManager::FadeOut(void)
 /*
  *  シーン変更
  */
-void
-CSceneManager::SceneChange()
+void CSceneManager::SceneChange()
 {
     if (!m_SceneList.empty())
     {

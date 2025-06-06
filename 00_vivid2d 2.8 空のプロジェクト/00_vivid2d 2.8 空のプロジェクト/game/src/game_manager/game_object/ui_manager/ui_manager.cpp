@@ -196,7 +196,7 @@ void CUIManager::Delete(UI_ID id)
     }
 }
 
-CUIManager::UI_LIST CUIManager::GetList()
+const CUIManager::UI_LIST& CUIManager::GetList()
 {
     return m_UIList;
 }

@@ -75,13 +75,13 @@ Action()
 	if (m_State == SKILL_STATE::COOLDOWN) return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::STOMP, false);
-	CBulletManager::GetInstance().Create(m_Player->GetUnitCategory(), BULLET_ID::SHOCK_WAVE, m_Player->GetPosition(), CVector3::UP);
-	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, m_Player->GetPosition());
+	CBulletManager::GetInstance().Create(m_Player.lock()->GetUnitCategory(), BULLET_ID::SHOCK_WAVE, m_Player.lock()->GetPosition(), CVector3::UP);
+	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, m_Player.lock()->GetPosition());
 	m_Timer.SetUp(m_cool_time);
 	m_State = SKILL_STATE::COOLDOWN;
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 }
 
 /*!

@@ -71,7 +71,7 @@ Update(void)
 			switch (m_PlayerAffectedGravity[i])
 			{
 			case GRAVITY_AFFECTED::NONE:
-				if ((m_Player->GetPosition() - TempPlayer->GetPosition()).Length() < m_gravity_area_radius)
+				if ((m_Player.lock()->GetPosition() - TempPlayer->GetPosition()).Length() < m_gravity_area_radius)
 				{
 					m_PlayerAffectedGravity[i] = GRAVITY_AFFECTED::AFFECTED;
 					TempPlayer->MulMoveSpeedRate(m_gravity_speed_down_rate);
@@ -87,7 +87,7 @@ Update(void)
 				if (m_PlayerAffectedEffect[i] != nullptr)
 					m_PlayerAffectedEffect[i]->SetPosition(TempPlayer->GetPosition());
 
-				if ((m_Player->GetPosition() - TempPlayer->GetPosition()).Length() > m_gravity_area_radius)
+				if ((m_Player.lock()->GetPosition() - TempPlayer->GetPosition()).Length() > m_gravity_area_radius)
 				{
 					m_PlayerAffectedGravity[i] = GRAVITY_AFFECTED::NONE;
 					TempPlayer->DivMoveSpeedRate(m_gravity_speed_down_rate);
@@ -107,7 +107,7 @@ Update(void)
 		//エフェクトの位置調整
 		if (m_Effect != nullptr)
 		{
-			m_Effect->SetPosition(m_Player->GetPosition());
+			m_Effect->SetPosition(m_Player.lock()->GetPosition());
 		}
 		break;
 
@@ -155,12 +155,12 @@ Action(void)
 	CSoundManager::GetInstance().SetSEVolume(SE_ID::GRAVITYAREA, m_se_volume);
 	//エフェクトの生成（仮置き、エフェクトが完成したらセットする）
 
-	CVector3 effectPosition = m_Player->GetPosition();
-	effectPosition.y -= m_Player->GetHeight()/2;
+	CVector3 effectPosition = m_Player.lock()->GetPosition();
+	effectPosition.y -= m_Player.lock()->GetHeight()/2;
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::GRAVITY_AREA, effectPosition,CVector3(),m_effect_scale);
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effectPosition, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 
 	m_State = SKILL_STATE::ACTIVE;
 }

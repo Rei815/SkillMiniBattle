@@ -94,7 +94,7 @@ Finalize(void)
  */
 bool
 IUnit::
-CheckHitBullet(IBullet* bullet)
+CheckHitBullet(std::shared_ptr<IBullet> bullet)
 {
     if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
         return false;
@@ -133,7 +133,7 @@ CheckHitBullet(IBullet* bullet)
 }
 
 
-bool IUnit::CheckHitBulletModel(IBullet* bullet)
+bool IUnit::CheckHitBulletModel(std::shared_ptr<IBullet> bullet)
 {
     if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
         return false;
@@ -412,7 +412,7 @@ Attack(void)
 {
 }
 
-void IUnit::HitBullet(IBullet* bullet, CVector3 hit_position)
+void IUnit::HitBullet(std::shared_ptr<IBullet> bullet, CVector3 hit_position)
 {
     //åpè≥êÊÇ≈èàóùÇçÏÇÈ
 }

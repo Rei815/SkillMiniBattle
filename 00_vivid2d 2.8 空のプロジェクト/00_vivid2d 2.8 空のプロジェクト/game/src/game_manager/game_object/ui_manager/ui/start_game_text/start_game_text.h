@@ -53,7 +53,7 @@ private:
     static const vivid::Vector2     m_default_position; //!< 生成時の座標
     static const unsigned int       m_default_color;    //!< 生成時の色
 
-    static const std::string        m_file_name;      //!< カウントダウンのファイル名
+    static const std::string        m_file_name;        //!< カウントダウンのファイル名
 
     static const float              m_zoomin_time;
     static const float              m_stop_time;

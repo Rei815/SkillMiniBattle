@@ -52,7 +52,7 @@ Update(void)
 		while (it != unitList.end())
 		{
 			std::shared_ptr<IUnit> unit = *it;
-			if (unit->GetUnitID() != m_Player->GetUnitID())
+			if (unit->GetUnitID() != m_Player.lock()->GetUnitID())
 				unit->AddAffectedVelocity(CVector3(0.0f, 0.0f, -m_wind_strength));
 
 			++it;
@@ -104,7 +104,7 @@ Action(void)
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::STRONG_WIND, effectPosition, CVector3(), 5.0f);
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 
 	m_State = SKILL_STATE::ACTIVE;
 }

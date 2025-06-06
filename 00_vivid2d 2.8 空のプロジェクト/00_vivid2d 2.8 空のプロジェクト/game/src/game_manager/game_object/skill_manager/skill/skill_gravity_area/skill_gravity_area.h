@@ -57,7 +57,7 @@ protected:
 
     GRAVITY_AFFECTED m_PlayerAffectedGravity[(int)UNIT_ID::NONE];
 
-    IEffect* m_Effect;
-    IEffect* m_SkillEffect;
-    IEffect* m_PlayerAffectedEffect[(int)UNIT_ID::NONE];
+    std::shared_ptr<IEffect> m_Effect;
+    std::shared_ptr<IEffect> m_SkillEffect;
+    std::shared_ptr<IEffect> m_PlayerAffectedEffect[(int)UNIT_ID::NONE];
 };

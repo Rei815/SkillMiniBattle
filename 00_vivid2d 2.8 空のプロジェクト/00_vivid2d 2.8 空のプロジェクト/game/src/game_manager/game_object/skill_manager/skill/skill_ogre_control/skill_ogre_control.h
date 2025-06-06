@@ -54,6 +54,6 @@ protected:
     CUnitManager&       um = CUnitManager::GetInstance();
 
     std::shared_ptr<CDaruma_FallDownGimmick> m_Gimmick;
-    IEffect* m_Effect;
-    IEffect* m_SkillEffect;
+    std::shared_ptr<IEffect> m_Effect;
+    std::shared_ptr<IEffect> m_SkillEffect;
 };

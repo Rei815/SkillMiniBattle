@@ -34,7 +34,7 @@ void CSkillOgreControl::Update(void)
 		break;
 
 	case SKILL_STATE::ACTIVE:
-		if (!m_Player->GetPlayerMoving())
+		if (!m_Player.lock()->GetPlayerMoving())
 		{
 			m_Gimmick->OgreControlTurn();
 			m_State = SKILL_STATE::COOLDOWN;
@@ -72,7 +72,7 @@ void CSkillOgreControl::Action()
 		m_State = SKILL_STATE::ACTIVE;
 
 		m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
-		m_SkillEffect->SetParent(m_Player);
+		m_SkillEffect->SetParent(m_Player.lock());
 	}
 }
 

@@ -132,7 +132,7 @@ void CUnitManager::Delete(UNIT_ID id)
  */
 void
 CUnitManager::
-CheckHitBullet(IBullet* bullet)
+CheckHitBullet(std::shared_ptr<IBullet> bullet)
 {
     if (m_UnitList.empty()) return;
 
@@ -244,22 +244,6 @@ void CUnitManager::SetAllPlayerAction(bool flag)
     return;
 
 }
-
-bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos)
-{
-    if (m_UnitList.empty()) return false;
-    UNIT_LIST::iterator it = m_UnitList.begin();
-
-    while (it != m_UnitList.end())
-    {
-        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true && (*it)->GetUnitCategory() != UNIT_CATEGORY::PLAYER)
-            return true;
-
-        ++it;
-    }
-    return false;
-}
-
 
 CUnitManager::UNIT_LIST CUnitManager::GetUnitList()
 {

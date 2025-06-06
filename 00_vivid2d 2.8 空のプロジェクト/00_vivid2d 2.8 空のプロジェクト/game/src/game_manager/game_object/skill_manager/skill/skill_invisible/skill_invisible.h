@@ -45,5 +45,5 @@ protected:
     static const float m_effect_scale;
 
     bool m_Active;
-    IEffect* m_SkillEffect;
+    std::shared_ptr<IEffect> m_SkillEffect;
 };

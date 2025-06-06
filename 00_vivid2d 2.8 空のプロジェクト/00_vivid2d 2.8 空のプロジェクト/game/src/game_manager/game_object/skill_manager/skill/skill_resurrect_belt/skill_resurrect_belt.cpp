@@ -49,14 +49,14 @@ Update(void)
 
 	case SKILL_STATE::ACTIVE:
 		CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
-		m_Player->SetPosition(m_resurrect_position);
+		m_Player.lock()->SetPosition(m_resurrect_position);
 
 		if (m_SkillEffect == nullptr)
 		{
 			m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
 			m_ResurrectEffect = CEffectManager::GetInstance().Create(EFFECT_ID::RESURRECT, CVector3().ZERO, CVector3(), m_effect_scale);
-			m_SkillEffect->SetParent(m_Player);
-			m_ResurrectEffect->SetParent(m_Player);
+			m_SkillEffect->SetParent(m_Player.lock());
+			m_ResurrectEffect->SetParent(m_Player.lock());
 		}
 		m_State = SKILL_STATE::COOLDOWN;
 		break;

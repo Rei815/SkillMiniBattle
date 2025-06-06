@@ -9,17 +9,6 @@ using namespace std;
 
 class IEffect;
 
-/*!
- *  @class      CEffectManager
- *
- *  @brief      エフェクト管理クラス
- *
- *  @author     Kazuya Maruyama
- *
- *  @date       2020/11/13
- *
- *  @since      1.0
- */
 class CEffectManager
 {
 public:
@@ -57,7 +46,7 @@ public:
      *  @param[in]  pos         位置
      *  @param[in]  scale       拡大率
      */
-    IEffect*        Create(EFFECT_ID id, const CVector3& pos = CVector3::ZERO, float scale = 1.0f);
+    std::shared_ptr<IEffect>        Create(EFFECT_ID id, const CVector3& pos = CVector3::ZERO, float scale = 1.0f);
 
     /*!
      *  @brief      エフェクト生成
@@ -66,18 +55,8 @@ public:
      *  @param[in]  pos         位置
      *  @param[in]  rot         回転
      */
-    IEffect*        Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot);
+    std::shared_ptr<IEffect>        Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot);
 
-
-    /*!
-     *  @brief      エフェクト生成
-     *
-     *  @param[in]  id          エフェクトID
-     *  @param[in]  pos         位置
-     *  @param[in]  rot         回転
-     *  @param[in]  scale       拡大率
-     */
-    IEffect*        Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const float scale);
 
     /*!
      *  @brief      エフェクト生成
@@ -87,7 +66,17 @@ public:
      *  @param[in]  rot         回転
      *  @param[in]  scale       拡大率
      */
-    IEffect*        Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const CVector3& scale);
+    std::shared_ptr<IEffect>        Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const float scale);
+
+    /*!
+     *  @brief      エフェクト生成
+     *
+     *  @param[in]  id          エフェクトID
+     *  @param[in]  pos         位置
+     *  @param[in]  rot         回転
+     *  @param[in]  scale       拡大率
+     */
+    std::shared_ptr<IEffect>        Create(EFFECT_ID id, const CVector3& pos, const CVector3& rot, const CVector3& scale);
 
 
     /*!
@@ -98,7 +87,7 @@ public:
      *  @param[in]  color       色
      *  @param[in]  rotation    回転値
      */
-    IEffect*        Create(EFFECT_ID id, const vivid::Vector2& pos, unsigned int color, float rotation);
+    std::shared_ptr<IEffect>        Create(EFFECT_ID id, const vivid::Vector2& pos, unsigned int color, float rotation);
 
     /*!
      *  @brief      親の位置設定
@@ -120,7 +109,7 @@ public:
 
 private:
 
-    IEffect* CreateClass(EFFECT_ID id);
+    std::shared_ptr<IEffect> CreateClass(EFFECT_ID id);
     /*!
      *  @brief      コンストラクタ
      */
@@ -150,7 +139,7 @@ private:
     /*!
      *  @brief      エフェクトリスト型
      */
-    using EFFECT_LIST = list<IEffect*>;
+    using EFFECT_LIST = list<std::shared_ptr<IEffect>>;
 
     EFFECT_LIST     m_EffectList;   //!< エフェクトリスト
 };

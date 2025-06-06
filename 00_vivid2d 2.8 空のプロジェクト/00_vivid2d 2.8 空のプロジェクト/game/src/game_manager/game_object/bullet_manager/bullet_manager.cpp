@@ -43,7 +43,7 @@ Update(void)
 
     while (it != m_BulletList.end())
     {
-        IBullet* bullet = (IBullet*)(*it);
+        std::shared_ptr<IBullet> bullet = *it;
 
         bullet->Update();
 
@@ -56,8 +56,6 @@ Update(void)
         {
 
             bullet->Finalize();
-
-            delete bullet;
 
             it = m_BulletList.erase(it);
 
@@ -102,15 +100,13 @@ Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
-
         ++it;
     }
 
     m_BulletList.clear();
 }
 
-std::list<IBullet*> CBulletManager::GetBulletList()
+std::list<std::shared_ptr<IBullet>> CBulletManager::GetBulletList()
 {
     return m_BulletList;
 }
@@ -119,16 +115,16 @@ std::list<IBullet*> CBulletManager::GetBulletList()
 /*
  *  íeê∂ê¨
  */
-IBullet*
+std::shared_ptr<IBullet>
 CBulletManager::
 Create(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter,  CVector3& pos, const CVector3& dir)
 {
-    IBullet* bullet = nullptr;
+    std::shared_ptr<IBullet> bullet = nullptr;
 
     switch (bulletParameter->bulletID)
     {
-    case BULLET_ID::SHOCK_WAVE:     bullet = new CShockWaveBullet();   break;
-    case BULLET_ID::CANNON:         bullet = new CCannonBullet();   break;
+    case BULLET_ID::SHOCK_WAVE:     bullet = std::make_shared<CShockWaveBullet>();   break;
+    case BULLET_ID::CANNON:         bullet = std::make_shared<CCannonBullet>();   break;
     }
 
     if (!bullet) return nullptr;
@@ -136,7 +132,7 @@ Create(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter,  CVecto
     bullet->Initialize(category, bulletParameter, pos, dir);
 
     // ê∂ê¨ÇµÇΩíeÇÉäÉXÉgÇ…í«â¡
-    m_BulletList.push_back(bullet);
+    m_BulletList.emplace_back(bullet);
 
     return bullet;
 }
@@ -144,14 +140,14 @@ Create(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter,  CVecto
 /*
  *  íeê∂ê¨
  */
-IBullet* CBulletManager::Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir)
+std::shared_ptr<IBullet> CBulletManager::Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir)
 {
-    IBullet* bullet = nullptr;
+    std::shared_ptr<IBullet> bullet = nullptr;
 
     switch (id)
     {
-    case BULLET_ID::SHOCK_WAVE:     bullet = new CShockWaveBullet();   break;
-    case BULLET_ID::CANNON:         bullet = new CCannonBullet();   break;
+    case BULLET_ID::SHOCK_WAVE:     bullet = std::make_shared<CShockWaveBullet>();  break;
+    case BULLET_ID::CANNON:         bullet = std::make_shared<CCannonBullet>();     break;
     }
 
     if (!bullet) return nullptr;
@@ -159,7 +155,7 @@ IBullet* CBulletManager::Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& 
     bullet->Initialize(category, pos, dir);
 
     // ê∂ê¨ÇµÇΩíeÇÉäÉXÉgÇ…í«â¡
-    m_BulletList.push_back(bullet);
+    m_BulletList.emplace_back(bullet);
 
     return bullet;
 }
@@ -173,7 +169,7 @@ void CBulletManager::CheckReflectModel(const CModel& model)
 
     while (it != m_BulletList.end())
     {
-        IBullet* bullet = (IBullet*)(*it);
+        std::shared_ptr<IBullet> bullet = *it;
 
         if (!bullet || model.GetModelHandle() == VIVID_DX_ERROR)
         {

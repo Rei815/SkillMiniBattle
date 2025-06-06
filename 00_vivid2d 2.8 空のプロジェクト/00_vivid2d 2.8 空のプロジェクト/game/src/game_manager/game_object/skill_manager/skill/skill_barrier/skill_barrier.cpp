@@ -44,7 +44,7 @@ Update(void)
 {
 	CSkill::Update();
 
-	m_ColliderModel.Update(m_Player->GetPosition());
+	m_ColliderModel.Update(m_Player.lock()->GetPosition());
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
@@ -53,7 +53,7 @@ Update(void)
 	case SKILL_STATE::ACTIVE:
 		if (m_Effect != nullptr)
 		{
-			m_Effect->SetPosition(m_Player->GetPosition());
+			m_Effect->SetPosition(m_Player.lock()->GetPosition());
 			CBulletManager::GetInstance().CheckReflectModel(m_ColliderModel);
 		}
 		break;
@@ -94,7 +94,7 @@ void CSkillBarrier::SetPlayer(std::shared_ptr<CPlayer> player)
 {
 	CSkill::SetPlayer(player);
 
-	m_ColliderModel.Initialize(m_collider_model_file_name, m_Player->GetPosition());
+	m_ColliderModel.Initialize(m_collider_model_file_name, m_Player.lock()->GetPosition());
 }
 
 /*!
@@ -109,10 +109,10 @@ Action(void)
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::BARRIER, false);
 
-	m_Player->StartInvincible(m_duration_time);
-	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::BARRIER, m_Player->GetPosition(), 0.04f);
+	m_Player.lock()->StartInvincible(m_duration_time);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::BARRIER, m_Player.lock()->GetPosition(), 0.04f);
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO,CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 
 	m_State = SKILL_STATE::ACTIVE;
 }

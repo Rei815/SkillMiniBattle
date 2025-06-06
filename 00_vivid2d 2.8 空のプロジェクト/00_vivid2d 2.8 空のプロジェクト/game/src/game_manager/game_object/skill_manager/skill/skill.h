@@ -16,7 +16,7 @@ enum class SKILL_STATE
     COOLDOWN,
 };
 
-class CSkill
+class CSkill : public std::enable_shared_from_this<CSkill>
 {
 public:
     CSkill(float duration_time = 0.0f, float cool_time = 0.0f);
@@ -84,7 +84,7 @@ protected:
     static const vivid::Vector2     m_icon_positionList[];
     static const float              m_icon_scale;
 
-    std::shared_ptr<CPlayer>            m_Player;
+    std::weak_ptr<CPlayer>          m_Player;
 
     SKILL_CATEGORY      m_Category;
     SKILL_ID            m_SkillID;

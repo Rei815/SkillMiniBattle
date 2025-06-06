@@ -50,7 +50,7 @@ public:
      *  @param[in]  gimmick_id          ギミックのID
      *  @param[in]  object              オブジェクト
      */
-    void        StartGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object);
+    void        SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object);
 
     /*!
      *  @brief      ギミック付与
@@ -59,7 +59,7 @@ public:
      *  @param[in]  object              オブジェクト
      *  @param[in]  delayFrame          遅延時間
      */
-    void        StartGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object, float time);
+    void        SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object, float time);
 
     /*!
      *  @brief      オブジェクトリスト型

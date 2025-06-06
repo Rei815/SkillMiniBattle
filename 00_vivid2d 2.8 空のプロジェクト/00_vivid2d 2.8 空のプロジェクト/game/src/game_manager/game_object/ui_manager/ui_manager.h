@@ -86,7 +86,7 @@ public:
      *
      *  @return     オブジェクトリスト
      */
-    UI_LIST         GetList();
+    const UI_LIST&  GetList();
 
     /*!
      *  @brief      レイヤー内の番号をもとに並び替え

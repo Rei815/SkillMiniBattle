@@ -407,7 +407,7 @@ void CFallOutGame::CheckFinish()
 		{
 			std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(unit);
 
-			CSkill* skill = player->GetSkill();
+			std::shared_ptr<CSkill> skill = player->GetSkill();
 			if (skill->GetSkillID() == SKILL_ID::RESURRECT_FALLOUT && skill->GetState() != SKILL_STATE::COOLDOWN)
 			{
 				skill->SetState(SKILL_STATE::ACTIVE);

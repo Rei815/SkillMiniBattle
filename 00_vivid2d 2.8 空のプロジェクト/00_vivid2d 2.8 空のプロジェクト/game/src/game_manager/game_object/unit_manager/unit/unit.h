@@ -65,7 +65,7 @@ public:
      *  @retval     true    当たっている
      *  @retval     false   当たっていない
      */
-    virtual bool    CheckHitBullet(IBullet* bullet);
+    virtual bool    CheckHitBullet(std::shared_ptr<IBullet> bullet);
 
     /*!
      *  @brief      アタリ判定チェック
@@ -75,7 +75,7 @@ public:
      *  @retval     true    当たっている
      *  @retval     false   当たっていない
      */
-    virtual bool    CheckHitBulletModel(IBullet* bullet);
+    virtual bool    CheckHitBulletModel(std::shared_ptr<IBullet> bullet);
 
     /*!
      *  @brief      ユニットID取得
@@ -306,7 +306,7 @@ protected:
      *  @param[in]  bullet          被弾した弾
      *  @param[in]  hit_position    被弾位置
      */
-    virtual void    HitBullet(IBullet* bullet, CVector3 hit_position);
+    virtual void    HitBullet(std::shared_ptr<IBullet> bullet, CVector3 hit_position);
 
     /*!
      *  @brief      衝撃を与える
