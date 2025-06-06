@@ -11,7 +11,7 @@
 class CSkill;
 class CController;
 
-class CPlayer: public IUnit
+class CPlayer: public IUnit , public std::enable_shared_from_this<CPlayer>
 {
 public:
 
@@ -24,7 +24,7 @@ public:
      *
      *  @param[in]  position    初期位置
      */
-    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name);
+    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position);
 
     /*!
      *  @brief      更新
@@ -42,39 +42,25 @@ public:
     virtual void    Finalize(void);
 
     /*!
-     *  @brief          行動の可不可を設定
+     *  @brief      行動の可不可を設定
      *
-     *  @param[in]      flag    行動フラグ
+     *  @param[in]  flag    行動フラグ
      */
-    void                SetActionFlag(bool flag);
-
-    /*!
-     *  @brief      コントローラーの取得
-     *
-     *  @return     コントローラーのポインタ
-     */
-
-    CController*    GetController(void);
+    void            SetActionFlag(bool flag);
     
-    /*!
-     *  @brief      コントローラーの設定
-     *
-     *  @param[in]  controller    コントローラーのポインタ
-     */
-    void            SetController(CController* controller);
     /*!
      *  @brief      スキルの取得
      *
      *  @return     スキル
      */
-    CSkill*         GetSkill();
+    std::shared_ptr<CSkill>     GetSkill();
 
     /*!
      *  @brief      スキルのセット
      *
      *  @param[in]  skill    スキルのポインタ
      */
-    void            SetSkill(CSkill* skill);
+    void            SetSkill(std::shared_ptr<CSkill> skill);
 
     /*!
      *  @brief      スキル等によるスピード倍率のセット
@@ -129,14 +115,14 @@ protected:
     /*!
      *  @brief      攻撃
      */
-    void        Attack(void);
+    void            Attack(void);
 
     /*!
      *  @brief      被弾
      *  @param[in]  bullet          被弾した弾
      *  @param[in]  hit_position    被弾位置
      */
-    void    HitBullet(IBullet* bullet, CVector3 hit_position);
+    void            HitBullet(std::shared_ptr<IBullet> bullet, CVector3 hit_position);
 
     /*!
      *  @brief      衝撃を与える
@@ -144,39 +130,40 @@ protected:
      *  @param[in]  direction      向き
      *  @param[in]  float          衝撃力
      */
-    void    Impact(const CVector3& hit_position, const CVector3& direction, float power);
+    void            Impact(const CVector3& hit_position, const CVector3& direction, float power);
     /*!
      *  @brief      死亡
      */
-    void        Defeat(void);
+    void            Defeat(void);
 
 
     /*!
      *  @brief      操作
      */
-    void        Control(void);
+    void            Control(void);
 
     /*!
      *  @brief      移動処理
      */
-    void        Move(void);
+    void            Move(void);
 
     /*!
      *  @brief      ダメージを喰らった時の処理(ダメージの計算はUnit)
      */
-    void        Damage(void);
+    void            Damage(void);
 
+    static const std::string        m_file_name;                                //!< モデルのファイル名
     static const float              m_radius;                                   //!< 半径
     static const float              m_height;                                   //!< 高さ
-    static const float              m_model_scale;                              //1< モデルの大きさ
+    static const float              m_model_scale;                              //!< モデルの大きさ
     static const float              m_move_speed;                               //!< 移動速度
     static const float              m_jump_power;                               //!< ジャンプ力
-    static const CVector3           m_move_friction;                            //!< 移動用減速率
     static const float              m_fly_away_speed;                           //!< 被弾時の吹っ飛び速度
     static const float              m_max_life;                                 //!< 最大ライフ
     static const float              m_max_invincible_time;                      //!< 無敵時間
-    static const int                m_invincible_visible_interval;              //!< 無敵時間中の点滅間隔
     static const float              m_fall_accelerator;                         //!< 落下加速度
+    static const CVector3           m_move_friction;                            //!< 移動用減速率
+    static const int                m_invincible_visible_interval;              //!< 無敵時間中の点滅間隔
 
     static const unsigned int       m_player_body_color[(int)UNIT_ID::NONE];    //!< 体の色
     static const unsigned int       m_player_eye_color[(int)UNIT_ID::NONE];     //!< 目の色
@@ -184,13 +171,13 @@ protected:
     float                           m_MoveSpeedRate;                            //!< 移動速度の倍率
     float                           m_JumpPowerRate;                            //!< ジャンプ力の倍率
 
-    CSkill*                         m_Skill;                                    //!< スキル
+    std::shared_ptr<CSkill>         m_Skill;                                    //!< スキル
 
     CVector3                        m_Accelerator;                              //!< 加速度影響による移動速度
     CVector3                        m_InitialPosition;                          //!< 初期位置
+    CTimer                          m_InvincibleTimer;                          //!< 無敵時間タイマー
     bool                            m_StopFlag;                                 //!< 停止フラグ
     bool                            m_FrictionFlag;                             //!< 減速フラグ
-    CTimer                          m_InvincibleTimer;                          //!< 無敵時間タイマー
     bool                            m_ActionFlag;                               //!< 行動処理有効フラグ
-    CController*                    m_Controller;                               //!< コントローラー
+    std::shared_ptr<CController>    m_Controller;                               //!< コントローラー
 };

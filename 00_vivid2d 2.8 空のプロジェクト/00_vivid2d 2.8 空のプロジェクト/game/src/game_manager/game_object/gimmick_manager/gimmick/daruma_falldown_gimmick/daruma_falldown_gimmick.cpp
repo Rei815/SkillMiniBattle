@@ -27,10 +27,10 @@ CDaruma_FallDownGimmick::CDaruma_FallDownGimmick()
 CDaruma_FallDownGimmick::~CDaruma_FallDownGimmick(void)
 {
 }
-void CDaruma_FallDownGimmick::Initialize(IObject* object)
+void CDaruma_FallDownGimmick::Initialize(std::shared_ptr<IObject> object)
 {
 	CGimmick::Initialize(object);
-	m_Object->SetGimmick(this);
+	m_Object->SetGimmick(shared_from_this());
 }
 
 void CDaruma_FallDownGimmick::Update(void)

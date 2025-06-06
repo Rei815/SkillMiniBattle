@@ -27,10 +27,10 @@ CDodgeBallGimmick::~CDodgeBallGimmick(void)
 {
 }
 
-void CDodgeBallGimmick::Initialize(IObject* object)
+void CDodgeBallGimmick::Initialize(std::shared_ptr<IObject> object)
 {
 	CGimmick::Initialize(object, m_spawn_time);
-	m_Object->SetGimmick(this);
+	m_Object->SetGimmick(shared_from_this());
 
 	m_NowState = CANNON_STATE::SPAWN;
 
@@ -48,10 +48,10 @@ void CDodgeBallGimmick::Initialize(IObject* object)
 	m_Shot = CLauncher::GetInstance().Create(SHOT_ID::DODGE_BALL);
 }
 
-void CDodgeBallGimmick::Initialize(IObject* object, float time)
+void CDodgeBallGimmick::Initialize(std::shared_ptr<IObject> object, float time)
 {
 	CGimmick::Initialize(object, time);
-	m_Object->SetGimmick(this);
+	m_Object->SetGimmick(shared_from_this());
 
 	m_NowState = CANNON_STATE::SPAWN;
 

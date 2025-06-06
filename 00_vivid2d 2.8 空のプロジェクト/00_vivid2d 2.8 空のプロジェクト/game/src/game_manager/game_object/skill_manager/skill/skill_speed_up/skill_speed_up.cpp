@@ -68,7 +68,7 @@ Finalize(void)
  */
 void
 CSkillSpeedUp::
-SetPlayer(CPlayer* player)
+SetPlayer(std::shared_ptr<CPlayer> player)
 {
 	CSkill::SetPlayer(player);
 

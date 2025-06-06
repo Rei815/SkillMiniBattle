@@ -28,15 +28,15 @@ void CSkillInvisible::Update(void)
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
-		m_Player->SetAlpha(1.0f);
+		m_Player.lock()->SetAlpha(1.0f);
 		break;
 
 	case SKILL_STATE::ACTIVE:
-		m_Player->DecAlpha(0.5f);
+		m_Player.lock()->DecAlpha(0.5f);
 		break;
 
 	case SKILL_STATE::COOLDOWN:
-		m_Player->RevertAlpha(1.0f);
+		m_Player.lock()->RevertAlpha(1.0f);
 		break;
 	}
 }
@@ -56,13 +56,13 @@ void CSkillInvisible::Action(void)
 	if (m_State != SKILL_STATE::WAIT) return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::INVISIBLE, false);
-	m_Player->StartInvincible(m_duration_time);
+	m_Player.lock()->StartInvincible(m_duration_time);
 	m_State = SKILL_STATE::ACTIVE;
 
-	CVector3 effect_position = m_Player->GetPosition();
+	CVector3 effect_position = m_Player.lock()->GetPosition();
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effect_position, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 }
 
 /*!

@@ -3,15 +3,15 @@
 #include "vivid.h"
 #include <EffekseerForDXLib.h>      // effekseerライブラリの読み込み
 
-const float                 CCamera::m_lerp_speed = 0.1f;
-const float                 CCamera::m_near = 100.0f;
-const float                 CCamera::m_far = 200000.0f;
-const float                 CCamera::m_fov = 60.0f;
-const int                   CCamera::m_shake_interval = 3;                  //揺れの間隔
-const int                   CCamera::m_shake_max_num = 5;                   //揺れる回数
-const float                 CCamera::m_shake_value = 5.0f;                  //揺れの大きさ
-const CVector3              CCamera::m_initial_position = CVector3();       //初期位置
-const CVector3              CCamera::m_initial_direction = CVector3();      //初期の向き
+const float                 CCamera::m_lerp_speed = 0.1f;       //カメラの動きの速さ
+const float                 CCamera::m_near = 100.0f;           //Nearクリップ
+const float                 CCamera::m_far = 200000.0f;         //Farクリップ
+const float                 CCamera::m_fov = 60.0f;             //Fovクリップ
+const float                 CCamera::m_shake_interval = 0.04;   //揺れの間隔
+const int                   CCamera::m_shake_max_num = 5;       //最大の揺れる回数
+const float                 CCamera::m_shake_value = 5.0f;      //揺れの大きさ
+const CVector3              CCamera::m_position = CVector3(0, 400, -1000);  //初期位置
+const CVector3              CCamera::m_direction = CVector3::FORWARD;       //初期の向き
 
 CCamera& CCamera::GetInstance(void)
 {
@@ -26,13 +26,7 @@ CCamera& CCamera::GetInstance(void)
  */
 void CCamera::Initialize()
 {
-    m_Position.x = 0.0f;
-    m_Position.y = 400.0f;
-    m_Position.z = -1000.0f;
-
     SetCameraNearFar(m_near, m_far);
-
-    m_Direction = CVector3(0,-0.5,1);
 
     SetCameraPositionAndTarget_UpVecY(m_Position, m_Position + m_Direction);
 
@@ -105,7 +99,7 @@ void CCamera::Shake()
 {
     m_ShakeFlag = true;
 
-
+    m_ShakeTimer.Reset();
 }
 
 void CCamera::_Shake()
@@ -113,36 +107,35 @@ void CCamera::_Shake()
     if (!m_ShakeFlag)
         return;
 
-    if (++m_ShakeTimer > m_shake_interval)
+    m_ShakeTimer.Update();
+    if (!m_ShakeTimer.Finished())
     {
+
         m_ShakeVector = CVector3::ZERO;
 
         // カメラの位置と注視点をセット、注視点は向いている向き
         SetCameraPositionAndTarget_UpVecY(m_Position + m_ShakeVector, m_Position + m_Direction + m_ShakeVector);
 
-        m_ShakeTimer = 0;
+        m_ShakeTimer.Reset();
         m_ShakeVector = CVector3::DeviationToDirection(m_ShakeVector, m_shake_value);
-
-        if (++m_ShakeCount > m_shake_max_num)
-        {
-            m_ShakeCount = 0;
-            m_ShakeFlag = false;
-        }
+        ++m_ShakeCount;
     }
+    if(m_ShakeCount > m_shake_max_num)
+        m_ShakeFlag = false;
 }
 
 /*!
  *  @brief      コンストラクタ
  */
 CCamera::CCamera()
-	: m_Position()
-    , m_Direction()
+	: m_Position(m_position)
+    , m_Direction(m_direction)
     , m_Fov(m_fov)
     , m_Offset()
-    , m_ShakeCount()
-    , m_ShakeFlag()
-    , m_ShakeTimer()
-    , m_ShakeVector()
+    , m_ShakeCount(m_shake_max_num)
+    , m_ShakeFlag(false)
+    , m_ShakeTimer(m_shake_interval)
+    , m_ShakeVector(CVector3::ZERO)
 {
 }
 

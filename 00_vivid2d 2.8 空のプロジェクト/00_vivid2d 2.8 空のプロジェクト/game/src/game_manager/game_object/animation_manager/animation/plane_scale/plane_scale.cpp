@@ -11,10 +11,11 @@ CPlaneScale::~CPlaneScale()
 {
 }
 
-void CPlaneScale::Initialize(void* plane_pointer)
+void CPlaneScale::Initialize(std::shared_ptr<void> plane_pointer)
 {
-	if (!plane_pointer) return;
-	m_Plane = static_cast<CPlaneGameImage*>(plane_pointer);
+	m_Plane = std::static_pointer_cast<CPlaneGameImage>(plane_pointer);
+	if (!m_Plane) return;
+
 	m_Plane->SetSpeed(0.0f);
 
 }
@@ -36,7 +37,7 @@ void CPlaneScale::Update()
 	if (scale.x <= m_min_scale.x || scale.y <= m_min_scale.y || scale.z <= m_min_scale.z)
 	{
 		m_ActiveFlag = false;
-		CUIManager::GetInstance().Delete(m_Plane);
+		m_Plane->Delete();
 	}
 }
 

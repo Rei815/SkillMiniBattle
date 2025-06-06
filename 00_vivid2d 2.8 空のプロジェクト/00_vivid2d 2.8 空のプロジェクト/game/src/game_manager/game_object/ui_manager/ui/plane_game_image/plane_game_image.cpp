@@ -88,7 +88,6 @@ Update(void)
 	//s—ñ‚Ìì¬
 	//‰ñ“]Œã‚ÉˆÚ“®‚µAÄ“x‰ñ“]‚³‚¹‚é
 	m_Matrix = CMatrix::Rotate(CVector3(0.0f, _rad, 0.0f)) * CMatrix::Translate(m_Transform.position) * CMatrix::Rotate(CVector3(0.0f, rad, 0.0f));
-
 }
 
 /*
@@ -138,12 +137,12 @@ void CPlaneGameImage::SetSpeed(float speed)
 	m_Speed = speed;
 }
 
-IAnimation* CPlaneGameImage::GetAnimation(void)
+std::shared_ptr<IAnimation> CPlaneGameImage::GetAnimation(void)
 {
 	return m_Animation;
 }
 
-void CPlaneGameImage::SetAnimation(IAnimation* animation)
+void CPlaneGameImage::SetAnimation(std::shared_ptr<IAnimation> animation)
 {
 	m_Animation = animation;
 }

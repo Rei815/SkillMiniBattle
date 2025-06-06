@@ -40,7 +40,7 @@ public:
      *  @param[in]  id                  ギミックID
      *  @param[in]  object              オブジェクトのポインタ
      */
-    void        Create(GIMMICK_ID id, IObject* object);
+    void        Create(GIMMICK_ID id, std::shared_ptr<IObject> object);
 
     /*!
      *  @brief      ギミック生成
@@ -49,12 +49,12 @@ public:
      *  @param[in]  object              オブジェクトのポインタ
      *  @param[in]  time                遅延時間
      */
-    void        Create(GIMMICK_ID id, IObject* object, float time);
+    void        Create(GIMMICK_ID id, std::shared_ptr<IObject> object, float time);
 
     /*!
      *  @brief      ギミックリスト型
      */
-    using GIMMICK_LIST = std::list<CGimmick*>;
+    using GIMMICK_LIST = std::list<std::shared_ptr<CGimmick>>;
     GIMMICK_LIST GetList();
 private:
     /*!

@@ -207,7 +207,7 @@ void IEffect::SetRotation(const CVector3& rotation)
  */
 bool
 IEffect::
-GetActive(void)
+IsActive(void)
 {
     return m_ActiveFlag;
 }
@@ -223,7 +223,7 @@ SetActive(bool active)
 }
 
 
-void IEffect::SetParent(IUnit* parent)
+void IEffect::SetParent(std::shared_ptr<IUnit> parent)
 {
     m_Parent = parent;
 }

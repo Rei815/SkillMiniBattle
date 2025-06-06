@@ -69,6 +69,6 @@ private:
     static const float      m_belt_conveyor_rotate_y;
     static const float      m_belt_conveyor_scale;
 
-    IObject*                m_StageObject;
+    std::shared_ptr<IObject>                m_StageObject;
 
 };

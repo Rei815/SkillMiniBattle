@@ -28,15 +28,13 @@ IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     , m_Category(category)
     , m_UnitID(unit_id)
     , m_InvincibleFlag(false)
-    , m_UnitState(UNIT_STATE::ATTACK)
-    , m_Max_Vertex()
+    , m_UnitState(UNIT_STATE::APPEAR)
     , m_Radius()
-    , m_DamageRate(1.0f)
-    , m_Shot()
     , m_Alpha()
     , m_DefeatFlag(false)
-    , m_Gravity()
+    , m_Gravity(m_gravity)
     , m_Parent(nullptr)
+    , m_Model()
 {
 }
 
@@ -53,18 +51,10 @@ IUnit::
  */
 void
 IUnit::
-Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name)
+Initialize(UNIT_ID id, const CVector3& position)
 {
     m_UnitID = id;
     m_Transform.position = position;
-    m_Velocity = CVector3();
-    m_ActiveFlag = true;
-    m_InvincibleFlag = false;
-    m_UnitState = UNIT_STATE::APPEAR;
-    m_Alpha = 0.0f;
-    m_RevertAlpha = false;
-    m_FileName = file_name;
-    m_Gravity = m_gravity;
 }
 /*
  *  更新
@@ -73,35 +63,6 @@ void
 IUnit::
 Update(void)
 {
-    if (m_Parent != nullptr)
-    {
-
-        //一度接地したらジャンプや判定の外に行かない限り接地したオブジェクトに追従する
-        float offset = m_Radius - m_Radius / 3.0f;
-        const float line_length = 100.0f;
-        bool releaseFlag = false;
-        for (int i = 0; i < 9; i++)
-        {
-            CVector3 start = m_Transform.position + CVector3(-offset + (offset) * (i % 3), 0.0f, -offset + (offset) * (i / 3));
-            CVector3 end = start + CVector3(0, -line_length, 0);
-            CVector3 hitPos = m_Parent->GetModel().GetHitLinePosition(start, end);
-            if (hitPos != end)
-            {
-                m_Transform.position.y = hitPos.y + m_Radius;
-                releaseFlag = false;
-            }
-            else
-                releaseFlag = true;
-        }
-
-        if (releaseFlag || m_Parent->GetColliderActiveFlag() == false)
-            m_Parent = nullptr;
-    }
-    else
-    {
-        m_Velocity += m_Gravity;
-    }
-
     switch (m_UnitState)
     {
     case UNIT_STATE::APPEAR:    Appear();      break;
@@ -133,7 +94,7 @@ Finalize(void)
  */
 bool
 IUnit::
-CheckHitBullet(IBullet* bullet)
+CheckHitBullet(std::shared_ptr<IBullet> bullet)
 {
     if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
         return false;
@@ -172,7 +133,7 @@ CheckHitBullet(IBullet* bullet)
 }
 
 
-bool IUnit::CheckHitBulletModel(IBullet* bullet)
+bool IUnit::CheckHitBulletModel(std::shared_ptr<IBullet> bullet)
 {
     if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
         return false;
@@ -241,19 +202,19 @@ SetPosition(const CVector3& positioin)
  */
 bool
 IUnit::
-GetActive(void)
+IsActive(void)
 {
     return m_ActiveFlag;
 }
 
 /*
- *  アクティブフラグ設定
+ *  削除
  */
 void
 IUnit::
-SetActive(bool active)
+Delete()
 {
-    m_ActiveFlag = active;
+    m_ActiveFlag = false;
 }
 
 /*
@@ -350,26 +311,6 @@ CVector3 IUnit::GetForwardVector()
     return m_ForwardVector;
 }
 
-void IUnit::AddShot(void)
-{
-    m_Shot->AddShot();
-}
-
-void IUnit::AddBullet(void)
-{
-    m_Shot->AddBullet();
-}
-
-void IUnit::DamageUp(float damageRate)
-{
-    m_DamageRate += damageRate;
-}
-
-float IUnit::GetDamageRate(void)
-{
-    return m_DamageRate;
-}
-
 bool IUnit::GetDefeatFlag(void)
 {
     return m_DefeatFlag;
@@ -426,12 +367,12 @@ void IUnit::SetAlpha(float alpha)
 
 }
 
-IObject* IUnit::GetParent(void)
+std::shared_ptr<IObject> IUnit::GetParent(void)
 {
     return m_Parent;
 }
 
-void IUnit::SetParent(IObject* parent)
+void IUnit::SetParent(std::shared_ptr<IObject> parent)
 {
     m_Parent = parent;
 }
@@ -470,7 +411,8 @@ IUnit::
 Attack(void)
 {
 }
-void IUnit::HitBullet(IBullet* bullet, CVector3 hit_position)
+
+void IUnit::HitBullet(std::shared_ptr<IBullet> bullet, CVector3 hit_position)
 {
     //継承先で処理を作る
 }
@@ -478,7 +420,6 @@ void IUnit::HitBullet(IBullet* bullet, CVector3 hit_position)
 void IUnit::Impact(const CVector3& hit_position, const CVector3& direction, const float power)
 {
 }
-
 
 /*
  *  死亡
@@ -488,10 +429,4 @@ IUnit::
 Defeat(void)
 {
     m_DefeatFlag = true;
-}
-
-void IUnit::Delete(void)
-{
-    m_ActiveFlag = false;
-
 }

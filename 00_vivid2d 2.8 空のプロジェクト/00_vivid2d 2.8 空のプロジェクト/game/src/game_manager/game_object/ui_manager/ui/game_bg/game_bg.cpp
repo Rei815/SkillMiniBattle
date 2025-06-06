@@ -10,7 +10,7 @@ const int    CGameBG::m_height = 780;
  */
 CGameBG::
 CGameBG(UI_ID id)
-    : CUI(m_width, m_height, id)
+    : CUI(m_width, m_height, id, -2)
 {
 }
 
@@ -50,8 +50,6 @@ CGameBG::
 Draw(void)
 {
     vivid::DrawTexture(m_FileName, m_position, 0xffffffff);
-
-
 }
 
 /*

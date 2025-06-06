@@ -44,6 +44,6 @@ protected:
     static const float  m_duration_time;
     static const float  m_cool_time;
 
-    IEffect* m_SkillEffect;
+    std::shared_ptr<IEffect> m_SkillEffect;
 
 };

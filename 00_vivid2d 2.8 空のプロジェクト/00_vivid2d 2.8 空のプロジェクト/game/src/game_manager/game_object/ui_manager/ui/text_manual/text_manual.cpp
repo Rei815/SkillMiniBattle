@@ -8,7 +8,7 @@ const vivid::Vector2    CTextManual::m_scale = vivid::Vector2(0.3f, 0.3f);
 const vivid::Vector2    CTextManual::m_anchor = vivid::Vector2((m_width * m_scale.x) / 2.0f, (m_height * m_scale.y) / 2.0f);
 
 CTextManual::CTextManual(UI_ID id)
-	: CUI(m_width, m_height, id)
+	: CUI(m_width, m_height, id, -1)
 {
 }
 

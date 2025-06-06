@@ -112,16 +112,7 @@ Update(void)
 		m_State = STATE::WAIT;
 		break;
 	case CFallOutTopic::STATE::FINISH:
-
-		////初期値に戻す
-		//m_Rect = m_rect;
-
-		////決定されているマークの位置にする
-		//m_Rect.top = m_rect.top + (5 - static_cast<int>(m_CurrentID)) * m_height;
-		//m_Rect.bottom = m_rect.bottom + (5 - static_cast<int>(m_CurrentID)) * m_height;
-
-		//	
-		//m_ActiveFlag = false;
+		m_BackGround = nullptr;
 		break;
 	}
 }
@@ -143,6 +134,7 @@ void
 CFallOutTopic::
 Finalize(void)
 {
+	m_BackGround = nullptr;
 }
 
 void CFallOutTopic::SetMarkID(MARK_ID markID)

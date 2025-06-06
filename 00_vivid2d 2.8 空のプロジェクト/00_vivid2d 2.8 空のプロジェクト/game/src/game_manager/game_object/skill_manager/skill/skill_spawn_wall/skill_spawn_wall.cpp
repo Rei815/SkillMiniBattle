@@ -96,10 +96,10 @@ Action(void)
 	CTransform SpawnTr;
 	
 	//スポーンするオブジェクトの座標
-	SpawnTr.position = m_Player->GetPosition() + m_Player->GetForwardVector() * m_wall_spawn_distance;
+	SpawnTr.position = m_Player.lock()->GetPosition() + m_Player.lock()->GetForwardVector() * m_wall_spawn_distance;
 
 	//スポーンするオブジェクトの向き
-	CVector3 TempVector = m_Player->GetForwardVector();
+	CVector3 TempVector = m_Player.lock()->GetForwardVector();
 	float TempRotY = asin(TempVector.x) * 180.0f / DX_PI_F;
 	if (TempVector.x < 0)
 		TempRotY = -TempRotY;
@@ -109,7 +109,7 @@ Action(void)
 	m_State = SKILL_STATE::ACTIVE;
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 }
 
 /*!

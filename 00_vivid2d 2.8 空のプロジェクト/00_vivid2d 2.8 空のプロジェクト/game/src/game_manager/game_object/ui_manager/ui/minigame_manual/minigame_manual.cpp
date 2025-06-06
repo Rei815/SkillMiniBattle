@@ -20,7 +20,7 @@ const std::string CMiniGameManual::m_file_name[] =
  */
 CMiniGameManual::
 CMiniGameManual(UI_ID id)
-	: CUI(id)
+	: CUI(id, -1)
 {
 }
 
@@ -40,7 +40,7 @@ CMiniGameManual::
 Initialize(void)
 {
 	CUI::Initialize(m_position);
-	CUI* bg = CUIManager::GetInstance().Create(UI_ID::NOTICE, m_bg_position);
+	std::shared_ptr<CUI> bg = CUIManager::GetInstance().Create(UI_ID::NOTICE, m_bg_position);
 	bg->SetScale(m_bg_scale);
 
 	SetOrderInLayer(1);

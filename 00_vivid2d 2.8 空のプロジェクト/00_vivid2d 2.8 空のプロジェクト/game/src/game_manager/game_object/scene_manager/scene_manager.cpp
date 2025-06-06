@@ -1,14 +1,3 @@
-
-/*!
- *  @file       scene_manager.cpp
- *  @brief      シーン管理
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #include "scene_manager.h"
 #include "scene\title\title.h"
 #include "scene\game_roll_and_reveal\game_roll_and_reveal.h"
@@ -32,8 +21,7 @@ const float             CSceneManager::m_wait_time = 0.0f;
 /*
  *  インスタンスの取得
  */
-CSceneManager&
-CSceneManager::GetInstance(void)
+CSceneManager& CSceneManager::GetInstance(void)
 {
     static CSceneManager instance;
 
@@ -43,8 +31,7 @@ CSceneManager::GetInstance(void)
 /*
  *  初期化
  */
-void
-CSceneManager::Initialize(void)
+void CSceneManager::Initialize(void)
 {
     // ルートシーン生成
     m_NextSceneID = SCENE_ID::TITLE;
@@ -52,7 +39,7 @@ CSceneManager::Initialize(void)
     // シーン変更
     m_State = STATE::SCENE_CHANGE;
 
-    m_Timer.SetUp(m_wait_time);
+    m_SceneChangeWaitTimer.SetUp(m_wait_time);
     m_FadeSpeed = m_fade_speed;
     m_FadeColor = 0x00ffffff;
     m_PauseController = nullptr;
@@ -61,8 +48,7 @@ CSceneManager::Initialize(void)
 /*
  *  更新
  */
-void
-CSceneManager::Update(void)
+void CSceneManager::Update(void)
 {
     switch (m_State)
     {
@@ -81,7 +67,8 @@ CSceneManager::Update(void)
         m_PauseController = cm.GetSpecifiedButtonDownController(BUTTON_ID::START);
     if (m_PauseController == nullptr) return;
         m_PauseController->Update();
-    if (m_PauseController->GetButtonDown(BUTTON_ID::START) && GetLastSceneID() != SCENE_ID::TITLE && m_State == STATE::SCENE_UPDATE)
+        if (m_PauseController->GetButtonDown(BUTTON_ID::START) && 
+            GetLastSceneID() != SCENE_ID::TITLE && m_State == STATE::SCENE_UPDATE)
     {
         Pause();
     }
@@ -90,8 +77,7 @@ CSceneManager::Update(void)
 /*
  *  描画
  */
-void
-CSceneManager::Draw(void)
+void CSceneManager::Draw(void)
 {
     // シーン描画
     if (m_SceneList.empty()) return;
@@ -111,8 +97,7 @@ CSceneManager::Draw(void)
 /*
  *  シーンエフェクト描画
  */
-void
-CSceneManager::DrawSceneEffect(void)
+void CSceneManager::DrawSceneEffect(void)
 {
     vivid::DrawTexture("data\\Textures\\white.png", vivid::Vector2(), m_FadeColor);
 
@@ -121,8 +106,7 @@ CSceneManager::DrawSceneEffect(void)
 /*
  *  解放
  */
-void
-CSceneManager::Finalize(void)
+void CSceneManager::Finalize(void)
 {
     // シーン解放
     if (m_SceneList.empty()) return;
@@ -132,8 +116,6 @@ CSceneManager::Finalize(void)
     while (it != m_SceneList.end())
     {
         (*it)->Finalize();
-
-        delete (*it);
 
         it = m_SceneList.erase(it);
 
@@ -146,8 +128,7 @@ CSceneManager::Finalize(void)
 /*
  *  シーン切換え
  */
-void
-CSceneManager::ChangeScene(SCENE_ID id)
+void CSceneManager::ChangeScene(SCENE_ID id)
 {
     // 次のシーンIDを登録
     m_NextSceneID = id;
@@ -167,11 +148,11 @@ void CSceneManager::RemoveScene(SCENE_ID id)
     SCENE_LIST::iterator it = m_SceneList.begin();
     while (it != m_SceneList.end())
     {
-        IScene* scene = (IScene*)(*it);
+        std::shared_ptr<IScene> scene = *it;
 
         if (scene->GetSceneID() == id)
         {
-            scene->SetActive(false);
+            scene->Delete();
             return;
         }
         ++it;
@@ -225,7 +206,7 @@ void CSceneManager::Pause()
     }
     else
     {
-        CPause* pause = (CPause*)um.Create(UI_ID::PAUSE);
+        std::shared_ptr<CPause> pause = dynamic_pointer_cast<CPause>(um.Create(UI_ID::PAUSE));
         pause->SetPauseController(m_PauseController);
     }
     m_PauseFlag ^= true;
@@ -274,26 +255,25 @@ CSceneManager::operator=(const CSceneManager& rhs)
 /*
  *  シーン生成
  */
-IScene*
-CSceneManager::CreateScene(SCENE_ID id)
+std::shared_ptr<IScene> CSceneManager::CreateScene(SCENE_ID id)
 {
     //IDを基準にシーン多分岐
-    IScene* scene = nullptr;
+    std::shared_ptr<IScene> scene = nullptr;
 
     switch (id)
     {
-    case SCENE_ID::TITLE:                   scene = new CTitle();               break;
-    case SCENE_ID::SELECT_SKILL:            scene = new CSelectSkill();         break;
-    case SCENE_ID::GAME_ROLL_AND_REVEAL:   scene = new CGameRollAndReveal();  break;
-    case SCENE_ID::FALL_GAME:               scene = new CFallOutGame();         break;
-    case SCENE_ID::DARUMA_FALLDOWN_GAME:    scene = new CDaruma_FallDownGame(); break;
-    case SCENE_ID::DODGEBALL_GAME:          scene = new CDodgeBallGame();       break;
-    case SCENE_ID::BELTCONVEYOR_GAME:       scene = new CBeltConveyorGame();    break;
-    case SCENE_ID::MINIGAME_RESULT:         scene = new CMiniGameResult();      break;
-    case SCENE_ID::GAME_RESULT:             scene = new CGameResult();          break;
-    case SCENE_ID::ENTRY:                   scene = new CEntry();               break;
+    case SCENE_ID::TITLE:               scene = std::make_shared<CTitle>();                 break;
+    case SCENE_ID::SELECT_SKILL:        scene = std::make_shared<CSelectSkill>();           break;
+    case SCENE_ID::GAME_ROLL_AND_REVEAL:scene = std::make_shared<CGameRollAndReveal>();     break;
+    case SCENE_ID::FALL_GAME:           scene = std::make_shared<CFallOutGame>();           break;
+    case SCENE_ID::DARUMA_FALLDOWN_GAME:scene = std::make_shared<CDaruma_FallDownGame>();   break;
+    case SCENE_ID::DODGEBALL_GAME:      scene = std::make_shared<CDodgeBallGame>();         break;
+    case SCENE_ID::BELTCONVEYOR_GAME:   scene = std::make_shared<CBeltConveyorGame>();      break;
+    case SCENE_ID::MINIGAME_RESULT:     scene = std::make_shared<CMiniGameResult>();        break;
+    case SCENE_ID::GAME_RESULT:         scene = std::make_shared<CGameResult>();            break;
+    case SCENE_ID::ENTRY:               scene = std::make_shared<CEntry>();                 break;
     }
-    m_SceneList.push_back(scene);
+    m_SceneList.emplace_back(scene);
     
     //初期化
     scene->Initialize(id);
@@ -307,8 +287,7 @@ CSceneManager::CreateScene(SCENE_ID id)
 /*
  *  フェードイン
  */
-void
-CSceneManager::FadeIn(void)
+void CSceneManager::FadeIn(void)
 {
     unsigned int alpha = vivid::alpha::GetAlpha(m_FadeColor);
     if (alpha == 0u)
@@ -325,8 +304,7 @@ CSceneManager::FadeIn(void)
 /*
  *  シーン更新
  */
-void
-CSceneManager::SceneUpdate(void)
+void CSceneManager::SceneUpdate(void)
 {
     // シーン更新
     if (m_SceneList.empty()) return;
@@ -335,17 +313,15 @@ CSceneManager::SceneUpdate(void)
 
     while (it != m_SceneList.end())
     {
-        IScene* scene = (IScene*)(*it);
+        std::shared_ptr<IScene> scene = *it;
 
         //アクティブかつポーズ中でない
         if(scene->GetSceneState() == SCENE_STATE::ACTIVE && !m_PauseFlag)
             scene->Update();
 
-        if (!scene->GetActive())
+        if (!scene->IsActive())
         {
             scene->Finalize();
-
-            delete scene;
 
             it = m_SceneList.erase(it);
 
@@ -368,16 +344,15 @@ CSceneManager::SceneUpdate(void)
 /*
  *  フェードアウト
  */
-void
-CSceneManager::FadeOut(void)
+void CSceneManager::FadeOut(void)
 {
     unsigned int alpha = vivid::alpha::GetAlpha(m_FadeColor);
     if (alpha == 255u)
     {
-        m_Timer.Update();
-        if (m_Timer.Finished())
+        m_SceneChangeWaitTimer.Update();
+        if (m_SceneChangeWaitTimer.Finished())
         {
-            m_Timer.Reset();
+            m_SceneChangeWaitTimer.Reset();
             // シーン変更
             m_State = STATE::SCENE_CHANGE;
             m_FadeSpeed = -m_fade_speed;
@@ -390,20 +365,17 @@ CSceneManager::FadeOut(void)
 /*
  *  シーン変更
  */
-void
-CSceneManager::SceneChange()
+void CSceneManager::SceneChange()
 {
     if (!m_SceneList.empty())
     {
         SCENE_LIST::iterator it = m_SceneList.begin();
         while (it != m_SceneList.end())
         {
-            IScene* scene = (IScene*)(*it);
-            if (scene->GetActive() == true)
+            std::shared_ptr<IScene> scene = *it;
+            if (scene->IsActive() == true)
             {
                 scene->Finalize();
-
-                delete scene;
 
                 it = m_SceneList.erase(it);
 
@@ -422,7 +394,7 @@ CSceneManager::SceneChange()
     m_State = STATE::FADEIN;
 }
 
-IScene* CSceneManager::GetScene(SCENE_ID scene_id)
+std::shared_ptr<IScene> CSceneManager::GetScene(SCENE_ID scene_id)
 {
     if (m_SceneList.empty()) return nullptr;
 
@@ -430,9 +402,9 @@ IScene* CSceneManager::GetScene(SCENE_ID scene_id)
 
     while (it != m_SceneList.end())
     {
-        IScene* scene = (IScene*)(*it);
+        std::shared_ptr<IScene> scene = *it;
 
-        if (scene->GetActive() && scene->GetSceneID() == scene_id)
+        if (scene->IsActive() && scene->GetSceneID() == scene_id)
             return scene;
 
         ++it;

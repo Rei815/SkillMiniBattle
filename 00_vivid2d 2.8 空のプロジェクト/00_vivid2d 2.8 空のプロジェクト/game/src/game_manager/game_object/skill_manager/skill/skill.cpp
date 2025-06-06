@@ -101,7 +101,7 @@ void CSkill::Update(void)
 	}
 
 	//UI更新
-	if (m_Player != nullptr && !m_Player->GetDefeatFlag())
+	if (m_Player.lock() != nullptr && !m_Player.lock()->GetDefeatFlag())
 	{
 		if (m_UiSkillIcon != nullptr)
 		{
@@ -148,29 +148,29 @@ void CSkill::Finalize(void)
 /*!
  *  @brief      プレイヤーのセット
  */
-void CSkill::SetPlayer(CPlayer* player)
+void CSkill::SetPlayer(std::shared_ptr<CPlayer> player)
 {
 	CUIManager& uim = CUIManager::GetInstance();
-	CUI* temp;
+	std::shared_ptr<CUI> temp;
 	temp = uim.Create(UI_ID::SKILL_ICON);
-	m_UiSkillIcon = dynamic_cast<CSkillIcon*>(temp);
+	m_UiSkillIcon = std::dynamic_pointer_cast<CSkillIcon>(temp);
 	if (m_UiSkillIcon == nullptr)
-		temp->SetActive(false);
+		temp->Delete();
 
 	temp = uim.Create(UI_ID::SKILL_CURSOR);
-	m_UiSkillCursor = dynamic_cast<CSkillCursor*>(temp);
+	m_UiSkillCursor = std::dynamic_pointer_cast<CSkillCursor>(temp);
 	if (m_UiSkillCursor == nullptr)
-		temp->SetActive(false);
+		temp->Delete();
 
 	temp = uim.Create(UI_ID::SKILL_GAUGE);
-	m_UiSkillGauge = dynamic_cast<CSkillGauge*>(temp);
+	m_UiSkillGauge = std::dynamic_pointer_cast<CSkillGauge>(temp);
 	if (m_UiSkillGauge == nullptr)
-		temp->SetActive(false);
+		temp->Delete();
 
 	m_Player = player;
-	m_Player->SetSkill(this);
+	m_Player.lock()->SetSkill(shared_from_this());
 
-	m_PlayerID = m_Player->GetUnitID();
+	m_PlayerID = m_Player.lock()->GetUnitID();
 	m_IconPosition = m_icon_positionList[(int)m_PlayerID];
 
 	if (m_UiSkillIcon != nullptr)

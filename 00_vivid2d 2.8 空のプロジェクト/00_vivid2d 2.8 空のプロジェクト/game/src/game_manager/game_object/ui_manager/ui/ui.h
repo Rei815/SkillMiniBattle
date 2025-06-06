@@ -11,7 +11,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    CUI(UI_ID id);
+    CUI(UI_ID id, int layer = 0);
     /*!
      *  @brief      コンストラクタ
      */
@@ -68,14 +68,12 @@ public:
      *
      *  @return     アクティブフラグ
      */
-    bool            GetActive(void);
+    bool            IsActive(void);
 
     /*!
-     *  @brief      アクティブフラグ設定
-     *
-     *  @param[in]  active  アクティブフラグ
+     *  @brief      削除
      */
-    void            SetActive(bool active);
+    void            Delete();
 
     /*!
      *  @brief      位置取得

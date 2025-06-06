@@ -73,8 +73,8 @@ private:
     static const float			m_min_height;	        //!< 最低高度
     static const float			m_wait_height;	        //!< 待機する高さ
 
-    using CHILDRENLIST = std::list<CUI*>;
-    CHILDRENLIST                m_ChildrenList;         //!< 子UIのリスト
+    using CHILDREN_LIST = std::list<std::shared_ptr<CUI>>;
+    CHILDREN_LIST               m_ChildrenList;         //!< 子UIのリスト
     STATE                       m_State;                //!< 動きの状態
     bool                        m_WaitFlag;             //!< 待機するフラグ
 };

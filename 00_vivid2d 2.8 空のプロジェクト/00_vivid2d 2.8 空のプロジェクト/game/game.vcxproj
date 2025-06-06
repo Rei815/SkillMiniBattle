@@ -190,7 +190,6 @@
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\entry\entry.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game\belt_conveyor_game\belt_conveyor_game.cpp" />
     <ClCompile Include="src\game_manager\game_object\light\light.cpp" />
-    <ClCompile Include="src\game_manager\game_object\object_manager\object\maze_stage\maze_stage.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\strong_wind_effect\strong_wind_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\game_result\game_result.cpp" />
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\barrier_effect\barrier_effect.cpp" />
@@ -344,7 +343,6 @@
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\entry\entry.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game\belt_conveyor_game\belt_conveyor_game.h" />
     <ClInclude Include="src\game_manager\game_object\light\light.h" />
-    <ClInclude Include="src\game_manager\game_object\object_manager\object\maze_stage\maze_stage.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\strong_wind_effect\strong_wind_effect.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\game_result\game_result.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\select_skill\select_skill.h" />

@@ -36,8 +36,8 @@ public:
     void        Finalize(void);
 
 private:
-    static const std::string        m_file_name;
-    static const vivid::Vector2     m_position;             //!< 位置
+    static const std::string        m_file_name;        //!< ファイル名
+    static const vivid::Vector2     m_position;         //!< 位置
 
     static const int                m_height;           //!< 高さ
     static const int                m_width;            //!< 幅

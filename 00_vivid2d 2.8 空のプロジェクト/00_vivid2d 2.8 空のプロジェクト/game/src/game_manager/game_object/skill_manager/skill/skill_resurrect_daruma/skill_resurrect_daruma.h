@@ -42,8 +42,8 @@ protected:
     static const float m_duration_time;
     static const float m_effect_scale;
 
-    IEffect*            m_SkillEffect;
-    IEffect*            m_ResurrectEffect;
+    std::shared_ptr<IEffect>            m_SkillEffect;
+    std::shared_ptr<IEffect>            m_ResurrectEffect;
     CVector3            m_Resurrect_Position;
     bool                m_EffectFlag;
 };

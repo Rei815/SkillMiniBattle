@@ -43,17 +43,17 @@ public:
 
 
 protected:
-    static const float       m_cool_time;
-    static const float       m_duration_time;
-    static const CVector3    m_EffectPosition;
-    static const float       m_effect_scale;
+    static const float          m_cool_time;
+    static const float          m_duration_time;
+    static const CVector3       m_EffectPosition;
+    static const float          m_effect_scale;
 
-    CPlayer*            m_Target;
+    std::shared_ptr<CPlayer>    m_Target;
 
     CDataManager&       dm = CDataManager::GetInstance();
     CUnitManager&       um = CUnitManager::GetInstance();
 
-    CDaruma_FallDownGimmick* m_Gimmick;
-    IEffect* m_Effect;
-    IEffect* m_SkillEffect;
+    std::shared_ptr<CDaruma_FallDownGimmick> m_Gimmick;
+    std::shared_ptr<IEffect> m_Effect;
+    std::shared_ptr<IEffect> m_SkillEffect;
 };

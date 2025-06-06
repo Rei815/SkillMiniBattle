@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 class IAnimation
 {
 public:
@@ -13,11 +14,10 @@ public:
 	virtual ~IAnimation();
 
 	/*!
-	 *  @brief      初期化
+	 *  @brief      初期化(純粋仮想関数のため派生先で定義)
 	 *
-	 *  @param[in]  object_pointer    アニメーションさせるオブジェクトのポインタ
 	*/
-	virtual void	Initialize(void* object_pointer) = 0;
+	virtual void	Initialize(std::shared_ptr<void> pointer) = 0;
 
 	/*!
 	 *  @brief      更新
@@ -34,14 +34,12 @@ public:
 	 *
 	 *  @return     アクティブフラグ
 	 */
-	bool            GetActive(void);
+	bool            IsActive(void);
 
 	/*!
 	 *  @brief      アクティブフラグ設定
-	 *
-	 *  @param[in]  active  アクティブフラグ
 	 */
-	void            SetActive(bool active);
+	void            Delete();
 
 protected:
 	

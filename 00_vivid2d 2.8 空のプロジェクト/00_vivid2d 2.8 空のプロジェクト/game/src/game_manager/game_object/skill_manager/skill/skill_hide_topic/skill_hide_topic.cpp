@@ -42,9 +42,9 @@ Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
-		if (m_Parent)
+		if (m_ParentTopic)
 		{
-			m_Shutter->SetPosition(m_Parent->GetPosition());
+			m_Shutter->SetPosition(m_ParentTopic->GetPosition());
 		}
 		break;
 	case SKILL_STATE::COOLDOWN:
@@ -92,12 +92,13 @@ Action(void)
 	CUIManager::UI_LIST topicList;
 	CUIManager::UI_LIST::iterator it = uiList.begin();
 
+	//UIƒŠƒXƒg‚©‚ç‚¨‘è‚¾‚¯‚ðŽæ“¾‚·‚é
 	while (it != uiList.end())
 	{
-		CUI* ui = (*it);
+		std::shared_ptr<CUI> ui = (*it);
 		if (ui->GetUI_ID() == UI_ID::FALLOUT_TOPIC_BG)
 		{
-			topicList.push_back(ui);
+			topicList.emplace_back(ui);
 		}
 		++it;
 	}
@@ -105,14 +106,14 @@ Action(void)
 	it = topicList.begin();
 	int num = rand() % topicList.size();
 	std::advance(it, num);
-	m_Parent = (*it);
+	m_ParentTopic = (*it);
 	m_Shutter = CUIManager::GetInstance().Create(UI_ID::TOPIC_SHUTTER, (*it)->GetPosition());
 	m_State = SKILL_STATE::ACTIVE;
 
-	CVector3 effect_position = m_Player->GetPosition();
+	CVector3 effect_position = m_Player.lock()->GetPosition();
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effect_position, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 }
 
 /*!

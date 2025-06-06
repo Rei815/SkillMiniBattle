@@ -86,9 +86,9 @@ public:
 	 */
 	void SetScale(const CVector3& scale);
 
-	bool CheckHitLine(const CVector3& startPos, const CVector3& endPos);
+	bool CheckHitLine(const CVector3& startPos, const CVector3& endPos)const;
 	bool CheckHitTriangle(const CVector3& posA, const CVector3& posB, const CVector3& posC);
-	CVector3 GetHitLinePosition(const CVector3& startPos, const CVector3& endPos);
+	CVector3 GetHitLinePosition(const CVector3& startPos, const CVector3& endPos)const;
 	CVector3 GetHitTrianglePosition(const CVector3& posA, const CVector3& posB, const CVector3& posC);
 
 	unsigned int GetMaterialDif(int material_index);

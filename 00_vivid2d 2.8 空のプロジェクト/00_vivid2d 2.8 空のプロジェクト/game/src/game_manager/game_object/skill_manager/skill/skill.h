@@ -16,7 +16,7 @@ enum class SKILL_STATE
     COOLDOWN,
 };
 
-class CSkill
+class CSkill : public std::enable_shared_from_this<CSkill>
 {
 public:
     CSkill(float duration_time = 0.0f, float cool_time = 0.0f);
@@ -46,7 +46,7 @@ public:
     /*!
      *  @brief      プレイヤーのセット
      */
-    virtual void    SetPlayer(CPlayer* player);
+    virtual void    SetPlayer(std::shared_ptr<CPlayer> player);
 
     /*!
      *  @brief      アクション呼び出し
@@ -80,23 +80,18 @@ public:
      */
     void    SetState(SKILL_STATE state);
 
-    /*
-                サウンド再生
-    */
-    void SoundPlay();
-
 protected:
     static const vivid::Vector2     m_icon_positionList[];
     static const float              m_icon_scale;
 
-    CPlayer*            m_Player;
+    std::weak_ptr<CPlayer>          m_Player;
 
     SKILL_CATEGORY      m_Category;
     SKILL_ID            m_SkillID;
 
-    CSkillIcon*         m_UiSkillIcon;
-    CSkillGauge*        m_UiSkillGauge;
-    CSkillCursor*       m_UiSkillCursor;
+    std::shared_ptr<CSkillIcon>         m_UiSkillIcon;
+    std::shared_ptr<CSkillGauge>        m_UiSkillGauge;
+    std::shared_ptr<CSkillCursor>       m_UiSkillCursor;
 
     vivid::Vector2      m_IconPosition;
 

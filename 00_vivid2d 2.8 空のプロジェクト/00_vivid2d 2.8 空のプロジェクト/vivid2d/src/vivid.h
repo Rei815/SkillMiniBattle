@@ -745,6 +745,13 @@ namespace vivid
     int     GetWindowHeight(void);
 
     /*!
+     *  @brief      ウィンドウの中心位置取得
+     *
+     *  @return     ウィンドウの中心位置
+     */
+    vivid::Vector2  GetWindowCenterPosition(void);
+
+    /*!
      *  @brief      デルタタイム取得
      *              デルタタイムは前回の更新からどれくらいの時間が経過したかの値
      *

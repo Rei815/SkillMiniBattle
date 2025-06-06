@@ -84,14 +84,14 @@ public:
      *
      *  @return     アニメーション
      */
-    IAnimation*     GetAnimation(void);
+    std::shared_ptr<IAnimation>     GetAnimation(void);
 
     /*!
      *  @brief      アニメーション設定
      *
      *  @param[in]  animation  アニメーション
      */
-    void            SetAnimation(IAnimation* animation);
+    void            SetAnimation(std::shared_ptr<IAnimation> animation);
 
 private:
 
@@ -116,5 +116,5 @@ private:
     CVector3                        m_InitialPosition;  //!< 初期位置
     GAME_ID                         m_GameID;           //!< 画像のゲームID
     CMatrix                         m_Matrix;
-    IAnimation*                     m_Animation;
+    std::shared_ptr<IAnimation>     m_Animation;
 };

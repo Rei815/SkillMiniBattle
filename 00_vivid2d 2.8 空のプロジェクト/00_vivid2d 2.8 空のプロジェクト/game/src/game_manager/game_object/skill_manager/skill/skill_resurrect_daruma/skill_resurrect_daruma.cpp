@@ -37,8 +37,8 @@ void CSkillResurrectDaruma::Update(void)
 			m_EffectFlag = true;
 			m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
 			m_ResurrectEffect = CEffectManager::GetInstance().Create(EFFECT_ID::RESURRECT, CVector3().ZERO, CVector3(), m_effect_scale);
-			m_SkillEffect->SetParent(m_Player);
-			m_ResurrectEffect->SetParent(m_Player);
+			m_SkillEffect->SetParent(m_Player.lock());
+			m_ResurrectEffect->SetParent(m_Player.lock());
 		}
 
 		break;
@@ -64,7 +64,7 @@ void CSkillResurrectDaruma::Action(void)
 
 void CSkillResurrectDaruma::ActionEnd(void)
 {
-	m_Player->SetActionFlag(true);
+	m_Player.lock()->SetActionFlag(true);
 
 	if (m_SkillEffect != nullptr)
 	{

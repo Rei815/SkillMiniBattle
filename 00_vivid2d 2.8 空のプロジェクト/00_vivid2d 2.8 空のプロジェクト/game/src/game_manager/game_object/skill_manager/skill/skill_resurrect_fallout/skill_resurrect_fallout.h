@@ -40,9 +40,9 @@ public:
 
 protected:
     static const float      m_resurrect_height;
-    static const CVector3   m_initial_position;
+    static const CVector3   m_position;
     static const float      m_effect_scale;
 
-    IEffect*                m_SkillEffect;
-    IEffect*                m_ResurrectEffect;
+    std::shared_ptr<IEffect>                m_SkillEffect;
+    std::shared_ptr<IEffect>                m_ResurrectEffect;
 };

@@ -578,6 +578,14 @@ GetWindowHeight(void)
 }
 
 /*
+ *  ウィンドウの中心位置取得
+ */
+vivid::Vector2 vivid::GetWindowCenterPosition(void)
+{
+    return vivid::Vector2(g_window_width / 2.0f, g_window_height / 2.0f);
+}
+
+/*
  *  デルタタイム取得
  */
 float

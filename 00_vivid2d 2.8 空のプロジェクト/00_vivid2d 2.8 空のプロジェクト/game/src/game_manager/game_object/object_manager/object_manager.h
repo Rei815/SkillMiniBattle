@@ -42,7 +42,7 @@ public:
      *  @param[in]  id              オブジェクトID
      *  @param[in]  position        位置
      */
-    IObject*    Create(OBJECT_ID id, const CTransform& transform);
+    std::shared_ptr<IObject>    Create(OBJECT_ID id, const CTransform& transform);
 
     /*!
      *  @brief      ギミック付与
@@ -50,7 +50,7 @@ public:
      *  @param[in]  gimmick_id          ギミックのID
      *  @param[in]  object              オブジェクト
      */
-    void        StartGimmick(GIMMICK_ID gimmick_id, IObject* object);
+    void        SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object);
 
     /*!
      *  @brief      ギミック付与
@@ -59,12 +59,12 @@ public:
      *  @param[in]  object              オブジェクト
      *  @param[in]  delayFrame          遅延時間
      */
-    void        StartGimmick(GIMMICK_ID gimmick_id, IObject* object, float time);
+    void        SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object, float time);
 
     /*!
      *  @brief      オブジェクトリスト型
      */
-    using OBJECT_LIST = std::list<IObject*>;
+    using OBJECT_LIST = std::list<std::shared_ptr<IObject>>;
 
     /*!
      *  @brief      リスト取得
@@ -79,7 +79,7 @@ public:
      *  @param[in]  player          プレイヤークラス
      *  @return     オブジェクト(ポインタ)
      */
-    IObject*    CheckHitObject(CPlayer* player);
+    std::shared_ptr<IObject>    CheckHitObject(std::shared_ptr<CPlayer> player);
 private:
 
     /*!

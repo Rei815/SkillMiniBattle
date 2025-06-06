@@ -4,6 +4,7 @@
 #include <list>
 #include "animation/animation_id.h"
 #include "animation/animation.h"
+#include <memory>
 class CAnimationManager
 {
 public:
@@ -29,18 +30,19 @@ public:
      */
     void        Finalize(void);
 
-    ///*!
-    // *  @brief        アニメーション生成
-    // *
-    // *  @param[in]    id                  ギミックID
-    // *  @return       アニメーション
-    // */
-    IAnimation*        Create(ANIMATION_ID id, void* object_pointer);
+    /*!
+     *  @brief        アニメーション生成
+     *
+     *  @param[in]    id                ギミックID
+     *  @param[in]    pointer           アニメーションさせるインスタンスのポインタ
+     *  @return       アニメーション
+     */
+    std::shared_ptr<IAnimation>        Create(ANIMATION_ID id, std::shared_ptr<void> pointer);
 
     /*!
      *  @brief      ギミックリスト型
      */
-    using ANIMATION_LIST = std::list<IAnimation*>;
+    using ANIMATION_LIST = std::list<std::shared_ptr<IAnimation>>;
 
     /*!
      *  @brief      リスト取得

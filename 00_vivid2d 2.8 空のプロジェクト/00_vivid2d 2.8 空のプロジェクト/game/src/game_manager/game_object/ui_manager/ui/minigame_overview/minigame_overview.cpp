@@ -23,7 +23,7 @@ const std::string CMiniGameOverView::m_file_name[] =
  */
 CMiniGameOverView::
 CMiniGameOverView(UI_ID id)
-	: CUI(id)
+	: CUI(id, -1)
 {
 }
 
@@ -43,7 +43,7 @@ CMiniGameOverView::
 Initialize(void)
 {
 	CUI::Initialize(m_position);
-	CUI* bg = CUIManager::GetInstance().Create(UI_ID::NOTICE_WIDE, m_bg_position);
+	std::shared_ptr<CUI> bg = CUIManager::GetInstance().Create(UI_ID::NOTICE_WIDE, m_bg_position);
 	bg->SetScale(m_bg_scale);
 	SetOrderInLayer(1);
 	m_FileName = m_file_name[(int)CDataManager::GetInstance().GetSelectGameID()];

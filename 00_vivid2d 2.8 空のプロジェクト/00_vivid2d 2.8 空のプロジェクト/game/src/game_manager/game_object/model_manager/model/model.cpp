@@ -6,7 +6,7 @@
 * コンストラクタ
 */
 CModel::CModel()
-	: m_Transform()
+	: m_Transform(CVector3())
  	, m_Handle(VIVID_DX_ERROR)
 {
 }
@@ -143,7 +143,7 @@ void CModel::SetScale(const CVector3& scale)
 	m_Transform.scale = scale;
 }
 
-bool CModel::CheckHitLine(const CVector3& startPos, const CVector3& endPos)
+bool CModel::CheckHitLine(const CVector3& startPos, const CVector3& endPos)const
 {
 	MV1_COLL_RESULT_POLY hitPoly = MV1CollCheck_Line(m_Handle, -1, startPos, endPos);
 	if (hitPoly.HitFlag == 1)
@@ -159,7 +159,7 @@ bool CModel::CheckHitTriangle(const CVector3& posA, const CVector3& posB, const 
 	return false;
 }
 
-CVector3 CModel::GetHitLinePosition(const CVector3& startPos, const CVector3& endPos)
+CVector3 CModel::GetHitLinePosition(const CVector3& startPos, const CVector3& endPos)const
 {
 	MV1_COLL_RESULT_POLY hitPoly = MV1CollCheck_Line(m_Handle, -1, startPos, endPos);
 	if (hitPoly.HitFlag == 1)

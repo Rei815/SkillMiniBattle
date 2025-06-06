@@ -99,8 +99,6 @@ Finalize(void)
     {
         (*it)->Finalize();
 
-        delete(*it);
-
         ++it;
     }
 
@@ -119,46 +117,46 @@ void
 CSkillManager::
 CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
 {
-    CSkill* skill = nullptr;
+    std::shared_ptr<CSkill> skill = nullptr;
 
     switch (skill_id)
     {
     case SKILL_ID::SPEED_UP:
-        skill = new CSkillSpeedUp();            break;
+        skill = std::make_shared<CSkillSpeedUp>();          break;
     case SKILL_ID::JUMP_UP:
-        skill = new CSkillJumpUp();             break;
+        skill = std::make_shared<CSkillJumpUp>();           break;
     case SKILL_ID::FLOATING:
-        skill = new CSkillFloating();           break;
+        skill = std::make_shared<CSkillFloating>();         break;
     case SKILL_ID::STOMP:
-        skill = new CSkillStomp();              break;
+        skill = std::make_shared<CSkillStomp>();            break;
     case SKILL_ID::DASH:
-        skill = new CSkillDash();               break;
+        skill = std::make_shared<CSkillDash>();             break;
     case SKILL_ID::SPAWN_WALL:
-        skill = new CSkillSpawnWall();          break;
+        skill = std::make_shared<CSkillSpawnWall>();        break;
     case SKILL_ID::BARRIER:
-        skill = new CSkillBarrier();            break;
+        skill = std::make_shared<CSkillBarrier>();          break;
     case SKILL_ID::GRAVITY_AREA:
-        skill = new CSkillGravityArea();        break;
+        skill = std::make_shared<CSkillGravityArea>();      break;
     case SKILL_ID::INVISIBLE:
-        skill = new CSkillInvisible();          break;
+        skill = std::make_shared<CSkillInvisible>();        break;
     case SKILL_ID::STUN:
-        skill = new CSkillStun();               break;
+        skill = std::make_shared<CSkillStun>();             break;
     case SKILL_ID::MIMICRY:
-        skill = new CSkillMimicry();            break;
+        skill = std::make_shared<CSkillMimicry>();          break;
     case SKILL_ID::SLOW:
-        skill = new CSkillSlow();               break;
+        skill = std::make_shared<CSkillSlow>();             break;
     case SKILL_ID::OGRE_CONTOROL:
-        skill = new CSkillOgreControl();        break;
+        skill = std::make_shared<CSkillOgreControl>();      break;
     case SKILL_ID::RESURRECT_DARUMA:
-        skill = new CSkillResurrectDaruma();    break;
+        skill = std::make_shared<CSkillResurrectDaruma>();  break;
     case SKILL_ID::RESURRECT_FALLOUT:
-        skill = new CSkillResurrectFallout();   break;
+        skill = std::make_shared<CSkillResurrectFallout>(); break;
     case SKILL_ID::RESURRECT_BELT:
-        skill = new CSkillResurrectBelt();      break;
+        skill = std::make_shared<CSkillResurrectBelt>();    break;
     case SKILL_ID::STRONG_WIND:
-        skill = new CSkillStrongWind();         break;
+        skill = std::make_shared<CSkillStrongWind>();       break;
     case SKILL_ID::HIDE_TOPIC:
-        skill = new CSkillHideTopic();          break;
+        skill = std::make_shared<CSkillHideTopic>();        break;
 
     default:
         break;
@@ -182,7 +180,7 @@ SetSkill(void)
         if (m_SetSkill[i] != nullptr)
         {
             m_SetSkill[i]->SetPlayer(CUnitManager::GetInstance().GetPlayer((UNIT_ID)i));
-            m_SkillList.push_back(m_SetSkill[i]);
+            m_SkillList.emplace_back(m_SetSkill[i]);
         }
     }
 }

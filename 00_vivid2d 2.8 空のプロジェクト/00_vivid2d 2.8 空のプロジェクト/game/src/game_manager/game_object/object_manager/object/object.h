@@ -2,7 +2,7 @@
 #include "../../model_manager/model/model.h"
 #include "object_id.h"
 #include "../../gimmick_manager/gimmick/gimmick.h"
-
+#include <memory>
 class CGimmick;
 class IObject
 {
@@ -43,7 +43,7 @@ public:
      *
      *  @return     アクティブフラグ
      */
-    bool            GetActive(void);
+    bool            IsActive(void);
 
     /*!
      *  @brief      アクティブフラグ設定
@@ -115,9 +115,9 @@ public:
      */
     CModel          GetModel();
 
-    void            SetGimmick(CGimmick* gimmick);
+    void            SetGimmick(std::shared_ptr<CGimmick> gimmick);
     
-    CGimmick*       GetGimmick();
+    std::shared_ptr<CGimmick>       GetGimmick();
 
     /*!
      *  @brief      モデル取得
@@ -148,16 +148,15 @@ public:
     void            SetColliderActiveFlag(bool active);
 
 protected:
-    static const float  m_limit_alpha;
-    OBJECT_ID           m_ObjectID;
-    CModel			    m_Model;
-    CTransform		    m_Transform;
-    CVector3            m_Velocity;
-    std::string         m_FileName;
-    bool                m_ActiveFlag;
-    float               m_Alpha;
-    CGimmick*           m_Gimmick;
-    std::string         m_Tag;
-
-    bool                m_ColliderActiveFlag;
+    static const float          m_limit_alpha;          //!< アルファ値の限界値
+    OBJECT_ID                   m_ObjectID;             //!< オブジェクトのID
+    CModel			            m_Model;                //!< モデル
+    CTransform		            m_Transform;            //!< トランスフォーム
+    CVector3                    m_Velocity;             //!< 速度
+    std::string                 m_FileName;             //!< ファイル名
+    bool                        m_ActiveFlag;           //!< アクティブフラグ
+    float                       m_Alpha;                //!< アルファ値
+    std::shared_ptr<CGimmick>   m_Gimmick;              //!< ギミック
+    std::string                 m_Tag;                  //!< タグ名
+    bool                        m_ColliderActiveFlag;   //!< 判定を取るか
 };

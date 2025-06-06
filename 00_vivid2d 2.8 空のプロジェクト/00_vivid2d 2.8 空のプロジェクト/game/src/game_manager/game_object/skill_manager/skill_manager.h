@@ -41,7 +41,7 @@ public:
     /*!
      *  @brief      スキルリスト型
      */
-    using SKILL_LIST = std::list<CSkill*>;
+    using SKILL_LIST = std::list<std::shared_ptr<CSkill>>;
 
     /*!
      *  @brief      スキル生成
@@ -80,7 +80,7 @@ private:
      */
     CSkillManager& operator=(const CSkillManager& rhs);
 
-    CSkill*     m_SetSkill[(int) UNIT_ID::NONE];
+    std::shared_ptr<CSkill>     m_SetSkill[(int) UNIT_ID::NONE];
 
     SKILL_LIST  m_SkillList;             //!< スキルリスト
 };

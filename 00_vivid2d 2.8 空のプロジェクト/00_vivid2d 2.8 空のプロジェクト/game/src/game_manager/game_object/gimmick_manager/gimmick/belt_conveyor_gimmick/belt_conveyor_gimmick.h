@@ -22,9 +22,9 @@ public:
      *  @brief      ‰Šú‰»
      *
      */
-    void    Initialize(IObject* object);
+    void    Initialize(std::shared_ptr<IObject> object);
 
-    void    Initialize(IObject* object, float time);
+    void    Initialize(std::shared_ptr<IObject> object, float time);
 
     /*!
      *  @brief      XV
@@ -60,5 +60,5 @@ private:
 
     static const float      m_obstruction_object_fall_speed;
 
-    std::list<IObject*>     m_ObstructionObjectList;
+    std::list<std::shared_ptr<IObject>>     m_ObstructionObjectList;
 };

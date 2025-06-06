@@ -49,7 +49,7 @@ protected:
     static const CVector3 m_model_rot;
     static const float m_model_scale;
 
-    IEffect*    m_SkillEffect;
+    std::shared_ptr<IEffect>    m_SkillEffect;
     CModel      m_ObjModel;
     CTransform  m_ObjTransform;
 };

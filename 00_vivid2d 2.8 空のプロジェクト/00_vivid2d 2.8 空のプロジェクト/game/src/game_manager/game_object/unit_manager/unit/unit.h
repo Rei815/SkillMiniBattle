@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "unit_id.h"
@@ -7,7 +6,7 @@
 #include "..\..\bullet_manager\bullet\bullet.h"
 #include "..\..\object_manager\object\object.h"
 #include "../../launcher/shot/shot.h"
-
+#include <memory>
 
 /*!
  *  @brief  ユニットの状態ID
@@ -41,7 +40,7 @@ public:
      *
      *  @param[in]  position    位置
      */
-    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position, const std::string& file_name);
+    virtual void    Initialize(UNIT_ID unit_id, const CVector3& position);
 
     /*!
      *  @brief      更新
@@ -66,7 +65,7 @@ public:
      *  @retval     true    当たっている
      *  @retval     false   当たっていない
      */
-    virtual bool    CheckHitBullet(IBullet* bullet);
+    virtual bool    CheckHitBullet(std::shared_ptr<IBullet> bullet);
 
     /*!
      *  @brief      アタリ判定チェック
@@ -76,7 +75,7 @@ public:
      *  @retval     true    当たっている
      *  @retval     false   当たっていない
      */
-    virtual bool    CheckHitBulletModel(IBullet* bullet);
+    virtual bool    CheckHitBulletModel(std::shared_ptr<IBullet> bullet);
 
     /*!
      *  @brief      ユニットID取得
@@ -104,14 +103,12 @@ public:
      *
      *  @return     アクティブフラグ
      */
-    bool            GetActive(void);
+    bool            IsActive(void);
 
     /*!
-     *  @brief      アクティブフラグ設定
-     *
-     *  @param[in]  active  アクティブフラグ
+     *  @brief      削除
      */
-    void            SetActive(bool active);
+    void            Delete();
 
     /*!
      *  @brief      ユニット識別子取得
@@ -165,14 +162,14 @@ public:
      *
      *  @param[in]  velocity    セットする速度
      */
-    void SetAffectedVelocity(CVector3 velocity);
+    void            SetAffectedVelocity(CVector3 velocity);
 
     /*!
      *  @brief      『外部からの影響による移動速度』の加算
      *
      *  @param[in]  velocity    加算する速度
      */
-    void AddAffectedVelocity(CVector3 velocity);
+    void            AddAffectedVelocity(CVector3 velocity);
 
     /*!
      *  @brief      半径取得
@@ -192,63 +189,68 @@ public:
      *  @brief      弾数追加
      *
      */
-    void        AddShot(void);
+    void            AddShot(void);
 
     /*!
      *  @brief      発射数追加
      *
      */
-    void        AddBullet(void);
+    void            AddBullet(void);
 
     /*!
      *  @brief      弾数追加
      *
      */
-    void        DamageUp(float damageRate);
+    void            DamageUp(float damageRate);
 
     /*!
      *  @brief      攻撃率取得
      *
      *  @return     攻撃率
      */
-    float       GetDamageRate(void);
+    float           GetDamageRate(void);
 
     /*!
      *  @brief      敗北フラグ取得
      *
      *  @return     敗北フラグ
      */
-    bool       GetDefeatFlag(void);
+    bool            GetDefeatFlag(void);
 
     /*!
      *  @brief      敗北フラグ設定
      *
      *  @param[in]  flag    敗北フラグ
      */
-    void       SetDefeatFlag(bool flag);
-
-    CModel      GetModel(void);
+    void            SetDefeatFlag(bool flag);
 
     /*!
-         *  @brief      地上にいるかどうかを設定
-         *
-         *  @param[in]  flag    接地フラグ
+     *  @brief      モデル取得
+     *
+     *  @return     モデル
      */
-    void        SetIsGround(bool flag);
+    CModel          GetModel(void);
 
     /*!
-         *  @brief      地上にいるかどうかを取得
-         *
-         *  @return     接地フラグ
+     *  @brief      地上にいるかどうかを設定
+     *
+     *  @param[in]  flag    接地フラグ
      */
-    bool        GetIsGround();
+    void            SetIsGround(bool flag);
+
+    /*!
+         *  @brief  地上にいるかどうかを取得
+         *
+         *  @return 接地フラグ
+     */
+    bool            GetIsGround();
 
     /*!
      *  @brief      重力を設定
      *
      *  @param[in]  gravity    重力値
      */
-    void        SetGravity(const CVector3& gravity);
+    void            SetGravity(const CVector3& gravity);
 
     /*!
      *  @brief      基礎重力を取得
@@ -261,27 +263,27 @@ public:
     /*!
      *  @brief      アルファ値を減らしていく
      */
-    void    DecAlpha(float alpha = 0.0f);
+    void            DecAlpha(float alpha = 0.0f);
     /*!
      *  @brief      アルファ値を元に戻す
      */
-    void        RevertAlpha(float alpha);
+    void            RevertAlpha(float alpha);
 
-    void        SetAlpha(float alpha);
+    void            SetAlpha(float alpha);
 
     /*!
      *  @brief      親のオブジェクトを取得
      *
      *  @return     親のオブジェクト
      */
-    IObject*    GetParent(void);
+    std::shared_ptr<IObject>        GetParent(void);
 
     /*!
      *  @brief      親のオブジェクトを設定
      *
      *  @param[in]  parent    親のオブジェクト
      */
-    void        SetParent(IObject* parent);
+    void            SetParent(std::shared_ptr<IObject> parent);
 
     void            SetForwardVector(const CVector3& forward_vector);
 
@@ -300,25 +302,11 @@ protected:
     virtual void    Attack(void);
 
     /*!
-     *  @brief      射撃
-     *  @param[in]  aim         Playerを狙うかどうか
-     *  @param[in]  position    発射位置
-     */
-    void        Fire(CShot* shot, bool aim, CVector3& position);
-
-    /*!
-     *  @brief      射撃
-     *  @param[in]  aim         Playerを狙うかどうか
-     *  @param[in]  position    発射位置
-     */
-    void        Fire(CShot* shot, bool aim, CVector3& position, const CVector3& direction);
-
-    /*!
      *  @brief      被弾
      *  @param[in]  bullet          被弾した弾
      *  @param[in]  hit_position    被弾位置
      */
-    virtual void    HitBullet(IBullet* bullet, CVector3 hit_position);
+    virtual void    HitBullet(std::shared_ptr<IBullet> bullet, CVector3 hit_position);
 
     /*!
      *  @brief      衝撃を与える
@@ -333,36 +321,25 @@ protected:
      */
     virtual void    Defeat(void);
 
-    /*!
-     *  @brief      削除
-     */
-    virtual void    Delete(void);
-
     static const float      m_destroy_scale_adjust;     //!< エフェクト(destroy)の大きさ調整値
     static const float      m_alpha_speed;              //!< アルファ値の速度
-    static const CVector3   m_gravity;
+    static const CVector3   m_gravity;                  //!< 重力値
 
-    float                   m_Radius;
-    float                   m_Height;
-    CModel                  m_Model;
-    CTransform	            m_Transform;		    //!< トランスフォーム
-    CVector3                m_ForwardVector;        //!< 正面方向のベクトル
-    CVector3	            m_Max_Vertex;		    //!< 最大頂点座標
-    CVector3                m_Velocity;             //!< 速度
-    CVector3                m_AffectedVelocity;     //!< 外部からの影響による速度
-    CVector3                m_Gravity;              //!< 重力
-    UNIT_CATEGORY           m_Category;             //!< ユニット識別子
-    UNIT_ID                 m_UnitID;               //!< ユニットID
-    bool                    m_ActiveFlag;           //!< アクティブフラグ
-    bool                    m_InvincibleFlag;       //!< 無敵フラグ
-    UNIT_STATE              m_UnitState;            //!< 状態ID
-    bool                    m_AimFlag;              //!< 狙うかどうか
-    float                   m_DamageRate;
-    CShot*                  m_Shot;
-    bool                    m_RevertAlpha;              //!< アルファ値を戻す
+    float                   m_Radius;                   //!< 半径
+    float                   m_Height;                   //!< 高さ
+    CModel                  m_Model;                    //!< モデル
+    CTransform	            m_Transform;		        //!< トランスフォーム
+    CVector3                m_ForwardVector;            //!< 正面方向のベクトル
+    CVector3                m_Velocity;                 //!< 速度
+    CVector3                m_AffectedVelocity;         //!< 外部からの影響による速度
+    CVector3                m_Gravity;                  //!< 重力
+    UNIT_CATEGORY           m_Category;                 //!< ユニット識別子
+    UNIT_ID                 m_UnitID;                   //!< ユニットID
+    bool                    m_ActiveFlag;               //!< アクティブフラグ
+    bool                    m_InvincibleFlag;           //!< 無敵フラグ
+    UNIT_STATE              m_UnitState;                //!< 状態ID
     float                   m_Alpha;                    //!< アルファ値
     bool                    m_DefeatFlag;               //!< 敗北フラグ
-    std::string             m_FileName;
     bool                    m_IsGround;                 //!< 地上にいるか
-    IObject*                m_Parent;                   //!< 親のオブジェクト
+    std::shared_ptr<IObject>                m_Parent;                   //!< 親のオブジェクト
 };

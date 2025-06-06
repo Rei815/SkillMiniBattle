@@ -165,7 +165,7 @@ GetRadius(void)
  */
 bool
 IBullet::
-GetActive(void)
+IsActive(void)
 {
     return m_ActiveFlag;
 }

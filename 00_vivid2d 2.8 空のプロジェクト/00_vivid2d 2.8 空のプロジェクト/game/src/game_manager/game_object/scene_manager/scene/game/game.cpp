@@ -20,8 +20,7 @@ const float CGame::m_finish_text_time = 1.2f;
  *  コンストラクタ
  */
 CGame::CGame(void)
-    : m_DebugText()
-    , m_WaitTimer()
+    : m_WaitTimer()
     , m_CountFlag(true)
     , m_SetActionflag(false)
     , m_FinishFlag(false)
@@ -60,8 +59,6 @@ CGame::Initialize(SCENE_ID scene_id)
     um.Create(UI_ID::START_COUNTDOWN);
 
     m_GameState = GAME_STATE::START;
-
-    m_DebugText = "親ゲームシーン";
 }
 
 /*
@@ -105,25 +102,7 @@ CGame::Draw(void)
     CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
     CEffectManager::GetInstance().Draw();
-    CGimmickManager::GetInstance().Draw();
-#ifdef VIVID_DEBUG
-    switch (m_GameState)
-    {
-    case GAME_STATE::START:
-        vivid::DrawText(20, "スタート", vivid::Vector2(0, 0));
-
-        break;
-    case GAME_STATE::PLAY:
-        vivid::DrawText(20, "プレイ", vivid::Vector2(0, 0));
-
-        break;
-    case GAME_STATE::FINISH:
-        vivid::DrawText(20, "フィニッシュ", vivid::Vector2(0, 0));
-        break;
-    }
-    vivid::DrawText(20, m_DebugText, vivid::Vector2(0, vivid::WINDOW_HEIGHT - 20));
-#endif
-}
+    CGimmickManager::GetInstance().Draw();}
 
 /*
  *  解放
@@ -162,18 +141,16 @@ SetGameState(GAME_STATE state)
 
 void CGame::AddRanking(UNIT_ID unitID)
 {
-    IUnit* unit = CUnitManager::GetInstance().GetPlayer(unitID);
+    std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().GetPlayer(unitID);
 
     for (ENTRY_LIST::iterator entry_it = m_EntryList.begin(); entry_it != m_EntryList.end(); entry_it++)
     {
-        if (unitID != UNIT_ID::NONE)
+        if ((*entry_it)->GetUnitID() == unitID)
         {
-            if ((*entry_it)->GetUnitID() == unitID)
-            {
-                m_ResultList.push_back(CUnitManager::GetInstance().GetPlayer(unitID));
-                m_EntryList.erase(entry_it);
-                break;
-            }
+            //リザルトに登録、エントリーからは削除
+            m_ResultList.emplace_back(CUnitManager::GetInstance().GetPlayer(unitID));
+            m_EntryList.erase(entry_it);
+            break;
         }
     }
 }
@@ -186,7 +163,6 @@ void
 CGame::Start(void)
 {
     CSoundManager::GetInstance().Play_SE(SE_ID::GAME_START, false);
-
 
     if (!m_SetActionflag)
     {
@@ -212,7 +188,7 @@ CGame::Start(void)
             {
                 m_GameState = GAME_STATE::PLAY;
 
-                CPlayer* TempPlayer;
+                std::shared_ptr<CPlayer> TempPlayer;
 
                 for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
                 {

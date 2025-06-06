@@ -61,48 +61,48 @@ private:
     void CreateCursor(void);
     void MoveCursor(void);
 
-    static const float          m_cursor_move_time;
+    static const float              m_cursor_move_time;
 
-    static const vivid::Vector2 m_title_poster_scale;
-    static const vivid::Vector2 m_title_poster_position;
+    static const vivid::Vector2     m_title_poster_scale;
+    static const vivid::Vector2     m_title_poster_position;
 
-    static const float          m_icon_scale;
-    static const vivid::Vector2 m_icon_positionList[];
+    static const float              m_icon_scale;
+    static const vivid::Vector2     m_icon_positionList[];
 
-    static const vivid::Vector2 m_icon_poster_scale;
-    static const vivid::Vector2 m_icon_poster_position;
+    static const vivid::Vector2     m_icon_poster_scale;
+    static const vivid::Vector2     m_icon_poster_position;
 
-    static const float          m_icon_name_scale;
-    static const float          m_icon_name_position_up;
+    static const float              m_icon_name_scale;
+    static const float              m_icon_name_position_up;
 
-    static const float          m_info_scale;
-    static const vivid::Vector2 m_info_position;
+    static const float              m_info_scale;
+    static const vivid::Vector2     m_info_position;
 
-    static const float          m_video_scale;
-    static const vivid::Vector2 m_video_position;
+    static const float              m_video_scale;
+    static const vivid::Vector2     m_video_position;
 
-    static const vivid::Vector2 m_video_poster_scale;
-    static const vivid::Vector2 m_bg_position;
+    static const vivid::Vector2     m_video_poster_scale;
+    static const vivid::Vector2     m_bg_position;
 
-    SKILL_ID                    m_ChooseSkillID[(int)UNIT_ID::NONE];
-    CSkillIcon*                 m_SkillSelectIcon[(int)UNIT_ID::NONE];
+    SKILL_ID                        m_ChooseSkillID[(int)UNIT_ID::NONE];
+    std::shared_ptr<CSkillIcon>     m_SkillSelectIcon[(int)UNIT_ID::NONE];
 
-    std::list<CSkillCursor*>    m_SkillCursorList;
+    std::list<std::shared_ptr<CSkillCursor>>        m_SkillCursorList;
 
-    std::list<int>              m_CursorPosNumList;
-    int                         m_NowCursorPosNum;
+    std::list<int>                      m_CursorPosNumList;
+    int                                 m_NowCursorPosNum;
 
-    UNIT_ID                     m_CursorID[(int)UNIT_ID::NONE];
-    int                         m_NowCursorID_Num;
+    UNIT_ID                             m_CursorID[(int)UNIT_ID::NONE];
+    int                                 m_NowCursorID_Num;
 
-    CSkillCursor*               m_SkillSelectCursor;
-    CTimer                      m_CursorMoveTimer;
+    std::shared_ptr<CSkillCursor>       m_SkillSelectCursor;
+    CTimer                              m_CursorMoveTimer;
 
-    CSkillInfomation*           m_SkillInfomation;
+    std::shared_ptr<CSkillInfomation>   m_SkillInfomation;
 
-    CSkillVideo*                m_SkillVideo;
+    std::shared_ptr<CSkillVideo>        m_SkillVideo;
 
-    GAME_ID                     m_GameID;
-    CSceneUIParent*             m_SceneUIParent;
+    GAME_ID                         m_GameID;
+    std::shared_ptr<CSceneUIParent>     m_SceneUIParent;
 
 };

@@ -23,7 +23,7 @@ void CLauncher::Update(void)
 
     while (it != m_ShotList.end())
     {
-        CShot* shot = (CShot*)(*it);
+        std::shared_ptr<CShot> shot = *it;
 
         shot->Update();
 
@@ -44,8 +44,6 @@ void CLauncher::Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
-
         ++it;
     }
 
@@ -59,15 +57,15 @@ CLauncher& CLauncher::GetInstance(void)
     return instance;
 }
 
-CShot* CLauncher::Create(SHOT_ID shotID)
+std::shared_ptr<CShot> CLauncher::Create(SHOT_ID shotID)
 {
-    CShot* shot = nullptr;
+    std::shared_ptr<CShot> shot = nullptr;
     switch (shotID)
     {
-    case SHOT_ID::BASIC:                 shot = new CBasic();               break;
-    case SHOT_ID::SHOCK_WAVE:            shot = new CShockWave();           break;
-    case SHOT_ID::DODGE_BALL:            shot = new CDodgeBall();           break;
-    case SHOT_ID::MAX:                                                      break;
+    case SHOT_ID::BASIC:                 shot = std::make_shared<CBasic>();         break;
+    case SHOT_ID::SHOCK_WAVE:            shot = std::make_shared<CShockWave>();     break;
+    case SHOT_ID::DODGE_BALL:            shot = std::make_shared<CDodgeBall>();     break;
+    case SHOT_ID::MAX:                                                              break;
     }
 
     if (!shot)

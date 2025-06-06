@@ -52,8 +52,8 @@ Update(void)
 
 	if (m_Effect != nullptr)
 	{
-		CVector3 effectPosition = m_Player->GetPosition();
-		effectPosition.y -= m_Player->GetHeight() / 2;
+		CVector3 effectPosition = m_Player.lock()->GetPosition();
+		effectPosition.y -= m_Player.lock()->GetHeight() / 2;
 		m_Effect->SetPosition(effectPosition);
 	}
 
@@ -94,20 +94,20 @@ Action()
 	if (m_State != SKILL_STATE::WAIT) return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::FLOATING, false);
-	CVector3 velocity = m_Player->GetVelocity();
+	CVector3 velocity = m_Player.lock()->GetVelocity();
 
-	m_Player->SetGravity(CVector3::ZERO);
-	m_Player->SetVelocity(CVector3(velocity.x, 0.1f, velocity.z));
-	m_Player->SetParent(nullptr);
-	m_Player->SetIsGround(false);
-	CVector3 effectPosition = m_Player->GetPosition();
-	effectPosition.y -= m_Player->GetHeight() / 2;
+	m_Player.lock()->SetGravity(CVector3::ZERO);
+	m_Player.lock()->SetVelocity(CVector3(velocity.x, 0.1f, velocity.z));
+	m_Player.lock()->SetParent(nullptr);
+	m_Player.lock()->SetIsGround(false);
+	CVector3 effectPosition = m_Player.lock()->GetPosition();
+	effectPosition.y -= m_Player.lock()->GetHeight() / 2;
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::FLOATING, effectPosition, CVector3::UP, m_scale);
 	m_State = SKILL_STATE::ACTIVE;
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effectPosition, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 
 }
 
@@ -118,7 +118,7 @@ void
 CSkillFloating::
 ActionEnd(void)
 {
-	m_Player->SetGravity(m_Player->GetDefaultGravity());
+	m_Player.lock()->SetGravity(m_Player.lock()->GetDefaultGravity());
 	if (m_Effect != nullptr )
 	{
 		m_Effect->SetActive(false);

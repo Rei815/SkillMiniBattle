@@ -36,7 +36,7 @@ public:
      */
     void        Finalize(void);
 
-    void        SetPauseController(CController* controller);
+    void        SetPauseController(std::shared_ptr<CController> controller);
 private:
     static const vivid::Vector2     m_position;     //!< ˆÊ’u
     static const int                m_height;       //!< ‚‚³
@@ -46,7 +46,7 @@ private:
     static const vivid::Vector2     m_scale;        //!< Šgk
     static const vivid::Vector2     m_offset;       //!< Šgk
     unsigned int                    m_Color[2];
-    CController*                    m_PauseController;
+    std::shared_ptr<CController>                    m_PauseController;
     int                             m_UINum;
     vivid::Vector2                  m_Anchor[2];
     vivid::Vector2                  m_Scale[2];

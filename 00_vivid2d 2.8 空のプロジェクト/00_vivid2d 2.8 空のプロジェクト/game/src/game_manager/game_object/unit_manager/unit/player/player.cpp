@@ -5,20 +5,18 @@
 #include "../../../object_manager/object_manager.h"
 #include "../../../controller_manager/controller_manager.h"
 
-
+const std::string       CPlayer::m_file_name = "data\\Models\\player_rabbit.mv1";
 const float             CPlayer::m_radius = 50.0f;
 const float             CPlayer::m_height = 70.0f;
 const float             CPlayer::m_model_scale = 0.33f;
-
 const float             CPlayer::m_move_speed = 0.6f;
 const float             CPlayer::m_jump_power = 20.0f;
-const CVector3          CPlayer::m_move_friction = CVector3(0.9f,0.975f,0.9f);
 const float             CPlayer::m_fly_away_speed = 40.0f;
-
 const float             CPlayer::m_max_life = 3.0f;
 const float             CPlayer::m_max_invincible_time = 1.0f;
-const int               CPlayer::m_invincible_visible_interval = 4;
 const float             CPlayer::m_fall_accelerator = 0.025f;
+const CVector3          CPlayer::m_move_friction = CVector3(0.9f,0.975f,0.9f);
+const int               CPlayer::m_invincible_visible_interval = 4;
 
 const unsigned int      CPlayer::m_player_body_color[] =
 {
@@ -52,16 +50,17 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
+
 }
 
-void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string& file_name)
+void CPlayer::Initialize(UNIT_ID id, const CVector3& position)
 {
-    (void)position;
-
-    IUnit::Initialize(id, position, file_name);
+    IUnit::Initialize(id, position);
     CControllerManager& cm = CControllerManager::GetInstance();
     CControllerManager::CONTROLLER_LIST controllerList = cm.GetList();
     CControllerManager::CONTROLLER_LIST::iterator it = controllerList.begin();
+
+    //IDによってカテゴリーの切り替え
     switch (id)
     {
     case UNIT_ID::PLAYER1:
@@ -83,7 +82,7 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
     {
         if ((*it)->GetUnitID() == id)
         {
-            m_Controller = (*it);
+            m_Controller = std::shared_ptr<CController>(*it);
             break;
         }
         ++it;
@@ -94,7 +93,9 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position, const std::string
 
     m_InitialPosition = position;
 
-    m_Model.Initialize(file_name, position, m_model_scale);
+    
+    
+    m_Model.Initialize(m_file_name, position, m_model_scale);
 
     m_Model.SetMaterialDif(0, m_player_body_color[(int)id]);
     m_Model.SetMaterialDif(1, m_player_eye_color[(int)id]);
@@ -148,17 +149,7 @@ void CPlayer::SetActionFlag(bool flag)
     m_ActionFlag = flag;
 }
 
-CController* CPlayer::GetController()
-{
-    return m_Controller;
-}
-
-void CPlayer::SetController(CController* controller)
-{
-    m_Controller = controller;
-}
-
-CSkill* CPlayer::GetSkill()
+std::shared_ptr<CSkill> CPlayer::GetSkill()
 {
     return m_Skill;
 }
@@ -197,7 +188,7 @@ bool CPlayer::GetPlayerMoving()
     return Input;
 }
 
-void CPlayer::SetSkill(CSkill* skill)
+void CPlayer::SetSkill(std::shared_ptr<CSkill> skill)
 {
     m_Skill = skill;
 }
@@ -271,7 +262,7 @@ Attack(void)
 /*
  *  被弾
  */
-void CPlayer::HitBullet(IBullet* bullet, CVector3 hit_position)
+void CPlayer::HitBullet(std::shared_ptr<IBullet> bullet, CVector3 hit_position)
 {
     if (m_InvincibleFlag)
         return;
@@ -364,13 +355,35 @@ Defeat(void)
 
 void CPlayer::Move(void)
 {
-    ////重力処理
-    //if (!m_IsGround && !m_StopFlag)
-    //{
-    //    m_Accelerator.y -= m_FallSpeed;
+    if (m_Parent != nullptr)
+    {
+        //一度接地したらジャンプや判定の外に行かない限り接地したオブジェクトに追従する
+        const float ground_check_offset_x = m_Radius - m_Radius / 3.0f;
+        const float ground_check_line_length = 100.0f;
+        bool releaseFlag = false;
+        for (int i = 0; i < 9; i++)
+        {
+            CVector3 start = m_Transform.position + CVector3(-ground_check_offset_x + (ground_check_offset_x) * (i % 3), 0.0f, -ground_check_offset_x + (ground_check_offset_x) * (i / 3));
+            CVector3 end = start + CVector3(0, -ground_check_line_length, 0);
+            CVector3 hitPos = m_Parent->GetModel().GetHitLinePosition(start, end);
+            if (hitPos != end)
+            {
+                m_Transform.position.y = hitPos.y + m_Radius;
+            }
+            else
+            {
+                releaseFlag = true;
+                break;
+            }
+        }
 
-    //    m_FallSpeed += m_fall_accelerator;
-    //}
+        if (releaseFlag || m_Parent->GetColliderActiveFlag() == false)
+            m_Parent = nullptr;
+    }
+    else
+    {
+        m_Velocity += m_Gravity;
+    }
 
     if (!m_StopFlag)
     {
@@ -378,8 +391,9 @@ void CPlayer::Move(void)
         m_Transform.position += m_Velocity + m_AffectedVelocity;
     }
 
-    IObject* floorObject = CObjectManager::GetInstance().CheckHitObject(this);
+    std::shared_ptr<IObject> floorObject = CObjectManager::GetInstance().CheckHitObject(shared_from_this());
     
+    //床に当たっているならそのオブジェクトを親にする
     if (floorObject)
     {
         if (floorObject->GetTag() == "Floor")
@@ -394,6 +408,7 @@ void CPlayer::Move(void)
         m_IsGround = false;
     }
 
+    //摩擦による減速
     if (m_FrictionFlag)
     {
         m_Velocity.x *= m_move_friction.x;
@@ -405,6 +420,7 @@ void CPlayer::Move(void)
         m_AffectedVelocity.z *= m_move_friction.z;
     }
 
+    //地上なら落ちないように
     if (m_IsGround)
     {
         if(m_Velocity.y > 0.0f)
@@ -412,8 +428,6 @@ void CPlayer::Move(void)
 
         if(m_AffectedVelocity.y > 0.0f)
             m_AffectedVelocity.y = 0.0f;
-
-//        m_FallSpeed = 0.0f;
     }
 
     m_Accelerator = CVector3::ZERO;

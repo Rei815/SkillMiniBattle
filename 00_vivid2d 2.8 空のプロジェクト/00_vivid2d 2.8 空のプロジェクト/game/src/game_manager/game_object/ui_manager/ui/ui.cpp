@@ -2,12 +2,12 @@
 #include "..\..\scene_manager\scene_manager.h"
 #include "../ui_manager.h"
 
-CUI::CUI(UI_ID id)
+CUI::CUI(UI_ID id, int layer)
     : m_ActiveFlag(true)
     , m_UI_ID(id)
     , m_Transform()
     , m_Parent(nullptr)
-    , m_OrderInLayer(0)
+    , m_OrderInLayer(layer)
     , m_SceneID(SCENE_ID::MAX)
 {
 }
@@ -107,7 +107,7 @@ Finalize(void)
  */
 bool
 CUI::
-GetActive(void)
+IsActive(void)
 {
     return m_ActiveFlag;
 }
@@ -117,10 +117,9 @@ GetActive(void)
  */
 void
 CUI::
-SetActive(bool active)
+Delete()
 {
-
-    m_ActiveFlag = active;
+    m_ActiveFlag = false;
 }
 
 vivid::Vector2 CUI::GetPosition(void)

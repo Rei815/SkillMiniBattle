@@ -13,13 +13,13 @@ CGimmick::~CGimmick(void)
 {
 }
 
-void CGimmick::Initialize(IObject* object)
+void CGimmick::Initialize(std::shared_ptr<IObject> object)
 {
 	m_Object = object;
 	m_Switch = false;
 }
 
-void CGimmick::Initialize(IObject* object, float time)
+void CGimmick::Initialize(std::shared_ptr<IObject> object, float time)
 {
 	m_Object = object;
 	m_Switch = false;
@@ -44,7 +44,7 @@ GIMMICK_ID CGimmick::GetGimmickID(void)
 	return GIMMICK_ID();
 }
 
-bool CGimmick::GetActive(void)
+bool CGimmick::IsActive(void)
 {
 	return m_ActiveFlag;
 }

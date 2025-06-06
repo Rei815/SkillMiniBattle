@@ -43,6 +43,6 @@ protected:
     static const float  m_cool_time;
     static const float  m_effect_scale;
 
-    IEffect*            m_SkillEffect;
-    CShot*              m_Shot;
+    std::shared_ptr<IEffect>            m_SkillEffect;
+    std::shared_ptr<CShot>              m_Shot;
 };

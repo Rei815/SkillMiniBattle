@@ -6,7 +6,7 @@ IObject::IObject()
 	, m_Velocity()
 	, m_Gimmick(nullptr)
 	, m_Tag("None")
-	,m_ActiveFlag(true)
+	, m_ActiveFlag(true)
 	, m_ColliderActiveFlag(true)
 {
 }
@@ -40,7 +40,7 @@ OBJECT_ID IObject::GetObjectID(void)
 	return m_ObjectID;
 }
 
-bool IObject::GetActive(void)
+bool IObject::IsActive(void)
 {
 	return m_ActiveFlag;
 }
@@ -95,12 +95,12 @@ CModel IObject::GetModel()
 	return m_Model;
 }
 
-void IObject::SetGimmick(CGimmick* gimmick)
+void IObject::SetGimmick(std::shared_ptr<CGimmick> gimmick)
 {
 	m_Gimmick = gimmick;
 }
 
-CGimmick* IObject::GetGimmick()
+std::shared_ptr<CGimmick> IObject::GetGimmick()
 {
 	return m_Gimmick;
 }

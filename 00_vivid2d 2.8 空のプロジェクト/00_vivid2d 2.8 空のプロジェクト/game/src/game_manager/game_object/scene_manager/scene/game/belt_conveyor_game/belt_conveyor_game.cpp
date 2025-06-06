@@ -41,6 +41,8 @@ CBeltConveyorGame::~CBeltConveyorGame(void)
 
 void CBeltConveyorGame::Initialize(SCENE_ID scene_id)
 {
+	SetLightDirection(CVector3::DOWN + CVector3::FORWARD);
+
 	CGame::Initialize(scene_id);
 
 	m_BackGround.Initialize("data\\Textures\\belt_conveyor_bg.png");
@@ -56,20 +58,17 @@ void CBeltConveyorGame::Initialize(SCENE_ID scene_id)
 	//BGM再生
 	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
 
-	//
-	m_DebugText = "ベルトコンベアゲーム";
-
 	//プレイヤーのスポーン
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
 	{
-		IUnit* unit = CUnitManager::GetInstance().Create((UNIT_ID)i, m_player_spawnpos_list[i]);
-		CPlayer* Player = dynamic_cast<CPlayer*>(unit);
+		std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().Create((UNIT_ID)i, m_player_spawnpos_list[i]);
+		std::shared_ptr<CPlayer> Player = dynamic_pointer_cast<CPlayer>(unit);
 		if (Player != nullptr)
 		{
 			Player->SetActionFlag(false);
 			Player->SetForwardVector(m_player_default_forward);
 		}
-		m_EntryList.push_back(unit);
+		m_EntryList.emplace_back(unit);
 	}
 
 	CSkillManager::GetInstance().SetSkill();
@@ -135,17 +134,17 @@ void CBeltConveyorGame::CheckFinish(void)
 	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		IUnit* unit = (*it);
+		std::shared_ptr<IUnit> unit = *it;
 		++it;
 
 		if (unit->GetDefeatFlag() == true)	continue;
 
 		if (unit->GetPosition().y < m_defeat_height)
 		{
-			CPlayer* player = dynamic_cast<CPlayer*>(unit);
+			std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(unit);
 			if (player != nullptr)
 			{
-				CSkill* skill = player->GetSkill();
+				std::shared_ptr<CSkill> skill = player->GetSkill();
 				if (skill->GetSkillID() == SKILL_ID::RESURRECT_BELT && skill->GetState() != SKILL_STATE::COOLDOWN)
 				{
 					skill->SetState(SKILL_STATE::ACTIVE);

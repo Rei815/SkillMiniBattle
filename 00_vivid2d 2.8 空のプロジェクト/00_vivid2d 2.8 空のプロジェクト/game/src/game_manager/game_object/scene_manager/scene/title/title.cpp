@@ -18,14 +18,6 @@ CTitle::~CTitle(void)
 
 void CTitle::Initialize(SCENE_ID scene_id)
 {
-    //ライティングの初期設定
-    MATERIALPARAM Material;
-    Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
-    Material.Specular = GetColorF(0.0f, 1.0f, 0.0f, 0.0f);
-    Material.Ambient = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
-    Material.Emissive = GetColorF(1.0f, 1.0f, 1.0f, 1.0f);
-    Material.Power = 20.0f;
-    SetMaterialParam(Material);
 
     IScene::Initialize(scene_id);
 

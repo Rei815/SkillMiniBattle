@@ -43,7 +43,7 @@ protected:
     static const float  m_cool_time;
     static const float  m_duration_time;
     static const float  m_effect_scale;
-    CUI*                m_Parent;
-    CUI*                m_Shutter;
-    IEffect*            m_SkillEffect;
+    std::shared_ptr<CUI>                m_ParentTopic;
+    std::shared_ptr<CUI>                m_Shutter;
+    std::shared_ptr<IEffect>            m_SkillEffect;
 };

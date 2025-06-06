@@ -60,7 +60,7 @@ void CSkillSlow::Action()
 
 	for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 	{
-		if (um.GetPlayer(UNIT_ID(i)) != m_Player)
+		if (um.GetPlayer(UNIT_ID(i)) != m_Player.lock())
 		{
 			um.GetPlayer(UNIT_ID(i))->MulMoveSpeedRate(0.5f);
 			m_EffectList.push_front(CEffectManager::GetInstance().Create(EFFECT_ID::DEBUFF, CVector3().ZERO, CVector3(), m_effect_scale));
@@ -69,7 +69,7 @@ void CSkillSlow::Action()
 	}
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 	m_State = SKILL_STATE::ACTIVE;
 }
 
@@ -83,7 +83,7 @@ void CSkillSlow::ActionEnd(void)
 
 	if (m_EffectList.empty() == false)
 	{
-		std::list<IEffect*>::iterator it = m_EffectList.begin();
+		std::list<std::shared_ptr<IEffect>>::iterator it = m_EffectList.begin();
 		while (it != m_EffectList.end())
 		{
 			(*it)->SetActive(false);
@@ -95,7 +95,7 @@ void CSkillSlow::ActionEnd(void)
 
 	for (int i = 0; i < dm.GetCurrentPlayer(); i++)
 	{
-		if (um.GetPlayer(UNIT_ID(i)) != m_Player)
+		if (um.GetPlayer(UNIT_ID(i)) != m_Player.lock())
 		{
 			um.GetPlayer(UNIT_ID(i))->DivMoveSpeedRate(0.5f);
 		}

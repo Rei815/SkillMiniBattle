@@ -20,12 +20,12 @@ void IAnimation::Finalize(void)
 
 }
 
-bool IAnimation::GetActive(void)
+bool IAnimation::IsActive(void)
 {
 	return m_ActiveFlag;
 }
 
-void IAnimation::SetActive(bool active)
+void IAnimation::Delete()
 {
-	m_ActiveFlag = active;
+	m_ActiveFlag = false;
 }

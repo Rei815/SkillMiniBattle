@@ -87,14 +87,14 @@ Action(void)
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::DASH, false);
 
-	CVector3 effectPosition = m_Player->GetPosition();
+	CVector3 effectPosition = m_Player.lock()->GetPosition();
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, 
 		CVector3().ZERO, CVector3(), 3.0f);
-	m_SkillEffect->SetParent(m_Player);
+	m_SkillEffect->SetParent(m_Player.lock());
 
 
-	m_Player->MulMoveSpeedRate(m_dash_speed_up_rate);
+	m_Player.lock()->MulMoveSpeedRate(m_dash_speed_up_rate);
 	m_State = SKILL_STATE::ACTIVE;
 }
 
@@ -111,5 +111,5 @@ ActionEnd(void)
 		m_SkillEffect = nullptr;
 	}
 
-	m_Player->DivMoveSpeedRate(m_dash_speed_up_rate);
+	m_Player.lock()->DivMoveSpeedRate(m_dash_speed_up_rate);
 }

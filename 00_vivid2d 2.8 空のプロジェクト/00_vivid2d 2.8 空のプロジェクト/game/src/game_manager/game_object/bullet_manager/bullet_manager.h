@@ -1,14 +1,3 @@
-
-/*!
- *  @file       bullet_manager.h
- *  @brief      íeä«óù
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #pragma once
 
 #include <list>
@@ -16,18 +5,7 @@
 #include "bullet\bullet.h"
 #include "..\unit_manager\unit\unit_id.h"
 #include "../launcher/launcher.h"
-
-/*!
- *  @class      CBulletManager
- *
- *  @brief      íeä«óùÉNÉâÉX
- *
- *  @author     Kazuya Maruyama
- *
- *  @date       2020/11/13
- *
- *  @since      1.0
- */
+#include <memory>
 class CBulletManager
 {
 public:
@@ -59,9 +37,15 @@ public:
     void        Finalize(void);
 
     /*!
+     *  @brief      íeÉäÉXÉgå^
+     */
+    using BULLET_LIST = std::list<std::shared_ptr<IBullet>>;
+
+
+    /*!
      *  @brief      ï`âÊ
      */
-    std::list<IBullet*>        GetBulletList();
+    BULLET_LIST       GetBulletList();
     /*!
      *  @brief      íeê∂ê¨
      *
@@ -70,7 +54,7 @@ public:
      *  @param[in]  pos         à íu
      *  @param[in]  dir         å¸Ç´
      */
-    IBullet*        Create(UNIT_CATEGORY category,CShot::BulletParameters* bulletParameters, CVector3& pos, const CVector3& dir);
+    std::shared_ptr<IBullet>        Create(UNIT_CATEGORY category,CShot::BulletParameters* bulletParameters, CVector3& pos, const CVector3& dir);
 
     /*!
      *  @brief      íeê∂ê¨
@@ -80,12 +64,7 @@ public:
      *  @param[in]  pos         à íu
      *  @param[in]  dir         å¸Ç´
      */
-    IBullet*        Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir);
-
-    /*!
-     *  @brief      ÉÇÉfÉãÇ∆ÇÃîªíË
-     */
-    void        CheckHitModel(const CModel& model);
+    std::shared_ptr<IBullet>        Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir);
     
     /*!
      *  @brief      ÉÇÉfÉãÇ∆ÇÃîΩéÀîªíË
@@ -119,10 +98,6 @@ private:
      */
     CBulletManager& operator=(const CBulletManager& rhs);
 
-    /*!
-     *  @brief      íeÉäÉXÉgå^
-     */
-    using BULLET_LIST = std::list<IBullet*>;
 
     BULLET_LIST     m_BulletList;   //!< íeÉäÉXÉg
 };

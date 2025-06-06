@@ -33,7 +33,7 @@ public:
     /*!
      *  @brief      プレイヤーのセット
      */
-    void    SetPlayer(CPlayer* player);
+    void    SetPlayer(std::shared_ptr<CPlayer> player);
 
     /*!
      *  @brief      アクション呼び出し
@@ -52,6 +52,6 @@ protected:
     static const float m_effect_scale;
 
     CModel			    m_ColliderModel;
-    IEffect*            m_Effect;
-    IEffect*            m_SkillEffect;
+    std::shared_ptr<IEffect>            m_Effect;
+    std::shared_ptr<IEffect>            m_SkillEffect;
 };

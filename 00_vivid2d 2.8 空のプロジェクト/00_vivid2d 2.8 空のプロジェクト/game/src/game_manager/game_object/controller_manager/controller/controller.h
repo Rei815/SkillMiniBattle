@@ -29,7 +29,7 @@ public:
     /*!
      *  @brief  アクティブフラグの取得
      */
-    bool        GetActive(void);
+    bool        IsActive(void);
 
     /*!
      *  @brief  ボタンが押されたかどうか

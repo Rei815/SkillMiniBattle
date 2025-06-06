@@ -5,7 +5,7 @@ CPlane::CPlane()
 	: m_Transform()
 	, m_Handle(DX_NONE_GRAPH)
 	, m_Color(DxLib::GetColorU8(255, 255, 255, 255))
-	, m_Normal()
+	, m_Normal(0.0f, 0.0f, -1.0f)
 {
 }
 
@@ -20,20 +20,13 @@ void CPlane::SetUp(const std::string fileName)
 
 	if (m_Handle != VIVID_DX_ERROR)
 	{
-		//幅、高さを取得して変数に入る
 		DxLib::GetGraphSize(m_Handle, &m_Width, &m_Height);
 	}
-}
-
-void CPlane::_Draw()
-{
-	//トランスフォーム内の情報から行列を作る
-	CMatrix mat_trans = CMatrix::Translate(m_Transform.position);
-	CMatrix mat_rot = CMatrix::Rotate(m_Transform.rotation);
-	CMatrix mat_scale = CMatrix::Scale(m_Transform.scale);
-	CMatrix m = mat_scale * mat_rot * mat_trans;
-
-	Draw(m);
+	else
+	{
+		m_Width = 1.0f;		// デフォルト値を設定
+		m_Height = 1.0f;	// デフォルト値を設定
+	}
 }
 
 void CPlane::Draw(const CMatrix& mat)

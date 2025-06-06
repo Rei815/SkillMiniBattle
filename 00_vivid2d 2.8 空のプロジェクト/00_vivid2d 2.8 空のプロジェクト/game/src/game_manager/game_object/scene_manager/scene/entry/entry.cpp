@@ -14,8 +14,10 @@ const   float       CEntry::m_start_time = 30.0f;
 const   float       CEntry::m_hold_start_time = 2.0f;
 const   float       CEntry::m_exit_time = 0.3f;
 const   int         CEntry::m_min_player = 2;
-const CVector3		CEntry::m_camera_position = CVector3(0, 400.0f, -1600.0f);
-const CVector3		CEntry::m_camera_direction = CVector3(0, 0.0f, 0.6f);
+const CVector3		CEntry::m_camera_position = CVector3(100, 1000.0f, -100.0f);
+//const CVector3		CEntry::m_camera_position = CVector3(0, 400.0f, -1600.0f);
+//const CVector3		CEntry::m_camera_direction = CVector3(0, 0.0f, 0.6f);
+const CVector3		CEntry::m_camera_direction = CVector3(0,-1.0f,0.5f);
 
 CEntry::CEntry(void)
     : m_NextUnitID(UNIT_ID::PLAYER1)
@@ -26,6 +28,7 @@ CEntry::CEntry(void)
     , m_GameStartGauge(nullptr)
     , m_BackGround(UI_ID::GAME_BG)
     , m_CanStartFlag(false)
+    , m_PlayerJoinUI(nullptr)
 {
 
 }
@@ -66,22 +69,22 @@ void CEntry::Initialize(SCENE_ID scene_id)
     m_GameStartTimer.SetUp(m_start_time, CTimer::COUNT_TYPE::DOWN);
     vivid::Vector2  GaugePos = vivid::Vector2(1200, 50);
     float  GaugeScale = 0.3f;
-    m_GameStartGauge = (CSkillGauge*)um.Create(UI_ID::SKILL_GAUGE);
+    m_GameStartGauge = dynamic_pointer_cast<CSkillGauge>(um.Create(UI_ID::SKILL_GAUGE));
     if (m_GameStartGauge)
     {
         m_GameStartGauge->SetGauge(GaugePos,GaugeScale);
     }
+    //m_GameStartGauge = std::shared_ptr<CSkillGauge>(dynamic_cast<CSkillGauge*>(um.Create(UI_ID::SKILL_GAUGE)));
+    //if (m_GameStartGauge)
+    //{
+    //    m_GameStartGauge->SetGauge(GaugePos,GaugeScale);
+    //}
     um.Create(UI_ID::ENTRY_X_BUTTON);
 
-    CUI* TempUI = um.Create(UI_ID::PLAYER_JOIN);
-    m_PlayerJoinUI = dynamic_cast<CPlayerJoin*>(TempUI);
+    m_PlayerJoinUI = dynamic_pointer_cast<CPlayerJoin>(um.Create(UI_ID::PLAYER_JOIN));
+    //m_PlayerJoinUI = std::shared_ptr<CPlayerJoin>(dynamic_cast<CPlayerJoin*>(um.Create(UI_ID::PLAYER_JOIN)));
 
-    //キャストチェック（念のため）
-    if (m_PlayerJoinUI == nullptr)
-    {
-        TempUI->SetActive(false);
-        TempUI = nullptr;
-    }
+    om.Create(OBJECT_ID::SKILL_WALL_OBJECT, CTransform(CVector3(400,0,0)));
 }
 
 void CEntry::Update(void)
@@ -125,7 +128,9 @@ void CEntry::Update(void)
         //存在しているプレイヤーのIDを持っておく
         while (it != unitList.end())
         {
-            CPlayer* player = (CPlayer*)(*it);
+            std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(*it);
+            ++it;
+            if (player == nullptr) continue;
             UNIT_ID unitID = player->GetUnitID();
             if (unitID == UNIT_ID::PLAYER1)
                 m_PlayerArray[0] = unitID;
@@ -136,7 +141,6 @@ void CEntry::Update(void)
             if (unitID == UNIT_ID::PLAYER4)
                 m_PlayerArray[3] = unitID;
 
-            ++it;
         }
         m_NextUnitID = UNIT_ID::NONE;
 
@@ -156,60 +160,11 @@ void CEntry::Update(void)
 
     CheckButtonDown();
 
-
-    //デバッグ用
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD1))
-    {
-        if(um.GetPlayer(UNIT_ID::PLAYER1) == nullptr)
-            um.Create(UNIT_ID::PLAYER1, m_spawn_position);
-        else
-        {
-            um.Delete(UNIT_ID::PLAYER1);
-            m_PlayerArray[0] = UNIT_ID::NONE;
-        }
-    }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD2))
-    {
-        if (um.GetPlayer(UNIT_ID::PLAYER2) == nullptr)
-            um.Create(UNIT_ID::PLAYER2, m_spawn_position);
-        else
-        {
-            um.Delete(UNIT_ID::PLAYER2);
-            m_PlayerArray[1] = UNIT_ID::NONE;
-        }
-    }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD3))
-    {
-        if (um.GetPlayer(UNIT_ID::PLAYER3) == nullptr)
-            um.Create(UNIT_ID::PLAYER3, m_spawn_position);
-        else
-        {
-            um.Delete(UNIT_ID::PLAYER3);
-            m_PlayerArray[2] = UNIT_ID::NONE;
-        }
-    }
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::NUMPAD4))
-    {
-        if (um.GetPlayer(UNIT_ID::PLAYER4) == nullptr)
-            um.Create(UNIT_ID::PLAYER4, m_spawn_position);
-        else
-        {
-            um.Delete(UNIT_ID::PLAYER4);
-            m_PlayerArray[3] = UNIT_ID::NONE;
-        }
-    }
-    //if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN))
-    //{
-    //    CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
-    //    CSceneManager::GetInstance().ChangeScene(SCENE_ID::SELECTGAME);
-    //}
-
-
     CUnitManager::UNIT_LIST::iterator it = unitList.begin();
     //落ちても戻す
     while (it != unitList.end())
     {
-        CPlayer* player = (CPlayer*)(*it);
+        std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(*it);
 
         ++it;
         if (!player) continue;
@@ -226,15 +181,15 @@ void CEntry::Draw(void)
 {
     m_BackGround.Draw();
     CEffectManager::GetInstance().Draw();
-    CObjectManager& om = CObjectManager::GetInstance();
-    CUnitManager& um = CUnitManager::GetInstance();
-    om.Draw();
-    um.Draw();}
+    CObjectManager::GetInstance().Draw();
+    CUnitManager::GetInstance().Draw();
+}
 
 void CEntry::Finalize(void)
 {
     m_BackGround.Finalize();
     IScene::Finalize();
+    CUnitManager::GetInstance().Finalize();
     CUIManager::GetInstance().Finalize();
     CObjectManager::GetInstance().Finalize();
     CEffectManager::GetInstance().Finalize();
@@ -246,18 +201,19 @@ void CEntry::CheckButtonHold(void)
 
     //ボタンを長押ししている時の処理
     //人数が二人以上でm_hold_start_time以上長押ししているコントローラーがある時ゲーム開始
-    CController* buttonHoldController = cm.GetSpecifiedButtonHoldController(BUTTON_ID::X);
+    std::shared_ptr<CController> buttonHoldController = cm.GetSpecifiedButtonHoldController(BUTTON_ID::X);
     if (buttonHoldController)
     {
         UNIT_ID unitID = buttonHoldController->GetUnitID();
 
-        //一人以下の時にタイマーのリセット
-        if (unitID == UNIT_ID::NONE)// || m_PlayerNum < m_min_player)
+        //プレイヤーがいなくなったらタイマーのリセット
+        if (unitID == UNIT_ID::NONE)
         {
             for (int i = 0; i < 5; i++)
             {
                 m_HoldTimer[i].Reset();
             }
+            //ゲージもリセット
             m_GameStartGauge->SetPercent(0.0f);
             return;
         }
@@ -273,7 +229,7 @@ void CEntry::CheckButtonHold(void)
         {
             if (m_PlayerNum == 1)
             {
-                CController* dummy = cm.GetController(CONTROLLER_ID::DUMMY);
+                std::shared_ptr<CController> dummy = cm.GetController(CONTROLLER_ID::DUMMY);
                 dummy->SetUnitID(m_NextUnitID);
 
                 CUnitManager::GetInstance().Create(m_NextUnitID, m_spawn_position);
@@ -284,7 +240,7 @@ void CEntry::CheckButtonHold(void)
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::GAME_ROLL_AND_REVEAL);
         }
     }
-    CController* controller = nullptr;
+    std::shared_ptr<CController> controller = nullptr;
     bool         resetGaugeFlag = false;
     //長押ししていないコントローラーのタイマーをリセット
     for (int i = 0; i < 5; i++)
@@ -312,18 +268,15 @@ void CEntry::CheckButtonDown(void)
 {
     CControllerManager& cm = CControllerManager::GetInstance();
     //ボタンを押したときにコントローラーが動かせるプレイヤーがいない場合プレイヤー生成
-    CController* buttonDownController = cm.GetSpecifiedButtonDownController(BUTTON_ID::X);
+    std::shared_ptr<CController> buttonDownController = cm.GetSpecifiedButtonDownController(BUTTON_ID::X);
     if (buttonDownController)
     {
-        if (buttonDownController->GetUnitID() == UNIT_ID::NONE)
+        if (buttonDownController->GetUnitID() == UNIT_ID::NONE && m_NextUnitID != UNIT_ID::NONE)
         {
-            if (m_NextUnitID != UNIT_ID::NONE)
-            {
-                m_WasPressd = true;
-                buttonDownController->SetUnitID(m_NextUnitID);
-                CUnitManager::GetInstance().Create(m_NextUnitID, m_spawn_position);
-                m_PlayerJoinUI->SetPlayer(m_NextUnitID, true);
-            }
+            m_WasPressd = true;
+            buttonDownController->SetUnitID(m_NextUnitID);
+            CUnitManager::GetInstance().Create(m_NextUnitID, m_spawn_position);
+            m_PlayerJoinUI->SetPlayer(m_NextUnitID, true);
         }
     }
 
@@ -334,8 +287,8 @@ void CEntry::CheckButtonUp(void)
     CControllerManager& cm = CControllerManager::GetInstance();
     CUnitManager& um = CUnitManager::GetInstance();
 
-    //ボタンを離した時にm_exit_timeより長押ししてない場合プレイヤーを退出させる
-    CController* buttonUpController = cm.GetSpecifiedButtonUpController(BUTTON_ID::X);
+    std::shared_ptr<CController> buttonUpController = cm.GetSpecifiedButtonUpController(BUTTON_ID::X);
+
     if (buttonUpController)
     {
         UNIT_ID unitID = buttonUpController->GetUnitID();
@@ -346,6 +299,7 @@ void CEntry::CheckButtonUp(void)
         }
         float timer = m_HoldTimer[(int)unitID].GetTimer();
         if (timer == 0.0f) return;
+        //ボタンを離した時にm_exit_timeより長押ししてない場合プレイヤーを退出させる
         if (timer < m_exit_time)
         {
             UNIT_ID deleteUnitID = buttonUpController->GetUnitID();

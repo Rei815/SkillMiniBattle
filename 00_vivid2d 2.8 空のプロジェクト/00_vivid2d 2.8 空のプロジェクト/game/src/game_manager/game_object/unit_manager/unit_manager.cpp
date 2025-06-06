@@ -7,7 +7,6 @@
 #include "..\..\..\utility\utility.h"
 #include "../ui_manager/ui_manager.h"
 
-const std::string   CUnitManager::m_file_name = "data\\Models\\player_rabbit.mv1";
 /*
  *  インスタンスの取得
  */
@@ -38,10 +37,8 @@ void
 CUnitManager::
 Update(void)
 {
-
     // ユニット更新
     UpdateUnit();
-
 }
 
 /*
@@ -78,8 +75,6 @@ Finalize(void)
     {
         (*it)->Finalize();
 
-        delete (*it);
-
         ++it;
     }
 
@@ -89,11 +84,11 @@ Finalize(void)
 /*
  *  ユニット生成
  */
-IUnit*
+std::shared_ptr<IUnit>
 CUnitManager::
 Create(UNIT_ID id, const CVector3& pos)
 {
-    IUnit* unit = nullptr;
+    std::shared_ptr<IUnit> unit = nullptr;
 
     switch (id)
     {
@@ -101,15 +96,15 @@ Create(UNIT_ID id, const CVector3& pos)
     case UNIT_ID::PLAYER2:
     case UNIT_ID::PLAYER3:
     case UNIT_ID::PLAYER4:
-    unit = new CPlayer();  break;
+        unit = std::make_shared<CPlayer>();  break;
     }
     
 
     if (!unit) return nullptr;
 
-    unit->Initialize(id, pos, m_file_name);
+    unit->Initialize(id, pos);
 
-    m_UnitList.push_back(unit);
+    m_UnitList.emplace_back(unit);
     return unit;
 }
 
@@ -121,10 +116,12 @@ void CUnitManager::Delete(UNIT_ID id)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = (IUnit*)(*it);
+        std::shared_ptr<IUnit> unit = *it;
         if (unit->GetUnitID() == id)
-            unit->SetActive(false);
-
+        {
+            unit->Delete();
+            return;
+        }
         ++it;
 
     }
@@ -135,7 +132,7 @@ void CUnitManager::Delete(UNIT_ID id)
  */
 void
 CUnitManager::
-CheckHitBullet(IBullet* bullet)
+CheckHitBullet(std::shared_ptr<IBullet> bullet)
 {
     if (m_UnitList.empty()) return;
 
@@ -143,7 +140,7 @@ CheckHitBullet(IBullet* bullet)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = (IUnit*)(*it);
+        std::shared_ptr<IUnit> unit = *it;
 
         if (bullet->GetColliderID() == COLLIDER_ID::MODEL)
             unit->CheckHitBulletModel(bullet);
@@ -157,7 +154,7 @@ CheckHitBullet(IBullet* bullet)
 /*
 * オブジェクトとの当たり判定
 */
-void CUnitManager::CheckHitObject(IObject* object)
+void CUnitManager::CheckHitObject(std::shared_ptr<IObject> object)
 {
     if (m_UnitList.empty()) return;
     UNIT_LIST::iterator it = m_UnitList.begin();
@@ -169,8 +166,8 @@ void CUnitManager::CheckHitObject(IObject* object)
             ++it;
             continue;
         }
-        IUnit* unit = (*it);
-        
+        std::shared_ptr<IUnit> unit = *it;
+
         //水平方向の判定-----------------------------------------------------        
         
         CVector3 startPos, endPos, ForwardVector, CheckVector;
@@ -187,7 +184,8 @@ void CUnitManager::CheckHitObject(IObject* object)
             endPos = startPos;
             CheckVector = ForwardVector.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f * i).Normalize();
             endPos += CheckVector * (*it)->GetRadius();
-            CheckHitObjectHorizontal(object, (*it), startPos, endPos);
+            CheckHitObjectHorizontal(object, unit.get(), startPos, endPos);
+            DrawLine3D(startPos, endPos, 0xffffffff);
         }
 
         //垂直方向の判定-----------------------------------------------------
@@ -199,7 +197,7 @@ void CUnitManager::CheckHitObject(IObject* object)
         {
             CVector3 unit_pos = unit->GetPosition();
             CVector3 start = unit_pos + CVector3(-offset + (offset) * (i % 3), 0.0f, -offset + (offset) * (i / 3));
-            CheckHitObjectVertical(object, (*it), start, CVector3(0.0f, -radius * 3, 0.0f));
+            CheckHitObjectVertical(object, unit.get(), start, CVector3(0.0f, -radius * 3, 0.0f));
         }
 
         ++it;
@@ -209,7 +207,7 @@ void CUnitManager::CheckHitObject(IObject* object)
 }
 
 
-CPlayer* CUnitManager::GetPlayer(UNIT_ID id)
+std::shared_ptr<CPlayer> CUnitManager::GetPlayer(UNIT_ID id)
 {
     if (m_UnitList.empty()) return nullptr;
 
@@ -218,7 +216,7 @@ CPlayer* CUnitManager::GetPlayer(UNIT_ID id)
     while (it != m_UnitList.end())
     {
         if ((*it)->GetUnitID() == id)
-            return (CPlayer*)(*it);
+            return dynamic_pointer_cast<CPlayer>(*it);
 
         ++it;
     }
@@ -236,7 +234,7 @@ void CUnitManager::SetAllPlayerAction(bool flag)
     {
         if ((*it)->GetUnitCategory() == UNIT_CATEGORY::PLAYER)
         {
-            CPlayer* player = (CPlayer*)(*it);
+            std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(*it);
             player->SetActionFlag(flag);
         }
 
@@ -246,23 +244,6 @@ void CUnitManager::SetAllPlayerAction(bool flag)
     return;
 
 }
-
-bool CUnitManager::CheckHitLineEnemy(const CVector3& startPos, const CVector3& endPos)
-{
-    if (m_UnitList.empty()) return false;
-    UNIT_LIST::iterator it = m_UnitList.begin();
-
-    while (it != m_UnitList.end())
-    {
-        if ((*it)->GetModel().CheckHitLine(startPos, endPos) == true && (*it)->GetUnitCategory() != UNIT_CATEGORY::PLAYER)
-            return true;
-
-        ++it;
-    }
-
-    return false;
-}
-
 
 CUnitManager::UNIT_LIST CUnitManager::GetUnitList()
 {
@@ -288,15 +269,13 @@ UpdateUnit(void)
 
     while (it != m_UnitList.end())
     {
-        IUnit* unit = (IUnit*)(*it);
+        std::shared_ptr<IUnit> unit = *it;
 
-        unit->Update();
+         unit->Update();
 
-        if (!unit->GetActive())
+        if (!unit->IsActive())
         {
             unit->Finalize();
-
-            delete unit;
 
             it = m_UnitList.erase(it);
 
@@ -306,13 +285,12 @@ UpdateUnit(void)
         ++it;
     }
 }
-
 /*
  *  ユニットとステージとのアタリ判定の処理（垂直）
  */
 void
 CUnitManager::
-CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir, float length)
+CheckHitObjectVertical(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir, float length)
 {
     CVector3 hitPos;
     CVector3 end_position = startPos + (down_dir * length);
@@ -359,7 +337,7 @@ CheckHitObjectVertical(IObject* object, IUnit* unit, const CVector3& startPos, c
  */
 void
 CUnitManager::
-CheckHitObjectHorizontal(IObject* object, IUnit* unit, const CVector3& startPos, const CVector3& endPos)
+CheckHitObjectHorizontal(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& endPos)
 {
     CVector3 hitPos;
 

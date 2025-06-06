@@ -20,7 +20,7 @@ public:
      *  @brief      ‰Šú‰»
      *
      */
-    void    Initialize(IObject* object);
+    void    Initialize(std::shared_ptr<IObject> object);
 
 
     /*!
