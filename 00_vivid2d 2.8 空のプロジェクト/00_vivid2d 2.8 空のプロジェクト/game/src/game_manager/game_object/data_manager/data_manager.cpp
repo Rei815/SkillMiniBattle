@@ -1,6 +1,9 @@
 #include "data_manager.h"
 
 const int CDataManager::m_max_game_num = 4;
+const int CDataManager::m_required_wins = 3;
+const int CDataManager::m_max_player_join = 4;
+const int CDataManager::m_min_player_join = 2;
 /*
  *  インスタンスの取得
  */
@@ -51,14 +54,14 @@ void CDataManager::PlayerWin(UNIT_ID unitID)
     ++m_PlayerWins[(int)unitID];
 }
 
-int CDataManager::GetCurrentPlayer()
+int CDataManager::GetCurrentJoinPlayer()
 {
     return m_CurrentJoinPlayerNum;
 }
 
-void CDataManager::SetCurrentPlayer(int num)
+void CDataManager::SetCurrentJoinPlayer(int num)
 {
-    if (num > 4 || num < 2) return;
+    if (num > m_max_player_join || num < m_min_player_join) return;
     m_CurrentJoinPlayerNum = num;
 
     ResetLastGameRanking();
@@ -82,6 +85,11 @@ int CDataManager::GetPlayerWin(int unitID)
 int CDataManager::GetMaxGameNum()
 {
     return m_max_game_num;
+}
+
+int CDataManager::GetRequiredWins()
+{
+    return m_required_wins;
 }
 
 void CDataManager::ResetLastGameRanking()
@@ -144,7 +152,7 @@ int CDataManager::GetConnectControllerNum()
 CDataManager::
 CDataManager(void)
     : m_PlayerWins()
-    , m_CurrentJoinPlayerNum(2)
+    , m_CurrentJoinPlayerNum(m_min_player_join)
     , m_LastGameRanking{UNIT_ID::NONE}
     , m_NowGameRankingNum(1)
 {

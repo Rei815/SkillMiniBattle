@@ -43,14 +43,14 @@ public:
      *
      *  @return     プレイヤーの数
      */
-    int             GetCurrentPlayer();
+    int             GetCurrentJoinPlayer();
 
     /*!
      *  @brief      参加しているプレイヤーの数を設定
      *
      *  @param[in]  num     プレイヤーの数
      */
-    void            SetCurrentPlayer(int num);
+    void            SetCurrentJoinPlayer(int num);
 
     /*!
      *  @brief      ゲームのIDを取得
@@ -81,6 +81,13 @@ public:
      *  @return     ミニゲームの数
      */
     int             GetMaxGameNum();
+
+    /*!
+     *  @brief      必要な勝利数を取得
+     *
+     *  @return     必要な勝利数
+     */
+    int             GetRequiredWins();
     /*!
      *  @brief      前回のミニゲームのランキングをリセット
      */
@@ -134,10 +141,14 @@ private:
     CDataManager& operator=(const CDataManager& rhs);
 
     static const int    m_max_game_num;                         //!< 最大のゲーム数
+    static const int    m_required_wins;                        //!< 必要な勝利数
+    static const int    m_min_player_join;                      //!< 参加可能な最大人数
+    static const int    m_max_player_join;                      //!< 最小の人数
 
     UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];  //!< 1つ前のゲームのランキング
     int                 m_NowGameRankingNum;                    //!< 1つ前のゲームのランキングをつけるため、次の順位を格納する変数
     int                 m_PlayerWins[(int)UNIT_ID::NONE];       //!< プレイヤーの勝利数
     int                 m_CurrentJoinPlayerNum;                 //!< 現在の参加しているプレイヤー
     GAME_ID             m_CurrentGameID;                        //!< 現在選ばれているゲームのID
+
 };

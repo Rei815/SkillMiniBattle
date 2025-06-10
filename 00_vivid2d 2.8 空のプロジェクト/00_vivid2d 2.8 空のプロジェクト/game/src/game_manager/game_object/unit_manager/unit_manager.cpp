@@ -172,20 +172,19 @@ void CUnitManager::CheckHitObject(std::shared_ptr<IObject> object)
         
         CVector3 startPos, endPos, ForwardVector, CheckVector;
 
-        //正面方向の取得
-        startPos = (*it)->GetPosition();
-        ForwardVector = (*it)->GetForwardVector();
-        ForwardVector.y = 0.0f;
-        ForwardVector = CVector3().Normalize(ForwardVector);
 
         //判定する（45度おきに8方向をチェック）
         for (int i = 0; i < 8; i++)
         {
+            startPos = (*it)->GetPosition();
+            //正面方向の取得
+            ForwardVector = (*it)->GetForwardVector();
+            ForwardVector.y = 0.0f;
+            ForwardVector = CVector3().Normalize(ForwardVector);
             endPos = startPos;
             CheckVector = ForwardVector.RotateAroundCoordinatesAxis(COORDINATES_AXIS::Y, 45.0f * i).Normalize();
             endPos += CheckVector * (*it)->GetRadius();
-            CheckHitObjectHorizontal(object, unit.get(), startPos, endPos);
-            DrawLine3D(startPos, endPos, 0xffffffff);
+            CheckHitObjectHorizontal(object, unit, startPos, endPos);
         }
 
         //垂直方向の判定-----------------------------------------------------
@@ -197,7 +196,7 @@ void CUnitManager::CheckHitObject(std::shared_ptr<IObject> object)
         {
             CVector3 unit_pos = unit->GetPosition();
             CVector3 start = unit_pos + CVector3(-offset + (offset) * (i % 3), 0.0f, -offset + (offset) * (i / 3));
-            CheckHitObjectVertical(object, unit.get(), start, CVector3(0.0f, -radius * 3, 0.0f));
+            CheckHitObjectVertical(object, unit, start, CVector3(0.0f, -radius * 3, 0.0f));
         }
 
         ++it;
@@ -290,7 +289,7 @@ UpdateUnit(void)
  */
 void
 CUnitManager::
-CheckHitObjectVertical(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir, float length)
+CheckHitObjectVertical(std::shared_ptr<IObject> object, std::shared_ptr<IUnit> unit, const CVector3& startPos, const CVector3& down_dir, float length)
 {
     CVector3 hitPos;
     CVector3 end_position = startPos + (down_dir * length);
@@ -337,7 +336,7 @@ CheckHitObjectVertical(std::shared_ptr<IObject> object, IUnit* unit, const CVect
  */
 void
 CUnitManager::
-CheckHitObjectHorizontal(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& endPos)
+CheckHitObjectHorizontal(std::shared_ptr<IObject> object, std::shared_ptr<IUnit> unit, const CVector3& startPos, const CVector3& endPos)
 {
     CVector3 hitPos;
 

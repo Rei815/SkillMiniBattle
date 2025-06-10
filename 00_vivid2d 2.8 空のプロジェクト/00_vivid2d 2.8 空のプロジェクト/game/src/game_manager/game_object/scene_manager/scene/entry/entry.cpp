@@ -227,7 +227,7 @@ void CEntry::CheckButtonHold(void)
                 m_PlayerNum++;
             }
 
-            CDataManager::GetInstance().SetCurrentPlayer(m_PlayerNum);
+            CDataManager::GetInstance().SetCurrentJoinPlayer(m_PlayerNum);
             CSceneManager::GetInstance().ChangeScene(SCENE_ID::GAME_ROLL_AND_REVEAL);
         }
     }

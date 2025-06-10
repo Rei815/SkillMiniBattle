@@ -59,7 +59,7 @@ void CBeltConveyorGame::Initialize(SCENE_ID scene_id)
 	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
 
 	//プレイヤーのスポーン
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
 		std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().Create((UNIT_ID)i, m_player_spawnpos_list[i]);
 		std::shared_ptr<CPlayer> Player = dynamic_pointer_cast<CPlayer>(unit);
@@ -158,14 +158,14 @@ void CBeltConveyorGame::CheckFinish(void)
 			CDataManager::GetInstance().AddLastGameRanking(unit->GetUnitID());
 
 			//念のため、同一フレームで全滅した場合に一人残すようにする
-			if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+			if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentJoinPlayer() - 1)
 				break;
 		}
 	}
 
-	if (CDataManager::GetInstance().GetCurrentPlayer() > 1)
+	if (CDataManager::GetInstance().GetCurrentJoinPlayer() > 1)
 	{
-		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentJoinPlayer() - 1)
 		{
 			//生き残った一人を勝ちにする
 			CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
@@ -177,7 +177,7 @@ void CBeltConveyorGame::CheckFinish(void)
 	}
 	else
 	{
-		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
+		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentJoinPlayer())
 		{
 			//やられているためリザルトリストから勝ちにする
 			CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());

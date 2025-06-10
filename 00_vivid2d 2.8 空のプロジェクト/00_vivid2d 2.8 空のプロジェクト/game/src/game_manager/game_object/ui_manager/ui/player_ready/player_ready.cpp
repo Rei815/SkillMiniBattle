@@ -33,7 +33,7 @@ CPlayerReady::~CPlayerReady()
 void CPlayerReady::Initialize()
 {
 	CUI::Initialize(m_position);
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
 		m_Color[i] = m_color[i];
 	}
@@ -65,7 +65,7 @@ void CPlayerReady::Update(void)
 		if (keyboard->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)keyboard->GetUnitID()] ^= 0x007f7f7f;
 
-	if (CDataManager::GetInstance().GetCurrentPlayer() == 2 && cm.GetController(CONTROLLER_ID::DUMMY)->GetUnitID() == UNIT_ID::PLAYER2)
+	if (CDataManager::GetInstance().GetCurrentJoinPlayer() == 2 && cm.GetController(CONTROLLER_ID::DUMMY)->GetUnitID() == UNIT_ID::PLAYER2)
 		m_Color[(int)UNIT_ID::PLAYER2] = 0xffffffff;
 
 	
@@ -91,7 +91,7 @@ void CPlayerReady::Update(void)
 
 
 	bool flag = false;
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
 		if (m_Color[i] == 0xffffffff)
 			flag = true;
@@ -107,7 +107,7 @@ void CPlayerReady::Update(void)
 
 void CPlayerReady::Draw(void)
 {
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
 		vivid::DrawTexture(m_file_names[i], m_Position + (m_offset * i), m_Color[i], m_rect, m_anchor, m_scale);
 	}

@@ -311,7 +311,7 @@ void CSelectSkill::CreateSkillIcon(void)
 
 void CSelectSkill::SetCursorID(void)
 {
-    int CurrentPlayer = CDataManager::GetInstance().GetCurrentPlayer();
+    int CurrentPlayer = CDataManager::GetInstance().GetCurrentJoinPlayer();
 
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {

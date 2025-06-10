@@ -190,7 +190,7 @@ CGame::Start(void)
 
                 std::shared_ptr<CPlayer> TempPlayer;
 
-                for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+                for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
                 {
                     TempPlayer = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
                     TempPlayer->SetActionFlag(true);
