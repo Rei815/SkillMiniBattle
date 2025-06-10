@@ -122,7 +122,7 @@ private:
      */
     CDataManager& operator=(const CDataManager& rhs);
 
-    static const int    m_max_game_num;
+    static const int    m_max_game_num;                         //!< Å‘å‚ÌƒQ[ƒ€”
 
     UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];              //1‚Â‘O‚ÌƒQ[ƒ€‚Ìƒ‰ƒ“ƒLƒ“ƒO
     int                 m_NowGameRankingNum;                                //1‚Â‘O‚ÌƒQ[ƒ€‚Ìƒ‰ƒ“ƒLƒ“ƒO‚ð‚Â‚¯‚é‚½‚ßAŽŸ‚Ì‡ˆÊ‚ðŠi”[‚·‚é•Ï”

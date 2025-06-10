@@ -1,10 +1,9 @@
 
 #include "vivid.h"
 #include "model.h"
-#include "..\..\unit_manager\unit\unit.h"
 /*
-* コンストラクタ
-*/
+ * コンストラクタ
+ */
 CModel::CModel()
 	: m_Transform(CVector3())
  	, m_Handle(VIVID_DX_ERROR)
@@ -12,15 +11,15 @@ CModel::CModel()
 }
 
 /*
-* デストラクタ
-*/
+ * デストラクタ
+ */
 CModel::~CModel()
 {
 }
 
 /*
-* 初期化
-*/
+ * 初期化
+ */
 void CModel::Initialize(const std::string& file_name, const CVector3& position, float scale)
 {
 	Initialize(file_name, position, CVector3(scale, scale, scale));
@@ -151,28 +150,12 @@ bool CModel::CheckHitLine(const CVector3& startPos, const CVector3& endPos)const
 	return false;
 }
 
-bool CModel::CheckHitTriangle(const CVector3& posA, const CVector3& posB, const CVector3& posC)
-{
-	MV1_COLL_RESULT_POLY_DIM hitPolyDim = MV1CollCheck_Triangle(m_Handle, -1, posA, posB, posC);
-	if (hitPolyDim.HitNum > 0)
-		return true;
-	return false;
-}
-
 CVector3 CModel::GetHitLinePosition(const CVector3& startPos, const CVector3& endPos)const
 {
 	MV1_COLL_RESULT_POLY hitPoly = MV1CollCheck_Line(m_Handle, -1, startPos, endPos);
 	if (hitPoly.HitFlag == 1)
 		return hitPoly.HitPosition;
 	return endPos;
-}
-
-CVector3 CModel::GetHitTrianglePosition(const CVector3& posA, const CVector3& posB, const CVector3& posC)
-{
-	MV1_COLL_RESULT_POLY_DIM hitPolyDim = MV1CollCheck_Triangle(m_Handle, -1, posA, posB, posC);
-	if (hitPolyDim.HitNum > 0)
-		return hitPolyDim.Dim->HitPosition;
-	return CVector3();
 }
 
 unsigned int CModel::GetMaterialDif(int material_index)

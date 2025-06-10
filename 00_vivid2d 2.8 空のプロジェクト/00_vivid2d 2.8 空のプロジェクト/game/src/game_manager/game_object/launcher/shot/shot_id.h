@@ -2,9 +2,9 @@
 
 enum class SHOT_ID
 {
-    BASIC,
-    SHOCK_WAVE,
-    DODGE_BALL,
+    BASIC,      //!< Šî–{‚Ì’e
+    SHOCK_WAVE, //!< ÕŒ‚”g
+    DODGE_BALL, //!< ƒhƒbƒaƒ{[ƒ‹
 
     MAX,
 };

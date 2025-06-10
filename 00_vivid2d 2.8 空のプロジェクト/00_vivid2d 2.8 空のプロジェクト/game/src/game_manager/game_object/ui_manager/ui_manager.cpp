@@ -15,7 +15,6 @@
 #include "ui/title_logo/title_logo.h"
 #include "ui/start_game_count/start_game_count.h"
 #include "ui/start_game_text/start_game_text.h"
-#include "ui/fade/fade.h"
 #include "ui/finish_game_text/finish_game_text.h"
 #include "ui/game_bg/game_bg.h"
 #include "ui/menu_bg/menu_bg.h"
@@ -73,10 +72,13 @@ CUIManager::Update(void)
 
     while (it != m_UIList.end())
     {
-        std::shared_ptr<CUI> ui = (*it);
+        std::shared_ptr<CUI> ui = *it;
 
+        //ポーズ中はポーズUIのみが動くように
         if(ui->GetUI_ID() == UI_ID::PAUSE || !CSceneManager::GetInstance().Pausing())
             ui->Update();
+
+        //リストをソート
         SortList();
         if (!ui->IsActive())
         {
@@ -202,6 +204,7 @@ const CUIManager::UI_LIST& CUIManager::GetList()
 
 void CUIManager::SortList(void)
 {
+    //UIクラス内のm_OrderInLayerを元に並び替え
     m_UIList.sort([](const std::shared_ptr<CUI> p, const std::shared_ptr<CUI> q) {return p.get()->GetOrderInLayer() < p.get()->GetOrderInLayer(); });
 }
 
@@ -272,8 +275,6 @@ std::shared_ptr<CUI> CUIManager::CreateClass(UI_ID id)
         ui = std::make_shared<CKey>(id);                break;
     case UI_ID::KEY_BG:
         ui = std::make_shared<CKeyBG>(id);              break;
-    case UI_ID::FADE:
-        ui = std::make_shared<CFade>(id);               break;
     case UI_ID::GAME_BG:
         ui = std::make_shared<CGameBG>(id);             break;
     case UI_ID::SCENE_UI_PARENT:

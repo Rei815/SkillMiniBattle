@@ -78,6 +78,7 @@ void CPlayer::Initialize(UNIT_ID id, const CVector3& position)
         m_Category = UNIT_CATEGORY::PLAYER4;
         break;
     }
+    //コントローラーに設定されているUnitIDと合っている場合自身のコントローラーとして取得
     while (it != controllerList.end())
     {
         if ((*it)->GetUnitID() == id)

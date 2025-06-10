@@ -8,16 +8,17 @@
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../data_manager/data_manager.h"
 
-const   CVector3    CEntry::m_spawn_position = CVector3(0.0f, 100.0f, 0.0f);
-const   float       CEntry::m_respawn_height = -200.0f;
-const   float       CEntry::m_start_time = 30.0f;
-const   float       CEntry::m_hold_start_time = 2.0f;
-const   float       CEntry::m_exit_time = 0.3f;
-const   int         CEntry::m_min_player = 2;
-const CVector3		CEntry::m_camera_position = CVector3(100, 1000.0f, -100.0f);
-//const CVector3		CEntry::m_camera_position = CVector3(0, 400.0f, -1600.0f);
-//const CVector3		CEntry::m_camera_direction = CVector3(0, 0.0f, 0.6f);
-const CVector3		CEntry::m_camera_direction = CVector3(0,-1.0f,0.5f);
+const   CVector3        CEntry::m_spawn_position = CVector3(0.0f, 100.0f, 0.0f);
+const   float           CEntry::m_respawn_height = -200.0f;
+const   float           CEntry::m_start_time = 30.0f;
+const   float           CEntry::m_hold_start_time = 2.0f;
+const   float           CEntry::m_exit_time = 0.3f;
+const   int             CEntry::m_min_player = 2;
+const CVector3		    CEntry::m_camera_position = CVector3(0, 400.0f, -1600.0f);
+const CVector3		    CEntry::m_camera_direction = CVector3(0, 0.0f, 0.6f);
+const CVector3		    CEntry::m_stage_position = CVector3(0.0f, 0.0f, 500.0f);
+const vivid::Vector2    CEntry::m_gauge_position = vivid::Vector2(1200, 50);
+const float             CEntry::m_gauge_scale = 0.3f;
 
 CEntry::CEntry(void)
     : m_NextUnitID(UNIT_ID::PLAYER1)
@@ -55,7 +56,7 @@ void CEntry::Initialize(SCENE_ID scene_id)
     om.Initialize();
     cm.Initialize();
 
-    om.Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT, CTransform(CVector3(0.0f,0.0f, 500.0f)));
+    om.Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT, CTransform(m_stage_position));
 
     for (int i = 0; i < 4; i++)
     {
@@ -67,24 +68,14 @@ void CEntry::Initialize(SCENE_ID scene_id)
 
     }
     m_GameStartTimer.SetUp(m_start_time, CTimer::COUNT_TYPE::DOWN);
-    vivid::Vector2  GaugePos = vivid::Vector2(1200, 50);
-    float  GaugeScale = 0.3f;
     m_GameStartGauge = dynamic_pointer_cast<CSkillGauge>(um.Create(UI_ID::SKILL_GAUGE));
     if (m_GameStartGauge)
     {
-        m_GameStartGauge->SetGauge(GaugePos,GaugeScale);
+        m_GameStartGauge->SetGauge(m_gauge_position,m_gauge_scale);
     }
-    //m_GameStartGauge = std::shared_ptr<CSkillGauge>(dynamic_cast<CSkillGauge*>(um.Create(UI_ID::SKILL_GAUGE)));
-    //if (m_GameStartGauge)
-    //{
-    //    m_GameStartGauge->SetGauge(GaugePos,GaugeScale);
-    //}
     um.Create(UI_ID::ENTRY_X_BUTTON);
 
     m_PlayerJoinUI = dynamic_pointer_cast<CPlayerJoin>(um.Create(UI_ID::PLAYER_JOIN));
-    //m_PlayerJoinUI = std::shared_ptr<CPlayerJoin>(dynamic_cast<CPlayerJoin*>(um.Create(UI_ID::PLAYER_JOIN)));
-
-    om.Create(OBJECT_ID::SKILL_WALL_OBJECT, CTransform(CVector3(400,0,0)));
 }
 
 void CEntry::Update(void)

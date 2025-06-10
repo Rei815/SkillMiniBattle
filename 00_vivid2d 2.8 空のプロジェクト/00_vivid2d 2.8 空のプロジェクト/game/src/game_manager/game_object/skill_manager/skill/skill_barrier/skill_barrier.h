@@ -1,7 +1,7 @@
 #pragma once
 #include "../skill.h"
 #include "../../../effect_manager/effect/effect.h"
-#include "../../../model_manager/model/model.h"
+#include "../../../model/model.h"
 #include "../../../effect_manager/effect_manager.h"
 
 class CSkillBarrier : public CSkill

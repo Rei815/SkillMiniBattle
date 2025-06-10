@@ -1,6 +1,6 @@
 #include "data_manager.h"
 
-const int CDataManager::m_max_game_num = 3;
+const int CDataManager::m_max_game_num = 4;
 /*
  *  インスタンスの取得
  */

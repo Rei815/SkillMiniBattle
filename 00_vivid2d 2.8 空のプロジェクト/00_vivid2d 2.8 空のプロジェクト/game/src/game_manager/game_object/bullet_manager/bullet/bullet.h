@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../../../mathematics\mathematics.h"
-#include "../../model_manager/model/model.h"
+#include "../../model/model.h"
 #include "../../launcher/launcher.h"
 #include "collider_id.h"
 #include "bullet_id.h"

@@ -63,6 +63,8 @@ Update(void)
         }
 
         break;
+
+    //２つのUIのアルファ値を切り替える
     case CEntryXButton::STATE::FADE_IN:
         m_Color[m_UINum] = vivid::alpha::AdjustAlpha(m_Color[m_UINum], m_fade_speed);
         if (alpha == 255u)

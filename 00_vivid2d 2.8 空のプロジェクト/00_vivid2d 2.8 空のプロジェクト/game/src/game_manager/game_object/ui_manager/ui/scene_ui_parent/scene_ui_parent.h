@@ -28,29 +28,29 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
-    void        Initialize(const vivid::Vector2& position);
+    void            Initialize(const vivid::Vector2& position);
 
     /*!
      *  @brief      XV
      */
-    void        Update(void);
+    void            Update(void);
 
     /*!
      *  @brief      •`‰æ
      */
-    void        Draw(void);
+    void            Draw(void);
 
     /*!
      *  @brief      ‰ğ•ú
      */
-    void        Finalize(void);
+    void            Finalize(void);
 
     /*!
      *  @brief      ó‘Ôæ“¾
      *
      *  @return     ó‘Ô
      */
-    STATE            GetState(void);
+    STATE           GetState(void);
 
     /*!
      *  @brief      ó‘Ôİ’è

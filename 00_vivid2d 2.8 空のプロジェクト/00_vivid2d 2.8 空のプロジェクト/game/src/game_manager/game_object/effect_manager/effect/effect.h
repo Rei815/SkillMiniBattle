@@ -17,7 +17,7 @@ public:
     /*!
      *  @brief      コンストラクタ
      */
-    IEffect(const std::string& file_name, EFFECT_ID effectID = EFFECT_ID::DESTROY, float speed = 1.0f);
+    IEffect(const std::string& file_name, EFFECT_ID effectID, float speed = 1.0f);
 
     /*!
      *  @brief      コンストラクタ

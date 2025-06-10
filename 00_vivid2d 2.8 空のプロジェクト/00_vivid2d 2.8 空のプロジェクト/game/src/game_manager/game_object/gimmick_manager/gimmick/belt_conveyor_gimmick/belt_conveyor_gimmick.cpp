@@ -135,7 +135,7 @@ void CBeltConveyorGimmick::Update(void)
 			continue;
 
 		//空中ならスキップ
-		if (!unit->GetIsGround())
+		if (!unit->IsGround())
 			continue;
 
 		unit->SetPosition(unit->GetPosition() + m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate));

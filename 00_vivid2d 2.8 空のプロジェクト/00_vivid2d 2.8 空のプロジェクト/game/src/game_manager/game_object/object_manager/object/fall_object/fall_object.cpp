@@ -41,7 +41,10 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 	int grHandle = vivid::core::FindLoadedTexture(m_FileName);
 
 	MV1SetTextureGraphHandle(m_Model.GetModelHandle(), 0, grHandle, true);
+
+	//モデルを半透明に変更
 	unsigned int color = m_Model.GetMaterialDif(0);
+	//アルファ値をクリアし、100を入れる
 	color = (color & 0x00ffffff) | (100 & 0xff) << 24;
 	m_Model.SetMaterialDif(0, color);
 	m_Tag = "Floor";

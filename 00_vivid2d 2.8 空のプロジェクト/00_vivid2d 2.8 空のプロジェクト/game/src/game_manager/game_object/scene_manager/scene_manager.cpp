@@ -63,14 +63,19 @@ void CSceneManager::Update(void)
     CEffectManager& em = CEffectManager::GetInstance();
     CControllerManager& cm = CControllerManager::GetInstance();
 
+
+    //ポーズできるコントローラーは1つのみ
     if(m_PauseController == nullptr)
         m_PauseController = cm.GetSpecifiedButtonDownController(BUTTON_ID::START);
-    if (m_PauseController == nullptr) return;
+    if (m_PauseController != nullptr)
+    {
         m_PauseController->Update();
         if (m_PauseController->GetButtonDown(BUTTON_ID::START) && 
             GetLastSceneID() != SCENE_ID::TITLE && m_State == STATE::SCENE_UPDATE)
-    {
-        Pause();
+        {
+            Pause();
+        }
+
     }
 }
 
@@ -100,7 +105,6 @@ void CSceneManager::Draw(void)
 void CSceneManager::DrawSceneEffect(void)
 {
     vivid::DrawTexture("data\\Textures\\white.png", vivid::Vector2(), m_FadeColor);
-
 }
 
 /*

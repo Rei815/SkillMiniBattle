@@ -200,7 +200,7 @@ void CDodgeBallGame::Play(void)
 
 		std::shared_ptr<IObject> temp = ChooseCannon();
 		if(temp != nullptr)
-			temp->GetGimmick()->SetSwitch(true);
+			temp->GetGimmick()->SetOperationFlag(true);
 	}
 
 	m_StageShrinkTimer.Update();

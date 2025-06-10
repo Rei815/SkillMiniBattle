@@ -18,7 +18,8 @@ public:
 
     /*!
      *  @brief      初期化
-     *
+     * 
+     *  @param[in]  object       オブジェクト
      */
     void    Initialize(std::shared_ptr<IObject> object);
 
@@ -44,8 +45,6 @@ private:
     static const float  m_return_time;      //!< 元に戻るまでの時間
 
     float               m_StartHeight;      //!< 初期の高さ
-
     float               m_ReturnTime;       //!< 元に戻るまでの時間
-
-    CTimer              m_ReturnTimer;
+    CTimer              m_ReturnTimer;      //!< 戻るまでのタイマー
 };

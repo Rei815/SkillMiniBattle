@@ -1,5 +1,5 @@
 #pragma once
-#include "../../model_manager/model/model.h"
+#include "../../model/model.h"
 #include "object_id.h"
 #include "../../gimmick_manager/gimmick/gimmick.h"
 #include <memory>
