@@ -20,11 +20,8 @@ void
 CDataManager::
 Initialize(void)
 {
-    for (int i = 0; i < m_CurrentPlayerNum; i++)
-    {
+    for (int i = 0; i < m_CurrentJoinPlayerNum; i++)
         m_PlayerWins[i] = 0;
-    }
-    m_MaxGameNum = m_max_game_num;
 }
 
 /*
@@ -40,7 +37,7 @@ CDataManager::Update(void)
  */
 void CDataManager::Finalize(void)
 {
-    for (int i = 0; i < m_CurrentPlayerNum; i++)
+    for (int i = 0; i < m_CurrentJoinPlayerNum; i++)
     {
         m_LastGameRanking[i] = UNIT_ID::NONE;
         m_PlayerWins[i] = 0;
@@ -56,13 +53,13 @@ void CDataManager::PlayerWin(UNIT_ID unitID)
 
 int CDataManager::GetCurrentPlayer()
 {
-    return m_CurrentPlayerNum;
+    return m_CurrentJoinPlayerNum;
 }
 
 void CDataManager::SetCurrentPlayer(int num)
 {
     if (num > 4 || num < 2) return;
-    m_CurrentPlayerNum = num;
+    m_CurrentJoinPlayerNum = num;
 
     ResetLastGameRanking();
 }
@@ -84,35 +81,30 @@ int CDataManager::GetPlayerWin(int unitID)
 
 int CDataManager::GetMaxGameNum()
 {
-    return m_MaxGameNum;
-}
-
-void CDataManager::SetMaxGameNum(int num)
-{
-    m_MaxGameNum = num;
+    return m_max_game_num;
 }
 
 void CDataManager::ResetLastGameRanking()
 {
     for (int i = 0; i < (int)UNIT_ID::NONE; i++)
     {
-        m_LastGameRanking[i] = (UNIT_ID)((m_CurrentPlayerNum - 1) - i);
+        m_LastGameRanking[i] = (UNIT_ID)((m_CurrentJoinPlayerNum - 1) - i);
     }
 
-    m_NowGameRankingNum = m_CurrentPlayerNum - 1;
+    m_NowGameRankingNum = m_CurrentJoinPlayerNum - 1;
 }
 
 void CDataManager::AddLastGameRanking(UNIT_ID unit_id)
 {
     //引数が範囲外でないかのチェック
-    if ((int)unit_id >= m_CurrentPlayerNum)
+    if ((int)unit_id >= m_CurrentJoinPlayerNum)
         return;
 
 
     //ランキングに被りがないかのチェック
     bool duplicate = false;
 
-    for (int i = m_NowGameRankingNum + 1; i < m_CurrentPlayerNum; i++)
+    for (int i = m_NowGameRankingNum + 1; i < m_CurrentJoinPlayerNum; i++)
         if (m_LastGameRanking[i] == unit_id)
             duplicate = true;
 
@@ -152,7 +144,7 @@ int CDataManager::GetConnectControllerNum()
 CDataManager::
 CDataManager(void)
     : m_PlayerWins()
-    , m_CurrentPlayerNum(2)
+    , m_CurrentJoinPlayerNum(2)
     , m_LastGameRanking{UNIT_ID::NONE}
     , m_NowGameRankingNum(1)
 {

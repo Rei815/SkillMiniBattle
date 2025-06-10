@@ -69,23 +69,34 @@ public:
     /*!
      *  @brief      プレイヤーの勝利を取得
      *
+     *  @param[in]  unitID     ユニットのID
+     * 
      *  @return     プレイヤーの勝利数
      */
     int             GetPlayerWin(int unitID);
 
-
+    /*!
+     *  @brief      ミニゲームの数を取得
+     *
+     *  @return     ミニゲームの数
+     */
     int             GetMaxGameNum();
-
-
-    void            SetMaxGameNum(int num);
-
-
+    /*!
+     *  @brief      前回のミニゲームのランキングをリセット
+     */
     void            ResetLastGameRanking();
 
-
+    /*!
+     *  @brief      前回のミニゲームのランキングにプレイヤーを追加
+     */
     void            AddLastGameRanking(UNIT_ID unit_id);
 
-
+    /*!
+     *  @brief      前回のミニゲームのランキングを取得
+     * 
+     *  @param[in]  num     ユニットのID
+     *  @return     ユニットのID
+     */
     UNIT_ID         GetLastGameRanking(int num);
 
     /*!
@@ -124,13 +135,9 @@ private:
 
     static const int    m_max_game_num;                         //!< 最大のゲーム数
 
-    UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];              //1つ前のゲームのランキング
-    int                 m_NowGameRankingNum;                                //1つ前のゲームのランキングをつけるため、次の順位を格納する変数
-
-    int                 m_PlayerWins[(int)UNIT_ID::NONE];
-    int                 m_CurrentPlayerNum;
-
-    GAME_ID             m_CurrentGameID;
-
-    int                 m_MaxGameNum;
+    UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];  //!< 1つ前のゲームのランキング
+    int                 m_NowGameRankingNum;                    //!< 1つ前のゲームのランキングをつけるため、次の順位を格納する変数
+    int                 m_PlayerWins[(int)UNIT_ID::NONE];       //!< プレイヤーの勝利数
+    int                 m_CurrentJoinPlayerNum;                 //!< 現在の参加しているプレイヤー
+    GAME_ID             m_CurrentGameID;                        //!< 現在選ばれているゲームのID
 };
