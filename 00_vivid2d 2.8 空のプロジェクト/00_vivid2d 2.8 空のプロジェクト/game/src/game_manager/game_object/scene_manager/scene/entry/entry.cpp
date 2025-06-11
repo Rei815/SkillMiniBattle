@@ -76,6 +76,8 @@ void CEntry::Initialize(SCENE_ID scene_id)
     um.Create(UI_ID::ENTRY_X_BUTTON);
 
     m_PlayerJoinUI = dynamic_pointer_cast<CPlayerJoin>(um.Create(UI_ID::PLAYER_JOIN));
+
+    om.Create(OBJECT_ID::SKILL_WALL_OBJECT, CTransform(CVector3(0, 0, 500)));
 }
 
 void CEntry::Update(void)

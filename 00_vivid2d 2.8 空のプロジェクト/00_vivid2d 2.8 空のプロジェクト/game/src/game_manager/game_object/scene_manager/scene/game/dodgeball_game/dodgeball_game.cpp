@@ -114,6 +114,7 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 
 	CLauncher::GetInstance().Initialize();
 	CBulletManager::GetInstance().Initialize();
+
 }
 
 void CDodgeBallGame::Update(void)
@@ -131,7 +132,6 @@ void CDodgeBallGame::Update(void)
 void CDodgeBallGame::Draw(void)
 {
 	m_BackGround.Draw();
-	//CStage::GetInstance().Draw();
 	CBulletManager::GetInstance().Draw();
 	CGame::Draw();
 }
