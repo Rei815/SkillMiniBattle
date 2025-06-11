@@ -340,7 +340,6 @@ CheckHitObjectHorizontal(std::shared_ptr<IObject> object, std::shared_ptr<IUnit>
 {
     CVector3 hitPos;
 
-    DrawLine3D(startPos, endPos, 0xffffffff);
     if (object->GetModel().CheckHitLine(startPos, endPos) == true)
     {
         hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);

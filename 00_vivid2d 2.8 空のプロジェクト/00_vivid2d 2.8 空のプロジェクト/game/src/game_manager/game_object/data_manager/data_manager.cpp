@@ -2,7 +2,6 @@
 
 const int CDataManager::m_max_game_num = 4;
 const int CDataManager::m_required_wins = 3;
-const int CDataManager::m_max_player_join = 4;
 const int CDataManager::m_min_player_join = 2;
 /*
  *  インスタンスの取得
@@ -90,6 +89,16 @@ int CDataManager::GetMaxGameNum()
 int CDataManager::GetRequiredWins()
 {
     return m_required_wins;
+}
+
+int CDataManager::GetMaxJoinPlayerNum()
+{
+    return m_max_player_join;
+}
+
+int CDataManager::GetActiveControllerNum()
+{
+    return m_active_controller_num;
 }
 
 void CDataManager::ResetLastGameRanking()

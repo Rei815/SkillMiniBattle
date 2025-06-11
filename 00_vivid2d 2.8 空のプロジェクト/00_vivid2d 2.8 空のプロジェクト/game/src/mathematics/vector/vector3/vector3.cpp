@@ -365,6 +365,7 @@ CVector3 CVector3::CreateRandomDeviation(float deviationAmount)
 
 	static std::mt19937 gen(rd());
 
+	//}deviationAmount‚Ì”ÍˆÍ‚Å’l‚ğo‚·
 	std::uniform_real_distribution<float> dis(-deviationAmount, deviationAmount);
 
 	return CVector3(dis(gen), dis(gen), dis(gen));

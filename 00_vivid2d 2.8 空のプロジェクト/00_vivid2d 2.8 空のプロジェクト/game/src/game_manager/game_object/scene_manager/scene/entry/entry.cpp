@@ -42,30 +42,32 @@ void CEntry::Initialize(SCENE_ID scene_id)
 {
     IScene::Initialize(scene_id);
 
-    CEffectManager::GetInstance().Initialize();
-    CCamera::GetInstance().Initialize();
-    CCamera::GetInstance().SetPosition(m_camera_position);
-    CCamera::GetInstance().SetDirection(m_camera_direction);
     CObjectManager& om = CObjectManager::GetInstance();
     CUIManager& um = CUIManager::GetInstance();
+    CCamera& camera = CCamera::GetInstance();
+    CControllerManager& cm = CControllerManager::GetInstance();
+    CDataManager& dm = CDataManager::GetInstance();
+    CEffectManager::GetInstance().Initialize();
+    camera.Initialize();
+    camera.SetPosition(m_camera_position);
+    camera.SetDirection(m_camera_direction);
     CUIManager::UI_LIST uiList = um.GetList();
     um.Initialize();
     m_BackGround.Initialize("data\\Textures\\dodge_ball_bg.jpg");
 
-    CControllerManager& cm = CControllerManager::GetInstance();
     om.Initialize();
     cm.Initialize();
 
     om.Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT, CTransform(m_stage_position));
-
-    for (int i = 0; i < 4; i++)
+    const int maxPlayerNum = dm.GetMaxJoinPlayerNum();
+    for (int i = 0; i < maxPlayerNum; i++)
     {
         m_PlayerArray[i] = UNIT_ID::NONE;
     }
-    for (int i = 0; i < 5; i++)
+    const int ActiveControllerNum = dm.GetActiveControllerNum();
+    for (int i = 0; i < ActiveControllerNum; i++)
     {
         m_HoldTimer[i].SetUp(m_hold_start_time);
-
     }
     m_GameStartTimer.SetUp(m_start_time, CTimer::COUNT_TYPE::DOWN);
     m_GameStartGauge = dynamic_pointer_cast<CSkillGauge>(um.Create(UI_ID::SKILL_GAUGE));
@@ -76,8 +78,6 @@ void CEntry::Initialize(SCENE_ID scene_id)
     um.Create(UI_ID::ENTRY_X_BUTTON);
 
     m_PlayerJoinUI = dynamic_pointer_cast<CPlayerJoin>(um.Create(UI_ID::PLAYER_JOIN));
-
-    om.Create(OBJECT_ID::SKILL_WALL_OBJECT, CTransform(CVector3(0, 0, 500)));
 }
 
 void CEntry::Update(void)
@@ -88,6 +88,8 @@ void CEntry::Update(void)
     CEffectManager::GetInstance().Update();
     CObjectManager& om = CObjectManager::GetInstance();
     CUnitManager& um = CUnitManager::GetInstance();
+    CDataManager& dm = CDataManager::GetInstance();
+
     cm.Update();
     om.Update();
     um.Update();
@@ -95,7 +97,8 @@ void CEntry::Update(void)
     m_CanStartFlag = true;
 
     m_PlayerNum = 0;
-    for (int i = 0; i < 4; i++)
+    const int maxPlayerNum = dm.GetMaxJoinPlayerNum();
+    for (int i = 0; i < maxPlayerNum; i++)
     {
         if (m_PlayerArray[i] != UNIT_ID::NONE)
             m_PlayerNum++;
@@ -138,7 +141,7 @@ void CEntry::Update(void)
         m_NextUnitID = UNIT_ID::NONE;
 
         //IDからいないプレイヤーを探す
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < maxPlayerNum; i++)
         {
             if (m_PlayerArray[i] == UNIT_ID::NONE)
             {
@@ -202,7 +205,8 @@ void CEntry::CheckButtonHold(void)
         //プレイヤーがいなくなったらタイマーのリセット
         if (unitID == UNIT_ID::NONE)
         {
-            for (int i = 0; i < 5; i++)
+            const int ActiveControllerNum = CDataManager::GetInstance().GetActiveControllerNum();
+            for (int i = 0; i < ActiveControllerNum; i++)
             {
                 m_HoldTimer[i].Reset();
             }
@@ -218,8 +222,10 @@ void CEntry::CheckButtonHold(void)
             m_GameStartGauge->SetPercent(percent);
         }
 
+        //ゲージ最大まで長押ししたら開始
         if (m_HoldTimer[(int)unitID].Finished() && m_CanStartFlag)
         {
+            //一人の場合、ダミーコントローラーを2Pとして扱う
             if (m_PlayerNum == 1)
             {
                 std::shared_ptr<CController> dummy = cm.GetController(CONTROLLER_ID::DUMMY);

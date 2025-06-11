@@ -88,6 +88,21 @@ public:
      *  @return     必要な勝利数
      */
     int             GetRequiredWins();
+
+    /*!
+     *  @brief      最大の参加可能なプレイヤーの数を取得
+     *
+     *  @return     最大の参加可能なプレイヤーの数を取得
+     */
+    int             GetMaxJoinPlayerNum();
+
+    /*!
+     *  @brief      操作可能なコントローラー数を取得
+     *
+     *  @return     操作可能なコントローラー数
+     */
+    int             GetActiveControllerNum();
+
     /*!
      *  @brief      前回のミニゲームのランキングをリセット
      */
@@ -112,6 +127,10 @@ public:
      *  @return     コントローラーの接続数
      */
     int             GetConnectControllerNum();
+
+    static const int    m_max_player_join = 4;                      //!< 参加可能な最大人数
+    static const int    m_active_controller_num = 5;                //!< 操作可能なコントローラー数
+
 private:
 
     /*!
@@ -142,8 +161,7 @@ private:
 
     static const int    m_max_game_num;                         //!< 最大のゲーム数
     static const int    m_required_wins;                        //!< 必要な勝利数
-    static const int    m_min_player_join;                      //!< 参加可能な最大人数
-    static const int    m_max_player_join;                      //!< 最小の人数
+    static const int    m_min_player_join;                      //!< ゲームに必要な最小の人数
 
     UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];  //!< 1つ前のゲームのランキング
     int                 m_NowGameRankingNum;                    //!< 1つ前のゲームのランキングをつけるため、次の順位を格納する変数
