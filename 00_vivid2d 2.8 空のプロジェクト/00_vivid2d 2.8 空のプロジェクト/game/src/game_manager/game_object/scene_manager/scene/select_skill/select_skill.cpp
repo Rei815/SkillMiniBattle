@@ -354,7 +354,6 @@ void CSelectSkill::CreateCursor(void)
     if (controller == nullptr) return;
     //コントローラーを振動させる
     cm.Vibration((CONTROLLER_ID)controller->GetUnitID());
-
 }
 
 void CSelectSkill::MoveCursor(void)

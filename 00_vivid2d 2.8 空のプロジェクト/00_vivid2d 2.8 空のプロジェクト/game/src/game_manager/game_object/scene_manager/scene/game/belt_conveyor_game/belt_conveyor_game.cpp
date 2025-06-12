@@ -73,7 +73,6 @@ void CBeltConveyorGame::Initialize(SCENE_ID scene_id)
 
 	CSkillManager::GetInstance().SetSkill();
 	CTransform transform = CTransform();
-
 }
 
 void CBeltConveyorGame::Update(void)
@@ -125,7 +124,6 @@ void CBeltConveyorGame::Play(void)
 void CBeltConveyorGame::Finish(void)
 {
 	CGame::Finish();
-
 }
 
 void CBeltConveyorGame::CheckFinish(void)

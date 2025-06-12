@@ -98,14 +98,19 @@ void CBeltConveyorGimmick::Update(void)
 
 			CVector3 CheckLineEndPos = ObjPos + CVector3(0.0f, 50.0f, 0.0f);
 
-			//ベルトコンベアの上にいるかどうか
+			//ベルトコンベアの上にいる場合
 			if (m_Object->GetModel().CheckHitLine( ObjPos, CheckLineEndPos))
 			{
+				//ベルトコンベアの速さに合わせて水平方向の移動
 				(*it)->SetPosition(ObjPos + m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate));
 			}
+			//ベルトコンベアの上にいない場合（落下中）
 			else
 			{
+				//ベルトコンベアの速さの半分の速さで水平方向の移動 ＋ 落下速度で垂直方向の移動（ゲームプレイ中にあまり見ない部分の演出のため、厳密にリアルの動きを再現する必要はなさそうなので、それっぽく見える程度に）
 				(*it)->SetPosition(ObjPos + m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate * 0.5f) + CVector3::DOWN * m_obstruction_object_fall_speed);
+				
+				//少し回転させる（ベルトコンベアの端が丸くなっている影響で、落下時に回転が加わるほうが自然に見える）
 				(*it)->SetRotation((*it)->GetRotation() + CVector3(0.2f, 0.0f, 0.0f));
 			}
 
