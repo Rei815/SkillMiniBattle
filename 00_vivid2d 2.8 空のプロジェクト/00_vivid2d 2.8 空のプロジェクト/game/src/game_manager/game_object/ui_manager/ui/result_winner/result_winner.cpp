@@ -42,9 +42,9 @@ Initialize(void)
 	CUI::Initialize(m_position);
 	CDataManager& dm = CDataManager::GetInstance();
 	//最も点数が高いプレイヤーのIDを取得
-	for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+	for (int i = 0; i < dm.GetCurrentJoinPlayer(); i++)
 	{
-		if (dm.GetPlayerWin(i) == dm.GetMaxGameNum())
+		if (dm.GetPlayerWin(i) == dm.GetRequiredWins())
 		{
 			m_FileName = m_file_name[i];
 			break;

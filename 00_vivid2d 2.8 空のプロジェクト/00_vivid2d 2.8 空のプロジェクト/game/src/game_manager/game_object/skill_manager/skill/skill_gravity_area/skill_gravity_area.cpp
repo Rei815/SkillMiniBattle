@@ -57,7 +57,7 @@ Update(void)
 	case SKILL_STATE::ACTIVE:
 		for (int i = 0; i < (int)UNIT_ID::NONE; i++)
 		{
-			if (i >= CDataManager::GetInstance().GetCurrentPlayer())
+			if (i >= CDataManager::GetInstance().GetCurrentJoinPlayer())
 				break;
 
 			if ((UNIT_ID)i == m_PlayerID)

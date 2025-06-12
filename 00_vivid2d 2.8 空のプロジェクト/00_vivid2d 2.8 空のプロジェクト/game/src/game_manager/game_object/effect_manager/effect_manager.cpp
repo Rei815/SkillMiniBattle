@@ -1,8 +1,6 @@
 #include "effect_manager.h"
-#include "effect/destroy_effect/destroy_effect.h"
 #include "effect/hit_effect/hit_effect.h"
 #include "effect/jump_effect/jump_effect.h"
-#include "effect/dust_cloud_effect/dust_cloud_effect.h"
 #include "effect/shock_wave_effect/shock_wave_effect.h"
 #include "effect/forecast_line_effect/forecast_line_effect.h"
 #include "effect/barrier_effect/barrier_effect.h"
@@ -200,10 +198,8 @@ std::shared_ptr<IEffect> CEffectManager::CreateClass(EFFECT_ID id)
 
     switch (id)
     {
-    case EFFECT_ID::DESTROY:                effect = std::make_shared<CDestroyEffect>();        break;
     case EFFECT_ID::HIT:                    effect = std::make_shared<CHitEffect>();            break;
     case EFFECT_ID::JUMP:                   effect = std::make_shared<CJumpEffect>();           break;
-    case EFFECT_ID::DUST_CLOUD:             effect = std::make_shared<CDustCloudEffect>();      break;
     case EFFECT_ID::SHOCK_WAVE:             effect = std::make_shared<CShockWaveEffect>();      break;
     case EFFECT_ID::FORECAST_LINE:          effect = std::make_shared<CForecastLineEffect>();   break;
     case EFFECT_ID::BARRIER:                effect = std::make_shared<CBarrierEffect>();        break;

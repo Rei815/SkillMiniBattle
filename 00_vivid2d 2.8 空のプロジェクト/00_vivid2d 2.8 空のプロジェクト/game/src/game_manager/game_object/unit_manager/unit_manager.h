@@ -132,7 +132,7 @@ private:
      *  @param[in]  startPos    当たり判定をする線分の開始地点
      *  @param[in]  endPos      当たり判定をする線分の終了地点
      */
-    void    CheckHitObjectVertical(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& down_dir = CVector3(0.0f, -1.0f, 0.0f), float length = 1.0f);
+    void    CheckHitObjectVertical(std::shared_ptr<IObject> object, std::shared_ptr<IUnit> unit, const CVector3& startPos, const CVector3& down_dir = CVector3(0.0f, -1.0f, 0.0f), float length = 1.0f);
     
     /*!
      *  @brief      ユニットとステージとのアタリ判定の処理（水平）
@@ -142,7 +142,7 @@ private:
      *  @param[in]  startPos    当たり判定をする線分の開始地点
      *  @param[in]  endPos      当たり判定をする線分の終了地点
      */
-    void    CheckHitObjectHorizontal(std::shared_ptr<IObject> object, IUnit* unit, const CVector3& startPos, const CVector3& endPos);
+    void    CheckHitObjectHorizontal(std::shared_ptr<IObject> object, std::shared_ptr<IUnit> unit, const CVector3& startPos, const CVector3& endPos);
 
     UNIT_LIST                                           m_UnitList;     //!< ユニットリスト
     DEFEAT_LIST                                         m_DefeatList;   //!< ランキングリスト

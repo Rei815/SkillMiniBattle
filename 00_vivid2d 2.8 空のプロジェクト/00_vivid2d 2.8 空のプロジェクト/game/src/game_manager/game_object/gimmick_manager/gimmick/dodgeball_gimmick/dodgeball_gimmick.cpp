@@ -194,9 +194,9 @@ void CDodgeBallGimmick::Move()
 	m_Object->SetRotation(TempRotation);
 
 	//–C‚Ì”­ŽË
-	if (m_Switch)
+	if (m_OperationFlag)
 	{
-		m_Switch = false;
+		m_OperationFlag = false;
 
 		//‰ñ“]‚ÌŠp“x‚ðƒ‰ƒWƒAƒ“‚É•ÏŠ·‚·‚é
 		TempRotation = CVector3(DEG_TO_RAD(TempRotation.x), DEG_TO_RAD(TempRotation.y), DEG_TO_RAD(TempRotation.z));

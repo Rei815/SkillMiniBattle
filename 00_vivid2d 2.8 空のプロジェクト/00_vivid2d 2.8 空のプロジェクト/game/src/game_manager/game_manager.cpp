@@ -1,14 +1,3 @@
-
-/*!
- *  @file       game_manager.cpp
- *  @brief      ゲーム管理
- *  @author     Kazuya Maruyama
- *  @date       2020/11/13
- *  @since      1.0
- *
- *  Copyright (c) 2013-2020, Kazuya Maruyama. All rights reserved.
- */
-
 #include "game_manager.h"
 #include "game_object\game_object.h"
 
@@ -29,21 +18,12 @@ CGameManager::GetInstance(void)
 void
 CGameManager::Initialize(void)
 {
-    // モデルマネージャー取得
-    CModelManager& model = CModelManager::GetInstance();
-
-    // モデル読み込み
-    model.Load();
-
     // サウンドマネージャー取得
     CSoundManager& sound = CSoundManager::GetInstance();
 
     // サウンド読み込み
     sound.Load_SE();
     sound.Load_BGM();
-
-    // BGM再生
-    //sound.Play(SOUND_ID::BGM, true);
 
     // シーンマネージャー初期化
     CSceneManager::GetInstance().Initialize();

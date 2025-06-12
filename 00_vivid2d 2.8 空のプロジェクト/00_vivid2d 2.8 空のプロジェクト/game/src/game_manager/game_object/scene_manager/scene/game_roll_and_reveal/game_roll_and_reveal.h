@@ -44,6 +44,7 @@ public:
 private:
     static const int                    m_games_num;            //!< ƒQ[ƒ€”
     static const CVector3               m_camera_position;      //!< ƒJƒƒ‰‚ÌˆÊ’u
+    static const float                  m_circle_height;        //!< ‰~‚Ì‚‚³
     static const float                  m_circle_radius;        //!< ‰~‚Ì”¼Œa
     std::shared_ptr<CSceneUIParent>     m_PlaneUIParent;        //!< UI‚Ìe(‰ñ“]ƒvƒŒ[ƒ“)
     std::shared_ptr<CSceneUIParent>     m_RevealUIParent;       //!< UI‚Ìe(à–¾—pUI)

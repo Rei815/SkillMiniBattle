@@ -2,7 +2,7 @@
 
 #include "unit_id.h"
 #include "..\..\..\..\mathematics\mathematics.h"
-#include "../../model_manager/model/model.h"
+#include "../../model/model.h"
 #include "..\..\bullet_manager\bullet\bullet.h"
 #include "..\..\object_manager\object\object.h"
 #include "../../launcher/shot/shot.h"
@@ -186,31 +186,6 @@ public:
     float           GetHeight(void);
 
     /*!
-     *  @brief      弾数追加
-     *
-     */
-    void            AddShot(void);
-
-    /*!
-     *  @brief      発射数追加
-     *
-     */
-    void            AddBullet(void);
-
-    /*!
-     *  @brief      弾数追加
-     *
-     */
-    void            DamageUp(float damageRate);
-
-    /*!
-     *  @brief      攻撃率取得
-     *
-     *  @return     攻撃率
-     */
-    float           GetDamageRate(void);
-
-    /*!
      *  @brief      敗北フラグ取得
      *
      *  @return     敗北フラグ
@@ -243,7 +218,7 @@ public:
          *
          *  @return 接地フラグ
      */
-    bool            GetIsGround();
+    bool            IsGround();
 
     /*!
      *  @brief      重力を設定
@@ -341,5 +316,5 @@ protected:
     float                   m_Alpha;                    //!< アルファ値
     bool                    m_DefeatFlag;               //!< 敗北フラグ
     bool                    m_IsGround;                 //!< 地上にいるか
-    std::shared_ptr<IObject>                m_Parent;                   //!< 親のオブジェクト
+    std::shared_ptr<IObject>m_Parent;                   //!< 親のオブジェクト
 };

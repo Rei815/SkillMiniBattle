@@ -78,7 +78,7 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	CVector3 playerPos[] = { m_floor_transform_list[(int)MARK_ID::CIRCLE].position, m_floor_transform_list[(int)MARK_ID::CROSS].position,
 	m_floor_transform_list[(int)MARK_ID::MOON].position,m_floor_transform_list[(int)MARK_ID::SQUARE].position };
 
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
 		playerPos[i].y += m_player_spawn_height;
 		std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().Create((UNIT_ID)i, playerPos[i]);
@@ -418,7 +418,7 @@ void CFallOutGame::CheckFinish()
 
 			CDataManager::GetInstance().AddLastGameRanking(player->GetUnitID());
 			//念のため、同一フレームで全滅した場合に一人残すようにする
-			if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+			if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentJoinPlayer() - 1)
 				break;
 
 		}
@@ -426,10 +426,10 @@ void CFallOutGame::CheckFinish()
 	}
 
 	//二人以上の場合
-	if (CDataManager::GetInstance().GetCurrentPlayer() > 1)
+	if (CDataManager::GetInstance().GetCurrentJoinPlayer() > 1)
 	{
 		//一人が生き残った時に終了
-		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer() - 1)
+		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentJoinPlayer() - 1)
 		{
 			//生き残った一人を勝ちにする
 			CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
@@ -442,7 +442,7 @@ void CFallOutGame::CheckFinish()
 	else //一人の場合
 	{
 		//やられたら終了
-		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentPlayer())
+		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentJoinPlayer())
 		{
 			//やられているためリザルトリストから勝ちにする
 			CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());

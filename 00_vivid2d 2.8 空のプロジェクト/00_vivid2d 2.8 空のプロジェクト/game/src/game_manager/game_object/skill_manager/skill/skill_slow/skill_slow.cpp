@@ -58,7 +58,7 @@ void CSkillSlow::Action()
 
 	
 
-	for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+	for (int i = 0; i < dm.GetCurrentJoinPlayer(); i++)
 	{
 		if (um.GetPlayer(UNIT_ID(i)) != m_Player.lock())
 		{
@@ -93,7 +93,7 @@ void CSkillSlow::ActionEnd(void)
 		m_EffectList.clear();
 	}
 
-	for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+	for (int i = 0; i < dm.GetCurrentJoinPlayer(); i++)
 	{
 		if (um.GetPlayer(UNIT_ID(i)) != m_Player.lock())
 		{

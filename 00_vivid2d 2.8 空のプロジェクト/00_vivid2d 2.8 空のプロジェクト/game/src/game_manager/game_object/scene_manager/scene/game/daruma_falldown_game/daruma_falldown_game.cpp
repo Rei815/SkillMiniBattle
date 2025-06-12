@@ -45,13 +45,13 @@ CDaruma_FallDownGame::~CDaruma_FallDownGame(void)
 void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 {
 	CGame::Initialize(scene_id);
-	m_RemainCount = CDataManager::GetInstance().GetCurrentPlayer();
+	m_RemainCount = CDataManager::GetInstance().GetCurrentJoinPlayer();
 	m_CountTime = 90;
 	m_Timer.SetUp(m_CountTime);
 
 	CSoundManager::GetInstance().Play_BGM(BGM_ID::MAIN_BGM, true);
 
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
 		m_PlayerPosition[i] = CVector3();
 	}
@@ -59,7 +59,7 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 	Temp.position = m_ogre_position;
 	Temp.rotation = m_ogre_rotation;
 
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
 		std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 100, 100 * i));
 		m_StartPosition[i] = unit->GetPosition();
@@ -73,7 +73,7 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 
 	CSkillManager::GetInstance().SetSkill();
 
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
 		std::shared_ptr<CPlayer> Player = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
 		Player->MulMoveSpeedRate(m_move_speed);
@@ -129,7 +129,7 @@ void CDaruma_FallDownGame::Ranking(void)
 	std::list<std::shared_ptr<CPlayer>> LosePlayerList;
 
 	//àÍà à»äOÇîsñkèÛë‘Ç…Ç∑ÇÈ
-	for (int j = 0; j < CDataManager::GetInstance().GetCurrentPlayer(); j++)
+	for (int j = 0; j < CDataManager::GetInstance().GetCurrentJoinPlayer(); j++)
 	{
 		if (j != m_TempFirstNum)
 		{
@@ -215,7 +215,7 @@ void CDaruma_FallDownGame::Play(void)
 
 		if (!gimmick) continue;
 
-		for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+		for (int i = 0; i < dm.GetCurrentJoinPlayer(); i++)
 		{
 			player = um.GetPlayer((UNIT_ID)i);
 
@@ -266,7 +266,7 @@ void CDaruma_FallDownGame::Play(void)
 	if (m_Timer.Finished())
 	{
 		float FirstPosX = -1500;
-		for (int i = 0; i < CDataManager::GetInstance().GetCurrentPlayer(); i++)
+		for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 		{
 			float TempPosX = um.GetPlayer((UNIT_ID)i)->GetPosition().x;
 			if (TempPosX >= FirstPosX)

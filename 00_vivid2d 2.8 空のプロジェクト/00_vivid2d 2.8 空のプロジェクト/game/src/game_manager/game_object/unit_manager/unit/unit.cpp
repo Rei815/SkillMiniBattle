@@ -331,7 +331,7 @@ void IUnit::SetIsGround(bool flag)
     m_IsGround = flag;
 }
 
-bool IUnit::GetIsGround()
+bool IUnit::IsGround()
 {
     return m_IsGround;
 }

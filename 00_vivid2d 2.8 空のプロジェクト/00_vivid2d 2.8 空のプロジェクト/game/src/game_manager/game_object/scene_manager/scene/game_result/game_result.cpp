@@ -34,7 +34,7 @@ void CGameResult::Update(void)
     CControllerManager& cm = CControllerManager::GetInstance();
     cm.Update();
 
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || cm.GetAnyControllerButtonDown(BUTTON_ID::ANY))
+    if (cm.GetAnyControllerButtonDown(BUTTON_ID::ANY))
     {
         CSceneManager::GetInstance().ChangeScene(SCENE_ID::TITLE);
     }

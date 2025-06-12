@@ -68,7 +68,7 @@ void CSceneUIParent::Initialize(const vivid::Vector2& position)
 
         ui->SetPosition(position);
         ui->SetTransform(transform);
-        ui->SetParent(this);
+        ui->SetParent(shared_from_this());
         m_ChildrenList.emplace_back(ui);
     }
 }

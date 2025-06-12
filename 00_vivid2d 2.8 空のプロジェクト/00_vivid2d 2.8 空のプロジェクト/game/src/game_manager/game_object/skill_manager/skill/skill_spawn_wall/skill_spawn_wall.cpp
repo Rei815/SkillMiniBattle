@@ -7,6 +7,7 @@
 const float CSkillSpawnWall::m_cool_time = 15.0f;
 const float CSkillSpawnWall::m_duration_time = 5.0f;
 const float CSkillSpawnWall::m_wall_spawn_distance = 200.0f;
+const float CSkillSpawnWall::m_wall_spawn_height = -100.0f;
 const float CSkillSpawnWall::m_effect_scale = 2.0f;
 
 CSkillSpawnWall::CSkillSpawnWall(void)
@@ -97,7 +98,7 @@ Action(void)
 	
 	//スポーンするオブジェクトの座標
 	SpawnTr.position = m_Player.lock()->GetPosition() + m_Player.lock()->GetForwardVector() * m_wall_spawn_distance;
-
+	SpawnTr.position.y = m_wall_spawn_height;
 	//スポーンするオブジェクトの向き
 	CVector3 TempVector = m_Player.lock()->GetForwardVector();
 	float TempRotY = asin(TempVector.x) * 180.0f / DX_PI_F;

@@ -5,9 +5,7 @@
   */
 enum class EFFECT_ID
 {
-    DESTROY,                //!< 撃破エフェクト
     HIT,                    //!< ヒットエフェクト
-    DAMAGE,                 //!< ダメージエフェクト
     JUMP,                   //!< ジャンプエフェクト
     DUST_CLOUD,             //!< 土煙エフェクト
     SHOCK_WAVE,             //!< 衝撃波エフェクト

@@ -36,6 +36,8 @@ void CFallGimmick::Update(void)
 		break;
 	case GIMMICK_STATE::PLAY:
 		m_Timer.Update();
+
+		//落下開始
 		if (m_Timer.Finished())
 		{
 			m_Timer.Reset();
@@ -62,6 +64,7 @@ void CFallGimmick::Update(void)
 		m_ReturnTimer.Update();
 		if (m_ReturnTimer.Finished())
 		{
+			//状態のリセット
 			m_ReturnTimer.Reset();
 			objectPos.y = m_StartHeight;
 			m_Object->SetPosition(objectPos);

@@ -3,7 +3,7 @@
 CGimmick::CGimmick()
 	: m_Object(nullptr)
 	, m_Timer()
-	, m_Switch(false)
+	, m_OperationFlag(false)
 	, m_State(GIMMICK_STATE::WAIT)
 	, m_ActiveFlag(true)
 {
@@ -16,13 +16,13 @@ CGimmick::~CGimmick(void)
 void CGimmick::Initialize(std::shared_ptr<IObject> object)
 {
 	m_Object = object;
-	m_Switch = false;
+	m_OperationFlag = false;
 }
 
 void CGimmick::Initialize(std::shared_ptr<IObject> object, float time)
 {
 	m_Object = object;
-	m_Switch = false;
+	m_OperationFlag = false;
 	m_Timer.SetUp(time);
 }
 
@@ -54,9 +54,9 @@ void CGimmick::SetActive(bool active)
 	m_ActiveFlag = active;
 }
 
-void CGimmick::SetSwitch(bool sw)
+void CGimmick::SetOperationFlag(bool flag)
 {
-	m_Switch = sw;
+	m_OperationFlag = flag;
 }
 
 void CGimmick::SetTimer(float time)

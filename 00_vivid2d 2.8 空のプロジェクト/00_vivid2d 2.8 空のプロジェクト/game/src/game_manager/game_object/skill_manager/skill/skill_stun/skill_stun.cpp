@@ -61,7 +61,7 @@ void CSkillStun::Action()
 
 	TopPlayerList.emplace_back(um.GetPlayer(UNIT_ID(0)));
 
-	for (int i = 1; i < dm.GetCurrentPlayer(); i++)
+	for (int i = 1; i < dm.GetCurrentJoinPlayer(); i++)
 	{
 		if (um.GetPlayer(UNIT_ID(i))->GetPosition().x > (*TopPlayerList.begin())->GetPosition().x)
 		{

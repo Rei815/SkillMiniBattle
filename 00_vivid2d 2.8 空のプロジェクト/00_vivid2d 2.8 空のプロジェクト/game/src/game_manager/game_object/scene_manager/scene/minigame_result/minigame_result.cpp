@@ -33,14 +33,14 @@ void CMiniGameResult::Initialize(SCENE_ID scene_id)
     CUIManager& um = CUIManager::GetInstance();
     vivid::Vector2 offsetPos;
     int firstPlayerID = (int)dm.GetLastGameRanking(0);
-    for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+    for (int i = 0; i < dm.GetCurrentJoinPlayer(); i++)
     {
         vivid::Vector2 noticePos = m_origin_notice_pos;
         noticePos.x += m_notice_offset * i;
         std::shared_ptr<CNotice> notice = dynamic_pointer_cast<CNotice>(um.Create(UI_ID::NOTICE, noticePos));
         notice->SetScale(m_notice_scale);
         //îwåiï\é¶
-        for (int j = 0; j < dm.GetMaxGameNum(); j++)
+        for (int j = 0; j < dm.GetRequiredWins(); j++)
         {
             offsetPos = vivid::Vector2((m_key_offset * j) + (m_players_key_offset * i), 0);
             um.Create(UI_ID::KEY_BG, m_origin_key_pos + offsetPos);
@@ -95,13 +95,13 @@ void CMiniGameResult::Update(void)
 
         }
     }
-    if ((vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::RETURN) || cm.GetAnyControllerButtonDown(BUTTON_ID::ANY)))
+    if (cm.GetAnyControllerButtonDown(BUTTON_ID::ANY))
     {
 
         SCENE_ID sceneID = SCENE_ID::GAME_ROLL_AND_REVEAL;
-        for (int i = 0; i < dm.GetCurrentPlayer(); i++)
+        for (int i = 0; i < dm.GetCurrentJoinPlayer(); i++)
         {
-            if (dm.GetPlayerWin(i) == dm.GetMaxGameNum())
+            if (dm.GetPlayerWin(i) == dm.GetRequiredWins())
             {
                 sceneID = SCENE_ID::GAME_RESULT;
                 break;

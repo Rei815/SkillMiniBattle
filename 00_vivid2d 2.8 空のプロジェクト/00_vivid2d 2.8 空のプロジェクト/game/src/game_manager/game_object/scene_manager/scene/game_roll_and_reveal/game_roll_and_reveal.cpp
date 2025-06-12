@@ -13,6 +13,7 @@
 
 const int CGameRollAndReveal::m_games_num = 4;
 const float CGameRollAndReveal::m_circle_radius = 500.0f;
+const float CGameRollAndReveal::m_circle_height = 500.0f;
 CGameRollAndReveal::CGameRollAndReveal(void)
     : m_SelectedGameFlag(false)
     , m_GameInfomationFlag(false)
@@ -53,15 +54,16 @@ void CGameRollAndReveal::Initialize(SCENE_ID scene_id)
     CSoundManager::GetInstance().Play_BGM(BGM_ID::READY_BGM, true);
 
     CUIManager::UI_LIST uiList = um.GetList();
+    int maxGameNum = CDataManager::GetInstance().GetMaxGameNum();
     //ゲームの画像を円状かつ均等に配置
-    for (int i = 0; i < m_games_num; i++)
+    for (int i = 0; i < maxGameNum; i++)
     {
         CTransform transform;
-        const float rad = i / (float)m_games_num * DX_TWO_PI;
+        const float rad = i / (float)maxGameNum * DX_TWO_PI;
         const float _x = m_circle_radius * sin(rad);
         const float _z = m_circle_radius * cos(rad);
-        transform.rotation.y = i * (360.0f / (float)m_games_num);
-        transform.position.y = 500.0f;
+        transform.rotation.y = i * (360.0f / (float)maxGameNum);
+        transform.position.y = m_circle_height;
         transform.position.x = 0.0f;//_x;
         transform.position.z = -m_circle_radius;//_z;
         
@@ -94,24 +96,61 @@ void CGameRollAndReveal::Update(void)
     CCamera::GetInstance().Update();
     am.Update();
 
+#if _DEBUG
+
+    //キーボードの1,2,3,4キーで任意のミニゲームを選べる
+
+    //1キーでだるまさんがころんだ
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
+    {
+        m_SelectedGameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
+        dm.SetGameID(m_SelectedGameID);
+
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+    }
+
+    //２キーでフォールアウト
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
+    {
+        m_SelectedGameID = GAME_ID::FALLOUT_GAME;
+        dm.SetGameID(m_SelectedGameID);
+
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+    }
+
+    //３キーでドッヂボール
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::THREE))
+    {
+        m_SelectedGameID = GAME_ID::DODGE_BALL_GAME;
+        dm.SetGameID(m_SelectedGameID);
+
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+    }
+
+    //４キーでベルトコンベアー
+    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FOUR))
+    {
+        m_SelectedGameID = GAME_ID::BELT_CONVEYOR_GAME;
+        dm.SetGameID(m_SelectedGameID);
+
+        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
+    }
+#endif // _DEBUG
 
     CUIManager::UI_LIST uiList = um.GetList();
     if (m_PlaneUIParent)
     {
+        //中心にきたら親子関係を解除
         if (m_PlaneUIParent->GetState() == CSceneUIParent::STATE::WAIT)
         {
-            for (auto& ui : uiList)
-            {
-                if (ui->GetUI_ID() == UI_ID::PLANE_GAME_IMAGE)
-                {
-                    ui->SetParent(nullptr);
-                }
-            }
+            m_PlaneUIParent->ReleaseChildren();
             m_PlaneUIParent->Delete();
             m_PlaneUIParent = nullptr;
         }
 
     }
+
+    //ミニゲーム画像が真ん中来たあと、いずれかのコントローラーのBボタンが押されたら選ばれたミニゲーム画像を上昇、それ以外は収縮
     if (cm.GetSpecifiedButtonDownController(BUTTON_ID::B) && m_PlaneUIParent == nullptr && m_SelectedGameFlag == false)
     {
 
@@ -151,7 +190,7 @@ void CGameRollAndReveal::Update(void)
     }
     if (m_SelectedGameFlag == true)
     {
-        //上昇アニメーションが終了している
+        //上昇アニメーションが終了したあと、説明画面を出す
         if (m_SelectedPlane->GetAnimation() == nullptr && m_GameInfomationFlag == false)
         {
             m_SelectedPlane->Delete();
@@ -175,42 +214,6 @@ void CGameRollAndReveal::Update(void)
         }
     }
 
-#if _DEBUG
-
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::ONE))
-    {
-        m_SelectedGameID = GAME_ID::DARUMA_FALL_DOWN_GAME;
-        dm.SetGameID(m_SelectedGameID);
-
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-    }
-
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::TWO))
-    {
-        m_SelectedGameID = GAME_ID::FALLOUT_GAME;
-        dm.SetGameID(m_SelectedGameID);
-
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-    }
-
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::THREE))
-    {
-        m_SelectedGameID = GAME_ID::DODGE_BALL_GAME;
-        dm.SetGameID(m_SelectedGameID);
-
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-    }
-
-    if (vivid::keyboard::Trigger(vivid::keyboard::KEY_ID::FOUR))
-    {
-        m_SelectedGameID = GAME_ID::BELT_CONVEYOR_GAME;
-        dm.SetGameID(m_SelectedGameID);
-
-        CSoundManager::GetInstance().Play_SE(SE_ID::SCENE_MOVE, false);
-    }
-#endif // _DEBUG
-
-
     if (m_RevealUIParent)
     {
         std::shared_ptr<CPlayerReady> playerReady = dynamic_pointer_cast<CPlayerReady>(um.GetUI(UI_ID::PLAYER_READY));
@@ -224,12 +227,17 @@ void CGameRollAndReveal::Update(void)
             m_RevealUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
         }
-        if (m_RevealUIParent->GetState() != CSceneUIParent::STATE::FINISH) return;
+        if (m_RevealUIParent->GetState() == CSceneUIParent::STATE::FINISH)
+        {
 
-        const float min_height = -vivid::GetWindowHeight() / 2;
-        const float max_height = vivid::GetWindowHeight() * 1.5;
-        if (m_RevealUIParent->GetPosition().y <= min_height || max_height <= m_RevealUIParent->GetPosition().y)
+            //ゲーム選択＆説明のシーンを消去
+            const float min_height = -vivid::GetWindowHeight() / 2;
+            const float max_height = vivid::GetWindowHeight() * 1.5;
+            m_RevealUIParent->Delete();
+            m_RevealUIParent = nullptr;
             CSceneManager::GetInstance().RemoveScene(SCENE_ID::GAME_ROLL_AND_REVEAL);
+        }
+
     }
 }
 void CGameRollAndReveal::Draw(void)
@@ -241,5 +249,4 @@ void CGameRollAndReveal::Finalize(void)
     IScene::Finalize();
 
     CCamera::GetInstance().Finalize();
-    m_RevealUIParent = nullptr;
 }

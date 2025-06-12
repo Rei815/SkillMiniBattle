@@ -64,7 +64,9 @@ private:
     static const CVector3           m_camera_position;      //!< カメラの位置
     static const CVector3           m_camera_direction;     //!< カメラの向き
     static const int                m_min_player;           //!< 開始可能な最少人数
-
+    static const CVector3           m_stage_position;       //!< ステージの位置
+    static const vivid::Vector2     m_gauge_position;       //!< ゲージの位置
+    static const float              m_gauge_scale;          //!< ゲージの大きさ
     UNIT_ID                         m_NextUnitID;           //!< 次に生成するプレイヤーのID
     UNIT_ID                         m_PlayerArray[4];       //!< 存在しているプレイヤーのID
     CTimer                          m_GameStartTimer;       //!< ゲーム開始までのタイマー

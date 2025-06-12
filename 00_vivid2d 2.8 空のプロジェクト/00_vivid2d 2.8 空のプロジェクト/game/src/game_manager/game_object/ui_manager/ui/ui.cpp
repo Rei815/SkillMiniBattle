@@ -177,12 +177,12 @@ void CUI::SetTransform(const CTransform& transform)
     m_Transform = transform;
 }
 
-CUI* CUI::GetParent(void)
+std::shared_ptr<CUI> CUI::GetParent(void)
 {
     return m_Parent;
 }
 
-void CUI::SetParent(CUI* parent)
+void CUI::SetParent(std::shared_ptr<CUI> parent)
 {
     m_Parent = parent;
 }

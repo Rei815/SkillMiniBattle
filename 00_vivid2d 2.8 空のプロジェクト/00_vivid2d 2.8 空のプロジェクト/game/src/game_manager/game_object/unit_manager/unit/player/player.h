@@ -2,7 +2,7 @@
 
 #include "..\..\..\..\..\mathematics\mathematics.h"
 #include "..\unit.h"
-#include "../../../model_manager/model/model.h"
+#include "../../../model/model.h"
 #include "../../../bullet_manager/bullet/bullet.h"
 #include "../../../skill_manager/skill/skill.h"
 #include "../../../effect_manager/effect_manager.h"

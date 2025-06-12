@@ -49,11 +49,11 @@ private:
     static const vivid::Vector2     m_anchor;       //!< 基準点
     static const vivid::Vector2     m_scale;        //!< 拡縮
     static const float              m_wait_time;    //!< 待機時間
+    static const int                m_fade_speed;   //!< フェードスピード
 
-    unsigned int                    m_Color[2];
-    static const int                m_fade_speed;
-    int                             m_FadeSpeed;
-    int                             m_UINum;
-    CTimer                          m_WaitTimer;
-    STATE                           m_State;
+    unsigned int                    m_Color[2];     //!< RGBA(アルファ値切り替え用)    
+    int                             m_FadeSpeed;    //!< フェードスピード
+    int                             m_UINum;        //!< 表示するUIの番号
+    CTimer                          m_WaitTimer;    //!< 待機させるタイマー
+    STATE                           m_State;        //!< 状態
 };

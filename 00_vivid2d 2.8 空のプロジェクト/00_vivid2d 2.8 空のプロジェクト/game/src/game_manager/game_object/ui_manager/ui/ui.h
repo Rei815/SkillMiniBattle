@@ -5,7 +5,8 @@
 #include "ui_id.h"
 #include "../../../../utility/utility.h"
 #include "../../scene_manager/scene/scene_id.h"
-class CUI
+#include <memory>
+class CUI : public std::enable_shared_from_this<CUI>
 {
 public:
     /*!
@@ -154,14 +155,14 @@ public:
      *
      *  @return     親のオブジェクト
      */
-    CUI*            GetParent(void);
+    std::shared_ptr<CUI>        GetParent(void);
 
     /*!
      *  @brief      親のトランスフォーム設定
      *
      *  @param[in]  parent  親のトランスフォーム
      */
-    void            SetParent(CUI* parent);
+    void            SetParent(std::shared_ptr<CUI> parent);
 
     /*!
      *  @brief      レイヤー内番号取得
@@ -205,7 +206,7 @@ protected:
     bool                            m_ActiveFlag;       //!< アクティブフラグ
     UI_ID                           m_UI_ID;            //!< ID
     vivid::Vector2                  m_Scale;            //!< 拡大率
-    CUI*                            m_Parent;           //!< 親のポインタ
+    std::shared_ptr<CUI>            m_Parent;           //!< 親のポインタ
     int                             m_OrderInLayer;     //!< 描画順
     CVector3                        m_Velocity;         //!< 移動ベクトル
     SCENE_ID                        m_SceneID;          //!< シーンID
