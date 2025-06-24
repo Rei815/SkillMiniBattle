@@ -15,7 +15,7 @@ CGameObject::~CGameObject()
     for (auto const& pair : m_Components)
     {
         // pair.second は shared_ptr なので、null チェックは不要
-        pair.second->OnDetach(this);
+        pair.second.front()->OnDetach(this);
     }
 }
 
@@ -39,7 +39,7 @@ void CGameObject::Update(float delta_time)
     // これはシンプルな実装であり、将来的にはシステムによる更新モデルに移行することを検討する
     for (auto const& pair : m_Components)
     {
-        pair.second->Update(delta_time, this); // GameObject* this を渡す
+        pair.second.front()->Update(delta_time, this); // GameObject* this を渡す
     }
 }
 
