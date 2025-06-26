@@ -10,12 +10,14 @@ CGameObject::CGameObject()
 
 CGameObject::~CGameObject()
 {
-    // デストラクタで、アタッチされているコンポーネントの OnDetach を呼び出す
-    // マップは自動的に解放される
+    // マップの各要素（各コンポーネント型）に対してループ
     for (auto const& pair : m_Components)
     {
-        // pair.second は shared_ptr なので、null チェックは不要
-        pair.second.front()->OnDetach(this);
+        // ベクターの中の各コンポーネントインスタンスに対してループ
+        for (auto& component : pair.second)
+        {
+            component->OnDetach(this);
+        }
     }
 }
 
@@ -39,7 +41,11 @@ void CGameObject::Update(float delta_time)
     // これはシンプルな実装であり、将来的にはシステムによる更新モデルに移行することを検討する
     for (auto const& pair : m_Components)
     {
-        pair.second.front()->Update(delta_time, this); // GameObject* this を渡す
+        for (auto& component : pair.second)
+        {
+            component->Update(delta_time, this); // GameObject* this を渡す
+
+        }
     }
 }
 

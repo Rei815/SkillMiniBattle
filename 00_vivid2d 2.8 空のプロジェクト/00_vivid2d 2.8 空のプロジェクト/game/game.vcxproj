@@ -169,6 +169,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\component\model_component\model_component.cpp" />
     <ClCompile Include="src\component\transform_component\transform_component.cpp" />
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation\animation.cpp" />
     <ClCompile Include="src\game_manager\game_object\animation_manager\animation\key_scale\key_scale.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="src\game_manager\game_object\effect_manager\effect\skill_star_effect\skill_star_effect.cpp" />
     <ClCompile Include="src\game_manager\game_object\game_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\gimmick_manager\gimmick\belt_conveyor_gimmick\belt_conveyor_gimmick.cpp" />
+    <ClCompile Include="src\game_manager\game_object\model_manager\model_manager.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\belt_conveyor_obstruction_object\belt_conveyor_obstruction_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\object_manager\object\belt_conveyor_object\belt_conveyor_object.cpp" />
     <ClCompile Include="src\game_manager\game_object\scene_manager\scene\entry\entry.cpp" />
@@ -250,6 +252,7 @@
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\ui.cpp" />
     <ClCompile Include="src\game_manager\game_object\ui_manager\ui\scene_ui_parent\scene_ui_parent.cpp" />
     <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
+    <ClCompile Include="src\mathematics\quaternion\quaternion.cpp" />
     <ClCompile Include="src\primitive\plane\plane.cpp" />
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\bullet.cpp" />
     <ClCompile Include="src\game_manager\game_object\bullet_manager\bullet\cannon_bullet\cannon_bullet.cpp" />
@@ -317,6 +320,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\component\component.h" />
+    <ClInclude Include="src\component\model_component\model_component.h" />
     <ClInclude Include="src\component\transform_component\transform_component.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\animation.h" />
     <ClInclude Include="src\game_manager\game_object\animation_manager\animation\animation_id.h" />
@@ -337,6 +341,7 @@
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\resurrect_effect\resurrect_effect.h" />
     <ClInclude Include="src\game_manager\game_object\effect_manager\effect\skill_star_effect\skill_star_effect.h" />
     <ClInclude Include="src\game_manager\game_object\gimmick_manager\gimmick\belt_conveyor_gimmick\belt_conveyor_gimmick.h" />
+    <ClInclude Include="src\game_manager\game_object\model_manager\model_manager.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object\belt_conveyor_obstruction_object\belt_conveyor_obstruction_object.h" />
     <ClInclude Include="src\game_manager\game_object\object_manager\object\belt_conveyor_object\belt_conveyor_object.h" />
     <ClInclude Include="src\game_manager\game_object\scene_manager\scene\entry\entry.h" />
@@ -400,6 +405,7 @@
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\topic_shutter\topic_shutter.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\scene_ui_parent\scene_ui_parent.h" />
     <ClInclude Include="src\mathematics\matrix\matrix.h" />
+    <ClInclude Include="src\mathematics\quaternion\quaternion.h" />
     <ClInclude Include="src\primitive\plane\plane.h" />
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\bullet.h" />
     <ClInclude Include="src\game_manager\game_object\bullet_manager\bullet\cannon_bullet\cannon_bullet.h" />

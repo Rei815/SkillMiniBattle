@@ -1,15 +1,15 @@
 
 #include "vivid.h"
 #include "model.h"
-/*
- * コンストラクタ
- */
-CModel::CModel()
-	: m_Transform(CVector3())
- 	, m_Handle(VIVID_DX_ERROR)
+CModel::CModel(MODEL_ID id)
 {
 }
-
+// コンストラクタ：ファイルパスを受け取り、Loadを呼ぶ
+CModel::CModel(const std::string& file_name)
+	: m_Handle(-1) // VIVID_DX_ERRORの定義がない場合、-1で初期化
+{
+	Load(file_name);
+}
 /*
  * デストラクタ
  */
@@ -17,39 +17,10 @@ CModel::~CModel()
 {
 }
 
-/*
- * 初期化
- */
-void CModel::Initialize(const std::string& file_name, const CVector3& position, float scale)
+int CModel::GetHandle() const
 {
-	Initialize(file_name, position, CVector3(scale, scale, scale));
+	return m_Handle;
 }
-
-void CModel::Initialize(const std::string& file_name, const CVector3& position, const CVector3& scale)
-{
-	CTransform TempTr;
-	TempTr.position = position;
-	Initialize(file_name, TempTr, scale);
-}
-
-void CModel::Initialize(const std::string& file_name, const CTransform& transform, float scale)
-{
-	Initialize(file_name, transform, CVector3(scale, scale, scale));
-}
-
-void CModel::Initialize(const std::string& file_name, const CTransform& transform, const CVector3& scale)
-{
-	m_Transform = transform;
-	m_Transform.scale = scale;
-
-	Load(file_name);
-
-	//位置情報の更新
-	MV1SetPosition(m_Handle, m_Transform.position);
-	MV1SetScale(m_Handle, m_Transform.scale);
-	MV1SetRotationXYZ(m_Handle, m_Transform.GetRadianRotation());
-}
-
 
 void CModel::Load(const std::string& file_name)
 {
@@ -58,9 +29,13 @@ void CModel::Load(const std::string& file_name)
 
 	m_Handle = DxLib::MV1LoadModel(file_name.c_str());
 
+	// 当たり判定のセットアップ
 	MV1SetupCollInfo(m_Handle, -1, 8, 8, 8);
-}
 
+	// ★★★ ここに移動 ★★★
+	// モデル全体の参照用メッシュを構築
+	DxLib::MV1SetupReferenceMesh(m_Handle, -1, TRUE);
+}
 void CModel::Unload(void)
 {
 	if (m_Handle == VIVID_DX_ERROR)return;
@@ -68,78 +43,6 @@ void CModel::Unload(void)
 	DxLib::MV1DeleteModel(m_Handle);
 
 	m_Handle = VIVID_DX_ERROR;
-}
-
-/*
-* 更新
-*/
-void CModel::Update(void)
-{
-	Update(m_Transform);
-}
-
-void CModel::Update(const CTransform& transform)
-{
-	//エラー
-	if (m_Handle == VIVID_DX_ERROR)
-		return;
-
-	m_Transform = transform;
-
-	//位置情報の更新
-	MV1SetPosition(m_Handle, m_Transform.position);
-	MV1SetScale(m_Handle, m_Transform.scale);
-	MV1SetRotationXYZ(m_Handle, m_Transform.GetRadianRotation());
-	MV1RefreshCollInfo(m_Handle);
-}
-
-/*
-* 描画
-*/
-void CModel::Draw()
-{
-	//エラー
-	if (m_Handle == VIVID_DX_ERROR)
-		return;
-
-	//描画
-	MV1DrawModel(m_Handle);
-
-	// モデル全体の参照用メッシュを構築
-	MV1SetupReferenceMesh(m_Handle, -1, TRUE);
-}
-
-/*
-* 解放
-*/
-void CModel::Finalize()
-{
-	Unload();
-}
-
-int CModel::GetModelHandle() const
-{
-	return m_Handle;
-}
-
-void CModel::SetPosition(const CVector3& position)
-{
-	m_Transform.position = position;
-}
-
-void CModel::SetRotation(const CVector3& rotation)
-{
-	m_Transform.rotation == rotation;
-}
-
-void CModel::SetScale(float scale)
-{
-	SetScale(CVector3(scale, scale, scale));
-}
-
-void CModel::SetScale(const CVector3& scale)
-{
-	m_Transform.scale = scale;
 }
 
 bool CModel::CheckHitLine(const CVector3& startPos, const CVector3& endPos)const

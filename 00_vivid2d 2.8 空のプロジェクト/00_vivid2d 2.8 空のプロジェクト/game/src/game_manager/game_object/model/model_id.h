@@ -13,6 +13,7 @@ enum class MODEL_CATEGORY
  */
 enum class MODEL_ID
 {
+    PLAYER,
     CUBE,
     FLAT_CUBE,
     CANNON,

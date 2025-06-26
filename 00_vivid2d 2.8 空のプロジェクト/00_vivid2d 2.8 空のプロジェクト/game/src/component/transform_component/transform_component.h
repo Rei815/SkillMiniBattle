@@ -1,24 +1,39 @@
 #pragma once
-#include "../component.h"      // IComponent の基底クラス
+#include "../component.h"
+#include "../../mathematics/mathematics.h" // CTransform, CMatrix など、あなたのプロジェクトの型に合わせてください
 #include "../../utility/transform/transform.h"
+
 class TransformComponent : public IComponent
 {
-public:
-    // このコンポーネントが保持するデータ
-    CTransform transform;
+private:
+    // あなたのプロジェクトに既存の、座標・回転・スケールをまとめた構造体（CTransformなど）をそのまま使います。
+    CTransform m_transform;
+
+    // 最適化のためのデータ
+    mutable CMatrix m_worldMatrix;
+    mutable bool    m_isDirty;
 
 public:
-    // コンストラクタ
-    TransformComponent() = default;
-
-    // デストラクタ
+    // --- コンストラクタ ---
+    TransformComponent();
     ~TransformComponent() override = default;
 
-    // このコンポーネントは、自分自身で何かを更新する必要はないので、
-    // Updateの中身は空でOKです。
-    // 他のコンポーネントが、このTransformComponentの情報を参照して動作します。
-    void Update(float delta_time, CGameObject* owner) override
-    {
-        // 何もしない
-    }
+    // --- 更新処理 ---
+    void Update(float delta_time, CGameObject* owner) override {}
+
+    // --- ゲッター / セッター ---
+    const CTransform& GetTransform() const { return m_transform; }
+    void SetTransform(const CTransform& transform);
+
+    // より使いやすくするための便利なメソッド
+    void SetPosition(const CVector3& position);
+    void SetRotation(const CVector3& euler_angles);
+    void SetScale(const CVector3& scale);
+
+    // --- 行列取得 ---
+    const CMatrix& GetWorldMatrix() const;
+
+private:
+    // --- 内部処理 ---
+    void RecalculateWorldMatrix() const;
 };
