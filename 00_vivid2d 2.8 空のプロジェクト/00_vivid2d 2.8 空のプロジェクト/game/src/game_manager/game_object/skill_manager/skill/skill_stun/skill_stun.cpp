@@ -103,13 +103,13 @@ void CSkillStun::ActionEnd()
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete(false);
 		m_SkillEffect = nullptr;
 	}
 
 	if (m_Effect != nullptr)
 	{
-		m_Effect->SetActive(false);
+		m_Effect->Delete(false);
 		m_Effect = nullptr;
 	}
 }

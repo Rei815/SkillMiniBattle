@@ -366,7 +366,7 @@ void CPlayer::Move(void)
         {
             CVector3 start = m_Transform.position + CVector3(-ground_check_offset_x + (ground_check_offset_x) * (i % 3), 0.0f, -ground_check_offset_x + (ground_check_offset_x) * (i / 3));
             CVector3 end = start + CVector3(0, -ground_check_line_length, 0);
-            CVector3 hitPos = m_Parent->GetModel().GetHitLinePosition(start, end);
+            CVector3 hitPos = m_Parent->GetModelHandle().GetHitLinePosition(start, end);
             if (hitPos != end)
             {
                 m_Transform.position.y = hitPos.y + m_Radius;

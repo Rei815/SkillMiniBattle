@@ -51,7 +51,6 @@ protected:
     static const std::string m_collider_model_file_name;
     static const float m_effect_scale;
 
-    CModel			    m_ColliderModel;
     std::shared_ptr<IEffect>            m_Effect;
     std::shared_ptr<IEffect>            m_SkillEffect;
 };

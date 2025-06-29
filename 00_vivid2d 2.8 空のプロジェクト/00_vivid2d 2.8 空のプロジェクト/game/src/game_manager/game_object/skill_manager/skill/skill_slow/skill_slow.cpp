@@ -77,7 +77,7 @@ void CSkillSlow::ActionEnd(void)
 {
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete(false);
 		m_SkillEffect = nullptr;
 	}
 
@@ -86,7 +86,7 @@ void CSkillSlow::ActionEnd(void)
 		std::list<std::shared_ptr<IEffect>>::iterator it = m_EffectList.begin();
 		while (it != m_EffectList.end())
 		{
-			(*it)->SetActive(false);
+			(*it)->Delete(false);
 
 			it++;
 		}

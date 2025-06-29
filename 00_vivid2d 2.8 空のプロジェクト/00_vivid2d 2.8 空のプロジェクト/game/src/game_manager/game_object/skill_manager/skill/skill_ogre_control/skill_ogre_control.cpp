@@ -45,7 +45,7 @@ void CSkillOgreControl::Update(void)
 	case SKILL_STATE::COOLDOWN:
 		if (m_Effect != nullptr)
 		{
-			m_Effect->SetActive(false);
+			m_Effect->Delete(false);
 			m_Effect = nullptr;
 		}
 		break;
@@ -83,13 +83,13 @@ void CSkillOgreControl::ActionEnd(void)
 {
 	if (m_Effect != nullptr)
 	{
-		m_Effect->SetActive(false);
+		m_Effect->Delete(false);
 		m_Effect = nullptr;
 	}
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete(false);
 		m_SkillEffect = nullptr;
 	}
 }

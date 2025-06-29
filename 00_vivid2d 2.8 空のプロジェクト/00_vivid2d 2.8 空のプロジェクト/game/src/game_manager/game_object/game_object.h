@@ -107,19 +107,10 @@ public:
     virtual void Draw();
     virtual void Finalize();
 
-    // --- 基本的なデータへのアクセス ---
-    // (これらは最終的にTransformComponentに移行するため、いずれ削除します)
-    virtual const CVector3& GetPosition() const { return m_Position; }
-    virtual void SetPosition(const CVector3& position) { m_Position = position; }
-    virtual CTransform GetTransform() const { return m_Transform; }
-    virtual void SetTransform(const CTransform& transform) { m_Transform = transform; }
-
     virtual bool IsActive() const { return m_IsActive; }
-    virtual void SetActive(bool active) { m_IsActive = active; }
+    virtual void Delete() { m_IsActive = false; }
 
 protected:
-    CVector3   m_Position;
-    CTransform m_Transform;
     bool       m_IsActive;
 
 private:

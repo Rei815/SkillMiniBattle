@@ -68,13 +68,13 @@ void CSkillResurrectDaruma::ActionEnd(void)
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete(false);
 		m_SkillEffect = nullptr;
 	}
 
 	if (m_ResurrectEffect != nullptr)
 	{
-		m_ResurrectEffect->SetActive(false);
+		m_ResurrectEffect->Delete(false);
 		m_ResurrectEffect = nullptr;
 	}
 }

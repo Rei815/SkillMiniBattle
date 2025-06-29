@@ -99,7 +99,7 @@ void CBeltConveyorGimmick::Update(void)
 			CVector3 CheckLineEndPos = ObjPos + CVector3(0.0f, 50.0f, 0.0f);
 
 			//ベルトコンベアの上にいる場合
-			if (m_Object->GetModel().CheckHitLine( ObjPos, CheckLineEndPos))
+			if (m_Object->GetModelHandle().CheckHitLine( ObjPos, CheckLineEndPos))
 			{
 				//ベルトコンベアの速さに合わせて水平方向の移動
 				(*it)->SetPosition(ObjPos + m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate));
@@ -121,7 +121,7 @@ void CBeltConveyorGimmick::Update(void)
 		while (it != DeleteObjList.end())
 		{
 			m_ObstructionObjectList.remove((*it));
-			(*it)->SetActive(false);
+			(*it)->Delete(false);
 			it++;
 		}
 	}

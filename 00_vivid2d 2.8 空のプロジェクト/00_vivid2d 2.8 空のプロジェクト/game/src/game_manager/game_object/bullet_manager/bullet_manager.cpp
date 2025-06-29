@@ -54,9 +54,6 @@ Update(void)
         // 弾が非アクティブなら削除してリストから外す
         if (!bullet->IsActive())
         {
-
-            bullet->Finalize();
-
             it = m_BulletList.erase(it);
 
             continue;
@@ -92,17 +89,6 @@ void
 CBulletManager::
 Finalize(void)
 {
-    if (m_BulletList.empty()) return;
-
-    BULLET_LIST::iterator it = m_BulletList.begin();
-
-    while (it != m_BulletList.end())
-    {
-        (*it)->Finalize();
-
-        ++it;
-    }
-
     m_BulletList.clear();
 }
 
@@ -171,13 +157,13 @@ void CBulletManager::CheckReflectModel(const CModel& model)
     {
         std::shared_ptr<IBullet> bullet = *it;
 
-        if (!bullet || model.GetModelHandle() == VIVID_DX_ERROR)
+        if (!bullet || model.GetHandle() == VIVID_DX_ERROR)
         {
             ++it;
             continue;
         }
 
-        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
+        DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(model.GetHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
         if (hit_poly_dim.HitNum >= 1)
         {
             CSoundManager::GetInstance().Play_SE(SE_ID::REFLECTION, false);

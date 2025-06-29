@@ -8,7 +8,7 @@ const float         CCannonBullet::m_max_speed = 50.0f;
  *  コンストラクタ
  */
 CCannonBullet::CCannonBullet()
-    : IBullet(m_file_name, COLLIDER_ID::SPHERE)
+    : IBullet(COLLIDER_ID::SPHERE)
 {
 
 }
@@ -19,18 +19,9 @@ void CCannonBullet::Initialize(UNIT_CATEGORY category, CShot::BulletParameters* 
     m_Speed = bulletParameter->speed;
     m_Direction = direction;
     m_Accleration = bulletParameter->acceleration;
-    
-    MV1SetMaterialDifColor(m_Model.GetModelHandle(), 0, GetColorF(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void CCannonBullet::Update()
 {
-
     IBullet::Update();
-
-}
-
-void CCannonBullet::Finalize(void)
-{
-    IBullet::Finalize();
 }

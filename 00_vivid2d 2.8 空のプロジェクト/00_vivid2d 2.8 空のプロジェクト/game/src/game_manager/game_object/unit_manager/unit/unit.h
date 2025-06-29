@@ -200,11 +200,11 @@ public:
     void            SetDefeatFlag(bool flag);
 
     /*!
-     *  @brief      モデル取得
+     *  @brief      モデルハンドル取得
      *
-     *  @return     モデル
+     *  @return     モデルハンドル
      */
-    CModel          GetModel(void);
+    int             GetModelHandle(void) const;
 
     /*!
      *  @brief      地上にいるかどうかを設定
@@ -296,25 +296,25 @@ protected:
      */
     virtual void    Defeat(void);
 
-    static const float      m_destroy_scale_adjust;     //!< エフェクト(destroy)の大きさ調整値
-    static const float      m_alpha_speed;              //!< アルファ値の速度
-    static const CVector3   m_gravity;                  //!< 重力値
+    static const float              m_destroy_scale_adjust; //!< エフェクト(destroy)の大きさ調整値
+    static const float              m_alpha_speed;          //!< アルファ値の速度
+    static const CVector3           m_gravity;              //!< 重力値
 
-    float                   m_Radius;                   //!< 半径
-    float                   m_Height;                   //!< 高さ
-    CModel                  m_Model;                    //!< モデル
-    CTransform	            m_Transform;		        //!< トランスフォーム
-    CVector3                m_ForwardVector;            //!< 正面方向のベクトル
-    CVector3                m_Velocity;                 //!< 速度
-    CVector3                m_AffectedVelocity;         //!< 外部からの影響による速度
-    CVector3                m_Gravity;                  //!< 重力
-    UNIT_CATEGORY           m_Category;                 //!< ユニット識別子
-    UNIT_ID                 m_UnitID;                   //!< ユニットID
-    bool                    m_ActiveFlag;               //!< アクティブフラグ
-    bool                    m_InvincibleFlag;           //!< 無敵フラグ
-    UNIT_STATE              m_UnitState;                //!< 状態ID
-    float                   m_Alpha;                    //!< アルファ値
-    bool                    m_DefeatFlag;               //!< 敗北フラグ
-    bool                    m_IsGround;                 //!< 地上にいるか
-    std::shared_ptr<IObject>m_Parent;                   //!< 親のオブジェクト
+    std::shared_ptr<CGameObject>    m_GameObject;           //!< エンティティ
+    float                           m_Radius;               //!< 半径
+    float                           m_Height;               //!< 高さ
+    CTransform	                    m_Transform;		    //!< トランスフォーム
+    CVector3                        m_ForwardVector;        //!< 正面方向のベクトル
+    CVector3                        m_Velocity;             //!< 速度
+    CVector3                        m_AffectedVelocity;     //!< 外部からの影響による速度
+    CVector3                        m_Gravity;              //!< 重力
+    UNIT_CATEGORY                   m_Category;             //!< ユニット識別子
+    UNIT_ID                         m_UnitID;               //!< ユニットID
+    bool                            m_ActiveFlag;           //!< アクティブフラグ
+    bool                            m_InvincibleFlag;       //!< 無敵フラグ
+    UNIT_STATE                      m_UnitState;            //!< 状態ID
+    float                           m_Alpha;                //!< アルファ値
+    bool                            m_DefeatFlag;           //!< 敗北フラグ
+    bool                            m_IsGround;             //!< 地上にいるか
+    std::shared_ptr<IObject>        m_Parent;               //!< 親のオブジェクト
 };

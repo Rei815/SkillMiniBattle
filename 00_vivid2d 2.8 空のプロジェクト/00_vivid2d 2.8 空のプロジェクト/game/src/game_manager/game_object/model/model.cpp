@@ -1,14 +1,11 @@
 
 #include "vivid.h"
 #include "model.h"
+#include "..\model_manager\model_manager.h"
 CModel::CModel(MODEL_ID id)
-{
-}
-// コンストラクタ：ファイルパスを受け取り、Loadを呼ぶ
-CModel::CModel(const std::string& file_name)
 	: m_Handle(-1) // VIVID_DX_ERRORの定義がない場合、-1で初期化
 {
-	Load(file_name);
+	Load(CModelManager::GetInstance().GetModelFilePath(id));
 }
 /*
  * デストラクタ

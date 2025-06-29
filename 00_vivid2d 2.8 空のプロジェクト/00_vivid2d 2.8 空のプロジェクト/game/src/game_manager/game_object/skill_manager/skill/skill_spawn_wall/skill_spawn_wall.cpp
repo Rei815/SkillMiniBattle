@@ -49,7 +49,7 @@ Update(void)
 
 	case SKILL_STATE::ACTIVE:
 		if (m_WallObj != nullptr)
-			CBulletManager::GetInstance().CheckReflectModel(m_WallObj->GetModel());
+			CBulletManager::GetInstance().CheckReflectModel(m_WallObj->GetModelHandle());
 		break;
 
 	case SKILL_STATE::COOLDOWN:
@@ -122,13 +122,13 @@ ActionEnd(void)
 {
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete(false);
 		m_SkillEffect = nullptr;
 	}
 
 	if (m_WallObj != nullptr)
 	{
-		m_WallObj->SetActive(false);
+		m_WallObj->Delete(false);
 		m_WallObj = nullptr;
 	}
 }

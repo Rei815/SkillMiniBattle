@@ -1,162 +1,46 @@
 #pragma once
-#include "../../model/model.h"
-#include "object_id.h"
-#include "../../gimmick_manager/gimmick/gimmick.h"
 #include <memory>
+#include "object_id.h"
+
+// 前方宣言
+class CGameObject;
 class CGimmick;
+class CTransform;
+
+// すべての「静的オブジェクト」の親となるクラス
+// もはや、自分では描画も座標管理もしない、「脳」だけの存在
 class IObject
 {
+protected:
+    // ★★★ すべてのオブジェクトが持つ「体」 ★★★
+    std::shared_ptr<CGameObject> m_gameObject;
+
+    // --- 「脳」が持つべき、オブジェクト固有のデータ ---
+    OBJECT_ID m_ObjectID;
+    std::shared_ptr<CGimmick> m_Gimmick;
+    std::string m_Tag;
+    bool m_ColliderActiveFlag;
+
 public:
     IObject();
-    ~IObject();
+    virtual ~IObject() = default;
 
-    /*!
-     *  @brief      初期化
-     *
-     */
-    virtual void    Initialize(OBJECT_ID id, const CTransform& pos);
+    // 初期化処理は、自分の「体」を生成し、設定する役割になる
+    virtual void Initialize(OBJECT_ID id, const CTransform& transform);
 
-    /*!
-     *  @brief      更新
-     */
-    virtual void    Update(void);
+    // 更新処理は、ギミックの更新や、特殊なロジックを実行する
+    virtual void Update();
 
-    /*!
-     *  @brief      描画
-     */
-    virtual void    Draw(void);
+    // 描画処理は、「体」に丸投げするだけ
+    virtual void Draw();
 
-    /*!
-     *  @brief      解放
-     */
-    virtual void    Finalize(void);
+    // --- 外部とのインターフェース ---
+    // 座標などを知りたい場合は、「体」に問い合わせる
+    CVector3 GetPosition();
+    bool IsActive();
+    void Delete(); // 内部でm_gameObject->Delete()を呼ぶ
 
-    /*!
-     *  @brief      オブジェクトID取得
-     *
-     *  @return     オブジェクトID
-     */
-    OBJECT_ID       GetObjectID(void);
-
-    /*!
-     *  @brief      アクティブフラグ取得
-     *
-     *  @return     アクティブフラグ
-     */
-    bool            IsActive(void);
-
-    /*!
-     *  @brief      アクティブフラグ設定
-     *
-     *  @param[in]  active  アクティブフラグ
-     */
-    void            SetActive(bool active);
-
-    /*!
-     *  @brief      位置取得
-     *
-     *  @return     位置
-     */
-    CVector3        GetPosition();
-    /*!
-     *  @brief      位置設定
-     *
-     *  @param[in]  position  位置
-     */
-    void            SetPosition(const CVector3& position);
-
-    /*!
-     *  @brief      回転取得
-     *
-     *  @return     回転
-     */
-    CVector3        GetRotation();
-
-    /*!
-     *  @brief      Tramsform取得
-     *
-     *  @return     Tramsform
-     */
-    CTransform      GetTransform();
-
-    /*!
-     *  @brief      位置設定
-     *
-     *  @param[in]  rotation  位置
-     */
-    void            SetRotation(const CVector3& rotation);
-
-    /*!
-     *  @brief      速度設定
-     *
-     *  @param[in]  velocity  速度
-     */
-    void            SetVelocity(const CVector3& velocity);
-
-    /*!
-     *  @brief      スケール設定
-     *
-     *  @param[in]  scale  オブジェクトの大きさ
-     */
-    void            SetScale(float scale);
-
-    /*!
-     *  @brief      スケール設定
-     *
-     *  @param[in]  scale  オブジェクトの大きさ
-     */
-    void            SetScale(const CVector3& scale);
-
-
-    /*!
-     *  @brief      モデル取得
-     *
-     *  @return     モデル
-     */
-    CModel          GetModel();
-
-    void            SetGimmick(std::shared_ptr<CGimmick> gimmick);
-    
-    std::shared_ptr<CGimmick>       GetGimmick();
-
-    /*!
-     *  @brief      モデル取得
-     *
-     *  @return     モデル
-     */
-    std::string     GetTag();
-
-    /*!
-     *  @brief      アルファ値設定
-     *
-     *  @param[in]  alpha  アルファ値
-     */
-    void            SetAlpha(float alpha);
-
-    /*!
-     *  @brief      判定フラグ取得
-     *
-     *  @return     判定フラグ
-     */
-    bool            GetColliderActiveFlag();
-
-    /*!
-     *  @brief      判定フラグ設定
-     *
-     *  @param[in]  active  判定フラグ
-     */
-    void            SetColliderActiveFlag(bool active);
-
-protected:
-    static const float          m_limit_alpha;          //!< アルファ値の限界値
-    OBJECT_ID                   m_ObjectID;             //!< オブジェクトのID
-    CModel			            m_Model;                //!< モデル
-    CTransform		            m_Transform;            //!< トランスフォーム
-    CVector3                    m_Velocity;             //!< 速度
-    std::string                 m_FileName;             //!< ファイル名
-    bool                        m_ActiveFlag;           //!< アクティブフラグ
-    float                       m_Alpha;                //!< アルファ値
-    std::shared_ptr<CGimmick>   m_Gimmick;              //!< ギミック
-    std::string                 m_Tag;                  //!< タグ名
-    bool                        m_ColliderActiveFlag;   //!< 判定を取るか
+    // ギミックの操作は、そのまま残す
+    void SetGimmick(std::shared_ptr<CGimmick> gimmick);
+    std::shared_ptr<CGimmick> GetGimmick();
 };

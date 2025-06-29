@@ -6,6 +6,7 @@
 #include "../../bullet_manager/bullet/bullet.h"
 #include <vivid.cpp>
 #include "../unit_manager.h"
+#include "../../../../component/model_component/model_component.h"
 
 const float             IUnit::m_destroy_scale_adjust = 25.0f;
 const float             IUnit::m_alpha_speed = 0.025f;
@@ -34,7 +35,6 @@ IUnit(UNIT_CATEGORY category, UNIT_ID unit_id)
     , m_DefeatFlag(false)
     , m_Gravity(m_gravity)
     , m_Parent(nullptr)
-    , m_Model()
 {
 }
 
@@ -102,10 +102,7 @@ CheckHitBullet(std::shared_ptr<IBullet> bullet)
     switch (bullet->GetColliderID())
     {
     case COLLIDER_ID::SPHERE:
-        hit_poly_dim = MV1CollCheck_Sphere(m_Model.GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
-        break;
-    case COLLIDER_ID::CAPSULE:
-        hit_poly_dim = MV1CollCheck_Capsule(m_Model.GetModelHandle(), -1, bullet->GetColliderPosA(), bullet->GetColliderPosB(),bullet->GetRadius());
+        hit_poly_dim = MV1CollCheck_Sphere(m_GameObject->GetComponent<ModelComponent>()->GetModelHandle(), -1, bullet->GetPosition(), bullet->GetRadius());
         break;
     }
     bool hit_flag = false;
@@ -120,7 +117,7 @@ CheckHitBullet(std::shared_ptr<IBullet> bullet)
 
         CEffectManager::GetInstance().Create(EFFECT_ID::HIT, hitPosition);
 
-        bullet->SetActive(false);
+        bullet->Delete();
 
         if (m_InvincibleFlag)
             return hit_flag;
@@ -138,7 +135,7 @@ bool IUnit::CheckHitBulletModel(std::shared_ptr<IBullet> bullet)
     if (!bullet || m_Category == bullet->GetBulletCategory() || m_UnitState == UNIT_STATE::DEFEAT)
         return false;
     DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim{};
-    hit_poly_dim = MV1CollCheck_Sphere(bullet->GetModel().GetModelHandle(), -1, GetPosition(), GetRadius());
+    hit_poly_dim = MV1CollCheck_Sphere(bullet->GetModelHandle(), -1, GetPosition(), GetRadius());
     bool hit_flag = false;
 
     if (hit_poly_dim.HitNum >= 1)
@@ -160,7 +157,7 @@ bool IUnit::CheckHitBulletModel(std::shared_ptr<IBullet> bullet)
             direction = hit_poly_dim.Dim->Normal;
         }
         Impact(hitPosition, direction, bullet->GetPower());
-        bullet->SetActive(false);
+        bullet->Delete();
     }
     // 当たり判定情報の後始末
     MV1CollResultPolyDimTerminate(hit_poly_dim);
@@ -321,11 +318,21 @@ void IUnit::SetDefeatFlag(bool flag)
     m_DefeatFlag = flag;
 }
 
-CModel IUnit::GetModel(void)
+int IUnit::GetModelHandle(void) const
 {
-    return m_Model;
-}
+    if (!m_GameObject)
+    {
+        return VIVID_DX_ERROR;
+    }
 
+    // ModelComponentはほぼ必ず存在するはずだが、念のためnullチェックを行う
+    if (auto modelComp = m_GameObject->GetComponent<ModelComponent>())
+    {
+        return modelComp->GetModelHandle();
+    }
+
+    return VIVID_DX_ERROR;
+}
 void IUnit::SetIsGround(bool flag)
 {
     m_IsGround = flag;
@@ -357,13 +364,13 @@ void IUnit::RevertAlpha(float alpha = 1.0f)
 
     m_Alpha += m_alpha_speed;
 
-    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
+    MV1SetOpacityRate(GetModelHandle(), m_Alpha);
 }
 
 void IUnit::SetAlpha(float alpha)
 {
     m_Alpha = alpha;
-    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
+    MV1SetOpacityRate(GetModelHandle(), m_Alpha);
 
 }
 
@@ -391,7 +398,7 @@ void IUnit::DecAlpha(float alpha)
     else
         m_Alpha = 0.0f;
 
-    MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
+    MV1SetOpacityRate(GetModelHandle(), m_Alpha);
 
 }
 

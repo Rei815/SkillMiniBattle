@@ -1,49 +1,43 @@
 #include "shock_wave_bullet.h"
-#include "../../../launcher/launcher.h"
+#include "../../../../../component/transform_component/transform_component.h"
+#include "../../../../../component/model_component/model_component.h"
 
-const std::string   CShockWaveBullet::m_file_name = "data\\Models\\stomp_coll.mv1";
-const float         CShockWaveBullet::m_max_speed = 50.0f;
-const float         CShockWaveBullet::m_spread_speed = 8.0f;
-const float         CShockWaveBullet::m_height = 21.0f;
-const int           CShockWaveBullet::m_life_time = 60;
-const float         CShockWaveBullet::m_acceleration = 0.2f;
-const float         CShockWaveBullet::m_scale = 0.5f;
-const float         CShockWaveBullet::m_power = 0.5f;
-
-/*
- *  コンストラクタ
- */
+const float CShockWaveBullet::m_max_speed = 50.0f;
+const float CShockWaveBullet::m_spread_speed = 8.0f;
+const float CShockWaveBullet::m_height = 21.0f;
+const float CShockWaveBullet::m_life_time = 1.0f;
+const float CShockWaveBullet::m_acceleration = 0.2f;
+const float CShockWaveBullet::m_scale = 0.5f;
+const float CShockWaveBullet::m_power = 0.5f;
+// コンストラクタ：親クラスのデフォルトコンストラクタを呼ぶだけでOK
 CShockWaveBullet::CShockWaveBullet()
-    : IBullet(m_file_name, COLLIDER_ID::MODEL)
+    : IBullet(COLLIDER_ID::MODEL)
 {
-
 }
 
 void CShockWaveBullet::Initialize(UNIT_CATEGORY category, const CVector3& position, const CVector3& direction)
 {
-    m_BulletID = BULLET_ID::SHOCK_WAVE;
-    CVector3 _position = position;
-    _position.y -= m_height / 2.0f;
     IBullet::Initialize(category, position, direction);
-    m_Speed = m_spread_speed;
-    m_Velocity = CVector3::ZERO;
-    m_LifeTimer = m_life_time;
-    m_Transform.scale = m_scale;
-    m_Power = m_power;
+    m_BulletID = BULLET_ID::SHOCK_WAVE;
+    m_GameObject->AddComponent<ModelComponent>(MODEL_ID::STOMP_COLL);
+
+    m_SpreadSpeed = m_spread_speed;
+    m_CurrentScale = m_scale;
 }
 
 void CShockWaveBullet::Update()
 {
-    m_Speed += m_acceleration;
-    // 最高速度制限
-    if (m_Speed > m_max_speed)
-        m_Speed = m_max_speed;
-
-    m_Transform.scale.x += vivid::GetDeltaTime() * m_Speed;
-    m_Transform.scale.z += vivid::GetDeltaTime() * m_Speed;
     IBullet::Update();
-}
 
-void CShockWaveBullet::Draw()
-{
+    // アクティブでなければ、何もしない
+    if (!IsActive()) return;
+
+    // --- 衝撃波独自の更新処理 ---
+    m_SpreadSpeed += m_acceleration; // 加速
+    m_CurrentScale += m_SpreadSpeed * vivid::GetDeltaTime();
+
+    if (m_TransformComponent)
+    {
+        m_TransformComponent->SetScale(CVector3(m_CurrentScale, 1.0f, m_CurrentScale)); // 縦方向には広げない
+    }
 }

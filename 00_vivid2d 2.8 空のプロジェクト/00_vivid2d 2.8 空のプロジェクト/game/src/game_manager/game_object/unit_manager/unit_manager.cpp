@@ -161,7 +161,7 @@ void CUnitManager::CheckHitObject(std::shared_ptr<IObject> object)
 
     while (it != m_UnitList.end())
     {
-        if (object->GetModel().GetModelHandle() == VIVID_DX_ERROR || object->GetColliderActiveFlag() == false)
+        if (object->GetModelHandle().GetHandle() == VIVID_DX_ERROR || object->GetColliderActiveFlag() == false)
         {
             ++it;
             continue;
@@ -295,10 +295,10 @@ CheckHitObjectVertical(std::shared_ptr<IObject> object, std::shared_ptr<IUnit> u
     CVector3 end_position = startPos + (down_dir * length);
 
     //‰º•ûŒü
-    if (object->GetModel().CheckHitLine(startPos, end_position) == true)
+    if (object->GetModelHandle().CheckHitLine(startPos, end_position) == true)
     {
 
-        hitPos = object->GetModel().GetHitLinePosition(startPos, end_position);
+        hitPos = object->GetModelHandle().GetHitLinePosition(startPos, end_position);
         float footPos = 0.0f;
         footPos = unit->GetPosition().y - (unit->GetHeight() / 2.0f);
 
@@ -314,10 +314,10 @@ CheckHitObjectVertical(std::shared_ptr<IObject> object, std::shared_ptr<IUnit> u
 
     //ã•ûŒü
     end_position = startPos + (-down_dir * length);
-    if (object->GetModel().CheckHitLine(startPos, end_position) == true)
+    if (object->GetModelHandle().CheckHitLine(startPos, end_position) == true)
     {
 
-        hitPos = object->GetModel().GetHitLinePosition(startPos, end_position);
+        hitPos = object->GetModelHandle().GetHitLinePosition(startPos, end_position);
         float headPos = unit->GetPosition().y + unit->GetHeight() / 2.0f;
 
 
@@ -340,9 +340,9 @@ CheckHitObjectHorizontal(std::shared_ptr<IObject> object, std::shared_ptr<IUnit>
 {
     CVector3 hitPos;
 
-    if (object->GetModel().CheckHitLine(startPos, endPos) == true)
+    if (object->GetModelHandle().CheckHitLine(startPos, endPos) == true)
     {
-        hitPos = object->GetModel().GetHitLinePosition(startPos, endPos);
+        hitPos = object->GetModelHandle().GetHitLinePosition(startPos, endPos);
 
         float diffX = endPos.x - hitPos.x;
         float diffZ = endPos.z - hitPos.z;

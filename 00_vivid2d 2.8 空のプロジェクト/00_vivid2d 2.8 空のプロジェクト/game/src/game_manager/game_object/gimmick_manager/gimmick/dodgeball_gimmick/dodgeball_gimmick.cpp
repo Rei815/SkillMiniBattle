@@ -101,7 +101,7 @@ void CDodgeBallGimmick::Finalize(void)
 	CGimmick::Finalize();
 
 	if (m_Effect != nullptr)
-		m_Effect->SetActive(false);
+		m_Effect->Delete(false);
 }
 
 void CDodgeBallGimmick::Spawn()

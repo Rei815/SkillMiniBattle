@@ -1,18 +1,18 @@
-PLAYER_RABBIT	data/Models/player_rabbit.mv1
-BULLET	data/Models/Bullet.mv1
-CANNON	data/Models/cannon.mv1
-OGRE	data/Models/ogre.mv1
-FALLOUT_FLOOR	data/Models/fallout_floor.mv1
-DODGEBALL_STAGE	data/Models/dodgeball_stage.mv1
-DARUMA_STAGE	data/Models/darumaStage.mv1
-BELT_CONVEYOR_STAGE	data/Models/belt_conveyor_stage.mv1
-BELT_CONVEYOR_OBSTRUCTION_1	data/Models/belt_conveyor_obstruction_1.mv1
-BELT_CONVEYOR_OBSTRUCTION_2	data/Models/belt_conveyor_obstruction_2.mv1
-BELT_CONVEYOR_OBSTRUCTION_3	data/Models/belt_conveyor_obstruction_3.mv1
-BELT_CONVEYOR_OBSTRUCTION_4	data/Models/belt_conveyor_obstruction_4.mv1
-BELT_CONVEYOR_OBSTRUCTION_5	data/Models/belt_conveyor_obstruction_5.mv1
-BELT_CONVEYOR_OBSTRUCTION_6	data/Models/belt_conveyor_obstruction_6.mv1
-SKILL_BARRIER_COLLIDER	data/Models/skill_barrier_collider.mv1
-SKILL_MIMICRY_OBJ	data/Models/skill_mimicry_obj.mv1
-SKILL_WALL	data/Models/skill_wall.mv1
-STOMP_COLL	data/Models/stomp_coll.mv1
+PLAYER_RABBIT,data/Models/player_rabbit.mv1
+BULLET,data/Models/Bullet.mv1
+CANNON,data/Models/cannon.mv1
+OGRE,data/Models/ogre.mv1
+FALLOUT_FLOOR,data/Models/fallout_floor.mv1
+DODGEBALL_STAGE,data/Models/dodgeball_stage.mv1
+DARUMA_STAGE,data/Models/darumaStage.mv1
+BELT_CONVEYOR_STAGE,data/Models/belt_conveyor_stage.mv1
+BELT_CONVEYOR_OBSTRUCTION_1,data/Models/belt_conveyor_obstruction_1.mv1
+BELT_CONVEYOR_OBSTRUCTION_2,data/Models/belt_conveyor_obstruction_2.mv1
+BELT_CONVEYOR_OBSTRUCTION_3,data/Models/belt_conveyor_obstruction_3.mv1
+BELT_CONVEYOR_OBSTRUCTION_4,data/Models/belt_conveyor_obstruction_4.mv1
+BELT_CONVEYOR_OBSTRUCTION_5,data/Models/belt_conveyor_obstruction_5.mv1
+BELT_CONVEYOR_OBSTRUCTION_6,data/Models/belt_conveyor_obstruction_6.mv1
+SKILL_BARRIER_COLLIDER,data/Models/skill_barrier_collider.mv1
+SKILL_MIMICRY_OBJ,data/Models/skill_mimicry_obj.mv1
+SKILL_WALL,data/Models/skill_wall.mv1
+STOMP_COLL,data/Models/stomp_coll.mv1

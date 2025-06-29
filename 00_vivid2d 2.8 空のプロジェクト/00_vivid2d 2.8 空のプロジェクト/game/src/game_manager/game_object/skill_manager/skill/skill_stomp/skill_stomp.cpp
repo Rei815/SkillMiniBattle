@@ -3,6 +3,7 @@
 #include "../../../bullet_manager/bullet_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../../../component/model_component/model_component.h"
 
 const float CSkillStomp::m_cool_time = 10.0f;
 const float CSkillStomp::m_effect_scale = 2.0f;
@@ -27,6 +28,8 @@ CSkillStomp::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
+	m_GameObject->AddComponent<ModelComponent>(MODEL_ID::STOMP_COLL);
+
 }
 
 /*!
@@ -37,6 +40,8 @@ CSkillStomp::
 Update(void)
 {
 	CSkill::Update();
+	m_GameObject->Update(vivid::GetDeltaTime());
+
 }
 
 /*!
@@ -93,7 +98,7 @@ ActionEnd(void)
 {
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 }

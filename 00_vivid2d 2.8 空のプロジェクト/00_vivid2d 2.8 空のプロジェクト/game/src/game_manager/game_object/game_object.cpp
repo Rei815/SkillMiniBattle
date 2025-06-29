@@ -1,11 +1,11 @@
 #include "game_object.h"
+#include "../../component/transform_component/transform_component.h"
 
 CGameObject::CGameObject()
-    : m_Position(0.0f, 0.0f, 0.0f),
-    m_Transform(),
-    m_IsActive(true)
+    : m_IsActive(true)
 {
-    // 必要であれば、ここに共通の初期化処理を記述
+    //座標は必ず持たせる
+    AddComponent<TransformComponent>();
 }
 
 CGameObject::~CGameObject()

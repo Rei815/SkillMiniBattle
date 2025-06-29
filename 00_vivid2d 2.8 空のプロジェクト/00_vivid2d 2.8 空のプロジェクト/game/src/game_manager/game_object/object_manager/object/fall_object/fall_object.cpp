@@ -40,7 +40,7 @@ void CFallObject::Initialize(OBJECT_ID id, const CTransform& transform)
 
 	int grHandle = vivid::core::FindLoadedTexture(m_FileName);
 
-	MV1SetTextureGraphHandle(m_Model.GetModelHandle(), 0, grHandle, true);
+	MV1SetTextureGraphHandle(m_Model.GetHandle(), 0, grHandle, true);
 
 	//ƒ‚ƒfƒ‹‚ğ”¼“§–¾‚É•ÏX
 	unsigned int color = m_Model.GetMaterialDif(0);

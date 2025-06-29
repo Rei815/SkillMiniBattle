@@ -14,7 +14,6 @@ private:
 public:
     // コンストラクタで、MODEL_IDまたはファイルパスを受け取り、モデルをロードします
     CModel(MODEL_ID id);
-    CModel(const std::string& file_name);
 
     // デストラクタで、モデルを自動的にアンロードします
     ~CModel();

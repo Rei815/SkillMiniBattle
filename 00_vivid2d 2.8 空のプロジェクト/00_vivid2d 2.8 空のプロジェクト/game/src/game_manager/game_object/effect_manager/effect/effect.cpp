@@ -217,9 +217,9 @@ IsActive(void)
  */
 void
 IEffect::
-SetActive(bool active)
+Delete()
 {
-    m_ActiveFlag = active;
+    m_ActiveFlag = false;
 }
 
 

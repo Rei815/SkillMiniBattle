@@ -49,9 +49,9 @@ bool CGimmick::IsActive(void)
 	return m_ActiveFlag;
 }
 
-void CGimmick::SetActive(bool active)
+void CGimmick::Delete()
 {
-	m_ActiveFlag = active;
+	m_ActiveFlag = false;
 }
 
 void CGimmick::SetOperationFlag(bool flag)

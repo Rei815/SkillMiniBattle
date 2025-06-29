@@ -28,7 +28,7 @@ void IObject::Update(void)
 
 void IObject::Draw(void)
 {
-	MV1SetOpacityRate(m_Model.GetModelHandle(), m_Alpha);
+	MV1SetOpacityRate(m_Model.GetHandle(), m_Alpha);
 }
 
 void IObject::Finalize(void)
@@ -45,9 +45,9 @@ bool IObject::IsActive(void)
 	return m_ActiveFlag;
 }
 
-void IObject::SetActive(bool active)
+void IObject::Delete()
 {
-	m_ActiveFlag = active;
+	m_ActiveFlag = false;
 }
 
 CVector3 IObject::GetPosition()
@@ -90,7 +90,7 @@ void IObject::SetScale(const CVector3& scale)
 	m_Transform.scale = scale;
 }
 
-CModel IObject::GetModel()
+CModel IObject::GetModelHandle()
 {
 	return m_Model;
 }

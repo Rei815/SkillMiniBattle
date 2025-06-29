@@ -96,7 +96,7 @@ Update(void)
 					//エフェクトを消す
 					if (m_PlayerAffectedEffect[i] != nullptr)
 					{
-						m_PlayerAffectedEffect[i]->SetActive(false);
+						m_PlayerAffectedEffect[i]->Delete(false);
 						m_PlayerAffectedEffect[i] = nullptr;
 					}
 				}
@@ -175,13 +175,13 @@ ActionEnd(void)
 	//エフェクトを消す
 	if (m_Effect != nullptr)
 	{
-		m_Effect->SetActive(false);
+		m_Effect->Delete(false);
 		m_Effect = nullptr;
 	}
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete(false);
 		m_SkillEffect = nullptr;
 	}
 
@@ -200,7 +200,7 @@ ActionEnd(void)
 		//エフェクトを消す
 		if (m_PlayerAffectedEffect[i] != nullptr)
 		{
-			m_PlayerAffectedEffect[i]->SetActive(false);
+			m_PlayerAffectedEffect[i]->Delete(false);
 			m_PlayerAffectedEffect[i] = nullptr;
 		}
 	}

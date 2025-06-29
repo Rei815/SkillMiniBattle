@@ -165,7 +165,7 @@ std::shared_ptr<IObject> CObjectManager::CheckHitObject(std::shared_ptr<CPlayer>
     while (it != m_ObjectList.end())
     {
         std::shared_ptr<IObject> object = *it;
-        if (object->GetModel().GetModelHandle() == VIVID_DX_ERROR || object->GetColliderActiveFlag() == false)
+        if (object->GetModelHandle().GetHandle() == VIVID_DX_ERROR || object->GetColliderActiveFlag() == false)
         {
             ++it;
             continue;
@@ -182,7 +182,7 @@ std::shared_ptr<IObject> CObjectManager::CheckHitObject(std::shared_ptr<CPlayer>
             CVector3 start = unit_pos + CVector3(-offset + (offset) * (i % 3), 0.0, -offset + (offset) * (i / 3));
             CVector3 end_position = start + CVector3(0, -radius, 0);
 
-            if (object->GetModel().CheckHitLine(start, end_position) == true)
+            if (object->GetModelHandle().CheckHitLine(start, end_position) == true)
                 return object;
         }
 

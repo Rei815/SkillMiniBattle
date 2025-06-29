@@ -39,10 +39,10 @@ public:
      */
     void    ActionEnd(void);
 
-protected:
-    static const float  m_cool_time;
-    static const float  m_effect_scale;
+private:
+    static const float              m_cool_time;    //!< クールタイム
+    static const float              m_effect_scale; //!< エフェクト拡大率
 
-    std::shared_ptr<IEffect>            m_SkillEffect;
-    std::shared_ptr<CShot>              m_Shot;
+    std::shared_ptr<CGameObject>    m_GameObject;   //!< エンティティ
+    std::shared_ptr<IEffect>        m_SkillEffect;  //!< エフェクト
 };

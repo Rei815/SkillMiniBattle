@@ -40,16 +40,16 @@ public:
 
 
 protected:
-    static const float m_cool_time;
-    static const float m_duration_time;
-    static const float m_mimicry_speed_rate;
-    static const float m_effect_scale;
-    static const std::string m_model_name;
-    static const CVector3 m_model_pos;
-    static const CVector3 m_model_rot;
-    static const float m_model_scale;
+    static const float          m_cool_time;
+    static const float          m_duration_time;
+    static const float          m_mimicry_speed_rate;
+    static const float          m_effect_scale;
+    static const CVector3       m_model_pos;
+    static const CVector3       m_model_rot;
+    static const float          m_model_scale;
 
-    std::shared_ptr<IEffect>    m_SkillEffect;
-    CModel      m_ObjModel;
-    CTransform  m_ObjTransform;
+    std::shared_ptr<CGameObject>        m_GameObject;   //!< エンティティ
+    std::shared_ptr<TransformComponent> m_TransformComponent;   //!< キャッシュ用コンポーネント
+
+    std::shared_ptr<IEffect>            m_SkillEffect;
 };

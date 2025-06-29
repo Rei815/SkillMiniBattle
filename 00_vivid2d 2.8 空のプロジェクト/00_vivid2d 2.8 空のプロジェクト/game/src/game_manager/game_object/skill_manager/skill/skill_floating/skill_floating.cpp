@@ -121,12 +121,12 @@ ActionEnd(void)
 	m_Player.lock()->SetGravity(m_Player.lock()->GetDefaultGravity());
 	if (m_Effect != nullptr )
 	{
-		m_Effect->SetActive(false);
+		m_Effect->Delete(false);
 		m_Effect = nullptr;
 	}
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete(false);
 		m_SkillEffect = nullptr;
 	}
 

@@ -72,7 +72,7 @@ void CSkillInvisible::ActionEnd(void)
 {
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete(false);
 		m_SkillEffect = nullptr;
 	}
 }

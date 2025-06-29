@@ -149,7 +149,7 @@ public:
      *
      *  @param[in]  active  アクティブフラグ
      */
-    void            SetActive(bool active);
+    void            Delete();
 
     /*!
      *  @brief      親

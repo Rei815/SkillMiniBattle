@@ -13,7 +13,6 @@ const float CSkillBarrier::m_effect_scale = 3.0f;
 
 CSkillBarrier::CSkillBarrier(void)
 	:CSkill(SKILL_CATEGORY::ACTIVE, m_duration_time, m_cool_time)
-	, m_ColliderModel()
 	, m_Effect(nullptr)
 	, m_SkillEffect(nullptr)
 {
@@ -128,13 +127,13 @@ ActionEnd(void)
 {
 	if (m_Effect != nullptr)
 	{
-		m_Effect->SetActive(false);
+		m_Effect->Delete(false);
 		m_Effect = nullptr;
 	}
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->SetActive(false);
+		m_SkillEffect->Delete(false);
 		m_SkillEffect = nullptr;
 	}
 }
