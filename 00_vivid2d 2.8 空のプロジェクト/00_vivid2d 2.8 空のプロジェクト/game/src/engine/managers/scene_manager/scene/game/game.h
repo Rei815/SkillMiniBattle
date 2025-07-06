@@ -1,11 +1,11 @@
 #pragma once
 
 #include"..\scene.h"
-#include "../../../model/model.h"
 #include "game_id.h"
-#include "../../../object_manager/object/object.h"
-#include "../../../unit_manager/unit/unit.h"
 #include "../../../ui_manager/ui/game_bg/game_bg.h"
+#include "../../../../../game/components/player_component/player_id.h"
+#include <list>
+#include "../../../../core/game_object/game_object.h"
 /*!
 *  @brief  ゲームの状態
 */
@@ -69,9 +69,9 @@ protected:
     /*!
      *  @brief      ランキングに追加
      *
-     *  @param[in]  unit   追加するunitのID
+     *  @param[in]  unit   追加するプレイヤーのID
      */
-    void            AddRanking(UNIT_ID unitID);
+    void            AddRanking(PLAYER_ID unitID);
 
     /*!
      *  @brief      スタート
@@ -104,8 +104,8 @@ protected:
     bool            m_FinishFlag;   //!< ミニゲームが終了したか
     bool            m_ResultFlag;   //!< リザルトが出ているか
 
-    using ENTRY_LIST = std::list<std::shared_ptr<IUnit>>;   //!< 参加もしくは生存中のプレイヤーのリスト
-    using RESULT_LIST = std::list<std::shared_ptr<IUnit>>;  //!< 敗北してリザルトに移ったプレイヤーのリスト
+    using ENTRY_LIST = std::list<std::shared_ptr<CGameObject>>;   //!< 参加もしくは生存中のプレイヤーのリスト
+    using RESULT_LIST = std::list<std::shared_ptr<CGameObject>>;  //!< 敗北してリザルトに移ったプレイヤーのリスト
 
     ENTRY_LIST          m_EntryList;    //!< エントリーリスト
     RESULT_LIST         m_ResultList;   //!< リザルトリスト

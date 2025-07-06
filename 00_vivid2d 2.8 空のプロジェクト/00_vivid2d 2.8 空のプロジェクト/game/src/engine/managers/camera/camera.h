@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vivid.h"
+#include "../../utility/timer/timer.h"
 /*!
 *  @brief      ƒJƒƒ‰ƒNƒ‰ƒX
 */

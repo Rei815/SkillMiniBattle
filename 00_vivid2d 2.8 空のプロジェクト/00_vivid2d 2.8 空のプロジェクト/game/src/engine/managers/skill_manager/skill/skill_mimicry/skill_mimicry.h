@@ -1,6 +1,7 @@
 #pragma once
 #include "../skill.h"
 #include "../../../effect_manager/effect_manager.h"
+#include "../../../../components/transform_component/transform_component.h"
 
 class CSkillMimicry : public CSkill
 {

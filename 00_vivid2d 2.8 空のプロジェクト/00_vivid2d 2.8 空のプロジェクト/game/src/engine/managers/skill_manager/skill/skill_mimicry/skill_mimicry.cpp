@@ -1,7 +1,7 @@
 #include "skill_mimicry.h"
 #include "../../../sound_manager/sound_manager.h"
-#include "../../../../../component/model_component/model_component.h"
-#include "../../../../../component/transform_component/transform_component.h"
+#include "../../../../components/model_component/model_component.h"
+#include "../../../../../game/components/player_component/player_component.h"
 
 const float CSkillMimicry::m_cool_time = 10.0f;
 const float CSkillMimicry::m_duration_time = 5.0f;
@@ -55,7 +55,7 @@ void CSkillMimicry::Update(void)
 		break;
 	}
 
-	m_TransformComponent->SetPosition(m_Player.lock()->GetPosition() + m_model_pos);
+	m_TransformComponent->SetPosition(m_TransformComponent->GetPosition() + m_model_pos);
 	m_GameObject->Update(vivid::GetDeltaTime());
 }
 
@@ -79,10 +79,12 @@ void CSkillMimicry::Action()
 	if (m_State != SKILL_STATE::WAIT)	return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::MIMICRY, false);
-	m_Player.lock()->MulMoveSpeedRate(m_mimicry_speed_rate);
-	m_Player.lock()->StartInvincible(m_duration_time);
+
+	auto PlayerComp = m_GameObject->GetComponent<PlayerComponent>();
+	PlayerComp->MulMoveSpeedRate(m_mimicry_speed_rate);
+	PlayerComp->StartInvincible(m_duration_time);
 	m_State = SKILL_STATE::ACTIVE;
-	CVector3 effect_position = m_Player.lock()->GetPosition();
+	CVector3 effect_position = m_TransformComponent->GetPosition();
 
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effect_position, CVector3(), m_effect_scale);
@@ -94,5 +96,7 @@ void CSkillMimicry::Action()
  */
 void CSkillMimicry::ActionEnd(void)
 {
-	m_Player.lock()->DivMoveSpeedRate(m_mimicry_speed_rate);
+	auto PlayerComp = m_GameObject->GetComponent<PlayerComponent>();
+
+	PlayerComp->DivMoveSpeedRate(m_mimicry_speed_rate);
 }

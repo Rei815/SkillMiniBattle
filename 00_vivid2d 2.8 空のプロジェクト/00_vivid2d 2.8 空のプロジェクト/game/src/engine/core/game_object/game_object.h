@@ -1,23 +1,22 @@
 #pragma once
-#include "../../component/component.h"
-
+#include "../component/component.h"
 #include "../../mathematics/mathematics.h"
 #include "../../utility/utility.h"
 
 #include <memory>
-#include <vector> // vectorを追加
+#include <vector>
 #include <map>
 #include <typeindex>
 #include <typeinfo>
 #include <cassert>
+#include "game_types.h"
+#include "../../managers/object_manager/object_id.h"
 
 class CGameObject
 {
 public:
     CGameObject();
     virtual ~CGameObject();
-
-    // --- コンポーネント管理メソッド ---
 
     /**
      * @brief コンポーネントを追加します。同じ型のコンポーネントも複数追加できます。
@@ -109,10 +108,22 @@ public:
 
     virtual bool IsActive() const { return m_IsActive; }
     virtual void Delete() { m_IsActive = false; }
+    // --- ID管理メソッドを追加 ---
+    void SetID(OBJECT_ID id) { m_Id = id; }
+    OBJECT_ID GetID() const { return m_Id; }
 
+    // --- タグ管理メソッド ---
+    void SetTag(GameObjectTag tag) { m_Tag = tag; }
+    GameObjectTag GetTag() const { return m_Tag; }
+
+    // --- タグ管理メソッド ---
+    void SetCategory(FACTION_CATEGORY category) { m_Category = category; }
+    FACTION_CATEGORY GetCategory() const { return m_Category; }
 protected:
-    bool       m_IsActive;
-
+    bool                m_IsActive;
+    GameObjectTag       m_Tag; // タグを保持するメンバー変数
+    OBJECT_ID           m_Id; // オブジェクトのIDを保持
+    FACTION_CATEGORY    m_Category;
 private:
     std::map<std::type_index, std::vector<std::shared_ptr<IComponent>>> m_Components;
 };

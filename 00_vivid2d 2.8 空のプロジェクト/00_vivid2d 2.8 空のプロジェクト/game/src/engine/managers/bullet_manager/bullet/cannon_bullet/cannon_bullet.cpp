@@ -13,7 +13,7 @@ CCannonBullet::CCannonBullet()
 
 }
 
-void CCannonBullet::Initialize(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter, const CVector3& position, const CVector3& direction)
+void CCannonBullet::Initialize(FACTION_CATEGORY category, CShot::BulletParameters* bulletParameter, const CVector3& position, const CVector3& direction)
 {
     IBullet::Initialize(category, bulletParameter, position, direction);
     m_Speed = bulletParameter->speed;

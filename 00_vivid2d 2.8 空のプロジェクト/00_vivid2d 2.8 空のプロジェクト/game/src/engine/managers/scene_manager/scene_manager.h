@@ -3,7 +3,6 @@
 #include "vivid.h"
 #include"scene\scene_id.h"
 #include <list>
-#include "..\..\..\utility\utility.h"
 #include "..\controller_manager\controller\controller.h"
 #include"scene\game\game.h"
 

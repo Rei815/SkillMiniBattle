@@ -3,9 +3,6 @@
 #include "vivid.h"
 #include "skill/skill_id.h"
 #include "skill/skill.h"
-#include "../unit_manager/unit_manager.h"
-#include "../unit_manager/unit/player/player.h"
-#include "../unit_manager/unit/unit_id.h"
 #include "../scene_manager/scene/game/game_id.h"
 
 class CSkillManager
@@ -46,7 +43,7 @@ public:
     /*!
      *  @brief      スキル生成
      */
-    void        CreateSkill(SKILL_ID skill_id, UNIT_ID player_id);
+    void        CreateSkill(SKILL_ID skill_id, PLAYER_ID player_id);
 
     /*!
      *  @brief      スキル付与
@@ -80,7 +77,7 @@ private:
      */
     CSkillManager& operator=(const CSkillManager& rhs);
 
-    std::shared_ptr<CSkill>     m_SetSkill[(int) UNIT_ID::NONE];
+    std::shared_ptr<CSkill>     m_SetSkill[(int)PLAYER_ID::NONE];
 
     SKILL_LIST  m_SkillList;             //!< スキルリスト
 };

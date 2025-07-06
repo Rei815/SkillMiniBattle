@@ -1,6 +1,6 @@
 #include "shock_wave_bullet.h"
-#include "../../../../../component/transform_component/transform_component.h"
-#include "../../../../../component/model_component/model_component.h"
+#include "../../../../components/model_component/model_component.h"
+#include "../../../../components/transform_component/transform_component.h"
 
 const float CShockWaveBullet::m_max_speed = 50.0f;
 const float CShockWaveBullet::m_spread_speed = 8.0f;
@@ -15,7 +15,7 @@ CShockWaveBullet::CShockWaveBullet()
 {
 }
 
-void CShockWaveBullet::Initialize(UNIT_CATEGORY category, const CVector3& position, const CVector3& direction)
+void CShockWaveBullet::Initialize(FACTION_CATEGORY category, const CVector3& position, const CVector3& direction)
 {
     IBullet::Initialize(category, position, direction);
     m_BulletID = BULLET_ID::SHOCK_WAVE;

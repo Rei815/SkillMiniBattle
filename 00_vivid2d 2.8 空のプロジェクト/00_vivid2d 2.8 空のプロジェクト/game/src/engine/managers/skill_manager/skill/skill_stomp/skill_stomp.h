@@ -1,7 +1,7 @@
 #pragma once
-#pragma once
 #include "../skill.h"
-
+#include "../../../../../engine/core/game_object/game_object.h"
+#include "../../../../managers/effect_manager/effect/effect.h"
 class CSkillStomp : public CSkill
 {
 public:

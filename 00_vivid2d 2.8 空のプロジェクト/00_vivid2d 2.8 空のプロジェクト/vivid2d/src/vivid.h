@@ -18,7 +18,7 @@
 #include <cmath>
 #include <ctime>
 #include <tuple>
-#include "..\..\game\src\mathematics\mathematics.h"
+#include "../../game/src/engine/mathematics/mathematics.h"
 
 /*!
  *  @brief  WindowsAPI‚Å’è‹`‚³‚ê‚Ä‚¢‚éƒ}ƒNƒ‚ğ–³Œø‰»

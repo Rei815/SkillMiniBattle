@@ -1,5 +1,6 @@
 #include "skill_ogre_control.h"
 #include "../../../object_manager/object_manager.h"
+#include "../../../../../game/components/player_component/player_component.h"
 
 const float CSkillOgreControl::m_cool_time = 30.0f;
 const float CSkillOgreControl::m_duration_time = 10.0f;
@@ -34,7 +35,7 @@ void CSkillOgreControl::Update(void)
 		break;
 
 	case SKILL_STATE::ACTIVE:
-		if (!m_Player.lock()->GetPlayerMoving())
+		if (!m_Player.lock()->GetComponent<PlayerComponent>()->GetPlayerMoving())
 		{
 			m_Gimmick->OgreControlTurn();
 			m_State = SKILL_STATE::COOLDOWN;
@@ -45,7 +46,7 @@ void CSkillOgreControl::Update(void)
 	case SKILL_STATE::COOLDOWN:
 		if (m_Effect != nullptr)
 		{
-			m_Effect->Delete(false);
+			m_Effect->Delete();
 			m_Effect = nullptr;
 		}
 		break;
@@ -83,13 +84,13 @@ void CSkillOgreControl::ActionEnd(void)
 {
 	if (m_Effect != nullptr)
 	{
-		m_Effect->Delete(false);
+		m_Effect->Delete();
 		m_Effect = nullptr;
 	}
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 }

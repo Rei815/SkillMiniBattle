@@ -14,7 +14,7 @@ public:
      *  @param[in]  position        î≠éÀID
      *  @param[in]  direction       å¸Ç´
      */
-    void    Initialize(UNIT_CATEGORY category, CShot::BulletParameters* bulletParameter, const CVector3& position, const CVector3& direction);
+    void    Initialize(FACTION_CATEGORY category, CShot::BulletParameters* bulletParameter, const CVector3& position, const CVector3& direction);
 
 	/*!
 	 *  @brief      çXêV

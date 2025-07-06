@@ -8,7 +8,7 @@ CController::CController()
 	, m_Stick()
 	, m_LeftHorizontal(false)
 	, m_LeftVertical(false)
-	, m_UnitID(UNIT_ID::NONE)
+	, m_PlayerID(PLAYER_ID::NONE)
 	, m_Device(vivid::controller::DEVICE_ID::MAX)
 {
 }
@@ -203,12 +203,12 @@ void CController::SetControllerID(CONTROLLER_ID controller_id)
 	}
 }
 
-UNIT_ID CController::GetUnitID()
+PLAYER_ID CController::GetPlayerID()
 {
-	return m_UnitID;
+	return m_PlayerID;
 }
 
-void CController::SetUnitID(UNIT_ID unit_id)
+void CController::SetPlayerID(PLAYER_ID player_id)
 {
-	m_UnitID = unit_id;
+	m_PlayerID = player_id;
 }

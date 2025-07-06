@@ -3,7 +3,6 @@
 #include <list>
 #include "bullet\bullet_id.h"
 #include "bullet\bullet.h"
-#include "..\unit_manager\unit\unit_id.h"
 #include "../launcher/launcher.h"
 #include <memory>
 class CBulletManager
@@ -54,7 +53,7 @@ public:
      *  @param[in]  pos         à íu
      *  @param[in]  dir         å¸Ç´
      */
-    std::shared_ptr<IBullet>        Create(UNIT_CATEGORY category,CShot::BulletParameters* bulletParameters, CVector3& pos, const CVector3& dir);
+    std::shared_ptr<IBullet>        Create(FACTION_CATEGORY category,CShot::BulletParameters* bulletParameters, CVector3& pos, const CVector3& dir);
 
     /*!
      *  @brief      íeê∂ê¨
@@ -64,12 +63,12 @@ public:
      *  @param[in]  pos         à íu
      *  @param[in]  dir         å¸Ç´
      */
-    std::shared_ptr<IBullet>        Create(UNIT_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir);
+    std::shared_ptr<IBullet>        Create(FACTION_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir);
     
     /*!
      *  @brief      ÉÇÉfÉãÇ∆ÇÃîΩéÀîªíË
      */
-    void        CheckReflectModel(const CModel& model);
+    void        CheckReflectModel(int model_handle);
 
 private:
     /*!

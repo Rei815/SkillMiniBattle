@@ -1,10 +1,9 @@
 #pragma once
 
 #include <list>
-#include "../../../mathematics/mathematics.h"
-
 #include "effect\effect_id.h"
 #include "effect/effect.h"
+#include <memory>
 using namespace std;
 
 class IEffect;

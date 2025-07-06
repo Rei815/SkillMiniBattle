@@ -2,8 +2,22 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-#include "../../../object_manager/object/fall_object/mark_id.h"
 #include <memory>
+#include "../../../../utility/timer/timer.h"
+
+/*!
+ *  @brief      マークID
+ */
+enum class MARK_ID
+{
+    CIRCLE,     //!< 丸マーク
+    CROSS,      //!< バツマーク
+    MOON,       //!< 月マーク
+    SQUARE,     //!< 四角マーク
+    SUN,        //!< 太陽マーク
+    TRIANGLE,   //!< 三角マーク
+    NONE,
+};
 class CFallOutTopic : public CUI
 {
 public:

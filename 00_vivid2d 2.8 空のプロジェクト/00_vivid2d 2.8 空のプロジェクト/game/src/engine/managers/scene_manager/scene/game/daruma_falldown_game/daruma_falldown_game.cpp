@@ -1,19 +1,15 @@
 #include "daruma_falldown_game.h"
-#include "../../../../unit_manager/unit_manager.h"
-#include "../../../../gimmick_manager/gimmick_manager.h"
-#include "../../../../gimmick_manager/gimmick/daruma_falldown_gimmick/daruma_falldown_gimmick.h"
+#include <EffekseerForDXLib.h>
 #include "../../../../object_manager/object_manager.h"
 #include "../../../../camera/camera.h"
-#include "../../../../unit_manager/unit/player/player.h"
-#include "../../../../unit_manager/unit/unit.h"
-#include "../../../../unit_manager/unit_manager.h"
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
 #include "../../../../sound_manager/sound_manager.h"
 
-#include <EffekseerForDXLib.h>
-
-
+#include "../../../../../../game/components/player_component/player_component.h"
+#include "../../../../../../game/components/gimmick_component/daruma_fall_down_gimmick_component/daruma_fall_down_gimmick_component.h"
+#include "../../../../../../engine/components/transform_component/transform_component.h"
+#include <algorithm>
 const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(-500,700.0f, -1000.0f);
 const CVector3	CDaruma_FallDownGame::m_camera_direction = CVector3(0, -100, 100);
 
@@ -61,36 +57,28 @@ void CDaruma_FallDownGame::Initialize(SCENE_ID scene_id)
 
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
-		std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().Create((UNIT_ID)i, CVector3(-1500, 100, 100 * i));
-		m_StartPosition[i] = unit->GetPosition();
-		std::shared_ptr<CPlayer> Player = dynamic_pointer_cast<CPlayer>(unit);
-		if (Player != nullptr)
+		std::shared_ptr<CGameObject> player = CObjectManager::GetInstance().Create(OBJECT_ID::PLAYER, CVector3(-1500, 100, 100 * i), (PLAYER_ID)i);
+		auto playerComp = player->GetComponent<PlayerComponent>();
+		auto transform = player->GetComponent<TransformComponent>();
+		m_StartPosition[i] = transform->GetPosition();
+		if (playerComp != nullptr)
 		{
-			Player->SetActionFlag(false);
-			Player->SetForwardVector(m_player_default_forward);
+			playerComp->SetActionFlag(false);
+			playerComp->SetForwardVector(m_player_default_forward);
+			playerComp->MulMoveSpeedRate(m_move_speed);
 		}
 	}
 
 	CSkillManager::GetInstance().SetSkill();
-
-	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
-	{
-		std::shared_ptr<CPlayer> Player = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
-		Player->MulMoveSpeedRate(m_move_speed);
-		Player->SetActionFlag(false);
-	}
 
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
 	CCamera::GetInstance().SetDirection(m_camera_direction);
 
 	//オブジェクトの生成
-	m_OgreObject = CObjectManager::GetInstance().Create(OBJECT_ID::OGRE_OBJECT, Temp);
+	m_OgreObject = CObjectManager::GetInstance().Create(OBJECT_ID::OGRE, Temp);
 
-	
-
-	CUnitManager::GetInstance();
-	CObjectManager::GetInstance().Create(OBJECT_ID::DARUMA_FALLDOWN_STAGE_OBJECT, CTransform(CVector3(0,-1000, -100)));
+	CObjectManager::GetInstance().Create(OBJECT_ID::DARUMA_FALLDOWN_STAGE, CTransform(CVector3(0,-1000, -100)));
 
 	m_TempFirstDis = FLT_MAX;
 	m_TempFirstNum = -1;
@@ -124,56 +112,66 @@ void CDaruma_FallDownGame::Finalize(void)
 
 void CDaruma_FallDownGame::Ranking(void)
 {
-	CUnitManager& um = CUnitManager::GetInstance();
-
-	std::list<std::shared_ptr<CPlayer>> LosePlayerList;
-
-	//一位以外を敗北状態にする
-	for (int j = 0; j < CDataManager::GetInstance().GetCurrentJoinPlayer(); j++)
+	// 毎フレーム、PlayerComponentを持つオブジェクトを全て取得
+	auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
+	PLAYER_ID winnerId = (PLAYER_ID)m_TempFirstNum; // 勝利者のID
+	// 2. 敗者リストを作成
+	std::vector<std::shared_ptr<CGameObject>> loserObjects;
+	for (auto& playerObject : allPlayers)
 	{
-		if (j != m_TempFirstNum)
+		auto playerComp = playerObject->GetComponent<PlayerComponent>();
+		if (playerComp)
 		{
-			um.GetPlayer((UNIT_ID)j)->SetDefeatFlag(true);
-			LosePlayerList.emplace_back(um.GetPlayer((UNIT_ID)j));
-		}
-	}
-
-	while (!LosePlayerList.empty())
-	{
-		std::list<std::shared_ptr<CPlayer>>::iterator temp = LosePlayerList.begin();
-
-		for (std::list<std::shared_ptr<CPlayer>>::iterator it = LosePlayerList.begin(); it != LosePlayerList.end(); it++)
-		{
-			if ((*temp)->GetPosition().x > (*it)->GetPosition().x)
+			// 勝利者でなければ、敗者リストに追加
+			if (playerComp->GetPlayerID() != winnerId)
 			{
-				temp = it;
+				playerComp->SetDefeated(true); // 敗北状態に設定
+				loserObjects.push_back(playerObject);
 			}
 		}
-
-		CDataManager::GetInstance().AddLastGameRanking((*temp)->GetUnitID());
-		LosePlayerList.erase(temp);
 	}
+	// 3. 敗者をX座標でソートする (昇順：Xが小さいほど順位が上)
+	std::sort(loserObjects.begin(), loserObjects.end(),
+		[](const auto& a, const auto& b) {
+			auto transA = a->GetComponent<TransformComponent>();
+			auto transB = b->GetComponent<TransformComponent>();
+			// transformが両方有効な場合のみ比較
+			if (transA && transB) {
+				return transA->GetPosition().x < transB->GetPosition().x;
+			}
+			return false;
+		});
 
-	CDataManager::GetInstance().AddLastGameRanking((UNIT_ID)m_TempFirstNum);
-	CDataManager::GetInstance().PlayerWin((UNIT_ID)m_TempFirstNum);
+	// 4. ソートされた順に、敗者をランキングに登録
+	for (const auto& loserObject : loserObjects)
+	{
+		if (auto playerComp = loserObject->GetComponent<PlayerComponent>())
+		{
+			CDataManager::GetInstance().AddLastGameRanking(playerComp->GetPlayerID());
+		}
+	}
+	CDataManager::GetInstance().AddLastGameRanking(winnerId);
+	CDataManager::GetInstance().PlayerWin(winnerId);
 
 	CGame::SetGameState(GAME_STATE::FINISH);
 }
 
 void CDaruma_FallDownGame::ResetPosition(void)
 {
-	//std::shared_ptr<CPlayer> ReturnPlayer = m_MovePlayer.front();
 	for (int i = 0; i < m_MovePlayer.size(); i++)
 	{
-		if (m_MovePlayer.front()->GetPosition().x > -1500)
+		auto playerComp = m_MovePlayer.front()->GetComponent<PlayerComponent>();
+		auto transform = m_MovePlayer.front()->GetComponent<TransformComponent>();
+
+		if (transform->GetPosition().x > -1500)
 		{
-			m_MovePlayer.front()->SetPosition(CVector3(m_MovePlayer.front()->GetPosition() - m_reset_speed));
+			transform->SetPosition(CVector3(transform->GetPosition() - m_reset_speed));
 			m_MovePlayer.emplace_back(m_MovePlayer.front());
 			m_MovePlayer.pop_front();
 		}
 		else
 		{
-			m_MovePlayer.front()->SetActionFlag(true);
+			playerComp->SetActionFlag(true);
 			m_MovePlayer.pop_front();
 		}
 	}
@@ -187,7 +185,6 @@ void CDaruma_FallDownGame::Start(void)
 void CDaruma_FallDownGame::Play(void)
 {
 	CGame::Play();
-	CUnitManager& um = CUnitManager::GetInstance();
 	CDataManager& dm = CDataManager::GetInstance();
 
 	if (m_TextPosition.x > 0)
@@ -199,7 +196,7 @@ void CDaruma_FallDownGame::Play(void)
 
 	if (!m_GimmickOn)
 	{
-		CGimmickManager::GetInstance().Create(GIMMICK_ID::DARUMA_FALLDOWN_GIMMICK, m_OgreObject);
+		m_OgreObject->AddComponent<DarumaFallDownGimmickComponent>();
 		m_GimmickOn = true;
 	}
 
@@ -208,28 +205,27 @@ void CDaruma_FallDownGame::Play(void)
 
 	m_Timer.Update();
 
-	for (it = objectList.begin(); it != objectList.end(); it++)
+	// DarumaGimmickComponentは、鬼オブジェクト用のラッパーコンポーネントとします
+	auto darumaObjects = CObjectManager::GetInstance().GetObjectsWithComponent<DarumaFallDownGimmickComponent>();
+	auto gimmick = darumaObjects.begin()->get()->GetComponent<DarumaFallDownGimmickComponent>();
+	auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
+
+	for (auto& playerObject : allPlayers)
 	{
-		std::shared_ptr<CGimmick> gimmick = (*it)->GetGimmick();
-		std::shared_ptr<CPlayer> player;
-
-		if (!gimmick) continue;
-
-		for (int i = 0; i < dm.GetCurrentJoinPlayer(); i++)
-		{
-			player = um.GetPlayer((UNIT_ID)i);
+			auto player = playerObject->GetComponent<PlayerComponent>();
+			auto transform = playerObject->GetComponent<TransformComponent>();
 
 			if (!player) continue;
 
 			//鬼が振り返ってる時の処理
-			if (gimmick->GetState() == GIMMICK_STATE::PLAY && player->GetInvincibleFlag() == false)
+			if (gimmick->GetState() == GIMMICK_STATE::PLAY && player->IsInvincible() == false)
 			{
 				if (player->GetPlayerMoving())
 				{
 					player->SetActionFlag(false);
 					player->SetVelocity(CVector3::ZERO);
 
-					m_TextureColor[i] = 0xffffffff;
+					m_TextureColor[(int)player->GetPlayerID()] = 0xffffffff;
 
 					std::shared_ptr<CSkill> skill = player->GetSkill();
 					if (skill->GetSkillID() == SKILL_ID::RESURRECT_DARUMA && skill->GetState() != SKILL_STATE::COOLDOWN)
@@ -242,22 +238,21 @@ void CDaruma_FallDownGame::Play(void)
 			}
 			else
 			{
-				m_TextureColor[i] = 0x00000000;
+				m_TextureColor[(int)player->GetPlayerID()] = 0x00000000;
 
-				if (player->GetPosition().x <= -1500)
+				if (transform->GetPosition().x <= -1500)
 				{
 					player->SetActionFlag(true);
 				}
 
-				if ((player->GetPosition().x >= m_goal_position.x)&& (player->GetPosition().z <= m_goal_position.z + 100)&& (player->GetPosition().z >= m_goal_position.z - 100))
+				if ((transform->GetPosition().x >= m_goal_position.x)&& (transform->GetPosition().z <= m_goal_position.z + 100)&& (transform->GetPosition().z >= m_goal_position.z - 100))
 				{
-					m_TempFirstNum = i;
+					m_TempFirstNum = (int)player->GetPlayerID();
 					Ranking();
 				}
 			}
 			if (m_MovePlayer.empty() == false)
 				ResetPosition();
-		}
 	}
 
 	
@@ -266,12 +261,15 @@ void CDaruma_FallDownGame::Play(void)
 	if (m_Timer.Finished())
 	{
 		float FirstPosX = -1500;
-		for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
+		auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
+
+		for (auto& player : allPlayers)
 		{
-			float TempPosX = um.GetPlayer((UNIT_ID)i)->GetPosition().x;
+			auto transform = player->GetComponent<TransformComponent>();
+			float TempPosX = transform->GetPosition().x;
 			if (TempPosX >= FirstPosX)
 			{
-				m_TempFirstNum = i;
+				m_TempFirstNum = (int)player->GetID();
 				FirstPosX = TempPosX;
 			}
 		}

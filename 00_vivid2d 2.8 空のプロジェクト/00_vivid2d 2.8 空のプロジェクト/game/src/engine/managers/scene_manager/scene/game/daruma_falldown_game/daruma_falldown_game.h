@@ -1,8 +1,6 @@
 #pragma once
 
 #include "..\game.h"
-#include "../../../../unit_manager/unit/player/player.h"
-
 
 class CDaruma_FallDownGame : public CGame
 {
@@ -65,16 +63,16 @@ private:
     static const CVector3           m_goal_position;
     static const CVector3           m_reset_speed;
 
-    std::shared_ptr<IObject> m_OgreObject;
-    CTimer                              m_Timer;
-    CVector3                            m_PlayerPosition[4];
-    CVector3                            m_StartPosition[4];
-    int                                 m_RemainCount;
-    int                                 m_TempFirstNum;
-    int                                 m_CountTime;
-    int                                 m_TextureColor[4];
-    float                               m_TempFirstDis;
-    bool                                m_GimmickOn;
-    std::list<std::shared_ptr<CPlayer>> m_MovePlayer;
-    vivid::Vector2                      m_TextPosition;
+    std::shared_ptr<CGameObject>            m_OgreObject;
+    CTimer                                  m_Timer;
+    CVector3                                m_PlayerPosition[4];
+    CVector3                                m_StartPosition[4];
+    int                                     m_RemainCount;
+    int                                     m_TempFirstNum;
+    int                                     m_CountTime;
+    int                                     m_TextureColor[4];
+    float                                   m_TempFirstDis;
+    bool                                    m_GimmickOn;
+    std::list<std::shared_ptr<CGameObject>> m_MovePlayer;
+    vivid::Vector2                          m_TextPosition;
 };

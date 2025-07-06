@@ -1,6 +1,6 @@
 #include "fallout_topic.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../ui_manager/ui_manager.h"
+#include "../../../../utility/easing/easing.h"
 
 const std::string		CFallOutTopic::m_file_name = "data\\Textures\\fall_topic_ui.png";
 const int               CFallOutTopic::m_height = 100;

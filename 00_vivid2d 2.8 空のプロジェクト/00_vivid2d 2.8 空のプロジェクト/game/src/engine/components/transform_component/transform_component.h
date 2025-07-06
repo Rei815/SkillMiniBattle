@@ -31,12 +31,14 @@ public:
     void SetPosition(const CVector3& position);
     void SetRotation(const CVector3& euler_angles);
     void SetScale(const CVector3& scale);
+    void SetScale(float scale);
 
     // 現在位置から、指定されたオフセット分だけ移動させる
     void Translate(const CVector3& offset);
     // --- 行列取得 ---
     const CMatrix& GetWorldMatrix() const;
 
+    float GetLength() const;
 private:
     // --- 内部処理 ---
     void RecalculateWorldMatrix() const;

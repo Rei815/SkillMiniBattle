@@ -13,7 +13,7 @@ public:
      *  @param[in]  position        à íu
      *  @param[in]  direction       å¸Ç´
      */
-     void    Initialize(UNIT_CATEGORY category, const CVector3& position, const CVector3& direction) override;
+     void    Initialize(FACTION_CATEGORY category, const CVector3& position, const CVector3& direction) override;
 
     /*!
      *  @brief      çXêV

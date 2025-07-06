@@ -1,6 +1,7 @@
 #pragma once
 #include "../skill.h"
-#include "../../../object_manager/object/object.h"
+#include "../../../effect_manager/effect/effect.h"
+#include "../../../../core/game_object/game_object.h"
 
 class CSkillSpawnWall : public CSkill
 {
@@ -47,5 +48,5 @@ protected:
     static const float  m_effect_scale;
 
     std::shared_ptr<IEffect>            m_SkillEffect;
-    std::shared_ptr<IObject>            m_WallObj;
+    std::shared_ptr<CGameObject>        m_WallObj;
 };

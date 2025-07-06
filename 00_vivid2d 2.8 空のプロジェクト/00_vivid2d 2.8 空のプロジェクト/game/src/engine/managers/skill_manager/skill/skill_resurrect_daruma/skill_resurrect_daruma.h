@@ -1,5 +1,6 @@
 #pragma once
 #include "../skill.h"
+#include "../../../effect_manager/effect/effect.h"
 
 class CSkillResurrectDaruma : public CSkill
 {

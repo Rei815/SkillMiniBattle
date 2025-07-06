@@ -139,13 +139,13 @@ SetGameState(GAME_STATE state)
     m_GameState = state;
 }
 
-void CGame::AddRanking(UNIT_ID unitID)
+void CGame::AddRanking(PLAYER_ID unitID)
 {
-    std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().GetPlayer(unitID);
+    std::shared_ptr<IUnit> unit = CObjectManager::GetInstance().GetPlayer(unitID);
 
     for (ENTRY_LIST::iterator entry_it = m_EntryList.begin(); entry_it != m_EntryList.end(); entry_it++)
     {
-        if ((*entry_it)->GetUnitID() == unitID)
+        if ((*entry_it)->GetPlayerID() == unitID)
         {
             //リザルトに登録、エントリーからは削除
             m_ResultList.emplace_back(CUnitManager::GetInstance().GetPlayer(unitID));

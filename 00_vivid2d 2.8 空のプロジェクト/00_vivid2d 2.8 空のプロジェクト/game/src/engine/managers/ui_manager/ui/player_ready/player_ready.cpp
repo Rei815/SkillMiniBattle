@@ -51,21 +51,21 @@ void CPlayerReady::Update(void)
 	std::shared_ptr<CController> keyboard = cm.GetController(CONTROLLER_ID::KEYBOARD);
 	if (controller1)
 		if (controller1->GetButtonDown(BUTTON_ID::B))
-			m_Color[(int)controller1->GetUnitID()] ^= 0x007f7f7f;
+			m_Color[(int)controller1->GetPlayerID()] ^= 0x007f7f7f;
 	if (controller2)
 		if (controller2->GetButtonDown(BUTTON_ID::B))
-			m_Color[(int)controller2->GetUnitID()] ^= 0x007f7f7f;
+			m_Color[(int)controller2->GetPlayerID()] ^= 0x007f7f7f;
 	if (controller3)
 		if (controller3->GetButtonDown(BUTTON_ID::B))
-			m_Color[(int)controller3->GetUnitID()] ^= 0x007f7f7f;
+			m_Color[(int)controller3->GetPlayerID()] ^= 0x007f7f7f;
 	if (controller4)
 		if (controller4->GetButtonDown(BUTTON_ID::B))
-			m_Color[(int)controller4->GetUnitID()] ^= 0x007f7f7f;
+			m_Color[(int)controller4->GetPlayerID()] ^= 0x007f7f7f;
 	if (keyboard)
 		if (keyboard->GetButtonDown(BUTTON_ID::B))
-			m_Color[(int)keyboard->GetUnitID()] ^= 0x007f7f7f;
+			m_Color[(int)keyboard->GetPlayerID()] ^= 0x007f7f7f;
 
-	if (CDataManager::GetInstance().GetCurrentJoinPlayer() == 2 && cm.GetController(CONTROLLER_ID::DUMMY)->GetUnitID() == UNIT_ID::PLAYER2)
+	if (CDataManager::GetInstance().GetCurrentJoinPlayer() == 2 && cm.GetController(CONTROLLER_ID::DUMMY)->GetPlayerID() == UNIT_ID::PLAYER2)
 		m_Color[(int)UNIT_ID::PLAYER2] = 0xffffffff;
 
 	

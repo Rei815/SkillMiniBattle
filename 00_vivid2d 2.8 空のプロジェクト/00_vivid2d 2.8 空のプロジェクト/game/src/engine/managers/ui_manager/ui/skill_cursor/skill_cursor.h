@@ -3,7 +3,7 @@
 #include "vivid.h"
 #include "..\ui.h"
 #include "../../../skill_manager/skill/skill_id.h"
-#include "../../../unit_manager/unit/unit_id.h"
+#include "../../../../../game/components/player_component/player_id.h"
 
 class CSkillCursor : public CUI
 {
@@ -43,10 +43,10 @@ public:
      */
     void        Finalize(void);
 
-    void        SetCursor(UNIT_ID player_id, vivid::Vector2 position, float scale);
-    void        SetCursor(UNIT_ID player_id, vivid::Vector2 position, vivid::Vector2 scale);
+    void        SetCursor(PLAYER_ID player_id, vivid::Vector2 position, float scale);
+    void        SetCursor(PLAYER_ID player_id, vivid::Vector2 position, vivid::Vector2 scale);
 
-    void        SetPlayer(UNIT_ID player_id);
+    void        SetPlayer(PLAYER_ID player_id);
 
     void        SetPosition(const vivid::Vector2& position);
 

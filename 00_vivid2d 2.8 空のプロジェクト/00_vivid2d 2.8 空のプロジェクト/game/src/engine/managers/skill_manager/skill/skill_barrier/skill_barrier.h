@@ -1,9 +1,9 @@
 #pragma once
 #include "../skill.h"
 #include "../../../effect_manager/effect/effect.h"
-#include "../../../model/model.h"
 #include "../../../effect_manager/effect_manager.h"
-
+#include "../../../../components/model_component/model_component.h"
+#include "../../../../../game/components/player_component/player_component.h"
 class CSkillBarrier : public CSkill
 {
 public:
@@ -33,7 +33,7 @@ public:
     /*!
      *  @brief      プレイヤーのセット
      */
-    void    SetPlayer(std::shared_ptr<CPlayer> player);
+    void    SetPlayer(std::shared_ptr<CGameObject> player);
 
     /*!
      *  @brief      アクション呼び出し
@@ -53,4 +53,5 @@ protected:
 
     std::shared_ptr<IEffect>            m_Effect;
     std::shared_ptr<IEffect>            m_SkillEffect;
+    std::shared_ptr<CGameObject>        m_BarrierCollider;
 };

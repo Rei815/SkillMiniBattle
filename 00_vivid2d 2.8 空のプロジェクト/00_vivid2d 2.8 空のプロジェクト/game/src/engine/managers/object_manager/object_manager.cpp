@@ -1,15 +1,14 @@
 #include "object_manager.h"
-#include "..\..\..\utility\utility.h"
-#include "object\fall_object\fall_object.h"
-#include "object\cannon_object\cannon_object.h"
-#include "object\ogre_object\ogre_object.h"
-#include "object\dodgeball_stage_object\dodgeball_stage_object.h"
-#include "object\daruma_falldown_stage_object\daruma_falldown_stage_object.h"
-#include "object\belt_conveyor_object\belt_conveyor_object.h"
-#include "object\belt_conveyor_obstruction_object\belt_conveyor_obstruction_object.h"
-#include "object\skill_wall_object\skill_wall_object.h"
-#include "..\gimmick_manager\gimmick_manager.h"
-#include "..\unit_manager\unit_manager.h"
+#include "../../core/game_object/game_object.h"
+#include "../../components/transform_component/transform_component.h"
+#include "../../components/model_component/model_component.h"
+#include "../../components/collider_component/mesh_collider_component/mesh_collider_component.h"
+#include "../../../game/components/player_component/player_component.h"
+#include "../../../game/components/gimmick_component/dodge_ball_gimmick_component/dodge_ball_gimmick_component.h"
+#include "../../../game/components/gimmick_component/belt_conveyor_gimmick_componet/belt_conveyor_gimmick_componet.h"
+#include "../../../game/components/gimmick_component/fall_gimmick_component/fall_gimmick_component.h"
+#include "../../../game/components/gimmick_component/daruma_fall_down_gimmick_component/daruma_fall_down_gimmick_component.h"
+#include "../bullet_manager/bullet/bullet.h"
 
 /*
  *  インスタンスの取得
@@ -30,7 +29,7 @@ void
 CObjectManager::
 Initialize(void)
 {
-    m_ObjectList.clear();
+    m_GameObjects.clear();
 }
 
 /*
@@ -42,15 +41,6 @@ Update(void)
 {
     // オブジェクト更新
     UpdateObject();
-
-    OBJECT_LIST::iterator it = m_ObjectList.begin();
-
-    while (it != m_ObjectList.end())
-    {
-        CUnitManager::GetInstance().CheckHitObject((*it));
-
-        ++it;
-    }
 }
 
 /*
@@ -60,11 +50,11 @@ void
 CObjectManager::
 Draw(void)
 {
-    if (m_ObjectList.empty()) return;
+    if (m_GameObjects.empty()) return;
 
-    OBJECT_LIST::iterator it = m_ObjectList.begin();
+    OBJECT_LIST::iterator it = m_GameObjects.begin();
 
-    while (it != m_ObjectList.end())
+    while (it != m_GameObjects.end())
     {
         (*it)->Draw();
 
@@ -79,118 +69,241 @@ void
 CObjectManager::
 Finalize(void)
 {
-    if (m_ObjectList.empty()) return;
-
-    OBJECT_LIST::iterator it = m_ObjectList.begin();
-
-    while (it != m_ObjectList.end())
-    {
-        (*it)->Finalize();
-
-        ++it;
-    }
-
-    m_ObjectList.clear();
+    m_GameObjects.clear();
 }
 
 /*
  *  オブジェクト生成
  */
-std::shared_ptr<IObject> CObjectManager::Create(OBJECT_ID id, const CTransform& transform)
+std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransform& transform, PLAYER_ID player_id)
 {
-    std::shared_ptr<IObject> object = nullptr;
+    // CGameObjectのインスタンスを生成
+    auto gameObject = std::make_shared<CGameObject>();
+    gameObject->SetID(id);
+    // 共通のTransformComponentを設定
+    auto transformComp = gameObject->GetComponent<TransformComponent>();
+    transformComp->SetTransform(transform);
 
     switch (id)
     {
 
-    case OBJECT_ID::MOON_FALL_OBJECT:
-    case OBJECT_ID::SUN_FALL_OBJECT:
-    case OBJECT_ID::CIRCLE_FALL_OBJECT:
-    case OBJECT_ID::SQUARE_FALL_OBJECT:
-    case OBJECT_ID::TRIANGLE_FALL_OBJECT:
-    case OBJECT_ID::CROSS_FALL_OBJECT:
-    object = std::make_shared<CFallObject>();                           break;
-    case OBJECT_ID::CANNON_OBJECT:
-        object = std::make_shared<CCannonObject>();                     break;
-    case OBJECT_ID::OGRE_OBJECT:
-        object = std::make_shared<COgreObject>();                       break;
-    case OBJECT_ID::DODGEBALL_STAGE_OBJECT:
-        object = std::make_shared<CDogeballStageObject>();              break;
-    case OBJECT_ID::DARUMA_FALLDOWN_STAGE_OBJECT:
-        object = std::make_shared<CDarumaFallDownStageObject>();        break;
-    case OBJECT_ID::BELT_CONVEYOR_STAGE_OBJECT:
-        object = std::make_shared<CBeltConveyorObject>();               break;
-    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_OBJECT:
-        object = std::make_shared<CBeltConveyorObstructionObject>();    break;
-    case OBJECT_ID::SKILL_WALL_OBJECT:
-        object = std::make_shared<CSkillWallObject>();                  break;
+    case OBJECT_ID::FALL_FLOOR_MOON:
+    case OBJECT_ID::FALL_FLOOR_SUN:
+    case OBJECT_ID::FALL_FLOOR_CIRCLE:
+    case OBJECT_ID::FALL_FLOOR_SQUARE:
+    case OBJECT_ID::FALL_FLOOR_TRIANGLE:
+    case OBJECT_ID::FALL_FLOOR_CROSS:
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::FALLOUT_FLOOR);
+        gameObject->AddComponent<FallGimmickComponent>(id);
+        gameObject->AddComponent<MeshColliderComponent>();
+        break;
+    case OBJECT_ID::CANNON:
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::CANNON);
+        //大砲ギミックのセット
+        gameObject->AddComponent<DodgeBallGimmickComponent>();
+        gameObject->AddComponent<MeshColliderComponent>();
+    break;
+    
+    case OBJECT_ID::OGRE:
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::OGRE);
+        gameObject->AddComponent<MeshColliderComponent>();
+        break;
+    case OBJECT_ID::DODGEBALL_STAGE:
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::DODGEBALL_STAGE);
+        gameObject->AddComponent<MeshColliderComponent>();
+        break;
+    case OBJECT_ID::DARUMA_FALLDOWN_STAGE:
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::DARUMA_STAGE);
+        gameObject->AddComponent<MeshColliderComponent>();
+        break;
+    case OBJECT_ID::BELT_CONVEYOR:
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_STAGE);
+        gameObject->AddComponent<MeshColliderComponent>();
+        break;
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_1:
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_2:
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_3:
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_4:
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_5:
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_6:
+        gameObject->AddComponent<ModelComponent>(id);
+        gameObject->AddComponent<MeshColliderComponent>();
+        break;
+    case OBJECT_ID::SKILL_WALL:
+        gameObject->AddComponent<ModelComponent>(id);
+        gameObject->AddComponent<MeshColliderComponent>();
+        break;
+    case OBJECT_ID::SKILL_BARRIER_OBJECT:
+        gameObject->AddComponent<ModelComponent>(id);
+        gameObject->AddComponent<MeshColliderComponent>();
+        break;
+    case OBJECT_ID::PLAYER:
+    {
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::PLAYER);
+        gameObject->AddComponent<MeshColliderComponent>();
+        gameObject->AddComponent<PlayerComponent>(player_id,transform);
+        break;
+    }
     }
 
-    if (!object) return nullptr;
+    if (!gameObject) return nullptr;
 
-    object->Initialize(id, transform);
-    m_ObjectList.emplace_back(object);
+    gameObject->Initialize();
 
-    return object;
-}
+    m_GameObjects.emplace_back(gameObject);
 
-void CObjectManager::SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object)
-{
-    if (m_ObjectList.empty()) return;
-
-    CGimmickManager::GetInstance().Create(gimmick_id, object);
-}
-
-void CObjectManager::SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object, float time)
-{
-    if (m_ObjectList.empty()) return;
-
-    CGimmickManager::GetInstance().Create(gimmick_id, object, time);
-
+    return gameObject;
 }
 
 CObjectManager::OBJECT_LIST CObjectManager::GetList()
 {
-    return m_ObjectList;
+    return m_GameObjects;
 }
 
-/*
-* 当たったオブジェクトを返す
-*/
-std::shared_ptr<IObject> CObjectManager::CheckHitObject(std::shared_ptr<CPlayer> player)
+std::shared_ptr<CGameObject> CObjectManager::CheckHitLineForAll(
+    const CVector3& start, const CVector3& end, CGameObject* ignore_object, CVector3& out_hitPosition)
 {
-    if (m_ObjectList.empty()) return nullptr;
-    OBJECT_LIST::iterator it = m_ObjectList.begin();
-
-    while (it != m_ObjectList.end())
+    // 管理している全てのゲームオブジェクトをループ
+    for (auto& object : m_GameObjects)
     {
-        std::shared_ptr<IObject> object = *it;
-        if (object->GetModelHandle().GetHandle() == VIVID_DX_ERROR || object->GetColliderActiveFlag() == false)
+        // 自分自身との判定は無視する
+        if (object.get() == ignore_object)
         {
-            ++it;
             continue;
         }
 
-        //垂直方向の判定-----------------------------------------------------
+        // オブジェクトからColliderComponentを取得
+        auto collider = object->GetComponent<ColliderComponent>();
 
-        float radius = player->GetRadius();
-        float offset = radius / 2.0f;
-        for (int i = 0; i < 9; ++i)
+        // コライダーがあり、かつ有効な場合のみチェック
+        if (collider && collider->IsEnabled())
         {
-            CVector3 unit_pos = player->GetPosition();
-
-            CVector3 start = unit_pos + CVector3(-offset + (offset) * (i % 3), 0.0, -offset + (offset) * (i / 3));
-            CVector3 end_position = start + CVector3(0, -radius, 0);
-
-            if (object->GetModelHandle().CheckHitLine(start, end_position) == true)
+            // コライダーのライン判定を実行
+            if (collider->CheckHitLine(start, end, out_hitPosition))
+            {
+                // 最初にヒットしたオブジェクトを返す
                 return object;
+            }
         }
-
-        ++it;
     }
+
+    // 何にもヒットしなかった
     return nullptr;
 }
 
+// シンプルバージョンの実装
+std::shared_ptr<CGameObject> CObjectManager::CheckHitLineForAll(
+    const CVector3& start, const CVector3& end, CGameObject* ignore_object)
+{
+    // ダミー変数を用意して、詳細バージョンを呼び出す
+    CVector3 dummy_hit_pos;
+    return this->CheckHitLineForAll(start, end, ignore_object, dummy_hit_pos);
+}
+/*
+ *  オブジェクトと弾のアタリ判定
+ */
+void
+CObjectManager::
+CheckHitBullet(std::shared_ptr<IBullet> bullet)
+{
+    // 2. 全オブジェクトのペアを総当たりでチェック
+    for (auto& object : m_GameObjects)
+    {
+        // Aが弾でなければ、当たり判定の主体にならないのでスキップ
+        if (!object->IsActive() || bullet->GetBulletCategory() == object->GetCategory())
+        {
+            continue;
+        }
+
+        // --- 「弾」と「プレイヤー」の当たり判定の例 ---
+        if (object->GetTag() == GameObjectTag::PLAYER)
+        {
+
+            // B(プレイヤー)のColliderを取得
+            auto targetCollider = object->GetComponent<ColliderComponent>();
+            // B(プレイヤー)のColliderを取得
+            auto targetTransform = object->GetComponent<TransformComponent>();
+            // B(プレイヤー)のColliderを取得
+            auto target = object->GetComponent<PlayerComponent>();
+            // B(プレイヤー)のColliderを取得
+            auto bulletCollider = bullet->GetComponent<ColliderComponent>();
+
+            if (targetCollider && targetCollider->IsEnabled())
+            {
+                bool isHit = false;
+
+                CollisionResult result;
+                // 弾の形状に応じて、ターゲットのコライダーに問い合わせる
+                switch (bullet->GetColliderID()) // GetColliderIDはBulletComponentが持つと仮定
+                {
+                case COLLIDER_ID::SPHERE:
+                    isHit = targetCollider->CheckHitSphere(bullet->GetPosition(), bullet->GetRadius(), result); break;
+
+                case COLLIDER_ID::MODEL:
+                    isHit = bulletCollider->CheckHitSphere(targetTransform->GetPosition(), target->GetRadius(), result); break;
+                    break;
+                }
+
+                if (isHit)
+                {
+                    switch (bullet->GetColliderID())
+                    {
+                    case COLLIDER_ID::SPHERE:  target->HitBullet(bullet, result.hitPosition);                      break;
+                    case COLLIDER_ID::MODEL:
+                        CVector3 direction = bullet->GetVelocity().Normalize();
+                        if (bullet->GetID() == BULLET_ID::SHOCK_WAVE)
+                        {
+                            direction = result.hitNormal;
+                        }
+                        target->Impact(result.hitPosition, direction, bullet->GetPower()); 
+                        
+                        break;
+
+                    }
+                    // A(弾)を消滅させる
+                    bullet->Delete();
+                }
+            }
+        }
+    }
+}
+///*
+//* 当たったオブジェクトを返す
+//*/
+//std::shared_ptr<IObject> CObjectManager::CheckHitObject(std::shared_ptr<CPlayer> player)
+//{
+//    if (m_ObjectList.empty()) return nullptr;
+//    OBJECT_LIST::iterator it = m_ObjectList.begin();
+//
+//    while (it != m_ObjectList.end())
+//    {
+//        std::shared_ptr<IObject> object = *it;
+//        if (object->GetModelHandle().GetHandle() == VIVID_DX_ERROR || object->GetColliderActiveFlag() == false)
+//        {
+//            ++it;
+//            continue;
+//        }
+//
+//        //垂直方向の判定-----------------------------------------------------
+//
+//        float radius = player->GetRadius();
+//        float offset = radius / 2.0f;
+//        for (int i = 0; i < 9; ++i)
+//        {
+//            CVector3 unit_pos = player->GetPosition();
+//
+//            CVector3 start = unit_pos + CVector3(-offset + (offset) * (i % 3), 0.0, -offset + (offset) * (i / 3));
+//            CVector3 end_position = start + CVector3(0, -radius, 0);
+//
+//            if (object->GetModelHandle().CheckHitLine(start, end_position) == true)
+//                return object;
+//        }
+//
+//        ++it;
+//    }
+//    return nullptr;
+//}
+//
 /*
  *  オブジェクト更新
  */
@@ -198,21 +311,21 @@ void
 CObjectManager::
 UpdateObject(void)
 {
-    if (m_ObjectList.empty()) return;
+    if (m_GameObjects.empty()) return;
 
-    OBJECT_LIST::iterator it = m_ObjectList.begin();
+    OBJECT_LIST::iterator it = m_GameObjects.begin();
 
-    while (it != m_ObjectList.end())
+    while (it != m_GameObjects.end())
     {
-        std::shared_ptr<IObject> object = *it;
+        std::shared_ptr<CGameObject> gameObject = *it;
 
-        object->Update();
+        gameObject->Update(vivid::GetDeltaTime());
 
-        if (!object->IsActive())
+        if (!gameObject->IsActive())
         {
-            object->Finalize();
+            gameObject->Finalize();
 
-            it = m_ObjectList.erase(it);
+            it = m_GameObjects.erase(it);
 
             continue;
         }

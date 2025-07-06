@@ -1,5 +1,4 @@
 #include "skill_gauge.h"
-#include "../../../unit_manager/unit/unit_id.h"
 
 const int               CSkillGauge::m_height = 600;
 const int               CSkillGauge::m_width = 600;

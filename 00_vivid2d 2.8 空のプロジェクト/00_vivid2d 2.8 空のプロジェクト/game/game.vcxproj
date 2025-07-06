@@ -171,6 +171,13 @@
   <ItemGroup>
     <ClCompile Include="src\engine\components\collider_component\collider_component.cpp" />
     <ClCompile Include="src\engine\components\collider_component\mesh_collider_component\mesh_collider_component.cpp" />
+    <ClCompile Include="src\game\components\gimmick_component\belt_conveyor_gimmick_componet\belt_conveyor_gimmick\belt_conveyor_gimmick.cpp" />
+    <ClCompile Include="src\game\components\gimmick_component\belt_conveyor_gimmick_componet\belt_conveyor_gimmick_componet.cpp" />
+    <ClCompile Include="src\game\components\gimmick_component\daruma_fall_down_gimmick_component\daruma_fall_down_gimmick\daruma_fall_down_gimmick.cpp" />
+    <ClCompile Include="src\game\components\gimmick_component\daruma_fall_down_gimmick_component\daruma_fall_down_gimmick_component.cpp" />
+    <ClCompile Include="src\game\components\gimmick_component\dodge_ball_gimmick_component\dodge_ball_gimmick\dodge_ball_gimmick.cpp" />
+    <ClCompile Include="src\game\components\gimmick_component\dodge_ball_gimmick_component\dodge_ball_gimmick_component.cpp" />
+    <ClCompile Include="src\game\components\gimmick_component\dodge_ball_gimmick_component\_dodge_ball_gimmick_component.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\fall_gimmick_component\fall_gimmick_component.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\gimmick_component.cpp" />
     <ClCompile Include="src\engine\components\model_component\model_component.cpp" />
@@ -192,14 +199,12 @@
     <ClCompile Include="src\engine\managers\effect_manager\effect\skill_star_effect\skill_star_effect.cpp" />
     <ClCompile Include="src\engine\core\game_object\game_object.cpp" />
     <ClCompile Include="src\engine\managers\model_manager\model_manager.cpp" />
-    <ClCompile Include="src\game\game_object\belt_conveyor_obstruction_object\belt_conveyor_obstruction_object.cpp" />
-    <ClCompile Include="src\game\game_object\belt_conveyor_object\belt_conveyor_object.cpp" />
+    <ClCompile Include="src\game\components\player_component\player_component.cpp" />
     <ClCompile Include="src\engine\managers\scene_manager\scene\entry\entry.cpp" />
     <ClCompile Include="src\engine\managers\scene_manager\scene\game\belt_conveyor_game\belt_conveyor_game.cpp" />
     <ClCompile Include="src\engine\managers\effect_manager\effect\strong_wind_effect\strong_wind_effect.cpp" />
     <ClCompile Include="src\engine\managers\scene_manager\scene\game_result\game_result.cpp" />
     <ClCompile Include="src\engine\managers\effect_manager\effect\barrier_effect\barrier_effect.cpp" />
-    <ClCompile Include="src\game\game_object\skill_wall_object\skill_wall_object.cpp" />
     <ClCompile Include="src\engine\managers\scene_manager\scene\select_skill\select_skill.cpp" />
     <ClCompile Include="src\engine\managers\skill_manager\skill\skill_barrier\skill_barrier.cpp" />
     <ClCompile Include="src\engine\managers\skill_manager\skill\skill_floating\skill_floating.cpp" />
@@ -241,7 +246,6 @@
     <ClCompile Include="src\engine\managers\ui_manager\ui\skill_gauge\skill_gauge.cpp" />
     <ClCompile Include="src\engine\managers\ui_manager\ui\skill_cursor\skill_cursor.cpp" />
     <ClCompile Include="src\engine\managers\ui_manager\ui\skill_icon\skill_icon.cpp" />
-    <ClCompile Include="src\game\game_object\daruma_falldown_stage_object\daruma_falldown_stage_object.cpp" />
     <ClCompile Include="src\engine\managers\ui_manager\ui\player_icon\player_icon.cpp" />
     <ClCompile Include="src\engine\managers\ui_manager\ui\fallout_topic_bg\fallout_topic_bg.cpp" />
     <ClCompile Include="src\engine\managers\ui_manager\ui\skill_infomation\skill_infomation.cpp" />
@@ -270,17 +274,11 @@
     <ClCompile Include="src\engine\managers\effect_manager\effect\jump_effect\jump_effect.cpp" />
     <ClCompile Include="src\engine\managers\effect_manager\effect\shock_wave_effect\shock_wave_effect.cpp" />
     <ClCompile Include="src\engine\managers\effect_manager\effect_manager.cpp" />
-    <ClCompile Include="src\game\game_object\launcher\launcher.cpp" />
-    <ClCompile Include="src\game\game_object\launcher\shot\basic\basic.cpp" />
-    <ClCompile Include="src\game\game_object\launcher\shot\dodge_ball\dodge_ball.cpp" />
-    <ClCompile Include="src\game\game_object\launcher\shot\shock_wave\shock_wave.cpp" />
-    <ClCompile Include="src\game\game_object\launcher\shot\shot.cpp" />
-    <ClCompile Include="src\game\game_object\ogre_object\ogre_object.cpp" />
-    <ClCompile Include="src\game\game_object\dodgeball_stage_object\dodgeball_stage_object.cpp" />
-    <ClCompile Include="src\game\game_object\cannon_object\cannon_object.cpp" />
+    <ClCompile Include="src\engine\managers\launcher\launcher.cpp" />
+    <ClCompile Include="src\engine\managers\launcher\shot\basic\basic.cpp" />
+    <ClCompile Include="src\engine\managers\launcher\shot\dodge_ball\dodge_ball.cpp" />
+    <ClCompile Include="src\engine\managers\launcher\shot\shot.cpp" />
     <ClCompile Include="src\engine\managers\scene_manager\scene\game\daruma_falldown_game\daruma_falldown_game.cpp" />
-    <ClCompile Include="src\game\game_object\fall_object\fall_object.cpp" />
-    <ClCompile Include="src\engine\managers\object_manager\object\object.cpp" />
     <ClCompile Include="src\engine\managers\object_manager\object_manager.cpp" />
     <ClCompile Include="src\engine\managers\scene_manager\scene\game\dodgeball_game\dodgeball_game.cpp" />
     <ClCompile Include="src\engine\managers\scene_manager\scene\game\fallout_game\fallout_game.cpp" />
@@ -300,9 +298,6 @@
     <ClCompile Include="src\engine\managers\ui_manager\ui\pause\pause.cpp" />
     <ClCompile Include="src\engine\managers\ui_manager\ui\plane_game_image\plane_game_image.cpp" />
     <ClCompile Include="src\engine\managers\ui_manager\ui_manager.cpp" />
-    <ClCompile Include="src\engine\managers\unit_manager\unit\player\player.cpp" />
-    <ClCompile Include="src\engine\managers\unit_manager\unit\unit.cpp" />
-    <ClCompile Include="src\engine\managers\unit_manager\unit_manager.cpp" />
     <ClCompile Include="src\game\main.cpp" />
     <ClCompile Include="src\engine\utility\csv_loader\csv_loader.cpp" />
     <ClCompile Include="src\engine\utility\easing\easing.cpp" />
@@ -317,8 +312,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\components\collider_component\collider_component.h" />
+    <ClInclude Include="src\engine\components\collider_component\collision_result.h" />
     <ClInclude Include="src\engine\components\collider_component\mesh_collider_component\mesh_collider_component.h" />
     <ClInclude Include="src\engine\core\component\component.h" />
+    <ClInclude Include="src\engine\core\game_object\game_types.h" />
+    <ClInclude Include="src\engine\managers\object_manager\object_id.h" />
+    <ClInclude Include="src\game\components\gimmick_component\belt_conveyor_gimmick_componet\belt_conveyor_gimmick\belt_conveyor_gimmick.h" />
+    <ClInclude Include="src\game\components\gimmick_component\belt_conveyor_gimmick_componet\belt_conveyor_gimmick_componet.h" />
+    <ClInclude Include="src\game\components\gimmick_component\daruma_fall_down_gimmick_component\daruma_fall_down_gimmick\daruma_fall_down_gimmick.h" />
+    <ClInclude Include="src\game\components\gimmick_component\daruma_fall_down_gimmick_component\daruma_fall_down_gimmick_component.h" />
+    <ClInclude Include="src\game\components\gimmick_component\dodge_ball_gimmick_component\dodge_ball_gimmick\dodge_ball_gimmick.h" />
+    <ClInclude Include="src\game\components\gimmick_component\dodge_ball_gimmick_component\dodge_ball_gimmick_component.h" />
     <ClInclude Include="src\game\components\gimmick_component\fall_gimmick_component\fall_gimmick_component.h" />
     <ClInclude Include="src\game\components\gimmick_component\gimmick_component.h" />
     <ClInclude Include="src\engine\components\model_component\model_component.h" />
@@ -342,8 +346,7 @@
     <ClInclude Include="src\engine\managers\effect_manager\effect\resurrect_effect\resurrect_effect.h" />
     <ClInclude Include="src\engine\managers\effect_manager\effect\skill_star_effect\skill_star_effect.h" />
     <ClInclude Include="src\engine\managers\model_manager\model_manager.h" />
-    <ClInclude Include="src\game\game_object\belt_conveyor_obstruction_object\belt_conveyor_obstruction_object.h" />
-    <ClInclude Include="src\game\game_object\belt_conveyor_object\belt_conveyor_object.h" />
+    <ClInclude Include="src\game\components\player_component\player_component.h" />
     <ClInclude Include="src\engine\managers\scene_manager\scene\entry\entry.h" />
     <ClInclude Include="src\engine\managers\scene_manager\scene\game\belt_conveyor_game\belt_conveyor_game.h" />
     <ClInclude Include="src\engine\managers\effect_manager\effect\strong_wind_effect\strong_wind_effect.h" />
@@ -353,7 +356,6 @@
     <ClInclude Include="src\engine\managers\skill_manager\skill\skill_jump_up\skill_jump_up.h" />
     <ClInclude Include="src\engine\managers\skill_manager\skill\skill_punch_up\punch_up.h" />
     <ClInclude Include="src\engine\managers\effect_manager\effect\barrier_effect\barrier_effect.h" />
-    <ClInclude Include="src\game\game_object\skill_wall_object\skill_wall_object.h" />
     <ClInclude Include="src\engine\managers\skill_manager\skill\skill_floating\skill_floating.h" />
     <ClInclude Include="src\engine\managers\skill_manager\skill\skill_barrier\skill_barrier.h" />
     <ClInclude Include="src\engine\managers\skill_manager\skill\skill_dash\skill_dash.h" />
@@ -393,6 +395,7 @@
     <ClInclude Include="src\engine\managers\skill_manager\skill\skill_strong_wind\skill_strong_wind.h" />
     <ClInclude Include="src\engine\managers\ui_manager\ui\skill_infomation\skill_infomation.h" />
     <ClInclude Include="src\engine\managers\ui_manager\ui\skill_name\skill_name.h" />
+    <ClInclude Include="src\game\components\player_component\player_id.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_cursor\skill_select_cursor.h" />
     <ClInclude Include="src\game_manager\game_object\ui_manager\ui\skill_select_icon\skill_select_icon.h" />
     <ClInclude Include="src\engine\managers\ui_manager\ui\fallout_topic_bg\fallout_topic_bg.h" />
@@ -424,16 +427,12 @@
     <ClInclude Include="src\engine\managers\effect_manager\effect\shock_wave_effect\shock_wave_effect.h" />
     <ClInclude Include="src\engine\managers\effect_manager\effect_manager.h" />
     <ClInclude Include="src\engine\core\game_object\game_object.h" />
-    <ClInclude Include="src\game\game_object\launcher\launcher.h" />
-    <ClInclude Include="src\game\game_object\launcher\shot\basic\basic.h" />
-    <ClInclude Include="src\game\game_object\launcher\shot\dodge_ball\dodge_ball.h" />
-    <ClInclude Include="src\game\game_object\launcher\shot\shock_wave\shock_wave.h" />
-    <ClInclude Include="src\game\game_object\launcher\shot\shot.h" />
-    <ClInclude Include="src\game\game_object\launcher\shot\shot_id.h" />
+    <ClInclude Include="src\engine\managers\launcher\launcher.h" />
+    <ClInclude Include="src\engine\managers\launcher\shot\basic\basic.h" />
+    <ClInclude Include="src\engine\managers\launcher\shot\dodge_ball\dodge_ball.h" />
+    <ClInclude Include="src\engine\managers\launcher\shot\shot.h" />
+    <ClInclude Include="src\engine\managers\launcher\shot\shot_id.h" />
     <ClInclude Include="src\engine\managers\model_manager\model_id.h" />
-    <ClInclude Include="src\game\game_object\cannon_object\cannon_object.h" />
-    <ClInclude Include="src\game\game_object\ogre_object\ogre_object.h" />
-    <ClInclude Include="src\game\game_object\dodgeball_stage_object\dodgeball_stage_object.h" />
     <ClInclude Include="src\engine\managers\scene_manager\scene\game\daruma_falldown_game\daruma_falldown_game.h" />
     <ClInclude Include="src\engine\managers\scene_manager\scene\game\dodgeball_game\dodgeball_game.h" />
     <ClInclude Include="src\engine\managers\scene_manager\scene\game\fallout_game\fallout_game.h" />
@@ -458,10 +457,6 @@
     <ClInclude Include="src\engine\managers\ui_manager\ui\ui.h" />
     <ClInclude Include="src\engine\managers\ui_manager\ui\ui_id.h" />
     <ClInclude Include="src\engine\managers\ui_manager\ui_manager.h" />
-    <ClInclude Include="src\engine\managers\unit_manager\unit\player\player.h" />
-    <ClInclude Include="src\engine\managers\unit_manager\unit\unit.h" />
-    <ClInclude Include="src\engine\managers\unit_manager\unit\unit_id.h" />
-    <ClInclude Include="src\engine\managers\unit_manager\unit_manager.h" />
     <ClInclude Include="src\engine\mathematics\mathematics.h" />
     <ClInclude Include="src\engine\mathematics\vector\vector.h" />
     <ClInclude Include="src\engine\primitive\primitive.h" />

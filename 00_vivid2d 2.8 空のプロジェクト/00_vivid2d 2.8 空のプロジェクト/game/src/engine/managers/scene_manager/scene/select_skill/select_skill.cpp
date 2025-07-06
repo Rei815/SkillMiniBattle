@@ -353,7 +353,7 @@ void CSelectSkill::CreateCursor(void)
     std::shared_ptr<CController> controller = cm.GetController((CONTROLLER_ID)m_CursorID[m_NowCursorID_Num]);
     if (controller == nullptr) return;
     //コントローラーを振動させる
-    cm.Vibration((CONTROLLER_ID)controller->GetUnitID());
+    cm.Vibration((CONTROLLER_ID)controller->GetPlayerID());
 }
 
 void CSelectSkill::MoveCursor(void)
@@ -367,7 +367,7 @@ void CSelectSkill::MoveCursor(void)
     std::shared_ptr<CController> controller = nullptr;
     while (it != controllerList.end())
     {
-        if ((*it)->GetUnitID() == m_CursorID[m_NowCursorID_Num])
+        if ((*it)->GetPlayerID() == m_CursorID[m_NowCursorID_Num])
         {
             controller = *it;
             break;

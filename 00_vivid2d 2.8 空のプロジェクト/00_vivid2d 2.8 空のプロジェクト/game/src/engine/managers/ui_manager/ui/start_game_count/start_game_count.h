@@ -2,6 +2,7 @@
 
 #include "vivid.h"
 #include "..\ui.h"
+#include "../../../../utility/timer/timer.h"
 
 class CStartGameCount : public CUI
 {

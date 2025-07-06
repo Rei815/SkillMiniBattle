@@ -2,7 +2,7 @@
 
 #include "vivid.h"
 #include "..\ui.h"
-#include "../../../unit_manager/unit/unit_id.h"
+#include "../../../../../game/components/player_component/player_id.h"
 
 class  CPlayerIcon :  public CUI
 {
@@ -41,7 +41,7 @@ public:
      *  @brief  ƒvƒŒƒCƒ„[‚ÌID‚ğİ’è
      *          ID‚Å‰æ‘œ‚ğ·‚µ‘Ö‚¦‚é
      */
-    void        SetPlayerID(UNIT_ID unit_id);
+    void        SetPlayerID(PLAYER_ID unit_id);
 
 private:
 

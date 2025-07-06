@@ -1,5 +1,7 @@
 #include "skill_invisible.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../../../game/components/player_component/player_component.h"
+#include "../../../../../engine/components/transform_component/transform_component.h"
 
 const float CSkillInvisible::m_cool_time = 10.0f;
 const float CSkillInvisible::m_duration_time = 3.0f;
@@ -25,18 +27,19 @@ void CSkillInvisible::Update(void)
 {
 	CSkill::Update();
 
+	auto Player = m_Player.lock()->GetComponent<PlayerComponent>();
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
-		m_Player.lock()->SetAlpha(1.0f);
+		Player->SetAlpha(1.0f);
 		break;
 
 	case SKILL_STATE::ACTIVE:
-		m_Player.lock()->DecAlpha(0.5f);
+		Player->DecAlpha(0.5f);
 		break;
 
 	case SKILL_STATE::COOLDOWN:
-		m_Player.lock()->RevertAlpha(1.0f);
+		Player->RevertAlpha(1.0f);
 		break;
 	}
 }
@@ -54,12 +57,13 @@ void CSkillInvisible::Finalize(void)
 void CSkillInvisible::Action(void)
 {
 	if (m_State != SKILL_STATE::WAIT) return;
-
+	auto Player = m_Player.lock()->GetComponent<PlayerComponent>();
+	auto Transform = m_Player.lock()->GetComponent<TransformComponent>();
 	CSoundManager::GetInstance().Play_SE(SE_ID::INVISIBLE, false);
-	m_Player.lock()->StartInvincible(m_duration_time);
+	Player->StartInvincible(m_duration_time);
 	m_State = SKILL_STATE::ACTIVE;
 
-	CVector3 effect_position = m_Player.lock()->GetPosition();
+	CVector3 effect_position = Transform->GetPosition();
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effect_position, CVector3(), m_effect_scale);
 	m_SkillEffect->SetParent(m_Player.lock());
@@ -72,7 +76,7 @@ void CSkillInvisible::ActionEnd(void)
 {
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 }

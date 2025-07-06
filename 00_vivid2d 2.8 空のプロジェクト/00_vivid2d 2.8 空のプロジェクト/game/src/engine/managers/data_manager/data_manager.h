@@ -2,9 +2,8 @@
 
 #include "vivid.h"
 #include <list>
-#include "../unit_manager/unit/player/player.h"
-#include "../unit_manager/unit/unit_id.h"
 #include "../scene_manager/scene/game/game_id.h"
+#include "../../../game/components/player_component/player_id.h"
 
 class CDataManager
 {
@@ -36,7 +35,7 @@ public:
      *
      *  @param[in]  unitID     ユニットID
      */
-    void            PlayerWin(UNIT_ID unitID);
+    void            PlayerWin(PLAYER_ID unitID);
 
     /*!
      *  @brief      参加しているプレイヤーの数を取得
@@ -111,7 +110,7 @@ public:
     /*!
      *  @brief      前回のミニゲームのランキングにプレイヤーを追加
      */
-    void            AddLastGameRanking(UNIT_ID unit_id);
+    void            AddLastGameRanking(PLAYER_ID unit_id);
 
     /*!
      *  @brief      前回のミニゲームのランキングを取得
@@ -119,7 +118,7 @@ public:
      *  @param[in]  num     ユニットのID
      *  @return     ユニットのID
      */
-    UNIT_ID         GetLastGameRanking(int num);
+    PLAYER_ID         GetLastGameRanking(int num);
 
     /*!
      *  @brief      コントローラーの接続数を取得
@@ -163,9 +162,9 @@ private:
     static const int    m_required_wins;                        //!< 必要な勝利数
     static const int    m_min_player_join;                      //!< ゲームに必要な最小の人数
 
-    UNIT_ID             m_LastGameRanking[(int)UNIT_ID::NONE];  //!< 1つ前のゲームのランキング
+    PLAYER_ID             m_LastGameRanking[(int)PLAYER_ID::NONE];  //!< 1つ前のゲームのランキング
     int                 m_NowGameRankingNum;                    //!< 1つ前のゲームのランキングをつけるため、次の順位を格納する変数
-    int                 m_PlayerWins[(int)UNIT_ID::NONE];       //!< プレイヤーの勝利数
+    int                 m_PlayerWins[(int)PLAYER_ID::NONE];       //!< プレイヤーの勝利数
     int                 m_CurrentJoinPlayerNum;                 //!< 現在の参加しているプレイヤー
     GAME_ID             m_CurrentGameID;                        //!< 現在選ばれているゲームのID
 

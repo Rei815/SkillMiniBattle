@@ -10,7 +10,7 @@
  */
 
 #include "vivid.h"
-#include "game_manager/game_manager.h"
+#include "../engine/managers/game_manager/game_manager.h"
 
  /*!
   *  @brief      描画関数

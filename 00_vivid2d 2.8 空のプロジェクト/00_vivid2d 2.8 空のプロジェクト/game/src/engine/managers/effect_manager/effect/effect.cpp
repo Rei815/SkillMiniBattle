@@ -1,6 +1,6 @@
 #include "effect.h"
-#include "..\..\..\..\utility\utility.h"
 #include <EffekseerForDXLib.h>
+#include "../../../components/transform_component/transform_component.h"
 
 IEffect::IEffect()
     : m_Scale(CVector3(25.0f, 25.0f, 25.0f))
@@ -136,7 +136,7 @@ IEffect::
 Update(void)
 {
     if (m_Parent)
-        m_Transform.position = m_Parent->GetPosition();
+        m_Transform.position = m_Parent->GetComponent<TransformComponent>()->GetPosition();
 
     if (!vivid::effekseer::IsEffectPlaying(m_PlayHandle))
         m_ActiveFlag = false;
@@ -223,9 +223,9 @@ Delete()
 }
 
 
-void IEffect::SetParent(std::shared_ptr<IUnit> parent)
+void IEffect::SetParent(std::shared_ptr<CGameObject> gameObject)
 {
-    m_Parent = parent;
+    m_Parent = gameObject;
 }
 
 EFFECT_ID IEffect::GetEffectID(void)

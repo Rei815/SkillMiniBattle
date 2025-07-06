@@ -94,7 +94,7 @@ Finalize(void)
 
 void
 CSkillCursor::
-SetCursor(UNIT_ID player_id, vivid::Vector2 position, float scale)
+SetCursor(PLAYER_ID player_id, vivid::Vector2 position, float scale)
 {
 	SetPlayer(player_id);
 	SetPosition(position);
@@ -103,7 +103,7 @@ SetCursor(UNIT_ID player_id, vivid::Vector2 position, float scale)
 
 void
 CSkillCursor::
-SetCursor(UNIT_ID player_id, vivid::Vector2 position, vivid::Vector2 scale)
+SetCursor(PLAYER_ID player_id, vivid::Vector2 position, vivid::Vector2 scale)
 {
 	SetPlayer(player_id);
 	SetPosition(position);
@@ -112,7 +112,7 @@ SetCursor(UNIT_ID player_id, vivid::Vector2 position, vivid::Vector2 scale)
 
 void
 CSkillCursor::
-SetPlayer(UNIT_ID player_id)
+SetPlayer(PLAYER_ID player_id)
 {
 	m_FileName = m_cursorFileName[(int)player_id];	
 }

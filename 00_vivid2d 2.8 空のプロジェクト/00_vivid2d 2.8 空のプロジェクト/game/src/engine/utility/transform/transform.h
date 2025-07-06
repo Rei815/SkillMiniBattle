@@ -37,14 +37,14 @@ public:
     */
     CTransform& operator=(const CTransform& t);
 
-    CVector3 GetForwardVector(void);
+    CVector3 GetForwardVector(void) const;
 
-    CVector3 GetRightVector(void);
+    CVector3 GetRightVector(void) const;
 
-    CVector3 GetUpVector(void);
+    CVector3 GetUpVector(void) const;
 
-    CVector3 GetRadianRotation(void);
+    CVector3 GetRadianRotation(void) const;
 
 private:
-    CVector3 GetRotateVector(CVector3 vector);
+    CVector3 GetRotateVector(CVector3 vector) const;
 };

@@ -52,7 +52,7 @@ Update(void)
 		while (it != unitList.end())
 		{
 			std::shared_ptr<IUnit> unit = *it;
-			if (unit->GetUnitID() != m_Player.lock()->GetUnitID())
+			if (unit->GetPlayerID() != m_Player.lock()->GetPlayerID())
 				unit->AddAffectedVelocity(CVector3(0.0f, 0.0f, -m_wind_strength));
 
 			++it;

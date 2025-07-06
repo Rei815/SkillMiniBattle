@@ -1,19 +1,36 @@
-#include "fall_gimmick_component.h" // 対応するヘッダーファイル
+#include "fall_gimmick_component.h"
 #include "../../../../engine/components/transform_component/transform_component.h"
 #include "../../../../engine/components/model_component/model_component.h"
 #include "../../../../engine/core/game_object/game_object.h"
-#include "../../../../engine/components/collider_component/collider_component.h"
+#include "../../../../engine/components/collider_component/mesh_collider_component/mesh_collider_component.h"
 
 const	float				FallGimmickComponent::m_fall_speed = 5.0f;
 const	float				FallGimmickComponent::m_return_height = -500.0f;
 const	float				FallGimmickComponent::m_return_time = 3.0f;
-
-FallGimmickComponent::FallGimmickComponent()
+const	std::string		FallGimmickComponent::m_file_name_list[] = {
+    "data\\Models\\Textures\\fall_out_circle.png",
+    "data\\Models\\Textures\\fall_out_cross.png",
+    "data\\Models\\Textures\\fall_out_moon.png",
+    "data\\Models\\Textures\\fall_out_square.png",
+    "data\\Models\\Textures\\fall_out_sun.png",
+    "data\\Models\\Textures\\fall_out_triangle.png",
+};
+FallGimmickComponent::FallGimmickComponent(OBJECT_ID id)
     : GimmickComponent()
     , m_ReturnTime(m_return_time)
     , m_StartHeight(0.0f)
     , m_ReturnTimer(m_return_time)
 {
+    switch (id)
+    {
+    case OBJECT_ID::FALL_FLOOR_CIRCLE:		m_MarkID = MARK_ID::CIRCLE;		break;
+    case OBJECT_ID::FALL_FLOOR_CROSS:		m_MarkID = MARK_ID::CROSS;		break;
+    case OBJECT_ID::FALL_FLOOR_MOON:		m_MarkID = MARK_ID::MOON;		break;
+    case OBJECT_ID::FALL_FLOOR_SQUARE:		m_MarkID = MARK_ID::SQUARE;		break;
+    case OBJECT_ID::FALL_FLOOR_SUN:		    m_MarkID = MARK_ID::SUN;		break;
+    case OBJECT_ID::FALL_FLOOR_TRIANGLE:	m_MarkID = MARK_ID::TRIANGLE;	break;
+    }
+
 }
 
 void FallGimmickComponent::OnAttach(CGameObject* owner)
@@ -27,18 +44,40 @@ void FallGimmickComponent::OnAttach(CGameObject* owner)
         m_StartHeight = transform->GetPosition().y;
     }
 
+    CVector3 rotation = transform->GetRotation();
+    switch (m_MarkID)
+    {
+    case MARK_ID::CIRCLE:   rotation.y = 30; break;
+    case MARK_ID::CROSS:    rotation.y = 30; break;
+    case MARK_ID::MOON:     rotation.y = 90; break;
+    case MARK_ID::SQUARE:   rotation.y = -30;break;
+    case MARK_ID::SUN:      rotation.y = 90; break;
+    case MARK_ID::TRIANGLE: rotation.y = -30;break;
+    case MARK_ID::NONE:
+        break;
+    }
+    transform->SetRotation(rotation);
     // 各タイマーをセットアップ
-    m_Timer.SetUp(m_ReturnTime);
     m_ReturnTimer.SetUp(m_ReturnTime);
+
+    auto FileName = m_file_name_list[static_cast<int>(m_MarkID)];
+    vivid::LoadTexture(FileName);
+
+    int grHandle = vivid::core::FindLoadedTexture(FileName);
+
+    auto model = owner->GetComponent<ModelComponent>();
+    MV1SetTextureGraphHandle(model->GetHandle(), 0, grHandle, true);
+
+    //モデルを半透明に変更
+    DxLib::COLOR_F color = model->GetMaterialColor(0);
+    //アルファ値をクリアし、100を入れる
+    color.a /= 2;
+    model->SetMaterialColor(0, color);
+    owner->SetTag(GameObjectTag::FLOOR);
 }
 
 void FallGimmickComponent::Update(float delta_time, CGameObject* owner)
 {
-    // 毎フレーム呼ばれる更新処理
-
-    // まず親クラスの共通処理（タイマー更新など）を呼ぶ
-    GimmickComponent::Update(delta_time, owner);
-
     // 連携するコンポーネントを取得
     auto transform = owner->GetComponent<TransformComponent>();
     auto model = owner->GetComponent<ModelComponent>(); // 見た目を管理するコンポーネント
@@ -56,12 +95,9 @@ void FallGimmickComponent::Update(float delta_time, CGameObject* owner)
 
     case GIMMICK_STATE::PLAY:
         // 落下処理
-        m_Timer.Update();
-        if (m_Timer.Finished())
+        m_ReturnTimer.Update();
+        if (m_ReturnTimer.Finished())
         {
-            m_Timer.Reset();
-            m_Timer.SetActive(false);
-
             // 下方向に移動させる（フレームレートに依存しないように delta_time を掛ける）
             transform->Translate(CVector3(0.0f, -m_fall_speed * delta_time, 0.0f));
         }
@@ -76,7 +112,7 @@ void FallGimmickComponent::Update(float delta_time, CGameObject* owner)
         // 特定の高さまで落ちたら当たり判定を無効化
         if (currentPos.y <= (m_StartHeight + m_return_height) * 0.5f)
         {
-            if (auto collider = owner->GetComponent<ColliderComponent>()) // 当たり判定コンポーネント
+            if (auto collider = owner->GetComponent<MeshColliderComponent>()) // 当たり判定コンポーネント
             {
                 collider->SetEnabled(false); // 当たり判定をOFFにするメソッドがあると仮定
             }
@@ -85,8 +121,8 @@ void FallGimmickComponent::Update(float delta_time, CGameObject* owner)
         // 復帰地点まで落ちたら、状態をFINISHに移行
         if (currentPos.y <= m_return_height)
         {
-            m_Timer.SetActive(true);
-            m_Timer.SetUp(m_ReturnTime);
+            m_ReturnTimer.SetActive(true);
+            m_ReturnTimer.SetUp(m_ReturnTime);
             m_State = GIMMICK_STATE::FINISH;
         }
         break;
@@ -110,7 +146,7 @@ void FallGimmickComponent::Update(float delta_time, CGameObject* owner)
             }
 
             // 当たり判定を元に戻す
-            if (auto collider = owner->GetComponent<ColliderComponent>())
+            if (auto collider = owner->GetComponent<MeshColliderComponent>())
             {
                 collider->SetEnabled(true);
             }

@@ -1,12 +1,12 @@
 #pragma once
 #include "../../core/component/component.h"
 #include "../../mathematics/mathematics.h"
-
+#include "collision_result.h"
 // 全ての当たり判定コンポーネントの親クラス
 class ColliderComponent : public IComponent
 {
 public:
-    ColliderComponent() = default;
+    ColliderComponent();
     virtual ~ColliderComponent() = default;
 
     /**
@@ -20,6 +20,12 @@ public:
         const CVector3& startPos,
         const CVector3& endPos,
         CVector3& out_hitPosition) const = 0; // = 0 で純粋仮想関数
+
+    // 指定された「球」と自分が当たっているか？
+    virtual bool CheckHitSphere(const CVector3& center, float radius, CollisionResult& out_result) const = 0;
+
+    // 指定された「カプセル」と自分が当たっているか？
+    virtual bool CheckHitCapsule(const CVector3& posA, const CVector3& posB, float radius, CVector3& out_hitPosition) const = 0;
 
     /*
      * @brief 当たり判定が有効かどうかを設定します。

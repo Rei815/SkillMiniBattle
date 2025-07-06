@@ -1,4 +1,5 @@
 #include "skill_video.h"
+#include "../../../../../game/components/player_component/player_id.h"
 
 const int               CSkillVideo::m_height = 400;
 const int               CSkillVideo::m_width = 800;
@@ -36,7 +37,7 @@ CSkillVideo(UI_ID id)
 	, m_CenterPos(vivid::Vector2::ZERO)
 	, m_NowSkillNum(-1)
 {
-	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+	for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
 	{
 		m_Handle[i] = -1;
 		m_HandleSkillID[i] = SKILL_ID::MAX;
@@ -95,7 +96,7 @@ Draw(void)
 {
 	CUI::Draw();
 
-	if (m_NowSkillNum >= 0 && m_NowSkillNum < (int)UNIT_ID::NONE)
+	if (m_NowSkillNum >= 0 && m_NowSkillNum < (int)PLAYER_ID::NONE)
 	{
 		if (GetMovieStateToGraph(m_Handle[m_NowSkillNum]) == 0)
 		{
@@ -149,7 +150,7 @@ void
 CSkillVideo::
 SetSkillVideo(int skill_num, SKILL_ID skill_id)
 {
-	if (skill_num < 0 || skill_num >= (int)UNIT_ID::NONE)
+	if (skill_num < 0 || skill_num >= (int)PLAYER_ID::NONE)
 		return;
 
 	if (m_Handle[skill_num] != -1)
@@ -157,7 +158,7 @@ SetSkillVideo(int skill_num, SKILL_ID skill_id)
 
 	m_HandleSkillID[skill_num] = skill_id;
 
-	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+	for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
 	{
 		if (i == skill_num)
 			continue;
@@ -180,7 +181,7 @@ void
 CSkillVideo::
 ResetSkillVideo()
 {
-	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+	for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
 	{
 		DeleteGraph(m_Handle[i]);
 		m_Handle[i] = -1;

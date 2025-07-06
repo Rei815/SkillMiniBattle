@@ -2,7 +2,7 @@
 #include "controller_id.h"
 #include <vivid.h>
 #include "button_id.h"
-#include "../../unit_manager/unit/player/player.h"
+#include "../../../../game/components/player_component/player_id.h"
 
 class CPlayer;
 class CController
@@ -85,25 +85,25 @@ public:
     /*!
      *  @brief      コントローラーのIDを取得
      */
-    CONTROLLER_ID       GetID();
+    CONTROLLER_ID   GetID();
 
-    void                Vibration();
+    void            Vibration();
 
-    void                SetControllerID(CONTROLLER_ID controller_id);
+    void            SetControllerID(CONTROLLER_ID controller_id);
 
     /*!
-     *  @brief      ユニットIDを取得
+     *  @brief      プレイヤーIDを取得
      *
-     *  @return     ユニットID
+     *  @return     プレイヤーID
      */
-    UNIT_ID         GetUnitID();
+    PLAYER_ID       GetPlayerID();
 
     /*!
      *  @brief      ユニットIDを設定
      *
      *  @param[in]  unit_id    ユニットID
      */
-    void            SetUnitID(UNIT_ID unit_id);
+    void            SetPlayerID(PLAYER_ID unit_id);
 
 
 private:
@@ -118,5 +118,5 @@ private:
     bool                            m_LeftHorizontal;
     bool                            m_LeftVertical;
     vivid::Vector2                  m_Stick;
-    UNIT_ID                         m_UnitID;
+    PLAYER_ID                       m_PlayerID;
 };

@@ -59,7 +59,7 @@ private:
 
     static const float m_defeat_height;
 
-    static const CVector3   m_player_spawnpos_list[(int)UNIT_ID::NONE];
+    static const CVector3   m_player_spawnpos_list[(int)PLAYER_ID::NONE];
     static const CVector3   m_player_default_forward;
 
     static const CVector3   m_camera_position;
@@ -69,6 +69,6 @@ private:
     static const float      m_belt_conveyor_rotate_y;
     static const float      m_belt_conveyor_scale;
 
-    std::shared_ptr<IObject>                m_StageObject;
+    std::shared_ptr<CGameObject>                m_StageObject;
 
 };

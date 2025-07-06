@@ -1,9 +1,8 @@
 #pragma once
 #include "../skill.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../data_manager/data_manager.h"
-#include "../../../gimmick_manager/gimmick/daruma_falldown_gimmick/daruma_falldown_gimmick.h"
 #include "../../../effect_manager/effect_manager.h"
+#include "../../../../../game/components/gimmick_component/daruma_fall_down_gimmick_component/daruma_fall_down_gimmick_component.h"
 
 class CSkillOgreControl : public CSkill
 {
@@ -51,9 +50,9 @@ protected:
     std::shared_ptr<CPlayer>    m_Target;
 
     CDataManager&       dm = CDataManager::GetInstance();
-    CUnitManager&       um = CUnitManager::GetInstance();
+    CObjectManager&     om = CObjectManager::GetInstance();
 
-    std::shared_ptr<CDaruma_FallDownGimmick> m_Gimmick;
+    std::shared_ptr<DarumaFallDownGimmickComponent> m_Gimmick;
     std::shared_ptr<IEffect> m_Effect;
     std::shared_ptr<IEffect> m_SkillEffect;
 };

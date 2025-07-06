@@ -1,8 +1,5 @@
 #include "dodgeball_game.h"
 #include "../../../../data_manager/data_manager.h"
-#include "../../../../unit_manager/unit_manager.h"
-#include "../../../../gimmick_manager/gimmick_manager.h"
-#include "../../../../gimmick_manager/gimmick/dodgeball_gimmick/dodgeball_gimmick.h"
 #include "../../../../camera/camera.h"
 #include "../../../../object_manager/object_manager.h"
 #include "../../../../ui_manager/ui_manager.h"
@@ -12,8 +9,10 @@
 #include "../../../../sound_manager/sound_manager.h"
 
 
-#include "../../../../gimmick_manager/gimmick/fall_gimmick/fall_gimmick.h"
 #include "../../../scene_manager.h"
+#include "../../../../../../game/components/player_component/player_component.h"
+#include "../../../../../../game/components/gimmick_component/dodge_ball_gimmick_component/dodge_ball_gimmick_component.h"
+#include "../../../../../../engine/components/transform_component/transform_component.h"
 
 // 大砲の位置
 // 上下左右の4方向 × 各方向に5つずつ ＝ 20こ
@@ -87,8 +86,9 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 
 	//ステージ生成
 	CTransform StageTr = CTransform(m_default_stage_position, m_default_stage_rotation);
-	m_StageObject = CObjectManager::GetInstance().Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT,StageTr);
-	m_StageObject->SetScale(m_default_stage_scale);
+	m_StageObject = CObjectManager::GetInstance().Create(OBJECT_ID::DODGEBALL_STAGE,StageTr);
+	auto stageTransform = m_StageObject->GetComponent<TransformComponent>();
+	stageTransform->SetScale(CVector3(m_default_stage_scale, m_default_stage_scale, m_default_stage_scale));
 
 	CCamera::GetInstance().Initialize();
 	CCamera::GetInstance().SetPosition(m_camera_position);
@@ -100,14 +100,14 @@ void CDodgeBallGame::Initialize(SCENE_ID scene_id)
 	//プレイヤーのスポーン
 	for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
 	{
-		std::shared_ptr<IUnit> unit = CUnitManager::GetInstance().Create((UNIT_ID)i, m_player_spawnpos_list[i]);
-		std::shared_ptr<CPlayer> Player = dynamic_pointer_cast<CPlayer>(unit);
+		std::shared_ptr<CGameObject> gameObject = CObjectManager::GetInstance().Create(OBJECT_ID::PLAYER, m_player_spawnpos_list[i], (PLAYER_ID)i);
+		auto Player = gameObject->GetComponent<PlayerComponent>();
 		if (Player != nullptr)
 		{
 			Player->SetActionFlag(false);
 			Player->SetForwardVector(m_player_default_forward);
 		}
-		m_EntryList.emplace_back(unit);
+		m_EntryList.emplace_back(gameObject);
 	}
 
 	CSkillManager::GetInstance().SetSkill();
@@ -198,21 +198,25 @@ void CDodgeBallGame::Play(void)
 
 		m_ShotTimer.SetUp(m_NowShotTime);
 
-		std::shared_ptr<IObject> temp = ChooseCannon();
-		if(temp != nullptr)
-			temp->GetGimmick()->SetOperationFlag(true);
+		std::shared_ptr<CGameObject> temp = ChooseCannon();
+		if (temp != nullptr)
+		{
+			auto gimmick = temp->GetComponent<DodgeBallGimmickComponent>();
+			gimmick->SetOperationFlag(true);
+		}
 	}
 
 	m_StageShrinkTimer.Update();
 	if (m_StageShrinkFlg)
 	{
+		auto stageTransform = m_StageObject->GetComponent<TransformComponent>();
 		if (m_StageShrinkTimer.Finished())
 		{
-			m_StageObject->SetScale(0.0f);
+			stageTransform->SetScale(CVector3());
 		}
 		else
 		{
-			m_StageObject->SetScale((m_stage_shrink_time - m_StageShrinkTimer.GetTimer()) / m_stage_shrink_time * m_default_stage_scale);
+			stageTransform->SetScale((m_stage_shrink_time - m_StageShrinkTimer.GetTimer()) / m_stage_shrink_time * m_default_stage_scale);
 		}
 	}
 	else
@@ -239,21 +243,32 @@ void CDodgeBallGame::Finish(void)
 	 */
 void CDodgeBallGame::CheckFinish(void)
 {
-	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
-	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
-	while (it != unitList.end())
+	// 毎フレーム、PlayerComponentを持つオブジェクトを全て取得
+	auto activePlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
+
+	int trulyActivePlayerCount = 0;
+
+	// --- 脱落プレイヤーのチェック ---
+	for (auto& playerObject : activePlayers)
 	{
-		std::shared_ptr<IUnit> unit = (*it);
-		++it;
+		auto playerComp = playerObject->GetComponent<PlayerComponent>();
+		auto transform = playerObject->GetComponent<TransformComponent>();
 
-		if (unit->GetDefeatFlag() == true)	continue;
+		if (!playerComp || !transform) continue;
 
-		if (unit->GetPosition().Length() > m_defeat_distance)
+		if (playerComp->IsDefeated())
 		{
-			AddRanking(unit->GetUnitID());
-			unit->SetDefeatFlag(true);
+			continue;
+		}
 
-			CDataManager::GetInstance().AddLastGameRanking(unit->GetUnitID());
+		trulyActivePlayerCount++;
+
+		if (transform->GetLength() > m_defeat_distance)
+		{
+			AddRanking(playerComp->GetPlayerID());
+			playerComp->SetDefeatFlag(true);
+
+			CDataManager::GetInstance().AddLastGameRanking(playerComp->GetPlayerID());
 
 			//念のため、同一フレームで全滅した場合に一人残すようにする
 			if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentJoinPlayer() - 1)
@@ -261,25 +276,29 @@ void CDodgeBallGame::CheckFinish(void)
 		}
 	}
 
+	//二人以上の場合
 	if (CDataManager::GetInstance().GetCurrentJoinPlayer() > 1)
 	{
+		auto winnerComp = m_EntryList.begin()->get()->GetComponent<PlayerComponent>();
+		//一人が生き残った時に終了
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentJoinPlayer() - 1)
 		{
 			//生き残った一人を勝ちにする
-			CDataManager::GetInstance().PlayerWin((*m_EntryList.begin())->GetUnitID());
+			CDataManager::GetInstance().PlayerWin(winnerComp->GetPlayerID());
 
-			CDataManager::GetInstance().AddLastGameRanking((*m_EntryList.begin())->GetUnitID());
-
+			CDataManager::GetInstance().AddLastGameRanking(winnerComp->GetPlayerID());
 			CGame::SetGameState(GAME_STATE::FINISH);
 		}
 	}
-	else
+	else //一人の場合
 	{
+		auto winnerComp = m_ResultList.begin()->get()->GetComponent<PlayerComponent>();
+
+		//やられたら終了
 		if (m_ResultList.size() == CDataManager::GetInstance().GetCurrentJoinPlayer())
 		{
 			//やられているためリザルトリストから勝ちにする
-			CDataManager::GetInstance().PlayerWin((*m_ResultList.begin())->GetUnitID());
-
+			CDataManager::GetInstance().PlayerWin(winnerComp->GetPlayerID());
 			CGame::SetGameState(GAME_STATE::FINISH);
 		}
 	}
@@ -295,51 +314,34 @@ void CDodgeBallGame::SpawnCannnon(void)
 	Temp.rotation = m_cannon_rot_list[(int)m_NextCannnonDir * m_max_cannnon_count + m_CannonCount];
 
 	//大砲オブジェクトの生成
-	std::shared_ptr<IObject> CannonObject = CObjectManager::GetInstance().Create(OBJECT_ID::CANNON_OBJECT, Temp);
-
-	//大砲ギミックのセット
-	CGimmickManager::GetInstance().Create(GIMMICK_ID::DODGEBALL_GIMMICK, CannonObject);
+	std::shared_ptr<CGameObject> CannonObject = CObjectManager::GetInstance().Create(OBJECT_ID::CANNON, Temp);
 }
 
 
-std::shared_ptr<IObject> CDodgeBallGame::ChooseCannon(void)
+std::shared_ptr<CGameObject> CDodgeBallGame::ChooseCannon(void)
 {
-	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
+	// 毎フレーム、PlayerComponentを持つオブジェクトを全て取得
+	auto allCannons = CObjectManager::GetInstance().GetObjectsWithComponent<DodgeBallGimmickComponent>();
 
-	if (objectList.empty())
-		return nullptr;
-
-	CObjectManager::OBJECT_LIST ReadyCannonObjectList;
-	ReadyCannonObjectList.clear();
-	CObjectManager::OBJECT_LIST::iterator it = objectList.begin();
-
-	while (it != objectList.end())
+	std::vector<std::shared_ptr<CGameObject>> readyCannonsList;
+	for (auto& cannonObject : allCannons)
 	{
-		std::shared_ptr<CDodgeBallGimmick> DodgeBallGimmick = nullptr;
+		auto gimmickComp = cannonObject->GetComponent<DodgeBallGimmickComponent>();
 
-		if ((*it)->GetGimmick() != nullptr)
-			DodgeBallGimmick = dynamic_pointer_cast<CDodgeBallGimmick>((*it)->GetGimmick());
-
-
-		if (DodgeBallGimmick != nullptr)
+		// 条件に合うものだけを絞り込む
+		if (gimmickComp && gimmickComp->GetNowState() == CANNON_STATE::MOVE && !gimmickComp->GetShotFlag())
 		{
-			if (DodgeBallGimmick->GetNowState() == CANNON_STATE::MOVE &&
-				!DodgeBallGimmick->GetShotFlag())
-			{
-				ReadyCannonObjectList.push_back((*it));
-			}
+			readyCannonsList.push_back(cannonObject);
 		}
-
-		++it;
 	}
 
-	if (ReadyCannonObjectList.size() < 1)
+	// 4. 発射可能な大砲が1つもなければ、nullptrを返す
+	if (readyCannonsList.empty())
+	{
 		return nullptr;
+	}
 
-	it = ReadyCannonObjectList.begin();
-	int index = rand() % ReadyCannonObjectList.size();
-
-	std::advance(it, index);
-
-	return *it;
+	// 5. 準備OKのリストから、ランダムに1つ選んで返す
+	int index = rand() % readyCannonsList.size();
+	return readyCannonsList[index];
 }

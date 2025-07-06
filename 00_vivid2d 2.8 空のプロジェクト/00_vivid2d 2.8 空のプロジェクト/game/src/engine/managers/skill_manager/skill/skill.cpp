@@ -1,4 +1,5 @@
 #include "skill.h"
+#include "../../../../game/components/player_component/player_component.h"
 
 const float				CSkill::m_icon_scale = 0.25;
 
@@ -17,7 +18,7 @@ CSkill::CSkill(float duration_time, float cool_time)
 	, m_CoolTime(cool_time)
 	, m_Timer(duration_time)
 	, m_GaugePercent(0)
-	, m_PlayerID(UNIT_ID::NONE)
+	, m_PlayerID(PLAYER_ID::NONE)
 	, m_IconPosition(vivid::Vector2::ZERO)
 	, m_Category(SKILL_CATEGORY::PASSIVE)
 	, m_UiSkillIcon(nullptr)
@@ -35,7 +36,7 @@ CSkill::CSkill(SKILL_CATEGORY category, float duration_time, float cool_time)
 	, m_CoolTime(cool_time)
 	, m_Timer(duration_time)
 	, m_GaugePercent(0)
-	, m_PlayerID(UNIT_ID::NONE)
+	, m_PlayerID(PLAYER_ID::NONE)
 	, m_IconPosition(vivid::Vector2::ZERO)
 	, m_Category(category)
 	, m_UiSkillIcon(nullptr)
@@ -101,7 +102,7 @@ void CSkill::Update(void)
 	}
 
 	//UI更新
-	if (m_Player.lock() != nullptr && !m_Player.lock()->GetDefeatFlag())
+	if (m_Player.lock() != nullptr && !m_Player.lock()->GetComponent<PlayerComponent>()->IsDefeated())
 	{
 		if (m_UiSkillIcon != nullptr)
 		{
@@ -148,7 +149,7 @@ void CSkill::Finalize(void)
 /*!
  *  @brief      プレイヤーのセット
  */
-void CSkill::SetPlayer(std::shared_ptr<CPlayer> player)
+void CSkill::SetPlayer(std::shared_ptr<CGameObject> player)
 {
 	CUIManager& uim = CUIManager::GetInstance();
 	std::shared_ptr<CUI> temp;
@@ -167,10 +168,11 @@ void CSkill::SetPlayer(std::shared_ptr<CPlayer> player)
 	if (m_UiSkillGauge == nullptr)
 		temp->Delete();
 
+	auto PlayerComp = m_Player.lock()->GetComponent<PlayerComponent>();
 	m_Player = player;
-	m_Player.lock()->SetSkill(shared_from_this());
+	PlayerComp->SetSkill(shared_from_this());
 
-	m_PlayerID = m_Player.lock()->GetUnitID();
+	m_PlayerID = PlayerComp->GetPlayerID();
 	m_IconPosition = m_icon_positionList[(int)m_PlayerID];
 
 	if (m_UiSkillIcon != nullptr)

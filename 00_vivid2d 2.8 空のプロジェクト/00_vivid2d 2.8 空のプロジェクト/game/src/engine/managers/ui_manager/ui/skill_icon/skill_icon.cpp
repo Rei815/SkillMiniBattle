@@ -1,5 +1,4 @@
 #include "skill_icon.h"
-#include "../../../unit_manager/unit/unit_id.h"
 
 const int               CSkillIcon::m_height = 600;
 const int               CSkillIcon::m_width = 600;

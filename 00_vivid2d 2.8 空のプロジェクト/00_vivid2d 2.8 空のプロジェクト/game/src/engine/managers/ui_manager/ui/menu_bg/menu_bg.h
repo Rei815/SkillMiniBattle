@@ -3,7 +3,6 @@
 #include "vivid.h"
 #include "..\ui.h"
 #include "../../../skill_manager/skill/skill_id.h"
-#include "../../../unit_manager/unit/unit_id.h"
 
 class CMenuBG : public CUI
 {

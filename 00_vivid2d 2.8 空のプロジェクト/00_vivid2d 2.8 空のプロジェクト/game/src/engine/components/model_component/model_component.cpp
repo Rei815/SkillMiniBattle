@@ -1,5 +1,4 @@
 #include "model_component.h"
-#include "../../game_object/game_object.h"
 #include "../transform_component/transform_component.h"
 #include "../../managers/model_manager/model_manager.h" // ModelManagerを使う
 #include "../../core/game_object/game_object.h"
@@ -38,6 +37,17 @@ int ModelComponent::GetHandle() const
     return m_ModelHandle;
 }
 
+void ModelComponent::SetMaterialColor(int material_index, const DxLib::COLOR_F& color)
+{
+    if (m_ModelHandle == -1) return;
+
+    // 変換処理は不要になり、受け取ったcolorをそのまま渡すだけ！
+    DxLib::MV1SetMaterialDifColor(m_ModelHandle, material_index, color);
+}
+COLOR_F ModelComponent::GetMaterialColor(int material_index)
+{
+    return DxLib::MV1GetMaterialDifColor(m_ModelHandle, material_index);
+}
 void ModelComponent::SetAlpha(float alpha)
 {
     // コンポーネントが自身の状態として透明度を保持

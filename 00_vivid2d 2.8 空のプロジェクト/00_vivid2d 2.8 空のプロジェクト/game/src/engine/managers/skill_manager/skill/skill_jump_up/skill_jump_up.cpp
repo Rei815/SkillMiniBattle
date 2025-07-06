@@ -1,6 +1,5 @@
 #include "skill_jump_up.h"
-#include "../../../unit_manager/unit_manager.h"
-
+#include "../../../../../game/components/player_component/player_component.h"
 const float CSkillJumpUp::m_jump_up_rate = 1.4f;
 
 CSkillJumpUp::CSkillJumpUp(void)
@@ -67,11 +66,11 @@ Finalize(void)
  */
 void
 CSkillJumpUp::
-SetPlayer(std::shared_ptr<CPlayer> player)
+SetPlayer(std::shared_ptr<CGameObject> player)
 {
 	CSkill::SetPlayer(player);
-
-	player->SetJumpPowerRate(m_jump_up_rate);
+	auto playerComp = player->GetComponent<PlayerComponent>();
+	playerComp->SetJumpPowerRate(m_jump_up_rate);
 }
 
 /*!

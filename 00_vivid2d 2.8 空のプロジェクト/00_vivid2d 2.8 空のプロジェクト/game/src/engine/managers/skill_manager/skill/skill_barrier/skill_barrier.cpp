@@ -1,13 +1,12 @@
 #include "skill_barrier.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
 #include "../../../sound_manager/sound_manager.h"
-
+#include "../../../../components/transform_component/transform_component.h"
+#include "../../../object_manager/object_manager.h"
 
 const float CSkillBarrier::m_duration_time = 5.0f;
 const float CSkillBarrier::m_cool_time = 25.0f;
-const std::string CSkillBarrier::m_collider_model_file_name = "data\\Models\\skill_barrier_collider.mv1";
 const float CSkillBarrier::m_effect_scale = 3.0f;
 
 
@@ -43,7 +42,10 @@ Update(void)
 {
 	CSkill::Update();
 
-	m_ColliderModel.Update(m_Player.lock()->GetPosition());
+	auto colliderTransform = m_BarrierCollider->GetComponent<TransformComponent>();
+	auto colliderModel = m_BarrierCollider->GetComponent<ModelComponent>();
+	auto transform = m_Player.lock()->GetComponent<TransformComponent>();
+	transform->SetPosition(transform->GetPosition());
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
@@ -52,8 +54,8 @@ Update(void)
 	case SKILL_STATE::ACTIVE:
 		if (m_Effect != nullptr)
 		{
-			m_Effect->SetPosition(m_Player.lock()->GetPosition());
-			CBulletManager::GetInstance().CheckReflectModel(m_ColliderModel);
+			m_Effect->SetPosition(transform->GetPosition());
+			CBulletManager::GetInstance().CheckReflectModel(colliderModel->GetHandle());
 		}
 		break;
 
@@ -83,17 +85,18 @@ Finalize(void)
 {
 	CSkill::Finalize();
 
-	m_ColliderModel.Finalize();
+	m_BarrierCollider->Finalize();
 }
 
 /*!
  *  @brief      プレイヤーのセット
  */
-void CSkillBarrier::SetPlayer(std::shared_ptr<CPlayer> player)
+void CSkillBarrier::SetPlayer(std::shared_ptr<CGameObject> player)
 {
 	CSkill::SetPlayer(player);
 
-	m_ColliderModel.Initialize(m_collider_model_file_name, m_Player.lock()->GetPosition());
+	auto transform = m_Player.lock()->GetComponent<TransformComponent>();
+	m_BarrierCollider = CObjectManager::GetInstance().Create(OBJECT_ID::SKILL_BARRIER_OBJECT, transform->GetPosition());
 }
 
 /*!
@@ -107,9 +110,10 @@ Action(void)
 		return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::BARRIER, false);
-
-	m_Player.lock()->StartInvincible(m_duration_time);
-	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::BARRIER, m_Player.lock()->GetPosition(), 0.04f);
+	auto transform = m_Player.lock()->GetComponent<TransformComponent>();
+	auto playerComp = m_Player.lock()->GetComponent<PlayerComponent>();
+	playerComp->StartInvincible(m_duration_time);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::BARRIER, transform->GetPosition(), 0.04f);
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO,CVector3(), m_effect_scale);
 	m_SkillEffect->SetParent(m_Player.lock());
 
@@ -127,13 +131,13 @@ ActionEnd(void)
 {
 	if (m_Effect != nullptr)
 	{
-		m_Effect->Delete(false);
+		m_Effect->Delete();
 		m_Effect = nullptr;
 	}
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 }

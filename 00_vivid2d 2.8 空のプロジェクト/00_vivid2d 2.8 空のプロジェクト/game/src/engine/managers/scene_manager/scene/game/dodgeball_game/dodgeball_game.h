@@ -72,7 +72,7 @@ private:
 
     void SpawnCannnon(void);
 
-    std::shared_ptr<IObject> ChooseCannon(void);
+    std::shared_ptr<CGameObject> ChooseCannon(void);
 
 
     static const CVector3   m_cannon_pos_list[];
@@ -86,23 +86,23 @@ private:
     static const float      m_min_shot_time;
     static const float      m_shot_time_acceleration;
 
-    static const float      m_defeat_distance;
+    static const float              m_defeat_distance;
 
-    static const float      m_stage_shrink_time;
-    static const CVector3   m_default_stage_position;
-    static const CVector3   m_default_stage_rotation;
-    static const float      m_default_stage_scale;
+    static const float              m_stage_shrink_time;
+    static const CVector3           m_default_stage_position;
+    static const CVector3           m_default_stage_rotation;
+    static const float              m_default_stage_scale;
 
-    static const CVector3   m_camera_position;
-    static const CVector3   m_camera_direction;
+    static const CVector3           m_camera_position;
+    static const CVector3           m_camera_direction;
 
-    int                 m_CannonCount;
-    CTimer              m_SpawnTimer;
-    CTimer              m_ShotTimer;
-    float               m_NowShotTime;
-    CTimer              m_StageShrinkTimer;
-    bool                m_StageShrinkFlg;
-    std::shared_ptr<IObject>            m_StageObject;
-    CANNON_DIRECTION    m_NextCannnonDir;
-    CSoundManager*      m_bgm;
+    int                             m_CannonCount;
+    CTimer                          m_SpawnTimer;
+    CTimer                          m_ShotTimer;
+    float                           m_NowShotTime;
+    CTimer                          m_StageShrinkTimer;
+    bool                            m_StageShrinkFlg;
+    std::shared_ptr<CGameObject>    m_StageObject;
+    CANNON_DIRECTION                m_NextCannnonDir;
+    CSoundManager*                  m_bgm;
 };

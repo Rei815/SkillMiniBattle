@@ -2,10 +2,11 @@
 
 #include "vivid.h"
 #include <list>
-#include "object/object.h"
-#include "object/object_id.h"
-#include "../gimmick_manager/gimmick/gimmick_id.h"
-#include "..\unit_manager\unit\player\player.h"
+#include "object_id.h"
+#include <memory>
+#include "../../../engine/core/game_object/game_object.h"
+#include "../bullet_manager/bullet/bullet.h"
+
 class CObjectManager
 {
 public:
@@ -42,29 +43,12 @@ public:
      *  @param[in]  id              オブジェクトID
      *  @param[in]  position        位置
      */
-    std::shared_ptr<IObject>    Create(OBJECT_ID id, const CTransform& transform);
-
-    /*!
-     *  @brief      ギミック付与
-     *
-     *  @param[in]  gimmick_id          ギミックのID
-     *  @param[in]  object              オブジェクト
-     */
-    void        SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object);
-
-    /*!
-     *  @brief      ギミック付与
-     *
-     *  @param[in]  gimmick_id          ギミックのID
-     *  @param[in]  object              オブジェクト
-     *  @param[in]  delayFrame          遅延時間
-     */
-    void        SetGimmick(GIMMICK_ID gimmick_id, std::shared_ptr<IObject> object, float time);
+    std::shared_ptr<CGameObject>    Create(OBJECT_ID id, const CTransform& transform, PLAYER_ID player_id = PLAYER_ID::NONE);
 
     /*!
      *  @brief      オブジェクトリスト型
      */
-    using OBJECT_LIST = std::list<std::shared_ptr<IObject>>;
+    using OBJECT_LIST = std::list<std::shared_ptr<CGameObject>>;
 
     /*!
      *  @brief      リスト取得
@@ -73,13 +57,42 @@ public:
      */
     OBJECT_LIST GetList();
 
+    template<typename T>
+    std::vector<std::shared_ptr<CGameObject>> GetObjectsWithComponent()
+    {
+        std::vector<std::shared_ptr<CGameObject>> result;
+        for (auto& obj : m_GameObjects)
+        {
+            if (obj->HasComponent<T>())
+            {
+                result.push_back(obj);
+            }
+        }
+        return result;
+    }
+
+    // 詳細バージョン（衝突位置も取得する）
+    std::shared_ptr<CGameObject> CheckHitLineForAll(
+        const CVector3& start,
+        const CVector3& end,
+        CGameObject* ignore_object, // 自分自身を無視するための引数
+        CVector3& out_hitPosition   // 衝突位置を格納する
+    );
+
+    // シンプルバージョン（当たり判定の有無だけ）
+    std::shared_ptr<CGameObject> CheckHitLineForAll(
+        const CVector3& start,
+        const CVector3& end,
+        CGameObject* ignore_object
+    );
+
     /*!
-     *  @brief      当たったオブジェクトを返す
+     *  @brief      ユニットと弾とのアタリ判定
      *
-     *  @param[in]  player          プレイヤークラス
-     *  @return     オブジェクト(ポインタ)
+     *  @param[in]  bullet  弾クラス
      */
-    std::shared_ptr<IObject>    CheckHitObject(std::shared_ptr<CPlayer> player);
+    void        CheckHitBullet(std::shared_ptr<IBullet> bullet);
+
 private:
 
     /*!
@@ -114,5 +127,5 @@ private:
      */
     CObjectManager& operator=(const CObjectManager& rhs);
 
-    OBJECT_LIST             m_ObjectList;             //!< オブジェクトリスト
+    OBJECT_LIST             m_GameObjects;             //!< オブジェクトリスト
 };

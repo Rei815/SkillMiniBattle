@@ -1,12 +1,13 @@
 #include "entry.h"
 #include "..\..\scene_manager.h"
-#include "..\..\..\game_object.h"
 #include "../../../sound_manager/sound_manager.h"
 #include "../../../controller_manager/controller_manager.h"
 #include "../../../object_manager/object_manager.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../data_manager/data_manager.h"
+#include "../../../ui_manager/ui_manager.h"
+
+#include "../../../../../game/components/player_component/player_id.h"
 
 const   CVector3        CEntry::m_spawn_position = CVector3(0.0f, 100.0f, 0.0f);
 const   float           CEntry::m_respawn_height = -200.0f;
@@ -21,7 +22,7 @@ const vivid::Vector2    CEntry::m_gauge_position = vivid::Vector2(1200, 50);
 const float             CEntry::m_gauge_scale = 0.3f;
 
 CEntry::CEntry(void)
-    : m_NextUnitID(UNIT_ID::PLAYER1)
+    : m_NextUnitID(PLAYER_ID::PLAYER1)
     , m_GameStartTimer()
     , m_HoldStartTimer(m_hold_start_time)
     , m_HoldTimer()
@@ -58,11 +59,11 @@ void CEntry::Initialize(SCENE_ID scene_id)
     om.Initialize();
     cm.Initialize();
 
-    om.Create(OBJECT_ID::DODGEBALL_STAGE_OBJECT, CTransform(m_stage_position));
+    om.Create(OBJECT_ID::DODGEBALL_STAGE, CTransform(m_stage_position));
     const int maxPlayerNum = dm.GetMaxJoinPlayerNum();
     for (int i = 0; i < maxPlayerNum; i++)
     {
-        m_PlayerArray[i] = UNIT_ID::NONE;
+        m_PlayerArray[i] = PLAYER_ID::NONE;
     }
     const int ActiveControllerNum = dm.GetActiveControllerNum();
     for (int i = 0; i < ActiveControllerNum; i++)
@@ -87,12 +88,10 @@ void CEntry::Update(void)
     CControllerManager& cm = CControllerManager::GetInstance();
     CEffectManager::GetInstance().Update();
     CObjectManager& om = CObjectManager::GetInstance();
-    CUnitManager& um = CUnitManager::GetInstance();
     CDataManager& dm = CDataManager::GetInstance();
 
     cm.Update();
     om.Update();
-    um.Update();
 
     m_CanStartFlag = true;
 
@@ -100,12 +99,12 @@ void CEntry::Update(void)
     const int maxPlayerNum = dm.GetMaxJoinPlayerNum();
     for (int i = 0; i < maxPlayerNum; i++)
     {
-        if (m_PlayerArray[i] != UNIT_ID::NONE)
+        if (m_PlayerArray[i] != PLAYER_ID::NONE)
             m_PlayerNum++;
     }
     for (int i = 0; i < m_PlayerNum; i++)
     {
-        if (m_PlayerArray[i] != (UNIT_ID)i)
+        if (m_PlayerArray[i] != (PLAYER_ID)i)
         {
             m_CanStartFlag = false;
             break;
@@ -116,7 +115,7 @@ void CEntry::Update(void)
         m_GameStartTimer.Update();
     CUnitManager::UNIT_LIST unitList = um.GetUnitList();
     CUnitManager::UNIT_LIST entryList = unitList;
-    if (unitList.empty()) m_NextUnitID = UNIT_ID::PLAYER1;
+    if (unitList.empty()) m_NextUnitID = PLAYER_ID::PLAYER1;
     else
     {
         CUnitManager::UNIT_LIST::iterator it = unitList.begin();
@@ -127,7 +126,7 @@ void CEntry::Update(void)
             std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(*it);
             ++it;
             if (player == nullptr) continue;
-            UNIT_ID unitID = player->GetUnitID();
+            UNIT_ID unitID = player->GetPlayerID();
             if (unitID == UNIT_ID::PLAYER1)
                 m_PlayerArray[0] = unitID;
             if (unitID == UNIT_ID::PLAYER2)
@@ -200,7 +199,7 @@ void CEntry::CheckButtonHold(void)
     std::shared_ptr<CController> buttonHoldController = cm.GetSpecifiedButtonHoldController(BUTTON_ID::X);
     if (buttonHoldController)
     {
-        UNIT_ID unitID = buttonHoldController->GetUnitID();
+        UNIT_ID unitID = buttonHoldController->GetPlayerID();
 
         //プレイヤーがいなくなったらタイマーのリセット
         if (unitID == UNIT_ID::NONE)
@@ -229,7 +228,7 @@ void CEntry::CheckButtonHold(void)
             if (m_PlayerNum == 1)
             {
                 std::shared_ptr<CController> dummy = cm.GetController(CONTROLLER_ID::DUMMY);
-                dummy->SetUnitID(m_NextUnitID);
+                dummy->SetPlayerID(m_NextUnitID);
 
                 CUnitManager::GetInstance().Create(m_NextUnitID, m_spawn_position);
                 m_PlayerNum++;
@@ -245,13 +244,13 @@ void CEntry::CheckButtonHold(void)
     for (int i = 0; i < 5; i++)
     {
         controller = cm.GetController((CONTROLLER_ID)i);
-        UNIT_ID unitID = controller->GetUnitID();
+        UNIT_ID unitID = controller->GetPlayerID();
 
         //プレイヤーを操作できるコントローラーが長押ししていない
         if (!controller->GetButtonHold(BUTTON_ID::X) && unitID != UNIT_ID::NONE)
         {
             resetGaugeFlag = true;
-            m_HoldTimer[(int)controller->GetUnitID()].Reset();
+            m_HoldTimer[(int)controller->GetPlayerID()].Reset();
         }
         if (controller->GetButtonHold(BUTTON_ID::X) && unitID != UNIT_ID::NONE)
         {
@@ -270,11 +269,11 @@ void CEntry::CheckButtonDown(void)
     std::shared_ptr<CController> buttonDownController = cm.GetSpecifiedButtonDownController(BUTTON_ID::X);
     if (buttonDownController)
     {
-        if (buttonDownController->GetUnitID() == UNIT_ID::NONE && m_NextUnitID != UNIT_ID::NONE)
+        if (buttonDownController->GetPlayerID() == UNIT_ID::NONE && m_NextUnitID != UNIT_ID::NONE)
         {
             m_WasPressd = true;
-            buttonDownController->SetUnitID(m_NextUnitID);
-            CUnitManager::GetInstance().Create(m_NextUnitID, m_spawn_position);
+            buttonDownController->SetPlayerID(m_NextUnitID);
+            CObjectManager::GetInstance().Create(m_NextUnitID, m_spawn_position);
             m_PlayerJoinUI->SetPlayer(m_NextUnitID, true);
         }
     }
@@ -290,7 +289,7 @@ void CEntry::CheckButtonUp(void)
 
     if (buttonUpController)
     {
-        UNIT_ID unitID = buttonUpController->GetUnitID();
+        UNIT_ID unitID = buttonUpController->GetPlayerID();
         if (unitID == UNIT_ID::NONE || m_WasPressd)
         {
             m_WasPressd = false;
@@ -301,9 +300,9 @@ void CEntry::CheckButtonUp(void)
         //ボタンを離した時にm_exit_timeより長押ししてない場合プレイヤーを退出させる
         if (timer < m_exit_time)
         {
-            UNIT_ID deleteUnitID = buttonUpController->GetUnitID();
+            UNIT_ID deleteUnitID = buttonUpController->GetPlayerID();
             um.Delete(deleteUnitID);
-            buttonUpController->SetUnitID(UNIT_ID::NONE);
+            buttonUpController->SetPlayerID(UNIT_ID::NONE);
             m_PlayerArray[(int)deleteUnitID] = UNIT_ID::NONE;
             m_PlayerJoinUI->SetPlayer(deleteUnitID, false);
         }

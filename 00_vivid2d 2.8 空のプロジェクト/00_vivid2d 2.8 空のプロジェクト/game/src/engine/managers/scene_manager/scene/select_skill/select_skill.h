@@ -5,13 +5,12 @@
 #include "../scene.h"
 #include "../game/game_id.h"
 #include "../../../skill_manager/skill/skill_id.h"
-#include "../../../unit_manager/unit/unit_id.h"
 #include "../../../ui_manager/ui/skill_icon/skill_icon.h"
 #include "../../../ui_manager/ui/skill_cursor/skill_cursor.h"
 #include "../../../ui_manager/ui/skill_infomation/skill_infomation.h"
 #include "../../../ui_manager/ui/skill_video/skill_video.h"
 #include "../../../ui_manager/ui/scene_ui_parent/scene_ui_parent.h"
-
+#include "../../../../utility/timer/timer.h"
 class CSelectSkill
     : public IScene
 {
@@ -84,15 +83,15 @@ private:
     static const vivid::Vector2     m_video_poster_scale;
     static const vivid::Vector2     m_bg_position;
 
-    SKILL_ID                        m_ChooseSkillID[(int)UNIT_ID::NONE];
-    std::shared_ptr<CSkillIcon>     m_SkillSelectIcon[(int)UNIT_ID::NONE];
+    SKILL_ID                        m_ChooseSkillID[(int)PLAYER_ID::NONE];
+    std::shared_ptr<CSkillIcon>     m_SkillSelectIcon[(int)PLAYER_ID::NONE];
 
     std::list<std::shared_ptr<CSkillCursor>>        m_SkillCursorList;
 
     std::list<int>                      m_CursorPosNumList;
     int                                 m_NowCursorPosNum;
 
-    UNIT_ID                             m_CursorID[(int)UNIT_ID::NONE];
+    PLAYER_ID                           m_CursorID[(int)PLAYER_ID::NONE];
     int                                 m_NowCursorID_Num;
 
     std::shared_ptr<CSkillCursor>       m_SkillSelectCursor;
@@ -102,7 +101,7 @@ private:
 
     std::shared_ptr<CSkillVideo>        m_SkillVideo;
 
-    GAME_ID                         m_GameID;
+    GAME_ID                             m_GameID;
     std::shared_ptr<CSceneUIParent>     m_SceneUIParent;
 
 };

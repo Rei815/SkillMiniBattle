@@ -2,9 +2,7 @@
 
 #include "vivid.h"
 #include "effect_id.h"
-#include "../../../../mathematics/mathematics.h"
-#include "../../../../utility/utility.h"
-#include "../../unit_manager/unit/unit.h"
+#include "../../../core/game_object/game_object.h"
 
 class IEffect
 {
@@ -156,7 +154,7 @@ public:
      *
      *  @param[in]  parent  親
      */
-    void            SetParent(std::shared_ptr<IUnit> unit);
+    void            SetParent(std::shared_ptr<CGameObject> gameObject);
 
     /*!
      *  @brief      エフェクトID取得
@@ -173,21 +171,21 @@ public:
     int             GetEffectHandle(void);
 
 protected:
-    int			            m_PlayHandle;   //!< ハンドル
-    CTransform              m_Transform;    //!< トランスフォーム
-    std::string             m_FileName;     //!< エフェクトのファイル名
-    CVector3                m_Scale;        //!< 拡大率
-    bool                    m_ActiveFlag;   //!< アクティブフラグ
-    int                     m_Width;        //!< 幅
-    int                     m_Height;       //!< 高さ
-    vivid::Vector2          m_Position2D;   //!< 位置
-    unsigned int            m_Color;        //!< 色
-    vivid::Vector2          m_Anchor;       //!< 基準点
-    vivid::Rect             m_Rect;         //!< 読み込み範囲
-    vivid::Vector2          m_Scale2D;      //!< 2Dの拡大率
-    float                   m_Rotation;     //!< 回転値
-    std::shared_ptr<IUnit>  m_Parent;       //!< 親
-    EFFECT_ID               m_EffectID;     //!< エフェクトID
-    float                   m_Speed;        //!< 再生速度
-    bool                    m_StopFlag;     //!< 再生停止フラグ
+    int			                    m_PlayHandle;   //!< ハンドル
+    CTransform                      m_Transform;    //!< トランスフォーム
+    std::string                     m_FileName;     //!< エフェクトのファイル名
+    CVector3                        m_Scale;        //!< 拡大率
+    bool                            m_ActiveFlag;   //!< アクティブフラグ
+    int                             m_Width;        //!< 幅
+    int                             m_Height;       //!< 高さ
+    vivid::Vector2                  m_Position2D;   //!< 位置
+    unsigned int                    m_Color;        //!< 色
+    vivid::Vector2                  m_Anchor;       //!< 基準点
+    vivid::Rect                     m_Rect;         //!< 読み込み範囲
+    vivid::Vector2                  m_Scale2D;      //!< 2Dの拡大率
+    float                           m_Rotation;     //!< 回転値
+    std::shared_ptr<CGameObject>    m_Parent;       //!< 親
+    EFFECT_ID                       m_EffectID;     //!< エフェクトID
+    float                           m_Speed;        //!< 再生速度
+    bool                            m_StopFlag;     //!< 再生停止フラグ
 };

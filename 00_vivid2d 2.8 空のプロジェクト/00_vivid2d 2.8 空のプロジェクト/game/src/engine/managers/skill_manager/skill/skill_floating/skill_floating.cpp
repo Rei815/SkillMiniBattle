@@ -1,8 +1,8 @@
 #include "skill_floating.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../sound_manager/sound_manager.h"
-
+#include "../../../../components/transform_component/transform_component.h"
+#include "../../../../../game/components/player_component/player_component.h"
 const float		CSkillFloating::m_duration_time = 5.0f;
 const float		CSkillFloating::m_cool_time = 10.0f;
 const CVector3	CSkillFloating::m_scale = CVector3(4.0f, 1.0f, 4.0f);
@@ -52,8 +52,8 @@ Update(void)
 
 	if (m_Effect != nullptr)
 	{
-		CVector3 effectPosition = m_Player.lock()->GetPosition();
-		effectPosition.y -= m_Player.lock()->GetHeight() / 2;
+		CVector3 effectPosition = m_Player.lock()->GetComponent<TransformComponent>()->GetPosition();
+		effectPosition.y -= m_Player.lock()->GetComponent<PlayerComponent>()->GetHeight() / 2;
 		m_Effect->SetPosition(effectPosition);
 	}
 
@@ -92,16 +92,17 @@ CSkillFloating::
 Action()
 {
 	if (m_State != SKILL_STATE::WAIT) return;
-
+	auto player = m_Player.lock()->GetComponent<PlayerComponent>();
+	auto transform = m_Player.lock()->GetComponent<TransformComponent>();
 	CSoundManager::GetInstance().Play_SE(SE_ID::FLOATING, false);
-	CVector3 velocity = m_Player.lock()->GetVelocity();
+	CVector3 velocity = player->GetVelocity();
 
-	m_Player.lock()->SetGravity(CVector3::ZERO);
-	m_Player.lock()->SetVelocity(CVector3(velocity.x, 0.1f, velocity.z));
-	m_Player.lock()->SetParent(nullptr);
-	m_Player.lock()->SetIsGround(false);
-	CVector3 effectPosition = m_Player.lock()->GetPosition();
-	effectPosition.y -= m_Player.lock()->GetHeight() / 2;
+	player->SetGravity(CVector3::ZERO);
+	player->SetVelocity(CVector3(velocity.x, 0.1f, velocity.z));
+	player->SetGroundObject(nullptr);
+	player->SetIsGround(false);
+	CVector3 effectPosition = transform->GetPosition();
+	effectPosition.y -= player->GetHeight() / 2;
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::FLOATING, effectPosition, CVector3::UP, m_scale);
 	m_State = SKILL_STATE::ACTIVE;
@@ -118,15 +119,17 @@ void
 CSkillFloating::
 ActionEnd(void)
 {
-	m_Player.lock()->SetGravity(m_Player.lock()->GetDefaultGravity());
+	auto player = m_Player.lock()->GetComponent<PlayerComponent>();
+
+	player->SetGravity(player->GetDefaultGravity());
 	if (m_Effect != nullptr )
 	{
-		m_Effect->Delete(false);
+		m_Effect->Delete();
 		m_Effect = nullptr;
 	}
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 

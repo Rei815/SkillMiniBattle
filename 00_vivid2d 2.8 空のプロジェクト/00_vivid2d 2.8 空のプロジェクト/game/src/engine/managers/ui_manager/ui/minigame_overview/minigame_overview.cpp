@@ -1,5 +1,6 @@
 #include "minigame_overview.h"
 #include "../../../data_manager/data_manager.h"
+#include "../../ui_manager.h"
 
 const vivid::Vector2    CMiniGameOverView::m_position = vivid::Vector2(120, 540);
 const vivid::Vector2    CMiniGameOverView::m_bg_position = vivid::Vector2(300, 450);

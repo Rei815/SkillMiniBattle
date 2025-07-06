@@ -41,12 +41,12 @@ void CDataManager::Finalize(void)
 {
     for (int i = 0; i < m_CurrentJoinPlayerNum; i++)
     {
-        m_LastGameRanking[i] = UNIT_ID::NONE;
+        m_LastGameRanking[i] = PLAYER_ID::NONE;
         m_PlayerWins[i] = 0;
     }
 }
 
-void CDataManager::PlayerWin(UNIT_ID unitID)
+void CDataManager::PlayerWin(PLAYER_ID unitID)
 {
     if (0 > (int)unitID || (int)unitID > 4) return;
 
@@ -103,15 +103,15 @@ int CDataManager::GetActiveControllerNum()
 
 void CDataManager::ResetLastGameRanking()
 {
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
-        m_LastGameRanking[i] = (UNIT_ID)((m_CurrentJoinPlayerNum - 1) - i);
+        m_LastGameRanking[i] = (PLAYER_ID)((m_CurrentJoinPlayerNum - 1) - i);
     }
 
     m_NowGameRankingNum = m_CurrentJoinPlayerNum - 1;
 }
 
-void CDataManager::AddLastGameRanking(UNIT_ID unit_id)
+void CDataManager::AddLastGameRanking(PLAYER_ID unit_id)
 {
     //引数が範囲外でないかのチェック
     if ((int)unit_id >= m_CurrentJoinPlayerNum)
@@ -139,11 +139,11 @@ void CDataManager::AddLastGameRanking(UNIT_ID unit_id)
     m_NowGameRankingNum--;
 }
 
-UNIT_ID CDataManager::GetLastGameRanking(int num)
+PLAYER_ID CDataManager::GetLastGameRanking(int num)
 {
     //引数が適切でない場合
-    if (num < 0 || (int)UNIT_ID::NONE <= num)
-        return UNIT_ID::NONE;
+    if (num < 0 || (int)PLAYER_ID::NONE <= num)
+        return PLAYER_ID::NONE;
 
     //引数に問題がない場合
     else
@@ -162,7 +162,7 @@ CDataManager::
 CDataManager(void)
     : m_PlayerWins()
     , m_CurrentJoinPlayerNum(m_min_player_join)
-    , m_LastGameRanking{UNIT_ID::NONE}
+    , m_LastGameRanking{ PLAYER_ID::NONE}
     , m_NowGameRankingNum(1)
 {
     ResetLastGameRanking();

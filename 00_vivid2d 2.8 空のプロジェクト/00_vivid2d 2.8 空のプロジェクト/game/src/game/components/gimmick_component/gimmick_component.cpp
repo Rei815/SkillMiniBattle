@@ -1,16 +1,11 @@
 #include "gimmick_component.h" // 対応するヘッダーファイル
+#include "../../../engine/core/game_object/game_object.h"
 
 GimmickComponent::GimmickComponent()
     : m_State(GIMMICK_STATE::WAIT)
-    , m_OperationFlag(false)
     , m_Timer()
 {
     // IComponentのコンストラクタで m_IsActive は true に初期化される想定
-}
-
-void GimmickComponent::OnAttach(CGameObject* owner)
-{
-    // 派生クラスで具体的な初期化を行うため、基底クラスでは何もしない
 }
 
 void GimmickComponent::Update(float delta_time, CGameObject* owner)
@@ -31,7 +26,7 @@ void GimmickComponent::SetState(GIMMICK_STATE state)
     m_State = state;
 }
 
-void GimmickComponent::SetOperationFlag(bool flag)
+void GimmickComponent::SetTimer(float time)
 {
-    m_OperationFlag = flag;
+    m_Timer.SetUp(time);
 }

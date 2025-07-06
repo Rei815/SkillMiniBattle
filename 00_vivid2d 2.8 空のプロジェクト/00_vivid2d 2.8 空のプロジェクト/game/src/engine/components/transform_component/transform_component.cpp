@@ -31,6 +31,13 @@ void TransformComponent::SetScale(const CVector3& scale)
     m_isDirty = true;
 }
 
+void TransformComponent::SetScale(float scale)
+{
+    m_Transform.scale *= scale;
+    m_isDirty = true;
+
+}
+
 void TransformComponent::Translate(const CVector3& offset)
 {
     // 現在位置に、オフセット（移動量）を加算する
@@ -46,6 +53,11 @@ const CMatrix& TransformComponent::GetWorldMatrix() const
         RecalculateWorldMatrix();
     }
     return m_worldMatrix;
+}
+
+float TransformComponent::GetLength() const
+{
+    return CVector3::Length(m_Transform.position);
 }
 
 void TransformComponent::RecalculateWorldMatrix() const

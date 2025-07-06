@@ -3,8 +3,8 @@
 #include "vivid.h"
 #include "..\ui.h"
 #include "..\..\..\scene_manager\scene\game\game_id.h"
-#include "..\..\..\..\..\primitive\primitive.h"
 #include "../../../animation_manager/animation/animation.h"
+#include "../../../../primitive/plane/plane.h"
 
 class CPlaneGameImage : public CUI
 {

@@ -3,7 +3,7 @@
 #include "vivid.h"
 #include "..\ui.h"
 #include "../../../skill_manager/skill/skill_id.h"
-#include "../../../unit_manager/unit/unit_id.h"
+#include "../../../../../game/components/player_component/player_id.h"
 
 class CSkillVideo : public CUI
 {
@@ -60,8 +60,8 @@ private:
     static const vivid::Vector2     m_default_position; //!< À•W
 
     static const std::string        m_skill_video_file_name[];
-    int                             m_Handle[(int)UNIT_ID::NONE];
-    SKILL_ID                        m_HandleSkillID[(int)UNIT_ID::NONE];
+    int                             m_Handle[(int)PLAYER_ID::NONE];
+    SKILL_ID                        m_HandleSkillID[(int)PLAYER_ID::NONE];
 
     vivid::Vector2  m_CenterPos;
     int             m_NowSkillNum;

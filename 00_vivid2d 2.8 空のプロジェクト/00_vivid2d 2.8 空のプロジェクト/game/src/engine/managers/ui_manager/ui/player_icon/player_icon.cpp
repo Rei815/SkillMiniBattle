@@ -43,7 +43,7 @@ void CPlayerIcon::Finalize(void)
 {
 }
 
-void CPlayerIcon::SetPlayerID(UNIT_ID unit_id)
+void CPlayerIcon::SetPlayerID(PLAYER_ID unit_id)
 {
 	m_PlayerID = (int)unit_id;
 }

@@ -1,7 +1,6 @@
 #include "game_manager.h"
-#include "game_object\game_object.h"
-#include "game_object/sound_manager/sound_manager.h"
-#include "game_object/scene_manager/scene_manager.h"
+#include "../sound_manager/sound_manager.h"
+#include "../scene_manager/scene_manager.h"
 
  /*
   *  インスタンスの取得

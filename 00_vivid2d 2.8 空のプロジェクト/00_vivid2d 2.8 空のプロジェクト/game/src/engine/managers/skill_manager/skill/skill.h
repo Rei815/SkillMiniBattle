@@ -1,11 +1,13 @@
 #pragma once
-#include "../../unit_manager/unit/player/player.h"
 #include "../../ui_manager/ui_manager.h"
 #include "../../ui_manager/ui/skill_cursor/skill_cursor.h"
 #include "../../ui_manager/ui/skill_gauge/skill_gauge.h"
 #include "../../ui_manager/ui/skill_icon/skill_icon.h"
 #include "skill_id.h"
 #include "../../sound_manager/sound_manager.h"
+#include "../../../utility/timer/timer.h"
+#include "../../../../game/components/player_component/player_id.h"
+#include "../../../core/game_object/game_object.h"
 
 class CPlayer;
 
@@ -46,7 +48,7 @@ public:
     /*!
      *  @brief      プレイヤーのセット
      */
-    virtual void    SetPlayer(std::shared_ptr<CPlayer> player);
+    virtual void    SetPlayer(std::shared_ptr<CGameObject> player);
 
     /*!
      *  @brief      アクション呼び出し
@@ -84,7 +86,7 @@ protected:
     static const vivid::Vector2     m_icon_positionList[];
     static const float              m_icon_scale;
 
-    std::weak_ptr<CPlayer>          m_Player;
+    std::weak_ptr<CGameObject>      m_Player;
 
     SKILL_CATEGORY      m_Category;
     SKILL_ID            m_SkillID;
@@ -100,7 +102,7 @@ protected:
     CTimer              m_Timer;
 
     float               m_GaugePercent;
-    UNIT_ID             m_PlayerID;
+    PLAYER_ID           m_PlayerID;
     SKILL_STATE         m_State;
     SE_ID               m_Sound;
 };

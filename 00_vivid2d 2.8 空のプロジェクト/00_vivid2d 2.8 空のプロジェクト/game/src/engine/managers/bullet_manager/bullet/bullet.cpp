@@ -1,18 +1,15 @@
 
 #include "bullet.h"
-#include "..\..\..\..\utility\utility.h"
 #include "../../launcher/launcher.h"
-#include "../../unit_manager/unit_manager.h"
-#include "../../../../component/model_component/model_component.h"
-#include "../../../../component/transform_component/transform_component.h"
+#include "../../../components/model_component/model_component.h"
+#include "../../../components/transform_component/transform_component.h"
 const float           IBullet::m_life_time = 4.0f;
 
 /*
  *  コンストラクタ
  */
 IBullet::IBullet(COLLIDER_ID collider_id)
-    : m_Category(UNIT_CATEGORY::UNKNOWN)
-    , m_Velocity(CVector3(CVector3::ZERO))
+    : m_Velocity(CVector3(CVector3::ZERO))
     , m_Color(0xffffffff)
     , m_LifeTimer(0)
     , m_ColliderID(collider_id)
@@ -31,14 +28,12 @@ IBullet::~IBullet(void)
 /*
  *  初期化
  */
-void IBullet::Initialize(UNIT_CATEGORY category, CShot::BulletParameters* bulletParams, const CVector3& position, const CVector3& direction)
+void IBullet::Initialize(FACTION_CATEGORY category, CShot::BulletParameters* bulletParams, const CVector3& position, const CVector3& direction)
 {
-    m_Category = category;
     m_Velocity = direction * bulletParams->speed;
-    m_Color = (category == UNIT_CATEGORY::PLAYER ? m_player_color : m_enemy_color);
     m_GameObject = std::make_shared<CGameObject>();
     m_GameObject->AddComponent<ModelComponent>(MODEL_ID::BULLET);
-
+    m_Category = category;
     // TransformComponentを取得し、初期設定を行う
     if (auto transform = m_GameObject->GetComponent<TransformComponent>())
     {
@@ -48,12 +43,12 @@ void IBullet::Initialize(UNIT_CATEGORY category, CShot::BulletParameters* bullet
     m_LifeTimer.SetUp(m_life_time);
 }
 
-void IBullet::Initialize(UNIT_CATEGORY category, const CVector3& position, const CVector3& direction)
+void IBullet::Initialize(FACTION_CATEGORY category, const CVector3& position, const CVector3& direction)
 {
-    m_Category = category;
     m_Velocity = direction;
-    m_Color = (category == UNIT_CATEGORY::PLAYER ? m_player_color : m_enemy_color);
     m_GameObject = std::make_shared<CGameObject>();
+    m_Category = category;
+
     /*モデルコンポーネントは自身で設定*/
 
     //nullチェック
@@ -139,10 +134,7 @@ void IBullet::Delete()
     m_GameObject->Delete();
 }
 
-/*
- *  ユニット識別子取得
- */
-UNIT_CATEGORY IBullet::GetBulletCategory(void)
+FACTION_CATEGORY IBullet::GetBulletCategory(void)
 {
     return m_Category;
 }
@@ -192,7 +184,7 @@ int IBullet::GetModelHandle(void) const
     // ModelComponentはほぼ必ず存在するはずだが、念のためnullチェックを行う
     if (auto modelComp = m_GameObject->GetComponent<ModelComponent>())
     {
-        return modelComp->GetModelHandle();
+        return modelComp->GetHandle();
     }
 
     return VIVID_DX_ERROR;
