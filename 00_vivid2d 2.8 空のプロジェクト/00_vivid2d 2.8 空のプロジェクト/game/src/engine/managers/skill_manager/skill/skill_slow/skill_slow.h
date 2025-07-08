@@ -1,7 +1,8 @@
 #pragma once
 #include "../skill.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../data_manager/data_manager.h"
+#include "../../../effect_manager/effect/effect.h"
+#include "../../../object_manager/object_manager.h"
 
 class CSkillSlow : public CSkill
 {
@@ -50,5 +51,5 @@ protected:
     std::shared_ptr<IEffect> m_DebuffEffect;
     std::list<std::shared_ptr<IEffect>> m_EffectList;
     CDataManager&       dm = CDataManager::GetInstance();
-    CUnitManager&       um = CUnitManager::GetInstance();
+    CObjectManager&     om = CObjectManager::GetInstance();
 };

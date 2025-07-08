@@ -1,8 +1,6 @@
 #pragma once
 #include "../skill.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect/effect.h"
-
 enum class GRAVITY_AFFECTED
 {
     NONE,
@@ -55,9 +53,9 @@ protected:
     static const float  m_effect_scale;
     static const int    m_se_volume;
 
-    GRAVITY_AFFECTED m_PlayerAffectedGravity[(int)UNIT_ID::NONE];
+    GRAVITY_AFFECTED m_PlayerAffectedGravity[(int)PLAYER_ID::NONE];
 
     std::shared_ptr<IEffect> m_Effect;
     std::shared_ptr<IEffect> m_SkillEffect;
-    std::shared_ptr<IEffect> m_PlayerAffectedEffect[(int)UNIT_ID::NONE];
+    std::shared_ptr<IEffect> m_PlayerAffectedEffect[(int)PLAYER_ID::NONE];
 };

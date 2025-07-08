@@ -1,6 +1,4 @@
 #include "game_bg.h"
-#include "../../../unit_manager/unit_manager.h"
-
 const vivid::Vector2    CGameBG::m_position = vivid::Vector2(0, 0);
 const int    CGameBG::m_width = 1280;
 const int    CGameBG::m_height = 780;

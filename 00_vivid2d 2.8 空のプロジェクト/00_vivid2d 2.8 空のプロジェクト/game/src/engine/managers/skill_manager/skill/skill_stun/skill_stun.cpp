@@ -1,5 +1,8 @@
 #include "skill_stun.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../../../game/components/player_component/player_component.h"
+#include "../../../../../engine/components/transform_component/transform_component.h"
+#include "../../../effect_manager/effect_manager.h"
 
 const float CSkillStun::m_cool_time = 20.0f;
 const float CSkillStun::m_duration_time = 2.0f;
@@ -57,26 +60,29 @@ void CSkillStun::Action()
 		return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::STUN, false);
-	std::list<std::shared_ptr<CPlayer>>TopPlayerList;
+	std::list<std::shared_ptr<CGameObject>>TopPlayerList;
+	auto allPlayers = om.GetObjectsWithComponent<PlayerComponent>();
+	TopPlayerList.emplace_back(allPlayers.begin());
 
-	TopPlayerList.emplace_back(um.GetPlayer(UNIT_ID(0)));
-
-	for (int i = 1; i < dm.GetCurrentJoinPlayer(); i++)
+	for (auto& targetPlayerObject : allPlayers)
 	{
-		if (um.GetPlayer(UNIT_ID(i))->GetPosition().x > (*TopPlayerList.begin())->GetPosition().x)
+		if (auto targetComp = targetPlayerObject->GetComponent<TransformComponent>())
 		{
-			TopPlayerList.clear();
-			TopPlayerList.emplace_back(um.GetPlayer(UNIT_ID(i)));
+			if (targetComp->GetPosition().x > TopPlayerList.begin()->get()->GetComponent<TransformComponent>()->GetPosition().x)
+			{
+				TopPlayerList.clear();
+				TopPlayerList.emplace_back(targetPlayerObject);
 
-		}
-		else if (um.GetPlayer(UNIT_ID(i))->GetPosition().x == (*TopPlayerList.begin())->GetPosition().x)
-		{
-			TopPlayerList.emplace_back(um.GetPlayer(UNIT_ID(i)));
+			}
+			else if (targetComp->GetPosition().x == TopPlayerList.begin()->get()->GetComponent<TransformComponent>()->GetPosition().x)
+			{
+				TopPlayerList.emplace_back(targetPlayerObject);
+			}
 		}
 	}
 
 	int TargetPlayer = rand() % TopPlayerList.size();
-	std::list<std::shared_ptr<CPlayer>>::iterator it = TopPlayerList.begin();
+	std::list<std::shared_ptr<CGameObject>>::iterator it = TopPlayerList.begin();
 	std::next(it, TargetPlayer);
 
 	m_Target = *it;
@@ -84,10 +90,10 @@ void CSkillStun::Action()
 	if (m_Target == m_Player.lock())
 		return;
 
-	m_Target->SetActionFlag(false);
+	m_Target->GetComponent<PlayerComponent>()->SetActionFlag(false);
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
-	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::OGRE_CONTROL, m_Target->GetPosition(), CVector3(), 2.0f);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::OGRE_CONTROL, m_Target->GetComponent<TransformComponent>()->GetPosition(), CVector3(), 2.0f);
 
 	m_SkillEffect->SetParent(m_Player.lock());
 	m_State = SKILL_STATE::ACTIVE;
@@ -97,19 +103,19 @@ void CSkillStun::ActionEnd()
 {
 	if (m_Target != nullptr)
 	{
-		m_Target->SetActionFlag(true);
+		m_Target->GetComponent<PlayerComponent>()->SetActionFlag(true);
 		m_Target = nullptr;
 	}
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 
 	if (m_Effect != nullptr)
 	{
-		m_Effect->Delete(false);
+		m_Effect->Delete();
 		m_Effect = nullptr;
 	}
 }

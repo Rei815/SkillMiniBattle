@@ -1,8 +1,11 @@
 #include "skill_spawn_wall.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../object_manager/object_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../../components/model_component/model_component.h"
+#include "../../../../components/transform_component/transform_component.h"
+#include "../../../effect_manager/effect_manager.h"
+#include "../../../../../game/components/player_component/player_component.h"
 
 const float CSkillSpawnWall::m_cool_time = 15.0f;
 const float CSkillSpawnWall::m_duration_time = 5.0f;
@@ -49,7 +52,7 @@ Update(void)
 
 	case SKILL_STATE::ACTIVE:
 		if (m_WallObj != nullptr)
-			CBulletManager::GetInstance().CheckReflectModel(m_WallObj->GetModelHandle());
+			CBulletManager::GetInstance().CheckReflectModel(m_WallObj->GetComponent<ModelComponent>()->GetHandle());
 		break;
 
 	case SKILL_STATE::COOLDOWN:
@@ -97,16 +100,16 @@ Action(void)
 	CTransform SpawnTr;
 	
 	//スポーンするオブジェクトの座標
-	SpawnTr.position = m_Player.lock()->GetPosition() + m_Player.lock()->GetForwardVector() * m_wall_spawn_distance;
+	SpawnTr.position = m_Player.lock()->GetComponent<TransformComponent>()->GetPosition() + m_Player.lock()->GetComponent<PlayerComponent>()->GetForwardVector() * m_wall_spawn_distance;
 	SpawnTr.position.y = m_wall_spawn_height;
 	//スポーンするオブジェクトの向き
-	CVector3 TempVector = m_Player.lock()->GetForwardVector();
+	CVector3 TempVector = m_Player.lock()->GetComponent<PlayerComponent>()->GetForwardVector();
 	float TempRotY = asin(TempVector.x) * 180.0f / DX_PI_F;
 	if (TempVector.x < 0)
 		TempRotY = -TempRotY;
 	SpawnTr.rotation = CVector3(0, TempRotY, 0);
 	
-	m_WallObj = CObjectManager::GetInstance().Create(OBJECT_ID::SKILL_WALL_OBJECT,SpawnTr);
+	m_WallObj = CObjectManager::GetInstance().Create(OBJECT_ID::SKILL_WALL,SpawnTr);
 	m_State = SKILL_STATE::ACTIVE;
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
@@ -122,13 +125,13 @@ ActionEnd(void)
 {
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 
 	if (m_WallObj != nullptr)
 	{
-		m_WallObj->Delete(false);
+		m_WallObj->Delete();
 		m_WallObj = nullptr;
 	}
 }

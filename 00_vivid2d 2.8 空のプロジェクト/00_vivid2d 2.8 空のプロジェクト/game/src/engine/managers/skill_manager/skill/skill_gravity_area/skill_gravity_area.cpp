@@ -1,9 +1,10 @@
 #include "skill_gravity_area.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../data_manager/data_manager.h"
 #include "../../../sound_manager/sound_manager.h"
-
+#include "../../../../../game/components/player_component/player_component.h"
+#include "../../../../../engine/components/transform_component/transform_component.h"
+#include "../../../object_manager/object_manager.h"
 const float CSkillGravityArea::m_gravity_speed_down_rate = 0.7f;
 const float CSkillGravityArea::m_gravity_jump_down_rate = 0.7f;
 const float CSkillGravityArea::m_duration_time = 7.5f;
@@ -34,7 +35,7 @@ Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
 
-	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+	for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
 	{
 		m_PlayerAffectedGravity[i] = GRAVITY_AFFECTED::NONE;
 	}
@@ -49,65 +50,65 @@ Update(void)
 {
 	CSkill::Update();
 
+	auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
 		break;
 
 	case SKILL_STATE::ACTIVE:
-		for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+
+		for (auto& targetPlayerObject : allPlayers)
 		{
-			if (i >= CDataManager::GetInstance().GetCurrentJoinPlayer())
-				break;
-
-			if ((UNIT_ID)i == m_PlayerID)
-				continue;
-			
-			std::shared_ptr<CPlayer> TempPlayer = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
-
-			if (TempPlayer == nullptr)
-				continue;
-
-			switch (m_PlayerAffectedGravity[i])
+			if (auto targetComp = targetPlayerObject->GetComponent<PlayerComponent>())
 			{
-			case GRAVITY_AFFECTED::NONE:
-				if ((m_Player.lock()->GetPosition() - TempPlayer->GetPosition()).Length() < m_gravity_area_radius)
+
+				if (targetComp->GetPlayerID() == m_PlayerID)
+					continue;
+
+				int	index = (int)targetComp->GetPlayerID();
+				auto targetTransform = targetPlayerObject->GetComponent<TransformComponent>();
+				switch (m_PlayerAffectedGravity[index])
 				{
-					m_PlayerAffectedGravity[i] = GRAVITY_AFFECTED::AFFECTED;
-					TempPlayer->MulMoveSpeedRate(m_gravity_speed_down_rate);
-					TempPlayer->MulJumpPowerRate(m_gravity_jump_down_rate);
-
-					//エフェクトの生成（仮置き、エフェクトが完成したらセットする）
-					//if (false)
-						m_PlayerAffectedEffect[i] = CEffectManager::GetInstance().Create(EFFECT_ID::DEBUFF, TempPlayer->GetPosition(),CVector3(), 3.0f);
-				}
-				break;
-
-			case GRAVITY_AFFECTED::AFFECTED:
-				if (m_PlayerAffectedEffect[i] != nullptr)
-					m_PlayerAffectedEffect[i]->SetPosition(TempPlayer->GetPosition());
-
-				if ((m_Player.lock()->GetPosition() - TempPlayer->GetPosition()).Length() > m_gravity_area_radius)
-				{
-					m_PlayerAffectedGravity[i] = GRAVITY_AFFECTED::NONE;
-					TempPlayer->DivMoveSpeedRate(m_gravity_speed_down_rate);
-					TempPlayer->DivJumpPowerRate(m_gravity_jump_down_rate);
-
-					//エフェクトを消す
-					if (m_PlayerAffectedEffect[i] != nullptr)
+				case GRAVITY_AFFECTED::NONE:
+					if ((m_Player.lock()->GetComponent<TransformComponent>()->GetPosition() - targetTransform->GetPosition()).Length() < m_gravity_area_radius)
 					{
-						m_PlayerAffectedEffect[i]->Delete(false);
-						m_PlayerAffectedEffect[i] = nullptr;
+						m_PlayerAffectedGravity[index] = GRAVITY_AFFECTED::AFFECTED;
+						targetComp->MulMoveSpeedRate(m_gravity_speed_down_rate);
+						targetComp->MulJumpPowerRate(m_gravity_jump_down_rate);
+
+						//エフェクトの生成（仮置き、エフェクトが完成したらセットする）
+						//if (false)
+						m_PlayerAffectedEffect[index] = CEffectManager::GetInstance().Create(EFFECT_ID::DEBUFF, targetTransform->GetPosition(), CVector3(), 3.0f);
 					}
+					break;
+
+				case GRAVITY_AFFECTED::AFFECTED:
+					if (m_PlayerAffectedEffect[index] != nullptr)
+						m_PlayerAffectedEffect[index]->SetPosition(targetTransform->GetPosition());
+
+					if ((m_Player.lock()->GetComponent<TransformComponent>()->GetPosition() - targetTransform->GetPosition()).Length() > m_gravity_area_radius)
+					{
+						m_PlayerAffectedGravity[index] = GRAVITY_AFFECTED::NONE;
+						targetComp->DivMoveSpeedRate(m_gravity_speed_down_rate);
+						targetComp->DivJumpPowerRate(m_gravity_jump_down_rate);
+
+						//エフェクトを消す
+						if (m_PlayerAffectedEffect[index] != nullptr)
+						{
+							m_PlayerAffectedEffect[index]->Delete();
+							m_PlayerAffectedEffect[index] = nullptr;
+						}
+					}
+					break;
 				}
-				break;
 			}
 		}
 
 		//エフェクトの位置調整
 		if (m_Effect != nullptr)
 		{
-			m_Effect->SetPosition(m_Player.lock()->GetPosition());
+			m_Effect->SetPosition(m_Player.lock()->GetComponent<TransformComponent>()->GetPosition());
 		}
 		break;
 
@@ -155,8 +156,9 @@ Action(void)
 	CSoundManager::GetInstance().SetSEVolume(SE_ID::GRAVITYAREA, m_se_volume);
 	//エフェクトの生成（仮置き、エフェクトが完成したらセットする）
 
-	CVector3 effectPosition = m_Player.lock()->GetPosition();
-	effectPosition.y -= m_Player.lock()->GetHeight()/2;
+
+	CVector3 effectPosition = m_Player.lock()->GetComponent<TransformComponent>()->GetPosition();
+	effectPosition.y -= m_Player.lock()->GetComponent<PlayerComponent>()->GetHeight()/2;
 
 	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::GRAVITY_AREA, effectPosition,CVector3(),m_effect_scale);
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effectPosition, CVector3(), m_effect_scale);
@@ -175,33 +177,43 @@ ActionEnd(void)
 	//エフェクトを消す
 	if (m_Effect != nullptr)
 	{
-		m_Effect->Delete(false);
+		m_Effect->Delete();
 		m_Effect = nullptr;
 	}
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 
-	std::shared_ptr<CPlayer> TempPlayer;
-	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+	std::shared_ptr<CGameObject> TempPlayer;
+	auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
+	//全てのプレイヤーに対して重力の影響を消す
+	for (auto& targetPlayerObject : allPlayers)
 	{
-		//重力の影響を消す
-		if (m_PlayerAffectedGravity[i] == GRAVITY_AFFECTED::AFFECTED)
+		if (auto targetComp = targetPlayerObject->GetComponent<PlayerComponent>())
 		{
-			m_PlayerAffectedGravity[i] = GRAVITY_AFFECTED::NONE;
-			TempPlayer = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
-			TempPlayer->DivMoveSpeedRate(m_gravity_speed_down_rate);
-			TempPlayer->DivJumpPowerRate(m_gravity_jump_down_rate);
-		}
+			int	index = (int)targetComp->GetPlayerID();
+			if (auto targetComp = targetPlayerObject->GetComponent<PlayerComponent>())
+			{
+				if (targetComp->GetPlayerID() == m_PlayerID)
+					continue;
+				//重力の影響を消す
+				if (m_PlayerAffectedGravity[index] == GRAVITY_AFFECTED::AFFECTED)
+				{
+					m_PlayerAffectedGravity[index] = GRAVITY_AFFECTED::NONE;
+					targetComp->DivMoveSpeedRate(m_gravity_speed_down_rate);
+					targetComp->DivJumpPowerRate(m_gravity_jump_down_rate);
+				}
 
-		//エフェクトを消す
-		if (m_PlayerAffectedEffect[i] != nullptr)
-		{
-			m_PlayerAffectedEffect[i]->Delete(false);
-			m_PlayerAffectedEffect[i] = nullptr;
+				//エフェクトを消す
+				if (m_PlayerAffectedEffect[index] != nullptr)
+				{
+					m_PlayerAffectedEffect[index]->Delete();
+					m_PlayerAffectedEffect[index] = nullptr;
+				}
+			}
 		}
 	}
 	CSoundManager::GetInstance().Stop_SE(SE_ID::GRAVITYAREA);

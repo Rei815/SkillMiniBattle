@@ -1,9 +1,8 @@
 #include "skill_stomp.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../bullet_manager/bullet_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../sound_manager/sound_manager.h"
-#include "../../../../../component/model_component/model_component.h"
+#include "../../../../components/model_component/model_component.h"
 
 const float CSkillStomp::m_cool_time = 10.0f;
 const float CSkillStomp::m_effect_scale = 2.0f;
@@ -80,7 +79,7 @@ Action()
 	if (m_State == SKILL_STATE::COOLDOWN) return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::STOMP, false);
-	CBulletManager::GetInstance().Create(m_Player.lock()->GetUnitCategory(), BULLET_ID::SHOCK_WAVE, m_Player.lock()->GetPosition(), CVector3::UP);
+	CBulletManager::GetInstance().Create(FACTION_CATEGORY::PLAYERe, BULLET_ID::SHOCK_WAVE, m_Player.lock()->GetPosition(), CVector3::UP);
 	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, m_Player.lock()->GetPosition());
 	m_Timer.SetUp(m_cool_time);
 	m_State = SKILL_STATE::COOLDOWN;

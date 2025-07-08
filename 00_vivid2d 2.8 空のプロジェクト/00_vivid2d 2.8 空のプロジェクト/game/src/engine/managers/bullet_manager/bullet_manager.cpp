@@ -37,7 +37,7 @@ Update(void)
     // リストが空なら終了
     if (m_BulletList.empty()) return;
 
-    CObjectManager& um = CObjectManager::GetInstance();
+    CObjectManager& om = CObjectManager::GetInstance();
 
     BULLET_LIST::iterator it = m_BulletList.begin();
 
@@ -48,7 +48,7 @@ Update(void)
         bullet->Update();
 
         // ユニットマネージャーに弾と当たっているユニットがあるか問い合わせる
-        um.CheckHitBullet(bullet);
+        om.CheckHitBullet(bullet);
 
 
         // 弾が非アクティブなら削除してリストから外す

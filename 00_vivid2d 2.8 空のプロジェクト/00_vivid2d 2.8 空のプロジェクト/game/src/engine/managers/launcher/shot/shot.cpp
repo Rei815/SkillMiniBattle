@@ -8,7 +8,6 @@ CShot::CShot()
     : m_BulletInterval()
     , m_ShotFlag()
     , m_ShotCount()
-    , m_UnitCategory()
     , m_Position()
     , m_Direction(CVector3())
 {
@@ -19,7 +18,6 @@ CShot::CShot(BulletParameters bulletParameters)
     , m_BulletInterval()
     , m_ShotFlag()
     , m_ShotCount()
-    , m_UnitCategory()
     , m_Position()
     , m_Direction(CVector3())
 {
@@ -58,7 +56,7 @@ void CShot::Update(void)
             if(m_BulletParameters->homingDelayTime != 0)
                 dir = dir.Normalize();
 
-            bm.Create(m_UnitCategory, m_BulletParameters, m_Position, dir);
+            bm.Create(FACTION_CATEGORY::PLAYER, m_BulletParameters, m_Position, dir);
 
         }
 
@@ -78,7 +76,6 @@ void CShot::Shot(FACTION_CATEGORY unitCategory, CVector3& position, const CVecto
     if (m_ShotFlag)
         return;
 
-    m_UnitCategory = unitCategory;
     m_Position = position;
 
     m_Direction = direction;

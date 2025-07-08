@@ -1,7 +1,8 @@
 #include "skill_resurrect_daruma.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../data_manager/data_manager.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../effect_manager/effect_manager.h"
+#include "../../../../../game/components/player_component/player_component.h"
 
 const float CSkillResurrectDaruma::m_duration_time = 2.0f;
 const float CSkillResurrectDaruma::m_effect_scale = 2.0f;
@@ -64,17 +65,17 @@ void CSkillResurrectDaruma::Action(void)
 
 void CSkillResurrectDaruma::ActionEnd(void)
 {
-	m_Player.lock()->SetActionFlag(true);
+	m_Player.lock()->GetComponent<PlayerComponent>()->SetActionFlag(true);
 
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 
 	if (m_ResurrectEffect != nullptr)
 	{
-		m_ResurrectEffect->Delete(false);
+		m_ResurrectEffect->Delete();
 		m_ResurrectEffect = nullptr;
 	}
 }

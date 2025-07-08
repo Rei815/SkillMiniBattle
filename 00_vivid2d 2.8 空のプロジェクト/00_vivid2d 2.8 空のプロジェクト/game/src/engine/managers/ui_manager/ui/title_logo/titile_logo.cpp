@@ -1,5 +1,4 @@
 #include "title_logo.h"
-#include "../../../unit_manager/unit_manager.h"
 
 const vivid::Vector2    CTitleLogo::m_position = vivid::Vector2(0, 0);
 const int    CTitleLogo::m_width = 1280;

@@ -1,7 +1,8 @@
 #pragma once
 #include "../skill.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../data_manager/data_manager.h"
+#include "../../../object_manager/object_manager.h"
+#include "../../../effect_manager/effect/effect.h"
 
 class CSkillStun : public CSkill
 {
@@ -46,7 +47,7 @@ protected:
 
     std::shared_ptr<IEffect> m_SkillEffect;
     std::shared_ptr<IEffect> m_Effect;
-    std::shared_ptr<CPlayer> m_Target;
-    CUnitManager& um = CUnitManager::GetInstance();
+    std::shared_ptr<CGameObject> m_Target;
+    CObjectManager& om = CObjectManager::GetInstance();
     CDataManager& dm = CDataManager::GetInstance();
 };

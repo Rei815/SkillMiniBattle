@@ -1,6 +1,4 @@
 #include "entry_x_button.h"
-#include "../../../unit_manager/unit_manager.h"
-
 const int    CEntryXButton::m_width = 800;
 const int    CEntryXButton::m_height = 130;
 const vivid::Vector2    CEntryXButton::m_position = vivid::Vector2(0, 0);
