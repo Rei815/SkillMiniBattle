@@ -20,3 +20,9 @@ void DarumaFallDownGimmickComponent::Update(float delta_time, CGameObject* owner
     // 毎フレーム、元のクラスのUpdateを呼び出すだけ
     m_GimmickLogic->Update();
 }
+
+void DarumaFallDownGimmickComponent::OgreControlTurn()
+{
+	// 元のクラスのメソッドを呼び出す
+	m_GimmickLogic->OgreControlTurn();
+}

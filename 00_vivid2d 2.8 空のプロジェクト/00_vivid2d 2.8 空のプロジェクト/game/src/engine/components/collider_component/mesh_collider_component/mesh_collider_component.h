@@ -9,6 +9,7 @@ public:
 
     void OnAttach(CGameObject* owner) override;
 
+	void Update(float delta_time, CGameObject* owner) override;
     // Õ“ËˆÊ’u‚ª•s—v‚Èê‡‚Í‚±‚¿‚ç‚ğŒÄ‚Ô
     bool CheckHitLine(const CVector3& startPos, const CVector3& endPos) const;
 

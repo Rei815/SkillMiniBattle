@@ -1,7 +1,6 @@
 #pragma once
 
 #include "vivid.h"
-#include "..\..\..\utility\utility.h"
 #include <list>
 #include "controller/controller.h"
 #include <memory>

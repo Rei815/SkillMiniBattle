@@ -1,5 +1,6 @@
 #include "game_object.h"
-#include "../../component/transform_component/transform_component.h"
+#include "../../components/transform_component/transform_component.h"
+#include <engine/components/model_component/model_component.h>
 
 CGameObject::CGameObject()
     : m_IsActive(true)
@@ -56,7 +57,7 @@ void CGameObject::Draw()
         return;
     }
     // 描画関連のコンポーネントがあれば、そのDrawメソッドを呼び出すなど
-    // 例: if (auto renderComp = GetComponent<RenderComponent>()) { renderComp->Draw(this); }
+    if (auto modelComp = GetComponent<ModelComponent>()) { modelComp->Draw(this); }
 }
 
 void CGameObject::Finalize()

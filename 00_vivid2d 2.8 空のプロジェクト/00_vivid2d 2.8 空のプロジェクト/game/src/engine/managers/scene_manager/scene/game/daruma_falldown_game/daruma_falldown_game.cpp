@@ -5,11 +5,10 @@
 #include "../../../../data_manager/data_manager.h"
 #include "../../../../skill_manager/skill_manager.h"
 #include "../../../../sound_manager/sound_manager.h"
-
-#include "../../../../../../game/components/player_component/player_component.h"
-#include "../../../../../../game/components/gimmick_component/daruma_fall_down_gimmick_component/daruma_fall_down_gimmick_component.h"
-#include "../../../../../../engine/components/transform_component/transform_component.h"
+#include "game/components/player_component/player_component.h"
+#include "engine/components/transform_component/transform_component.h"
 #include <algorithm>
+#include "game/components/gimmick_component/daruma_fall_down_gimmick_component/daruma_fall_down_gimmick_component.h"
 const CVector3	CDaruma_FallDownGame::m_camera_position = CVector3(-500,700.0f, -1000.0f);
 const CVector3	CDaruma_FallDownGame::m_camera_direction = CVector3(0, -100, 100);
 
@@ -232,7 +231,7 @@ void CDaruma_FallDownGame::Play(void)
 						skill->SetState(SKILL_STATE::ACTIVE);
 					else
 					{
-						m_MovePlayer.emplace_back(player);
+						m_MovePlayer.emplace_back(playerObject);
 					}
 				}
 			}
@@ -261,7 +260,6 @@ void CDaruma_FallDownGame::Play(void)
 	if (m_Timer.Finished())
 	{
 		float FirstPosX = -1500;
-		auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
 
 		for (auto& player : allPlayers)
 		{

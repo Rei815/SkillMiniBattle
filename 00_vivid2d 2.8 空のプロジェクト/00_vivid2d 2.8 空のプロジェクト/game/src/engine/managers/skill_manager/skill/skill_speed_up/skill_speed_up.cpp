@@ -1,5 +1,5 @@
 #include "skill_speed_up.h"
-#include "../../../unit_manager/unit_manager.h"
+#include "../../../../../game/components/player_component/player_component.h"
 
 const float CSkillSpeedUp::m_speed_up_rate = 1.25f;
 
@@ -68,11 +68,11 @@ Finalize(void)
  */
 void
 CSkillSpeedUp::
-SetPlayer(std::shared_ptr<CPlayer> player)
+SetPlayer(std::shared_ptr<CGameObject> player)
 {
 	CSkill::SetPlayer(player);
 
-	player->SetMoveSpeedRate(m_speed_up_rate);
+	player->GetComponent<PlayerComponent>()->SetMoveSpeedRate(m_speed_up_rate);
 }
 
 /*!

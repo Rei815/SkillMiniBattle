@@ -71,7 +71,7 @@ protected:
      *
      *  @param[in]  unit   追加するプレイヤーのID
      */
-    void            AddRanking(PLAYER_ID unitID);
+    void            AddRanking(PLAYER_ID playerID);
 
     /*!
      *  @brief      スタート

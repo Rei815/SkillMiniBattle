@@ -5,7 +5,6 @@
 #include "../../components/collider_component/mesh_collider_component/mesh_collider_component.h"
 #include "../../../game/components/player_component/player_component.h"
 #include "../../../game/components/gimmick_component/dodge_ball_gimmick_component/dodge_ball_gimmick_component.h"
-#include "../../../game/components/gimmick_component/belt_conveyor_gimmick_componet/belt_conveyor_gimmick_componet.h"
 #include "../../../game/components/gimmick_component/fall_gimmick_component/fall_gimmick_component.h"
 #include "../../../game/components/gimmick_component/daruma_fall_down_gimmick_component/daruma_fall_down_gimmick_component.h"
 #include "../bullet_manager/bullet/bullet.h"
@@ -120,21 +119,20 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
         gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_STAGE);
         gameObject->AddComponent<MeshColliderComponent>();
         break;
-    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_1:
-    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_2:
-    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_3:
-    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_4:
-    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_5:
-    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_6:
-        gameObject->AddComponent<ModelComponent>(id);
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_1:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_1);
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_2:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_2);
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_3:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_3);
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_4:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_4);
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_5:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_5);
+    case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_6:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_6);
         gameObject->AddComponent<MeshColliderComponent>();
         break;
     case OBJECT_ID::SKILL_WALL:
-        gameObject->AddComponent<ModelComponent>(id);
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::SKILL_WALL);
         gameObject->AddComponent<MeshColliderComponent>();
         break;
     case OBJECT_ID::SKILL_BARRIER_OBJECT:
-        gameObject->AddComponent<ModelComponent>(id);
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::SKILL_BARRIER_COLLIDER);
         gameObject->AddComponent<MeshColliderComponent>();
         break;
     case OBJECT_ID::PLAYER:
@@ -153,6 +151,26 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
     m_GameObjects.emplace_back(gameObject);
 
     return gameObject;
+}
+
+void CObjectManager::DeletePlayer(PLAYER_ID player_id)
+{
+	// 指定されたプレイヤーIDを持つオブジェクトを検索
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end();)
+	{
+		auto& object = *it;
+		auto playerComp = object->GetComponent<PlayerComponent>();
+
+		if (playerComp && playerComp->GetPlayerID() == player_id)
+		{
+			// オブジェクトを削除
+			it = m_GameObjects.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
 
 CObjectManager::OBJECT_LIST CObjectManager::GetList()

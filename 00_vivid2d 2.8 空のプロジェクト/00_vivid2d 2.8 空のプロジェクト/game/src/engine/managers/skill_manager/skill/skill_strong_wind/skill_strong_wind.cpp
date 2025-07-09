@@ -1,7 +1,8 @@
 #include "skill_strong_wind.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../sound_manager/sound_manager.h"
 #include "../../../effect_manager/effect_manager.h"
+#include "../../../object_manager/object_manager.h"
+#include "../../../../../game/components/player_component/player_component.h"
 
 
 const float CSkillStrongWind::m_wind_strength = 0.15f;
@@ -41,21 +42,20 @@ CSkillStrongWind::
 Update(void)
 {
 	CSkill::Update();
-	CUnitManager::UNIT_LIST unitList = CUnitManager::GetInstance().GetUnitList();
-	CUnitManager::UNIT_LIST::iterator it = unitList.begin();
+	auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
 		break;
 
 	case SKILL_STATE::ACTIVE:
-		while (it != unitList.end())
+		for (auto& player : allPlayers)
 		{
-			std::shared_ptr<IUnit> unit = *it;
-			if (unit->GetPlayerID() != m_Player.lock()->GetPlayerID())
-				unit->AddAffectedVelocity(CVector3(0.0f, 0.0f, -m_wind_strength));
-
-			++it;
+			auto playerComponent = player->GetComponent<PlayerComponent>();
+			if (playerComponent && playerComponent->GetPlayerID() == m_Player.lock()->GetComponent<PlayerComponent>()->GetPlayerID())
+			{
+				playerComponent->AddAffectedVelocity(CVector3(0.0f, 0.0f, -m_wind_strength));
+			}
 		}
 		break;
 
@@ -119,12 +119,12 @@ ActionEnd(void)
 	//エフェクトを消す
 	if (m_Effect != nullptr)
 	{
-		m_Effect->Delete(false);
+		m_Effect->Delete();
 		m_Effect = nullptr;
 	}
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 

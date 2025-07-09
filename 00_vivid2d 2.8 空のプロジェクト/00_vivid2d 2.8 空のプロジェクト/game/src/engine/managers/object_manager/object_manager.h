@@ -45,6 +45,14 @@ public:
      */
     std::shared_ptr<CGameObject>    Create(OBJECT_ID id, const CTransform& transform, PLAYER_ID player_id = PLAYER_ID::NONE);
 
+	/*!
+	 *  @brief      プレイヤーを削除
+	 *
+	 *  @param[in]  player_id   プレイヤーID
+	 *
+	 */
+    void DeletePlayer(PLAYER_ID player_id);
+
     /*!
      *  @brief      オブジェクトリスト型
      */

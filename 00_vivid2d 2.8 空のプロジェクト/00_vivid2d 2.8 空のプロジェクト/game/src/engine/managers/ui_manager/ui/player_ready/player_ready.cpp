@@ -1,6 +1,5 @@
 #include "player_ready.h"
 #include "..\..\..\data_manager\data_manager.h"
-#include "..\..\..\unit_manager\unit_manager.h"
 #include "..\..\..\controller_manager\controller_manager.h"
 const std::string		CPlayerReady::m_file_names[] = {
 	"data\\Textures\\player_icon_1.png",
@@ -65,8 +64,8 @@ void CPlayerReady::Update(void)
 		if (keyboard->GetButtonDown(BUTTON_ID::B))
 			m_Color[(int)keyboard->GetPlayerID()] ^= 0x007f7f7f;
 
-	if (CDataManager::GetInstance().GetCurrentJoinPlayer() == 2 && cm.GetController(CONTROLLER_ID::DUMMY)->GetPlayerID() == UNIT_ID::PLAYER2)
-		m_Color[(int)UNIT_ID::PLAYER2] = 0xffffffff;
+	if (CDataManager::GetInstance().GetCurrentJoinPlayer() == 2 && cm.GetController(CONTROLLER_ID::DUMMY)->GetPlayerID() == PLAYER_ID::PLAYER2)
+		m_Color[(int)PLAYER_ID::PLAYER2] = 0xffffffff;
 
 	
 #if _DEBUG

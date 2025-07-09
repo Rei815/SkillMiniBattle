@@ -4,9 +4,9 @@
 #include "../../../../camera\camera.h"
 #include "../../../../skill_manager\skill_manager.h"
 #include "../../../../scene_manager\scene_manager.h"
-#include "../../../../../../engine\components\transform_component\transform_component.h"
-#include "../../../../../../game/components/player_component/player_component.h"
-#include "../../../../../../game/components/gimmick_component/belt_conveyor_gimmick_componet/belt_conveyor_gimmick_componet.h"
+#include "engine\components\transform_component\transform_component.h"
+#include "game/components/player_component/player_component.h"
+#include "game/components/gimmick_component/belt_conveyor_gimmick_component/belt_conveyor_gimmick_component.h"
 
 const float		CBeltConveyorGame::m_defeat_height			= -500.0f;
 const CVector3	CBeltConveyorGame::m_camera_position		= CVector3(0.0f, 800.0f, -1350.0f);

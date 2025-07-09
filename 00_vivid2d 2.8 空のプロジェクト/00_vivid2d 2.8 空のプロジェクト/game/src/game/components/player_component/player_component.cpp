@@ -48,7 +48,6 @@ PlayerComponent::PlayerComponent(PLAYER_ID id, CTransform transform)
     , m_ForwardVector(CVector3::FORWARD)
     , m_AffectedVelocity(CVector3::ZERO)
     , m_ActiveFlag(true)
-    , m_Category(PLAYER_CATEGORY::PLAYER)
     , m_PlayerID(id)
     , m_InvincibleFlag(false)
     , m_PlayerState(PLAYER_STATE::APPEAR)
@@ -64,23 +63,21 @@ void PlayerComponent::OnAttach(CGameObject* owner)
     CControllerManager& cm = CControllerManager::GetInstance();
     CControllerManager::CONTROLLER_LIST controllerList = cm.GetList();
     CControllerManager::CONTROLLER_LIST::iterator it = controllerList.begin();
-
+	m_Owner = owner;
     //IDによってカテゴリーの切り替え
     switch (m_PlayerID)
     {
     case PLAYER_ID::PLAYER1:
-        m_Category = PLAYER_CATEGORY::PLAYER1;
+        m_Owner->SetCategory(FACTION_CATEGORY::PLAYER1);
         break;
     case PLAYER_ID::PLAYER2:
-        m_Category = PLAYER_CATEGORY::PLAYER2;
-
+        m_Owner->SetCategory(FACTION_CATEGORY::PLAYER2);
         break;
     case PLAYER_ID::PLAYER3:
-        m_Category = PLAYER_CATEGORY::PLAYER3;
-
+        m_Owner->SetCategory(FACTION_CATEGORY::PLAYER3);
         break;
     case PLAYER_ID::PLAYER4:
-        m_Category = PLAYER_CATEGORY::PLAYER4;
+        m_Owner->SetCategory(FACTION_CATEGORY::PLAYER4);
         break;
     }
     //コントローラーに設定されているUnitIDと合っている場合自身のコントローラーとして取得
@@ -305,14 +302,6 @@ void PlayerComponent::SetAffectedVelocity(CVector3 velocity)
 void PlayerComponent::AddAffectedVelocity(CVector3 velocity)
 {
     m_AffectedVelocity += velocity;
-}
-
-void PlayerComponent::DivJumpPowerRate(float rate)
-{
-    if (rate == 0.0f)
-        return;
-
-    m_JumpPowerRate = m_JumpPowerRate / rate;
 }
 
 void PlayerComponent::StartInvincible(float invincible_time)

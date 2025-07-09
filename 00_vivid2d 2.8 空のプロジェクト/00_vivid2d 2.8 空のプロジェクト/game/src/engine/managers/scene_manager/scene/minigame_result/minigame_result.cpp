@@ -1,13 +1,12 @@
 #include "minigame_result.h"
 #include "..\..\scene_manager.h"
-#include "..\..\..\game_object.h"
 #include "../../../ui_manager/ui_manager.h"
 #include "../../../data_manager/data_manager.h"
 #include "../../../animation_manager/animation_manager.h"
 #include "../../../ui_manager/ui/player_icon/player_icon.h"
 #include "../../../ui_manager/ui/notice/notice.h"
 #include "../../../controller_manager/controller_manager.h"
-
+#include "../../../effect_manager/effect_manager.h"
 const vivid::Vector2  CMiniGameResult::m_origin_key_pos = vivid::Vector2(40, 250);
 const vivid::Vector2  CMiniGameResult::m_origin_icon_pos = vivid::Vector2(85, 100);
 const vivid::Vector2  CMiniGameResult::m_origin_notice_pos = vivid::Vector2(-70, -70);
@@ -37,7 +36,7 @@ void CMiniGameResult::Initialize(SCENE_ID scene_id)
     {
         vivid::Vector2 noticePos = m_origin_notice_pos;
         noticePos.x += m_notice_offset * i;
-        std::shared_ptr<CNotice> notice = dynamic_pointer_cast<CNotice>(um.Create(UI_ID::NOTICE, noticePos));
+        std::shared_ptr<CNotice> notice = std::dynamic_pointer_cast<CNotice>(um.Create(UI_ID::NOTICE, noticePos));
         notice->SetScale(m_notice_scale);
         //背景表示
         for (int j = 0; j < dm.GetRequiredWins(); j++)
@@ -49,8 +48,8 @@ void CMiniGameResult::Initialize(SCENE_ID scene_id)
         vivid::Vector2 iconPos = m_origin_icon_pos;
         iconPos.x += m_icon_offset * i;
 
-        std::shared_ptr<CPlayerIcon> playerIcon = dynamic_pointer_cast<CPlayerIcon>(um.Create(UI_ID::PLAYER_ICON, iconPos));
-        playerIcon->SetPlayerID((UNIT_ID)i);
+        std::shared_ptr<CPlayerIcon> playerIcon = std::dynamic_pointer_cast<CPlayerIcon>(um.Create(UI_ID::PLAYER_ICON, iconPos));
+        playerIcon->SetPlayerID((PLAYER_ID)i);
 
         //これまでの勝利数表示
         //一位のプレイヤー以外は勝利数そのままで表示
@@ -65,7 +64,7 @@ void CMiniGameResult::Initialize(SCENE_ID scene_id)
 
     }
 
-    m_SceneUIParent = dynamic_pointer_cast<CSceneUIParent>(um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
+    m_SceneUIParent = std::dynamic_pointer_cast<CSceneUIParent>(um.Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
     m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 
 }

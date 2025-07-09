@@ -1,6 +1,5 @@
 #include "..\ui.h"
-#include "..\..\..\unit_manager\unit\unit_id.h"
-
+#include "../../../../../game/components/player_component/player_id.h"
 class CPlayerJoin : public CUI
 {
 public:
@@ -31,7 +30,7 @@ public:
     /*!
      *  @brief      プレイヤー参加状況のセット
      */
-    void        SetPlayer(UNIT_ID id, bool join);
+    void        SetPlayer(PLAYER_ID id, bool join);
 
 private:
     static const std::string        m_file_names[];

@@ -12,7 +12,7 @@ private:
     float m_Alpha;     // “§–¾“x
 
 public:
-    ModelComponent(MODEL_ID id);
+    ModelComponent(MODEL_ID id = MODEL_ID::MAX);
     ~ModelComponent() override = default;
     // --- XVˆ— ---
     void Update(float delta_time, CGameObject* owner) override {}

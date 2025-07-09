@@ -258,7 +258,6 @@ private:
     std::shared_ptr<CController>    m_Controller;       //!< コントローラー
     CGameObject*                    m_GroundObject;     //!< 接地した床のオブジェクト
     CGameObject*                    m_Owner;
-    PLAYER_CATEGORY                 m_Category;         //!< プレイヤー識別子
     PLAYER_ID                       m_PlayerID;         //!< プレイヤーID
     PLAYER_STATE                    m_PlayerState;      //!< 状態ID
     CTimer                          m_InvincibleTimer;  //!< 無敵時間タイマー

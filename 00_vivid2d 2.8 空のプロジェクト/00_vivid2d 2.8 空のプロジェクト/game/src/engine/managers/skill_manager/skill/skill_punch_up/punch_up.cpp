@@ -1,5 +1,4 @@
 #include "punch_up.h"
-#include "../../../unit_manager/unit_manager.h"
 
 CPunchUp::CPunchUp(void)
 	:CSkill(SKILL_CATEGORY::PASSIVE)

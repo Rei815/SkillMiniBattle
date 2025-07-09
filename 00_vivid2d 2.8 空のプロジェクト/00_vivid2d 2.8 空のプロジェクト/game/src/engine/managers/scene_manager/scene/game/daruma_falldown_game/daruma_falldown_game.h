@@ -73,6 +73,6 @@ private:
     int                                     m_TextureColor[4];
     float                                   m_TempFirstDis;
     bool                                    m_GimmickOn;
-    std::list<std::shared_ptr<CGameObject>> m_MovePlayer;
+    ENTRY_LIST                              m_MovePlayer;
     vivid::Vector2                          m_TextPosition;
 };

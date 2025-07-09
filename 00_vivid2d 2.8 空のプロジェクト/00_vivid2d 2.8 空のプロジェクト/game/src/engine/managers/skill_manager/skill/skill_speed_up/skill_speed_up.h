@@ -30,7 +30,7 @@ public:
     /*!
      *  @brief      プレイヤーのセット
      */
-    void    SetPlayer(std::shared_ptr<CPlayer> player);
+    void    SetPlayer(std::shared_ptr<CGameObject> player);
 
 
     /*!

@@ -7,9 +7,9 @@
 #include "../../../../skill_manager/skill_manager.h"
 #include "../../../../sound_manager/sound_manager.h"
 #include "../../../../bullet_manager/bullet_manager.h"
-#include "../../../../../../game/components/player_component/player_component.h"
-#include "../../../../../../game/components/gimmick_component/fall_gimmick_component/fall_gimmick_component.h"
-#include "../../../../../../engine/components/transform_component/transform_component.h"
+#include "game/components/player_component/player_component.h"
+#include "game/components/gimmick_component/fall_gimmick_component/fall_gimmick_component.h"
+#include "engine/components/transform_component/transform_component.h"
 
 constexpr float floor_x = 475;
 constexpr float floor_y = -100;

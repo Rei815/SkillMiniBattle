@@ -1,6 +1,5 @@
 #include "player_join.h"
 #include "..\..\..\data_manager\data_manager.h"
-#include "..\..\..\unit_manager\unit_manager.h"
 #include "..\..\..\controller_manager\controller_manager.h"
 const std::string		CPlayerJoin::m_file_names[] = {
 	"data\\Textures\\player_icon_1.png",
@@ -31,7 +30,7 @@ void CPlayerJoin::Initialize()
 {
 	CUI::Initialize(m_position);
 
-	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+	for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
 	{
 		m_Color[i] = m_color_dark;
 	}
@@ -44,7 +43,7 @@ void CPlayerJoin::Update(void)
 
 void CPlayerJoin::Draw(void)
 {
-	for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+	for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
 	{
 		vivid::DrawTexture(m_file_names[i], m_Position + (m_offset * i), m_Color[i], m_rect, m_anchor, m_scale);
 	}
@@ -55,7 +54,7 @@ void CPlayerJoin::Finalize(void)
 }
 
 
-void CPlayerJoin::SetPlayer(UNIT_ID id, bool join)
+void CPlayerJoin::SetPlayer(PLAYER_ID id, bool join)
 {
 	if (join)
 		m_Color[(int)id] = m_color_light;

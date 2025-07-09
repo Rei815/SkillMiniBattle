@@ -5,8 +5,7 @@
 #include "..\..\..\camera\camera.h"
 #include "../../../ui_manager/ui/scene_ui_parent/scene_ui_parent.h"
 
-class CMiniGameResult
-    : public IScene
+class CMiniGameResult : public IScene
 {
 public:
     /*!

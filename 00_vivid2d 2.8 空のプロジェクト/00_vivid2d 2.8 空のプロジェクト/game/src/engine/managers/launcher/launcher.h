@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../../utility/utility.h"
 #include "shot/shot.h"
 #include <list>
 #include "shot/shot_id.h"

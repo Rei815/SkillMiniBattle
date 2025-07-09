@@ -1,15 +1,13 @@
 
 #include "game.h"
 #include "..\..\scene_manager.h"
-#include "..\..\..\game_object.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../skill_manager/skill_manager.h"
 #include "../../../ui_manager/ui_manager.h"
 #include "../../../controller_manager/controller_manager.h"
-#include "../../../gimmick_manager/gimmick_manager.h"
 #include "../../../object_manager/object_manager.h"
 #include "../../../data_manager/data_manager.h"
-#include "../../../unit_manager/unit/player/player.h"
+#include "../../../effect_manager/effect_manager.h"
+#include "../../../../../game/components/player_component/player_component.h"
 
 
 const float CGame::m_start_count_time = 3.0f;
@@ -48,8 +46,6 @@ CGame::Initialize(SCENE_ID scene_id)
     IScene::Initialize(scene_id);
     m_EntryList.clear();
     m_ResultList.clear();
-    CUnitManager::GetInstance().Initialize();
-    CGimmickManager::GetInstance().Initialize();
     CObjectManager::GetInstance().Initialize();
     CUIManager& um = CUIManager::GetInstance();
     um.Initialize();
@@ -77,15 +73,11 @@ CGame::Update(void)
         case GAME_STATE::FINISH:    Finish();       break;
         }
 
-        CUnitManager::GetInstance().Update();
-
         CSkillManager::GetInstance().Update();
 
         em.Update();
 
         CObjectManager::GetInstance().Update();
-
-        CGimmickManager::GetInstance().Update();
     }
 
     CControllerManager::GetInstance().Update();
@@ -97,13 +89,10 @@ CGame::Update(void)
 void
 CGame::Draw(void)
 {
-    CUnitManager::GetInstance().Draw();
     CSkillManager::GetInstance().Draw();
-    CGimmickManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
     CEffectManager::GetInstance().Draw();
-    CGimmickManager::GetInstance().Draw();}
-
+}
 /*
  *  解放
  */
@@ -112,11 +101,9 @@ CGame::Finalize(void)
 {
     IScene::Finalize();
 
-    CUnitManager::GetInstance().Finalize();
     CSkillManager::GetInstance().Finalize();
     CUIManager::GetInstance().Finalize();
     CEffectManager::GetInstance().Finalize();
-    CGimmickManager::GetInstance().Finalize();
     CObjectManager::GetInstance().Finalize();
 }
 
@@ -139,16 +126,17 @@ SetGameState(GAME_STATE state)
     m_GameState = state;
 }
 
-void CGame::AddRanking(PLAYER_ID unitID)
+void CGame::AddRanking(PLAYER_ID playerID)
 {
-    std::shared_ptr<IUnit> unit = CObjectManager::GetInstance().GetPlayer(unitID);
+    auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
 
     for (ENTRY_LIST::iterator entry_it = m_EntryList.begin(); entry_it != m_EntryList.end(); entry_it++)
     {
-        if ((*entry_it)->GetPlayerID() == unitID)
+        if ((*entry_it)->GetComponent<PlayerComponent>()->GetPlayerID() == playerID)
         {
+
             //リザルトに登録、エントリーからは削除
-            m_ResultList.emplace_back(CUnitManager::GetInstance().GetPlayer(unitID));
+            m_ResultList.emplace_back(*entry_it);
             m_EntryList.erase(entry_it);
             break;
         }
@@ -167,7 +155,14 @@ CGame::Start(void)
     if (!m_SetActionflag)
     {
         m_SetActionflag = true;
-        CUnitManager::GetInstance().SetAllPlayerAction(false);
+		auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
+        for (auto& player : allPlayers)
+        {
+			if (auto playerComp = player->GetComponent<PlayerComponent>())
+			{
+				playerComp->SetActionFlag(false);
+			}
+        }
     }
 
 
@@ -188,12 +183,13 @@ CGame::Start(void)
             {
                 m_GameState = GAME_STATE::PLAY;
 
-                std::shared_ptr<CPlayer> TempPlayer;
-
-                for (int i = 0; i < CDataManager::GetInstance().GetCurrentJoinPlayer(); i++)
+                auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
+                for (auto& player : allPlayers)
                 {
-                    TempPlayer = CUnitManager::GetInstance().GetPlayer((UNIT_ID)i);
-                    TempPlayer->SetActionFlag(true);
+                    if (auto playerComp = player->GetComponent<PlayerComponent>())
+                    {
+                        playerComp->SetActionFlag(true);
+                    }
                 }
             }
         }
@@ -205,11 +201,6 @@ CGame::Start(void)
  */
 void CGame::Play(void)
 {
-    if (m_SetActionflag)
-    {
-        m_SetActionflag = false;
-        CUnitManager::GetInstance().SetAllPlayerAction(true);
-    }
 
 #ifdef VIVID_DEBUG
 

@@ -1,7 +1,7 @@
 #include "camera.h"
-#include "../unit_manager/unit_manager.h"
 #include "vivid.h"
 #include <EffekseerForDXLib.h>      // effekseerライブラリの読み込み
+#include "../../utility/utility.h"
 
 const float                 CCamera::m_lerp_speed = 0.1f;       //カメラの動きの速さ
 const float                 CCamera::m_near = 100.0f;           //Nearクリップ

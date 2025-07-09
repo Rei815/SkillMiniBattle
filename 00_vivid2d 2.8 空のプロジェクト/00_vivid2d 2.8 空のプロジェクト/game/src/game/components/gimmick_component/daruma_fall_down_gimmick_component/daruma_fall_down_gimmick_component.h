@@ -15,6 +15,7 @@ public:
     void OnAttach(CGameObject* owner) override;
     void Update(float delta_time, CGameObject* owner) override;
 
+    void OgreControlTurn();
 private:
     // 元のギミックのロジックを持つインスタンス
     std::unique_ptr<CDarumaFallDownGimmick> m_GimmickLogic;

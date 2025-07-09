@@ -29,6 +29,13 @@ void MeshColliderComponent::OnAttach(CGameObject* owner)
     }
 }
 
+void MeshColliderComponent::Update(float delta_time, CGameObject* owner)
+{
+	// MeshColliderComponentは特に更新処理が必要ないので、空実装
+	// ただし、必要に応じてここに何か処理を追加することも可能
+	// 例えば、モデルの位置や回転に合わせてコライダーを更新するなど
+}
+
 bool MeshColliderComponent::CheckHitLine(const CVector3& startPos, const CVector3& endPos) const
 {
     // 衝突位置を格納するが、この関数の結果としては使わない「ダミー変数」

@@ -111,7 +111,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vivid2d\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../game\src;..\vivid2d\src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>26495</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -171,13 +171,12 @@
   <ItemGroup>
     <ClCompile Include="src\engine\components\collider_component\collider_component.cpp" />
     <ClCompile Include="src\engine\components\collider_component\mesh_collider_component\mesh_collider_component.cpp" />
-    <ClCompile Include="src\game\components\gimmick_component\belt_conveyor_gimmick_componet\belt_conveyor_gimmick\belt_conveyor_gimmick.cpp" />
-    <ClCompile Include="src\game\components\gimmick_component\belt_conveyor_gimmick_componet\belt_conveyor_gimmick_componet.cpp" />
+    <ClCompile Include="src\game\components\gimmick_component\belt_conveyor_gimmick_component\belt_conveyor_gimmick\belt_conveyor_gimmick.cpp" />
+    <ClCompile Include="src\game\components\gimmick_component\belt_conveyor_gimmick_component\belt_conveyor_gimmick_component.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\daruma_fall_down_gimmick_component\daruma_fall_down_gimmick\daruma_fall_down_gimmick.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\daruma_fall_down_gimmick_component\daruma_fall_down_gimmick_component.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\dodge_ball_gimmick_component\dodge_ball_gimmick\dodge_ball_gimmick.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\dodge_ball_gimmick_component\dodge_ball_gimmick_component.cpp" />
-    <ClCompile Include="src\game\components\gimmick_component\dodge_ball_gimmick_component\_dodge_ball_gimmick_component.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\fall_gimmick_component\fall_gimmick_component.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\gimmick_component.cpp" />
     <ClCompile Include="src\engine\components\model_component\model_component.cpp" />
@@ -317,8 +316,8 @@
     <ClInclude Include="src\engine\core\component\component.h" />
     <ClInclude Include="src\engine\core\game_object\game_types.h" />
     <ClInclude Include="src\engine\managers\object_manager\object_id.h" />
-    <ClInclude Include="src\game\components\gimmick_component\belt_conveyor_gimmick_componet\belt_conveyor_gimmick\belt_conveyor_gimmick.h" />
-    <ClInclude Include="src\game\components\gimmick_component\belt_conveyor_gimmick_componet\belt_conveyor_gimmick_componet.h" />
+    <ClInclude Include="src\game\components\gimmick_component\belt_conveyor_gimmick_component\belt_conveyor_gimmick\belt_conveyor_gimmick.h" />
+    <ClInclude Include="src\game\components\gimmick_component\belt_conveyor_gimmick_component\belt_conveyor_gimmick_component.h" />
     <ClInclude Include="src\game\components\gimmick_component\daruma_fall_down_gimmick_component\daruma_fall_down_gimmick\daruma_fall_down_gimmick.h" />
     <ClInclude Include="src\game\components\gimmick_component\daruma_fall_down_gimmick_component\daruma_fall_down_gimmick_component.h" />
     <ClInclude Include="src\game\components\gimmick_component\dodge_ball_gimmick_component\dodge_ball_gimmick\dodge_ball_gimmick.h" />

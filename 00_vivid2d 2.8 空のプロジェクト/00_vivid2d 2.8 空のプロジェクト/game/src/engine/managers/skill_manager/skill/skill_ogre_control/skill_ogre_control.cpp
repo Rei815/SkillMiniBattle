@@ -1,6 +1,7 @@
 #include "skill_ogre_control.h"
-#include "../../../object_manager/object_manager.h"
-#include "../../../../../game/components/player_component/player_component.h"
+#include "engine/managers/object_manager/object_manager.h"
+#include "game/components/player_component/player_component.h"
+#include "game/components/gimmick_component/daruma_fall_down_gimmick_component/daruma_fall_down_gimmick_component.h"
 
 const float CSkillOgreControl::m_cool_time = 30.0f;
 const float CSkillOgreControl::m_duration_time = 10.0f;
@@ -69,7 +70,16 @@ void CSkillOgreControl::Action()
 	{
 		m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::OGRE_CONTROL, m_EffectPosition, CVector3(), 5.0f);
 
-		m_Gimmick = dynamic_pointer_cast<CDaruma_FallDownGimmick>((*CObjectManager::GetInstance().GetList().begin())->GetGimmick());
+		auto object = CObjectManager::GetInstance().GetObjectsWithComponent<DarumaFallDownGimmickComponent>();
+
+		if (object.empty())
+		{
+			return;
+		}
+		// 取得したオブジェクトの最初のものを使用
+		auto it = object.begin();
+
+		m_Gimmick = (*it).get()->GetComponent<DarumaFallDownGimmickComponent>();
 		m_State = SKILL_STATE::ACTIVE;
 
 		m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);

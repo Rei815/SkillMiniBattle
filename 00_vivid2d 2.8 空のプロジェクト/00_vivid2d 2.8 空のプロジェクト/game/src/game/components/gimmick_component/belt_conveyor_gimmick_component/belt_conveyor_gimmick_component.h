@@ -13,7 +13,7 @@ public:
     void OnAttach(CGameObject* owner) override;
     void Update(float delta_time, CGameObject* owner) override;
 
-    void SetState()
+    void SetState();
 private:
     std::unique_ptr<CBeltConveyorGimmick> m_GimmickLogic;
 };

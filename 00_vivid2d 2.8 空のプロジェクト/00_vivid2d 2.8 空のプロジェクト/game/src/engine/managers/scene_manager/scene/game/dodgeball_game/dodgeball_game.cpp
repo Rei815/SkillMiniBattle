@@ -10,9 +10,9 @@
 
 
 #include "../../../scene_manager.h"
-#include "../../../../../../game/components/player_component/player_component.h"
-#include "../../../../../../game/components/gimmick_component/dodge_ball_gimmick_component/dodge_ball_gimmick_component.h"
-#include "../../../../../../engine/components/transform_component/transform_component.h"
+#include "game/components/player_component/player_component.h"
+#include "game/components/gimmick_component/dodge_ball_gimmick_component/dodge_ball_gimmick_component.h"
+#include "engine/components/transform_component/transform_component.h"
 
 // ‘å–C‚ÌˆÊ’u
 // ã‰º¶‰E‚Ì4•ûŒü ~ Še•ûŒü‚É5‚Â‚¸‚Â  20‚±
@@ -266,7 +266,7 @@ void CDodgeBallGame::CheckFinish(void)
 		if (transform->GetLength() > m_defeat_distance)
 		{
 			AddRanking(playerComp->GetPlayerID());
-			playerComp->SetDefeatFlag(true);
+			playerComp->SetDefeated(true);
 
 			CDataManager::GetInstance().AddLastGameRanking(playerComp->GetPlayerID());
 

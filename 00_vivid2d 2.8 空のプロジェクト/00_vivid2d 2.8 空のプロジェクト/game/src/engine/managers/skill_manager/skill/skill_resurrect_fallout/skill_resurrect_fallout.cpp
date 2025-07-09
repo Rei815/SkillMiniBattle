@@ -1,8 +1,9 @@
 #include "skill_resurrect_fallout.h"
-#include "../../../unit_manager/unit_manager.h"
 #include "../../../effect_manager/effect_manager.h"
 #include "../../../object_manager/object_manager.h"
 #include "../../../sound_manager/sound_manager.h"
+#include "../../../../../game/components/gimmick_component/fall_gimmick_component/fall_gimmick_component.h"
+#include "../../../../../engine/components/transform_component/transform_component.h"
 
 const float		CSkillResurrectFallout::m_resurrect_height = 200.0f;
 const float		CSkillResurrectFallout::m_effect_scale = 2.0f;
@@ -41,41 +42,34 @@ Update(void)
 {
 	CSkill::Update();
 
-	CObjectManager::OBJECT_LIST objectList = CObjectManager::GetInstance().GetList();
-	CObjectManager::OBJECT_LIST::iterator it = objectList.begin();
+	auto allGimmickObject = CObjectManager::GetInstance().GetObjectsWithComponent<FallGimmickComponent>();
 	switch (m_State)
 	{
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
 
-		while (it != objectList.end())
+		for (auto& gimmickObject : allGimmickObject)
 		{
-			if ((*it)->GetGimmick()->GetState() == GIMMICK_STATE::WAIT)
+			if (auto& gimmick = gimmickObject->GetComponent<FallGimmickComponent>())
 			{
-				CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
-				CVector3 resurrectPos = (*it)->GetPosition();
-				resurrectPos.y += m_resurrect_height;
-				m_Player.lock()->SetPosition(resurrectPos);
-				m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
-				m_ResurrectEffect = CEffectManager::GetInstance().Create(EFFECT_ID::RESURRECT, CVector3().ZERO, CVector3(), m_effect_scale);
-				m_SkillEffect->SetParent(m_Player.lock());
-				m_ResurrectEffect->SetParent(m_Player.lock());
+				if (gimmick->GetState() == GIMMICK_STATE::WAIT)
+				{
+					CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
+					CVector3 resurrectPos = gimmickObject->GetComponent<TransformComponent>()->GetPosition();
+					resurrectPos.y += m_resurrect_height;
+					m_Player.lock()->GetComponent<TransformComponent>()->SetPosition(resurrectPos);
+					m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
+					m_ResurrectEffect = CEffectManager::GetInstance().Create(EFFECT_ID::RESURRECT, CVector3().ZERO, CVector3(), m_effect_scale);
+					m_SkillEffect->SetParent(m_Player.lock());
+					m_ResurrectEffect->SetParent(m_Player.lock());
 
-				m_State = SKILL_STATE::COOLDOWN;
-				break;
+					m_State = SKILL_STATE::COOLDOWN;
+					break;
+
+				}
 			}
-
-			++it;
 		}
-
-		if (it == objectList.end())
-		{
-			m_Player.lock()->SetPosition(m_position);
-			m_State = SKILL_STATE::COOLDOWN;
-
-		}
-
 		break;
 	case SKILL_STATE::COOLDOWN:
 		break;
@@ -125,12 +119,12 @@ ActionEnd(void)
 {
 	if (m_SkillEffect != nullptr)
 	{
-		m_SkillEffect->Delete(false);
+		m_SkillEffect->Delete();
 		m_SkillEffect = nullptr;
 	}
 	if (m_ResurrectEffect != nullptr)
 	{
-		m_ResurrectEffect->Delete(false);
+		m_ResurrectEffect->Delete();
 		m_ResurrectEffect = nullptr;
 	}
 }

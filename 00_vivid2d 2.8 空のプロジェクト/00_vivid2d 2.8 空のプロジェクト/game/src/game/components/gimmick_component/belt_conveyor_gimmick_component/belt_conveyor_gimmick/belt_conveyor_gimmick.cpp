@@ -1,8 +1,8 @@
 #include "belt_conveyor_gimmick.h"
-#include "../../../../../engine/components/transform_component/transform_component.h"
-#include "../../../../../engine/managers/object_manager/object_manager.h"
-#include "../../../../../engine/components/collider_component/mesh_collider_component/mesh_collider_component.h"
+#include "engine/components/transform_component/transform_component.h"
+#include "engine/managers/object_manager/object_manager.h"
 #include "../../../player_component/player_component.h"
+#include "engine/components/collider_component/mesh_collider_component/mesh_collider_component.h"
 
 const float			CBeltConveyorGimmick::m_mid_belt_speed_time = 60.0f;
 

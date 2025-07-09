@@ -48,22 +48,22 @@ public:
     /*!
      *  @brief      弾生成
      *
-     *  @param[in]  category  ユニット識別子
+     *  @param[in]  category  所属識別子
      *  @param[in]  id          弾ID
      *  @param[in]  pos         位置
      *  @param[in]  dir         向き
      */
-    std::shared_ptr<IBullet>        Create(FACTION_CATEGORY category,CShot::BulletParameters* bulletParameters, CVector3& pos, const CVector3& dir);
+    std::shared_ptr<IBullet>        Create(FACTION_CATEGORY category,CShot::BulletParameters* bulletParameters, const CVector3& pos, const CVector3& dir);
 
     /*!
      *  @brief      弾生成
      *
-     *  @param[in]  category  ユニット識別子
+     *  @param[in]  category  所属識別子
      *  @param[in]  id          弾ID
      *  @param[in]  pos         位置
      *  @param[in]  dir         向き
      */
-    std::shared_ptr<IBullet>        Create(FACTION_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir);
+    std::shared_ptr<IBullet>        Create(FACTION_CATEGORY category, BULLET_ID id, const CVector3& pos, const CVector3& dir);
     
     /*!
      *  @brief      モデルとの反射判定

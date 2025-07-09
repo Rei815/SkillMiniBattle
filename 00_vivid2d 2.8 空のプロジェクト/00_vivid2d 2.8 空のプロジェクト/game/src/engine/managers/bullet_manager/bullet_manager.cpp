@@ -103,7 +103,7 @@ std::list<std::shared_ptr<IBullet>> CBulletManager::GetBulletList()
  */
 std::shared_ptr<IBullet>
 CBulletManager::
-Create(FACTION_CATEGORY category, CShot::BulletParameters* bulletParameter,  CVector3& pos, const CVector3& dir)
+Create(FACTION_CATEGORY category, CShot::BulletParameters* bulletParameter,  const CVector3& pos, const CVector3& dir)
 {
     std::shared_ptr<IBullet> bullet = nullptr;
 
@@ -126,7 +126,7 @@ Create(FACTION_CATEGORY category, CShot::BulletParameters* bulletParameter,  CVe
 /*
  *  íeê∂ê¨
  */
-std::shared_ptr<IBullet> CBulletManager::Create(FACTION_CATEGORY category, BULLET_ID id, CVector3& pos, const CVector3& dir)
+std::shared_ptr<IBullet> CBulletManager::Create(FACTION_CATEGORY category, BULLET_ID id, const CVector3& pos, const CVector3& dir)
 {
     std::shared_ptr<IBullet> bullet = nullptr;
 

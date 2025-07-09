@@ -1,4 +1,4 @@
-#include "belt_conveyor_gimmick_componet.h"
+#include "belt_conveyor_gimmick_component.h"
 #include "../../../../engine/core/game_object/game_object.h"
 #include "belt_conveyor_gimmick/belt_conveyor_gimmick.h"
 BeltConveyorGimmickComponent::BeltConveyorGimmickComponent()

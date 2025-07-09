@@ -1,6 +1,5 @@
 #include "select_skill.h"
 #include "..\..\scene_manager.h"
-#include "..\..\..\game_object.h"
 #include "..\..\..\camera\camera.h"
 #include "..\..\..\skill_manager\skill_manager.h"
 #include "..\..\..\data_manager\data_manager.h"
@@ -64,14 +63,14 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     m_GameID = CDataManager::GetInstance().GetSelectGameID();
 
     //アイコンの配列を初期化
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
         m_SkillSelectIcon[i] = nullptr;
     }
 
     //カーソル座標のリストの初期化
     m_CursorPosNumList.clear();
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
         m_CursorPosNumList.push_back(i);
     }
@@ -102,7 +101,7 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
 
     //スキル説明の生成
     std::shared_ptr<CUI> SkillInfo = CUIManager::GetInstance().Create(UI_ID::SKILL_INFO);
-    m_SkillInfomation = dynamic_pointer_cast<CSkillInfomation>(SkillInfo);
+    m_SkillInfomation = std::dynamic_pointer_cast<CSkillInfomation>(SkillInfo);
     if (m_SkillInfomation == nullptr)
     {
         SkillInfo->Delete();
@@ -118,14 +117,14 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
     ui->SetScale(m_video_poster_scale);
 
     std::shared_ptr<CUI> SkillVideo = CUIManager::GetInstance().Create(UI_ID::SKILL_VIDEO);
-    m_SkillVideo = dynamic_pointer_cast<CSkillVideo>(SkillVideo);
+    m_SkillVideo = std::dynamic_pointer_cast<CSkillVideo>(SkillVideo);
     if (m_SkillVideo == nullptr)
     {
         SkillVideo->Delete();
     }
     else
     {
-        for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+        for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
         {
             m_SkillVideo->SetSkillVideo(i, m_ChooseSkillID[i]);
         }
@@ -133,8 +132,7 @@ void CSelectSkill::Initialize(SCENE_ID scene_id)
         m_SkillVideo->SetPosition(m_video_position);
         m_SkillVideo->SetScale(m_video_scale);
     }
-    m_SceneUIParent = dynamic_pointer_cast<CSceneUIParent>(CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, 
-        vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
+    m_SceneUIParent = std::dynamic_pointer_cast<CSceneUIParent>(CUIManager::GetInstance().Create(UI_ID::SCENE_UI_PARENT, vivid::Vector2(vivid::GetWindowWidth() / 2, -vivid::GetWindowHeight() / 2)));
     m_SceneUIParent->SetState(CSceneUIParent::STATE::MOVE_ONE);
 }
 
@@ -163,7 +161,7 @@ void CSelectSkill::Finalize(void)
 {
     CCamera::GetInstance().Finalize();
     CSoundManager::GetInstance().Stop_BGM(BGM_ID::READY_BGM);
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
         if (m_SkillSelectIcon[i] != nullptr)
         {
@@ -239,7 +237,7 @@ void CSelectSkill::ChooseSkill(void)
     }
 
     //抽選
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
         if (!TempSkillNumList.empty())
         {
@@ -265,7 +263,7 @@ void CSelectSkill::ChooseSkill(void)
 
 void CSelectSkill::ResetChooseSkill(void)
 {
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
         m_ChooseSkillID[i] = SKILL_ID::MAX;
     }
@@ -280,10 +278,10 @@ void CSelectSkill::CreateSkillIcon(void)
     std::shared_ptr<CSkillName> SkillNameUI = nullptr;
     std::shared_ptr<CSkillIcon> SkillIconUI = nullptr;
 
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
         std::shared_ptr<CUI> ui = uim.Create(UI_ID::SKILL_NAME);
-        SkillNameUI = dynamic_pointer_cast<CSkillName>(ui);
+        SkillNameUI = std::dynamic_pointer_cast<CSkillName>(ui);
         if (SkillNameUI == nullptr) //ダウンキャストのチェック
         {
             ui->Delete();
@@ -295,7 +293,7 @@ void CSelectSkill::CreateSkillIcon(void)
 
         ui = uim.Create(UI_ID::SKILL_ICON);
 
-        SkillIconUI = dynamic_pointer_cast<CSkillIcon>(ui);
+        SkillIconUI = std::dynamic_pointer_cast<CSkillIcon>(ui);
         
         if (SkillIconUI == nullptr) //ダウンキャストのチェック
         {
@@ -313,7 +311,7 @@ void CSelectSkill::SetCursorID(void)
 {
     int CurrentPlayer = CDataManager::GetInstance().GetCurrentJoinPlayer();
 
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
         if (i < CurrentPlayer)
         {
@@ -321,7 +319,7 @@ void CSelectSkill::SetCursorID(void)
         }
         else
         {
-            m_CursorID[i] = UNIT_ID::NONE;
+            m_CursorID[i] = PLAYER_ID::NONE;
         }
     }
 
@@ -338,7 +336,7 @@ void CSelectSkill::CreateCursor(void)
         m_SkillCursorList.emplace_back(m_SkillSelectCursor);
         m_SkillSelectCursor = nullptr;
     }
-    m_SkillSelectCursor = dynamic_pointer_cast<CSkillCursor>(ui);
+    m_SkillSelectCursor = std::dynamic_pointer_cast<CSkillCursor>(ui);
 
     if (m_SkillSelectCursor == nullptr) //ダウンキャストのチェック
     {
@@ -402,7 +400,7 @@ void CSelectSkill::MoveCursor(void)
             {
                 //プレイヤーにスキルをセットする
                 SKILL_ID tempSkillID = m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))];
-                UNIT_ID tempPlayerID = m_CursorID[m_NowCursorID_Num];
+                PLAYER_ID tempPlayerID = m_CursorID[m_NowCursorID_Num];
 
                 CSkillManager::GetInstance().CreateSkill(tempSkillID, tempPlayerID);
 
@@ -411,8 +409,8 @@ void CSelectSkill::MoveCursor(void)
 
                 //まだ選択を終了していないプレイヤーがいる場合、次のプレイヤーのカーソルに切り替わる
                 m_NowCursorID_Num++;
-                if (m_NowCursorID_Num < (int)UNIT_ID::NONE &&
-                    m_CursorID[m_NowCursorID_Num] != UNIT_ID::NONE)
+                if (m_NowCursorID_Num < (int)PLAYER_ID::NONE &&
+                    m_CursorID[m_NowCursorID_Num] != PLAYER_ID::NONE)
                 {
                     m_NowCursorPosNum = 0;
 
@@ -458,7 +456,7 @@ void CSelectSkill::MoveCursor(void)
         }
 
     }
-    if (m_SkillInfomation != nullptr && !m_CursorPosNumList.empty() && m_NowCursorID_Num < (int)UNIT_ID::NONE && m_CursorID[m_NowCursorID_Num] != UNIT_ID::NONE)
+    if (m_SkillInfomation != nullptr && !m_CursorPosNumList.empty() && m_NowCursorID_Num < (int)PLAYER_ID::NONE && m_CursorID[m_NowCursorID_Num] != PLAYER_ID::NONE)
     {
         m_SkillInfomation->SetSkillInfo(m_ChooseSkillID[*(std::next(m_CursorPosNumList.begin(), m_NowCursorPosNum))]);
     }

@@ -1,7 +1,6 @@
 #include "launcher.h"
 #include "../bullet_manager/bullet_manager.h"
 #include "shot/basic/basic.h"
-#include "shot/shock_wave/shock_wave.h"
 #include "shot/dodge_ball/dodge_ball.h"
 
 /*
@@ -63,7 +62,6 @@ std::shared_ptr<CShot> CLauncher::Create(SHOT_ID shotID)
     switch (shotID)
     {
     case SHOT_ID::BASIC:                 shot = std::make_shared<CBasic>();         break;
-    case SHOT_ID::SHOCK_WAVE:            shot = std::make_shared<CShockWave>();     break;
     case SHOT_ID::DODGE_BALL:            shot = std::make_shared<CDodgeBall>();     break;
     case SHOT_ID::MAX:                                                              break;
     }

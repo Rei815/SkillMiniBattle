@@ -2,8 +2,9 @@
 #include "../skill.h"
 #include "../../../data_manager/data_manager.h"
 #include "../../../effect_manager/effect_manager.h"
-#include "../../../../../game/components/gimmick_component/daruma_fall_down_gimmick_component/daruma_fall_down_gimmick_component.h"
+#include "../../../object_manager/object_manager.h"
 
+class DarumaFallDownGimmickComponent;
 class CSkillOgreControl : public CSkill
 {
 public:
@@ -47,7 +48,7 @@ protected:
     static const CVector3       m_EffectPosition;
     static const float          m_effect_scale;
 
-    std::shared_ptr<CPlayer>    m_Target;
+    std::shared_ptr<CGameObject>    m_Target;
 
     CDataManager&       dm = CDataManager::GetInstance();
     CObjectManager&     om = CObjectManager::GetInstance();

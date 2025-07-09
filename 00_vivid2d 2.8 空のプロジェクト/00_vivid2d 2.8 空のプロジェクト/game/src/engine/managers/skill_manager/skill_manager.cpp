@@ -40,7 +40,7 @@ Initialize(void)
 {
     m_SkillList.clear();
 
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
         m_SetSkill[i] = nullptr;
     }
@@ -104,7 +104,7 @@ Finalize(void)
 
     m_SkillList.clear();
 
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+    for (int i = 0; i < (int)PLAYER_ID::NONE; i++)
     {
         m_SetSkill[i] = nullptr;
     }
@@ -115,7 +115,7 @@ Finalize(void)
  */
 void
 CSkillManager::
-CreateSkill(SKILL_ID skill_id, UNIT_ID player_id)
+CreateSkill(SKILL_ID skill_id, PLAYER_ID player_id)
 {
     std::shared_ptr<CSkill> skill = nullptr;
 
@@ -175,12 +175,15 @@ void
 CSkillManager::
 SetSkill(void)
 {
-    for (int i = 0; i < (int)UNIT_ID::NONE; i++)
+	auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
+
+    for(auto& player : allPlayers)
     {
-        if (m_SetSkill[i] != nullptr)
+		PLAYER_ID playerID = player->GetComponent<PlayerComponent>()->GetPlayerID();
+        if (m_SetSkill[(int)playerID] != nullptr)
         {
-            m_SetSkill[i]->SetPlayer(CUnitManager::GetInstance().GetPlayer((UNIT_ID)i));
-            m_SkillList.emplace_back(m_SetSkill[i]);
+            m_SetSkill[(int)playerID]->SetPlayer(player);
+            m_SkillList.emplace_back(m_SetSkill[(int)playerID]);
         }
     }
 }

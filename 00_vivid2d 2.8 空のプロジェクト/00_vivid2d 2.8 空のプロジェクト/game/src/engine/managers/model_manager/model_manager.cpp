@@ -101,15 +101,7 @@ int CModelManager::GetModelHandle(MODEL_ID id) const
 
     // 存在しない場合はエラーとして-1を返す
     return VIVID_DX_ERROR;
-}/*
- *  コンストラクタ
- */
-
-CModelManager::
-CModelManager(void)
-{
 }
-
 /*
  *  コピーコンストラクタ
  */

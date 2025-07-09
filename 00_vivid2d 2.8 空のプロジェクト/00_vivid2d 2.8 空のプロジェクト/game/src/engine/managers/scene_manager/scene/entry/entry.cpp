@@ -8,6 +8,8 @@
 #include "../../../ui_manager/ui_manager.h"
 
 #include "../../../../../game/components/player_component/player_id.h"
+#include "../../../../../game/components/player_component/player_component.h"
+#include "../../../../../engine/components/transform_component/transform_component.h"
 
 const   CVector3        CEntry::m_spawn_position = CVector3(0.0f, 100.0f, 0.0f);
 const   float           CEntry::m_respawn_height = -200.0f;
@@ -113,38 +115,32 @@ void CEntry::Update(void)
     //二人以上ならカウントダウンする
     if (m_PlayerNum >= m_min_player)
         m_GameStartTimer.Update();
-    CUnitManager::UNIT_LIST unitList = um.GetUnitList();
-    CUnitManager::UNIT_LIST entryList = unitList;
-    if (unitList.empty()) m_NextUnitID = PLAYER_ID::PLAYER1;
+    auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();
+    if (allPlayers.empty())
+        m_NextUnitID = PLAYER_ID::PLAYER1;
     else
     {
-        CUnitManager::UNIT_LIST::iterator it = unitList.begin();
-
-        //存在しているプレイヤーのIDを持っておく
-        while (it != unitList.end())
+        for (auto& player : allPlayers)
         {
-            std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(*it);
-            ++it;
-            if (player == nullptr) continue;
-            UNIT_ID unitID = player->GetPlayerID();
-            if (unitID == UNIT_ID::PLAYER1)
-                m_PlayerArray[0] = unitID;
-            if (unitID == UNIT_ID::PLAYER2)
-                m_PlayerArray[1] = unitID;
-            if (unitID == UNIT_ID::PLAYER3)
-                m_PlayerArray[2] = unitID;
-            if (unitID == UNIT_ID::PLAYER4)
-                m_PlayerArray[3] = unitID;
-
+			if (auto playerComp = player->GetComponent<PlayerComponent>())
+			{
+				PLAYER_ID playerID = playerComp->GetPlayerID();
+				if (playerID == PLAYER_ID::NONE) continue;
+				//プレイヤーがいればそのIDを登録
+				if (m_PlayerArray[(int)playerID] == PLAYER_ID::NONE)
+				{
+                    m_PlayerArray[(int)playerID] = playerID;
+                }
+			}
         }
-        m_NextUnitID = UNIT_ID::NONE;
+        m_NextUnitID = PLAYER_ID::NONE;
 
         //IDからいないプレイヤーを探す
         for (int i = 0; i < maxPlayerNum; i++)
         {
-            if (m_PlayerArray[i] == UNIT_ID::NONE)
+            if (m_PlayerArray[i] == PLAYER_ID::NONE)
             {
-                m_NextUnitID = (UNIT_ID)i;
+                m_NextUnitID = (PLAYER_ID)i;
                 break;
             }
         }
@@ -155,18 +151,13 @@ void CEntry::Update(void)
 
     CheckButtonDown();
 
-    CUnitManager::UNIT_LIST::iterator it = unitList.begin();
     //落ちても戻す
-    while (it != unitList.end())
+    for (auto& player : allPlayers)
     {
-        std::shared_ptr<CPlayer> player = dynamic_pointer_cast<CPlayer>(*it);
-
-        ++it;
-        if (!player) continue;
-
-        if (player->GetPosition().y < m_respawn_height)
+        if (auto transform = player->GetComponent<TransformComponent>())
         {
-            player->SetPosition(m_spawn_position);
+            if (transform->GetPosition().y < m_respawn_height)
+                transform->SetPosition(m_spawn_position);
         }
 
     }
@@ -177,14 +168,12 @@ void CEntry::Draw(void)
     m_BackGround.Draw();
     CEffectManager::GetInstance().Draw();
     CObjectManager::GetInstance().Draw();
-    CUnitManager::GetInstance().Draw();
 }
 
 void CEntry::Finalize(void)
 {
     m_BackGround.Finalize();
     IScene::Finalize();
-    CUnitManager::GetInstance().Finalize();
     CUIManager::GetInstance().Finalize();
     CObjectManager::GetInstance().Finalize();
     CEffectManager::GetInstance().Finalize();
@@ -199,10 +188,10 @@ void CEntry::CheckButtonHold(void)
     std::shared_ptr<CController> buttonHoldController = cm.GetSpecifiedButtonHoldController(BUTTON_ID::X);
     if (buttonHoldController)
     {
-        UNIT_ID unitID = buttonHoldController->GetPlayerID();
+        PLAYER_ID unitID = buttonHoldController->GetPlayerID();
 
         //プレイヤーがいなくなったらタイマーのリセット
-        if (unitID == UNIT_ID::NONE)
+        if (unitID == PLAYER_ID::NONE)
         {
             const int ActiveControllerNum = CDataManager::GetInstance().GetActiveControllerNum();
             for (int i = 0; i < ActiveControllerNum; i++)
@@ -230,7 +219,7 @@ void CEntry::CheckButtonHold(void)
                 std::shared_ptr<CController> dummy = cm.GetController(CONTROLLER_ID::DUMMY);
                 dummy->SetPlayerID(m_NextUnitID);
 
-                CUnitManager::GetInstance().Create(m_NextUnitID, m_spawn_position);
+                CObjectManager::GetInstance().Create(OBJECT_ID::PLAYER, m_spawn_position, m_NextUnitID);
                 m_PlayerNum++;
             }
 
@@ -244,15 +233,15 @@ void CEntry::CheckButtonHold(void)
     for (int i = 0; i < 5; i++)
     {
         controller = cm.GetController((CONTROLLER_ID)i);
-        UNIT_ID unitID = controller->GetPlayerID();
+        PLAYER_ID unitID = controller->GetPlayerID();
 
         //プレイヤーを操作できるコントローラーが長押ししていない
-        if (!controller->GetButtonHold(BUTTON_ID::X) && unitID != UNIT_ID::NONE)
+        if (!controller->GetButtonHold(BUTTON_ID::X) && unitID != PLAYER_ID::NONE)
         {
             resetGaugeFlag = true;
             m_HoldTimer[(int)controller->GetPlayerID()].Reset();
         }
-        if (controller->GetButtonHold(BUTTON_ID::X) && unitID != UNIT_ID::NONE)
+        if (controller->GetButtonHold(BUTTON_ID::X) && unitID != PLAYER_ID::NONE)
         {
             resetGaugeFlag = false;
             break;
@@ -269,11 +258,11 @@ void CEntry::CheckButtonDown(void)
     std::shared_ptr<CController> buttonDownController = cm.GetSpecifiedButtonDownController(BUTTON_ID::X);
     if (buttonDownController)
     {
-        if (buttonDownController->GetPlayerID() == UNIT_ID::NONE && m_NextUnitID != UNIT_ID::NONE)
+        if (buttonDownController->GetPlayerID() == PLAYER_ID::NONE && m_NextUnitID != PLAYER_ID::NONE)
         {
             m_WasPressd = true;
             buttonDownController->SetPlayerID(m_NextUnitID);
-            CObjectManager::GetInstance().Create(m_NextUnitID, m_spawn_position);
+            CObjectManager::GetInstance().Create(OBJECT_ID::PLAYER, m_spawn_position, m_NextUnitID);
             m_PlayerJoinUI->SetPlayer(m_NextUnitID, true);
         }
     }
@@ -283,28 +272,27 @@ void CEntry::CheckButtonDown(void)
 void CEntry::CheckButtonUp(void)
 {
     CControllerManager& cm = CControllerManager::GetInstance();
-    CUnitManager& um = CUnitManager::GetInstance();
 
     std::shared_ptr<CController> buttonUpController = cm.GetSpecifiedButtonUpController(BUTTON_ID::X);
 
     if (buttonUpController)
     {
-        UNIT_ID unitID = buttonUpController->GetPlayerID();
-        if (unitID == UNIT_ID::NONE || m_WasPressd)
+        PLAYER_ID playerID = buttonUpController->GetPlayerID();
+        if (playerID == PLAYER_ID::NONE || m_WasPressd)
         {
             m_WasPressd = false;
             return;
         }
-        float timer = m_HoldTimer[(int)unitID].GetTimer();
+        float timer = m_HoldTimer[(int)playerID].GetTimer();
         if (timer == 0.0f) return;
         //ボタンを離した時にm_exit_timeより長押ししてない場合プレイヤーを退出させる
         if (timer < m_exit_time)
         {
-            UNIT_ID deleteUnitID = buttonUpController->GetPlayerID();
-            um.Delete(deleteUnitID);
-            buttonUpController->SetPlayerID(UNIT_ID::NONE);
-            m_PlayerArray[(int)deleteUnitID] = UNIT_ID::NONE;
-            m_PlayerJoinUI->SetPlayer(deleteUnitID, false);
+            PLAYER_ID deletePlayerID = buttonUpController->GetPlayerID();
+			CObjectManager::GetInstance().DeletePlayer(deletePlayerID);
+            buttonUpController->SetPlayerID(PLAYER_ID::NONE);
+            m_PlayerArray[(int)deletePlayerID] = PLAYER_ID::NONE;
+            m_PlayerJoinUI->SetPlayer(deletePlayerID, false);
         }
     }
 

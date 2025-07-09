@@ -55,29 +55,29 @@ public:
     /*!
     *  @brief      準備
     */
-    virtual void    Ready(void);
+    void    Ready(void);
 
     /*!
     *  @brief      プレイ
     */
-    virtual void    Play(void);
+    void    Play(void);
 
     /*!
     *  @brief      待機
     */
-    virtual void    Wait(void);
+    void    Wait(void);
 
     /*!
     *  @brief      終了
     */
-    virtual void    Finish(void);
+    void    Finish(void);
 
     /*!
     *  @brief      振り向きフェイント
     */
-    virtual void    Feint(void);
+    void    Feint(void);
 
-    virtual void    OgreControlTurn(void);
+    void    OgreControlTurn(void);
 
 private:
 

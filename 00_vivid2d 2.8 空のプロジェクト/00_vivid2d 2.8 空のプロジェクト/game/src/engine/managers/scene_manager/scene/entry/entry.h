@@ -5,7 +5,6 @@
 #include "..\..\..\camera\camera.h"
 #include <list>
 #include "..\..\..\controller_manager\controller\controller.h"
-#include "..\..\..\unit_manager\unit\unit_id.h"
 #include "..\..\..\ui_manager\ui\skill_gauge\skill_gauge.h"
 #include "..\..\..\ui_manager\ui\game_bg\game_bg.h"
 #include "..\..\..\ui_manager\ui\player_join\player_join.h"
@@ -67,8 +66,8 @@ private:
     static const CVector3           m_stage_position;       //!< ステージの位置
     static const vivid::Vector2     m_gauge_position;       //!< ゲージの位置
     static const float              m_gauge_scale;          //!< ゲージの大きさ
-    UNIT_ID                         m_NextUnitID;           //!< 次に生成するプレイヤーのID
-    UNIT_ID                         m_PlayerArray[4];       //!< 存在しているプレイヤーのID
+    PLAYER_ID                       m_NextUnitID;           //!< 次に生成するプレイヤーのID
+    PLAYER_ID                         m_PlayerArray[4];       //!< 存在しているプレイヤーのID
     CTimer                          m_GameStartTimer;       //!< ゲーム開始までのタイマー
     CTimer                          m_HoldStartTimer;       //!< 長押しで開始するタイマー
     CTimer                          m_HoldTimer[5];         //!< 長押ししている時間

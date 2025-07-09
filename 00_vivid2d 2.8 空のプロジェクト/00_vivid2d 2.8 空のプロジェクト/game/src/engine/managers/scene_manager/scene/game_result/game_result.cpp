@@ -1,8 +1,8 @@
 #include "game_result.h"
 #include "..\..\scene_manager.h"
 #include "..\..\..\data_manager\data_manager.h"
-#include "..\..\..\game_object.h"
 #include "../../../controller_manager/controller_manager.h"
+#include "../../../ui_manager/ui_manager.h"
 
 CGameResult::CGameResult(void)
 {
