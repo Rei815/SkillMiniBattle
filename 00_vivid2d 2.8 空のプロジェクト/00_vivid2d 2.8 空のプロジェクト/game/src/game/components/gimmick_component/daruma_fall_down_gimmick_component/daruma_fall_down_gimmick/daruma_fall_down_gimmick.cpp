@@ -29,6 +29,7 @@ CDarumaFallDownGimmick::~CDarumaFallDownGimmick(void)
 }
 void CDarumaFallDownGimmick::Initialize(CGameObject* object)
 {
+	m_Object = object;
 }
 
 void CDarumaFallDownGimmick::Update(void)
@@ -83,6 +84,7 @@ void CDarumaFallDownGimmick::Ready()//U‚è•Ô‚è•û‚ÌÝ’è
 
 void CDarumaFallDownGimmick::Play()//U‚è•Ô‚é
 {
+	
 	//­‚µ‚¾‚¯U‚è•Ô‚é
 	if (m_Object->GetComponent<TransformComponent>()->GetRotation().y < 40)
 	{
@@ -163,4 +165,9 @@ void CDarumaFallDownGimmick::OgreControlTurn()//ƒXƒLƒ‹A‹S‘€ì‚ðŽg‚Á‚½‚Æ‚«‚Ìˆ—
 	m_Timer.SetUp(0.0f);
 	m_TurnAngle = m_default_turn_angle;
 	m_OgreState = OGRE_STATE::PLAY;
+}
+
+OGRE_STATE CDarumaFallDownGimmick::GetState()
+{
+	return m_OgreState;
 }

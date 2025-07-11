@@ -2,6 +2,7 @@
 #include "../../../sound_manager/sound_manager.h"
 #include "../../../../components/model_component/model_component.h"
 #include "../../../../../game/components/player_component/player_component.h"
+#include <engine/managers/object_manager/object_manager.h>
 
 const float CSkillMimicry::m_cool_time = 10.0f;
 const float CSkillMimicry::m_duration_time = 5.0f;
@@ -26,14 +27,6 @@ void CSkillMimicry::Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
 
-	m_GameObject->AddComponent<ModelComponent>(MODEL_ID::SKILL_MIMICRY_OBJ);
-	// TransformComponentを取得し、初期設定を行う
-	if (auto transformComp = m_GameObject->GetComponent<TransformComponent>())
-	{
-		transformComp->SetScale(CVector3(m_model_scale, m_model_scale, m_model_scale));
-		transformComp->SetRotation(CVector3(m_model_rot.x, m_model_rot.y, m_model_rot.z));
-		m_TransformComponent = transformComp;
-	}
 }
 
 void CSkillMimicry::Update(void)
@@ -55,7 +48,10 @@ void CSkillMimicry::Update(void)
 		break;
 	}
 
-	m_TransformComponent->SetPosition(m_TransformComponent->GetPosition() + m_model_pos);
+	if (!m_GameObject) return;
+	auto transform = m_GameObject->GetComponent<TransformComponent>();
+
+	transform->SetPosition(m_Player.lock()->GetComponent<TransformComponent>()->GetPosition() + m_model_pos);
 	m_GameObject->Update(vivid::GetDeltaTime());
 }
 
@@ -79,12 +75,20 @@ void CSkillMimicry::Action()
 	if (m_State != SKILL_STATE::WAIT)	return;
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::MIMICRY, false);
+	m_GameObject = CObjectManager::GetInstance().Create(OBJECT_ID::SKILL_MIMICRY_OBJECT, m_model_pos);
+	// TransformComponentを取得し、初期設定を行う
+	if (auto transformComp = m_GameObject->GetComponent<TransformComponent>())
+	{
+		transformComp->SetScale(CVector3(m_model_scale, m_model_scale, m_model_scale));
+		transformComp->SetRotation(CVector3(m_model_rot.x, m_model_rot.y, m_model_rot.z));
+	}
 
-	auto PlayerComp = m_GameObject->GetComponent<PlayerComponent>();
+	auto PlayerComp = m_Player.lock()->GetComponent<PlayerComponent>();
+	auto transform = m_GameObject->GetComponent<TransformComponent>();
 	PlayerComp->MulMoveSpeedRate(m_mimicry_speed_rate);
 	PlayerComp->StartInvincible(m_duration_time);
 	m_State = SKILL_STATE::ACTIVE;
-	CVector3 effect_position = m_TransformComponent->GetPosition();
+	CVector3 effect_position = transform->GetPosition();
 
 
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, effect_position, CVector3(), m_effect_scale);
@@ -96,7 +100,7 @@ void CSkillMimicry::Action()
  */
 void CSkillMimicry::ActionEnd(void)
 {
-	auto PlayerComp = m_GameObject->GetComponent<PlayerComponent>();
+	auto PlayerComp = m_Player.lock()->GetComponent<PlayerComponent>();
 
 	PlayerComp->DivMoveSpeedRate(m_mimicry_speed_rate);
 }

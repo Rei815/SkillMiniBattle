@@ -33,6 +33,7 @@ CBeltConveyorGimmick::~CBeltConveyorGimmick(void)
 
 void CBeltConveyorGimmick::Initialize(CGameObject* object)
 {
+	m_Object = object;
 	m_Timer.SetUp(m_mid_belt_speed_time);
 	m_BeltConveyorForward = m_Object->GetComponent<TransformComponent>()->GetTransform().GetForwardVector();
 

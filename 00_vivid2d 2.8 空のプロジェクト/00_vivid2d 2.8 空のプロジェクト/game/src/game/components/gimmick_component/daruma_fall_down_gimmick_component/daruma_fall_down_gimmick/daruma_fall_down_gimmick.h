@@ -79,6 +79,13 @@ public:
 
     void    OgreControlTurn(void);
 
+    /*!
+     *  @brief      状態を取得
+     *
+     *  @return     状態
+     */
+    OGRE_STATE      GetState();
+
 private:
 
     static const float      m_default_ready_time;   //デフォルトの鬼の準備時間

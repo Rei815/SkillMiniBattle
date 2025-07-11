@@ -87,6 +87,16 @@ float CVector3::Length(const CVector3& v)
 	return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
+float CVector3::LengthSq(void)
+{
+	return LengthSq(*this);
+}
+
+float CVector3::LengthSq(const CVector3& v)
+{
+	return (v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
 /*
  *  ì‡êœ
  */

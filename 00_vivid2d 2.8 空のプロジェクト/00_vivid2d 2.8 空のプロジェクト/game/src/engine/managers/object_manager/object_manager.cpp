@@ -79,6 +79,7 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
     // CGameObjectのインスタンスを生成
     auto gameObject = std::make_shared<CGameObject>();
     gameObject->SetID(id);
+    gameObject->SetTag(GAME_OBJECT_TAG::UNTAGGED);
     // 共通のTransformComponentを設定
     auto transformComp = gameObject->GetComponent<TransformComponent>();
     transformComp->SetTransform(transform);
@@ -92,9 +93,10 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
     case OBJECT_ID::FALL_FLOOR_SQUARE:
     case OBJECT_ID::FALL_FLOOR_TRIANGLE:
     case OBJECT_ID::FALL_FLOOR_CROSS:
-        gameObject->AddComponent<ModelComponent>(MODEL_ID::FALLOUT_FLOOR);
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::FALLOUT_FLOOR, true);
         gameObject->AddComponent<FallGimmickComponent>(id);
         gameObject->AddComponent<MeshColliderComponent>();
+        gameObject->SetTag(GAME_OBJECT_TAG::FLOOR);
         break;
     case OBJECT_ID::CANNON:
         gameObject->AddComponent<ModelComponent>(MODEL_ID::CANNON);
@@ -110,14 +112,19 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
     case OBJECT_ID::DODGEBALL_STAGE:
         gameObject->AddComponent<ModelComponent>(MODEL_ID::DODGEBALL_STAGE);
         gameObject->AddComponent<MeshColliderComponent>();
+        gameObject->SetTag(GAME_OBJECT_TAG::FLOOR);
+
         break;
     case OBJECT_ID::DARUMA_FALLDOWN_STAGE:
         gameObject->AddComponent<ModelComponent>(MODEL_ID::DARUMA_STAGE);
         gameObject->AddComponent<MeshColliderComponent>();
+        gameObject->SetTag(GAME_OBJECT_TAG::FLOOR);
         break;
     case OBJECT_ID::BELT_CONVEYOR:
         gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_STAGE);
         gameObject->AddComponent<MeshColliderComponent>();
+        gameObject->SetTag(GAME_OBJECT_TAG::FLOOR);
+
         break;
     case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_1:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_1);
     case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_2:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_2);
@@ -126,10 +133,17 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
     case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_5:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_5);
     case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_6:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_6);
         gameObject->AddComponent<MeshColliderComponent>();
+        gameObject->SetTag(GAME_OBJECT_TAG::FLOOR);
+
         break;
     case OBJECT_ID::SKILL_WALL:
         gameObject->AddComponent<ModelComponent>(MODEL_ID::SKILL_WALL);
         gameObject->AddComponent<MeshColliderComponent>();
+        gameObject->SetTag(GAME_OBJECT_TAG::WALL);
+
+        break;
+    case OBJECT_ID::SKILL_MIMICRY_OBJECT:
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::SKILL_MIMICRY_OBJ);
         break;
     case OBJECT_ID::SKILL_BARRIER_OBJECT:
         gameObject->AddComponent<ModelComponent>(MODEL_ID::SKILL_BARRIER_COLLIDER);
@@ -137,7 +151,7 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
         break;
     case OBJECT_ID::PLAYER:
     {
-        gameObject->AddComponent<ModelComponent>(MODEL_ID::PLAYER);
+        gameObject->AddComponent<ModelComponent>(MODEL_ID::PLAYER, true);
         gameObject->AddComponent<MeshColliderComponent>();
         gameObject->AddComponent<PlayerComponent>(player_id,transform);
         break;
@@ -191,7 +205,7 @@ std::shared_ptr<CGameObject> CObjectManager::CheckHitLineForAll(
         }
 
         // オブジェクトからColliderComponentを取得
-        auto collider = object->GetComponent<ColliderComponent>();
+        auto collider = object->GetComponent<MeshColliderComponent>();
 
         // コライダーがあり、かつ有効な場合のみチェック
         if (collider && collider->IsEnabled())
@@ -234,17 +248,17 @@ CheckHitBullet(std::shared_ptr<IBullet> bullet)
         }
 
         // --- 「弾」と「プレイヤー」の当たり判定の例 ---
-        if (object->GetTag() == GameObjectTag::PLAYER)
+        if (object->GetID() == OBJECT_ID::PLAYER)
         {
 
             // B(プレイヤー)のColliderを取得
-            auto targetCollider = object->GetComponent<ColliderComponent>();
+            auto targetCollider = object->GetComponent<MeshColliderComponent>();
             // B(プレイヤー)のColliderを取得
             auto targetTransform = object->GetComponent<TransformComponent>();
             // B(プレイヤー)のColliderを取得
             auto target = object->GetComponent<PlayerComponent>();
             // B(プレイヤー)のColliderを取得
-            auto bulletCollider = bullet->GetComponent<ColliderComponent>();
+            auto bulletCollider = bullet->GetComponent<MeshColliderComponent>();
 
             if (targetCollider && targetCollider->IsEnabled())
             {
@@ -252,7 +266,7 @@ CheckHitBullet(std::shared_ptr<IBullet> bullet)
 
                 CollisionResult result;
                 // 弾の形状に応じて、ターゲットのコライダーに問い合わせる
-                switch (bullet->GetColliderID()) // GetColliderIDはBulletComponentが持つと仮定
+                switch (bullet->GetColliderID())
                 {
                 case COLLIDER_ID::SPHERE:
                     isHit = targetCollider->CheckHitSphere(bullet->GetPosition(), bullet->GetRadius(), result); break;

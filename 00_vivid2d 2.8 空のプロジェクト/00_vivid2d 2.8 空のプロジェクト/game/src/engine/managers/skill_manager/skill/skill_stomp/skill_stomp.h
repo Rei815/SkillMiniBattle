@@ -1,6 +1,6 @@
 #pragma once
 #include "../skill.h"
-#include "../../../../../engine/core/game_object/game_object.h"
+#include "../../../../../engine/managers/bullet_manager/bullet/bullet.h"
 #include "../../../../managers/effect_manager/effect/effect.h"
 class CSkillStomp : public CSkill
 {
@@ -42,7 +42,7 @@ public:
 private:
     static const float              m_cool_time;    //!< クールタイム
     static const float              m_effect_scale; //!< エフェクト拡大率
-
-    std::shared_ptr<CGameObject>    m_GameObject;   //!< エンティティ
+        
+    std::shared_ptr<IBullet>        m_Bullet;       //!< 弾
     std::shared_ptr<IEffect>        m_SkillEffect;  //!< エフェクト
 };

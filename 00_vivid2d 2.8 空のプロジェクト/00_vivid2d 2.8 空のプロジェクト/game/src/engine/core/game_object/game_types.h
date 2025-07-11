@@ -1,10 +1,11 @@
 #pragma once
 
-enum class GameObjectTag
+enum class GAME_OBJECT_TAG
 {
     UNTAGGED, // 未分類
     PLAYER,
-    FLOOR,    // ★全ての床にこのタグを使う
+    FLOOR,    
+    WALL,   
     GIMMICK,
     BULLET,
 };

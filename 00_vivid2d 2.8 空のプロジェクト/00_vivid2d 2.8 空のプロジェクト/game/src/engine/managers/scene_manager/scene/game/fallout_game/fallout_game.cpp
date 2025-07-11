@@ -56,6 +56,7 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 {
 	CGame::Initialize(scene_id);
 	CCamera::GetInstance().Initialize();
+
 	m_BackGround.Initialize("data\\Textures\\fall_out_bg.png");
 
 	//タイマーの初期化

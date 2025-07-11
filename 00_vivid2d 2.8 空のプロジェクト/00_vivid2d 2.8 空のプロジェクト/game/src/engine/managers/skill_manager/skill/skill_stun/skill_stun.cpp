@@ -62,7 +62,7 @@ void CSkillStun::Action()
 	CSoundManager::GetInstance().Play_SE(SE_ID::STUN, false);
 	std::list<std::shared_ptr<CGameObject>>TopPlayerList;
 	auto allPlayers = om.GetObjectsWithComponent<PlayerComponent>();
-	TopPlayerList.emplace_back(allPlayers.begin()->get());
+	TopPlayerList.emplace_back(*allPlayers.begin());
 
 	for (auto& targetPlayerObject : allPlayers)
 	{

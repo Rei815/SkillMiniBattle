@@ -27,6 +27,7 @@ CDodgeBallGimmick::~CDodgeBallGimmick(void)
 
 void CDodgeBallGimmick::Initialize(CGameObject* object)
 {
+	m_Object = object;
 	m_Timer.SetUp(m_spawn_time);
 
 	m_NowState = CANNON_STATE::SPAWN;

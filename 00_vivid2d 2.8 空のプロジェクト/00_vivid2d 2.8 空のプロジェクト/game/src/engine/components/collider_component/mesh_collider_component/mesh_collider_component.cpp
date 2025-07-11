@@ -1,6 +1,7 @@
 #include "mesh_collider_component.h"
 #include "../../../core/game_object/game_object.h"
 #include "../../model_component/model_component.h" // ModelComponentからハンドルをもらう
+#include "../../transform_component/transform_component.h" // ModelComponentからハンドルをもらう
 
 MeshColliderComponent::MeshColliderComponent()
     : m_ModelHandle(-1) // DxLibのハンドルは-1で初期化するのが一般的
@@ -9,6 +10,7 @@ MeshColliderComponent::MeshColliderComponent()
 
 void MeshColliderComponent::OnAttach(CGameObject* owner)
 {
+    m_Owner = owner; // オーナーを保存
     // 自分を所有しているGameObjectにアタッチされているModelComponentを探す
     auto modelComp = owner->GetComponent<ModelComponent>();
     if (modelComp)
@@ -31,9 +33,7 @@ void MeshColliderComponent::OnAttach(CGameObject* owner)
 
 void MeshColliderComponent::Update(float delta_time, CGameObject* owner)
 {
-	// MeshColliderComponentは特に更新処理が必要ないので、空実装
-	// ただし、必要に応じてここに何か処理を追加することも可能
-	// 例えば、モデルの位置や回転に合わせてコライダーを更新するなど
+    MV1RefreshCollInfo(m_ModelHandle);
 }
 
 bool MeshColliderComponent::CheckHitLine(const CVector3& startPos, const CVector3& endPos) const

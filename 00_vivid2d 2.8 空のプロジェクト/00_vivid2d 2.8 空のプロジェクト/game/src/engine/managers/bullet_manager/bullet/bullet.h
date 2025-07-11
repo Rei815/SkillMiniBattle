@@ -145,4 +145,5 @@ protected:
     BULLET_ID                           m_BulletID;             //!< ’e‚ÌŽí—Þ
     COLLIDER_ID                         m_ColliderID;           //!< ”»’èID
     FACTION_CATEGORY                    m_Category;             //!< Š‘®
+	float							    m_Radius;               //!< ”¼Œa
 };

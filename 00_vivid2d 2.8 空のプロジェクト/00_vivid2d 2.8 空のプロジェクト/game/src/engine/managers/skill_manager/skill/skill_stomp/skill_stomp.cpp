@@ -28,7 +28,6 @@ CSkillStomp::
 Initialize(SKILL_ID skill_id)
 {
 	CSkill::Initialize(skill_id);
-	m_GameObject->AddComponent<ModelComponent>(MODEL_ID::STOMP_COLL);
 
 }
 
@@ -40,8 +39,6 @@ CSkillStomp::
 Update(void)
 {
 	CSkill::Update();
-	m_GameObject->Update(vivid::GetDeltaTime());
-
 }
 
 /*!
@@ -81,7 +78,9 @@ Action()
 
 	CSoundManager::GetInstance().Play_SE(SE_ID::STOMP, false);
 	auto transform = m_Player.lock()->GetComponent<TransformComponent>();
-	CBulletManager::GetInstance().Create(m_Player.lock()->GetCategory(), BULLET_ID::SHOCK_WAVE, transform->GetPosition(), CVector3::UP);
+	m_Bullet = CBulletManager::GetInstance().Create(m_Player.lock()->GetCategory(), BULLET_ID::SHOCK_WAVE, transform->GetPosition(), CVector3::UP);
+	m_Bullet->AddComponent<ModelComponent>(MODEL_ID::STOMP_COLL);
+
 	CEffectManager::GetInstance().Create(EFFECT_ID::SHOCK_WAVE, transform->GetPosition());
 	m_Timer.SetUp(m_cool_time);
 	m_State = SKILL_STATE::COOLDOWN;

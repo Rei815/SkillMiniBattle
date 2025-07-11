@@ -68,7 +68,13 @@ CMatrix CMatrix::Translate(const CVector3& translate)
 
 CMatrix CMatrix::Rotate(const CVector3& rotate)
 {
-    return DxLib::MMult(DxLib::MMult( DxLib::MGetRotZ(rotate.z), DxLib::MGetRotX(rotate.x)), DxLib::MGetRotY(rotate.y));
+    // 度数法で受け取った角度をラジアンに変換します
+    float radX = rotate.x * DX_PI_F / 180.0f;
+    float radY = rotate.y * DX_PI_F / 180.0f;
+    float radZ = rotate.z * DX_PI_F / 180.0f;
+
+    // ラジアンに変換した値をDXライブラリの関数に渡します
+    return DxLib::MMult(DxLib::MMult(DxLib::MGetRotZ(radZ), DxLib::MGetRotX(radX)), DxLib::MGetRotY(radY));
 }
 
 CMatrix CMatrix::Scale(const CVector3& scale)

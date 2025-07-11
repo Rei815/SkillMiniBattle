@@ -76,6 +76,22 @@ public:
 	static float        Length(const CVector3& v);
 
 	/*!
+	 *  @brief		ベクトルの大きさの二乗を取得
+	 *
+	 *  @return		ベクトルの大きさの二乗
+	 */
+	float               LengthSq(void);
+
+	/*!
+	 *  @brief		ベクトルの大きさの二乗を取得
+	 *
+	 *  @param[in]	v   ベクトルクラス
+	 *
+	 *  @return		ベクトルの大きさの二乗
+	 */
+	static float        LengthSq(const CVector3& v);
+
+	/*!
 	 *  @brief		2つのベクトルの内積<br>
 	 *				dot = vA・vB
 	 *

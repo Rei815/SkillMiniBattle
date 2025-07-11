@@ -169,7 +169,7 @@ public:
     /*!
      *  @brief      アルファ値を元に戻す
      */
-    void            RevertAlpha(float alpha);
+    void            RevertAlpha(float alpha = 1.0f);
 
     void            SetAlpha(float alpha);
     /*!
@@ -217,6 +217,7 @@ public:
      *  @param[in]  invincible_time    無敵時間
      */
     void            StartInvincible(float invincible_time);
+
 private:
     // IUnitとCPlayerから持ってきたメソッド
     void Control();
@@ -235,7 +236,8 @@ private:
      */
     void    Defeat(void);
 
-
+    // 壁との当たり判定を行うヘルパー関数を追加
+    void HandleWallCollisions(float delta_time, CGameObject* owner);
     static const float              m_radius;                                   //!< 半径
     static const float              m_height;                                   //!< 高さ
     static const float              m_model_scale;                              //!< モデルの大きさ
@@ -257,7 +259,6 @@ private:
     std::shared_ptr<CSkill>         m_Skill;            //!< スキル
     std::shared_ptr<CController>    m_Controller;       //!< コントローラー
     CGameObject*                    m_GroundObject;     //!< 接地した床のオブジェクト
-    CGameObject*                    m_Owner;
     PLAYER_ID                       m_PlayerID;         //!< プレイヤーID
     PLAYER_STATE                    m_PlayerState;      //!< 状態ID
     CTimer                          m_InvincibleTimer;  //!< 無敵時間タイマー

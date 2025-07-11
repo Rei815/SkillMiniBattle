@@ -50,7 +50,5 @@ protected:
     static const float          m_model_scale;
 
     std::shared_ptr<CGameObject>        m_GameObject;   //!< エンティティ
-    std::shared_ptr<TransformComponent> m_TransformComponent;   //!< キャッシュ用コンポーネント
-
     std::shared_ptr<IEffect>            m_SkillEffect;
 };

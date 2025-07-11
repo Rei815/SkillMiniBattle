@@ -3,6 +3,7 @@
 #include "../../launcher/launcher.h"
 #include "../../../components/model_component/model_component.h"
 #include "../../../components/transform_component/transform_component.h"
+#include <engine/components/collider_component/mesh_collider_component/mesh_collider_component.h>
 const float           IBullet::m_life_time = 4.0f;
 
 /*
@@ -10,7 +11,7 @@ const float           IBullet::m_life_time = 4.0f;
  */
 IBullet::IBullet(COLLIDER_ID collider_id)
     : m_Velocity(CVector3(CVector3::ZERO))
-    , m_Color(0xffffffff)
+    , m_Color(0xff0000ff)
     , m_LifeTimer(0)
     , m_ColliderID(collider_id)
     , m_Power(1.0f)
@@ -32,8 +33,10 @@ void IBullet::Initialize(FACTION_CATEGORY category, CShot::BulletParameters* bul
 {
     m_Velocity = direction * bulletParams->speed;
     m_GameObject = std::make_shared<CGameObject>();
-    m_GameObject->AddComponent<ModelComponent>(MODEL_ID::BULLET);
+    m_GameObject->AddComponent<ModelComponent>(MODEL_ID::BULLET, true);
+    m_GameObject->AddComponent<MeshColliderComponent>();
     m_Category = category;
+	m_Radius = bulletParams->radius;
     // TransformComponentを取得し、初期設定を行う
     if (auto transform = m_GameObject->GetComponent<TransformComponent>())
     {
@@ -72,13 +75,16 @@ void IBullet::Update(void)
 {
     m_LifeTimer.Update();
 
-    m_TransformComponent->Translate(m_Velocity);
+    // 経過時間を取得
+    float deltaTime = vivid::GetDeltaTime();
+
+    m_TransformComponent->Translate(m_Velocity * deltaTime);
 
     if (m_LifeTimer.Finished())
     {
         Delete();
     }
-    m_GameObject->Update(vivid::GetDeltaTime());
+    m_GameObject->Update(deltaTime);
 }
 
 /*
@@ -164,14 +170,7 @@ BULLET_ID IBullet::GetID()
 
 float IBullet::GetRadius()
 {
-    // キャッシュしておいたTransformComponentに問い合わせる
-    if (m_TransformComponent)
-    {
-        // TransformComponentが持つscaleのx成分を、弾の半径として返す
-        // 球なので、x,y,zは同じ
-        return m_TransformComponent->GetScale().x;
-    }
-    return 0.0f;
+    return m_Radius;
 }
 
 int IBullet::GetModelHandle(void) const

@@ -23,4 +23,6 @@ public:
     // コンポーネントがエンティティからデタッチされるときに呼ばれる終了処理
     // リソースの解放などを行う
     virtual void OnDetach(CGameObject* owner) { /* デフォルトでは何もしない */ }
+protected:
+	CGameObject* m_Owner = nullptr; // このコンポーネントがアタッチされている GameObject のポインタ
 };

@@ -81,13 +81,9 @@ Update(void)
 	if (m_Angle > 360)
 		m_Angle = 0;
 
-	float rad = DEG_TO_RAD(m_PosAngle);
-
-	float _rad = DEG_TO_RAD(m_Angle);
-
 	//s—ñ‚Ìì¬
 	//‰ñ“]Œã‚ÉˆÚ“®‚µAÄ“x‰ñ“]‚³‚¹‚é
-	m_Matrix = CMatrix::Rotate(CVector3(0.0f, _rad, 0.0f)) * CMatrix::Translate(m_Transform.position) * CMatrix::Rotate(CVector3(0.0f, rad, 0.0f));
+	m_Matrix = CMatrix::Rotate(CVector3(0.0f, m_Angle, 0.0f)) * CMatrix::Translate(m_Transform.position) * CMatrix::Rotate(CVector3(0.0f, m_PosAngle, 0.0f));
 }
 
 /*

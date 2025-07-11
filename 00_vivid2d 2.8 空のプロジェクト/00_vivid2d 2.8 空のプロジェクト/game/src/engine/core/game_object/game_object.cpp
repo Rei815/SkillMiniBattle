@@ -1,6 +1,8 @@
 #include "game_object.h"
 #include "../../components/transform_component/transform_component.h"
 #include <engine/components/model_component/model_component.h>
+#include <game/components/player_component/player_component.h>
+#include <engine/components/collider_component/mesh_collider_component/mesh_collider_component.h>
 
 CGameObject::CGameObject()
     : m_IsActive(true)

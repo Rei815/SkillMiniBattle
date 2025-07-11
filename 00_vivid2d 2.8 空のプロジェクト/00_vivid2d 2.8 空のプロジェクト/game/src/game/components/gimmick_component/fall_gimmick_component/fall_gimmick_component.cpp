@@ -60,20 +60,19 @@ void FallGimmickComponent::OnAttach(CGameObject* owner)
     // 各タイマーをセットアップ
     m_ReturnTimer.SetUp(m_ReturnTime);
 
-    auto FileName = m_file_name_list[static_cast<int>(m_MarkID)];
+    auto& FileName = m_file_name_list[static_cast<int>(m_MarkID)];
     vivid::LoadTexture(FileName);
 
     int grHandle = vivid::core::FindLoadedTexture(FileName);
 
     auto model = owner->GetComponent<ModelComponent>();
-    MV1SetTextureGraphHandle(model->GetHandle(), 0, grHandle, true);
+    DxLib::MV1SetTextureGraphHandle(model->GetHandle(), 0, grHandle, true);
 
     //モデルを半透明に変更
     DxLib::COLOR_F color = model->GetMaterialColor(0);
     //アルファ値をクリアし、100を入れる
-    color.a /= 2;
+    color.a = 0.5f;
     model->SetMaterialColor(0, color);
-    owner->SetTag(GameObjectTag::FLOOR);
 }
 
 void FallGimmickComponent::Update(float delta_time, CGameObject* owner)

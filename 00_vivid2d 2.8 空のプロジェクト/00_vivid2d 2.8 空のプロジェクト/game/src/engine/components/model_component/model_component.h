@@ -7,20 +7,22 @@ class TransformComponent;
 
 class ModelComponent : public IComponent
 {
-private:
-    int m_ModelHandle; // CModelのshared_ptrの代わりに、ハンドル(int)を直接保持
-    float m_Alpha;     // 透明度
 
 public:
-    ModelComponent(MODEL_ID id = MODEL_ID::MAX);
+    ModelComponent(MODEL_ID id = MODEL_ID::MAX, bool IsDuplicate = false);
     ~ModelComponent() override = default;
     // --- 更新処理 ---
     void Update(float delta_time, CGameObject* owner) override {}
     void Draw(const CGameObject* owner) const;
 
+    void SetModelHandle(int handle);
     // このコンポーネントが保持しているハンドルを返す
     int GetHandle() const;
     void SetMaterialColor(int material_index, const DxLib::COLOR_F& color);
     DxLib::COLOR_F GetMaterialColor(int material_index);
     void SetAlpha(float alpha);
+private:
+    int m_ModelHandle; // CModelのshared_ptrの代わりに、ハンドル(int)を直接保持
+    float m_Alpha;     // 透明度
+    bool m_IsDuplicated;
 };

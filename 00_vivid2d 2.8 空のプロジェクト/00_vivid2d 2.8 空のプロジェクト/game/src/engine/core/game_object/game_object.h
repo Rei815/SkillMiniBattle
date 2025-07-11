@@ -113,15 +113,15 @@ public:
     OBJECT_ID GetID() const { return m_Id; }
 
     // --- タグ管理メソッド ---
-    void SetTag(GameObjectTag tag) { m_Tag = tag; }
-    GameObjectTag GetTag() const { return m_Tag; }
+    void SetTag(GAME_OBJECT_TAG tag) { m_Tag = tag; }
+    GAME_OBJECT_TAG GetTag() const { return m_Tag; }
 
     // --- タグ管理メソッド ---
     void SetCategory(FACTION_CATEGORY category) { m_Category = category; }
     FACTION_CATEGORY GetCategory() const { return m_Category; }
 protected:
     bool                m_IsActive;
-    GameObjectTag       m_Tag; // タグを保持するメンバー変数
+    GAME_OBJECT_TAG       m_Tag; // タグを保持するメンバー変数
     OBJECT_ID           m_Id; // オブジェクトのIDを保持
     FACTION_CATEGORY    m_Category;
 private:

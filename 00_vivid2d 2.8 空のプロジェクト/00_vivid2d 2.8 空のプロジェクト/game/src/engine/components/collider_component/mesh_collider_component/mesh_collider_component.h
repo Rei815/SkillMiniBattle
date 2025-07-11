@@ -22,5 +22,6 @@ public:
     bool CheckHitCapsule(const CVector3& posA, const CVector3& posB, float radius, CVector3& out_hitPosition) const override;
 
 private:
+
     int m_ModelHandle; // 当たり判定に使用するモデルのハンドル
 };

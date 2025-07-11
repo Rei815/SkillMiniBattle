@@ -151,6 +151,7 @@ void CSkill::Finalize(void)
  */
 void CSkill::SetPlayer(std::shared_ptr<CGameObject> player)
 {
+	m_Player = player;
 	CUIManager& uim = CUIManager::GetInstance();
 	std::shared_ptr<CUI> temp;
 	temp = uim.Create(UI_ID::SKILL_ICON);
@@ -169,7 +170,6 @@ void CSkill::SetPlayer(std::shared_ptr<CGameObject> player)
 		temp->Delete();
 
 	auto PlayerComp = m_Player.lock()->GetComponent<PlayerComponent>();
-	m_Player = player;
 	PlayerComp->SetSkill(shared_from_this());
 
 	m_PlayerID = PlayerComp->GetPlayerID();

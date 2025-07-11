@@ -21,6 +21,7 @@ CModelManager::CModelManager()
     m_StringToIdMap["OGRE"] = MODEL_ID::OGRE;
     m_StringToIdMap["FALLOUT_FLOOR"] = MODEL_ID::FALLOUT_FLOOR;
     m_StringToIdMap["DODGEBALL_STAGE"] = MODEL_ID::DODGEBALL_STAGE;
+    m_StringToIdMap["DARUMA_STAGE"] = MODEL_ID::DARUMA_STAGE;
     m_StringToIdMap["BELT_CONVEYOR_STAGE"] = MODEL_ID::BELT_CONVEYOR_STAGE;
     m_StringToIdMap["BELT_CONVEYOR_OBSTRUCTION_1"] = MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_1;
     m_StringToIdMap["BELT_CONVEYOR_OBSTRUCTION_2"] = MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_2;
@@ -32,7 +33,6 @@ CModelManager::CModelManager()
     m_StringToIdMap["SKILL_MIMICRY_OBJ"] = MODEL_ID::SKILL_MIMICRY_OBJ;
     m_StringToIdMap["SKILL_WALL"] = MODEL_ID::SKILL_WALL;
     m_StringToIdMap["STOMP_COLL"] = MODEL_ID::STOMP_COLL;
-    // ...
 
     // --- 準備2：CSVローダーのインスタンスを作成 ---
      CCSVLoader csvLoader;
