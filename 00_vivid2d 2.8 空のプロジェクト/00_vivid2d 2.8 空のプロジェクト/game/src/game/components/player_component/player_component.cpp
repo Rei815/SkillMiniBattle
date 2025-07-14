@@ -9,8 +9,8 @@
 const float             PlayerComponent::m_radius = 50.0f;
 const float             PlayerComponent::m_height = 70.0f;
 const float             PlayerComponent::m_model_scale = 0.33f;
-const float             PlayerComponent::m_move_speed = 45.0f;
-const float             PlayerComponent::m_jump_power = 1800.0f;
+const float             PlayerComponent::m_move_speed = 40.0f;
+const float             PlayerComponent::m_jump_power = 1600.0f;
 const float             PlayerComponent::m_fly_away_speed = 2400.0f;
 const float             PlayerComponent::m_max_life = 3.0f;
 const float             PlayerComponent::m_max_invincible_time = 1.0f;
@@ -54,6 +54,7 @@ PlayerComponent::PlayerComponent(PLAYER_ID id, CTransform transform)
     , m_Alpha(0.0f)
     , m_DefeatFlag(false)
     , m_Gravity(m_gravity)
+	, m_IsGround(false)
     , m_GroundObject(nullptr)
 {
 }
@@ -375,14 +376,13 @@ void PlayerComponent::Control(void)
 
 void PlayerComponent::Move(float delta_time)
 {
+	if (m_Controller->GetID() == CONTROLLER_ID::DUMMY) return; // ダミーコントローラーは無視
     // --- 1. 物理計算（このフレームの速度を決定） ---
     // ※ このセクションは一度だけ実行するのが重要です
 
     // a. ジャンプや移動の力（一度だけ加わる力）を速度に加算
     m_Velocity += m_Accelerator;
 
-    // b. 重力など（継続的に加わる力）を、時間に応じて速度に加算
-    m_Velocity += m_Gravity * delta_time;
     m_Velocity += m_AffectedVelocity * delta_time;
 
 
@@ -391,20 +391,16 @@ void PlayerComponent::Move(float delta_time)
     auto transform = m_Owner->GetComponent<TransformComponent>();
     if (!transform) return;
 
-    transform->Translate(m_Velocity * delta_time);
-
-
     // --- 3. 壁との衝突判定 ---
     // 移動した結果、壁にめり込んでいたら押し出す
     HandleWallCollisions(delta_time, m_Owner);
-
 
     // --- 4. 接地判定 ---
     // ★★★ ご要望の「足元だけ」をチェックするロジック ★★★
     CObjectManager& om = CObjectManager::GetInstance();
     // レイの長さをキャラクターの身長の半分＋α程度に短くする
     const float ground_check_line_length = (m_height / 2.0f) + 5.0f;
-    const float ground_check_offset_x = m_radius * 0.9f;
+    const float ground_check_offset = m_radius * 0.65f;
 
     bool foundGroundThisFrame = false;
     float highestGroundY = -FLT_MAX;
@@ -412,9 +408,16 @@ void PlayerComponent::Move(float delta_time)
 
     for (int i = 0; i < 9; i++)
     {
+	    float groundMultiplier = 1.0f;
+
+        // 床の判定を円のようにするための倍率設定
+        if((i % 3) != 1 && (i / 3) != 1)
+			groundMultiplier = sinf(45.0f * DX_PI_F / 180.0f); 
+
         CVector3 currentPos = transform->GetPosition();
+
         // レイの始点をキャラクターの中心からにする
-        CVector3 startPos = currentPos + CVector3(-ground_check_offset_x + (ground_check_offset_x) * (i % 3), 0.0f, -ground_check_offset_x + (ground_check_offset_x) * (i / 3));
+        CVector3 startPos = currentPos + CVector3((-ground_check_offset + ground_check_offset * (i % 3)) * groundMultiplier, 0.0f, (-ground_check_offset + ground_check_offset * (i / 3)) * groundMultiplier);
         CVector3 endPos = startPos - CVector3(0, ground_check_line_length, 0);
         CVector3 hitPos;
         DrawLine3D(startPos, endPos, 0xFF0000);
@@ -438,6 +441,7 @@ void PlayerComponent::Move(float delta_time)
     {
         m_IsGround = true;
         m_GroundObject = tempGroundObject;
+
         m_Velocity.y = 0;
 
         CVector3 currentPos = transform->GetPosition();
@@ -445,9 +449,14 @@ void PlayerComponent::Move(float delta_time)
     }
     else
     {
+        // b. 重力など（継続的に加わる力）を、時間に応じて速度に加算
+        m_Velocity += m_Gravity * delta_time;
+
         m_IsGround = false;
         m_GroundObject = nullptr;
     }
+    transform->Translate(m_Velocity * delta_time);
+
 
 
     // --- 5. 摩擦と加速度のリセット ---

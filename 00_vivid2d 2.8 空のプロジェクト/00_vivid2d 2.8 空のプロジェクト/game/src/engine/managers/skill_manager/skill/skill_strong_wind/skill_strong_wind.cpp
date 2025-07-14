@@ -5,7 +5,7 @@
 #include "../../../../../game/components/player_component/player_component.h"
 
 
-const float CSkillStrongWind::m_wind_strength = 0.15f;
+const float CSkillStrongWind::m_wind_strength = 90.0f;
 const float CSkillStrongWind::m_cool_time = 5.0f;
 const float CSkillStrongWind::m_duration_time = 5.0f;
 const float CSkillStrongWind::m_effect_scale = 2.0f;
@@ -52,7 +52,7 @@ Update(void)
 		for (auto& player : allPlayers)
 		{
 			auto playerComponent = player->GetComponent<PlayerComponent>();
-			if (playerComponent && playerComponent->GetPlayerID() == m_Player.lock()->GetComponent<PlayerComponent>()->GetPlayerID())
+			if (playerComponent && playerComponent->GetPlayerID() != m_Player.lock()->GetComponent<PlayerComponent>()->GetPlayerID())
 			{
 				playerComponent->AddAffectedVelocity(CVector3(0.0f, 0.0f, -m_wind_strength));
 			}

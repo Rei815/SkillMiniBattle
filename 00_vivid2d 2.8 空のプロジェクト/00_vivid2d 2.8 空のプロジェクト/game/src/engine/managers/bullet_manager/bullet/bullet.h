@@ -93,13 +93,6 @@ public:
     FACTION_CATEGORY GetBulletCategory(void);
 
     /*!
-     *  @brief      弾の色取得
-     *
-     *  @return     弾の色
-     */
-    unsigned int    GetBulletColor(void);
-
-    /*!
      *  @brief      弾の判定ID取得
      *
      *  @return     弾の判定ID
@@ -128,15 +121,13 @@ public:
 
 protected:
 
-    std::shared_ptr<CGameObject>        m_GameObject;           //!< エンティティ
     std::shared_ptr<TransformComponent> m_TransformComponent;   //!< キャッシュ用コンポーネント
-    static const unsigned int           m_player_color;         //!< プレイヤーの弾の色
-    static const unsigned int           m_enemy_color;          //!< 敵の弾の色
     static const float                  m_life_time;            //!< 持続時間
     static const float                  m_radius;               //!< 弾の半径(初期値)
     static const float	                m_max_speed;            //!< 最高速度
+    static const DxLib::COLOR_F         m_color;                //!< 色
+
     CVector3                            m_Velocity;             //!< 速度
-    unsigned int                        m_Color;                //!< 色
     CTimer                              m_LifeTimer;            //!< 生存時間タイマー
     float                               m_Power;                //!< パワー
     float				                m_Speed;                //!< 速さ

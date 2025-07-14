@@ -30,7 +30,6 @@ CDaruma_FallDownGame::CDaruma_FallDownGame(void)
 	, m_StartPosition{ (CVector3(0,0,0)) }
 	, m_MovePlayer()
 	, m_TextureColor{(0x00000000)}
-	, m_TextPosition(vivid::Vector2(0,0))
 {
 }
 
@@ -185,14 +184,6 @@ void CDaruma_FallDownGame::Play(void)
 {
 	CGame::Play();
 	CDataManager& dm = CDataManager::GetInstance();
-
-	if (m_TextPosition.x > 0)
-	{
-		m_TextPosition.x -= 10;
-	}
-	else
-		m_TextPosition.x = 1100;
-
 	if (!m_GimmickOn)
 	{
 		m_OgreObject->AddComponent<DarumaFallDownGimmickComponent>();

@@ -19,10 +19,13 @@ void DarumaFallDownGimmickComponent::Update(float delta_time, CGameObject* owner
 {
     // 毎フレーム、元のクラスのUpdateを呼び出すだけ
     m_GimmickLogic->Update();
-	OGRE_STATE state = m_GimmickLogic->GetState();
+	OGRE_STATE state = m_GimmickLogic->GetOgreState();
     switch (state)
     {
-    case OGRE_STATE::WAIT:  m_State = GIMMICK_STATE::PLAY; break;
+    case OGRE_STATE::WAIT:
+        if(m_GimmickLogic->GetTurnState() != TURN_TYPE::FEINT)
+            m_State = GIMMICK_STATE::PLAY;
+        break;
     case OGRE_STATE::PLAY:  m_State = GIMMICK_STATE::WAIT; break;
     case OGRE_STATE::READY: m_State = GIMMICK_STATE::WAIT; break;
     case OGRE_STATE::FINISH:m_State = GIMMICK_STATE::WAIT; break;

@@ -5,13 +5,12 @@
 #include "../../../components/transform_component/transform_component.h"
 #include <engine/components/collider_component/mesh_collider_component/mesh_collider_component.h>
 const float           IBullet::m_life_time = 4.0f;
-
+const DxLib::COLOR_F IBullet::m_color = DxLib::COLOR_F{ 0.8f, 0.0f, 0.0f, 1.0f };
 /*
  *  コンストラクタ
  */
 IBullet::IBullet(COLLIDER_ID collider_id)
     : m_Velocity(CVector3(CVector3::ZERO))
-    , m_Color(0xff0000ff)
     , m_LifeTimer(0)
     , m_ColliderID(collider_id)
     , m_Power(1.0f)
@@ -32,13 +31,13 @@ IBullet::~IBullet(void)
 void IBullet::Initialize(FACTION_CATEGORY category, CShot::BulletParameters* bulletParams, const CVector3& position, const CVector3& direction)
 {
     m_Velocity = direction * bulletParams->speed;
-    m_GameObject = std::make_shared<CGameObject>();
-    m_GameObject->AddComponent<ModelComponent>(MODEL_ID::BULLET, true);
-    m_GameObject->AddComponent<MeshColliderComponent>();
+    auto model = AddComponent<ModelComponent>(MODEL_ID::BULLET, true);
+    model->SetMaterialColor(0, m_color);
+    AddComponent<MeshColliderComponent>();
     m_Category = category;
 	m_Radius = bulletParams->radius;
     // TransformComponentを取得し、初期設定を行う
-    if (auto transform = m_GameObject->GetComponent<TransformComponent>())
+    if (auto transform = GetComponent<TransformComponent>())
     {
         transform->SetPosition(position);
         m_TransformComponent = transform;
@@ -49,16 +48,15 @@ void IBullet::Initialize(FACTION_CATEGORY category, CShot::BulletParameters* bul
 void IBullet::Initialize(FACTION_CATEGORY category, const CVector3& position, const CVector3& direction)
 {
     m_Velocity = direction;
-    m_GameObject = std::make_shared<CGameObject>();
     m_Category = category;
-
+	m_TransformComponent = GetComponent<TransformComponent>();
     /*モデルコンポーネントは自身で設定*/
 
     //nullチェック
     assert(m_TransformComponent != nullptr && "IBullet requires a TransformComponent, but it was not found!");
 
     // TransformComponentを取得し、初期設定を行う
-    if (auto transform = m_GameObject->GetComponent<TransformComponent>())
+    if (auto transform = GetComponent<TransformComponent>())
     {
         transform->SetPosition(position);
         m_TransformComponent = transform;
@@ -84,7 +82,7 @@ void IBullet::Update(void)
     {
         Delete();
     }
-    m_GameObject->Update(deltaTime);
+	CGameObject::Update(deltaTime);  
 }
 
 /*
@@ -92,9 +90,8 @@ void IBullet::Update(void)
  */
 void IBullet::Draw(void)
 {
-    if (!m_GameObject || !IsActive()) return;
-    // 描画は【体】に丸投げ
-    m_GameObject->Draw();
+    if (!IsActive()) return;
+	CGameObject::Draw();
 }
 
 /*
@@ -102,8 +99,9 @@ void IBullet::Draw(void)
  */
 CVector3 IBullet::GetPosition(void)
 {
-    if (auto transform = m_GameObject->GetComponent<TransformComponent>()) {
-        return transform->GetPosition();
+    if (m_TransformComponent)
+    {
+        return m_TransformComponent->GetPosition();
     }
     return CVector3::ZERO;
 }
@@ -129,7 +127,7 @@ void IBullet::SetVelocity(const CVector3& velocity)
  */
 bool IBullet::IsActive(void)
 {
-    return m_GameObject ? m_GameObject->IsActive() : false;
+    return m_IsActive;
 }
 
 /*
@@ -137,20 +135,12 @@ bool IBullet::IsActive(void)
  */
 void IBullet::Delete()
 {
-    m_GameObject->Delete();
+    m_IsActive = false;
 }
 
 FACTION_CATEGORY IBullet::GetBulletCategory(void)
 {
     return m_Category;
-}
-
-/*
- *  弾の色取得
- */
-unsigned int IBullet::GetBulletColor(void)
-{
-    return m_Color;
 }
 
 COLLIDER_ID IBullet::GetColliderID(void)
@@ -175,13 +165,8 @@ float IBullet::GetRadius()
 
 int IBullet::GetModelHandle(void) const
 {
-    if (!m_GameObject)
-    {
-        return VIVID_DX_ERROR;
-    }
-
     // ModelComponentはほぼ必ず存在するはずだが、念のためnullチェックを行う
-    if (auto modelComp = m_GameObject->GetComponent<ModelComponent>())
+    if (auto modelComp = GetComponent<ModelComponent>())
     {
         return modelComp->GetHandle();
     }

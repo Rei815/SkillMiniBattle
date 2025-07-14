@@ -4,7 +4,7 @@
 #include "../../../../engine/core/game_object/game_object.h"
 #include "../../../../engine/components/collider_component/mesh_collider_component/mesh_collider_component.h"
 
-const	float				FallGimmickComponent::m_fall_speed = 5.0f;
+const	float				FallGimmickComponent::m_fall_speed = 300.0f;
 const	float				FallGimmickComponent::m_return_height = -500.0f;
 const	float				FallGimmickComponent::m_return_time = 3.0f;
 const	std::string		FallGimmickComponent::m_file_name_list[] = {
@@ -94,8 +94,8 @@ void FallGimmickComponent::Update(float delta_time, CGameObject* owner)
 
     case GIMMICK_STATE::PLAY:
         // 落下処理
-        m_ReturnTimer.Update();
-        if (m_ReturnTimer.Finished())
+        m_Timer.Update();
+        if (m_Timer.Finished())
         {
             // 下方向に移動させる（フレームレートに依存しないように delta_time を掛ける）
             transform->Translate(CVector3(0.0f, -m_fall_speed * delta_time, 0.0f));
@@ -120,7 +120,6 @@ void FallGimmickComponent::Update(float delta_time, CGameObject* owner)
         // 復帰地点まで落ちたら、状態をFINISHに移行
         if (currentPos.y <= m_return_height)
         {
-            m_ReturnTimer.SetActive(true);
             m_ReturnTimer.SetUp(m_ReturnTime);
             m_State = GIMMICK_STATE::FINISH;
         }

@@ -74,5 +74,4 @@ private:
     float                                   m_TempFirstDis;
     bool                                    m_GimmickOn;
     ENTRY_LIST                              m_MovePlayer;
-    vivid::Vector2                          m_TextPosition;
 };

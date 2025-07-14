@@ -27,16 +27,6 @@ public:
      */
     void    Update(void);
 
-    /*!
-     *  @brief      •`‰æ
-     */
-    void    Draw(void);
-
-    /*!
-     *  @brief      ‰ð•ú
-     */
-    void    Finalize(void);
-
 private:
     static const float      m_mid_belt_speed_time;
 

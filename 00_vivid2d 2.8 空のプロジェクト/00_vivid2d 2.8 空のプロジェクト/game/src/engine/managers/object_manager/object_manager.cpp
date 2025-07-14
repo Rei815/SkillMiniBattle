@@ -134,7 +134,6 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
     case OBJECT_ID::BELT_CONVEYOR_OBSTRUCTION_6:gameObject->AddComponent<ModelComponent>(MODEL_ID::BELT_CONVEYOR_OBSTRUCTION_6);
         gameObject->AddComponent<MeshColliderComponent>();
         gameObject->SetTag(GAME_OBJECT_TAG::FLOOR);
-
         break;
     case OBJECT_ID::SKILL_WALL:
         gameObject->AddComponent<ModelComponent>(MODEL_ID::SKILL_WALL);

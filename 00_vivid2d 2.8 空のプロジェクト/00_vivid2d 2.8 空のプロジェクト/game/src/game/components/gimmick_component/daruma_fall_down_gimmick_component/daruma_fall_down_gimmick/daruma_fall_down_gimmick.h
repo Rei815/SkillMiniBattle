@@ -80,11 +80,18 @@ public:
     void    OgreControlTurn(void);
 
     /*!
-     *  @brief      ó‘Ô‚ğæ“¾
+     *  @brief      ‹S‚Ìó‘Ô‚ğæ“¾
      *
      *  @return     ó‘Ô
      */
-    OGRE_STATE      GetState();
+    OGRE_STATE      GetOgreState();
+
+    /*!
+     *  @brief      ƒ^[ƒ“‚Ìó‘Ô‚ğæ“¾
+     *
+     *  @return     ó‘Ô
+     */
+    TURN_TYPE       GetTurnState();
 
 private:
 

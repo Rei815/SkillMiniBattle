@@ -108,7 +108,6 @@ void CSkillSlow::ActionEnd(void)
 		{
 			continue; // 自分自身はスキップ
 		}
-		// ターゲットのPlayerComponentを取得して、速度低下を適用
 		if (auto targetComp = targetPlayerObject->GetComponent<PlayerComponent>())
 		{
 			targetComp->DivMoveSpeedRate(0.5f);

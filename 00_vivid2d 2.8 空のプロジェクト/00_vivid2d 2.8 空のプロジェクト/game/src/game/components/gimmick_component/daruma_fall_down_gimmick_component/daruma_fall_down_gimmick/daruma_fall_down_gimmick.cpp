@@ -167,7 +167,12 @@ void CDarumaFallDownGimmick::OgreControlTurn()//スキル、鬼操作を使ったときの処理
 	m_OgreState = OGRE_STATE::PLAY;
 }
 
-OGRE_STATE CDarumaFallDownGimmick::GetState()
+OGRE_STATE CDarumaFallDownGimmick::GetOgreState()
 {
 	return m_OgreState;
+}
+
+TURN_TYPE CDarumaFallDownGimmick::GetTurnState()
+{
+	return m_TurnType;
 }

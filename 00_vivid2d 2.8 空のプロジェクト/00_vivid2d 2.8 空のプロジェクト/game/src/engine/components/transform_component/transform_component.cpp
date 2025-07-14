@@ -33,7 +33,9 @@ void TransformComponent::SetScale(const CVector3& scale)
 
 void TransformComponent::SetScale(float scale)
 {
-    m_Transform.scale *= scale;
+    m_Transform.scale.x = scale;
+    m_Transform.scale.y = scale;
+    m_Transform.scale.z = scale;
     m_isDirty = true;
 
 }

@@ -1,6 +1,7 @@
 #include "shock_wave_bullet.h"
 #include "../../../../components/model_component/model_component.h"
 #include "../../../../components/transform_component/transform_component.h"
+#include "../../../../components/collider_component/mesh_collider_component/mesh_collider_component.h"
 
 const float CShockWaveBullet::m_max_speed = 50.0f;
 const float CShockWaveBullet::m_spread_speed = 8.0f;
@@ -19,7 +20,8 @@ void CShockWaveBullet::Initialize(FACTION_CATEGORY category, const CVector3& pos
 {
     IBullet::Initialize(category, position, direction);
     m_BulletID = BULLET_ID::SHOCK_WAVE;
-    m_GameObject->AddComponent<ModelComponent>(MODEL_ID::STOMP_COLL);
+    AddComponent<ModelComponent>(MODEL_ID::STOMP_COLL);
+    AddComponent<MeshColliderComponent>();
 
     m_SpreadSpeed = m_spread_speed;
     m_CurrentScale = m_scale;

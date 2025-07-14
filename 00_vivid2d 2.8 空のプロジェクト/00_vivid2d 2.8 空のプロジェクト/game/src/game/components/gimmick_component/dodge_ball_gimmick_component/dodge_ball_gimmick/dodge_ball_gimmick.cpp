@@ -18,6 +18,7 @@ CDodgeBallGimmick::CDodgeBallGimmick()
 	, m_MoveTimer()
 	, m_ShotTimer()
 	, m_Effect(nullptr)
+	, m_OperationFlag(false)
 {
 }
 

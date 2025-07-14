@@ -285,7 +285,11 @@ void CFallOutGame::ResetTopic(void)
 
 		//ŽžŠÔ‚ð‚¸‚ç‚·
 		for (int i = 0; i < m_TopicList.size(); i++)
+		{
+
+			m_ChooseObjectTimer[i].SetActive(true);
 			m_ChooseObjectTimer[i].SetUp(m_ChooseObjectTimer[0].GetLimitTime() + i * 1.0f);
+		}
 
 		TOPIC_LIST::iterator topic_it = m_TopicList.begin();
 
