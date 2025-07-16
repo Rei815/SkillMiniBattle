@@ -136,7 +136,7 @@ void PlayerComponent::Update(float delta_time, CGameObject* owner)
         auto transform = owner->GetComponent<TransformComponent>();
         CVector3 rotation = transform->GetRotation();
         rotation.y = targetAngle;
-        m_ForwardVector = targetAngle;
+        m_ForwardVector = CVector3(m_Velocity.x, 0, m_Velocity.z).Normalize();
         transform->SetRotation(rotation);
     }
 

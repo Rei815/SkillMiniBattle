@@ -42,7 +42,6 @@ Update(void)
 {
 	CSkill::Update();
 
-	auto colliderTransform = m_BarrierCollider->GetComponent<TransformComponent>();
 	auto colliderModel = m_BarrierCollider->GetComponent<ModelComponent>();
 	auto transform = m_Player.lock()->GetComponent<TransformComponent>();
 	transform->SetPosition(transform->GetPosition());
@@ -72,8 +71,6 @@ CSkillBarrier::
 Draw(void)
 {
 	CSkill::Draw();
-
-
 }
 
 /*!

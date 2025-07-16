@@ -285,6 +285,11 @@ CheckHitBullet(std::shared_ptr<IBullet> bullet)
                 }
             }
         }
+
+        if (object->GetID() == OBJECT_ID::SKILL_BARRIER_OBJECT)
+        {
+
+        }
     }
 }
 ///*
