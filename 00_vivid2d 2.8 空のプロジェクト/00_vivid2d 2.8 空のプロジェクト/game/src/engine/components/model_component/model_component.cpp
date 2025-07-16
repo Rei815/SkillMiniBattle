@@ -14,14 +14,25 @@ ModelComponent::ModelComponent(MODEL_ID id, bool IsDuplicate)
 
     if (m_IsDuplicated)
     {
-        // ★複製フラグがtrueなら、モデルを複製してそのハンドルを保持
         m_ModelHandle = MV1DuplicateModel(sourceHandle);
     }
     else
     {
-        // ★フラグがfalseなら、今まで通り共有ハンドルを保持
         m_ModelHandle = sourceHandle;
     }
+}
+
+void ModelComponent::OnDetach(CGameObject* owner)
+{
+	if (m_ModelHandle != -1)
+	{
+		// モデルハンドルが有効なら、モデルを削除
+		if (m_IsDuplicated)
+		{
+			DxLib::MV1DeleteModel(m_ModelHandle);
+		}
+		m_ModelHandle = -1; // ハンドルを無効にする
+	}
 }
 
 void ModelComponent::Draw(const CGameObject* owner) const

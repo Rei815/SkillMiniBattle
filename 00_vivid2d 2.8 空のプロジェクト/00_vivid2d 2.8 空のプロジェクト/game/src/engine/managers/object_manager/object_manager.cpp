@@ -192,7 +192,7 @@ CObjectManager::OBJECT_LIST CObjectManager::GetList()
 }
 
 std::shared_ptr<CGameObject> CObjectManager::CheckHitLineForAll(
-    const CVector3& start, const CVector3& end, CGameObject* ignore_object, CVector3& out_hitPosition)
+    const CVector3& start, const CVector3& end, CGameObject* ignore_object, CollisionResult& out_result)
 {
     // 管理している全てのゲームオブジェクトをループ
     for (auto& object : m_GameObjects)
@@ -210,7 +210,7 @@ std::shared_ptr<CGameObject> CObjectManager::CheckHitLineForAll(
         if (collider && collider->IsEnabled())
         {
             // コライダーのライン判定を実行
-            if (collider->CheckHitLine(start, end, out_hitPosition))
+            if (collider->CheckHitLine(start, end, out_result))
             {
                 // 最初にヒットしたオブジェクトを返す
                 return object;
@@ -222,14 +222,6 @@ std::shared_ptr<CGameObject> CObjectManager::CheckHitLineForAll(
     return nullptr;
 }
 
-// シンプルバージョンの実装
-std::shared_ptr<CGameObject> CObjectManager::CheckHitLineForAll(
-    const CVector3& start, const CVector3& end, CGameObject* ignore_object)
-{
-    // ダミー変数を用意して、詳細バージョンを呼び出す
-    CVector3 dummy_hit_pos;
-    return this->CheckHitLineForAll(start, end, ignore_object, dummy_hit_pos);
-}
 /*
  *  オブジェクトと弾のアタリ判定
  */
@@ -252,11 +244,8 @@ CheckHitBullet(std::shared_ptr<IBullet> bullet)
 
             // B(プレイヤー)のColliderを取得
             auto targetCollider = object->GetComponent<MeshColliderComponent>();
-            // B(プレイヤー)のColliderを取得
             auto targetTransform = object->GetComponent<TransformComponent>();
-            // B(プレイヤー)のColliderを取得
             auto target = object->GetComponent<PlayerComponent>();
-            // B(プレイヤー)のColliderを取得
             auto bulletCollider = bullet->GetComponent<MeshColliderComponent>();
 
             if (targetCollider && targetCollider->IsEnabled())

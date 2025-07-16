@@ -238,6 +238,8 @@ private:
 
     // 壁との当たり判定を行うヘルパー関数を追加
     void HandleWallCollisions(float delta_time, CGameObject* owner);
+
+    void HandleCeilingCollisions(float delta_time, CGameObject* owner); // ★この関数宣言を追加
     static const float              m_radius;                                   //!< 半径
     static const float              m_height;                                   //!< 高さ
     static const float              m_model_scale;                              //!< モデルの大きさ

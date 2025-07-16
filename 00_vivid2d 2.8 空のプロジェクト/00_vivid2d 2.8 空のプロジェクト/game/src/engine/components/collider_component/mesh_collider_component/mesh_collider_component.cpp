@@ -2,7 +2,6 @@
 #include "../../../core/game_object/game_object.h"
 #include "../../model_component/model_component.h" // ModelComponentからハンドルをもらう
 #include "../../transform_component/transform_component.h" // ModelComponentからハンドルをもらう
-
 MeshColliderComponent::MeshColliderComponent()
     : m_ModelHandle(-1) // DxLibのハンドルは-1で初期化するのが一般的
 {
@@ -21,7 +20,7 @@ void MeshColliderComponent::OnAttach(CGameObject* owner)
         // 元のCModelにあった当たり判定用のセットアップをここに持ってくる
         if (m_ModelHandle != -1)
         {
-            MV1SetupCollInfo(m_ModelHandle, -1, 8, 8, 8);
+            DxLib::MV1SetupCollInfo(m_ModelHandle, -1, 8, 8, 8);
         }
     }
     else
@@ -33,19 +32,11 @@ void MeshColliderComponent::OnAttach(CGameObject* owner)
 
 void MeshColliderComponent::Update(float delta_time, CGameObject* owner)
 {
-    MV1RefreshCollInfo(m_ModelHandle);
+	m_ModelHandle = owner->GetComponent<ModelComponent>()->GetHandle(); // ModelComponentからハンドルを取得
+    DxLib::MV1RefreshCollInfo(m_ModelHandle, -1, -1); // 第2引数に-1を追加すると、より安全です
 }
 
-bool MeshColliderComponent::CheckHitLine(const CVector3& startPos, const CVector3& endPos) const
-{
-    // 衝突位置を格納するが、この関数の結果としては使わない「ダミー変数」
-    CVector3 dummy_hit_position;
-
-    // 内部で、引数が多い方の詳細な関数を呼び出し、その結果(true/false)だけを返す
-    return this->CheckHitLine(startPos, endPos, dummy_hit_position);
-}
-
-bool MeshColliderComponent::CheckHitLine(const CVector3& startPos,const CVector3& endPos, CVector3& out_hitPosition) const
+bool MeshColliderComponent::CheckHitLine(const CVector3& startPos,const CVector3& endPos, CollisionResult& out_result) const
 {
     if (m_ModelHandle == -1)
     {
@@ -58,7 +49,8 @@ bool MeshColliderComponent::CheckHitLine(const CVector3& startPos,const CVector3
     if (hitPoly.HitFlag) // DxLibのHitFlagはint型 (0 or 1)
     {
         // ヒットした場合、衝突位置をout引数に格納してtrueを返す
-        out_hitPosition = hitPoly.HitPosition;
+        out_result.hitPosition = hitPoly.HitPosition;
+        out_result.hitNormal = hitPoly.Normal;
         return true;
     }
 

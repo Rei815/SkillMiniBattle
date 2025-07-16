@@ -19,7 +19,7 @@ public:
     virtual bool CheckHitLine(
         const CVector3& startPos,
         const CVector3& endPos,
-        CVector3& out_hitPosition) const = 0; // = 0 で純粋仮想関数
+        CollisionResult& out_result = CollisionResult()) const = 0; // = 0 で純粋仮想関数
 
     // 指定された「球」と自分が当たっているか？
     virtual bool CheckHitSphere(const CVector3& center, float radius, CollisionResult& out_result) const = 0;

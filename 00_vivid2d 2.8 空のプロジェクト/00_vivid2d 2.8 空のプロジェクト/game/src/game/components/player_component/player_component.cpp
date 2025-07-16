@@ -104,6 +104,11 @@ void PlayerComponent::OnAttach(CGameObject* owner)
     m_StopFlag = false;
     m_FrictionFlag = true;
 
+    // ダミーのプレイヤーは動かず、浮かせる
+    if (m_Controller->GetID() == CONTROLLER_ID::DUMMY)
+    {
+		m_Gravity = CVector3::ZERO;
+    }
 }
 
 void PlayerComponent::Update(float delta_time, CGameObject* owner)
@@ -116,7 +121,6 @@ void PlayerComponent::Update(float delta_time, CGameObject* owner)
     case PLAYER_STATE::PLAY:    Play(delta_time);   break;
     case PLAYER_STATE::DEFEAT:  Defeat();           break;
     }
-    CVector3 TempForwardVector;
 
     // わずかな移動は無視するための閾値
     const float a_little_speed = 0.01f;
@@ -127,12 +131,15 @@ void PlayerComponent::Update(float delta_time, CGameObject* owner)
         // 1. 移動速度ベクトルから目標の角度を計算 (atan2fを使用)
         float targetAngle = atan2f(m_Velocity.x, m_Velocity.z) * 180.0f / DX_PI_F;
 
+
         // 2. 計算した角度を即座にTransformに設定
         auto transform = owner->GetComponent<TransformComponent>();
         CVector3 rotation = transform->GetRotation();
         rotation.y = targetAngle;
+        m_ForwardVector = targetAngle;
         transform->SetRotation(rotation);
     }
+
 }
 /*
  *  被弾
@@ -376,103 +383,92 @@ void PlayerComponent::Control(void)
 
 void PlayerComponent::Move(float delta_time)
 {
-	if (m_Controller->GetID() == CONTROLLER_ID::DUMMY) return; // ダミーコントローラーは無視
-    // --- 1. 物理計算（このフレームの速度を決定） ---
-    // ※ このセクションは一度だけ実行するのが重要です
-
-    // a. ジャンプや移動の力（一度だけ加わる力）を速度に加算
-    m_Velocity += m_Accelerator;
-
-    m_Velocity += m_AffectedVelocity * delta_time;
-
-
-    // --- 2. 座標の更新 ---
-    // 確定した速度と時間を使って、キャラクターを移動させる
     auto transform = m_Owner->GetComponent<TransformComponent>();
     if (!transform) return;
 
-    // --- 3. 壁との衝突判定 ---
-    // 移動した結果、壁にめり込んでいたら押し出す
-    HandleWallCollisions(delta_time, m_Owner);
+    // --- 1. 力の計算 ---
+    // このフレームで動きたい速度ベクトルを、これまで通り計算します
+    m_Velocity += m_Accelerator;
+    if (!m_IsGround)
+    {
+        m_Velocity += m_Gravity * delta_time;
+    }
+    m_Velocity += m_AffectedVelocity * delta_time;
 
-    // --- 4. 接地判定 ---
-    // ★★★ ご要望の「足元だけ」をチェックするロジック ★★★
+    // --- 2. 水平方向（X, Z）の移動と衝突解決 ---
+    CVector3 horizontalVelocity = CVector3(m_Velocity.x, 0.0f, m_Velocity.z);
+    transform->Translate(horizontalVelocity * delta_time);
+    HandleWallCollisions(delta_time, m_Owner); // 横に動かした結果、壁にめり込んだら押し戻す
+
+    // --- 3. 垂直方向（Y）の移動と衝突解決 ---
+    CVector3 verticalVelocity = CVector3(0.0f, m_Velocity.y, 0.0f);
+    transform->Translate(verticalVelocity * delta_time);
+    HandleCeilingCollisions(delta_time, m_Owner); // 上に動かした結果、天井にめり込んだら押し戻す
+
+    // --- 4. 接地判定と補正 ---
+    // 全ての移動が終わった最終的な位置で、接地しているかを確認
     CObjectManager& om = CObjectManager::GetInstance();
-    // レイの長さをキャラクターの身長の半分＋α程度に短くする
     const float ground_check_line_length = (m_height / 2.0f) + 5.0f;
-    const float ground_check_offset = m_radius * 0.65f;
-
+    const float ground_check_offset = m_radius * 0.9f;
     bool foundGroundThisFrame = false;
     float highestGroundY = -FLT_MAX;
     CGameObject* tempGroundObject = nullptr;
 
     for (int i = 0; i < 9; i++)
     {
-	    float groundMultiplier = 1.0f;
+        float groundMultiplier = 1.0f;
 
         // 床の判定を円のようにするための倍率設定
-        if((i % 3) != 1 && (i / 3) != 1)
-			groundMultiplier = sinf(45.0f * DX_PI_F / 180.0f); 
-
+        if ((i % 3) != 1 && (i / 3) != 1)
+            groundMultiplier = sinf(45.0f * DX_PI_F / 180.0f);
         CVector3 currentPos = transform->GetPosition();
-
-        // レイの始点をキャラクターの中心からにする
         CVector3 startPos = currentPos + CVector3((-ground_check_offset + ground_check_offset * (i % 3)) * groundMultiplier, 0.0f, (-ground_check_offset + ground_check_offset * (i / 3)) * groundMultiplier);
         CVector3 endPos = startPos - CVector3(0, ground_check_line_length, 0);
-        CVector3 hitPos;
+        CollisionResult hitResult;
         DrawLine3D(startPos, endPos, 0xFF0000);
 
-        if (auto hitObject = om.CheckHitLineForAll(startPos, endPos, m_Owner, hitPos))
+        if (auto hitObject = om.CheckHitLineForAll(startPos, endPos, m_Owner, hitResult))
         {
             if (hitObject->GetTag() == GAME_OBJECT_TAG::FLOOR)
             {
-                foundGroundThisFrame = true;
-                tempGroundObject = hitObject.get();
-                if (hitPos.y > highestGroundY)
+                float dot = CVector3::Dot(hitResult.hitNormal, CVector3::UP);
+                if (dot > 0.9f)
                 {
-                    highestGroundY = hitPos.y;
+                    foundGroundThisFrame = true;
+                    tempGroundObject = hitObject.get();
+                    if (hitResult.hitPosition.y > highestGroundY)
+                    {
+                        highestGroundY = hitResult.hitPosition.y;
+                    }
                 }
             }
         }
     }
 
-    // 接地判定の結果を反映
     if (foundGroundThisFrame && m_Velocity.y <= 0)
     {
         m_IsGround = true;
         m_GroundObject = tempGroundObject;
-
         m_Velocity.y = 0;
-
         CVector3 currentPos = transform->GetPosition();
-        transform->SetPosition(CVector3(currentPos.x, highestGroundY + (m_radius / 2.0f), currentPos.z));
+        transform->SetPosition(CVector3(currentPos.x, highestGroundY + (m_height / 2.0f), currentPos.z));
     }
     else
     {
-        // b. 重力など（継続的に加わる力）を、時間に応じて速度に加算
-        m_Velocity += m_Gravity * delta_time;
-
         m_IsGround = false;
         m_GroundObject = nullptr;
     }
-    transform->Translate(m_Velocity * delta_time);
 
-
-
-    // --- 5. 摩擦と加速度のリセット ---
-    // a. 摩擦を適用して速度を減速させる
+    // --- 5. 後処理 ---
     if (m_FrictionFlag)
     {
         m_Velocity.x *= m_move_friction.x;
-        // Yの摩擦は重力に影響するため、かけない方が自然な場合が多い
         m_Velocity.z *= m_move_friction.z;
-
         m_AffectedVelocity *= m_move_friction;
     }
-
-    // b. このフレームで使った加速度をリセットする
     m_Accelerator = CVector3::ZERO;
 }
+
 void PlayerComponent::Impact(const CVector3& direction, float power)
 {
 }
@@ -486,11 +482,22 @@ void PlayerComponent::Appear(void)
 
 void PlayerComponent::Play(float delta_time)
 {
+
     if (m_ActionFlag)
-    {
         Control();
-    }
     Move(delta_time);
+
+	// 無敵時間中の処理
+    if (!m_InvincibleFlag)
+        return;
+
+    m_InvincibleTimer.Update();
+    if (m_InvincibleTimer.Finished())
+    {
+        m_InvincibleTimer.SetUp(m_max_invincible_time);
+
+        m_InvincibleFlag = false;
+    }
 
 }
 
@@ -603,16 +610,63 @@ void PlayerComponent::HandleWallCollisions(float delta_time, CGameObject* owner)
         // レイの長さはキャラクターの半径と同じにする
         CVector3 endPos = startPos + checkDir * m_radius;
 
-        CVector3 hitPos;
+        CollisionResult hitResult;
         // 自分自身を除外して、線分と他のオブジェクトの当たり判定を行う
-        if (auto hitObject = CObjectManager::GetInstance().CheckHitLineForAll(startPos, endPos, owner, hitPos))
+        if (auto hitObject = CObjectManager::GetInstance().CheckHitLineForAll(startPos, endPos, owner, hitResult))
         {
             if (hitObject->GetTag() == GAME_OBJECT_TAG::WALL || hitObject->GetTag() == GAME_OBJECT_TAG::FLOOR)
             {
                 // ヒットした場合、めり込んだ分だけ押し出す
-                CVector3 pushBackVector = endPos - hitPos;
+                CVector3 pushBackVector = endPos - hitResult.hitPosition;
                 transform->Translate(-pushBackVector);
+                // 2. 壁方向に進もうとする速度を打ち消す（すり抜け対策）
+                CVector3 wallNormal = -checkDir; // 壁の法線は、レイの向きと逆
+                float speedIntoWall = CVector3::Dot(m_Velocity, wallNormal);
+
+                // 壁に向かう速度成分がある場合
+                if (speedIntoWall > 0)
+                {
+                    // その速度成分を打ち消すベクトルを速度から引く
+                    m_Velocity -= wallNormal * speedIntoWall;
+                }
             }
+        }
+    }
+}
+
+void PlayerComponent::HandleCeilingCollisions(float delta_time, CGameObject* owner)
+{
+    auto transform = owner->GetComponent<TransformComponent>();
+    if (!transform) return;
+
+    // ★★★ 上昇中でなければ、天井判定は行わない ★★★
+    if (m_Velocity.y <= 0)
+    {
+        return;
+    }
+
+    float headY = transform->GetPosition().y + (m_height / 2.0f);
+    float rayLength = (m_height / 2.0f) + 5.0f;
+    const float ground_check_offset_x = m_radius * 0.9f;
+
+    for (int i = 0; i < 9; i++)
+    {
+        CVector3 currentPos = transform->GetPosition();
+
+        CVector3 startPos = currentPos + CVector3(-ground_check_offset_x + (ground_check_offset_x) * (i % 3), 0.0f, -ground_check_offset_x * (i / 3));
+        CVector3 endPos = startPos - CVector3(0, -rayLength, 0);
+
+        CollisionResult hitResult;
+        DrawLine3D(startPos, endPos, 0xFF0000);
+
+        if (auto hitObject = CObjectManager::GetInstance().CheckHitLineForAll(startPos, endPos, owner, hitResult))
+        {
+            // 1. 上昇速度をゼロにする
+            m_Velocity.y = 0;
+
+            // 2. めり込んだ分だけ、下に押し出す
+            float pushDownDistance = (startPos.y + rayLength) - hitResult.hitPosition.y;
+            transform->Translate(CVector3(0, -pushDownDistance, 0));
         }
     }
 }

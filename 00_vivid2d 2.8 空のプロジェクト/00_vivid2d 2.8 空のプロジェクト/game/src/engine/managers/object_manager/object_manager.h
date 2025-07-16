@@ -6,7 +6,7 @@
 #include <memory>
 #include "../../../engine/core/game_object/game_object.h"
 #include "../bullet_manager/bullet/bullet.h"
-
+#include "engine/components/collider_component/collision_result.h"
 class CObjectManager
 {
 public:
@@ -84,14 +84,7 @@ public:
         const CVector3& start,
         const CVector3& end,
         CGameObject* ignore_object, // 自分自身を無視するための引数
-        CVector3& out_hitPosition   // 衝突位置を格納する
-    );
-
-    // シンプルバージョン（当たり判定の有無だけ）
-    std::shared_ptr<CGameObject> CheckHitLineForAll(
-        const CVector3& start,
-        const CVector3& end,
-        CGameObject* ignore_object
+        CollisionResult& out_result = CollisionResult()   // 衝突位置を格納する
     );
 
     /*!

@@ -11,6 +11,7 @@ class ModelComponent : public IComponent
 public:
     ModelComponent(MODEL_ID id = MODEL_ID::MAX, bool IsDuplicate = false);
     ~ModelComponent() override = default;
+    void OnDetach(CGameObject* owner) override;
     // --- 更新処理 ---
     void Update(float delta_time, CGameObject* owner) override {}
     void Draw(const CGameObject* owner) const;
@@ -22,7 +23,7 @@ public:
     DxLib::COLOR_F GetMaterialColor(int material_index);
     void SetAlpha(float alpha);
 private:
-    int m_ModelHandle; // CModelのshared_ptrの代わりに、ハンドル(int)を直接保持
+    int m_ModelHandle;
     float m_Alpha;     // 透明度
     bool m_IsDuplicated;
 };
