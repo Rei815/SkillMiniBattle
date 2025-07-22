@@ -288,7 +288,15 @@ public:
 	 */
 	friend CVector3     operator*(float scalar, const CVector3& v);
 
-
+	/*!
+	 *  @brief		除算演算子のオーバーロード
+	 *
+	 *  @param[in]	v       ベクトルクラス
+	 *  @param[in]	scalar  スカラー値
+	 *
+	 *  @return		ベクトルクラス
+	 */
+	friend CVector3     operator/(const CVector3& v, float scalar);
 	/*!
 	 *  @brief		ベクトルの方向を回転値（XYZオイラー角）に変換して返す
 	 *

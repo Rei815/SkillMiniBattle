@@ -240,6 +240,8 @@ private:
     void HandleWallCollisions(float delta_time, CGameObject* owner);
 
     void HandleCeilingCollisions(float delta_time, CGameObject* owner); // š‚±‚ÌŠÖ”éŒ¾‚ğ’Ç‰Á
+
+    void SubstepMove(const CVector3& totalMove, int maxSubsteps = 5);
     static const float              m_radius;                                   //!< ”¼Œa
     static const float              m_height;                                   //!< ‚‚³
     static const float              m_model_scale;                              //!< ƒ‚ƒfƒ‹‚Ì‘å‚«‚³

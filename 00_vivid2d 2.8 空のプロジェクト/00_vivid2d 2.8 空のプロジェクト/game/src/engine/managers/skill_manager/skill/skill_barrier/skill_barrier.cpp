@@ -71,6 +71,7 @@ CSkillBarrier::
 Draw(void)
 {
 	CSkill::Draw();
+	m_BarrierCollider->Draw();
 }
 
 /*!
@@ -110,7 +111,7 @@ Action(void)
 	auto transform = m_Player.lock()->GetComponent<TransformComponent>();
 	auto playerComp = m_Player.lock()->GetComponent<PlayerComponent>();
 	playerComp->StartInvincible(m_duration_time);
-	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::BARRIER, transform->GetPosition(), 0.04f);
+	//m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::BARRIER, transform->GetPosition(), 0.04f);
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO,CVector3(), m_effect_scale);
 	m_SkillEffect->SetParent(m_Player.lock());
 

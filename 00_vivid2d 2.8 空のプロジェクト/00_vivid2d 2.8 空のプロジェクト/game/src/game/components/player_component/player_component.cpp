@@ -395,15 +395,9 @@ void PlayerComponent::Move(float delta_time)
     }
     m_Velocity += m_AffectedVelocity * delta_time;
 
-    // --- 2. 水平方向（X, Z）の移動と衝突解決 ---
-    CVector3 horizontalVelocity = CVector3(m_Velocity.x, 0.0f, m_Velocity.z);
-    transform->Translate(horizontalVelocity * delta_time);
-    HandleWallCollisions(delta_time, m_Owner); // 横に動かした結果、壁にめり込んだら押し戻す
-
-    // --- 3. 垂直方向（Y）の移動と衝突解決 ---
-    CVector3 verticalVelocity = CVector3(0.0f, m_Velocity.y, 0.0f);
-    transform->Translate(verticalVelocity * delta_time);
-    HandleCeilingCollisions(delta_time, m_Owner); // 上に動かした結果、天井にめり込んだら押し戻す
+    // --- 2. 移動と衝突解決を分割して実行 ---
+    CVector3 totalMoveThisFrame = m_Velocity * delta_time;
+    SubstepMove(totalMoveThisFrame); // 新しい関数で移動を実行
 
     // --- 4. 接地判定と補正 ---
     // 全ての移動が終わった最終的な位置で、接地しているかを確認
@@ -668,5 +662,48 @@ void PlayerComponent::HandleCeilingCollisions(float delta_time, CGameObject* own
             float pushDownDistance = (startPos.y + rayLength) - hitResult.hitPosition.y;
             transform->Translate(CVector3(0, -pushDownDistance, 0));
         }
+    }
+}
+
+// 新しく追加する関数
+void PlayerComponent::SubstepMove(const CVector3& totalMove, int maxSubsteps)
+{
+    auto transform = m_Owner->GetComponent<TransformComponent>();
+    if (!transform) return;
+
+    // このフレームでの総移動距離
+    float totalMoveLength = totalMove.Length(totalMove);
+    if (totalMoveLength < 0.001f) // ほとんど動かないなら何もしない
+    {
+        return;
+    }
+
+    // サブステップの回数を計算
+    // 移動距離が半径の半分を超える場合、分割数を増やす
+    int substeps = static_cast<int>(ceilf(totalMoveLength / (m_radius * 0.5f)));
+    if (substeps > maxSubsteps)
+    {
+        substeps = maxSubsteps;
+    }
+    if (substeps < 1)
+    {
+        substeps = 1;
+    }
+
+    // 1サブステップあたりの移動量
+    CVector3 substepMove = totalMove / static_cast<float>(substeps);
+
+    // 分割して移動と衝突判定を繰り返す
+    for (int i = 0; i < substeps; ++i)
+    {
+        // 1. まずは水平方向に動かしてみる
+        transform->Translate(CVector3(substepMove.x, 0.0f, substepMove.z));
+        // 壁の衝突判定と解決（引数の delta_time は使っていないので 0.0f を渡す）
+        HandleWallCollisions(0.0f, m_Owner);
+
+        // 2. 次に垂直方向に動かしてみる
+        transform->Translate(CVector3(0.0f, substepMove.y, 0.0f));
+        // 天井の衝突判定と解決（引数の delta_time は使っていないので 0.0f を渡す）
+        HandleCeilingCollisions(0.0f, m_Owner);
     }
 }

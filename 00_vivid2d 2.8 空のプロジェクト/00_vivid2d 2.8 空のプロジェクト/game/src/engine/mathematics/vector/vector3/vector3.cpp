@@ -280,6 +280,11 @@ CVector3 operator*(float scalar, const CVector3& v)
 	return CVector3(v.x * scalar, v.y * scalar, v.z * scalar);
 }
 
+CVector3 operator/(const CVector3& v, float scalar)
+{
+	return CVector3(v.x / scalar, v.y / scalar, v.z / scalar);
+}
+
 CVector3 CVector3::GetVectorRotateXYZ(void)
 {
 	return GetVectorRotateXYZ(*this);
