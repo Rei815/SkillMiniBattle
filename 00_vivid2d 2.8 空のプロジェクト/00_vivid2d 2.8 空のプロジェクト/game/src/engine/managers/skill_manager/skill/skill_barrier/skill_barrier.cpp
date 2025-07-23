@@ -44,6 +44,7 @@ Update(void)
 
 	auto colliderModel = m_BarrierCollider->GetComponent<ModelComponent>();
 	auto transform = m_Player.lock()->GetComponent<TransformComponent>();
+	m_BarrierCollider->GetComponent<TransformComponent>()->SetPosition(transform->GetPosition());
 	transform->SetPosition(transform->GetPosition());
 	switch (m_State)
 	{
@@ -54,8 +55,8 @@ Update(void)
 		if (m_Effect != nullptr)
 		{
 			m_Effect->SetPosition(transform->GetPosition());
-			CBulletManager::GetInstance().CheckReflectModel(colliderModel->GetHandle());
 		}
+		CBulletManager::GetInstance().CheckReflectModel(colliderModel->GetHandle());
 		break;
 
 	case SKILL_STATE::COOLDOWN:
@@ -71,7 +72,6 @@ CSkillBarrier::
 Draw(void)
 {
 	CSkill::Draw();
-	m_BarrierCollider->Draw();
 }
 
 /*!
@@ -111,7 +111,7 @@ Action(void)
 	auto transform = m_Player.lock()->GetComponent<TransformComponent>();
 	auto playerComp = m_Player.lock()->GetComponent<PlayerComponent>();
 	playerComp->StartInvincible(m_duration_time);
-	//m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::BARRIER, transform->GetPosition(), 0.04f);
+	m_Effect = CEffectManager::GetInstance().Create(EFFECT_ID::BARRIER, transform->GetPosition(), 0.04f);
 	m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO,CVector3(), m_effect_scale);
 	m_SkillEffect->SetParent(m_Player.lock());
 

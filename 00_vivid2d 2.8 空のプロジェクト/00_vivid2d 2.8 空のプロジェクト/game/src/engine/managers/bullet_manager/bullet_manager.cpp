@@ -164,7 +164,6 @@ void CBulletManager::CheckReflectModel(int model_handle)
         }
 
         DxLib::MV1_COLL_RESULT_POLY_DIM hit_poly_dim = MV1CollCheck_Sphere(model_handle, -1, bullet->GetPosition(), bullet->GetRadius());
-		DrawSphere3D(bullet->GetPosition(), bullet->GetRadius(), 8, GetColor(255, 0, 0), GetColor(255, 0, 0), false);
         if (hit_poly_dim.HitNum >= 1)
         {
             CSoundManager::GetInstance().Play_SE(SE_ID::REFLECTION, false);
