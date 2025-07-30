@@ -131,25 +131,19 @@ void CBeltConveyorGimmick::Update(void)
 
 	//プレイヤーの移動（ベルトコンベアの影響）
 
-		// 1. ObjectManagerに、PlayerComponentを持つ全てのオブジェクトを問い合わせる
 	auto& objManager = CObjectManager::GetInstance();
 	auto playerObjects = objManager.GetObjectsWithComponent<PlayerComponent>();
 
-	// 2. 取得した全プレイヤーオブジェクトをループ
 	for (auto& playerObject : playerObjects)
 	{
-		// 3. PlayerComponentを取得して、状態をチェック
 		auto playerComp = playerObject->GetComponent<PlayerComponent>();
 		if (playerComp && !playerComp->IsDefeated() && playerComp->IsGround())
 		{
-			// 4. TransformComponentを取得して、ベルトコンベアの力を加える
-			auto playerTransform = playerObject->GetComponent<TransformComponent>();
-			if (playerTransform)
-			{
-				// フレームレートに依存しないように delta_time を掛ける
-				// (この処理はdelta_timeを受け取るUpdate内にあるはず)
-				playerTransform->Translate(move_vector * deltaTime);
-			}
+			// playerTransform->Translate(...) をやめる
+			CVector3 conveyor_force = m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate);
+
+			// プレイヤーコンポーネントに「外部からの力」として速度を渡す
+			playerComp->AddAffectedVelocity(conveyor_force);
 		}
 	}
 }

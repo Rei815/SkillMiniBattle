@@ -10,8 +10,8 @@ private:
     CTransform m_Transform;
 
     // 最適化のためのデータ
-    mutable CMatrix m_worldMatrix;
-    mutable bool    m_isDirty;
+    mutable CMatrix m_WorldMatrix;
+    mutable bool    m_IsDirty;
 
 public:
     // --- コンストラクタ ---

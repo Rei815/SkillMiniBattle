@@ -23,17 +23,20 @@ void MeshColliderComponent::OnAttach(CGameObject* owner)
             DxLib::MV1SetupCollInfo(m_ModelHandle, -1, 8, 8, 8);
         }
     }
-    else
-    {
-        // ModelComponentがないと動作しないので、警告を出すなど
-        // DX_LOGPRINTF("警告: MeshColliderComponentはModelComponentを必要とします。");
-    }
 }
 
 void MeshColliderComponent::Update(float delta_time, CGameObject* owner)
 {
-	m_ModelHandle = owner->GetComponent<ModelComponent>()->GetHandle(); // ModelComponentからハンドルを取得
-    DxLib::MV1RefreshCollInfo(m_ModelHandle, -1, -1); // 第2引数に-1を追加すると、より安全です
+    if (m_ModelHandle == -1) return;
+
+    // 1. まず、オーナーからTransformComponentを取得する
+    auto transform = owner->GetComponent<TransformComponent>();
+    if (!transform) return;
+
+    // 2. ★★★ これが解決策 ★★★
+    // 当たり判定を更新する直前に、このオブジェクトの現在のワールド行列をDXライブラリに設定する
+    DxLib::MV1SetMatrix(m_ModelHandle, transform->GetWorldMatrix());
+    DxLib::MV1RefreshCollInfo(m_ModelHandle); // 第2引数に-1を追加すると、より安全です
 }
 
 bool MeshColliderComponent::CheckHitLine(const CVector3& startPos,const CVector3& endPos, CollisionResult& out_result) const
@@ -44,7 +47,7 @@ bool MeshColliderComponent::CheckHitLine(const CVector3& startPos,const CVector3
     }
 
     // DXライブラリの当たり判定関数を呼び出す
-    MV1_COLL_RESULT_POLY hitPoly = MV1CollCheck_Line(m_ModelHandle, -1, startPos, endPos);
+    MV1_COLL_RESULT_POLY hitPoly = DxLib::MV1CollCheck_Line(m_ModelHandle, -1, startPos, endPos);
 
     if (hitPoly.HitFlag) // DxLibのHitFlagはint型 (0 or 1)
     {
@@ -62,7 +65,7 @@ bool MeshColliderComponent::CheckHitSphere(const CVector3& center, float radius,
     if (m_ModelHandle == -1) return false;
 
     // モデルと球の当たり判定
-    DxLib::MV1_COLL_RESULT_POLY_DIM hitResult = MV1CollCheck_Sphere(m_ModelHandle, -1, center, radius);
+    DxLib::MV1_COLL_RESULT_POLY_DIM hitResult = DxLib::MV1CollCheck_Sphere(m_ModelHandle, -1, center, radius);
     // ヒットしたかどうかを bool に変換
     out_result.isHit = (hitResult.HitNum > 0);
 
@@ -85,7 +88,7 @@ bool MeshColliderComponent::CheckHitCapsule(const CVector3& posA, const CVector3
     if (m_ModelHandle == -1) return false;
 
     // モデルとカプセルの当たり判定
-    DxLib::MV1_COLL_RESULT_POLY_DIM hitResult = MV1CollCheck_Capsule(m_ModelHandle, -1, posA, posB, radius);
+    DxLib::MV1_COLL_RESULT_POLY_DIM hitResult = DxLib::MV1CollCheck_Capsule(m_ModelHandle, -1, posA, posB, radius);
     if (hitResult.HitNum > 0)
     {
         // ヒットした場合、衝突位置をout引数に格納してtrueを返す

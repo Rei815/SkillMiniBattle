@@ -71,15 +71,10 @@ Finalize(void)
     m_GameObjects.clear();
 }
 
-/*
- *  オブジェクト生成
- */
 std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransform& transform, PLAYER_ID player_id)
 {
-    // CGameObjectのインスタンスを生成
     auto gameObject = std::make_shared<CGameObject>();
     gameObject->SetID(id);
-    gameObject->SetTag(GAME_OBJECT_TAG::UNTAGGED);
     // 共通のTransformComponentを設定
     auto transformComp = gameObject->GetComponent<TransformComponent>();
     transformComp->SetTransform(transform);
@@ -149,12 +144,10 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
         gameObject->AddComponent<MeshColliderComponent>();
         break;
     case OBJECT_ID::PLAYER:
-    {
         gameObject->AddComponent<ModelComponent>(MODEL_ID::PLAYER, true);
         gameObject->AddComponent<MeshColliderComponent>();
         gameObject->AddComponent<PlayerComponent>(player_id,transform);
         break;
-    }
     }
 
     if (!gameObject) return nullptr;
@@ -332,9 +325,7 @@ CheckHitBullet(std::shared_ptr<IBullet> bullet)
 /*
  *  オブジェクト更新
  */
-void
-CObjectManager::
-UpdateObject(void)
+void CObjectManager::UpdateObject(void)
 {
     if (m_GameObjects.empty()) return;
 
@@ -344,16 +335,14 @@ UpdateObject(void)
     {
         std::shared_ptr<CGameObject> gameObject = *it;
 
-        gameObject->Update(vivid::GetDeltaTime());
-
         if (!gameObject->IsActive())
         {
-            gameObject->Finalize();
-
             it = m_GameObjects.erase(it);
 
             continue;
         }
+
+        gameObject->Update(vivid::GetDeltaTime());
 
         ++it;
     }

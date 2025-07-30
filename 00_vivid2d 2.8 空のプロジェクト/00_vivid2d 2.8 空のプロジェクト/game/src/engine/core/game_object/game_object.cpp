@@ -6,6 +6,11 @@
 
 CGameObject::CGameObject()
     : m_IsActive(true)
+	, m_ID(OBJECT_ID::NONE)
+	, m_Tag(GAME_OBJECT_TAG::UNTAGGED)
+	, m_Category(FACTION_CATEGORY::NEUTRAL)
+	, m_Components()
+
 {
     //ç¿ïWÇÕïKÇ∏éùÇΩÇπÇÈ
     AddComponent<TransformComponent>();

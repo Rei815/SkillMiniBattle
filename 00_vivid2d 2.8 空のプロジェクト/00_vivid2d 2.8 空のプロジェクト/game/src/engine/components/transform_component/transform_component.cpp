@@ -2,33 +2,33 @@
 
 TransformComponent::TransformComponent()
     : m_Transform()     // デフォルトコンストラクタで初期化
-    , m_worldMatrix()   // デフォルトコンストラクタで初期化
-    , m_isDirty(true)   // 最初は必ず再計算が必要
+    , m_WorldMatrix()   // デフォルトコンストラクタで初期化
+    , m_IsDirty(true)   // 最初は必ず再計算が必要
 {
 }
 
 void TransformComponent::SetTransform(const CTransform& transform)
 {
     m_Transform = transform;
-    m_isDirty = true; // データが変更されたのでフラグを立てる
+    m_IsDirty = true; // データが変更されたのでフラグを立てる
 }
 
 void TransformComponent::SetPosition(const CVector3& position)
 {
     m_Transform.position = position;
-    m_isDirty = true;
+    m_IsDirty = true;
 }
 
 void TransformComponent::SetRotation(const CVector3& euler_angles)
 {
     m_Transform.rotation = euler_angles;
-    m_isDirty = true;
+    m_IsDirty = true;
 }
 
 void TransformComponent::SetScale(const CVector3& scale)
 {
     m_Transform.scale = scale;
-    m_isDirty = true;
+    m_IsDirty = true;
 }
 
 void TransformComponent::SetScale(float scale)
@@ -36,7 +36,7 @@ void TransformComponent::SetScale(float scale)
     m_Transform.scale.x = scale;
     m_Transform.scale.y = scale;
     m_Transform.scale.z = scale;
-    m_isDirty = true;
+    m_IsDirty = true;
 
 }
 
@@ -46,15 +46,15 @@ void TransformComponent::Translate(const CVector3& offset)
     m_Transform.position += offset;
 
     // 位置が変更されたので、忘れずにダーティフラグを立てる
-    m_isDirty = true;
+    m_IsDirty = true;
 }
 const CMatrix& TransformComponent::GetWorldMatrix() const
 {
-    if (m_isDirty)
+    if (m_IsDirty)
     {
         RecalculateWorldMatrix();
     }
-    return m_worldMatrix;
+    return m_WorldMatrix;
 }
 
 float TransformComponent::GetLength() const
@@ -70,8 +70,8 @@ void TransformComponent::RecalculateWorldMatrix() const
     CMatrix translateMat = CMatrix::Translate(m_Transform.position);
 
     // ワールド行列を計算してキャッシュします。
-    m_worldMatrix = scaleMat * rotationMat * translateMat;
+    m_WorldMatrix = scaleMat * rotationMat * translateMat;
 
     // 再計算が完了したので、フラグを降ろします。
-    m_isDirty = false;
+    m_IsDirty = false;
 }

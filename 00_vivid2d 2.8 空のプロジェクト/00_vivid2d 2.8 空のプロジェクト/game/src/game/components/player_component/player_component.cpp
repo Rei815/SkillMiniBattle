@@ -10,7 +10,7 @@ const float             PlayerComponent::m_radius = 50.0f;
 const float             PlayerComponent::m_height = 70.0f;
 const float             PlayerComponent::m_model_scale = 0.33f;
 const float             PlayerComponent::m_move_speed = 40.0f;
-const float             PlayerComponent::m_jump_power = 1600.0f;
+const float             PlayerComponent::m_jump_power = 1450.0f;
 const float             PlayerComponent::m_fly_away_speed = 2400.0f;
 const float             PlayerComponent::m_max_life = 3.0f;
 const float             PlayerComponent::m_max_invincible_time = 1.0f;
@@ -56,6 +56,11 @@ PlayerComponent::PlayerComponent(PLAYER_ID id, CTransform transform)
     , m_Gravity(m_gravity)
 	, m_IsGround(false)
     , m_GroundObject(nullptr)
+	, m_Velocity(CVector3::ZERO)
+	, m_MoveSpeed(m_move_speed)
+	, m_JumpPower(m_jump_power)
+	, m_InitialPosition(transform.position)
+
 {
 }
 
@@ -103,7 +108,7 @@ void PlayerComponent::OnAttach(CGameObject* owner)
 
     m_StopFlag = false;
     m_FrictionFlag = true;
-
+	m_ForwardVector = CVector3::FORWARD;
     // ダミーのプレイヤーは動かず、浮かせる
     if (m_Controller->GetID() == CONTROLLER_ID::DUMMY)
     {
@@ -113,8 +118,6 @@ void PlayerComponent::OnAttach(CGameObject* owner)
 
 void PlayerComponent::Update(float delta_time, CGameObject* owner)
 {
-    // オーナーのポインタを保持
-    m_Owner = owner;
     switch (m_PlayerState)
     {
     case PLAYER_STATE::APPEAR:  Appear();           break;
@@ -128,18 +131,23 @@ void PlayerComponent::Update(float delta_time, CGameObject* owner)
     // キャラクターに速度がある場合のみ、向きを変える
     if (m_Velocity.LengthSq() > a_little_speed)
     {
-        // 1. 移動速度ベクトルから目標の角度を計算 (atan2fを使用)
-        float targetAngle = atan2f(m_Velocity.x, m_Velocity.z) * 180.0f / DX_PI_F;
+        // 移動している場合：目標の向きは、移動方向。m_ForwardVectorを更新する。
+        m_ForwardVector = CVector3(m_Velocity.x, 0.0f, m_Velocity.z).Normalize();
 
-
-        // 2. 計算した角度を即座にTransformに設定
-        auto transform = owner->GetComponent<TransformComponent>();
-        CVector3 rotation = transform->GetRotation();
-        rotation.y = targetAngle;
-        m_ForwardVector = CVector3(m_Velocity.x, 0, m_Velocity.z).Normalize();
-        transform->SetRotation(rotation);
     }
+    float targetAngle = atan2f(m_ForwardVector.x, m_ForwardVector.z) * 180.0f / DX_PI_F;
 
+    if (!std::isnan(targetAngle))
+
+    {
+        // 計算した角度をTransformComponentに設定する
+        auto transform = owner->GetComponent<TransformComponent>();
+        if (transform)
+        {
+            CVector3 currentRotation = transform->GetRotation();
+            transform->SetRotation({ currentRotation.x, targetAngle, currentRotation.z });
+        }
+    }
 }
 /*
  *  被弾
@@ -193,8 +201,6 @@ void PlayerComponent::Impact(const CVector3& hit_position, const CVector3& direc
     // 2. 計算した吹き飛ばしベクトルを、直接 m_Velocity に加算する！
     m_Velocity += TempVelocity * m_fly_away_speed * power;
 
-    // SetAffectedVelocity の呼び出しは削除する
-    // SetAffectedVelocity(TempVelocity * m_fly_away_speed * power);
 }
 
 PLAYER_ID PlayerComponent::GetPlayerID() const
@@ -240,8 +246,6 @@ void PlayerComponent::SetActionFlag(bool flag)
 bool PlayerComponent::GetPlayerMoving()
 {
     bool Input = false;
-
-
 
     if (m_Controller)
     {
@@ -350,7 +354,6 @@ void PlayerComponent::Control(void)
     // 2. ベクトルの長さが少しでもあれば（＝入力があれば）処理する
     if (moveDir.LengthSq() > 0.01f) // わずかな入力のブレは無視
     {
-        // 3. ★★★ ここが最重要ポイント ★★★
         // ベクトルを正規化して、長さを必ず 1 にする
         moveDir.Normalize();
 
@@ -359,7 +362,6 @@ void PlayerComponent::Control(void)
         m_Accelerator.z = moveDir.z * m_move_speed * m_MoveSpeedRate;
     }
 
-    // --- ▲▲▲ ここまでが移動処理 ▲▲▲ ---
     //ジャンプ
     if (m_Controller->GetButtonDown(BUTTON_ID::A) && !m_StopFlag)
         if (m_IsGround == true)
@@ -386,24 +388,10 @@ void PlayerComponent::Move(float delta_time)
     auto transform = m_Owner->GetComponent<TransformComponent>();
     if (!transform) return;
 
-    // --- 1. 力の計算 ---
-    // このフレームで動きたい速度ベクトルを、これまで通り計算します
-    m_Velocity += m_Accelerator;
-    if (!m_IsGround)
-    {
-        m_Velocity += m_Gravity * delta_time;
-    }
-    m_Velocity += m_AffectedVelocity * delta_time;
 
-    // --- 2. 移動と衝突解決を分割して実行 ---
-    CVector3 totalMoveThisFrame = m_Velocity * delta_time;
-    SubstepMove(totalMoveThisFrame); // 新しい関数で移動を実行
-
-    // --- 4. 接地判定と補正 ---
-    // 全ての移動が終わった最終的な位置で、接地しているかを確認
     CObjectManager& om = CObjectManager::GetInstance();
-    const float ground_check_line_length = (m_height / 2.0f) + 5.0f;
-    const float ground_check_offset = m_radius * 0.9f;
+    const float ground_check_line_length = 100.0f;
+    const float ground_check_offset = m_radius * 0.7f;
     bool foundGroundThisFrame = false;
     float highestGroundY = -FLT_MAX;
     CGameObject* tempGroundObject = nullptr;
@@ -416,6 +404,7 @@ void PlayerComponent::Move(float delta_time)
         if ((i % 3) != 1 && (i / 3) != 1)
             groundMultiplier = sinf(45.0f * DX_PI_F / 180.0f);
         CVector3 currentPos = transform->GetPosition();
+
         CVector3 startPos = currentPos + CVector3((-ground_check_offset + ground_check_offset * (i % 3)) * groundMultiplier, 0.0f, (-ground_check_offset + ground_check_offset * (i / 3)) * groundMultiplier);
         CVector3 endPos = startPos - CVector3(0, ground_check_line_length, 0);
         CollisionResult hitResult;
@@ -439,28 +428,41 @@ void PlayerComponent::Move(float delta_time)
         }
     }
 
-    if (foundGroundThisFrame && m_Velocity.y <= 0)
+    CVector3 currentPos = transform->GetPosition();
+    float distanceToGround = currentPos.y - (highestGroundY + m_height / 2.0f);
+
+    // 「地面が見つかり」「落下中」で、かつ「地面が足元のごく近くにある」場合のみ接地しているとみなす
+    const float snap_distance = 10.0f; // この距離以内なら吸い付く
+    if (foundGroundThisFrame && m_Velocity.y <= 0 && distanceToGround <= snap_distance)
     {
+        float groundSurfaceY = highestGroundY + (m_height / 2.0f);
+
         m_IsGround = true;
         m_GroundObject = tempGroundObject;
         m_Velocity.y = 0;
-        CVector3 currentPos = transform->GetPosition();
-        transform->SetPosition(CVector3(currentPos.x, highestGroundY + (m_height / 2.0f), currentPos.z));
+        transform->SetPosition({ currentPos.x, highestGroundY + (m_height / 2.0f), currentPos.z });
     }
     else
     {
         m_IsGround = false;
         m_GroundObject = nullptr;
     }
+    if (!m_IsGround)
+    {
+        m_Velocity.y += m_Gravity.y * delta_time;
+    }
+    m_Velocity += m_Accelerator;
+    CVector3 total_velocity = m_Velocity + m_AffectedVelocity;
+    CVector3 totalMoveThisFrame = total_velocity * delta_time;
+    SubstepMove(totalMoveThisFrame);
 
-    // --- 5. 後処理 ---
     if (m_FrictionFlag)
     {
         m_Velocity.x *= m_move_friction.x;
         m_Velocity.z *= m_move_friction.z;
-        m_AffectedVelocity *= m_move_friction;
     }
     m_Accelerator = CVector3::ZERO;
+	m_AffectedVelocity = CVector3::ZERO;
 }
 
 void PlayerComponent::Impact(const CVector3& direction, float power)
@@ -641,13 +643,18 @@ void PlayerComponent::HandleCeilingCollisions(float delta_time, CGameObject* own
 
     float headY = transform->GetPosition().y + (m_height / 2.0f);
     float rayLength = (m_height / 2.0f) + 5.0f;
-    const float ground_check_offset_x = m_radius * 0.9f;
+    const float ground_check_offset = m_radius * 0.7f;
 
     for (int i = 0; i < 9; i++)
     {
+        float groundMultiplier = 1.0f;
+
+        // 床の判定を円のようにするための倍率設定
+        if ((i % 3) != 1 && (i / 3) != 1)
+            groundMultiplier = sinf(45.0f * DX_PI_F / 180.0f);
         CVector3 currentPos = transform->GetPosition();
 
-        CVector3 startPos = currentPos + CVector3(-ground_check_offset_x + (ground_check_offset_x) * (i % 3), 0.0f, -ground_check_offset_x * (i / 3));
+        CVector3 startPos = currentPos + CVector3((-ground_check_offset + ground_check_offset * (i % 3)) * groundMultiplier, 0.0f, (-ground_check_offset + ground_check_offset * (i / 3)) * groundMultiplier);
         CVector3 endPos = startPos - CVector3(0, -rayLength, 0);
 
         CollisionResult hitResult;

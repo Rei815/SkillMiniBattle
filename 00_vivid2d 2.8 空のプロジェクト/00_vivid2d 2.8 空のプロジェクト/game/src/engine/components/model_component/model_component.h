@@ -13,7 +13,7 @@ public:
     ~ModelComponent() override = default;
     void OnDetach(CGameObject* owner) override;
     // --- XVˆ— ---
-    void Update(float delta_time, CGameObject* owner) override {}
+    void Update(float delta_time, CGameObject* owner) override {};
     void Draw(const CGameObject* owner) const;
 
     void SetModelHandle(int handle);

@@ -18,13 +18,18 @@ public:
     CGameObject();
     virtual ~CGameObject();
 
-    /**
-     * @brief コンポーネントを追加します。同じ型のコンポーネントも複数追加できます。
+    /*
+     * @brief コンポーネントをこのゲームオブジェクトに追加
+     * 
+     * @param[in] T 追加するコンポーネントの型 (IComponent派生クラス)
+     * @param[in] Args コンポーネントのコンストラクタに渡す引数
+     * 
+     * @return 生成され、追加されたコンポーネントへのポインタ
      */
     template<typename T, typename... Args>
     std::shared_ptr<T> AddComponent(Args&&... args)
     {
-        static_assert(std::is_base_of<IComponent, T>::value, "T must inherit from IComponent");
+        static_assert(std::is_base_of<IComponent, T>::value, "テンプレート引数 T は IComponent を継承している必要があります");
 
         std::shared_ptr<T> component = std::make_shared<T>(std::forward<Args>(args)...);
         m_Components[typeid(T)].push_back(component);
@@ -32,13 +37,17 @@ public:
         return component;
     }
 
-    /**
-     * @brief 指定された型の最初のコンポーネントを取得します。
+    /*
+     * @brief 指定された型の最初のコンポーネントを取得
+     * 
+     * @param[in] T 取得したいコンポーネントの型
+     * 
+     * @return 見つかったコンポーネントへのポインタ なければnullptr
      */
     template<typename T>
     std::shared_ptr<T> GetComponent() const
     {
-        static_assert(std::is_base_of<IComponent, T>::value, "T must inherit from IComponent");
+        static_assert(std::is_base_of<IComponent, T>::value, "テンプレート引数 T は IComponent を継承している必要があります");
 
         auto it = m_Components.find(typeid(T));
         if (it != m_Components.end() && !it->second.empty())
@@ -48,13 +57,18 @@ public:
         return nullptr;
     }
 
-    /**
-     * @brief 指定された型のすべてのコンポーネントをベクターで取得します。
+    /*
+     * @brief 指定された型の全てのコンポーネントをベクターで取得
+     * 
+     * @param[in] T 取得したいコンポーネントの型
+     * 
+     * @return 見つかったコンポーネントのポインタを格納したstd::vector
+     * 見つからなかった場合は、空のベクターを返す
      */
     template<typename T>
     std::vector<std::shared_ptr<T>> GetComponents() const
     {
-        static_assert(std::is_base_of<IComponent, T>::value, "T must inherit from IComponent");
+        static_assert(std::is_base_of<IComponent, T>::value, "テンプレート引数 T は IComponent を継承している必要があります");
 
         std::vector<std::shared_ptr<T>> result;
         auto it = m_Components.find(typeid(T));
@@ -71,8 +85,12 @@ public:
         return result;
     }
 
-    /**
-     * @brief 特定のコンポーネントを少なくとも1つ持っているか確認します。
+    /*
+     * @brief 特定のコンポーネントを少なくとも1つ持っているか確認
+     * 
+	 * @param[in] T 確認したいコンポーネントの型
+     * 
+	 * @return 指定された型のコンポーネントが存在する場合はtrue、存在しない場合はfalse
      */
     template<typename T>
     bool HasComponent() const
@@ -81,13 +99,15 @@ public:
         return (it != m_Components.end() && !it->second.empty());
     }
 
-    /**
-     * @brief 指定された型のコンポーネントをすべて削除します。
+    /*
+     * @brief 指定された型のコンポーネントをすべて削除
+     * 
+	 * @param[in] T 削除したいコンポーネントの型
      */
     template<typename T>
     void RemoveComponent()
     {
-        static_assert(std::is_base_of<IComponent, T>::value, "T must inherit from IComponent");
+        static_assert(std::is_base_of<IComponent, T>::value, "テンプレート引数 T は IComponent を継承している必要があります");
 
         auto it = m_Components.find(typeid(T));
         if (it != m_Components.end())
@@ -100,7 +120,7 @@ public:
         }
     }
 
-    // --- ライフサイクルメソッド ---
+    // --- ライフサイクル ---
     virtual void Initialize();
     virtual void Update(float delta_time);
     virtual void Draw();
@@ -108,22 +128,22 @@ public:
 
     virtual bool IsActive() const { return m_IsActive; }
     virtual void Delete() { m_IsActive = false; }
-    // --- ID管理メソッドを追加 ---
-    void SetID(OBJECT_ID id) { m_Id = id; }
-    OBJECT_ID GetID() const { return m_Id; }
+    // --- ID管理 ---
+    void SetID(OBJECT_ID id) { m_ID = id; }
+    OBJECT_ID GetID() const { return m_ID; }
 
-    // --- タグ管理メソッド ---
+    // --- タグ管理 ---
     void SetTag(GAME_OBJECT_TAG tag) { m_Tag = tag; }
     GAME_OBJECT_TAG GetTag() const { return m_Tag; }
 
-    // --- タグ管理メソッド ---
+    // --- タグ管理 ---
     void SetCategory(FACTION_CATEGORY category) { m_Category = category; }
     FACTION_CATEGORY GetCategory() const { return m_Category; }
-protected:
-    bool                m_IsActive;
-    GAME_OBJECT_TAG       m_Tag; // タグを保持するメンバー変数
-    OBJECT_ID           m_Id; // オブジェクトのIDを保持
-    FACTION_CATEGORY    m_Category;
+
 private:
-    std::map<std::type_index, std::vector<std::shared_ptr<IComponent>>> m_Components;
+	std::map<std::type_index, std::vector<std::shared_ptr<IComponent>>> m_Components; //!< コンポーネントのマップ
+	bool                m_IsActive; //!< オブジェクトがアクティブかどうかを示すフラグ
+    GAME_OBJECT_TAG     m_Tag;      //!< タグを保持するメンバー変数
+    OBJECT_ID           m_ID;       //!< オブジェクトのIDを保持
+	FACTION_CATEGORY    m_Category; //!< カテゴリーを保持するメンバー変数
 };
