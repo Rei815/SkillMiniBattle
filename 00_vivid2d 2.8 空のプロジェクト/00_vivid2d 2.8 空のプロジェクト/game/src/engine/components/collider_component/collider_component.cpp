@@ -1,7 +1,7 @@
 #include "collider_component.h"
 
 ColliderComponent::ColliderComponent()
-    : m_IsEnabled(true) // コンストラクタで、デフォルトは有効(true)に初期化
+    : m_IsEnabled(true)
 {
 }
 

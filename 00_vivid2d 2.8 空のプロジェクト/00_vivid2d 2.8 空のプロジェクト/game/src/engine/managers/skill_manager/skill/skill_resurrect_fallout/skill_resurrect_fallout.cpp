@@ -4,6 +4,7 @@
 #include "../../../sound_manager/sound_manager.h"
 #include "../../../../../game/components/gimmick_component/fall_gimmick_component/fall_gimmick_component.h"
 #include "../../../../../engine/components/transform_component/transform_component.h"
+#include <game/components/player_component/player_component.h>
 
 const float		CSkillResurrectFallout::m_resurrect_height = 200.0f;
 const float		CSkillResurrectFallout::m_effect_scale = 2.0f;
@@ -48,7 +49,7 @@ Update(void)
 	case SKILL_STATE::WAIT:
 		break;
 	case SKILL_STATE::ACTIVE:
-
+	{
 		for (auto& gimmickObject : allGimmickObject)
 		{
 			if (auto& gimmick = gimmickObject->GetComponent<FallGimmickComponent>())
@@ -58,7 +59,10 @@ Update(void)
 					CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
 					CVector3 resurrectPos = gimmickObject->GetComponent<TransformComponent>()->GetPosition();
 					resurrectPos.y += m_resurrect_height;
-					m_Player.lock()->GetComponent<TransformComponent>()->SetPosition(resurrectPos);
+					auto& transform = m_Player.lock()->GetComponent<TransformComponent>();
+					transform->SetPosition(resurrectPos);
+					auto& playerComp = m_Player.lock()->GetComponent<PlayerComponent>();
+					playerComp->SetVelocity(CVector3::ZERO);
 					m_SkillEffect = CEffectManager::GetInstance().Create(EFFECT_ID::SKILL_STAR, CVector3().ZERO, CVector3(), m_effect_scale);
 					m_ResurrectEffect = CEffectManager::GetInstance().Create(EFFECT_ID::RESURRECT, CVector3().ZERO, CVector3(), m_effect_scale);
 					m_SkillEffect->SetParent(m_Player.lock());
@@ -70,6 +74,7 @@ Update(void)
 				}
 			}
 		}
+	}
 		break;
 	case SKILL_STATE::COOLDOWN:
 		break;

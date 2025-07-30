@@ -2,7 +2,7 @@
 #include "../../../sound_manager/sound_manager.h"
 #include "../../../../components/model_component/model_component.h"
 #include "../../../../../game/components/player_component/player_component.h"
-#include <engine/managers/object_manager/object_manager.h>
+#include "engine/managers/object_manager/object_manager.h"
 
 const float CSkillMimicry::m_cool_time = 10.0f;
 const float CSkillMimicry::m_duration_time = 5.0f;

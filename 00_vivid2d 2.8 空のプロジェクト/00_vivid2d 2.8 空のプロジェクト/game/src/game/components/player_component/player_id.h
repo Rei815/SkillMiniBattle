@@ -11,11 +11,3 @@ enum class PLAYER_ID
     PLAYER4,            //!< ƒvƒŒƒCƒ„[4
     NONE,
 };
-
-enum class MOVE_ID
-{
-    LEFT,
-    WAIT,
-    RIGHT,
-};
-

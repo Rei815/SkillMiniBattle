@@ -1,24 +1,28 @@
 #pragma once
 #include "../../core/component/component.h"
-#include "../../mathematics/mathematics.h" // CTransform, CMatrix など、あなたのプロジェクトの型に合わせてください
+#include "../../mathematics/mathematics.h"
 #include "../../utility/transform/transform.h"
 
 class TransformComponent : public IComponent
 {
-private:
-    // あなたのプロジェクトに既存の、座標・回転・スケールをまとめた構造体（CTransformなど）をそのまま使います。
-    CTransform m_Transform;
-
-    // 最適化のためのデータ
-    mutable CMatrix m_WorldMatrix;
-    mutable bool    m_IsDirty;
-
 public:
-    // --- コンストラクタ ---
+
+    /*!
+	 *  @brief      コンストラクタ
+     */
     TransformComponent();
+
+    /*!
+     *  @brief      デストラクタ
+     */
     ~TransformComponent() override = default;
 
-    // --- 更新処理 ---
+    /*!
+	 *  @brief      更新
+     * 
+	 *  @param[in] delta_time 前フレームからの経過時間
+	 *  @param[in] owner      コンポーネントをアタッチしたオーナーオブジェクト
+     */
     void Update(float delta_time, CGameObject* owner) override {}
 
     // --- ゲッター / セッター ---
@@ -33,13 +37,31 @@ public:
     void SetScale(const CVector3& scale);
     void SetScale(float scale);
 
-    // 現在位置から、指定されたオフセット分だけ移動させる
+    /*!
+	 *  @brief      オフセットを加えて位置を変更
+     *  
+	 *  @param[in] offset 位置を変更するためのオフセット
+     */
     void Translate(const CVector3& offset);
-    // --- 行列取得 ---
-    const CMatrix& GetWorldMatrix() const;
 
+	/*!
+	 *  @brief      ワールド行列を取得
+	 *
+	 *  @return     ワールド行列
+	 */
+    const CMatrix&  GetWorldMatrix() const;
+
+    /*!
+	 *  @brief      ワールド座標系での長さを取得
+     */
     float GetLength() const;
 private:
     // --- 内部処理 ---
     void RecalculateWorldMatrix() const;
+
+private:
+	CTransform m_Transform;         //!< トランスフォーム
+
+	mutable CMatrix m_WorldMatrix;  //!< ワールド行列
+	mutable bool    m_IsDirty;      //!< ワールド行列が再計算が必要かどうかのフラグ
 };

@@ -15,10 +15,18 @@
 class CGameObject
 {
 public:
+
+	/*!
+	 * @brief      コンストラクタ
+	 */
     CGameObject();
+
+	/*!
+	 * @brief      デストラクタ
+	 */
     virtual ~CGameObject();
 
-    /*
+    /*!
      * @brief コンポーネントをこのゲームオブジェクトに追加
      * 
      * @param[in] T 追加するコンポーネントの型 (IComponent派生クラス)
@@ -37,7 +45,7 @@ public:
         return component;
     }
 
-    /*
+    /*!
      * @brief 指定された型の最初のコンポーネントを取得
      * 
      * @param[in] T 取得したいコンポーネントの型
@@ -57,7 +65,7 @@ public:
         return nullptr;
     }
 
-    /*
+    /*!
      * @brief 指定された型の全てのコンポーネントをベクターで取得
      * 
      * @param[in] T 取得したいコンポーネントの型
@@ -85,7 +93,7 @@ public:
         return result;
     }
 
-    /*
+    /*!
      * @brief 特定のコンポーネントを少なくとも1つ持っているか確認
      * 
 	 * @param[in] T 確認したいコンポーネントの型
@@ -99,7 +107,7 @@ public:
         return (it != m_Components.end() && !it->second.empty());
     }
 
-    /*
+    /*!
      * @brief 指定された型のコンポーネントをすべて削除
      * 
 	 * @param[in] T 削除したいコンポーネントの型
@@ -140,9 +148,11 @@ public:
     void SetCategory(FACTION_CATEGORY category) { m_Category = category; }
     FACTION_CATEGORY GetCategory() const { return m_Category; }
 
+protected:
+	bool                m_IsActive; //!< オブジェクトがアクティブかどうかを示すフラグ
+
 private:
 	std::map<std::type_index, std::vector<std::shared_ptr<IComponent>>> m_Components; //!< コンポーネントのマップ
-	bool                m_IsActive; //!< オブジェクトがアクティブかどうかを示すフラグ
     GAME_OBJECT_TAG     m_Tag;      //!< タグを保持するメンバー変数
     OBJECT_ID           m_ID;       //!< オブジェクトのIDを保持
 	FACTION_CATEGORY    m_Category; //!< カテゴリーを保持するメンバー変数

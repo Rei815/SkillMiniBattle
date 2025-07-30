@@ -6,7 +6,7 @@
 ModelComponent::ModelComponent(MODEL_ID id, bool IsDuplicate)
     : m_ModelHandle(-1)
     , m_Alpha(1.0f) 
-    , m_IsDuplicated(IsDuplicate)// ハンドルを-1で、透明度を1.0で初期化
+    , m_IsDuplicated(IsDuplicate)
 {
     // ModelManagerから、元となる共有モデルのハンドルを取得
     int sourceHandle = CModelManager::GetInstance().GetModelHandle(id);
@@ -14,10 +14,12 @@ ModelComponent::ModelComponent(MODEL_ID id, bool IsDuplicate)
 
     if (m_IsDuplicated)
     {
+		// モデルを複製して、m_ModelHandleに設定
         m_ModelHandle = MV1DuplicateModel(sourceHandle);
     }
     else
     {
+		// 複製しない場合は、元のモデルのハンドルをそのまま使用
         m_ModelHandle = sourceHandle;
     }
 }
@@ -37,6 +39,7 @@ void ModelComponent::OnDetach(CGameObject* owner)
 
 void ModelComponent::Draw(const CGameObject* owner) const
 {
+	// オーナーがnullptrまたはモデルハンドルが無効な場合は何もしない
     if (m_ModelHandle == -1 || !owner)
     {
         return;

@@ -16,16 +16,6 @@ void GimmickComponent::Update(float delta_time, CGameObject* owner)
     // m_Timer.Update(delta_time); // delta_time‚ÅXV‚·‚éê‡
 }
 
-GIMMICK_STATE GimmickComponent::GetState() const
-{
-    return m_State;
-}
-
-void GimmickComponent::SetState(GIMMICK_STATE state)
-{
-    m_State = state;
-}
-
 void GimmickComponent::SetTimer(float time)
 {
     m_Timer.SetUp(time);

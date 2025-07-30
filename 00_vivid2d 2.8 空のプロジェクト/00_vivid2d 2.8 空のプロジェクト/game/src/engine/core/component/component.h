@@ -8,20 +8,22 @@ class CGameObject;
 class IComponent 
 {
 public:
+
+	/*!
+	 *  @brief      デストラクタ
+	 */
     virtual ~IComponent() = default;
 
-    // 更新処理
-    // delta_time: 前のフレームからの経過時間（秒単位など）
-    // owner: このコンポーネントがアタッチされている GameObject のポインタ
-    // コンポーネントが owner の状態を更新するために使用
+	/*!
+	 *	@brief      コンポーネントの更新
+	 * 
+	 *	@param[in] delta_time 前フレームからの経過時間
+	 *	@param[in] owner      コンポーネントをアタッチしたオーナーオブジェクト
+	 */
     virtual void Update(float delta_time, CGameObject* owner) = 0;
 
-    // コンポーネントがエンティティにアタッチされたときに呼ばれる初期化処理
-    // ここで、他のコンポーネントへの参照を取得したり、初期設定を行ったりできる
     virtual void OnAttach(CGameObject* owner) { /* デフォルトでは何もしない */ }
 
-    // コンポーネントがエンティティからデタッチされるときに呼ばれる終了処理
-    // リソースの解放などを行う
     virtual void OnDetach(CGameObject* owner) { /* デフォルトでは何もしない */ }
 protected:
 	CGameObject* m_Owner = nullptr; // このコンポーネントがアタッチされている GameObject のポインタ

@@ -12,17 +12,45 @@ enum class GIMMICK_STATE
 class GimmickComponent : public IComponent
 {
 public:
+	/*!
+	 *  @brief      コンストラクタ
+	 */
     GimmickComponent();
+
+	/*!
+	 *       @brief      デストラクタ
+     */
     virtual ~GimmickComponent() = default;
 
+    /*!
+	 *  @brief      コンポーネントの更新
+     * 
+	 *  @param[in] delta_time 前フレームからの経過時間
+	 *  @param[in] owner      コンポーネントをアタッチしたオーナーオブジェクト
+     */
     void Update(float delta_time, CGameObject* owner) override;
 
-    GIMMICK_STATE GetState() const;
-    void SetState(GIMMICK_STATE state);
+    /*!
+	 *  @brief      ギミックの状態を取得
+     */
+    GIMMICK_STATE GetState() const { return m_State; }
+
+    /*!
+	 *  @brief      ギミックの状態を設定
+     * 
+	 *  @param[in]  state   ギミックの状態を設定する値
+     */
+    void SetState(GIMMICK_STATE state) { m_State = state; }
+
+    /*!
+	 *  @brief      タイマーを設定
+     * 
+	 *  @param[in]  time    タイマーの時間を設定する値
+     */
     void SetTimer(float time);
 
 
 protected:
-    GIMMICK_STATE m_State;
-    CTimer        m_Timer;
-};
+	GIMMICK_STATE m_State;  //!< ギミックの状態
+	CTimer        m_Timer;  //!< タイマー
+};  

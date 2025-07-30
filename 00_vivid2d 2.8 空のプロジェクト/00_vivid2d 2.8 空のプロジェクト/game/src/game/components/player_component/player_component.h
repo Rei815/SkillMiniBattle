@@ -15,22 +15,45 @@ class TransformComponent;
 // プレイヤーの状態
 enum class PLAYER_STATE
 {
-    APPEAR,
-    PLAY, // 以前のATTACKに相当
-    DAMAGED,
-    DEFEAT,
+	APPEAR,     //!< 出現
+	PLAY,       //!< プレイ中
+	DAMAGED,    //!< 被弾
+	DEFEAT,     //!< 敗北
 };
 class PlayerComponent : public IComponent
 {
 public:
+
+	/*!
+	 *  @brief      コンストラクタ
+	 *  @param[in]  id             プレイヤーID
+	 *  @param[in]  transform      トランスフォーム
+	 */
     PlayerComponent(PLAYER_ID id, CTransform transform);
+
+	/*!
+	 *  @brief      デストラクタ
+	 */
     ~PlayerComponent() override = default;
 
-    void OnAttach(CGameObject* owner) override;
-    void Update(float delta_time, CGameObject* owner) override;
+	/*!
+	 *  @brief      アタッチ時の初期化
+     * 
+	 *  @param[in]  owner          コンポーネントをアタッチしたオーナーオブジェクト
+	 */
+    void            OnAttach(CGameObject* owner) override;
+
+	/*!
+	 *  @brief      更新
+	 *
+	 *  @param[in]  delta_time     前フレームからの経過時間
+	 *  @param[in]  owner          コンポーネントをデタッチしたオーナーオブジェクト
+	 */
+    void            Update(float delta_time, CGameObject* owner) override;
 
     /*!
      *  @brief      被弾
+     * 
      *  @param[in]  bullet          被弾した弾
      *  @param[in]  hit_position    被弾位置
      */
@@ -38,21 +61,33 @@ public:
 
     /*!
      *  @brief      衝撃を与える
+     * 
      *  @param[in]  hit_position   衝撃の位置
      *  @param[in]  direction      向き
-     *  @param[in]  float          衝撃力
+     *  @param[in]  power          衝撃力
      */
     void            Impact(const CVector3& hit_position, const CVector3& direction, float power);
 
-    PLAYER_ID GetPlayerID() const;
-    bool IsDefeated() const;
+	/*!
+	 *  @brief      プレイヤーのIDを取得
+	 *
+	 *  @return     プレイヤーのID
+	 */
+    PLAYER_ID       GetPlayerID() const;
+
+	/*!
+	 *  @brief      敗北フラグを取得
+	 *
+	 *  @return     true : 敗北している, false: 敗北していない
+	 */
+    bool            IsDefeated() const;
 
     /*!
      *  @brief      敗北フラグ設定
      *
      *  @param[in]  flag    敗北フラグ
      */
-    void SetDefeated(bool flag);
+    void            SetDefeated(bool flag);
 
     /*!
      *  @brief      無敵フラグ取得
@@ -68,11 +103,19 @@ public:
      */
     void            SetInvincible(bool flag);
 
+    /*!
+	 *  @brief      スキルを設定
+     *  
+	 *  @param[in]  skill   スキル
+     */
+    void            SetSkill(std::shared_ptr<CSkill> skill);
 
-    void SetSkill(std::shared_ptr<CSkill> skill);
-
-    // 接地しているかどうかを外部に教えるためのメソッド
-    bool IsGround() const;
+    /*!
+	 *  @brief      接地しているかを取得
+     *
+	 *  @return	    true    接地している, false 接地していない
+     */
+    bool            IsGround() const;
     /*!
      *  @brief      行動の可不可を設定
      *
@@ -80,10 +123,25 @@ public:
      */
     void            SetActionFlag(bool flag);
 
+	/*!
+	 *  @brief      プレイヤーが動いているかを取得
+	 *
+	 *  @return     true : 動いている, false: 動いていない
+	 */
     bool            GetPlayerMoving();
 
+	/*!
+	 *  @brief      プレイヤーの正面方向のベクトルを設定
+	 *
+	 *  @param[in]  forward_vector 正面方向のベクトル
+	 */
     void            SetForwardVector(const CVector3& forward_vector);
 
+	/*!
+	 *  @brief      プレイヤーの正面方向のベクトルを取得
+	 *
+	 *  @return     正面方向のベクトル
+	 */
     CVector3        GetForwardVector();
 
     /*!
@@ -91,7 +149,7 @@ public:
      *
      *  @return     スキル
      */
-    std::shared_ptr<CSkill>           GetSkill();
+    std::shared_ptr<CSkill>     GetSkill();
 
     /*!
      *  @brief      プレイヤーの高さを取得
@@ -126,28 +184,28 @@ public:
      *
      *  @param[in]  velocity 速度
      */
-    void        SetVelocity(const CVector3& velocity);
+    void            SetVelocity(const CVector3& velocity);
 
     /*!
      *  @brief      重力を設定
      *
      *  @param[in]  gravity 重力
      */
-    void        SetGravity(const CVector3& gravity);
+    void            SetGravity(const CVector3& gravity);
 
     /*!
      *  @brief      接地しているかを設定
      *
-     *  @param[in]  true    接地している　false 接地していない
+	 *  @param[in]  isGround 接地しているかのフラグ
      */
-    void        SetIsGround(bool isGround);
+    void            SetIsGround(bool isGround);
 
     /*!
      *  @brief      接地しているオブジェクトを設定
      *
      *  @param[in]  gameObject オブジェクト
      */
-    void        SetGroundObject(CGameObject* gameObject);
+    void            SetGroundObject(CGameObject* gameObject);
     /*!
      *  @brief      『外部からの影響による移動速度』のセット
      *
@@ -164,29 +222,40 @@ public:
 
     /*!
      *  @brief      アルファ値を減らしていく
+     * 
+	 *  @param[in]  alpha   減らせるアルファ値の上限
      */
     void            DecAlpha(float alpha = 0.0f);
     /*!
-     *  @brief      アルファ値を元に戻す
+     *  @brief      アルファ値を増やす
+     * 
+	 *  @param[in]  alpha   アルファ値の上限
      */
     void            RevertAlpha(float alpha = 1.0f);
 
+	/*!
+	 *  @brief      アルファ値を設定
+	 *
+	 *  @@param[in]  alpha   アルファ値
+	 */
     void            SetAlpha(float alpha);
     /*!
      *  @brief      スキル等によるスピード倍率のセット
      *
      *  @param[in]  rate    倍率
      */
-    void            SetMoveSpeedRate(float rate = 1.0f);
+    void            SetMoveSpeedRate(float rate = 1.0f) { m_MoveSpeedRate = rate; }
 
     /*!
      *  @brief      スキル等によるスピード倍率の乗算
+     * 
      *  @param[in]  rate    倍率
      */
     void            MulMoveSpeedRate(float rate = 1.0f);
 
     /*!
      *  @brief      スキル等によるスピード倍率の除算
+     * 
      *  @param[in]  rate    倍率
      */
     void            DivMoveSpeedRate(float rate = 1.0f);
@@ -219,29 +288,61 @@ public:
     void            StartInvincible(float invincible_time);
 
 private:
-    // IUnitとCPlayerから持ってきたメソッド
-    void Control();
-    void Move(float delta_time);
-    void Impact(const CVector3& direction, float power);
+
+	/*!
+	 *  @brief  コントローラーの入力に基づいてプレイヤーを制御
+	 */
+    void        Control();
+
+
     /*!
      *  @brief      出現
      */
-    void    Appear(void);
+    void            Appear(void);
+
     /*!
-     *  @brief      出現
+     *  @brief      プレイ中
+     * 
+	 *  @param[in]  delta_time 前フレームからの経過時間
      */
-    void    Play(float delta_time);
+    void            Play(float delta_time);
+
+	/*!
+	 *  @brief      プレイヤーの移動
+	 *
+	 *  @param[in]  delta_time 前フレームからの経過時間
+	 */
+    void            Move(float delta_time);
+
     /*!
-     *  @brief      出現
+	 *  @brief      床との衝突処理
+     * 
+	 *  @param[in]  owner  オーナーオブジェクト
      */
-    void    Defeat(void);
+	void            HandleGroundCollisions(CGameObject* owner);
 
-    // 壁との当たり判定を行うヘルパー関数を追加
-    void HandleWallCollisions(float delta_time, CGameObject* owner);
+	/*!
+	*   @brief      壁との衝突処理
+    * 
+	*   @param[in]  owner  オーナーオブジェクト
+    */
+    void            HandleWallCollisions(CGameObject* owner);
 
-    void HandleCeilingCollisions(float delta_time, CGameObject* owner); // ★この関数宣言を追加
+	/*!
+	 *  @brief      天井との衝突処理
+	 *
+	 *  @param[in]  owner  オーナーオブジェクト
+	 */
+    void            HandleCeilingCollisions(CGameObject* owner);
 
-    void SubstepMove(const CVector3& totalMove, int maxSubsteps = 5);
+	/*!
+	 *  @brief      サブステップでの移動処理
+	 *
+	 *  @param[in]  totalMove      このフレームでの総移動量
+	 *  @param[in]  maxSubsteps    最大サブステップ数
+	 */
+    void            SubstepMove(const CVector3& totalMove, int maxSubsteps = 5);
+
     static const float              m_radius;                                   //!< 半径
     static const float              m_height;                                   //!< 高さ
     static const float              m_model_scale;                              //!< モデルの大きさ

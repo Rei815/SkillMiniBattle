@@ -3,6 +3,7 @@
 #include "../../../object_manager/object_manager.h"
 #include "../../../sound_manager/sound_manager.h"
 #include "../../../../../engine/components/transform_component/transform_component.h"
+#include <game/components/player_component/player_component.h>
 
 const CVector3	CSkillResurrectBelt::m_resurrect_position = CVector3(0.0f,500.0f,0.0f);
 const float		CSkillResurrectBelt::m_effect_scale = 2.0f;
@@ -48,8 +49,12 @@ Update(void)
 		break;
 
 	case SKILL_STATE::ACTIVE:
+	{
 		CSoundManager::GetInstance().Play_SE(SE_ID::RESURECT, false);
-		m_Player.lock()->GetComponent<TransformComponent>()->SetPosition(m_resurrect_position);
+		auto& transform = m_Player.lock()->GetComponent<TransformComponent>();
+		transform->SetPosition(m_resurrect_position);
+		auto& playerComp = m_Player.lock()->GetComponent<PlayerComponent>();
+		playerComp->SetVelocity(CVector3::ZERO);
 
 		if (m_SkillEffect == nullptr)
 		{
@@ -60,7 +65,7 @@ Update(void)
 		}
 		m_State = SKILL_STATE::COOLDOWN;
 		break;
-
+	}
 	case SKILL_STATE::COOLDOWN:
 		break;
 	}

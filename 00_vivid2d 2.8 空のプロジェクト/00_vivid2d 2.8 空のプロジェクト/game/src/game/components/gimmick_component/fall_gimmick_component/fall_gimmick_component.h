@@ -9,21 +9,39 @@ public:
     FallGimmickComponent(OBJECT_ID id);
     ~FallGimmickComponent() = default;
 
+    /*!
+     *  @brief      アタッチ時の初期化
+     *
+     *  @param[in]  owner          コンポーネントをアタッチしたオーナーオブジェクト
+     */
     void OnAttach(CGameObject* owner) override;
+
+	/*!
+	 *  @brief      更新
+	 *
+	 *  @param[in] delta_time 前フレームからの経過時間
+	 *  @param[in] owner      コンポーネントをアタッチしたオーナーオブジェクト
+	 */
     void Update(float delta_time, CGameObject* owner) override;
 
-    // --- このクラス固有のメソッド ---
+    /*!
+	 *  @brief      戻るまでの時間を加算
+     * 
+	 *  @param[in] time 加算する値
+     * 
+     */
     void AddReturnTime(float time);
 
 private:
-    static const std::string    m_file_name_list[];
-    MARK_ID                     m_MarkID;
 
-    static const float  m_fall_speed;       //!< 落ちる速度
-    static const float  m_return_height;    //!< 元に戻る高さ
-    static const float  m_return_time;      //!< 元に戻るまでの時間
+	static const std::string    m_file_name_list[]; //!< ファイル名リスト
+	MARK_ID                     m_MarkID;           //!< マークID  
 
-    float               m_StartHeight;      //!< 初期の高さ
-    float               m_ReturnTime;       //!< 元に戻るまでの時間
-    CTimer              m_ReturnTimer;      //!< 戻るまでのタイマー
+    static const float  m_fall_speed;               //!< 落ちる速度
+    static const float  m_return_height;            //!< 元に戻る高さ
+    static const float  m_return_time;              //!< 元に戻るまでの時間
+
+    float               m_StartHeight;              //!< 初期の高さ
+    float               m_ReturnTime;               //!< 元に戻るまでの時間
+    CTimer              m_ReturnTimer;              //!< 戻るまでのタイマー
 };

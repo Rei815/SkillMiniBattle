@@ -1,6 +1,6 @@
 #include "skill_jump_up.h"
 #include "../../../../../game/components/player_component/player_component.h"
-const float CSkillJumpUp::m_jump_up_rate = 1.1f;
+const float CSkillJumpUp::m_jump_up_rate = 1.2f;
 
 CSkillJumpUp::CSkillJumpUp(void)
 	:CSkill(SKILL_CATEGORY::PASSIVE)
