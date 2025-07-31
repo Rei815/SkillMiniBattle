@@ -122,5 +122,4 @@ private:
     using TOPIC_LIST = std::list<std::shared_ptr<CFallOutTopic>>;
 
     TOPIC_LIST                          m_TopicList;                //!< お題のリスト
-    std::mt19937                        m_RandEngine; // メルセンヌ・ツイスターエンジン
 };

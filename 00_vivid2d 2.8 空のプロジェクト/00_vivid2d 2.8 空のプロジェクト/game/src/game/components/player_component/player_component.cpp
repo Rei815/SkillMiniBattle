@@ -202,46 +202,6 @@ void PlayerComponent::Impact(const CVector3& hit_position, const CVector3& direc
 
 }
 
-PLAYER_ID PlayerComponent::GetPlayerID() const
-{
-    return m_PlayerID;
-}
-
-bool PlayerComponent::IsDefeated() const
-{
-    return m_DefeatFlag;
-}
-
-void PlayerComponent::SetDefeated(bool flag)
-{
-    m_DefeatFlag = flag;
-}
-
-bool PlayerComponent::IsInvincible(void)
-{
-    return m_InvincibleFlag;
-}
-
-void PlayerComponent::SetInvincible(bool flag)
-{
-    m_InvincibleFlag = flag;
-}
-
-void PlayerComponent::SetSkill(std::shared_ptr<CSkill> skill)
-{
-    m_Skill = skill;
-}
-
-bool PlayerComponent::IsGround() const
-{
-    return m_IsGround;
-}
-
-void PlayerComponent::SetActionFlag(bool flag)
-{
-    m_ActionFlag = flag;
-}
-
 bool PlayerComponent::GetPlayerMoving()
 {
     if (m_Controller == nullptr) return false;
@@ -277,66 +237,6 @@ void PlayerComponent::SetForwardVector(const CVector3& forward_vector)
     {
         m_ForwardVector = forward_vector;
     }
-}
-
-CVector3 PlayerComponent::GetForwardVector()
-{
-    return m_ForwardVector;
-}
-
-std::shared_ptr<CSkill> PlayerComponent::GetSkill()
-{
-    return m_Skill;
-}
-
-float PlayerComponent::GetHeight()
-{
-    return m_height;
-}
-
-float PlayerComponent::GetRadius()
-{
-    return m_radius;
-}
-
-CVector3 PlayerComponent::GetVelocity()
-{
-    return m_Velocity;
-}
-
-CVector3 PlayerComponent::GetDefaultGravity()
-{
-    return m_gravity;
-}
-
-void PlayerComponent::SetVelocity(const CVector3& velocity)
-{
-    m_Velocity = velocity;
-}
-
-void PlayerComponent::SetGravity(const CVector3& gravity)
-{
-    m_Gravity = gravity;;
-}
-
-void PlayerComponent::SetIsGround(bool isGround)
-{
-    m_IsGround = isGround;
-}
-
-void PlayerComponent::SetGroundObject(CGameObject* gameObject)
-{
-    m_GroundObject = gameObject;
-}
-
-void PlayerComponent::SetAffectedVelocity(CVector3 velocity)
-{
-    m_AffectedVelocity = velocity;
-}
-
-void PlayerComponent::AddAffectedVelocity(CVector3 velocity)
-{
-    m_AffectedVelocity += velocity;
 }
 
 void PlayerComponent::StartInvincible(float invincible_time)
@@ -403,11 +303,6 @@ void PlayerComponent::DivMoveSpeedRate(float rate)
     m_MoveSpeedRate = m_MoveSpeedRate / rate;
 }
 
-void PlayerComponent::SetJumpPowerRate(float rate)
-{
-    m_JumpPowerRate = rate;
-}
-
 void PlayerComponent::MulJumpPowerRate(float rate)
 {
     if (rate == 0.0f)
@@ -428,17 +323,17 @@ void PlayerComponent::Control(void)
 {
     if (m_Controller == nullptr) return;
     vivid::Vector2 stick = m_Controller->GetLeftStick();
-    // 1. スティックの入力から、まずは「行きたい方向」のベクトルを作る
-    // ※コントローラーは上方向がマイナスで返ってくることが多いため、Z成分は反転させています
+    // スティックの入力から、行きたい方向のベクトルを作る
+    // コントローラーは上方向がマイナスで返ってくることが多いため、Z成分は反転
     CVector3 moveDir(stick.x, 0.0f, -stick.y);
 
-    // 2. ベクトルの長さが少しでもあれば（＝入力があれば）処理する
+    // ベクトルの長さが少しでもあれば（＝入力があれば）処理する
     if (moveDir.LengthSq() > 0.01f) // わずかな入力のブレは無視
     {
         // ベクトルを正規化して、長さを必ず 1 にする
         moveDir.Normalize();
 
-        // 4. 長さ1の方向に、本来の移動速度を掛けて力を決定する
+        // 長さ1の方向に、本来の移動速度を掛けて力を決定する
         m_Accelerator.x = moveDir.x * m_move_speed * m_MoveSpeedRate;
         m_Accelerator.z = moveDir.z * m_move_speed * m_MoveSpeedRate;
     }
@@ -710,28 +605,28 @@ void PlayerComponent::SubstepMove(const CVector3& totalMove, int maxSubsteps)
     {
         // === 水平方向の移動 (XとZを分離) ===
 
-        // 1. まずはX軸方向に動かしてみる
+        //まずはX軸方向に動かす
         transform->Translate(CVector3(substepMove.x, 0.0f, 0.0f));
         HandleWallCollisions(m_Owner); // 壁の衝突判定
 
-        // 2. 次にZ軸方向に動かしてみる
+        //次にZ軸方向に動かす
         transform->Translate(CVector3(0.0f, 0.0f, substepMove.z));
         HandleWallCollisions(m_Owner); // 壁の衝突判定
 
 
         // === 垂直方向の移動 (地面と天井) ===
 
-        // 3. 最後にY軸方向に動かしてみる
+        //最後にY軸方向に動かす
         transform->Translate(CVector3(0.0f, substepMove.y, 0.0f));
 
         if (substepMove.y > 0)
         {
-            // 上昇中 -> 天井との判定
+            // 上昇中は天井との判定
             HandleCeilingCollisions(m_Owner);
         }
         else
         {
-            // 落下中 -> 地面との判定
+            // 落下中は地面との判定
             HandleGroundCollisions(m_Owner);
         }
     }

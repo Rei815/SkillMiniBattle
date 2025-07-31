@@ -33,6 +33,8 @@ void IBullet::Initialize(FACTION_CATEGORY category, CShot::BulletParameters* bul
     m_Velocity = direction * bulletParams->speed;
     auto model = AddComponent<ModelComponent>(MODEL_ID::BULLET, true);
     model->SetMaterialColor(0, m_color);
+
+	//メッシュコンポーネントを追加
     AddComponent<MeshColliderComponent>();
     m_Category = category;
 	m_Radius = bulletParams->radius;
@@ -51,9 +53,6 @@ void IBullet::Initialize(FACTION_CATEGORY category, const CVector3& position, co
     m_Category = category;
 	m_TransformComponent = GetComponent<TransformComponent>();
     /*モデルコンポーネントは自身で設定*/
-
-    //nullチェック
-    assert(m_TransformComponent != nullptr && "IBullet requires a TransformComponent, but it was not found!");
 
     // TransformComponentを取得し、初期設定を行う
     if (auto transform = GetComponent<TransformComponent>())

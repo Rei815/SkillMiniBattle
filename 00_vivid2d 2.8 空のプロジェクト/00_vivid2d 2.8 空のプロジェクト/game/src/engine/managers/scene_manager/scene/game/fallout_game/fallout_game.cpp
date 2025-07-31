@@ -104,8 +104,6 @@ void CFallOutGame::Initialize(SCENE_ID scene_id)
 	object = om.Create(OBJECT_ID::FALL_FLOOR_SQUARE,m_floor_transform_list[(int)MARK_ID::SQUARE]);
 	object = om.Create(OBJECT_ID::FALL_FLOOR_SUN,m_floor_transform_list[(int)MARK_ID::SUN]);
 	object = om.Create(OBJECT_ID::FALL_FLOOR_TRIANGLE,m_floor_transform_list[(int)MARK_ID::TRIANGLE]);
-	m_RandEngine.seed(std::random_device()());
-
 }
 
 void CFallOutGame::Update(void)
@@ -240,18 +238,17 @@ void CFallOutGame::ResetTopic(void)
 	bool allGimmicksWaiting = true;
 	if (!m_ExtendTimer.Finished())
 	{
-		// 1. ObjectManagerから、FallGimmickComponentを持つオブジェクトを全て取得
-		// ※m_ObjectManagerはシーンが持っているインスタンス変数
+		//ObjectManagerから、FallGimmickComponentを持つオブジェクトを全て取得
 		auto gimmickObjects = CObjectManager::GetInstance().GetObjectsWithComponent<FallGimmickComponent>();
 
-		// 2. 取得した全ギミックオブジェクトをループ
+		//取得した全ギミックオブジェクトをループ
 		for (const auto& gimmickObject : gimmickObjects)
 		{
-			// 3. オブジェクトからFallGimmickComponentを取得
+			//オブジェクトからFallGimmickComponentを取得
 			auto gimmickComp = gimmickObject->GetComponent<FallGimmickComponent>();
 			if (gimmickComp)
 			{
-				// 4. コンポーネントの状態をチェック
+				//コンポーネントの状態をチェック
 				if (gimmickComp->GetState() != GIMMICK_STATE::WAIT)
 				{
 					allGimmicksWaiting = false;

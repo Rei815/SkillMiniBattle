@@ -195,7 +195,6 @@ void CDaruma_FallDownGame::Play(void)
 
 	m_Timer.Update();
 
-	// DarumaGimmickComponentは、鬼オブジェクト用のラッパーコンポーネントとします
 	auto darumaObjects = CObjectManager::GetInstance().GetObjectsWithComponent<DarumaFallDownGimmickComponent>();
 	auto gimmick = darumaObjects.begin()->get()->GetComponent<DarumaFallDownGimmickComponent>();
 	auto allPlayers = CObjectManager::GetInstance().GetObjectsWithComponent<PlayerComponent>();

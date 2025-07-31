@@ -10,7 +10,7 @@ const float CShockWaveBullet::m_life_time = 1.0f;
 const float CShockWaveBullet::m_acceleration = 0.2f;
 const float CShockWaveBullet::m_scale = 0.5f;
 const float CShockWaveBullet::m_power = 0.5f;
-// コンストラクタ：親クラスのデフォルトコンストラクタを呼ぶだけでOK
+
 CShockWaveBullet::CShockWaveBullet()
     : IBullet(COLLIDER_ID::MODEL)
 {
@@ -34,12 +34,13 @@ void CShockWaveBullet::Update()
     // アクティブでなければ、何もしない
     if (!IsActive()) return;
 
-    // --- 衝撃波独自の更新処理 ---
+    //モデルを大きくしていく
     m_SpreadSpeed += m_acceleration; // 加速
     m_CurrentScale += m_SpreadSpeed * vivid::GetDeltaTime();
 
     if (m_TransformComponent)
     {
-        m_TransformComponent->SetScale(CVector3(m_CurrentScale, 1.0f, m_CurrentScale)); // 縦方向には広げない
+        // 縦方向には広げない
+        m_TransformComponent->SetScale(CVector3(m_CurrentScale, 1.0f, m_CurrentScale)); 
     }
 }

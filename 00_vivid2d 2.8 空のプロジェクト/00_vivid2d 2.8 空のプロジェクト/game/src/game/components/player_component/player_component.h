@@ -68,67 +68,89 @@ public:
      */
     void            Impact(const CVector3& hit_position, const CVector3& direction, float power);
 
+    /*!
+     *  @brief      プレイヤーが動いているかを取得
+     *
+     *  @return     true : 動いている, false: 動いていない
+     */
+    bool            GetPlayerMoving();
+
 	/*!
 	 *  @brief      プレイヤーのIDを取得
 	 *
 	 *  @return     プレイヤーのID
 	 */
-    PLAYER_ID       GetPlayerID() const;
+    PLAYER_ID       GetPlayerID() const { return m_PlayerID; }
 
 	/*!
 	 *  @brief      敗北フラグを取得
 	 *
 	 *  @return     true : 敗北している, false: 敗北していない
 	 */
-    bool            IsDefeated() const;
+    bool            IsDefeated() const { return m_DefeatFlag; }
 
     /*!
      *  @brief      敗北フラグ設定
      *
      *  @param[in]  flag    敗北フラグ
      */
-    void            SetDefeated(bool flag);
+    void            SetDefeated(bool flag) { m_DefeatFlag = flag; }
 
     /*!
      *  @brief      無敵フラグ取得
      *
      *  @return     無敵フラグ
      */
-    bool            IsInvincible(void);
+    bool            IsInvincible(void) const { return m_InvincibleFlag; }
 
     /*!
      *  @brief      無敵フラグ設定
      *
      *  @param[in]  flag    無敵フラグ
      */
-    void            SetInvincible(bool flag);
+    void            SetInvincible(bool flag) { m_InvincibleFlag = flag; }
+
+    /*!
+     *  @brief      スキルを取得
+     *
+     *  @return     スキル
+     */
+    std::shared_ptr<CSkill>     GetSkill() const { return m_Skill; }
 
     /*!
 	 *  @brief      スキルを設定
      *  
 	 *  @param[in]  skill   スキル
      */
-    void            SetSkill(std::shared_ptr<CSkill> skill);
+    void            SetSkill(std::shared_ptr<CSkill> skill) { m_Skill = skill; }
 
     /*!
 	 *  @brief      接地しているかを取得
      *
 	 *  @return	    true    接地している, false 接地していない
      */
-    bool            IsGround() const;
+    bool            IsGround() const { return m_IsGround; }
+
+    /*!
+     *  @brief      接地しているかを設定
+     *
+     *  @param[in]  isGround 接地しているかのフラグ
+     */
+    void            SetIsGround(bool isGround) { m_IsGround = isGround; }
+
     /*!
      *  @brief      行動の可不可を設定
      *
      *  @param[in]  flag    行動フラグ
      */
-    void            SetActionFlag(bool flag);
+    void            SetActionFlag(bool flag) { m_ActionFlag = flag; }
 
 	/*!
-	 *  @brief      プレイヤーが動いているかを取得
+	 *  @brief      プレイヤーの正面方向のベクトルを取得
 	 *
-	 *  @return     true : 動いている, false: 動いていない
+	 *  @return     正面方向のベクトル
 	 */
-    bool            GetPlayerMoving();
+    CVector3        GetForwardVector() const { return m_ForwardVector; }
 
 	/*!
 	 *  @brief      プレイヤーの正面方向のベクトルを設定
@@ -137,88 +159,67 @@ public:
 	 */
     void            SetForwardVector(const CVector3& forward_vector);
 
-	/*!
-	 *  @brief      プレイヤーの正面方向のベクトルを取得
-	 *
-	 *  @return     正面方向のベクトル
-	 */
-    CVector3        GetForwardVector();
-
-    /*!
-     *  @brief      スキルを取得
-     *
-     *  @return     スキル
-     */
-    std::shared_ptr<CSkill>     GetSkill();
-
     /*!
      *  @brief      プレイヤーの高さを取得
      *
      *  @return     高さ
      */
-    float           GetHeight();
+    float           GetHeight() const { return m_height; }
 
     /*!
      *  @brief      プレイヤーの半径を取得
      *
      *  @return     半径
      */
-    float           GetRadius();
+    float           GetRadius() const { return m_radius; }
 
     /*!
      *  @brief      速度を取得
      *
      *  @return     速度
      */
-    CVector3        GetVelocity();
-
-    /*!
-     *  @brief      基本の重力を取得
-     *
-     *  @return     重力
-     */
-    CVector3        GetDefaultGravity();
+    CVector3        GetVelocity() const { return m_Velocity; }
 
     /*!
      *  @brief      速度を設定
      *
      *  @param[in]  velocity 速度
      */
-    void            SetVelocity(const CVector3& velocity);
+    void            SetVelocity(const CVector3& velocity) { m_Velocity = velocity; }
+
+    /*!
+     *  @brief      基本の重力を取得
+     *
+     *  @return     重力
+     */
+    CVector3        GetDefaultGravity() const { return m_gravity; }
 
     /*!
      *  @brief      重力を設定
      *
      *  @param[in]  gravity 重力
      */
-    void            SetGravity(const CVector3& gravity);
-
-    /*!
-     *  @brief      接地しているかを設定
-     *
-	 *  @param[in]  isGround 接地しているかのフラグ
-     */
-    void            SetIsGround(bool isGround);
+    void            SetGravity(const CVector3& gravity) { m_Gravity = gravity; }
 
     /*!
      *  @brief      接地しているオブジェクトを設定
      *
      *  @param[in]  gameObject オブジェクト
      */
-    void            SetGroundObject(CGameObject* gameObject);
+    void            SetGroundObject(CGameObject* gameObject) { m_GroundObject = gameObject; }
     /*!
      *  @brief      『外部からの影響による移動速度』のセット
      *
      *  @param[in]  velocity    セットする速度
      */
-    void            SetAffectedVelocity(CVector3 velocity);
+    void            SetAffectedVelocity(CVector3 velocity) { m_AffectedVelocity = velocity; }
 
     /*!
      *  @brief      『外部からの影響による移動速度』の加算
      *
      *  @param[in]  velocity    加算する速度
      */
-    void            AddAffectedVelocity(CVector3 velocity);
+    void            AddAffectedVelocity(CVector3 velocity) { m_AffectedVelocity += velocity; }
 
     /*!
      *  @brief      アルファ値を減らしていく
@@ -239,12 +240,6 @@ public:
 	 *  @@param[in]  alpha   アルファ値
 	 */
     void            SetAlpha(float alpha);
-    /*!
-     *  @brief      スキル等によるスピード倍率のセット
-     *
-     *  @param[in]  rate    倍率
-     */
-    void            SetMoveSpeedRate(float rate = 1.0f) { m_MoveSpeedRate = rate; }
 
     /*!
      *  @brief      スキル等によるスピード倍率の乗算
@@ -265,7 +260,7 @@ public:
      *
      *  @param[in]  rate    倍率
      */
-    void            SetJumpPowerRate(float rate = 1.0f);
+    void            SetJumpPowerRate(float rate = 1.0f) { m_JumpPower = rate; }
 
     /*!
      *  @brief      スキル等によるジャンプ倍率の乗算
@@ -290,9 +285,9 @@ public:
 private:
 
 	/*!
-	 *  @brief  コントローラーの入力に基づいてプレイヤーを制御
+	 *  @brief      コントローラーの入力に基づいてプレイヤーを制御
 	 */
-    void        Control();
+    void            Control();
 
 
     /*!
