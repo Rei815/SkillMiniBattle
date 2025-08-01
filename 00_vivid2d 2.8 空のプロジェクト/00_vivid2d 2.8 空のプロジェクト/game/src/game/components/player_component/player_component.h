@@ -260,7 +260,7 @@ public:
      *
      *  @param[in]  rate    ”{—¦
      */
-    void            SetJumpPowerRate(float rate = 1.0f) { m_JumpPower = rate; }
+    void            SetJumpPowerRate(float rate = 1.0f) { m_JumpPowerRate = rate; }
 
     /*!
      *  @brief      ƒXƒLƒ‹“™‚É‚æ‚éƒWƒƒƒ“ƒv”{—¦‚ÌæZ
