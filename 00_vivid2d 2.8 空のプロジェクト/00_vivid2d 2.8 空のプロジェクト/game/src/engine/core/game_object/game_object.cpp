@@ -3,6 +3,7 @@
 #include <engine/components/model_component/model_component.h>
 #include <game/components/player_component/player_component.h>
 #include <engine/components/collider_component/mesh_collider_component/mesh_collider_component.h>
+#include <engine/components/shadow_component/shadow_component.h>
 
 CGameObject::CGameObject()
     : m_IsActive(true)
@@ -65,6 +66,7 @@ void CGameObject::Draw()
     }
     // 描画関連のコンポーネントがあれば、そのDrawメソッドを呼び出すなど
     if (auto modelComp = GetComponent<ModelComponent>()) { modelComp->Draw(this); }
+	if (auto shadowComp = GetComponent<ShadowComponent>()) { shadowComp->Draw(); }
 }
 
 void CGameObject::Finalize()

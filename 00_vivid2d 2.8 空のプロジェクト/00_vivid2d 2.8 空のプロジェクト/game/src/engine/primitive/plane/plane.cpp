@@ -77,3 +77,8 @@ void CPlane::SetTransform(const CTransform& transform)
 {
 	m_Transform = transform;
 }
+
+void CPlane::SetColor(const COLOR_U8& color)
+{
+	m_Color = color;
+}

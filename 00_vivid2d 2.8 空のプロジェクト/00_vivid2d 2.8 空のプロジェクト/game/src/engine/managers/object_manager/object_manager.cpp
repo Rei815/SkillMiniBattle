@@ -7,6 +7,7 @@
 #include "../../../game/components/gimmick_component/dodge_ball_gimmick_component/dodge_ball_gimmick_component.h"
 #include "../../../game/components/gimmick_component/fall_gimmick_component/fall_gimmick_component.h"
 #include "../../../game/components/gimmick_component/daruma_fall_down_gimmick_component/daruma_fall_down_gimmick_component.h"
+#include "engine/components/shadow_component/shadow_component.h"
 #include "../bullet_manager/bullet/bullet.h"
 
 /*
@@ -147,6 +148,7 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
         gameObject->AddComponent<ModelComponent>(MODEL_ID::PLAYER, true);
         gameObject->AddComponent<MeshColliderComponent>();
         gameObject->AddComponent<PlayerComponent>(player_id,transform);
+		gameObject->AddComponent<ShadowComponent>();
         break;
     }
 
@@ -285,43 +287,6 @@ CheckHitBullet(std::shared_ptr<IBullet> bullet)
         }
     }
 }
-///*
-//* 当たったオブジェクトを返す
-//*/
-//std::shared_ptr<IObject> CObjectManager::CheckHitObject(std::shared_ptr<CPlayer> player)
-//{
-//    if (m_ObjectList.empty()) return nullptr;
-//    OBJECT_LIST::iterator it = m_ObjectList.begin();
-//
-//    while (it != m_ObjectList.end())
-//    {
-//        std::shared_ptr<IObject> object = *it;
-//        if (object->GetModelHandle().GetHandle() == VIVID_DX_ERROR || object->GetColliderActiveFlag() == false)
-//        {
-//            ++it;
-//            continue;
-//        }
-//
-//        //垂直方向の判定-----------------------------------------------------
-//
-//        float radius = player->GetRadius();
-//        float offset = radius / 2.0f;
-//        for (int i = 0; i < 9; ++i)
-//        {
-//            CVector3 unit_pos = player->GetPosition();
-//
-//            CVector3 start = unit_pos + CVector3(-offset + (offset) * (i % 3), 0.0, -offset + (offset) * (i / 3));
-//            CVector3 end_position = start + CVector3(0, -radius, 0);
-//
-//            if (object->GetModelHandle().CheckHitLine(start, end_position) == true)
-//                return object;
-//        }
-//
-//        ++it;
-//    }
-//    return nullptr;
-//}
-//
 /*
  *  オブジェクト更新
  */

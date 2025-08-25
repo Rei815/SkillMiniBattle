@@ -118,6 +118,7 @@ void PlayerComponent::OnAttach(CGameObject* owner)
 
 void PlayerComponent::Update(float delta_time, CGameObject* owner)
 {
+
     switch (m_PlayerState)
     {
     case PLAYER_STATE::APPEAR:  Appear();           break;

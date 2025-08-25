@@ -171,6 +171,7 @@
   <ItemGroup>
     <ClCompile Include="src\engine\components\collider_component\collider_component.cpp" />
     <ClCompile Include="src\engine\components\collider_component\mesh_collider_component\mesh_collider_component.cpp" />
+    <ClCompile Include="src\engine\components\shadow_component\shadow_component.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\belt_conveyor_gimmick_component\belt_conveyor_gimmick\belt_conveyor_gimmick.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\belt_conveyor_gimmick_component\belt_conveyor_gimmick_component.cpp" />
     <ClCompile Include="src\game\components\gimmick_component\daruma_fall_down_gimmick_component\daruma_fall_down_gimmick\daruma_fall_down_gimmick.cpp" />
@@ -312,6 +313,7 @@
     <ClInclude Include="src\engine\components\collider_component\collider_component.h" />
     <ClInclude Include="src\engine\components\collider_component\collision_result.h" />
     <ClInclude Include="src\engine\components\collider_component\mesh_collider_component\mesh_collider_component.h" />
+    <ClInclude Include="src\engine\components\shadow_component\shadow_component.h" />
     <ClInclude Include="src\engine\core\component\component.h" />
     <ClInclude Include="src\engine\core\game_object\game_types.h" />
     <ClInclude Include="src\engine\managers\object_manager\object_id.h" />

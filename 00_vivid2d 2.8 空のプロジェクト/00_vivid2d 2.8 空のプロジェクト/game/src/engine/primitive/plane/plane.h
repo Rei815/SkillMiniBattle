@@ -45,6 +45,12 @@ public:
 	 */
 	void	SetTransform(const CTransform& transform);
 
+	/*!
+	 *  @brief      F‚Ìİ’è
+	 *
+	 *  @param[in]	color	F
+	 */
+	void SetColor(const COLOR_U8& color); // ‚±‚Ìs‚ğ’Ç‰Á
 private:
 
 	static const unsigned short m_index[];
