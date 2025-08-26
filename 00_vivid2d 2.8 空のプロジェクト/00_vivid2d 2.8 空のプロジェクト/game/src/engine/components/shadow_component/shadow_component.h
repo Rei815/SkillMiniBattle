@@ -21,9 +21,8 @@ private:
 
     std::unique_ptr<CPlane> m_Plane; // CPlaneクラスのインスタンスを持つ
 
-    // 影の計算に使うパラメータ
-    static const float m_ground_y;
     static const float m_shadow_max_height;
-    static const float m_shadow_base_size; // CPlaneが画像の大きさを使うので、これは不要になるかも
     static const float m_shadow_min_scale;
+	static const std::string m_file_name; //!> 影の画像ファイル名
+
 };
