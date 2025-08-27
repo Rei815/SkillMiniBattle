@@ -70,8 +70,6 @@ void ShadowComponent::Draw()
         // 影の位置を決めるための移動行列
         CMatrix transMat = DxLib::MGetTranslate(CVector3(ownerPos.x, groundPos.y, ownerPos.z));
 
-        // 全ての行列を合成！順番が重要です。
-        // スケールはCPlane内部で適用されるので、ここでは不要
         // 1. XY平面のPlaneをXZ平面にする回転 -> 2. 地面の傾きに合わせる回転 -> 3. 指定位置へ移動
         CMatrix worldMat = rotXMat * slopeRotMat * transMat;
 
