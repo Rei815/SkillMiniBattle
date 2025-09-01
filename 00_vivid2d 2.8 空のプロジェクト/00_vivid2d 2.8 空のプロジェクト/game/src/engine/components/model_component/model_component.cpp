@@ -74,7 +74,7 @@ void ModelComponent::SetMaterialColor(int material_index, const DxLib::COLOR_F& 
 {
     if (m_ModelHandle == -1) return;
 
-    // 変換処理は不要になり、受け取ったcolorをそのまま渡すだけ！
+
     DxLib::MV1SetMaterialDifColor(m_ModelHandle, material_index, color);
 }
 COLOR_F ModelComponent::GetMaterialColor(int material_index)

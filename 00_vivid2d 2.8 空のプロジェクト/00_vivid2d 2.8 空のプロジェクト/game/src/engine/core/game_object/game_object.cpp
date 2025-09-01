@@ -30,15 +30,6 @@ CGameObject::~CGameObject()
     }
 }
 
-void CGameObject::Initialize()
-{
-    // GameObject 全体の初期化ロジック。
-    // 各コンポーネントの OnAttach は AddComponent() で呼び出される。
-    // ここでは、GameObject 自体が持つ初期化処理を記述する。
-    // 必要であれば、アタッチされている全てのコンポーネントのInitializeメソッドを呼び出すこともできるが、
-    // OnAttach で済ませられる場合は不要。
-}
-
 void CGameObject::Update(float delta_time)
 {
     if (!m_IsActive)

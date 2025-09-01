@@ -21,5 +21,5 @@ enum class FACTION_CATEGORY
 
     
     ENEMY,   // 敵陣営
-    GIMMICK, // 中立だが攻撃してくるギミックなど
+    GIMMICK, // 中立だが攻撃してくるギミック
 };

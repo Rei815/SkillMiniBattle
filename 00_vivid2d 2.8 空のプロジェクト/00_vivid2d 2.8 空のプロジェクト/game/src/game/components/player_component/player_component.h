@@ -353,8 +353,8 @@ private:
     static const CVector3           m_gravity;                                  //!< 重力値
     static const int                m_invincible_visible_interval;              //!< 無敵時間中の点滅間隔
 
-    static const COLOR_F       m_player_body_color[(int)PLAYER_ID::NONE];  //!< 体の色
-    static const COLOR_F       m_player_eye_color[(int)PLAYER_ID::NONE];   //!< 目の色
+    static const COLOR_F            m_player_body_color[(int)PLAYER_ID::NONE];  //!< 体の色
+    static const COLOR_F            m_player_eye_color[(int)PLAYER_ID::NONE];   //!< 目の色
 
     std::shared_ptr<CSkill>         m_Skill;            //!< スキル
     std::shared_ptr<CController>    m_Controller;       //!< コントローラー
@@ -370,8 +370,8 @@ private:
     CVector3                        m_Gravity;          //!< 重力
     float                           m_MoveSpeedRate;    //!< 移動速度の倍率
     float                           m_JumpPowerRate;    //!< ジャンプ力の倍率
-    float                           m_MoveSpeed;
-    float                           m_JumpPower;
+	float                           m_MoveSpeed;		//!< 移動速度   
+	float                           m_JumpPower;		//!< ジャンプ力
     float                           m_Alpha;            //!< アルファ値
     bool                            m_StopFlag;         //!< 停止フラグ
     bool                            m_FrictionFlag;     //!< 減速フラグ

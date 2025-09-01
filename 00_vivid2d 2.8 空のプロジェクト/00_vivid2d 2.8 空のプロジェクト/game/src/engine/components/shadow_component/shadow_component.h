@@ -16,13 +16,10 @@ public:
 
 private:
 
+    std::unique_ptr<CPlane>     m_Plane;        //!< CPlaneクラスのインスタンスを持つ
 
-    int m_ShadowGraph; // 影の画像ハンドル
-
-    std::unique_ptr<CPlane> m_Plane; // CPlaneクラスのインスタンスを持つ
-
-    static const float m_shadow_max_height;
-    static const float m_shadow_min_scale;
-	static const std::string m_file_name; //!> 影の画像ファイル名
+    static const float          m_shadow_max_height;
+    static const float          m_shadow_min_scale;
+	static const std::string    m_file_name;   //!< 影の画像ファイル名
 
 };

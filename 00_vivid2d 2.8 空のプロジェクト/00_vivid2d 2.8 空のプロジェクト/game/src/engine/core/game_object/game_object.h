@@ -129,7 +129,6 @@ public:
     }
 
     // --- ライフサイクル ---
-    virtual void Initialize();
     virtual void Update(float delta_time);
     virtual void Draw();
     virtual void Finalize();
@@ -144,7 +143,7 @@ public:
     void SetTag(GAME_OBJECT_TAG tag) { m_Tag = tag; }
     GAME_OBJECT_TAG GetTag() const { return m_Tag; }
 
-    // --- タグ管理 ---
+    // --- カテゴリー管理 ---
     void SetCategory(FACTION_CATEGORY category) { m_Category = category; }
     FACTION_CATEGORY GetCategory() const { return m_Category; }
 

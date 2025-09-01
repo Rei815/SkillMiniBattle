@@ -154,8 +154,6 @@ std::shared_ptr<CGameObject> CObjectManager::Create(OBJECT_ID id, const CTransfo
 
     if (!gameObject) return nullptr;
 
-    gameObject->Initialize();
-
     m_GameObjects.emplace_back(gameObject);
 
     return gameObject;

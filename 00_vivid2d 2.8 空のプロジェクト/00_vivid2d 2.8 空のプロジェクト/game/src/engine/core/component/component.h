@@ -22,9 +22,9 @@ public:
 	 */
     virtual void Update(float delta_time, CGameObject* owner) = 0;
 
-    virtual void OnAttach(CGameObject* owner) { /* デフォルトでは何もしない */ }
+    virtual void OnAttach(CGameObject* owner) {}
 
-    virtual void OnDetach(CGameObject* owner) { /* デフォルトでは何もしない */ }
+    virtual void OnDetach(CGameObject* owner) {}
 protected:
 	CGameObject* m_Owner = nullptr; // このコンポーネントがアタッチされている GameObject のポインタ
 };
