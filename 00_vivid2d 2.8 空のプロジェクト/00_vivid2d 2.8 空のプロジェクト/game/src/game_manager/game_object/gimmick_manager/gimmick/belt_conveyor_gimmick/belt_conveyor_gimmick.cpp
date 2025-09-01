@@ -107,7 +107,7 @@ void CBeltConveyorGimmick::Update(void)
 			//ベルトコンベアの上にいない場合（落下中）
 			else
 			{
-				//ベルトコンベアの速さの半分の速さで水平方向の移動 ＋ 落下速度で垂直方向の移動（ゲームプレイ中にあまり見ない部分の演出のため、厳密にリアルの動きを再現する必要はなさそうなので、それっぽく見える程度に）
+				//ベルトコンベアの速さの半分の速さで水平方向の移動 ＋ 落下速度で垂直方向の移動（ゲームプレイ中にあまり見ない部分の演出のため、厳密にリアルの動きを再現する必要はなさそうなので、それらしく見える程度に）
 				(*it)->SetPosition(ObjPos + m_BeltConveyorForward * (m_default_belt_move_speed * m_NowBeltSpeedRate * 0.5f) + CVector3::DOWN * m_obstruction_object_fall_speed);
 				
 				//少し回転させる（ベルトコンベアの端が丸くなっている影響で、落下時に回転が加わるほうが自然に見える）
